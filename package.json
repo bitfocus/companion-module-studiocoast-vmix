@@ -1,0 +1,14 @@
+{
+  "name": "studiocoast-vmix",
+  "version": "0.0.1",
+  "description": "Module to control StudioCoast vMix",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vmix"
+  ],
+  "author": "Per Røine",
+  "license": "MIT"
+}
