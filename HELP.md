@@ -27,7 +27,7 @@ We currently support the following actions:
 * **Stop Playlist:** Stops the current playlist
 * **Next item in playlist:** Jump to next playlist entry
 * **Previous item in playlist:** Jump to previous playlist entry
-* **Open Playlist:** Opens the given playList_Functions
+* **Open Playlist:** Opens the given playlist
 * **Toggle Overlay on program:** Toggles the given input as the given overlay on program
 * **Set Overlay on Preview:** Sets the given input as the given overlay on Preview
 
