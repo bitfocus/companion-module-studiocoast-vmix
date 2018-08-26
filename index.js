@@ -19,7 +19,7 @@ instance.prototype.updateConfig = function(config) {
 
 	self.config = config;
 	self.init_tcp();
-	self.config.port = '8099'
+
 };
 
 instance.prototype.init = function() {
@@ -42,7 +42,7 @@ instance.prototype.init_tcp = function() {
 	}
 
 	if (self.config.host) {
-		self.socket = new tcp(self.config.host, self.config.port);
+		self.socket = new tcp(self.config.host, 8099);
 
 		self.socket.on('status_change', function (status, message) {
 			self.status(status, message);
@@ -132,8 +132,6 @@ instance.prototype.actions = function(system) {
 		'prwNext': 	  	{ label: 'Send Next input to Preview'},
 		'prwPrv':       { label: 'Send Previous input to Preview'},
 
-
-
 		'transition':   {
 			label: 'Auto Transition',
 			options: [
@@ -146,8 +144,8 @@ instance.prototype.actions = function(system) {
 							 { id: 'Transition2', label: 'Transition 2'},
 							 { id: 'Transition3', label: 'Transition 3'},
 							 { id: 'Transition4', label: 'Transition 4'},
-							 { id: 'Stinger1', label: 'Stinger 1'},
-							 { id: 'Stinger2', label: 'Stinger 2'}
+							 { id: 'Stinger1',    label: 'Stinger 1'},
+							 { id: 'Stinger2',    label: 'Stinger 2'}
 						 ]
 				}
 			]
@@ -157,16 +155,15 @@ instance.prototype.actions = function(system) {
 			options: [
 				{
 					type: 'dropdown',
-						 label: 'Select transition',
+						 label: 'Toggle Function',
 						 id: 'toggleID',
 						 choices: [
-							 { id: 'multicorder':,  { label: 'Start / Stop MultCorder'},
-							 { id: 'record':,       { label: 'Start / Stop Recording'},
-							 { id: 'stream':,       { label: 'Start / Stop Stream'},
-							 { id: 'external':,     { label: 'Start / Stop External'},
-							 { id: 'fullscreen':,   { label: 'Start / Stop Fullscreen'},
-							 { id: 'ftb':,          { label: 'Fade To Black'},
-
+							 { id: 'StartStopMultiCorder', label: 'Start / Stop MultCorder'},
+							 { id: 'StartStopRecording',   label: 'Start / Stop Recording'},
+							 { id: 'StartStopStreaming',   label: 'Start / Stop Stream'},
+							 { id: 'StartStopExternal',    label: 'Start / Stop External'},
+							 { id: 'Fullscreen',           label: 'Start / Stop Fullscreen'},
+							 { id: 'FadeToBlack',          label: 'Fade To Black'}
 						 ]
 				}
 			]
@@ -176,13 +173,13 @@ instance.prototype.actions = function(system) {
 			options: [
 				{
 					type: 'dropdown',
-						 label: 'Select transition',
+						 label: 'Playlist Function',
 						 id: 'plfId',
 						 choices: [
-							 { id: 'start_pl':,     { label: 'Start Play List'},
-							 { id: 'stop_pl':,      { label: 'Stop Play List'},
-							 { id: 'next_pl':,      { label: 'Next Item in Play List'},
-							 { id: 'prv_pl':,       { label: 'Previous Item in Play List'}
+							 { id: 'StartPlayList',          label: 'Start Play List'},
+							 { id: 'StopPlayList',           label: 'Stop Play List'},
+							 { id: 'NextPlayListEntry',      label: 'Next Item in Play List'},
+							 { id: 'PreviousPlayListEntry',   label: 'Previous Item in Play List'}
 						 ]
 				}
 			]
@@ -211,10 +208,10 @@ instance.prototype.actions = function(system) {
 						 label: 'Select Overlay',
 						 id: 'overlayId',
 						 choices: [
-							 { id: 'OverlayInput1':,     { label: 'Overlay nr 1'},
-							 { id: 'OverlayInput2':,     { label: 'Overlay nr 2'},
-							 { id: 'OverlayInput3':,     { label: 'Overlay nr 3'},
-							 { id: 'OverlayInput4':,     { label: 'Overlay nr 4'}
+							 { id: 'OverlayInput1',     label: 'Overlay nr 1'},
+							 { id: 'OverlayInput2',     label: 'Overlay nr 2'},
+							 { id: 'OverlayInput3',     label: 'Overlay nr 3'},
+							 { id: 'OverlayInput4',     label: 'Overlay nr 4'}
 						 ]
 				}
 			]
@@ -233,10 +230,10 @@ instance.prototype.actions = function(system) {
 						 label: 'Select Overlay',
 						 id: 'overlayId',
 						 choices: [
-							 { id: 'PreviewOverlayInput1':,     { label: 'Overlay nr 1'},
-							 { id: 'PreviewOverlayInput2':,     { label: 'Overlay nr 2'},
-							 { id: 'PreviewOverlayInput3':,     { label: 'Overlay nr 3'},
-							 { id: 'PreviewOverlayInput4':,     { label: 'Overlay nr 4'}
+							 { id: 'PreviewOverlayInput1',     label: 'Overlay nr 1'},
+							 { id: 'PreviewOverlayInput2',     label: 'Overlay nr 2'},
+							 { id: 'PreviewOverlayInput3',     label: 'Overlay nr 3'},
+							 { id: 'PreviewOverlayInput4',     label: 'Overlay nr 4'}
 						 ]
 				}
 			]
@@ -290,11 +287,11 @@ instance.prototype.actions = function(system) {
 				break;
 
 			case 'overlayPgm':
-				cmd = 'FUNCTION  '+opt.overlayId +' Input=' opt.pgmId;
+				cmd = 'FUNCTION  '+opt.overlayId +' Input='+ opt.pgmId;
 				break;
 
 			case 'overlayPrw':
-				cmd = 'FUNCTION  '+opt.overlayId +' Input=' opt.prwId;
+				cmd = 'FUNCTION  '+opt.overlayId +' Input='+ opt.prwId;
 				break;
 
 	};
