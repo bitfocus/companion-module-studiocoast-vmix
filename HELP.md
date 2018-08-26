@@ -1,0 +1,34 @@
+**StudioCoast vMix**
+
+Go over to [vMix](https://www.vmix.com/) to learn more about the software.
+
+vMix is a Software Video Mixer and Switcher that utilises the latest advances in computer hardware to provide live HD video mixing, a task previously only possible on expensive dedicated hardware mixers.
+
+vMix also functions as live streaming software that allows you to publish your live productions directly to the Internet!.
+
+vMix runs on Windows 7, Windows 8 and Windows 10 platforms.
+
+vMix is a complete live video production software solution with features including LIVE mixing, switching, recording and LIVE streaming of SD, full HD and 4K video sources including cameras, video files, DVDs, images, Powerpoint and much much more.
+
+We currently support the following actions:
+* **QuickPlay:** Transitions the given input to program
+* **CutDirect:** Cuts the given input to program
+* **PreviewInput:** Previews the given input
+* **PreviewInputNext:** Previews the next input
+* **PreviewInputPrevious:** previews the previous input
+* **Transition 1-4:** Auto transition with the given transition type
+* **Toggle multicorder:** Starts / Stops the multicorder
+* **Toggle Record:** Starts / Stops recording
+* **Toggle Stream:** Starts / Stops streaming
+* **Toggle external:** Starts / Stops the external Encoder
+* **Toggle fullscreen:** Starts / Stops the Fullscreen Display
+* **Fade To Black:** Turns Fade To Black On / Off
+* **Start Playlist:** Starts the current playlist
+* **Stop Playlist:** Stops the current playlist
+* **Next item in playlist:** Jump to next playlist entry
+* **Previous item in playlist:** Jump to previous playlist entry
+* **Open Playlist:** Opens the given playList_Functions
+* **Toggle Overlay on program:** Toggles the given input as the given overlay on program
+* **Set Overlay on Preview:** Sets the given input as the given overlay on Preview
+
+For additional actions please raise a feature request at [github](https://github.com/bitfocus/companion)
