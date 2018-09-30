@@ -315,11 +315,5 @@ instance.prototype.actions = function(system) {
 
 };
 
-instance.module_info = {
-	label: 'StudioCoast vMix',
-	id: 'studiocoast-vmix',
-	version: '0.0.1'
-};
-
 instance_skel.extendedBy(instance);
 exports = module.exports = instance;
