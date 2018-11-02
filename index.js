@@ -95,146 +95,157 @@ instance.prototype.actions = function(system) {
 	var self = this;
 	self.system.emit('instance_actions', self.id, {
 
-		'quickPlay':   {
+		'quickPlay': {
 			label: 'Quick Play input to Program',
 			options: [
 				{
 					type: 'textinput',
-						 label: 'Input number',
-						 id: 'pgmId',
-						 regex: self.REGEX_NUMBER
+					label: 'Input number',
+					id: 'pgmId',
+					regex: self.REGEX_NUMBER
 				}
 			]
 		},
-		'pgmSel':   {
+		'pgmSel': {
 			label: 'Send Input to Program',
 			options: [
 				{
 					type: 'textinput',
-						 label: 'Input number',
-						 id: 'pgmId',
-						 regex: self.REGEX_NUMBER
+					label: 'Input number',
+					id: 'pgmId',
+					regex: self.REGEX_NUMBER
 				}
 			]
 		},
-		'prwSel':   {
+		'prwSel': {
 			label: 'Send Input to Preview',
 			options: [
 				{
 					type: 'textinput',
-						 label: 'Input number',
-						 id: 'prwId',
-						 regex: self.REGEX_NUMBER
+					label: 'Input number',
+					id: 'prwId',
+					regex: self.REGEX_NUMBER
 				}
 			]
 		},
 
-		'prwNext': 	  	{ label: 'Send Next input to Preview'},
-		'prwPrv':       { label: 'Send Previous input to Preview'},
+		'prwNext': { label: 'Send Next input to Preview'},
+		'prwPrv':  { label: 'Send Previous input to Preview'},
 
-		'transition':   {
+		'transition': {
 			label: 'Auto Transition',
 			options: [
 				{
 					type: 'dropdown',
-						 label: 'Select transition',
-						 id: 'transId',
-						 choices: [
-							 { id: 'Transition1', label: 'Transition 1'},
-							 { id: 'Transition2', label: 'Transition 2'},
-							 { id: 'Transition3', label: 'Transition 3'},
-							 { id: 'Transition4', label: 'Transition 4'},
-							 { id: 'Stinger1',    label: 'Stinger 1'},
-							 { id: 'Stinger2',    label: 'Stinger 2'}
-						 ]
+					label: 'Select transition',
+					id: 'transId',
+					choices: [
+						{ id: 'Transition1', label: 'Transition 1'},
+						{ id: 'Transition2', label: 'Transition 2'},
+						{ id: 'Transition3', label: 'Transition 3'},
+						{ id: 'Transition4', label: 'Transition 4'},
+						{ id: 'Stinger1',    label: 'Stinger 1'},
+						{ id: 'Stinger2',    label: 'Stinger 2'}
+					]
 				}
 			]
 		},
-		'toggle_functions':   {
+		'toggle_functions': {
 			label: 'Toggle Functions',
 			options: [
 				{
 					type: 'dropdown',
-						 label: 'Toggle Function',
-						 id: 'toggleID',
-						 choices: [
-							 { id: 'StartStopMultiCorder', label: 'Start / Stop MultCorder'},
-							 { id: 'StartStopRecording',   label: 'Start / Stop Recording'},
-							 { id: 'StartStopStreaming',   label: 'Start / Stop Stream'},
-							 { id: 'StartStopExternal',    label: 'Start / Stop External'},
-							 { id: 'Fullscreen',           label: 'Start / Stop Fullscreen'},
-							 { id: 'FadeToBlack',          label: 'Fade To Black'}
-						 ]
+					label: 'Toggle Function',
+					id: 'toggleID',
+					choices: [
+						{ id: 'StartStopMultiCorder', label: 'Start / Stop MultCorder'},
+						{ id: 'StartStopRecording',   label: 'Start / Stop Recording'},
+						{ id: 'StartStopStreaming',   label: 'Start / Stop Stream'},
+						{ id: 'StartStopExternal',    label: 'Start / Stop External'},
+						{ id: 'Fullscreen',           label: 'Start / Stop Fullscreen'},
+						{ id: 'FadeToBlack',          label: 'Fade To Black'}
+					]
 				}
 			]
 		},
-		'playList_Functions':   {
+		'playList_Functions': {
 			label: 'Play List Functions',
 			options: [
 				{
 					type: 'dropdown',
-						 label: 'Playlist Function',
-						 id: 'plfId',
-						 choices: [
-							 { id: 'StartPlayList',          label: 'Start Play List'},
-							 { id: 'StopPlayList',           label: 'Stop Play List'},
-							 { id: 'NextPlayListEntry',      label: 'Next Item in Play List'},
-							 { id: 'PreviousPlayListEntry',   label: 'Previous Item in Play List'}
-						 ]
+					label: 'Playlist Function',
+					id: 'plfId',
+					choices: [
+						{ id: 'StartPlayList',          label: 'Start Play List'},
+						{ id: 'StopPlayList',           label: 'Stop Play List'},
+						{ id: 'NextPlayListEntry',      label: 'Next Item in Play List'},
+						{ id: 'PreviousPlayListEntry',   label: 'Previous Item in Play List'}
+					]
 				}
 			]
 		},
-		'open_pl':      {
+		'open_pl': {
 			label: 'Open Play list',
 			options: [
 				{
 					type: 'textinput',
-						 label: 'Playlist name',
-						 id: 'plName'
+					label: 'Playlist name',
+					id: 'plName'
 				}
 			]
 		},
-		'overlayPgm':   {
+		'overlayPgm': {
 			label: 'Toggle Overlay on Program',
 			options: [
 				{
 					type: 'textinput',
-						 label: 'Input number',
-						 id: 'pgmId',
-						 regex: self.REGEX_NUMBER
+					label: 'Input number',
+					id: 'pgmId',
+					regex: self.REGEX_NUMBER
 				},
 				{
 					type: 'dropdown',
-						 label: 'Select Overlay',
-						 id: 'overlayId',
-						 choices: [
-							 { id: 'OverlayInput1',     label: 'Overlay nr 1'},
-							 { id: 'OverlayInput2',     label: 'Overlay nr 2'},
-							 { id: 'OverlayInput3',     label: 'Overlay nr 3'},
-							 { id: 'OverlayInput4',     label: 'Overlay nr 4'}
-						 ]
+					label: 'Select Overlay',
+					id: 'overlayId',
+					choices: [
+						{ id: 'OverlayInput1',     label: 'Overlay nr 1'},
+						{ id: 'OverlayInput2',     label: 'Overlay nr 2'},
+						{ id: 'OverlayInput3',     label: 'Overlay nr 3'},
+						{ id: 'OverlayInput4',     label: 'Overlay nr 4'}
+					]
 				}
 			]
 		},
-		'overlayPrw':   {
+		'overlayPrw': {
 			label: 'Set Overlay on Preview',
 			options: [
 				{
 					type: 'textinput',
-						 label: 'Input number',
-						 id: 'prwId',
-						 regex: self.REGEX_NUMBER
+					label: 'Input number',
+					id: 'prwId',
+					regex: self.REGEX_NUMBER
 				},
 				{
 					type: 'dropdown',
-						 label: 'Select Overlay',
-						 id: 'overlayId',
-						 choices: [
-							 { id: 'PreviewOverlayInput1',     label: 'Overlay nr 1'},
-							 { id: 'PreviewOverlayInput2',     label: 'Overlay nr 2'},
-							 { id: 'PreviewOverlayInput3',     label: 'Overlay nr 3'},
-							 { id: 'PreviewOverlayInput4',     label: 'Overlay nr 4'}
-						 ]
+					label: 'Select Overlay',
+					id: 'overlayId',
+					choices: [
+						{ id: 'PreviewOverlayInput1',     label: 'Overlay nr 1'},
+						{ id: 'PreviewOverlayInput2',     label: 'Overlay nr 2'},
+						{ id: 'PreviewOverlayInput3',     label: 'Overlay nr 3'},
+						{ id: 'PreviewOverlayInput4',     label: 'Overlay nr 4'}
+					]
+				}
+			]
+		},
+		'command': {
+			label: 'Run custom command',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Command',
+					id: 'command',
+					default: ''
 				}
 			]
 		}
@@ -292,6 +303,10 @@ instance.prototype.actions = function(system) {
 
 			case 'overlayPrw':
 				cmd = 'FUNCTION  '+opt.overlayId +' Input='+ opt.prwId;
+				break;
+
+			case 'command':
+				cmd = 'FUNCTION ' + opt.command;
 				break;
 
 	};
