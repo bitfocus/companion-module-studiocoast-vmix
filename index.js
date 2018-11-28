@@ -253,7 +253,7 @@ instance.prototype.actions = function(system) {
 					label: 'Fade time in ms',
 					id: 'fade_Time',
 					default: '2000',
-					regex: '/^[0-9]*$/'
+					regex: '/^(?!(0))[0-9]*$/'
 				},
 				{
 					type: 'textinput',
