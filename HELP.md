@@ -30,5 +30,11 @@ We currently support the following actions:
 * **Open Playlist:** Opens the given playlist
 * **Toggle Overlay on program:** Toggles the given input as the given overlay on program
 * **Set Overlay on Preview:** Sets the given input as the given overlay on Preview
+* **Set Countdown Time:** Set countdown duration according to Value as hh:mm:ss (00:00:00)
+* **Start Countdown:** Starts countdown on given Input
+* **Stop Countdown:** Stops countdown on given Input
+* **Set Volume Fade:** Activate a audio fade on given input
+* **Next Picture/Slide:** Move to Next Picture for Photo and PowerPoint Inputs
+* **Previous Picture/Slide:** Move to Previous Picture for Photo and PowerPoint Inputs
 
 For additional actions please raise a feature request at [github](https://github.com/bitfocus/companion)
