@@ -332,7 +332,7 @@ instance.prototype.actions = function(system) {
 				break;
 
 			case 'volumeFade':
-				cmd = 'FUNCTION  SetVolumeFade value=' + opt.fade_Min + ',' + opt.fade_Time + '&input=' + opt.fade_Input;
+				cmd = 'FUNCTION SetVolumeFade value=' + opt.fade_Min + ',' + opt.fade_Time + '&input=' + opt.fade_Input;
 				break;
 
 			case 'command':
