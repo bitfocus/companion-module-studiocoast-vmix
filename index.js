@@ -238,6 +238,32 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
+		'volumeFade': {
+			label: 'Set Volume Fade',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Fade to volume',
+					id: 'fade_Min',
+					default: '000',
+					regex: '/^[0-9]*$/'
+				},
+				{
+					type: 'textinput',
+					label: 'Fade time in ms',
+					id: 'fade_Time',
+					default: '2000',
+					regex: '/^(?!(0))[0-9]*$/'
+				},
+				{
+					type: 'textinput',
+					label: 'Input',
+					id: 'fade_Input',
+					default: '1',
+					regex: '/^[0-9]*$/'
+				}
+			]
+		},
 		'command': {
 			label: 'Run custom command',
 			options: [
@@ -303,6 +329,10 @@ instance.prototype.actions = function(system) {
 
 			case 'overlayPrw':
 				cmd = 'FUNCTION  '+opt.overlayId +' Input='+ opt.prwId;
+				break;
+
+			case 'volumeFade':
+				cmd = 'FUNCTION  SetVolumeFade value=' + opt.fade_Min + ',' + opt.fade_Time + '&input=' + opt.fade_Input;
 				break;
 
 			case 'command':
