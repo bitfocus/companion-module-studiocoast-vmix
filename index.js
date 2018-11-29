@@ -264,6 +264,30 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
+		'startCountdown': {
+			label: 'Start Countdown',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Input',
+					id: 'countdownStartInput',
+					default: '1',
+					regex: '/^[0-9]*$/'
+				}
+			]
+		},
+		'stopCountdown': {
+			label: 'Stop Countdown',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Input',
+					id: 'countdownStopInput',
+					default: '1',
+					regex: '/^[0-9]*$/'
+				}
+			]
+		},
 		'command': {
 			label: 'Run custom command',
 			options: [
@@ -333,6 +357,14 @@ instance.prototype.actions = function(system) {
 
 			case 'volumeFade':
 				cmd = 'FUNCTION SetVolumeFade value=' + opt.fade_Min + ',' + opt.fade_Time + '&input=' + opt.fade_Input;
+				break;
+
+			case 'startCountdown':
+				cmd = 'FUNCTION StartCountdown Input='+ opt.countdownStartInput;
+				break;
+
+			case 'stopCountdown':
+				cmd = 'FUNCTION StopCountdown Input='+ opt.countdownStopInput;
 				break;
 
 			case 'command':
