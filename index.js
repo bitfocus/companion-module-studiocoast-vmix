@@ -264,6 +264,73 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
+		'startCountdown': {
+			label: 'Start Countdown',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Input',
+					id: 'countdownStartInput',
+					default: '1',
+					regex: '/^[0-9]*$/'
+				}
+			]
+		},
+		'stopCountdown': {
+			label: 'Stop Countdown',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Input',
+					id: 'countdownStopInput',
+					default: '1',
+					regex: '/^[0-9]*$/'
+				}
+			]
+		},
+		'setCountdownTime': {
+			label: 'Set Countdown Time',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Time (00:00:00)',
+					id: 'countdownTime',
+					default: '00:10:00',
+					regex: '/^[0-9][0-9]:[0-9][0-9]:[0-9][0-9]$/'
+				},
+				{
+					type: 'textinput',
+					label: 'Input',
+					id: 'countdownSetInput',
+					default: '1',
+					regex: '/^[0-9]*$/'
+				}
+			]
+		},
+		'nextPicture': {
+			label: 'Next Picture/Slide',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Input',
+					id: 'nPictureInput',
+					default: '1',
+					regex: '/^[0-9]*$/'
+				}
+			]
+		},
+		'previousPicture': {
+			label: 'Previous Picture/Slide',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Input',
+					id: 'pPictureInput',
+					default: '1',
+					regex: '/^[0-9]*$/'
+				}
+			]
+		},
 		'command': {
 			label: 'Run custom command',
 			options: [
@@ -332,7 +399,27 @@ instance.prototype.actions = function(system) {
 				break;
 
 			case 'volumeFade':
-				cmd = 'FUNCTION  SetVolumeFade value=' + opt.fade_Min + ',' + opt.fade_Time + '&input=' + opt.fade_Input;
+				cmd = 'FUNCTION SetVolumeFade value=' + opt.fade_Min + ',' + opt.fade_Time + '&input=' + opt.fade_Input;
+				break;
+
+			case 'startCountdown':
+				cmd = 'FUNCTION StartCountdown Input='+ opt.countdownStartInput;
+				break;
+
+			case 'stopCountdown':
+				cmd = 'FUNCTION StopCountdown Input='+ opt.countdownStopInput;
+				break;
+
+			case 'nextPicture':
+				cmd = 'FUNCTION NextPicture Input='+ opt.nPictureInput;
+				break;
+
+			case 'previousPicture':
+				cmd = 'FUNCTION PreviousPicture Input='+ opt.pPictureInput;
+				break;
+
+			case 'setCountdownTime':
+				cmd = 'FUNCTION SetCountdown Value=' + opt.countdownTime + '&Input='+ opt.countdownSetInput;
 				break;
 
 			case 'command':
