@@ -391,11 +391,11 @@ instance.prototype.actions = function(system) {
 				break;
 
 			case 'overlayPgm':
-				cmd = 'FUNCTION  '+opt.overlayId +' Input='+ opt.pgmId;
+				cmd = 'FUNCTION '+opt.overlayId +' Input='+ opt.pgmId;
 				break;
 
 			case 'overlayPrw':
-				cmd = 'FUNCTION  '+opt.overlayId +' Input='+ opt.prwId;
+				cmd = 'FUNCTION '+opt.overlayId +' Input='+ opt.prwId;
 				break;
 
 			case 'volumeFade':
