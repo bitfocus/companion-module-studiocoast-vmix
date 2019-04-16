@@ -455,6 +455,10 @@ instance.prototype.actions = function(system) {
 				cmd = 'FUNCTION SetCountdown Value=' + opt.countdownTime + '&Input='+ opt.countdownSetInput;
 				break;
 
+			case 'keyPress':
+				cmd = 'FUNCTION KeyPress Value=' + opt.key;
+				break;
+
 			case 'scriptStart':
 				cmd = 'FUNCTION ScriptStart Value=' + opt.script;
 				break;
