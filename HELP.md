@@ -36,5 +36,8 @@ We currently support the following actions:
 * **Set Volume Fade:** Activate a audio fade on given input
 * **Next Picture/Slide:** Move to Next Picture for Photo and PowerPoint Inputs
 * **Previous Picture/Slide:** Move to Previous Picture for Photo and PowerPoint Inputs
+* **Start script** Start a script by name
+* **Stop script** Stop a script by name
+* **Custom command** Ability to run a custom command
 
 For additional actions please raise a feature request at [github](https://github.com/bitfocus/companion)
