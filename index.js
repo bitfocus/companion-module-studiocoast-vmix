@@ -331,6 +331,39 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
+		'keyPress': {
+			label: 'KeyPress',
+			options: [
+				{
+					type: 'textinput',
+					label: 'key',
+					id: 'key'
+				}
+			]
+		},
+		'scriptStart': {
+			label: 'Script start',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Script name',
+					id: 'script'
+				}
+			]
+		},
+		'scriptStop': {
+			label: 'Script stop',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Script name',
+					id: 'script'
+				}
+			]
+		},
+		'scriptStopAll': {
+			label: 'Script stop all'
+		},
 		'command': {
 			label: 'Run custom command',
 			options: [
@@ -420,6 +453,18 @@ instance.prototype.actions = function(system) {
 
 			case 'setCountdownTime':
 				cmd = 'FUNCTION SetCountdown Value=' + opt.countdownTime + '&Input='+ opt.countdownSetInput;
+				break;
+
+			case 'scriptStart':
+				cmd = 'FUNCTION ScriptStart Value=' + opt.script;
+				break;
+
+			case 'scriptStop':
+				cmd = 'FUNCTION ScriptStop Value=' + opt.script;
+				break;
+
+			case 'scriptStopAll':
+				cmd = 'FUNCTION ScriptStopAll';
 				break;
 
 			case 'command':
