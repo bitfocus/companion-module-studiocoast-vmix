@@ -11,6 +11,8 @@ function instance(system, id, config) {
 
 	self.actions(); // export actions
 
+	self.tally = [];
+
 	return self;
 }
 
@@ -31,6 +33,7 @@ instance.prototype.init = function() {
 	self.status(1,'Connecting'); // status ok!
 
 	self.init_tcp();
+	self.init_feedbacks();
 };
 
 instance.prototype.init_tcp = function() {
@@ -57,9 +60,19 @@ instance.prototype.init_tcp = function() {
 		self.socket.on('connect', function () {
 			self.status(self.STATE_OK);
 			debug("Connected");
+
+			// Subscribe to TALLY events
+			self.socket.send('SUBSCRIBE TALLY\r\n');
 		})
 
-		self.socket.on('data', function (data) {});
+		self.socket.on('data', function (data) {
+			data = data.toString();
+			if (data.startsWith('TALLY OK')) {
+				self.tally = data.substring(9, data.length-2).split('');
+				self.checkFeedbacks('input_preview');
+				self.checkFeedbacks('input_live');
+			}
+		});
 	}
 };
 
@@ -495,6 +508,78 @@ instance.prototype.actions = function(system) {
 
 
 };
+
+instance.prototype.init_feedbacks = function() {
+	var self = this;
+
+	var feedbacks = {};
+	feedbacks['input_preview'] = {
+		label: 'Change colors based on previewed input',
+		description: 'If the specified input is previewed, change colors of the bank',
+		options: [
+			{
+				type: 'colorpicker',
+				label: 'Foreground color',
+				id: 'fg',
+				default: self.rgb(255,255,255)
+			},
+			{
+				type: 'colorpicker',
+				label: 'Background color',
+				id: 'bg',
+				default: self.rgb(0,255,0)
+			},
+			{
+				type: 'textinput',
+				label: 'Input Number',
+				id: 'index',
+				default: 0,
+				regex: self.REGEX_NUMBER
+			}
+		]
+	};
+	feedbacks['input_live'] = {
+		label: 'Change colors based on live input',
+		description: 'If the specified input is live, change colors of the bank',
+		options: [
+			{
+				type: 'colorpicker',
+				label: 'Foreground color',
+				id: 'fg',
+				default: self.rgb(255,255,255)
+			},
+			{
+				type: 'colorpicker',
+				label: 'Background color',
+				id: 'bg',
+				default: self.rgb(0,255,0)
+			},
+			{
+				type: 'textinput',
+				label: 'Input Number',
+				id: 'index',
+				default: 0,
+				regex: self.REGEX_NUMBER
+			}
+		]
+	};
+
+	self.setFeedbackDefinitions(feedbacks);
+}
+
+instance.prototype.feedback = function(feedback, bank) {
+	var self = this;
+	if (feedback.type == 'input_preview') {
+		if (self.tally[feedback.options.index-1] == 2) {
+			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
+		}
+	}
+	if (feedback.type == 'input_live') {
+		if (self.tally[feedback.options.index-1] == 1) {
+			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
+		}
+	}
+}
 
 instance_skel.extendedBy(instance);
 exports = module.exports = instance;
