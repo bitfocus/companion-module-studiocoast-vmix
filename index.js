@@ -251,6 +251,41 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
+		'outputSet': {
+			label: 'Set Output Source',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Select Output',
+					id: 'outputId',
+					choices: [
+						{ id: 'SetOutput2',     label: 'Output 2'},
+						{ id: 'SetOutput3',     label: 'Output 3'},
+						{ id: 'SetOutput4',     label: 'Output 4'},
+						{ id: 'SetOutputExternal2',			label: 'Output External 2'},
+						{ id: 'SetOutputFullscreen',	 	label: 'Output Fullscreen 1'},
+						{ id: 'SetOutputFullscreen2',		label: 'Output Fullscreen 2'},
+					]
+				},
+				{
+					type: 'dropdown',
+					label: 'Select Input Type',
+					id: 'outputType',
+					choices: [
+						{ id: 'Output',					label: 'Output (Porgram)'},
+						{ id: 'Preview',				label: 'Preview'},
+						{ id: 'MultiView',			label: 'Multiview'},
+						{ id: 'Input',					label: 'Input'}
+					]
+				},
+				{
+					type: 'textinput',
+					label: 'Input number (if input is selected)',
+					id: 'outputInputId',
+					regex: self.REGEX_NUMBER
+				}
+			]
+		},
 		'volumeFade': {
 			label: 'Set Volume Fade',
 			options: [
@@ -444,6 +479,10 @@ instance.prototype.actions = function(system) {
 				cmd = 'FUNCTION '+opt.overlayId +' Input='+ opt.prwId;
 				break;
 
+			case 'outputSet':
+				cmd = 'FUNCTION '+opt.outputId + ' Value=' + opt.outputType + '&Input=' + opt.outputInputId;
+				break;
+			
 			case 'volumeFade':
 				cmd = 'FUNCTION SetVolumeFade value=' + opt.fade_Min + ',' + opt.fade_Time + '&input=' + opt.fade_Input;
 				break;

@@ -30,6 +30,7 @@ We currently support the following actions:
 * **Open Playlist:** Opens the given playlist
 * **Toggle Overlay on program:** Toggles the given input as the given overlay on program
 * **Set Overlay on Preview:** Sets the given input as the given overlay on Preview
+* **Set Output Source** Sets the input source used on output2, output3, output4, eksternal 2, fullscreen and fullscreen 2.
 * **Set Countdown Time:** Set countdown duration according to Value as hh:mm:ss (00:00:00)
 * **Start Countdown:** Starts countdown on given Input
 * **Stop Countdown:** Stops countdown on given Input
