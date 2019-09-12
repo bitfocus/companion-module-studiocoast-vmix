@@ -21,6 +21,7 @@ instance.prototype.updateConfig = function(config) {
 
 	self.config = config;
 	self.init_tcp();
+	self.actions();
 
 };
 
@@ -45,7 +46,7 @@ instance.prototype.init_tcp = function() {
 	}
 
 	if (self.config.host) {
-		self.socket = new tcp(self.config.host, 8099);
+		self.socket = new tcp(self.config.host, self.config.port);
 
 		self.socket.on('status_change', function (status, message) {
 			self.status(status, message);
@@ -86,7 +87,27 @@ instance.prototype.config_fields = function () {
 			id: 'host',
 			label: 'Target IP',
 			width: 6,
+			default: '127.0.0.1',
 			regex: self.REGEX_IP
+		},
+		{
+			type: 'textinput',
+			id: 'port',
+			label: 'Target Port (Default: 8099)',
+			width: 3,
+			default: 8099,
+			regex: self.REGEX_PORT
+		},
+		{
+			type: 'dropdown',
+			id: 'inputType',
+			label: 'Input difinition type:',
+			width: 3,
+			default: 'id',
+			choices: [
+				{ id: 'id', 		label: 'Input as ID (Number)' },
+				{ id: 'title', 	label: 'Input as Title (Text)' }
+			]
 		}
 	]
 };
@@ -100,12 +121,26 @@ instance.prototype.destroy = function() {
 		self.socket.destroy();
 	}
 
-	debug("destroy", self.id);;
+	debug("destroy", self.id);
 };
 
 
 instance.prototype.actions = function(system) {
 	var self = this;
+	var regex_type = '';
+
+	switch(self.config.inputType){
+
+		case 'id':
+			regex_type = self.REGEX_NUMBER;
+			break;
+
+		case 'title':
+			regex_type = '';
+			break;
+		
+	};
+
 	self.system.emit('instance_actions', self.id, {
 
 		'quickPlay': {
@@ -113,9 +148,9 @@ instance.prototype.actions = function(system) {
 			options: [
 				{
 					type: 'textinput',
-					label: 'Input number',
+					label: 'Input',
 					id: 'pgmId',
-					regex: self.REGEX_NUMBER
+					regex: regex_type
 				}
 			]
 		},
@@ -124,9 +159,9 @@ instance.prototype.actions = function(system) {
 			options: [
 				{
 					type: 'textinput',
-					label: 'Input number',
+					label: 'Input',
 					id: 'pgmId',
-					regex: self.REGEX_NUMBER
+					regex: regex_type
 				}
 			]
 		},
@@ -135,9 +170,9 @@ instance.prototype.actions = function(system) {
 			options: [
 				{
 					type: 'textinput',
-					label: 'Input number',
+					label: 'Input',
 					id: 'prwId',
-					regex: self.REGEX_NUMBER
+					regex: regex_type
 				}
 			]
 		},
@@ -211,12 +246,6 @@ instance.prototype.actions = function(system) {
 			label: 'Toggle Overlay on Program',
 			options: [
 				{
-					type: 'textinput',
-					label: 'Input number',
-					id: 'pgmId',
-					regex: self.REGEX_NUMBER
-				},
-				{
 					type: 'dropdown',
 					label: 'Select Overlay',
 					id: 'overlayId',
@@ -226,18 +255,18 @@ instance.prototype.actions = function(system) {
 						{ id: 'OverlayInput3',     label: 'Overlay nr 3'},
 						{ id: 'OverlayInput4',     label: 'Overlay nr 4'}
 					]
+				},
+				{
+					type: 'textinput',
+					label: 'Input',
+					id: 'pgmId',
+					regex: regex_type
 				}
 			]
 		},
 		'overlayPrw': {
 			label: 'Set Overlay on Preview',
 			options: [
-				{
-					type: 'textinput',
-					label: 'Input number',
-					id: 'prwId',
-					regex: self.REGEX_NUMBER
-				},
 				{
 					type: 'dropdown',
 					label: 'Select Overlay',
@@ -248,7 +277,91 @@ instance.prototype.actions = function(system) {
 						{ id: 'PreviewOverlayInput3',     label: 'Overlay nr 3'},
 						{ id: 'PreviewOverlayInput4',     label: 'Overlay nr 4'}
 					]
+				},
+				{
+					type: 'textinput',
+					label: 'Input',
+					id: 'prwId',
+					regex: regex_type
 				}
+			]
+		},
+		'overlayFunctions': {
+			label: 'Overlay Functions',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Select Overlay Function',
+					id: 'overlayFunc',
+					choices: [
+						{ id: 'OverlayInput1',     				label: 'Toggle Overlay 1 on program'},
+						{ id: 'OverlayInput2',     				label: 'Toggle Overlay 2 on program'},
+						{ id: 'OverlayInput3',     				label: 'Toggle Overlay 3 on program'},
+						{ id: 'OverlayInput4',     				label: 'Toggle Overlay 4 on program'},
+						{ id: 'PreviewOverlayInput1',     label: 'Toggle Overlay 1 on preview'},
+						{ id: 'PreviewOverlayInput2',     label: 'Toggle Overlay 2 on preview'},
+						{ id: 'PreviewOverlayInput3',     label: 'Toggle Overlay 3 on preview'},
+						{ id: 'PreviewOverlayInput4',     label: 'Toggle Overlay 4 on preview'},
+						{ id: 'OverlayInput1In',      		label: 'Transition Overlay 1 on'},
+						{ id: 'OverlayInput2In',      		label: 'Transition Overlay 2 on'},
+						{ id: 'OverlayInput3In',      		label: 'Transition Overlay 3 on'},
+						{ id: 'OverlayInput4In',      		label: 'Transition Overlay 4 on'},
+						{ id: 'OverlayInput1Out',     		label: 'Transition Overlay 1 off'},
+						{ id: 'OverlayInput2Out',     		label: 'Transition Overlay 2 off'},
+						{ id: 'OverlayInput3Out',     		label: 'Transition Overlay 3 off'},
+						{ id: 'OverlayInput4Out',     		label: 'Transition Overlay 4 off'},
+						{ id: 'OverlayInput1Off',     		label: 'Set Overlay 1 off'},
+						{ id: 'OverlayInput2Off',     		label: 'Set Overlay 2 off'},
+						{ id: 'OverlayInput3Off',     		label: 'Set Overlay 3 off'},
+						{ id: 'OverlayInput4Off',     		label: 'Set Overlay 4 off'},
+						{ id: 'OverlayAllOff',    				label: 'Set All Overlays off'},
+						{ id: 'OverlayInput1Zoom',    		label: 'Zoom PIP Overlay 1 to/from fulscreen'},
+						{ id: 'OverlayInput2Zoom',    		label: 'Zoom PIP Overlay 2 to/from fulscreen'},
+						{ id: 'OverlayInput3Zoom',    		label: 'Zoom PIP Overlay 3 to/from fulscreen'},
+						{ id: 'OverlayInput4Zoom',    		label: 'Zoom PIP Overlay 4 to/from fulscreen'},
+					]
+				},
+				{
+					type: 'textinput',
+					label: 'Input',
+					id: 'inputId',
+					regex: regex_type
+				}
+			]
+		},
+		'outputSet': {
+			label: 'Set Output Source',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Select Output',
+					id: 'outputId',
+					choices: [
+						{ id: 'SetOutput2',     label: 'Output 2'},
+						{ id: 'SetOutput3',     label: 'Output 3'},
+						{ id: 'SetOutput4',     label: 'Output 4'},
+						{ id: 'SetOutputExternal2',			label: 'Output External 2'},
+						{ id: 'SetOutputFullscreen',	 	label: 'Output Fullscreen 1'},
+						{ id: 'SetOutputFullscreen2',		label: 'Output Fullscreen 2'},
+					]
+				},
+				{
+					type: 'dropdown',
+					label: 'Select Input Type',
+					id: 'outputType',
+					choices: [
+						{ id: 'Output',					label: 'Output (Porgram)'},
+						{ id: 'Preview',				label: 'Preview'},
+						{ id: 'MultiView',			label: 'Multiview'},
+						{ id: 'Input',					label: 'Input'}
+					]
+				},
+				{
+					type: 'textinput',
+					label: 'Input',
+					id: 'outputInputId',
+					regex: regex_type
+				},
 			]
 		},
 		'volumeFade': {
@@ -273,7 +386,7 @@ instance.prototype.actions = function(system) {
 					label: 'Input',
 					id: 'fade_Input',
 					default: '1',
-					regex: '/^[0-9]*$/'
+					regex: regex_type
 				}
 			]
 		},
@@ -285,7 +398,7 @@ instance.prototype.actions = function(system) {
 					label: 'Input',
 					id: 'countdownStartInput',
 					default: '1',
-					regex: '/^[0-9]*$/'
+					regex: regex_type
 				}
 			]
 		},
@@ -297,7 +410,7 @@ instance.prototype.actions = function(system) {
 					label: 'Input',
 					id: 'countdownStopInput',
 					default: '1',
-					regex: '/^[0-9]*$/'
+					regex: regex_type
 				}
 			]
 		},
@@ -316,7 +429,7 @@ instance.prototype.actions = function(system) {
 					label: 'Input',
 					id: 'countdownSetInput',
 					default: '1',
-					regex: '/^[0-9]*$/'
+					regex: regex_type
 				}
 			]
 		},
@@ -328,7 +441,7 @@ instance.prototype.actions = function(system) {
 					label: 'Input',
 					id: 'nPictureInput',
 					default: '1',
-					regex: '/^[0-9]*$/'
+					regex: regex_type
 				}
 			]
 		},
@@ -340,7 +453,7 @@ instance.prototype.actions = function(system) {
 					label: 'Input',
 					id: 'pPictureInput',
 					default: '1',
-					regex: '/^[0-9]*$/'
+					regex: regex_type
 				}
 			]
 		},
@@ -444,6 +557,14 @@ instance.prototype.actions = function(system) {
 				cmd = 'FUNCTION '+opt.overlayId +' Input='+ opt.prwId;
 				break;
 
+			case 'overlayFunctions':
+				cmd = 'FUNCTION '+opt.overlayFunc +' Input='+ opt.inputId;
+				break;
+	
+			case 'outputSet':
+				cmd = 'FUNCTION '+opt.outputId + ' Value=' + opt.outputType + '&Input=' + opt.outputInputId;
+				break;
+			
 			case 'volumeFade':
 				cmd = 'FUNCTION SetVolumeFade value=' + opt.fade_Min + ',' + opt.fade_Time + '&input=' + opt.fade_Input;
 				break;
@@ -531,7 +652,7 @@ instance.prototype.init_feedbacks = function() {
 			},
 			{
 				type: 'textinput',
-				label: 'Input Number',
+				label: self.config.inputType.label,
 				id: 'index',
 				default: 0,
 				regex: self.REGEX_NUMBER
@@ -556,7 +677,7 @@ instance.prototype.init_feedbacks = function() {
 			},
 			{
 				type: 'textinput',
-				label: 'Input Number',
+				label: self.config.inputType.label,
 				id: 'index',
 				default: 0,
 				regex: self.REGEX_NUMBER
