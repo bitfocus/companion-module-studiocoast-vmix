@@ -86,7 +86,7 @@ instance.prototype.config_fields = function () {
 			type: 'textinput',
 			id: 'host',
 			label: 'Target IP',
-			width: 6,
+			width: 5,
 			default: '127.0.0.1',
 			regex: self.REGEX_IP
 		},
@@ -102,7 +102,7 @@ instance.prototype.config_fields = function () {
 			type: 'dropdown',
 			id: 'inputType',
 			label: 'Input definition type:',
-			width: 3,
+			width: 4,
 			default: 'id',
 			choices: [
 				{ id: 'id', 		label: 'Input as ID (Number)' },
@@ -652,7 +652,7 @@ instance.prototype.init_feedbacks = function() {
 			},
 			{
 				type: 'textinput',
-				label: 'Type to be set',//self.config.inputType.label,
+				label: 'Input Number',
 				id: 'index',
 				default: 0,
 				regex: self.REGEX_NUMBER
@@ -677,7 +677,7 @@ instance.prototype.init_feedbacks = function() {
 			},
 			{
 				type: 'textinput',
-				label: 'Type to be set',//self.config.inputType.label,
+				label: 'Input Number',
 				id: 'index',
 				default: 0,
 				regex: self.REGEX_NUMBER
