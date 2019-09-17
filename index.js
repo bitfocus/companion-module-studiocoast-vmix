@@ -101,7 +101,7 @@ instance.prototype.config_fields = function () {
 		{
 			type: 'dropdown',
 			id: 'inputType',
-			label: 'Input difinition type:',
+			label: 'Input definition type:',
 			width: 3,
 			default: 'id',
 			choices: [
@@ -138,7 +138,7 @@ instance.prototype.actions = function(system) {
 		case 'title':
 			regex_type = '';
 			break;
-		
+
 	};
 
 	self.system.emit('instance_actions', self.id, {
@@ -560,11 +560,11 @@ instance.prototype.actions = function(system) {
 			case 'overlayFunctions':
 				cmd = 'FUNCTION '+opt.overlayFunc +' Input='+ opt.inputId;
 				break;
-	
+
 			case 'outputSet':
 				cmd = 'FUNCTION '+opt.outputId + ' Value=' + opt.outputType + '&Input=' + opt.outputInputId;
 				break;
-			
+
 			case 'volumeFade':
 				cmd = 'FUNCTION SetVolumeFade value=' + opt.fade_Min + ',' + opt.fade_Time + '&input=' + opt.fade_Input;
 				break;
@@ -652,7 +652,7 @@ instance.prototype.init_feedbacks = function() {
 			},
 			{
 				type: 'textinput',
-				label: self.config.inputType.label,
+				label: 'Type to be set',//self.config.inputType.label,
 				id: 'index',
 				default: 0,
 				regex: self.REGEX_NUMBER
@@ -677,7 +677,7 @@ instance.prototype.init_feedbacks = function() {
 			},
 			{
 				type: 'textinput',
-				label: self.config.inputType.label,
+				label: 'Type to be set',//self.config.inputType.label,
 				id: 'index',
 				default: 0,
 				regex: self.REGEX_NUMBER
