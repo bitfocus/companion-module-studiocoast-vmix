@@ -139,7 +139,7 @@ instance.prototype.actions = function(system) {
 			regex_type = '';
 			break;
 
-	};
+	}
 
 	self.system.emit('instance_actions', self.id, {
 
@@ -609,7 +609,7 @@ instance.prototype.actions = function(system) {
 				cmd = 'FUNCTION ' + opt.command;
 				break;
 
-	};
+	}
 
 
 
