@@ -10,6 +10,7 @@ function instance(system, id, config) {
 	instance_skel.apply(this, arguments);
 
 	self.actions(); // export actions
+	self.init_presets();
 
 	self.tally = [];
 
@@ -18,6 +19,7 @@ function instance(system, id, config) {
 
 instance.prototype.updateConfig = function(config) {
 	var self = this;
+	self.init_presets();
 
 	self.config = config;
 	self.init_tcp();
@@ -30,6 +32,7 @@ instance.prototype.init = function() {
 
 	debug = self.debug;
 	log = self.log;
+	self.init_presets();
 
 	self.status(1,'Connecting'); // status ok!
 
@@ -112,6 +115,333 @@ instance.prototype.config_fields = function () {
 	]
 };
 
+instance.prototype.CHOICES_COMMANDS = [
+	{ id: 'quickPlay',				size: '18', label: 'Quick Play' },
+	{ id: 'pgmSel',						size: '18', label: 'PGM Select' },
+	{ id: 'prwSel',						size: '18', label: 'PRW Select' },
+	{ id: 'prwNext',					size: '18', label: 'PRW Next' },
+	{ id: 'prwPrv',						size: '18', label: 'PRW Prev' },
+	{ id: 'nextPicture',			size: '18', label: 'Next Photo' },
+	{ id: 'previousPicture',	size: '18', label: 'Prev Photo' },
+	{ id: 'keyPress',					size: '18', label: 'Send Key Press' },
+	{ id: 'scriptStart',			size: '18', label: 'Script Start' },
+	{ id: 'scriptStop',				size: '18', label: 'Script Stop' },
+	{ id: 'scriptStopAll',		size: '14', label: 'Script Stop All' },
+	{ id: 'command',					size: '14', label: 'Custom Command' },
+];
+
+instance.prototype.CHOICES_COMMANDS_AUTO_TRANS = [
+	{ id: 'Transition1',	size: '18', label: 'Trans 1' },
+	{ id: 'Transition2',	size: '18', label: 'Trans 2' },
+	{ id: 'Transition3',	size: '18', label: 'Trans 3' },
+	{ id: 'Transition4',	size: '18', label: 'Trans 4' },
+	{ id: 'Stinger1',			size: '18', label: 'Stinger 1' },
+	{ id: 'Stinger2',			size: '18', label: 'Stinger 2' },
+];
+
+instance.prototype.CHOICES_COMMANDS_TOGGLES = [
+	{ id: 'StartStopMultiCorder',	size: '18', label: 'Toggle Multi' },
+	{ id: 'StartStopRecording',		size: '18', label: 'Toggle Rec' },
+	{ id: 'StartStopStreaming',		size: '18', label: 'Toggle Stream' },
+	{ id: 'StartStopExternal',		size: '18', label: 'Toggle Ext' },
+	{ id: 'Fullscreen',						size: '18', label: 'Toggle Full' },
+	{ id: 'FadeToBlack',					size: '18', label: 'Toggle FTB' },
+];
+
+instance.prototype.CHOICES_COMMANDS_OUTPUT_SOURCE = [
+	{ id: 'SetOutput2',						size: '18', label: 'Out 2 = ' },
+	{ id: 'SetOutput3',						size: '18', label: 'Out 3 = ' },
+	{ id: 'SetOutput4',						size: '18', label: 'Out 4 = ' },
+	{ id: 'SetOutputExternal2',		size: '18', label: 'Ext = ' },
+	{ id: 'SetOutputFullscreen',	size: '18', label: 'Full 1 = ' },
+	{ id: 'SetOutputFullscreen2',	size: '18', label: 'Full 2 = ' },
+];
+
+instance.prototype.CHOICES_COMMANDS_OUTPUT_SOURCE_TYPE = [
+	{ id: 'Output',			short: 'PGM' },
+	{ id: 'Preview',		short: 'Prev' },
+	{ id: 'MultiView',	short: 'Multi' },
+	{ id: 'Input',			short: 'In' },
+];
+
+instance.prototype.CHOICES_COMMANDS_PLAYLIST = [
+	{ id: 'StartPlayList',					size: '18', label: 'Playlist Start' },
+	{ id: 'StopPlayList',						size: '18', label: 'Playlist Stop' },
+	{ id: 'NextPlayListEntry',			size: '18', label: 'Playlist Next' },
+	{ id: 'PreviousPlayListEntry',	size: '18', label: 'Playlist Prev' },
+];
+
+instance.prototype.CHOICES_COMMANDS_OVERLAY_FUNCTIONS = [
+	{ id: 'OverlayInput1',				size: '18', label: 'PGM OVL 1' },
+	{ id: 'OverlayInput2',				size: '18', label: 'PGM OVL 2' },
+	{ id: 'OverlayInput3',				size: '18', label: 'PGM OVL 3' },
+	{ id: 'OverlayInput4',				size: '18', label: 'PGM OVL 4' },
+	{ id: 'PreviewOverlayInput1',	size: '18', label: 'PREW OVL 1' },
+	{ id: 'PreviewOverlayInput2',	size: '18', label: 'PREW OVL 2' },
+	{ id: 'PreviewOverlayInput3',	size: '18', label: 'PREW OVL 3' },
+	{ id: 'PreviewOverlayInput4',	size: '18', label: 'PREW OVL 4' },
+	{ id: 'OverlayInput1In',      size: '14', label: 'Tran OVL 1 ON'},
+	{ id: 'OverlayInput2In',      size: '14', label: 'Tran OVL 2 ON'},
+	{ id: 'OverlayInput3In',      size: '14', label: 'Tran OVL 3 ON'},
+	{ id: 'OverlayInput4In',      size: '14', label: 'Tran OVL 4 ON'},
+	{ id: 'OverlayInput1Out',     size: '14', label: 'Tran OVL 1 OFF'},
+	{ id: 'OverlayInput2Out',     size: '14', label: 'Tran OVL 2 OFF'},
+	{ id: 'OverlayInput3Out',     size: '14', label: 'Tran OVL 3 OFF'},
+	{ id: 'OverlayInput4Out',     size: '14', label: 'Tran OVL 4 OFF'},
+	{ id: 'OverlayInput1Off',     size: '18', label: 'Set OVL 1 OFF'},
+	{ id: 'OverlayInput2Off',     size: '18', label: 'Set OVL 2 OFF'},
+	{ id: 'OverlayInput3Off',     size: '18', label: 'Set OVL 3 OFF'},
+	{ id: 'OverlayInput4Off',     size: '18', label: 'Set OVL 4 OFF'},
+	{ id: 'OverlayInputAllOff',		size: '14', label: 'Set All OVL OFF'},
+	{ id: 'OverlayInput1Zoom',    size: '18', label: 'PIP OVL 1 Z/F'},
+	{ id: 'OverlayInput2Zoom',    size: '18', label: 'PIP OVL 2 Z/F'},
+	{ id: 'OverlayInput3Zoom',    size: '18', label: 'PIP OVL 3 Z/F'},
+	{ id: 'OverlayInput4Zoom',    size: '18', label: 'PIP OVL 4 Z/F'},
+]
+
+instance.prototype.CHOICES_COMMANDS_VOLUME = [
+	{ id: 'volumeFade',		size: '18', label: 'In 1 Vol 0%', 	volume: '0' },
+	{ id: 'volumeFade',		size: '18', label: 'In 1 Vol 10%', 	volume: '10' },
+	{ id: 'volumeFade',		size: '18', label: 'In 1 Vol 20%', 	volume: '20' },
+	{ id: 'volumeFade',		size: '18', label: 'In 1 Vol 30%', 	volume: '30' },
+	{ id: 'volumeFade',		size: '18', label: 'In 1 Vol 40%', 	volume: '40' },
+	{ id: 'volumeFade',		size: '18', label: 'In 1 Vol 50%', 	volume: '50' },
+	{ id: 'volumeFade',		size: '18', label: 'In 1 Vol 60%', 	volume: '60' },
+	{ id: 'volumeFade',		size: '18', label: 'In 1 Vol 70%', 	volume: '70' },
+	{ id: 'volumeFade',		size: '18', label: 'In 1 Vol 80%',	volume: '80' },
+	{ id: 'volumeFade',		size: '18', label: 'In 1 Vol 90%',	volume: '90' },
+	{ id: 'volumeFade',		size: '18', label: 'In 1 Vol 100%',	volume: '100' },
+];
+
+instance.prototype.CHOICES_COMMANDS_COUNTDOWN_1 = [
+	{ id: 'startCountdown',		size: '18', label: 'CND Start' },
+	{ id: 'stopCountdown',		size: '18', label: 'CND Stop' },
+];
+
+instance.prototype.CHOICES_COMMANDS_COUNTDOWN_2 = [
+	{ id: 'setCountdownTime',	size: '18', label: 'CND 0 sec',		time: '00:00:00' },
+	{ id: 'setCountdownTime',	size: '18', label: 'CND 10 sec',	time: '00:00:10' },
+	{ id: 'setCountdownTime',	size: '18', label: 'CND 30 sec',	time: '00:00:30' },
+	{ id: 'setCountdownTime',	size: '18', label: 'CND 60 sec',	time: '00:01:00' },
+	{ id: 'setCountdownTime',	size: '18', label: 'CND 120 sec',	time: '00:02:00' },
+];
+
+instance.prototype.init_presets = function () {
+	var self = this;
+	var presets = [];
+/*
+		presets.push({
+			category: 'Commands',
+			label: self.CHOICES_COMMANDS[input].label,
+			bank: {
+				style: 'text',
+				text: self.CHOICES_COMMANDS[input].label,
+				size: pstSize_medium,
+				color: '16777215',
+				bgcolor: 0
+			},
+			actions: [{
+				action: self.CHOICES_COMMANDS[input].id,
+				options: {
+					id: self.CHOICES_COMMANDS[input].value,
+				}
+			}]
+		});
+*/
+	for (var input in self.CHOICES_COMMANDS) {
+		presets.push({
+			category: 'Commands',
+			label: self.CHOICES_COMMANDS[input].label,
+			bank: {
+				style: 'text',
+				text: self.CHOICES_COMMANDS[input].label,
+				size: self.CHOICES_COMMANDS[input].size,
+				color: '16777215',
+				bgcolor: self.rgb(0,0,0)
+			},
+			actions: [{
+				action: self.CHOICES_COMMANDS[input].id,
+			}]
+		})
+	}
+
+	for (var input in self.CHOICES_COMMANDS_AUTO_TRANS) {
+		presets.push({
+			category: 'Auto Transition',
+			label: self.CHOICES_COMMANDS_AUTO_TRANS[input].label,
+			bank: {
+				style: 'text',
+				text: self.CHOICES_COMMANDS_AUTO_TRANS[input].label,
+				size: self.CHOICES_COMMANDS_AUTO_TRANS[input].size,
+				color: '16777215',
+				bgcolor: self.rgb(0,0,0)
+			},
+			actions: [{
+				action: 'transition',
+				options: {
+					toggleID: self.CHOICES_COMMANDS_AUTO_TRANS[input].id
+				}
+			}]
+		})
+	}
+
+	for (var input in self.CHOICES_COMMANDS_TOGGLES) {
+		presets.push({
+			category: 'Toggle Functions',
+			label: self.CHOICES_COMMANDS_TOGGLES[input].label,
+			bank: {
+				style: 'text',
+				text: self.CHOICES_COMMANDS_TOGGLES[input].label,
+				size: self.CHOICES_COMMANDS_TOGGLES[input].size,
+				color: '16777215',
+				bgcolor: self.rgb(0,0,0)
+			},
+			actions: [{
+				action: 'toggle_functions',
+				options: {
+					toggleID: self.CHOICES_COMMANDS_TOGGLES[input].id
+				}
+			}]
+		})
+	}
+
+	for (var input in self.CHOICES_COMMANDS_OUTPUT_SOURCE) {
+		for (var x in self.CHOICES_COMMANDS_OUTPUT_SOURCE_TYPE) {
+			presets.push({
+				category: 'Output Source',
+				label: self.CHOICES_COMMANDS_OUTPUT_SOURCE[input].label + self.CHOICES_COMMANDS_OUTPUT_SOURCE_TYPE[x].short,
+				bank: {
+					style: 'text',
+					text: self.CHOICES_COMMANDS_OUTPUT_SOURCE[input].label + self.CHOICES_COMMANDS_OUTPUT_SOURCE_TYPE[x].short,
+					size: self.CHOICES_COMMANDS_OUTPUT_SOURCE[input].size,
+					color: '16777215',
+					bgcolor: self.rgb(0,0,0)
+				},
+				actions: [{
+					action: 'outputSet',
+					options: {
+						outputId: self.CHOICES_COMMANDS_OUTPUT_SOURCE[input].id,
+						outputType: self.CHOICES_COMMANDS_OUTPUT_SOURCE_TYPE[x].id
+					}
+				}]
+			})
+		}
+	}
+
+	for (var input in self.CHOICES_COMMANDS_PLAYLIST) {
+		presets.push({
+			category: 'Playlist',
+			label: self.CHOICES_COMMANDS_PLAYLIST[input].label,
+			bank: {
+				style: 'text',
+				text: self.CHOICES_COMMANDS_PLAYLIST[input].label,
+				size: self.CHOICES_COMMANDS_PLAYLIST[input].size,
+				color: '16777215',
+				bgcolor: self.rgb(0,0,0)
+			},
+			actions: [{
+				action: 'playList_Functions',
+				options: {
+					plfId: self.CHOICES_COMMANDS_PLAYLIST[input].id
+				}
+			}]
+		})
+	}
+
+	presets.push({
+		category: 'Playlist',
+		label: 'Playlist Open',
+		bank: {
+			style: 'text',
+			text: 'Playlist Open',
+			size: '18',
+			color: '16777215',
+			bgcolor: self.rgb(0,0,0)
+		},
+		actions: [{
+			action: 'open_pl'
+		}]
+	})
+
+	for (var input in self.CHOICES_COMMANDS_OVERLAY_FUNCTIONS) {
+		presets.push({
+			category: 'Overlays',
+			label: self.CHOICES_COMMANDS_OVERLAY_FUNCTIONS[input].label,
+			bank: {
+				style: 'text',
+				text: self.CHOICES_COMMANDS_OVERLAY_FUNCTIONS[input].label,
+				size: self.CHOICES_COMMANDS_OVERLAY_FUNCTIONS[input].size,
+				color: '16777215',
+				bgcolor: self.rgb(0,0,0)
+			},
+			actions: [{
+				action: 'overlayFunctions',
+				options: {
+					overlayFunc: self.CHOICES_COMMANDS_OVERLAY_FUNCTIONS[input].id,
+				}
+			}]
+		})
+	}
+
+	for (var input in self.CHOICES_COMMANDS_VOLUME) {
+		presets.push({
+			category: 'Input Volume',
+			label: self.CHOICES_COMMANDS_VOLUME[input].label,
+			bank: {
+				style: 'text',
+				text: self.CHOICES_COMMANDS_VOLUME[input].label,
+				size: self.CHOICES_COMMANDS_VOLUME[input].size,
+				color: '16777215',
+				bgcolor: self.rgb(0,0,0)
+			},
+			actions: [{
+				action: self.CHOICES_COMMANDS_VOLUME[input].id,
+				options: {
+					fade_Min: self.CHOICES_COMMANDS_VOLUME[input].volume
+				}
+			}]
+		})
+	}
+
+	for (var input in self.CHOICES_COMMANDS_COUNTDOWN_1) {
+		presets.push({
+			category: 'Countdown',
+			label: self.CHOICES_COMMANDS_COUNTDOWN_1[input].label,
+			bank: {
+				style: 'text',
+				text: self.CHOICES_COMMANDS_COUNTDOWN_1[input].label,
+				size: self.CHOICES_COMMANDS_COUNTDOWN_1[input].size,
+				color: '16777215',
+				bgcolor: self.rgb(0,0,0)
+			},
+			actions: [{
+				action: self.CHOICES_COMMANDS_COUNTDOWN_1[input].id,
+			}]
+		})
+	}
+
+	for (var input in self.CHOICES_COMMANDS_COUNTDOWN_2) {
+		presets.push({
+			category: 'Countdown',
+			label: self.CHOICES_COMMANDS_COUNTDOWN_2[input].label,
+			bank: {
+				style: 'text',
+				text: self.CHOICES_COMMANDS_COUNTDOWN_2[input].label,
+				size: self.CHOICES_COMMANDS_COUNTDOWN_2[input].size,
+				color: '16777215',
+				bgcolor: self.rgb(0,0,0)
+			},
+			actions: [{
+				action: self.CHOICES_COMMANDS_COUNTDOWN_2[input].id,
+				options: {
+					set: self.CHOICES_COMMANDS_COUNTDOWN_2[input].time
+				}
+			}]
+		})
+	}
+
+	self.setPresetDefinitions(presets);
+}
 
 // When module gets deleted
 instance.prototype.destroy = function() {
@@ -139,7 +469,7 @@ instance.prototype.actions = function(system) {
 			regex_type = '';
 			break;
 
-	}
+	};
 
 	self.system.emit('instance_actions', self.id, {
 
@@ -217,7 +547,7 @@ instance.prototype.actions = function(system) {
 			]
 		},
 		'playList_Functions': {
-			label: 'Play List Functions',
+			label: 'PlayList Functions',
 			options: [
 				{
 					type: 'dropdown',
@@ -233,56 +563,12 @@ instance.prototype.actions = function(system) {
 			]
 		},
 		'open_pl': {
-			label: 'Open Play list',
+			label: 'Open Playlist',
 			options: [
 				{
 					type: 'textinput',
 					label: 'Playlist name',
 					id: 'plName'
-				}
-			]
-		},
-		'overlayPgm': {
-			label: 'Toggle Overlay on Program',
-			options: [
-				{
-					type: 'dropdown',
-					label: 'Select Overlay',
-					id: 'overlayId',
-					choices: [
-						{ id: 'OverlayInput1',     label: 'Overlay nr 1'},
-						{ id: 'OverlayInput2',     label: 'Overlay nr 2'},
-						{ id: 'OverlayInput3',     label: 'Overlay nr 3'},
-						{ id: 'OverlayInput4',     label: 'Overlay nr 4'}
-					]
-				},
-				{
-					type: 'textinput',
-					label: 'Input',
-					id: 'pgmId',
-					regex: regex_type
-				}
-			]
-		},
-		'overlayPrw': {
-			label: 'Set Overlay on Preview',
-			options: [
-				{
-					type: 'dropdown',
-					label: 'Select Overlay',
-					id: 'overlayId',
-					choices: [
-						{ id: 'PreviewOverlayInput1',     label: 'Overlay nr 1'},
-						{ id: 'PreviewOverlayInput2',     label: 'Overlay nr 2'},
-						{ id: 'PreviewOverlayInput3',     label: 'Overlay nr 3'},
-						{ id: 'PreviewOverlayInput4',     label: 'Overlay nr 4'}
-					]
-				},
-				{
-					type: 'textinput',
-					label: 'Input',
-					id: 'prwId',
-					regex: regex_type
 				}
 			]
 		},
@@ -314,7 +600,7 @@ instance.prototype.actions = function(system) {
 						{ id: 'OverlayInput2Off',     		label: 'Set Overlay 2 off'},
 						{ id: 'OverlayInput3Off',     		label: 'Set Overlay 3 off'},
 						{ id: 'OverlayInput4Off',     		label: 'Set Overlay 4 off'},
-						{ id: 'OverlayAllOff',    				label: 'Set All Overlays off'},
+						{ id: 'OverlayInputAllOff',				label: 'Set All Overlays off'},
 						{ id: 'OverlayInput1Zoom',    		label: 'Zoom PIP Overlay 1 to/from fulscreen'},
 						{ id: 'OverlayInput2Zoom',    		label: 'Zoom PIP Overlay 2 to/from fulscreen'},
 						{ id: 'OverlayInput3Zoom',    		label: 'Zoom PIP Overlay 3 to/from fulscreen'},
@@ -549,14 +835,6 @@ instance.prototype.actions = function(system) {
 				cmd = 'FUNCTION SelectPlayList '+ opt.plName;
 				break;
 
-			case 'overlayPgm':
-				cmd = 'FUNCTION '+opt.overlayId +' Input='+ opt.pgmId;
-				break;
-
-			case 'overlayPrw':
-				cmd = 'FUNCTION '+opt.overlayId +' Input='+ opt.prwId;
-				break;
-
 			case 'overlayFunctions':
 				cmd = 'FUNCTION '+opt.overlayFunc +' Input='+ opt.inputId;
 				break;
@@ -609,7 +887,7 @@ instance.prototype.actions = function(system) {
 				cmd = 'FUNCTION ' + opt.command;
 				break;
 
-	}
+	};
 
 
 
