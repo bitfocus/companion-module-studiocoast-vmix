@@ -44,3 +44,13 @@ We currently support the following actions:
 * **Custom command:** Ability to run a custom command
 
 For additional actions please raise a feature request at [github](https://github.com/bitfocus/companion)
+
+**Using Custom Commands/Shortcodes**
+
+When usin vMix shortcodes, please follow this syntax/layout, with space before the first value:
+
+"ReplayMarkInOut Value=5000"
+
+and if there is more than one parameter use "&" as a separator between them like the example below:
+
+"SetOutput2 Value=Input&Input=3"
