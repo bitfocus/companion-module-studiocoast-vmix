@@ -4,6 +4,7 @@ Provides essential control over StudioCoast Vmix, for more info look in HELP.md
 Go over to [vMix](https://www.vmix.com/) to learn more about the software.
 
 **Using Custom Commands/Shortcodes**
+
 When usin vMix shortcodes, please follow this syntax/layout, with space before the first value:
 
 "ReplayMarkInOut Value=5000"
