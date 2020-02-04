@@ -48,6 +48,9 @@ For additional actions please raise a feature request at [github](https://github
 **Using Custom Commands/Shortcodes**
 
 When usin vMix shortcodes, please follow this syntax/layout, with space before the first value:
+
 ***"ReplayMarkInOut Value=5000"***
+
 and if there is more than one parameter use "&" as a separator between them like this example:
+
 ***"SetOutput2 Value=Input&Input=3"***
