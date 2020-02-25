@@ -1,4 +1,4 @@
-# companion-module-studiocoast-vmin
+# companion-module-studiocoast-vmix
 
 Provides essential control over StudioCoast Vmix, for more info look in HELP.md
 Go over to [vMix](https://www.vmix.com/) to learn more about the software.
