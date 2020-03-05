@@ -13,6 +13,16 @@ and if there is more than one parameter use "&" as a separator between them like
 
 "SetOutput2 Value=Input&Input=3"
 
+**V1.2.0**
+* Added support for using either input ID or Title and switching at any time
+* Added Tally update on first load
+* Added Tally polling through API
+* Added Support for Audio busses C to G, and Mix 2 to 4, from vMix v23
+* Added Feedback for Overlays, Replay, Input/Bus Mute, Solo, Routing, Title text (including countdowns)
+* Added action to set/increment/decrement Title text
+* Added more presets
+* Restructured module code, allowing for easier maintaining of code and future upgrades
+
 **V1.1.3**
 * Added overlay functions
 * Added set output functions
