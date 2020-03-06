@@ -1,6 +1,6 @@
-const got = require('../../../../node_modules/got');
-const xml2js = require('../../../../node_modules/xml2js');
-const _ = require('../../../../node_modules/lodash');
+const got = require('got');
+const xml2js = require('xml2js');
+const _ = require('lodash');
 
 exports.initAPI = function() {
 	const parseXML = body => {

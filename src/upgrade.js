@@ -159,8 +159,6 @@ exports.upgradeV1_2_0 = function(config, actions, releaseActions, feedbacks) {
 			feedback.type = 'inputLive';
 			feedback.mix = 1;
 		}
-
-		feedback.label = feedback.instance + ':' + feedback.type;
 	});
 
 	return changed;
