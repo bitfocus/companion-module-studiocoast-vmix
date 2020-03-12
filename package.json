@@ -1,6 +1,6 @@
 {
 	"name": "studiocoast-vmix",
-	"version": "1.1.6",
+	"version": "1.2.0",
 	"api_version": "1.0.0",
 	"keywords": [
 		"Software",
@@ -10,10 +10,18 @@
 	"product": "vMix",
 	"shortname": "vmix",
 	"description": "Module to control StudioCoast vMix",
-	"main": "index.js",
+	"main": "src/index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "Per Røine <per.roine@gmail.com>",
-	"license": "MIT"
+	"contributors": [
+		"Jeff Martin <dist@dist.dev>"
+	],
+	"license": "MIT",
+	"dependencies": {
+		"got": "^6.7.1",
+		"lodash": "^4.17.15",
+		"xml2js": "^0.4.22"
+	}
 }

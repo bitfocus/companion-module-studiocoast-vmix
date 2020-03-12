@@ -10,40 +10,14 @@ vMix runs on Windows 7, Windows 8 and Windows 10 platforms.
 
 vMix is a complete live video production software solution with features including LIVE mixing, switching, recording and LIVE streaming of SD, full HD and 4K video sources including cameras, video files, DVDs, images, Powerpoint and much much more.
 
-We currently support the following actions:
-* **QuickPlay:** Transitions the given input to program
-* **CutDirect:** Cuts the given input to program
-* **PreviewInput:** Previews the given input
-* **PreviewInputNext:** Previews the next input
-* **PreviewInputPrevious:** previews the previous input
-* **Transition 1-4:** Auto transition with the given transition type
-* **Toggle multicorder:** Starts / Stops the multicorder
-* **Toggle Record:** Starts / Stops recording
-* **Toggle Stream:** Starts / Stops streaming
-* **Toggle external:** Starts / Stops the external Encoder
-* **Toggle fullscreen:** Starts / Stops the Fullscreen Display
-* **Fade To Black:** Turns Fade To Black On / Off
-* **Start Playlist:** Starts the current playlist
-* **Stop Playlist:** Stops the current playlist
-* **Next item in playlist:** Jump to next playlist entry
-* **Previous item in playlist:** Jump to previous playlist entry
-* **Open Playlist:** Opens the given playlist
-* **Toggle Overlay on program:** Toggles the given input as the given overlay on program
-* **Set Overlay on Preview:** Sets the given input as the given overlay on Preview
-* **Overlay Functions** All overlay functions on/off, in/out, zoom and toggle.
-* **Set Output Source** Sets the input source used on output2, output3, output4, eksternal 2, fullscreen and fullscreen 2.
-* **Set Countdown Time:** Set countdown duration according to Value as hh:mm:ss (00:00:00)
-* **Start Countdown:** Starts countdown on given Input
-* **Stop Countdown:** Stops countdown on given Input
-* **Set Volume Fade:** Activate a audio fade on given input
-* **Next Picture/Slide:** Move to Next Picture for Photo and PowerPoint Inputs
-* **Previous Picture/Slide:** Move to Previous Picture for Photo and PowerPoint Inputs
-* **KeyPress:** Ability to send a keypress
-* **Start script:** Start a script by name
-* **Stop script:** Stop a script by name
-* **Custom command:** Ability to run a custom command
+**Functions**
 
-For additional actions please raise a feature request at [github](https://github.com/bitfocus/companion)
+Most commonly used vMix commands have been made available as actions to Companion users, as well as feedback which includes Tally for Mixes 1 to 4, Audio muting, solo, and routing, time remaining countdown for video inputs, title input feedback, and more.
+
+For commands not natively available in this module, you can access the full list of commands either through the vMix shortcuts screen, or at this [vMix API Util](https://util.dist.dev/vmixapi). These commands can either be sent as a HTTP GET request, or with a custom command as documented below.
+
+For additional actions please raise a feature request at [github](https://github.com/bitfocus/companion-module-studiocoast-vmix)
+
 
 **Using Custom Commands/Shortcodes**
 
