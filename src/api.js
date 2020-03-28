@@ -129,7 +129,7 @@ exports.initAPI = function() {
 					audio: audioData(xml.vmix.audio[0]),
 					status: {
 						fadeToBlack: xml.vmix.fadeToBlack[0] === 'True',
-						recording: xml.vmix.recording[0] === 'True',
+						recording: xml.vmix.recording[0] === 'True' || xml.vmix.recording[0]._ === 'True',
 						external: xml.vmix.external[0] === 'True',
 						streaming: xml.vmix.streaming[0] === 'True',
 						playList: xml.vmix.playList[0] === 'True',
