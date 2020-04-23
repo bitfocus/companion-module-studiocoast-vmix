@@ -124,7 +124,7 @@ exports.initFeedbacks = function() {
 			backgroundColorProgram,
 			{
 				type: 'dropdown',
-					label: 'Stream Start/Stop value',
+					label: 'Stream Feedback Value',
 					id: 'value',
 					default: '',
 					choices: [
