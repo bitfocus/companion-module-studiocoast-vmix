@@ -205,8 +205,8 @@ exports.initPresets = function() {
 	];
 
 	toggleFunctions.forEach(item => {
-		const actions = [{ action: 'toggleFunctions', options: { functionID: item.id } }];
-		const feedbacks = [{ type: 'status', options: { status: item.status, color: this.rgb(255, 255, 255), bgcolor: this.rgb(255, 0, 0) } }];
+		const actions = [{ action: 'toggleFunctions', options: { functionID: item.id, value: '' } }];
+		const feedbacks = [{ type: 'status', options: { status: item.status, color: this.rgb(255, 255, 255), bgcolor: this.rgb(255, 0, 0), value: '' } }];
 		const preset = createPreset('vMix Functions', item, actions, feedbacks);
 		presets.push(preset);
 	});

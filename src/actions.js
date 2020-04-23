@@ -156,6 +156,12 @@ exports.getActions = function() {
 						{ id: 'Fullscreen', label: 'Start / Stop Fullscreen' },
 						{ id: 'FadeToBlack', label: 'Fade To Black' }
 					]
+				},
+				{
+					type: 'textinput',
+					label: 'Stream Value (0 to 2, blank for all)',
+					id: 'value',
+					default: '',
 				}
 			]
 		},
