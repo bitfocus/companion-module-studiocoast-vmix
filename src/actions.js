@@ -158,10 +158,16 @@ exports.getActions = function() {
 					]
 				},
 				{
-					type: 'textinput',
-					label: 'Stream Value (0 to 2, blank for all)',
+					type: 'dropdown',
+					label: 'Stream Start/Stop value',
 					id: 'value',
 					default: '',
+					choices: [
+						{ id: '', label: 'All' },
+						{ id: '0', label: '0' },
+						{ id: '1', label: '1' },
+						{ id: '2', label: '2' }
+					]
 				}
 			]
 		},
