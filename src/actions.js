@@ -156,6 +156,18 @@ exports.getActions = function() {
 						{ id: 'Fullscreen', label: 'Start / Stop Fullscreen' },
 						{ id: 'FadeToBlack', label: 'Fade To Black' }
 					]
+				},
+				{
+					type: 'dropdown',
+					label: 'Stream Start/Stop value',
+					id: 'value',
+					default: '',
+					choices: [
+						{ id: '', label: 'All' },
+						{ id: '0', label: '0' },
+						{ id: '1', label: '1' },
+						{ id: '2', label: '2' }
+					]
 				}
 			]
 		},

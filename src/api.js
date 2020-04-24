@@ -131,7 +131,8 @@ exports.initAPI = function() {
 						fadeToBlack: xml.vmix.fadeToBlack[0] === 'True',
 						recording: xml.vmix.recording[0] === 'True' || xml.vmix.recording[0]._ === 'True',
 						external: xml.vmix.external[0] === 'True',
-						streaming: xml.vmix.streaming[0] === 'True',
+						streaming: xml.vmix.streaming[0] === 'True' || xml.vmix.streaming[0]._ === 'True',
+						stream: [false, false, false],
 						playList: xml.vmix.playList[0] === 'True',
 						multiCorder: xml.vmix.multiCorder[0] === 'True',
 						fullscreen: xml.vmix.fullscreen[0] === 'True'
@@ -144,6 +145,13 @@ exports.initAPI = function() {
 						cameraB: '0'
 					}
 				};
+
+				// Update stream Status
+				if (xml.vmix.streaming[0].$) {
+					data.status.stream[0] = xml.vmix.streaming[0].$.channel1 === 'True';
+					data.status.stream[1] = xml.vmix.streaming[0].$.channel2 === 'True';
+					data.status.stream[2] = xml.vmix.streaming[0].$.channel3 === 'True';
+				}
 
 				// Update Replay
 				const replayInput = data.inputs.find(input => input.type === 'Replay');
