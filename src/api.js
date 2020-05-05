@@ -203,7 +203,7 @@ exports.initAPI = function() {
 				// Check Audio status
 				if (!_.isEqual(data.audio, this.data.audio) || inputCheck) {
 					changes.add('busMute');
-					changes.add('busVolumeLevel')
+					changes.add('busVolumeLevel');
 				}
 
 				// Update variables
@@ -215,7 +215,7 @@ exports.initAPI = function() {
 						const volume = Math.round(parseFloat(input.volume));
 
 						// Remove symbols other than - _ . from the input title
-						let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '')
+						let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '');
 						this.setVariable(`input_volume_${inputName}`, volume);
 					}
 				});
