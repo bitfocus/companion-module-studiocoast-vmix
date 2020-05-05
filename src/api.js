@@ -185,6 +185,7 @@ exports.initAPI = function() {
 					changes.add('inputSolo');
 					changes.add('inputBusRouting');
 					changes.add('titleLayer');
+					changes.add('inputVolumeLevel');
 				}
 
 				// Check for status changes
@@ -195,6 +196,7 @@ exports.initAPI = function() {
 				// Check Audio status
 				if (!_.isEqual(data.audio, this.data.audio) || inputCheck) {
 					changes.add('busMute');
+					changes.add('busVolumeLevel')
 				}
 
 				// Check Replay
