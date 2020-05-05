@@ -5,6 +5,7 @@ const { getConfigFields } = require('./config');
 const { executeFeedback, initFeedbacks } = require('./feedback');
 const { initPresets } = require('./presets');
 const { upgradeV1_2_0 } = require('./upgrade');
+const { updateVariableDefinitions } = require('./variables');
 const tcp = require('./tcp');
 
 /**
@@ -36,6 +37,7 @@ class VMixInstance extends instance_skel {
 		this.config.host = this.config.host || '127.0.0.1';
 		this.config.httpPort = this.config.httpPort || 8088;
 		this.config.tcpPort = this.config.tcpPort || 8099;
+		this.updateVariableDefinitions = updateVariableDefinitions;
 	}
 
 	init() {
@@ -45,6 +47,7 @@ class VMixInstance extends instance_skel {
 		this.init_feedbacks();
 		initAPI.bind(this)();
 		initPresets.bind(this)();
+		this.updateVariableDefinitions();
 	}
 
 	// New config saved
