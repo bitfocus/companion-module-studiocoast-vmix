@@ -223,7 +223,7 @@ exports.initFeedbacks = function() {
 				label: 'Bus',
 				id: 'bus',
 				default: 'Master',
-				choices: ['Master', 'A', 'B', 'C', 'D', 'E', 'F', 'G'].map(id => ({ id, label: id }))
+				choices: ['Master', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'Headphones'].map(id => ({ id, label: id }))
 			},
 			comparison,
 			{
@@ -464,62 +464,46 @@ exports.executeFeedback = function(feedback, bank) {
 
 		const volume = parseFloat(input.volume);
 		const value = parseFloat(feedback.options.value);
-		let volumeInRange = false;
 
-		if (feedback.options.comparison === 'eq') {
-			volumeInRange = volume === value;
-		}
+		const volumeInRange = {
+			'eq': volume === value,
+			'lt': volume < value,
+			'lte': volume <= value,
+			'gt': volume > value,
+			'gte': volume >= value,
+		};
 
-		else if (feedback.options.comparison === 'lt') {
-			volumeInRange = volume < value;
-		}
-
-		else if (feedback.options.comparison === 'lte') {
-			volumeInRange = volume <= value;
-		}
-
-		else if (feedback.options.comparison === 'gt') {
-			volumeInRange = volume > value;
-		}
-
-		else if (feedback.options.comparison === 'gte') {
-			volumeInRange = volume >= value;
-		}
-
-		if (volumeInRange) {
+		if (volumeInRange[feedback.options.comparison]) {
 			return { color: feedback.options.fg, bgcolor: feedback.options.bg }
 		}
 	}
 
 	else if (feedback.type === 'busVolumeLevel') {
-		const busID = feedback.options.bus === 'Master' ? 'master' : ( 'bus' + feedback.options.bus);
-		const bus = this.data.audio.find(output => output.bus === busID);
-
-		const volume = parseFloat(bus.volume);
 		const value = parseFloat(feedback.options.value);
-		let volumeInRange = false;
+		let volume;
 
-		if (feedback.options.comparison === 'eq') {
-			volumeInRange = volume === value;
+		if (feedback.options.bus === 'Headphones') {
+			const bus = this.data.audio.find(output => output.bus === 'master');
+			volume = parseFloat(bus.headphonesVolume);
 		}
+		
+		else {
+			const busID = feedback.options.bus === 'Master' ? 'master' : ( 'bus' + feedback.options.bus);
+			const bus = this.data.audio.find(output => output.bus === busID);
+			if (bus !== undefined) {
+				volume = parseFloat(bus.volume);
+			}
+		}	
 
-		else if (feedback.options.comparison === 'lt') {
-			volumeInRange = volume < value;
-		}
+		const volumeInRange = {
+			'eq': volume === value,
+			'lt': volume < value,
+			'lte': volume <= value,
+			'gt': volume > value,
+			'gte': volume >= value,
+		};
 
-		else if (feedback.options.comparison === 'lte') {
-			volumeInRange = volume <= value;
-		}
-
-		else if (feedback.options.comparison === 'gt') {
-			volumeInRange = volume > value;
-		}
-
-		else if (feedback.options.comparison === 'gte') {
-			volumeInRange = volume >= value;
-		}
-
-		if (volumeInRange) {
+		if (volumeInRange[feedback.options.comparison]) {
 			return { color: feedback.options.fg, bgcolor: feedback.options.bg }
 		}
 	}

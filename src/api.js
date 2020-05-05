@@ -109,6 +109,11 @@ exports.initAPI = function() {
 						const volume = Math.round(parseFloat(output.volume));
 
 						this.setVariable(`bus_volume_${busID}`, volume);
+
+						if (output.bus === 'master') {
+							const headphonesVolume = Math.round(parseFloat(output.headphonesVolume));
+							this.setVariable('bus_volume_headphones', headphonesVolume);
+						}
 					});
 
 					return data;

@@ -1,7 +1,7 @@
 exports.updateVariableDefinitions = function() {
 	const variables = [];
 
-	['Master', 'A', 'B', 'C', 'D', 'E', 'F', 'G'].forEach(bus => {
+	['Master', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'Headphones'].forEach(bus => {
 		variables.push({
 			label: `Bus ${bus} Volume`,
       name: `bus_volume_${bus.toLowerCase()}`
