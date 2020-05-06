@@ -13,6 +13,9 @@ and if there is more than one parameter use "&" as a separator between them like
 
 "SetOutput2 Value=Input&Input=3"
 
+**v1.2.1**
+* Added feedback and instance variables for bus and input volume
+
 **V1.2.0**
 * Added support for using either input ID or Title and switching at any time
 * Added Tally update on first load

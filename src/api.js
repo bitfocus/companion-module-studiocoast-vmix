@@ -104,6 +104,18 @@ exports.initAPI = function() {
 						data.push(audio[key][0].$);
 					});
 
+					data.forEach(output => {
+						const busID = output.bus === 'master' ? 'master' : output.bus.substr(3);
+						const volume = Math.round(parseFloat(output.volume));
+
+						this.setVariable(`bus_volume_${busID}`, volume);
+
+						if (output.bus === 'master') {
+							const headphonesVolume = Math.round(parseFloat(output.headphonesVolume));
+							this.setVariable('bus_volume_headphones', headphonesVolume);
+						}
+					});
+
 					return data;
 				};
 
@@ -185,6 +197,7 @@ exports.initAPI = function() {
 					changes.add('inputSolo');
 					changes.add('inputBusRouting');
 					changes.add('titleLayer');
+					changes.add('inputVolumeLevel');
 				}
 
 				// Check for status changes
@@ -195,7 +208,22 @@ exports.initAPI = function() {
 				// Check Audio status
 				if (!_.isEqual(data.audio, this.data.audio) || inputCheck) {
 					changes.add('busMute');
+					changes.add('busVolumeLevel');
 				}
+
+				// Update variables
+				data.inputs.forEach(input => {
+					const previousState = this.data.inputs.find(item => item.key === input.key);
+
+					// Check input has volume and a different or no previous volume
+					if (input.volume !== undefined && (previousState === undefined || input.volume !== previousState.volume)) {
+						const volume = Math.round(parseFloat(input.volume));
+
+						// Remove symbols other than - _ . from the input title
+						let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '');
+						this.setVariable(`input_volume_${inputName}`, volume);
+					}
+				});
 
 				// Check Replay
 				if (!_.isEqual(data.replay, this.data.replay)) {
@@ -208,6 +236,11 @@ exports.initAPI = function() {
 				this.data = data;
 
 				changes.forEach(change => this.checkFeedbacks(change));
+
+				// Update variable definitions
+				if (changes.size > 0) {
+					this.updateVariableDefinitions();
+				}
 			}
 		});
 	};

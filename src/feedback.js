@@ -26,7 +26,7 @@ exports.initFeedbacks = function() {
 		type: 'textinput',
 		label: 'Input',
 		id: 'input',
-		default: 1
+		default: '1'
 	};
 
 	const mixInput = {
@@ -35,6 +35,20 @@ exports.initFeedbacks = function() {
 		id: 'mix',
 		default: 0,
 		choices: [1, 2, 3, 4].map((id, index) => ({ id: index, label: id }))
+	};
+
+	const comparison = {
+		type: 'dropdown',
+		label: 'Comparison',
+		id: 'comparison',
+		default: 'eq',
+		choices: [
+			{ id: 'eq', label: '=' },
+			{ id: 'lt', label: '<' },
+			{ id: 'lte', label: '<=' },
+			{ id: 'gt', label: '>' },
+			{ id: 'gte', label: '>=' },
+		]
 	};
 
 	feedbacks.inputPreview = {
@@ -176,6 +190,48 @@ exports.initFeedbacks = function() {
 				id: 'bus',
 				default: 'Master',
 				choices: ['Master', 'A', 'B', 'C', 'D', 'E', 'F', 'G'].map(id => ({ id, label: id }))
+			},
+			foregroundColor,
+			backgroundColorPreview
+		]
+  };
+  
+	feedbacks.inputVolumeLevel = {
+		label: 'Input Volume',
+		description: 'Indicate if an input fader is in a set value',
+		options: [
+			input,
+			comparison,
+			{
+				type: 'textinput',
+				label: 'Value',
+				id: 'value',
+				default: '100',
+				regex: this.REGEX_FLOAT_OR_INT
+			},
+			foregroundColor,
+			backgroundColorPreview
+		]
+	};
+  
+	feedbacks.busVolumeLevel = {
+		label: 'Bus Volume',
+		description: 'Indicate if an output bus fader is within a set range',
+		options: [
+			{
+				type: 'dropdown',
+				label: 'Bus',
+				id: 'bus',
+				default: 'Master',
+				choices: ['Master', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'Headphones'].map(id => ({ id, label: id }))
+			},
+			comparison,
+			{
+				type: 'textinput',
+				label: 'Value',
+				id: 'value',
+				default: '100',
+				regex: this.REGEX_FLOAT_OR_INT
 			},
 			foregroundColor,
 			backgroundColorPreview
@@ -400,6 +456,58 @@ exports.executeFeedback = function(feedback, bank) {
 		}
 	}
 	
+	else if (feedback.type === 'inputVolumeLevel') {
+		let input = getInput(feedback.options.input);
+		if (input === undefined || input.volume === undefined) {
+			return;
+		}
+
+		const volume = parseFloat(input.volume);
+		const value = parseFloat(feedback.options.value);
+
+		const volumeInRange = {
+			'eq': volume === value,
+			'lt': volume < value,
+			'lte': volume <= value,
+			'gt': volume > value,
+			'gte': volume >= value,
+		};
+
+		if (volumeInRange[feedback.options.comparison]) {
+			return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+		}
+	}
+
+	else if (feedback.type === 'busVolumeLevel') {
+		const value = parseFloat(feedback.options.value);
+		let volume;
+
+		if (feedback.options.bus === 'Headphones') {
+			const bus = this.data.audio.find(output => output.bus === 'master');
+			volume = parseFloat(bus.headphonesVolume);
+		}
+		
+		else {
+			const busID = feedback.options.bus === 'Master' ? 'master' : ( 'bus' + feedback.options.bus);
+			const bus = this.data.audio.find(output => output.bus === busID);
+			if (bus !== undefined) {
+				volume = parseFloat(bus.volume);
+			}
+		}	
+
+		const volumeInRange = {
+			'eq': volume === value,
+			'lt': volume < value,
+			'lte': volume <= value,
+			'gt': volume > value,
+			'gte': volume >= value,
+		};
+
+		if (volumeInRange[feedback.options.comparison]) {
+			return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+		}
+	}
+
 	else if (feedback.type === 'titleLayer') {
 		let input = getInput(feedback.options.input);
 		let text;
