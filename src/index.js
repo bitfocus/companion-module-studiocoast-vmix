@@ -25,6 +25,7 @@ class VMixInstance extends instance_skel {
 			version: '',
 			edition: '',
 			preset: '',
+			audio: [],
 			inputs: [],
 			mix: [
 				{ id: 1, active: false, preview: 0, program: 0 },
