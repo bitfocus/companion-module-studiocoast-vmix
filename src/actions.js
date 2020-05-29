@@ -288,6 +288,19 @@ exports.getActions = function() {
 			]
 		},
 
+		VirtualSet: {
+			label: 'VirtualSet - Zoom To Selected Preset',
+			options: [
+				input, 
+				{
+					type: 'textinput',
+					label: 'Preset (1-4)',
+					id: 'selectedIndex',
+					default: 1
+				},
+			]
+		},
+
 		SetVolumeFade: {
 			label: 'Audio - Set Volume Fade',
 			options: [
@@ -797,6 +810,10 @@ exports.executeAction = function(action) {
 
 	else if (action.action === 'SetMultiViewOverlay') {
 		cmd = `FUNCTION SetMultiViewOverlay Input=${opt.input}&Value=${opt.selectedIndex},${opt.LayerInput}`;
+	}
+
+	else if (action.action === 'VirtualSet') {
+		cmd = `FUNCTION SelectIndex Input=${opt.input}&Value=${opt.selectedIndex}`;
 	}
 
 	else if (action.action === 'SetText') {
