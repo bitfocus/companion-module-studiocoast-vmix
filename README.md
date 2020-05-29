@@ -13,6 +13,10 @@ and if there is more than one parameter use "&" as a separator between them like
 
 "SetOutput2 Value=Input&Input=3"
 
+**v1.2.2**
+* Added MultiViewOverlay Commands for setting and toggeling an overlay on/off
+* Added SetMultiViewOverlay Command for setting an Input on a MultiviewOverlay Layer
+
 **v1.2.1**
 * Added feedback and instance variables for bus and input volume
 

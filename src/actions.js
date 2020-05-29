@@ -241,6 +241,53 @@ exports.getActions = function() {
 			]
 		},
 
+		MultiViewOverlay: {
+			label: 'MultiViewOverlay - Toggle Overlay Layer on Input',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'MultiViewOverlay Function',
+					id: 'functionID',
+					default: 'MultiViewOverlay',
+					choices: [
+						{ id: 'MultiViewOverlay', label: 'Toggle Overlay Layer on Input' },
+						{ id: 'MultiViewOverlayOff', label: 'Set Overlay Layer Off' },
+						{ id: 'MultiViewOverlayOn', label: 'Set Overlay Layer On' }
+					]
+				},
+				input, 
+				{
+					type: 'textinput',
+					label: 'Layer',
+					id: 'selectedIndex',
+					default: 1
+				},
+			]
+		},
+
+		SetMultiViewOverlay: {
+			label: 'SetMultiViewOverlay - Set Input as Myltiview Overlay Layer',
+			options: [
+				{
+					type: 'textinput',
+					label: 'MultiView Input',
+					id: 'input'
+				},			
+				{
+					type: 'textinput',
+					label: 'Layer',
+					id: 'selectedIndex',
+					default: 1
+				},
+				{
+					type: 'textinput',
+					label: 'Input to use on Layer',
+					id: 'LayerInput',
+					default: 1
+				},			 
+			]
+		},
+
 		SetVolumeFade: {
 			label: 'Audio - Set Volume Fade',
 			options: [
@@ -744,6 +791,14 @@ exports.executeAction = function(action) {
 		cmd = `FUNCTION ${opt.command}`;
 	}
 	
+	else if (action.action === 'MultiViewOverlay') {
+		cmd = `FUNCTION ${opt.functionID} Input=${opt.input}&Value=${opt.selectedIndex}`;
+	}
+
+	else if (action.action === 'SetMultiViewOverlay') {
+		cmd = `FUNCTION SetMultiViewOverlay Input=${opt.input}&Value=${opt.selectedIndex},${opt.LayerInput}`;
+	}
+
 	else if (action.action === 'SetText') {
 		let text = opt.value;
 
