@@ -14,9 +14,11 @@ and if there is more than one parameter use "&" as a separator between them like
 "SetOutput2 Value=Input&Input=3"
 
 **v1.2.2**
-* Added MultiViewOverlay Commands for setting and toggeling an overlay on/off
-* Added SetMultiViewOverlay Command for setting an Input on a MultiviewOverlay Layer
-* Added VirtualSet Command for Zooming in to one of the four Selected Preset
+* Added MultiViewOverlay - Commands for setting and toggeling an overlay on/off
+* Added SetMultiViewOverlay - Command for setting an Input on a MultiviewOverlay Layer
+* Added VirtualSet - Command for Zooming in to one of the four Selected Preset
+* Added SelectTitlePreset - Allows for the option to preprogram titles and just select a specific preset.
+* Added Next and Previous Title Preset - Allows for the option to go back and fourth between title presets. 
 * (note there is no preset or feedback for these commands!)
 
 **v1.2.1**

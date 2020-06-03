@@ -301,6 +301,33 @@ exports.getActions = function() {
 			]
 		},
 
+		VideoCallAudioSource: {
+			label: 'VideoCall - Select Audio Source',
+			options: [
+				input, 
+				audioBusMaster
+			]
+		},
+
+		VideoCallVideoSource: {
+			label: 'VideoCall - Select Video Source',
+			options: [
+				input, 
+				{
+					type: 'dropdown',
+					label: 'Select Output',
+					id: 'functionID',
+					default: 'Output1',
+					choices: [
+						{ id: 'Output1', label: 'Output 1' },
+						{ id: 'Output2', label: 'Output 2' },
+						{ id: 'Output3', label: 'Output 3' },
+						{ id: 'Output4', label: 'Output 4' },
+					]
+				},
+			]
+		},
+
 		SetVolumeFade: {
 			label: 'Audio - Set Volume Fade',
 			options: [
@@ -340,6 +367,23 @@ exports.getActions = function() {
 		Audio: {
 			label: 'Audio - Input Mute',
 			options: [input]
+		},
+
+		AudioOnOff: {
+			label: 'Audio - Input On/Off',
+			options: [
+				input,
+				{
+					type: 'dropdown',
+					label: 'Option',
+					id: 'functionID',
+					default: 'AudioOn',
+					choices: [
+						{ id: 'AudioOn', label: 'Set input Audio ON' },
+						{ id: 'AudioOff', label: 'Set input Audio OFF' },
+					]
+				},
+			]
 		},
 
 		BusXSolo: {
@@ -404,6 +448,36 @@ exports.getActions = function() {
 					id: 'value',
 					default: ''
 				}
+			]
+		},
+
+		SelectTitlePreset: {
+			label: 'Title - Select Title Preset',
+			options: [
+				input,
+				{
+					type: 'textinput',
+					label: 'Preset Index',
+					id: 'selectedIndex',
+					default: 0
+				},
+			]
+		},
+
+		TitlePreset: {
+			label: 'Title - Select Next or Prev Title Preset',
+			options: [
+				input,
+				{
+					type: 'dropdown',
+					label: 'Option',
+					id: 'functionID',
+					default: 'NextTitlePreset',
+					choices: [
+						{ id: 'NextTitlePreset', label: 'Select Next Title Preset' },
+						{ id: 'PreviousTitlePreset', label: 'Select Previous Title Preset' },
+					]
+				},
 			]
 		},
 
@@ -829,6 +903,26 @@ exports.executeAction = function(action) {
 		cmd = `FUNCTION SetText Input=${opt.input}&SelectedIndex=${opt.selectedIndex}&Value=${text}`;
 	}
 	
+	else if (action.action === 'SelectTitlePreset') {
+		cmd = `FUNCTION SelectTitlePreset Input=${opt.input}&Value=${opt.selectedIndex}`;
+	}
+
+	else if (action.action === 'TitlePreset') {
+		cmd = `FUNCTION ${opt.functionID} Input=${opt.input}`;
+	}
+
+	else if (action.action === 'AudioOnOff') {
+		cmd = `FUNCTION ${opt.functionID} Input=${opt.input}`;
+	}
+
+	else if (action.action === 'VideoCallAudioSource') {
+		cmd = `FUNCTION VideoCallAudioSource Input=${opt.input}&Value=${opt.value}`;
+	}
+
+	else if (action.action === 'VideoCallVideoSource') {
+		cmd = `FUNCTION VideoCallVideoSource Input=${opt.input}&Value=${opt.functionID}`;
+	}
+
 	else if (action.action === 'replayRecording') {
 		if ((opt.functionID = 'ReplayToggleRecording')) {
 			cmd = `FUNCTION ${this.data.replay.recording ? 'ReplayStopRecording' : 'ReplayStartRecording'}`;
