@@ -266,7 +266,7 @@ exports.getActions = function() {
 		},
 
 		SetMultiViewOverlay: {
-			label: 'SetMultiViewOverlay - Set Input as Myltiview Overlay Layer',
+			label: 'SetMultiViewOverlay - Set Input as Multiview Overlay Layer',
 			options: [
 				{
 					type: 'textinput',
