@@ -305,7 +305,23 @@ exports.getActions = function() {
 			label: 'VideoCall - Select Audio Source',
 			options: [
 				input, 
-				audioBusMaster
+				{
+					type: 'dropdown',
+					label: 'Bus',
+					id: 'value',
+					default: 'BusA',
+					choices: [
+						{ id: 'Master', label: 'Master' },
+						{ id: 'Headphones', label: 'Headphones' },
+						{ id: 'BusA', label: 'A' },
+						{ id: 'BusB', label: 'B' },
+						{ id: 'BusC', label: 'C' },
+						{ id: 'BusD', label: 'D' },
+						{ id: 'BusE', label: 'E' },
+						{ id: 'BusF', label: 'F' },
+						{ id: 'BusG', label: 'G' },
+					]
+				},
 			]
 		},
 
