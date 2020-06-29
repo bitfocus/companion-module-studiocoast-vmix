@@ -13,27 +13,6 @@ and if there is more than one parameter use "&" as a separator between them like
 
 "SetOutput2 Value=Input&Input=3"
 
-**v1.2.2**
-* Added MultiViewOverlay - Commands for setting and toggeling an overlay on/off
-* Added SetMultiViewOverlay - Command for setting an Input on a MultiviewOverlay Layer
-* Added VirtualSet - Command for Zooming in to one of the four Selected Preset
-* Added SelectTitlePreset - Allows for the option to preprogram titles and just select a specific preset.
-* Added Next and Previous Title Preset - Allows for the option to go back and fourth between title presets. 
-* (note there is no preset or feedback for these commands!)
-
-**v1.2.1**
-* Added feedback and instance variables for bus and input volume
-
-**V1.2.0**
-* Added support for using either input ID or Title and switching at any time
-* Added Tally update on first load
-* Added Tally polling through API
-* Added Support for Audio busses C to G, and Mix 2 to 4, from vMix v23
-* Added Feedback for Overlays, Replay, Input/Bus Mute, Solo, Routing, Title text (including countdowns)
-* Added action to set/increment/decrement Title text
-* Added more presets
-* Restructured module code, allowing for easier maintaining of code and future upgrades
-
 **V1.1.3**
 * Added overlay functions
 * Added set output functions
@@ -48,3 +27,24 @@ and if there is more than one parameter use "&" as a separator between them like
 
 **V1.1.6**
 * Added simple and generic presets for all commands
+
+**V1.2.0**
+* Added support for using either input ID or Title and switching at any time
+* Added Tally update on first load
+* Added Tally polling through API
+* Added Support for Audio busses C to G, and Mix 2 to 4, from vMix v23
+* Added Feedback for Overlays, Replay, Input/Bus Mute, Solo, Routing, Title text (including countdowns)
+* Added action to set/increment/decrement Title text
+* Added more presets
+* Restructured module code, allowing for easier maintaining of code and future upgrades
+
+**v1.2.1**
+* Added feedback and instance variables for bus and input volume
+
+**v1.2.2**
+* Added MultiViewOverlay - Commands for setting and toggeling an overlay on/off
+* Added SetMultiViewOverlay - Command for setting an Input on a MultiviewOverlay Layer
+* Added VirtualSet - Command for Zooming in to one of the four Selected Preset
+* Added SelectTitlePreset - Allows for the option to preprogram titles and just select a specific preset.
+* Added Next and Previous Title Preset - Allows for the option to go back and fourth between title presets. 
+* (note there is no preset or feedback for these commands!)
