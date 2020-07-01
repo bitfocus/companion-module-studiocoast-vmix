@@ -48,3 +48,12 @@ and if there is more than one parameter use "&" as a separator between them like
 * Added SelectTitlePreset - Allows for the option to preprogram titles and just select a specific preset.
 * Added Next and Previous Title Preset - Allows for the option to go back and fourth between title presets. 
 * (note there is no preset or feedback for these commands!)
+
+**v1.2.3**
+* Added more preset options for existing commands
+* Added a description on how to use Mix 2-4
+* Added a Feedback for audio ON/Off (invers mute)
+* Added presets for MultiView Overlays
+* Added presets for selecting audio and video source for Vmix Calls
+* Added presets for toggeling audio On/Off
+* Added presets for using and settings Title layers and Presets

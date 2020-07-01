@@ -255,7 +255,11 @@ exports.getActions = function() {
 						{ id: 'MultiViewOverlayOn', label: 'Set Overlay Layer On' }
 					]
 				},
-				input, 
+				{
+					type: 'textinput',
+					label: 'MultiView Input',
+					id: 'input'
+				}, 
 				{
 					type: 'textinput',
 					label: 'Layer',
