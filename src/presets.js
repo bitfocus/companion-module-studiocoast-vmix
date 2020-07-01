@@ -184,10 +184,10 @@ exports.initPresets = function() {
 		{ id: 'VideoCallAudioSource', size: '18', label: 'Call 1 Bus E', input: '', value: 'BusE' },
 		{ id: 'VideoCallAudioSource', size: '18', label: 'Call 1 Bus F', input: '', value: 'BusF' },
 		{ id: 'VideoCallAudioSource', size: '18', label: 'Call 1 Bus G', input: '', value: 'BusG' },
-		{ id: 'VideoCallVideoSource', size: '18', label: 'Call 1 Out 1',   input: '', value: 'Output1' },
-		{ id: 'VideoCallVideoSource', size: '18', label: 'Call 1 Out 2',   input: '', value: 'Output2' },
-		{ id: 'VideoCallVideoSource', size: '18', label: 'Call 1 Out 3',   input: '', value: 'Output3' },
-		{ id: 'VideoCallVideoSource', size: '18', label: 'Call 1 Out 4',   input: '', value: 'Output4' },
+		{ id: 'VideoCallVideoSource', size: '18', label: 'Call 1 Out 1', input: '', value: 'Output1' },
+		{ id: 'VideoCallVideoSource', size: '18', label: 'Call 1 Out 2', input: '', value: 'Output2' },
+		{ id: 'VideoCallVideoSource', size: '18', label: 'Call 1 Out 3', input: '', value: 'Output3' },
+		{ id: 'VideoCallVideoSource', size: '18', label: 'Call 1 Out 4', input: '', value: 'Output4' },
 	];
 
 	vmixCall.forEach(item => {
@@ -203,6 +203,44 @@ exports.initPresets = function() {
 		}
 		
 		const preset = createPreset('Vmix Call', item, actions, feedbacks);
+		presets.push(preset);
+	});	
+	
+	// Titles and Graphics
+	const title = [
+		{ id: 'SetText', label: 'Set Title', input: '', layer: '0', adjustment: 'Set', value: '0' },
+		{ id: 'SetText', label: 'Set Title +1', input: '', layer: '0', adjustment: 'Increment', value: '1' },
+		{ id: 'SetText', label: 'Set Title -1', input: '', layer: '0', adjustment: 'Decrement', value: '1' },
+		{ id: 'SelectTitlePreset', label: 'Title Preset 0', input: '', value: '0' },
+		{ id: 'SelectTitlePreset', label: 'Title Preset 1', input: '', value: '1' },
+		{ id: 'SelectTitlePreset', label: 'Title Preset 2', input: '', value: '2' },
+		{ id: 'SelectTitlePreset', label: 'Title Preset 3', input: '', value: '3' },
+		{ id: 'TitlePreset', size: '18', label: 'Nest Title', input: '', value: 'NextTitlePreset' },
+		{ id: 'TitlePreset', size: '18', label: 'Prev Title', input: '', value: 'PreviousTitlePreset' },
+		{ id: 'ShowTitle', label: 'Title:', input: '', layer: '0' },
+	];
+
+	title.forEach(item => {
+		const actions = [];
+		const feedbacks = [];
+
+		if (item.id === 'SetText') {
+			actions.push({ action: item.id, options: { input: item.input, selectedIndex: item.layer, adjustment: item.adjustment, value: item.value } });
+		}
+
+		if (item.id === 'SelectTitlePreset') {
+			actions.push({ action: item.id, options: { input: item.input, selectedIndex: item.value } });
+		}
+		
+		else if (item.id === 'TitlePreset') {
+			actions.push({ action: item.id, options: { input: item.input, functionID: item.value } });
+		}
+		
+		else if (item.id === 'ShowTitle') {
+			feedbacks.push({ type: 'titleLayer', options: { input: item.input, layer: item.value, bg: this.rgb(255, 0, 0) } });
+		}
+
+		const preset = createPreset('Titles and Graphics', item, actions, feedbacks);
 		presets.push(preset);
 	});	
 	
