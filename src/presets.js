@@ -333,6 +333,66 @@ exports.initPresets = function() {
 		presets.push(preset);
 	});
 
+	// Multiview Overlays
+	const multiviewoverlay = [
+		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L1',  type: 'MultiViewOverlay', input: '', layer: '1' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L2',  type: 'MultiViewOverlay', input: '', layer: '2' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L3',  type: 'MultiViewOverlay', input: '', layer: '3' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L4',  type: 'MultiViewOverlay', input: '', layer: '4' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L5',  type: 'MultiViewOverlay', input: '', layer: '5' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L6',  type: 'MultiViewOverlay', input: '', layer: '6' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L7',  type: 'MultiViewOverlay', input: '', layer: '7' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L8',  type: 'MultiViewOverlay', input: '', layer: '8' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L9',  type: 'MultiViewOverlay', input: '', layer: '9' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L10',  type: 'MultiViewOverlay', input: '', layer: '10' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L1 Off',  type: 'MultiViewOverlayOff', input: '', layer: '1' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L2 Off',  type: 'MultiViewOverlayOff', input: '', layer: '2' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L3 Off',  type: 'MultiViewOverlayOff', input: '', layer: '3' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L4 Off',  type: 'MultiViewOverlayOff', input: '', layer: '4' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L5 Off',  type: 'MultiViewOverlayOff', input: '', layer: '5' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L6 Off',  type: 'MultiViewOverlayOff', input: '', layer: '6' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L7 Off',  type: 'MultiViewOverlayOff', input: '', layer: '7' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L8 Off',  type: 'MultiViewOverlayOff', input: '', layer: '8' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L9 Off',  type: 'MultiViewOverlayOff', input: '', layer: '9' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L10 Off',  type: 'MultiViewOverlayOff', input: '', layer: '10' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L1 On',  type: 'MultiViewOverlayOn', input: '', layer: '1' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L2 On',  type: 'MultiViewOverlayOn', input: '', layer: '2' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L3 On',  type: 'MultiViewOverlayOn', input: '', layer: '3' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L4 On',  type: 'MultiViewOverlayOn', input: '', layer: '4' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L5 On',  type: 'MultiViewOverlayOn', input: '', layer: '5' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L6 On',  type: 'MultiViewOverlayOn', input: '', layer: '6' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L7 On',  type: 'MultiViewOverlayOn', input: '', layer: '7' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L8 On',  type: 'MultiViewOverlayOn', input: '', layer: '8' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L9 On',  type: 'MultiViewOverlayOn', input: '', layer: '9' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L10 On',  type: 'MultiViewOverlayOn', input: '', layer: '10' },
+		{ id: 'SetMultiViewOverlay', size: '18', label: 'Set L1 To IN1', input: '', layer: '1', layerInput: '1' },
+		{ id: 'SetMultiViewOverlay', size: '18', label: 'Set L2 To IN1', input: '', layer: '2', layerInput: '1' },
+		{ id: 'SetMultiViewOverlay', size: '18', label: 'Set L3 To IN1', input: '', layer: '3', layerInput: '1' },
+		{ id: 'SetMultiViewOverlay', size: '18', label: 'Set L4 To IN1', input: '', layer: '4', layerInput: '1' },
+		{ id: 'SetMultiViewOverlay', size: '18', label: 'Set L5 To IN1', input: '', layer: '5', layerInput: '1' },
+		{ id: 'SetMultiViewOverlay', size: '18', label: 'Set L6 To IN1', input: '', layer: '6', layerInput: '1' },
+		{ id: 'SetMultiViewOverlay', size: '18', label: 'Set L7 To IN1', input: '', layer: '7', layerInput: '1' },
+		{ id: 'SetMultiViewOverlay', size: '18', label: 'Set L8 To IN1', input: '', layer: '8', layerInput: '1' },
+		{ id: 'SetMultiViewOverlay', size: '18', label: 'Set L9 To IN1', input: '', layer: '9', layerInput: '1' },
+		{ id: 'SetMultiViewOverlay', size: '18', label: 'Set L10 To IN1', input: '', layer: '10', layerInput: '1' },
+	];
+
+	multiviewoverlay.forEach(item => {
+		const actions = [];
+		const feedbacks = [];
+
+		if (item.id === 'MultiViewOverlay') {
+			actions.push({ action: item.id, options: { functionID: item.type, input: item.input, selectedIndex: item.layer } });
+		}
+		
+		else if (item.id === 'SetMultiViewOverlay') {
+			actions.push({ action: item.id, options: { Input: item.multiview, selectedIndex: item.layer, LayerInput: item.layerInput  } });
+		}
+		
+		const preset = createPreset('MultiView Overlays', item, actions, feedbacks);
+		presets.push(preset);
+	});	
+
 	// Audio
 	const audioRouting = [
 		{ id: 'Audio', size: '18', label: 'Input Mute' },
