@@ -18,6 +18,9 @@ For commands not natively available in this module, you can access the full list
 
 For additional actions please raise a feature request at [github](https://github.com/bitfocus/companion-module-studiocoast-vmix)
 
+**Using More Than One Mix (Mix 2-4)**
+
+If you want to use more than one video Mix in Vmix, make sure you create them as inputs. It's not obvious how this works, and a Mix is not synonymous with an Output. To add Mix 2-4 to your setup please proceed to add them as inputs in Vmix. after this, you could select different Mix's to different outputs if you want to.
 
 **Using Custom Commands/Shortcodes**
 
