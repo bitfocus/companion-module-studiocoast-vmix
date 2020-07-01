@@ -173,6 +173,39 @@ exports.initPresets = function() {
 		presets.push(preset);
 	});
 
+	// Vmix Call Audio and Video
+	const vmixCall = [
+		{ id: 'VideoCallAudioSource', size: '18', label: 'Call 1 Master', input: '', value: 'Master' },
+		{ id: 'VideoCallAudioSource', size: '18', label: 'Call 1 Head', input: '', value: 'Headphones' },
+		{ id: 'VideoCallAudioSource', size: '18', label: 'Call 1 Bus A', input: '', value: 'BusA' },
+		{ id: 'VideoCallAudioSource', size: '18', label: 'Call 1 Bus B', input: '', value: 'BusB' },
+		{ id: 'VideoCallAudioSource', size: '18', label: 'Call 1 Bus C', input: '', value: 'BusC' },
+		{ id: 'VideoCallAudioSource', size: '18', label: 'Call 1 Bus D', input: '', value: 'BusD' },
+		{ id: 'VideoCallAudioSource', size: '18', label: 'Call 1 Bus E', input: '', value: 'BusE' },
+		{ id: 'VideoCallAudioSource', size: '18', label: 'Call 1 Bus F', input: '', value: 'BusF' },
+		{ id: 'VideoCallAudioSource', size: '18', label: 'Call 1 Bus G', input: '', value: 'BusG' },
+		{ id: 'VideoCallVideoSource', size: '18', label: 'Call 1 Out 1',   input: '', value: 'Output1' },
+		{ id: 'VideoCallVideoSource', size: '18', label: 'Call 1 Out 2',   input: '', value: 'Output2' },
+		{ id: 'VideoCallVideoSource', size: '18', label: 'Call 1 Out 3',   input: '', value: 'Output3' },
+		{ id: 'VideoCallVideoSource', size: '18', label: 'Call 1 Out 4',   input: '', value: 'Output4' },
+	];
+
+	vmixCall.forEach(item => {
+		const actions = [];
+		const feedbacks = [];
+
+		if (item.id === 'VideoCallAudioSource') {
+			actions.push({ action: item.id, options: { input: item.input, value: item.value } });
+		}
+		
+		else if (item.id === 'VideoCallVideoSource') {
+			actions.push({ action: item.id, options: { input: item.input, functionID: item.value } });
+		}
+		
+		const preset = createPreset('Vmix Call', item, actions, feedbacks);
+		presets.push(preset);
+	});	
+	
 	// General Commands
 	const commands = [
 		{ id: 'NextPicture', size: '18', label: 'Next Photo' },
@@ -386,7 +419,7 @@ exports.initPresets = function() {
 		}
 		
 		else if (item.id === 'SetMultiViewOverlay') {
-			actions.push({ action: item.id, options: { Input: item.multiview, selectedIndex: item.layer, LayerInput: item.layerInput  } });
+			actions.push({ action: item.id, options: { input: item.multiview, selectedIndex: item.layer, LayerInput: item.layerInput  } });
 		}
 		
 		const preset = createPreset('MultiView Overlays', item, actions, feedbacks);
