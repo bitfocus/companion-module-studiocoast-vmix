@@ -194,6 +194,7 @@ exports.initAPI = function() {
 				if (!_.isEqual(data.inputs, this.data.inputs) || inputCheck) {
 					changes.add('videoTimer');
 					changes.add('inputMute');
+					changes.add('inputAudio');
 					changes.add('inputSolo');
 					changes.add('inputBusRouting');
 					changes.add('titleLayer');

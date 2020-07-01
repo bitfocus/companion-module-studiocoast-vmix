@@ -427,6 +427,12 @@ exports.initPresets = function() {
 	});	
 
 	// Audio
+	const audioOnOff = [
+		{ id: 'Audio', size: '18', label: 'Toggle Audio'},
+		{ id: 'AudioOnOff', size: '14', label: 'Set Audio On', value: 'AudioOn' },
+		{ id: 'AudioOnOff', size: '14', label: 'Set Audio Off', value: 'AudioOff' }
+	];
+
 	const audioRouting = [
 		{ id: 'Audio', size: '18', label: 'Input Mute' },
 		{ id: 'BusXAudio', size: '18', label: 'Bus Mute' },
@@ -449,6 +455,24 @@ exports.initPresets = function() {
 		{ size: '18', label: 'In 1 Vol 90%', volume: '90' },
 		{ size: '18', label: 'In 1 Vol 100%', volume: '100' }
 	];
+
+	audioOnOff.forEach(item => {
+		const actions = [];
+		const feedbacks = [];
+
+		if (item.id === 'Audio') {
+			actions.push({ action: item.id, options: { input: '' } });
+			feedbacks.push({ type: 'inputAudio', options: { input: '', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } });
+		}
+		
+		else if (item.id === 'AudioOnOff') {
+			actions.push({ action: item.id, options: { input: item.input, functionID: item.value } });
+			feedbacks.push({ type: 'inputAudio', options: { input: '', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } });
+		}
+		
+		const preset = createPreset('Audio', item, actions, feedbacks);
+		presets.push(preset);
+	});
 
 	audioRouting.forEach(item => {
 		const actions = [{ action: item.id, options: {} }];
@@ -484,7 +508,7 @@ exports.initPresets = function() {
 				}
 			});
 		}
-		
+
 		else if (item.id === 'Solo') {
 			feedbacks.push({
 				type: 'inputSolo',

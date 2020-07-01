@@ -173,6 +173,11 @@ exports.initFeedbacks = function() {
 		options: [input, foregroundColor, backgroundColorProgram]
 	};
 
+	feedbacks.inputAudio = {
+		label: 'Input Audio',
+		description: 'Indicate if an inputs Audio is ON',
+		options: [input, foregroundColor, backgroundColorProgram]
+	};
 	feedbacks.inputSolo = {
 		label: 'Input solo',
 		description: 'Indicate if an input is set to Solo',
@@ -438,7 +443,15 @@ exports.executeFeedback = function(feedback, bank) {
 			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
 		}
 	}
-	
+
+	else if (feedback.type === 'inputAudio') {
+		let input = getInput(feedback.options.input);
+
+		if (input && input.muted === 'False') {
+			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
+		}
+	}
+
 	else if (feedback.type === 'inputSolo') {
 		let input = getInput(feedback.options.input);
 
