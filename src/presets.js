@@ -19,24 +19,24 @@ exports.initPresets = function() {
 
 	// Mix 1
 	const mix1PreviewProgram = [
-		{ id: 'PreviewInput', mix: '1', input: '1', label: 'PRV 1', size: '24' },
-		{ id: 'PreviewInput', mix: '1', input: '2', label: 'PRV 2', size: '24' },
-		{ id: 'PreviewInput', mix: '1', input: '3', label: 'PRV 3', size: '24' },
-		{ id: 'PreviewInput', mix: '1', input: '4', label: 'PRV 4', size: '24' },
-		{ id: 'PreviewInput', mix: '1', input: '5', label: 'PRV 5', size: '24' },
-		{ id: 'PreviewInput', mix: '1', input: '6', label: 'PRV 6', size: '24' },
-		{ id: 'PreviewInput', mix: '1', input: '7', label: 'PRV 7', size: '24' },
-		{ id: 'PreviewInput', mix: '1', input: '8', label: 'PRV 8', size: '24' },
-		{ id: 'programCut', mix: '1', input: '1', label: 'PRGM 1', size: '24' },
-		{ id: 'programCut', mix: '1', input: '2', label: 'PRGM 2', size: '24' },
-		{ id: 'programCut', mix: '1', input: '3', label: 'PRGM 3', size: '24' },
-		{ id: 'programCut', mix: '1', input: '4', label: 'PRGM 4', size: '24' },
-		{ id: 'programCut', mix: '1', input: '5', label: 'PRGM 5', size: '24' },
-		{ id: 'programCut', mix: '1', input: '6', label: 'PRGM 6', size: '24' },
-		{ id: 'programCut', mix: '1', input: '7', label: 'PRGM 7', size: '24' },
-		{ id: 'programCut', mix: '1', input: '8', label: 'PRGM 8', size: '24' },
-		{ id: 'transitionMix', mix: '1', type: 'Cut', label: 'Cut', size: '24' },
-		{ id: 'transitionMix', mix: '1', type: 'Fade', label: 'Fade', size: '24' },
+		{ id: 'PreviewInput', mix: '0', input: '1', label: 'PRV 1', size: '24' },
+		{ id: 'PreviewInput', mix: '0', input: '2', label: 'PRV 2', size: '24' },
+		{ id: 'PreviewInput', mix: '0', input: '3', label: 'PRV 3', size: '24' },
+		{ id: 'PreviewInput', mix: '0', input: '4', label: 'PRV 4', size: '24' },
+		{ id: 'PreviewInput', mix: '0', input: '5', label: 'PRV 5', size: '24' },
+		{ id: 'PreviewInput', mix: '0', input: '6', label: 'PRV 6', size: '24' },
+		{ id: 'PreviewInput', mix: '0', input: '7', label: 'PRV 7', size: '24' },
+		{ id: 'PreviewInput', mix: '0', input: '8', label: 'PRV 8', size: '24' },
+		{ id: 'programCut', mix: '0', input: '1', label: 'PRGM 1', size: '24' },
+		{ id: 'programCut', mix: '0', input: '2', label: 'PRGM 2', size: '24' },
+		{ id: 'programCut', mix: '0', input: '3', label: 'PRGM 3', size: '24' },
+		{ id: 'programCut', mix: '0', input: '4', label: 'PRGM 4', size: '24' },
+		{ id: 'programCut', mix: '0', input: '5', label: 'PRGM 5', size: '24' },
+		{ id: 'programCut', mix: '0', input: '6', label: 'PRGM 6', size: '24' },
+		{ id: 'programCut', mix: '0', input: '7', label: 'PRGM 7', size: '24' },
+		{ id: 'programCut', mix: '0', input: '8', label: 'PRGM 8', size: '24' },
+		{ id: 'transitionMix', mix: '0', type: 'Cut', label: 'Cut', size: '24' },
+		{ id: 'transitionMix', mix: '0', type: 'Fade', label: 'Fade', size: '24' },
 		{ id: 'transition', label: 'AUTO', size: '24'}
 	];
 
@@ -68,18 +68,18 @@ exports.initPresets = function() {
 
 	// Mix 2-4
 	const mix2PreviewProgram = [
-		{ id: 'PreviewInput', mix: '2', input: '1', label: 'PRV MIX 2', size: '24' },
-		{ id: 'PreviewInput', mix: '3', input: '1', label: 'PRV MIX 3', size: '24' },
-		{ id: 'PreviewInput', mix: '4', input: '1', label: 'PRV MIX 4', size: '24' },
-		{ id: 'programCut', mix: '2', input: '1', label: 'PRGM MIX 2', size: '24' },
-		{ id: 'programCut', mix: '3', input: '1', label: 'PRGM MIX 3', size: '24' },
-		{ id: 'programCut', mix: '4', input: '1', label: 'PRGM MIX 4', size: '24' },
-		{ id: 'transitionMix', mix: '2', type: 'Cut', label: 'Cut MIX 2', size: '24' },
-		{ id: 'transitionMix', mix: '3', type: 'Cut', label: 'Cut MIX 3', size: '24' },
-		{ id: 'transitionMix', mix: '4', type: 'Cut', label: 'Cut MIX 4', size: '24' },
-		{ id: 'transitionMix', mix: '2', type: 'Fade', label: 'Fade MIX 2', size: '24' },
-		{ id: 'transitionMix', mix: '3', type: 'Fade', label: 'Fade MIX 3', size: '24' },
-		{ id: 'transitionMix', mix: '4', type: 'Fade', label: 'Fade MIX 4', size: '24' },
+		{ id: 'PreviewInput', mix: '1', input: '1', label: 'PRV MIX 2', size: '24' },
+		{ id: 'PreviewInput', mix: '2', input: '1', label: 'PRV MIX 3', size: '24' },
+		{ id: 'PreviewInput', mix: '3', input: '1', label: 'PRV MIX 4', size: '24' },
+		{ id: 'programCut', mix: '1', input: '1', label: 'PRGM MIX 2', size: '24' },
+		{ id: 'programCut', mix: '2', input: '1', label: 'PRGM MIX 3', size: '24' },
+		{ id: 'programCut', mix: '3', input: '1', label: 'PRGM MIX 4', size: '24' },
+		{ id: 'transitionMix', mix: '1', type: 'Cut', label: 'Cut MIX 2', size: '24' },
+		{ id: 'transitionMix', mix: '2', type: 'Cut', label: 'Cut MIX 3', size: '24' },
+		{ id: 'transitionMix', mix: '3', type: 'Cut', label: 'Cut MIX 4', size: '24' },
+		{ id: 'transitionMix', mix: '1', type: 'Fade', label: 'Fade MIX 2', size: '24' },
+		{ id: 'transitionMix', mix: '2', type: 'Fade', label: 'Fade MIX 3', size: '24' },
+		{ id: 'transitionMix', mix: '3', type: 'Fade', label: 'Fade MIX 4', size: '24' },
 	];
 
 	mix2PreviewProgram.forEach(item => {
