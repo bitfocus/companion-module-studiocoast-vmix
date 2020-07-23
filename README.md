@@ -57,3 +57,7 @@ and if there is more than one parameter use "&" as a separator between them like
 * Added presets for selecting audio and video source for Vmix Calls
 * Added presets for toggeling audio On/Off
 * Added presets for using and settings Title layers and Presets
+
+**v1.2.4**
+* Added the option to select the layer when using actions afecting countdowns
+* Added the action TitleBeginAnimation and ChangeCountdown to the list

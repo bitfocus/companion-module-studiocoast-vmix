@@ -418,17 +418,41 @@ exports.getActions = function() {
 
 		StartCountdown: {
 			label: 'Title - Start Countdown',
-			options: [input]
+			options: [
+				input,
+				{
+					type: 'textinput',
+					label: 'Layer',
+					id: 'selectedIndex',
+					default: 0
+				}
+			]
 		},
 
 		StopCountdown: {
 			label: 'Title - Stop Countdown',
-			options: [input]
+			options: [
+				input,
+				{
+					type: 'textinput',
+					label: 'Layer',
+					id: 'selectedIndex',
+					default: 0
+				}
+			]
 		},
 
 		PauseCountdown: {
 			label: 'Title - Pause Countdown',
-			options: [input]
+			options: [
+				input,
+				{
+					type: 'textinput',
+					label: 'Layer',
+					id: 'selectedIndex',
+					default: 0
+				}
+			]
 		},
 
 		SetCountdown: {
@@ -441,7 +465,33 @@ exports.getActions = function() {
 					default: '00:10:00',
 					regex: '/^[0-9][0-9]:[0-9][0-9]:[0-9][0-9]$/'
 				},
-				input
+				input,
+				{
+					type: 'textinput',
+					label: 'Layer',
+					id: 'selectedIndex',
+					default: 0
+				}
+			]
+		},
+
+		ChangeCountdown: {
+			label: 'Title - Change Countdown Time',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Time (00:00:00)',
+					id: 'value',
+					default: '00:10:00',
+					regex: '/^[0-9][0-9]:[0-9][0-9]:[0-9][0-9]$/'
+				},
+				input,
+				{
+					type: 'textinput',
+					label: 'Layer',
+					id: 'selectedIndex',
+					default: 0
+				}
 			]
 		},
 
@@ -496,6 +546,36 @@ exports.getActions = function() {
 					choices: [
 						{ id: 'NextTitlePreset', label: 'Select Next Title Preset' },
 						{ id: 'PreviousTitlePreset', label: 'Select Previous Title Preset' },
+					]
+				},
+			]
+		},
+
+		TitleBeginAnimation: {
+			label: 'Title - Begin Animation Page',
+			options: [
+				input,
+				{
+					type: 'dropdown',
+					label: 'Option',
+					id: 'value',
+					default: 'Page1',
+					choices: [
+						{ id: 'TransitionIn', label: 'Transition In' },
+						{ id: 'TransitionOut', label: 'Transition Out' },
+						{ id: 'Page1', label: 'Page 1' },
+						{ id: 'Page2', label: 'Page 2' },
+						{ id: 'Page3', label: 'Page 3' },
+						{ id: 'Page4', label: 'Page 4' },
+						{ id: 'Page5', label: 'Page 5' },
+						{ id: 'Page6', label: 'Page 6' },
+						{ id: 'Page7', label: 'Page 7' },
+						{ id: 'Page8', label: 'Page 8' },
+						{ id: 'Page9', label: 'Page 9' },
+						{ id: 'Page10', label: 'Page 10' },
+						{ id: 'Continuous', label: 'Continuous' },
+						{ id: 'DataChangeIn', label: 'Data Change In' },
+						{ id: 'DataChangeOut', label: 'Data Change Out' },
 					]
 				},
 			]
@@ -929,6 +1009,10 @@ exports.executeAction = function(action) {
 
 	else if (action.action === 'TitlePreset') {
 		cmd = `FUNCTION ${opt.functionID} Input=${opt.input}`;
+	}
+
+	else if (action.action === 'TitleBeginAnimation') {
+		cmd = `FUNCTION TitleBeginAnimation Input=${opt.input}&Value=${opt.value}`;
 	}
 
 	else if (action.action === 'AudioOnOff') {

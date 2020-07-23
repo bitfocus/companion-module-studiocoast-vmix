@@ -217,6 +217,21 @@ exports.initPresets = function() {
 		{ id: 'SelectTitlePreset', label: 'Title Preset 3', input: '', value: '3' },
 		{ id: 'TitlePreset', size: '18', label: 'Nest Title', input: '', value: 'NextTitlePreset' },
 		{ id: 'TitlePreset', size: '18', label: 'Prev Title', input: '', value: 'PreviousTitlePreset' },
+		{ id: 'TitleBeginAnimation', size: '14', label: 'Title Transition In', input: '', value: 'TransitionIn' },
+		{ id: 'TitleBeginAnimation', size: '14', label: 'Title Transition Out', input: '', value: 'TransitionOut' },
+		{ id: 'TitleBeginAnimation', size: '18', label: 'Title Page 1', input: '', value: 'Page1' },
+		{ id: 'TitleBeginAnimation', size: '18', label: 'Title Page 2', input: '', value: 'Page2' },
+		{ id: 'TitleBeginAnimation', size: '18', label: 'Title Page 3', input: '', value: 'Page3' },
+		{ id: 'TitleBeginAnimation', size: '18', label: 'Title Page 4', input: '', value: 'Page4' },
+		{ id: 'TitleBeginAnimation', size: '18', label: 'Title Page 5', input: '', value: 'Page5' },
+		{ id: 'TitleBeginAnimation', size: '18', label: 'Title Page 6', input: '', value: 'Page6' },
+		{ id: 'TitleBeginAnimation', size: '18', label: 'Title Page 7', input: '', value: 'Page7' },
+		{ id: 'TitleBeginAnimation', size: '18', label: 'Title Page 8', input: '', value: 'Page8' },
+		{ id: 'TitleBeginAnimation', size: '18', label: 'Title Page 9', input: '', value: 'Page9' },
+		{ id: 'TitleBeginAnimation', size: '18', label: 'Title Page 10', input: '', value: 'Page10' },
+		{ id: 'TitleBeginAnimation', size: '14', label: 'Title Continuous', input: '', value: 'Continuous' },
+		{ id: 'TitleBeginAnimation', size: '14', label: 'Title Data Change In', input: '', value: 'DataChangeIn' },
+		{ id: 'TitleBeginAnimation', size: '14', label: 'Title Data Change Out', input: '', value: 'DataChangeOut' },
 		{ id: 'ShowTitle', label: 'Title:', input: '', layer: '0' },
 	];
 
@@ -238,6 +253,10 @@ exports.initPresets = function() {
 		
 		else if (item.id === 'ShowTitle') {
 			feedbacks.push({ type: 'titleLayer', options: { input: item.input, layer: item.value, bg: this.rgb(255, 0, 0) } });
+		}
+
+		else if (item.id === 'TitleBeginAnimation') {
+			actions.push({ action: item.id, options: { input: item.input, value: item.value } });
 		}
 
 		const preset = createPreset('Titles and Graphics', item, actions, feedbacks);
@@ -585,6 +604,7 @@ exports.initPresets = function() {
 		{ id: 'StartCountdown', size: '18', label: 'CND Start' },
 		{ id: 'StopCountdown', size: '18', label: 'CND Stop' },
 		{ id: 'PauseCountdown', size: '18', label: 'CND Pause' },
+		{ id: 'ChangeCountdown', size: '14', label: 'Change 0 sec', time: '00:00:00' },	
 		{ id: 'SetCountdown', size: '18', label: 'CND 0 sec', time: '00:00:00' },
 		{ id: 'SetCountdown', size: '18', label: 'CND 10 sec', time: '00:00:10' },
 		{ id: 'SetCountdown', size: '18', label: 'CND 30 sec', time: '00:00:30' },
@@ -595,6 +615,10 @@ exports.initPresets = function() {
 	countdownFunctions.forEach(item => {
 		const actions = [{ action: item.id, options: { intput: '1' } }];
 		if (item.id === 'SetCountdown') {
+			actions[0].options.value = item.time;
+		}
+
+		if (item.id === 'ChangeCountdown') {
 			actions[0].options.value = item.time;
 		}
 
