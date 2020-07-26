@@ -31,10 +31,6 @@ exports.initAPI = function() {
 				};
 
 				const inputData = input => {
-
-//					if (input.list && input.list.length > 0) {
-//					this.log('error',"Input list without content");
-				
 					const data = { ...input.$ };
 
 					if (input.text) {
@@ -47,7 +43,6 @@ exports.initAPI = function() {
 
 					if (input.list) {
 						if (input.list.length > 0) {
-							this.log('error',"Input list without content");
 							data.list = input.list[0].$;
 						}
 						else {
