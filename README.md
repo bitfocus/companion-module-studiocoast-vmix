@@ -61,3 +61,4 @@ and if there is more than one parameter use "&" as a separator between them like
 **v1.2.4**
 * Added the option to select the layer when using actions afecting countdowns
 * Added the action TitleBeginAnimation and ChangeCountdown to the list
+* Fixed a bug with empty "lists inputs" breaking feedbacks

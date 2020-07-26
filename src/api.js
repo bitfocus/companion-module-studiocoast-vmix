@@ -31,6 +31,10 @@ exports.initAPI = function() {
 				};
 
 				const inputData = input => {
+
+//					if (input.list && input.list.length > 0) {
+//					this.log('error',"Input list without content");
+				
 					const data = { ...input.$ };
 
 					if (input.text) {
@@ -42,15 +46,22 @@ exports.initAPI = function() {
 					}
 
 					if (input.list) {
-						data.list = input.list[0].item.map((item, index) => {
-							const location = typeof item === 'string' ? item : item._;
-							return {
-								index,
-								location,
-								filename: location.split('\\')[location.split('\\').length - 1],
-								selected: item.$ && item.$.selected && item.$.selected === 'true'
-							};
-						});
+						if (input.list.length > 0) {
+							this.log('error',"Input list without content");
+							data.list = input.list[0].$;
+						}
+						else {
+
+							data.list = input.list[0].item.map((item, index) => {
+								const location = typeof item === 'string' ? item : item._;
+								return {
+									index,
+									location,
+									filename: location.split('\\')[location.split('\\').length - 1],
+									selected: item.$ && item.$.selected && item.$.selected === 'true'
+								};
+							});
+						}
 					}
 
 					if (input.position) {
@@ -78,6 +89,7 @@ exports.initAPI = function() {
 
 					return data;
 				};
+					
 
 				const overlayData = overlay => {
 					const data = {
