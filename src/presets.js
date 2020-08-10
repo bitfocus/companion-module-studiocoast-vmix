@@ -390,14 +390,14 @@ exports.initPresets = function() {
 
 	// Overlays
 	const overlayFunctions = [
-		{ id: 'OverlayInput1', size: '18', label: 'PGM OVL 1' },
-		{ id: 'OverlayInput2', size: '18', label: 'PGM OVL 2' },
-		{ id: 'OverlayInput3', size: '18', label: 'PGM OVL 3' },
-		{ id: 'OverlayInput4', size: '18', label: 'PGM OVL 4' },
-		{ id: 'PreviewOverlayInput1', size: '18', label: 'PREW OVL 1' },
-		{ id: 'PreviewOverlayInput2', size: '18', label: 'PREW OVL 2' },
-		{ id: 'PreviewOverlayInput3', size: '18', label: 'PREW OVL 3' },
-		{ id: 'PreviewOverlayInput4', size: '18', label: 'PREW OVL 4' },
+		{ id: 'OverlayInput1', size: '18', label: 'PGM OVL 1', overlay: '1' },
+		{ id: 'OverlayInput2', size: '18', label: 'PGM OVL 2', overlay: '2' },
+		{ id: 'OverlayInput3', size: '18', label: 'PGM OVL 3', overlay: '3' },
+		{ id: 'OverlayInput4', size: '18', label: 'PGM OVL 4', overlay: '4' },
+		{ id: 'PreviewOverlayInput1', size: '18', label: 'PREW OVL 1', overlay: '1' },
+		{ id: 'PreviewOverlayInput2', size: '18', label: 'PREW OVL 2', overlay: '2' },
+		{ id: 'PreviewOverlayInput3', size: '18', label: 'PREW OVL 3', overlay: '3' },
+		{ id: 'PreviewOverlayInput4', size: '18', label: 'PREW OVL 4', overlay: '4' },
 		{ id: 'OverlayInput1In', size: '14', label: 'Tran OVL 1 ON' },
 		{ id: 'OverlayInput2In', size: '14', label: 'Tran OVL 2 ON' },
 		{ id: 'OverlayInput3In', size: '14', label: 'Tran OVL 3 ON' },
@@ -410,7 +410,7 @@ exports.initPresets = function() {
 		{ id: 'OverlayInput2Off', size: '18', label: 'Set OVL 2 OFF' },
 		{ id: 'OverlayInput3Off', size: '18', label: 'Set OVL 3 OFF' },
 		{ id: 'OverlayInput4Off', size: '18', label: 'Set OVL 4 OFF' },
-		{ id: 'OverlayInputAllOff', size: '14', label: 'Set All OVL OFF' },
+		{ id: 'OverlayInputAllOff', size: '14', label: 'Set All OVL OFF', },
 		{ id: 'OverlayInput1Zoom', size: '18', label: 'PIP OVL 1 Z/F' },
 		{ id: 'OverlayInput2Zoom', size: '18', label: 'PIP OVL 2 Z/F' },
 		{ id: 'OverlayInput3Zoom', size: '18', label: 'PIP OVL 3 Z/F' },
@@ -419,7 +419,13 @@ exports.initPresets = function() {
 
 	overlayFunctions.forEach(item => {
 		const actions = [{ action: 'overlayFunctions', options: { functionID: item.id, input: 1 } }];
-		const preset = createPreset('Overlays', item, actions, []);
+		const feedbacks = [];
+
+		if (item.id === 'OverlayInput1' || item.id === 'OverlayInput2' || item.id === 'OverlayInput3' || item.id === 'OverlayInput4' || item.id === 'PreviewOverlayInput1' || item.id === 'PreviewOverlayInput2' || item.id === 'PreviewOverlayInput3' || item.id === 'PreviewOverlayInput4') {
+		feedbacks.push ({ type: 'overlayStatus', options: { input: item.input, overlay: item.overlay, fg: this.rgb(255, 255, 255), bgPreview: this.rgb(0, 255, 0), bgProgram: this.rgb(255, 0, 0) } });
+		};
+
+		const preset = createPreset('Overlays', item, actions, feedbacks);
 		presets.push(preset);
 	});
 

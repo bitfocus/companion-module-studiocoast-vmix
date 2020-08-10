@@ -1,6 +1,6 @@
 {
 	"name": "studiocoast-vmix",
-	"version": "1.2.4",
+	"version": "1.2.5",
 	"api_version": "1.0.0",
 	"keywords": [
 		"Software",
@@ -16,7 +16,8 @@
 	},
 	"author": "Per Røine <per.roine@gmail.com>",
 	"contributors": [
-		"Jeff Martin <dist@dist.dev>"
+		"Jeff Martin <dist@dist.dev>",
+		"Andreas H. Thomsen <mc-hauge@hotmail.com>"
 	],
 	"license": "MIT",
 	"dependencies": {

@@ -389,7 +389,15 @@ exports.executeFeedback = function(feedback, bank) {
 			return;
 		}
 
-		const remaining = parseInt(input.duration, 10) - parseInt(input.position, 10);
+		let markType = input.duration;
+
+		// Detect if there is a "Mark Out" in the video
+		if (input.markOut) {
+			markType = input.markOut;
+		}
+
+		const remaining = parseInt(markType, 10) - parseInt(input.position, 10);
+
 		const ms = Math.floor((remaining % 1000) / 100);
 		let sec = Math.floor((remaining % 60000) / 1000);
 		let min = Math.floor(remaining / 60000);
