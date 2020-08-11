@@ -581,6 +581,151 @@ exports.getActions = function() {
 			]
 		},
 
+		dataSourceAutoNext: {
+			label: 'DataSource - AutoNext',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'AutoNext State',
+					id: 'functionID',
+					defaut: 'DataSourceAutoNextOn',
+					choices: [
+						{ id: 'DataSourceAutoNextOn', label: 'On' },
+						{ id: 'DataSourceAutoNextOff', label: 'Off' },
+						{ id: 'DataSourceAutoNextOnOff', label: 'On/Off' }
+					]
+				},
+				{
+					type: 'textinput',
+					label: 'Name,Table',
+					id: 'value'
+				}
+			]
+		},
+
+		DataSourceNextRow: {
+			label: 'DataSource - Next Row',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Name,Table',
+					id: 'value'
+				}
+			]
+		},
+
+		DataSourcePreviousRow: {
+			label: 'DataSource - Previous Row',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Name,Table',
+					id: 'value'
+				}
+			]
+		},
+
+		DataSourceSelectRow: {
+			label: 'DataSource - Select Row',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Name,Table,Index',
+					id: 'value'
+				}
+			]
+		},
+
+		NextPicture: {
+			label: 'Slides - Next Picture/Slide',
+			options: [input]
+		},
+
+		PreviousPicture: {
+			label: 'Slides - Previous Picture/Slide',
+			options: [input]
+		},
+
+		videoActions: {
+			label: 'Video - Playback Actions',
+			options: [
+				input,
+				{
+					type: 'checkbox',
+					label: 'Affect Preview instead of inputs',
+					id: 'inputType',
+					default: false
+				},
+				{
+					type: 'dropdown',
+					label: 'Options',
+					id: 'functionID',
+					default: 'Play',
+					choices: [
+						{ id: 'Play', label: 'Play Video' },
+						{ id: 'Pause', label: 'Pause Video' },
+						{ id: 'PlayPause', label: 'Toggle Play and Pause' },
+						{ id: 'Restart', label: 'Restart Video' },
+						{ id: 'LoopOn', label: 'Loop Video On' },
+						{ id: 'LoopOff', label: 'Loop Video Off' },
+					]
+				}
+			]
+		},
+
+		//	Be aware this action should work as explained in the "Vmix Shortcode Docks" but seems to be % based and not on mili seconds. Use With Care
+		videoPlayhead: {
+			label: 'Video - Adjust or Set Playhead',
+			options: [
+				input,
+				{
+					type: 'checkbox',
+					label: 'Affect Preview instead of inputs',
+					id: 'inputType',
+					default: false
+				},
+				{
+					type: 'dropdown',
+					label: 'Adjustment',
+					id: 'adjustment',
+					default: 'Set',
+					choices: ['Set', 'Increment', 'Decrement'].map(item => ({ id: item, label: item }))
+				},
+				{
+					type: 'textinput',
+					label: 'value (in ms), but seems broken or some wierd % based setup',
+					id: 'value',
+					default: ''
+				}
+			]
+		},
+
+		videoMark: {
+			label: 'Video - Mark Functions',
+			options: [
+				input,
+				{
+					type: 'checkbox',
+					label: 'Affect Preview instead of inputs',
+					id: 'inputType',
+					default: false
+				},
+				{
+					type: 'dropdown',
+					label: 'Function',
+					id: 'functionID',
+					default: 'MarkIn',
+					choices: [
+						{ id: 'MarkIn', label: 'Mark In' },
+						{ id: 'MarkOut', label: 'Mark Out' },
+						{ id: 'MarkReset', label: 'Mark Reset' },
+						{ id: 'MarkResetIn', label: 'Mark Reset In' },
+						{ id: 'MarkResetOut', label: 'Mark Reset Out' },
+					]
+				}
+			]
+		},
+
 		replayACamera: {
 			label: 'Replay - Replay A Camera',
 			options: [
@@ -833,71 +978,6 @@ exports.getActions = function() {
 			]
 		},
 
-		NextPicture: {
-			label: 'Input - Next Picture/Slide',
-			options: [input]
-		},
-
-		PreviousPicture: {
-			label: 'Input - Previous Picture/Slide',
-			options: [input]
-		},
-
-		dataSourceAutoNext: {
-			label: 'DataSource - AutoNext',
-			options: [
-				{
-					type: 'dropdown',
-					label: 'AutoNext State',
-					id: 'functionID',
-					defaut: 'DataSourceAutoNextOn',
-					choices: [
-						{ id: 'DataSourceAutoNextOn', label: 'On' },
-						{ id: 'DataSourceAutoNextOff', label: 'Off' },
-						{ id: 'DataSourceAutoNextOnOff', label: 'On/Off' }
-					]
-				},
-				{
-					type: 'textinput',
-					label: 'Name,Table',
-					id: 'value'
-				}
-			]
-		},
-
-		DataSourceNextRow: {
-			label: 'DataSource - Next Row',
-			options: [
-				{
-					type: 'textinput',
-					label: 'Name,Table',
-					id: 'value'
-				}
-			]
-		},
-
-		DataSourcePreviousRow: {
-			label: 'DataSource - Previous Row',
-			options: [
-				{
-					type: 'textinput',
-					label: 'Name,Table',
-					id: 'value'
-				}
-			]
-		},
-
-		DataSourceSelectRow: {
-			label: 'DataSource - Select Row',
-			options: [
-				{
-					type: 'textinput',
-					label: 'Name,Table,Index',
-					id: 'value'
-				}
-			]
-		},
-
 		KeyPress: {
 			label: 'General - KeyPress',
 			options: [
@@ -1013,6 +1093,31 @@ exports.executeAction = function(action) {
 
 	else if (action.action === 'TitleBeginAnimation') {
 		cmd = `FUNCTION TitleBeginAnimation Input=${opt.input}&Value=${opt.value}`;
+	}
+
+	else if (action.action === 'videoActions' || action.action === 'videoMark') {
+		if (opt.inputType == true) {
+			cmd = `FUNCTION ${opt.functionID} Input=0`;	
+		} else {
+			cmd = `FUNCTION ${opt.functionID} Input=${opt.input}`;
+		}
+	}
+
+	else if (action.action === 'videoPlayhead') {
+		let text = opt.value;
+
+		// URL Encode plus and equals symbols to perform addition/subtraction on value instead of setting to a value.
+		if (opt.adjustment === 'Increment') {
+			text = '%2b%3d' + text;
+		} else if (opt.adjustment === 'Decrement') {
+			text = '-%3d' + text;
+		}
+
+		if (opt.inputType == true) {
+			cmd = `FUNCTION SetPosition Input=0&Value=${text}`;
+		} else {
+			cmd = `FUNCTION SetPosition Input=${opt.input}&Value=${text}`;
+		}
 	}
 
 	else if (action.action === 'AudioOnOff') {

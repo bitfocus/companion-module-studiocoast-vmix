@@ -66,3 +66,4 @@ and if there is more than one parameter use "&" as a separator between them like
 **v1.2.5**
 * Updated some presets, with coresponding feedbacks
 * Updated Video Timer feedback to autodetect and use "Mark out" if set
+* Added More functions Afecting Video Playback and Marking In and Out's
