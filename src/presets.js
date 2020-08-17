@@ -263,6 +263,48 @@ exports.initPresets = function() {
 		presets.push(preset);
 	});	
 	
+	// Video Playback
+	const videoActionsList = [
+		{ id: 'videoActions', input: '0', inputType: 'true', type: 'Play', label: 'Play', size: '18' },
+		{ id: 'videoActions', input: '0', inputType: 'true', type: 'Pause', label: 'Pause', size: '18' },
+		{ id: 'videoActions', input: '0', inputType: 'true', type: 'PlayPause', label: 'Play Pause', size: '18' },
+		{ id: 'videoActions', input: '0', inputType: 'true', type: 'Restart', label: 'Restart', size: '18' },
+		{ id: 'videoActions', input: '0', inputType: 'true', type: 'LoopOn', label: 'Loop ON', size: '18' },
+		{ id: 'videoActions', input: '0', inputType: 'true', type: 'LoopOff', label: 'Loop OFF', size: '18' },
+		{ id: 'videoPlayhead', input: '0', inputType: 'true', type: 'Set', value: '10000', label: 'Playhead 10 sec', size: '14' },
+		{ id: 'videoPlayhead', input: '0', inputType: 'true', type: 'Increment', value: '10000',label: 'Playhead +10 sec', size: '14' },
+		{ id: 'videoPlayhead', input: '0', inputType: 'true', type: 'Decrement', value: '10000', label: 'Playhead -10 sec', size: '14' },
+		{ id: 'videoMark', input: '0', inputType: 'true', type: 'MarkIn', label: 'Mark In', size: '18' },
+		{ id: 'videoMark', input: '0', inputType: 'true', type: 'MarkOut', label: 'Mark Out', size: '18' },
+		{ id: 'videoMark', input: '0', inputType: 'true', type: 'MarkReset', label: 'Clear In/Out', size: '18' },
+		{ id: 'videoMark', input: '0', inputType: 'true', type: 'MarkResetIn', label: 'Clear In', size: '18' },
+		{ id: 'videoMark', input: '0', inputType: 'true', type: 'MarkResetOut', label: 'Clear Out', size: '18' },
+		{ id: 'videoTimer', input: '0', label: 'Video Timecode',},
+	];
+
+	videoActionsList.forEach(item => {
+		const actions = [];
+		const feedbacks = [];
+
+		if (item.id === 'videoActions') {
+			actions.push({ action: item.id, options: { input: item.input, inputType: item.inputType, functionID: item.type } });
+		}
+		
+		else if (item.id === 'videoPlayhead') {
+			actions.push({ action: item.id, options: { input: item.input, inputType: item.inputType, adjustment: item.type, value: item.value } });
+		}
+		
+		else if (item.id === 'videoMark') {
+			actions.push({ action: item.id, options: { input: item.input, inputType: item.inputType, functionID: item.type } });
+		}
+		
+		else if (item.id === 'videoMark') {
+			feedbacks.push({ type: 'videoTimer', options: { input: item.input, color: this.rgb(255, 255, 255), color30: this.rgb(255, 255, 0), color10: this.rgb(255, 0, 0) } });
+		}
+		const preset = createPreset('Video Playback input', item, actions, feedbacks);
+		presets.push(preset);
+	});
+
 	// General Commands
 	const commands = [
 		{ id: 'NextPicture', size: '18', label: 'Next Photo' },
