@@ -17,6 +17,14 @@ exports.updateVariableDefinitions = function() {
 				name: `input_volume_${inputName}`
 			})
 		};
+
+	});
+
+	this.data.inputs.forEach(input => {
+		variables.push({
+			label: `Input ${input.number} Short Title`,
+			name: `input_${input.number}_name`
+		})
 	});
 
 	this.setVariableDefinitions(variables);

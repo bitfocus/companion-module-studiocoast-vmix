@@ -643,9 +643,6 @@ exports.executeFeedback = function(feedback, bank) {
 				}
 		}	
 
-		// dBLeft = parseFloat(input.meterF1);
-		// dBRight = parseFloat(input.meterF2);
-
 		dBLeft = (20 * Math.log(dBLeft) / Math.LN10);
 		dBRight = (20 * Math.log(dBRight) / Math.LN10);
 		

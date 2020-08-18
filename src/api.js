@@ -65,12 +65,10 @@ exports.initAPI = function() {
 
 					if (input.meterF1) {
 						data.meterF1 = input.meterF1[0].$;
-						// debug.log(data.meterF1);		
 					}
 
 					if (input.meterF2) {
 						data.meterF2 = input.meterF2[0].$;
-						// debug.log(data.meterF2);		
 					}
 
 					if (input.overlay) {
@@ -234,6 +232,16 @@ exports.initAPI = function() {
 				// Update variables
 				data.inputs.forEach(input => {
 					const previousState = this.data.inputs.find(item => item.key === input.key);
+
+					if (input.type === 'VideoList') {
+						// // Remove symbols other than - _ . from the input title
+						let inputTitle = input.title.replace(/[^a-z0-9-_.]+/gi, '');
+						this.setVariable(`input_${input.number}_name`, inputTitle);						
+					} else {
+						// Remove symbols other than - _ . from the input title
+						let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '');
+						this.setVariable(`input_${input.number}_name`, inputName);
+					}
 
 					// Check input has volume and a different or no previous volume
 					if (input.volume !== undefined && (previousState === undefined || input.volume !== previousState.volume)) {

@@ -69,4 +69,6 @@ and if there is more than one parameter use "&" as a separator between them like
 * Added More functions Afecting Video Playback and Marking In and Out's
 * Added Presets for Video Playback and Marking In and Out's
 * Added Feedback live dB for monitoring Audio on an input or a bus
+* Added Varibles that lists the ShortTitle of an imput
+* Added Varibles that lists the full title on "list" inputs 
 * Updated Audio presets with the new feedbacks
