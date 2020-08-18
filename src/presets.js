@@ -567,12 +567,18 @@ exports.initPresets = function() {
 
 		if (item.id === 'Audio') {
 			actions.push({ action: item.id, options: { input: '' } });
-			feedbacks.push({ type: 'inputAudio', options: { input: '', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } });
+			feedbacks.push(
+				{ type: 'inputAudio', options: { input: '1', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } },
+				{ type: 'liveInputVolume', options: { input: '1', value: 'false', color: this.rgb(255, 0, 0), color1: this.rgb(255, 255, 0), color6: this.rgb(0, 255, 0), color18: this.rgb(0, 192, 0),  color36: this.rgb(0, 128, 0) } }
+			);
 		}
 		
 		else if (item.id === 'AudioOnOff') {
 			actions.push({ action: item.id, options: { input: item.input, functionID: item.value } });
-			feedbacks.push({ type: 'inputAudio', options: { input: '', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } });
+			feedbacks.push(
+				{ type: 'inputAudio', options: { input: '1', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } },
+				{ type: 'liveInputVolume', options: { input: '1', value: 'false', color: this.rgb(255, 0, 0), color1: this.rgb(255, 255, 0), color6: this.rgb(0, 255, 0), color18: this.rgb(0, 192, 0),  color36: this.rgb(0, 128, 0) } }
+			);
 		}
 		
 		const preset = createPreset('Audio', item, actions, feedbacks);
@@ -583,7 +589,7 @@ exports.initPresets = function() {
 		const actions = [{ action: item.id, options: {} }];
 
 		if (['Audio', 'Solo', 'AudioBus'].includes(item.id)) {
-			actions[0].options.input = '';
+			actions[0].options.input = '1';
 		}
 
 		if (['AudioBus', 'BusXAudio', 'BusXSolo', 'BusXSendToMaster'].includes(item.id)) {
@@ -593,48 +599,28 @@ exports.initPresets = function() {
 		const feedbacks = [];
 
 		if (item.id === 'BusXAudio') {
-			feedbacks.push({
-				type: 'busMute',
-				options: {
-					bus: 'A',
-					fg: this.rgb(255, 255, 255),
-					bg: this.rgb(255, 0, 0)
-				}
-			});
+			feedbacks.push(
+				{ type: 'busMute', options: { bus: 'A', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } },
+				{ type: 'liveBusVolume', options: { bus: 'A', value: 'false', color: this.rgb(255, 0, 0), color1: this.rgb(255, 255, 0), color6: this.rgb(0, 255, 0), color18: this.rgb(0, 192, 0),  color36: this.rgb(0, 128, 0) } }
+			);
 		}
 		
 		else if (item.id === 'Audio') {
-			feedbacks.push({
-				type: 'inputMute',
-				options: {
-					input: '',
-					fg: this.rgb(255, 255, 255),
-					bg: this.rgb(255, 0, 0)
-				}
-			});
+			feedbacks.push(
+				{ type: 'inputMute', options: { input: '1', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } },
+				{ type: 'liveInputVolume', options: { input: '1', value: 'false', color: this.rgb(255, 0, 0), color1: this.rgb(255, 255, 0), color6: this.rgb(0, 255, 0), color18: this.rgb(0, 192, 0),  color36: this.rgb(0, 128, 0) } }
+			);
 		}
 
 		else if (item.id === 'Solo') {
-			feedbacks.push({
-				type: 'inputSolo',
-				options: {
-					input: '',
-					fg: this.rgb(255, 255, 255),
-					bg: this.rgb(255, 0, 0)
-				}
-			});
+			feedbacks.push(
+				{ type: 'inputSolo', options: { input: '1', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 255, 0) } },
+				{ type: 'liveInputVolume', options: { input: '1', value: 'false', color: this.rgb(255, 0, 0), color1: this.rgb(255, 255, 0), color6: this.rgb(0, 255, 0), color18: this.rgb(0, 192, 0),  color36: this.rgb(0, 128, 0) } }
+			);
 		}
 		
 		else if (item.id === 'AudioBus') {
-			feedbacks.push({
-				type: 'inputBusRouting',
-				options: {
-					input: '',
-					bus: 'A',
-					fg: this.rgb(255, 255, 255),
-					bg: this.rgb(0, 255, 0)
-				}
-			});
+			feedbacks.push({ type: 'inputBusRouting', options: { input: '1', bus: 'A', fg: this.rgb(255, 255, 255), bg: this.rgb(0, 255, 0) } });
 		}
 
 		const preset = createPreset('Audio', item, actions, feedbacks);
@@ -643,7 +629,8 @@ exports.initPresets = function() {
 
 	inputVolume.forEach(item => {
 		const actions = [{ action: 'SetVolumeFade', options: { input: '1', fadeMin: item.volume, fadeTime: '2000' } }];
-		const preset = createPreset('Audio', item, actions, []);
+		const feedbacks =	[{ type: 'liveInputVolume', options: { input: '1', value: 'false', color: this.rgb(255, 0, 0), color1: this.rgb(255, 255, 0), color6: this.rgb(0, 255, 0), color18: this.rgb(0, 192, 0),  color36: this.rgb(0, 128, 0) } }];
+		const preset = createPreset('Audio', item, actions, feedbacks);
 		presets.push(preset);
 	});
 

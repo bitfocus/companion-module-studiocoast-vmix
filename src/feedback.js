@@ -1,3 +1,5 @@
+const { text } = require("express");
+
 exports.initFeedbacks = function() {
 	const feedbacks = {};
 
@@ -52,19 +54,19 @@ exports.initFeedbacks = function() {
 	};
 
 	feedbacks.inputPreview = {
-		label: 'Change colors based on previewed input',
+		label: 'Preview - Change colors based on previewed input',
 		description: 'If the specified input is previewed, change colors of the bank',
 		options: [input, mixInput, foregroundColor, backgroundColorPreview]
 	};
 
 	feedbacks.inputLive = {
-		label: 'Change colors based on live input',
+		label: 'Live - Change colors based on live input',
 		description: 'If the specified input is live, change colors of the bank',
 		options: [input, mixInput, foregroundColor, backgroundColorProgram]
 	};
 
 	feedbacks.overlayStatus = {
-		label: 'Overlay status',
+		label: 'Overlay - Overlay status',
 		description: 'Indicates if an input is previewed, or live, as an overlay',
 		options: [
 			input,
@@ -92,7 +94,7 @@ exports.initFeedbacks = function() {
 	};
 
 	feedbacks.videoTimer = {
-		label: 'Video Timer',
+		label: 'Video - Video Timer',
 		description: 'Time remaining on video input',
 		options: [
 			input,
@@ -124,7 +126,7 @@ exports.initFeedbacks = function() {
 	};
 
 	feedbacks.status = {
-		label: 'vMix status',
+		label: 'vMix - status',
 		description: 'Current status of vMix, such as recording, external, etc...',
 		options: [
 			{
@@ -152,7 +154,7 @@ exports.initFeedbacks = function() {
 	};
 
 	feedbacks.busMute = {
-		label: 'Bus mute',
+		label: 'Audio - Bus mute',
 		description: 'Indicate if a bus is muted',
 		options: [
 			{
@@ -168,24 +170,24 @@ exports.initFeedbacks = function() {
 	};
 
 	feedbacks.inputMute = {
-		label: 'Input mute',
+		label: 'Audio - Input mute',
 		description: 'Indicate if an input is muted',
 		options: [input, foregroundColor, backgroundColorProgram]
 	};
 
 	feedbacks.inputAudio = {
-		label: 'Input Audio',
+		label: 'Audio - Input Audio',
 		description: 'Indicate if an inputs Audio is ON',
 		options: [input, foregroundColor, backgroundColorProgram]
 	};
 	feedbacks.inputSolo = {
-		label: 'Input solo',
+		label: 'Audio - Input solo',
 		description: 'Indicate if an input is set to Solo',
 		options: [input, foregroundColor, backgroundColorProgram]
 	};
 
 	feedbacks.inputBusRouting = {
-		label: 'Input Bus Routing',
+		label: 'Audio - Input Bus Routing',
 		description: 'Indicate which busses an input will output to',
 		options: [
 			input,
@@ -197,12 +199,111 @@ exports.initFeedbacks = function() {
 				choices: ['Master', 'A', 'B', 'C', 'D', 'E', 'F', 'G'].map(id => ({ id, label: id }))
 			},
 			foregroundColor,
-			backgroundColorPreview
+			{
+				type: 'colorpicker',
+				label: 'Background color',
+				id: 'bg',
+				default: this.rgb(255, 255, 0)
+			}
 		]
   };
-  
+
+	feedbacks.liveInputVolume = {
+		label: 'Audio - Input live dB value',
+		description: 'Indicate what the live dB value on an input is',
+		options: [
+			input,
+			{
+				type: 'checkbox',
+				label: 'Show the actual dB Value',
+				id: 'value',
+				default: false
+			},
+			{
+				type: 'colorpicker',
+				label: 'Text color above -1 dB',
+				id: 'color',
+				default: this.rgb(255, 0, 0)
+			},
+			{
+				type: 'colorpicker',
+				label: 'Text color below -1 dB',
+				id: 'color1',
+				default: this.rgb(255, 255, 0)
+			},
+			{
+				type: 'colorpicker',
+				label: 'Text color below -6 dB',
+				id: 'color6',
+				default: this.rgb(0, 255, 0)
+			},
+			{
+				type: 'colorpicker',
+				label: 'Text color below -18 dB',
+				id: 'color18',
+				default: this.rgb(0, 192, 0)
+			},
+			{
+				type: 'colorpicker',
+				label: 'Text color below -36 dB',
+				id: 'color36',
+				default: this.rgb(0, 128, 0)
+			}
+		]
+	};
+	
+	feedbacks.liveBusVolume = {
+		label: 'Audio - Bus live dB value',
+		description: 'Indicate what the live dB value on a bus is',
+		options: [
+			{
+				type: 'dropdown',
+				label: 'Bus',
+				id: 'bus',
+				default: 'Master',
+				choices: ['Master', 'A', 'B', 'C', 'D', 'E', 'F', 'G'].map(id => ({ id, label: id }))
+			},
+			{
+				type: 'checkbox',
+				label: 'Show the actual dB value',
+				id: 'value',
+				default: false
+			},
+			{
+				type: 'colorpicker',
+				label: 'Text color above -1 dB',
+				id: 'color',
+				default: this.rgb(255, 0, 0)
+			},
+			{
+				type: 'colorpicker',
+				label: 'Text color below -1 dB',
+				id: 'color1',
+				default: this.rgb(255, 255, 0)
+			},
+			{
+				type: 'colorpicker',
+				label: 'Text color below -6 dB',
+				id: 'color6',
+				default: this.rgb(0, 255, 0)
+			},
+			{
+				type: 'colorpicker',
+				label: 'Text color below -18 dB',
+				id: 'color18',
+				default: this.rgb(0, 192, 0)
+			},
+			{
+				type: 'colorpicker',
+				label: 'Text color below -36 dB',
+				id: 'color36',
+				default: this.rgb(0, 128, 0)
+			}
+		]
+	};
+
 	feedbacks.inputVolumeLevel = {
-		label: 'Input Volume',
+		label: 'Audio - Input Volume',
 		description: 'Indicate if an input fader is in a set value',
 		options: [
 			input,
@@ -220,7 +321,7 @@ exports.initFeedbacks = function() {
 	};
   
 	feedbacks.busVolumeLevel = {
-		label: 'Bus Volume',
+		label: 'Audio - Bus Volume',
 		description: 'Indicate if an output bus fader is within a set range',
 		options: [
 			{
@@ -244,7 +345,7 @@ exports.initFeedbacks = function() {
 	};
 
 	feedbacks.titleLayer = {
-		label: 'Title Layer',
+		label: 'Title - Layer',
 		description: 'Returns the text of a title by title index or name',
 		options: [
 			input,
@@ -258,7 +359,7 @@ exports.initFeedbacks = function() {
 	};
 
 	feedbacks.replayStatus = {
-		label: 'Replay Recording/Live',
+		label: 'Replay - Recording/Live',
 		description: 'Indicates current recording or live status of a replay input',
 		options: [
 			{
@@ -277,7 +378,7 @@ exports.initFeedbacks = function() {
 	};
 
 	feedbacks.replayEvents = {
-		label: 'Replay Events Tab',
+		label: 'Replay - Events Tab',
 		description: 'Indicates currently selected Events tab',
 		options: [
 			{
@@ -293,7 +394,7 @@ exports.initFeedbacks = function() {
 	};
 
 	feedbacks.replayCamera = {
-		label: 'Replay Recording/Live',
+		label: 'Replay - Recording/Live',
 		description: 'Indicates current recording or live status of a replay input',
 		options: [
 			{
@@ -420,7 +521,11 @@ exports.executeFeedback = function(feedback, bank) {
 			min = '0' + min;
 		}
 
-		return { color: color(), text: `${min}:${sec}.${ms}` };
+		if (bank.text != '') {
+			return { color: color(), text: bank.text + `\\n ${min}:${sec}.${ms}` };
+		} else {
+			return { color: color(), text: bank.text + `${min}:${sec}.${ms}` };	
+		}
 	}
 	
 	else if (feedback.type === 'status') {
@@ -477,6 +582,103 @@ exports.executeFeedback = function(feedback, bank) {
 		}
 	}
 	
+	else if (feedback.type === 'liveInputVolume') {
+		let input = getInput(feedback.options.input);
+
+		// Detect if there is sound enabled on an input
+		if (!input) {
+			return
+		}
+		
+		var dBLeft = parseFloat(input.meterF1);
+		var dBRight = parseFloat(input.meterF2);
+
+		dBLeft = (20 * Math.log(dBLeft) / Math.LN10);
+		dBRight = (20 * Math.log(dBRight) / Math.LN10);
+		
+		dB = Math.max(dBLeft, dBRight);
+		dB = +dB.toFixed(1);
+		
+		const color = () => {
+			if (dB > -1) {
+				return feedback.options.color;
+			}
+			else if (dB > -6) {
+				return feedback.options.color1;
+			}
+			else if (dB > -18) {
+				return feedback.options.color6;
+			}
+			else if (dB > -36) {
+				return feedback.options.color18;
+			}
+			return feedback.options.color36;
+		};
+
+		if (feedback.options.value == true) {
+			if (bank.text != '') {
+				return { color: color(), text: bank.text + `\\n ${dB} dB` };
+			} else {
+				return { color: color(), text: bank.text + `${dB} dB` };
+			}
+		} else {
+			return { color: color() };
+		}
+	}
+
+	else if (feedback.type === 'liveBusVolume') {
+		var dBLeft;
+		var dBRight;
+
+		if (feedback.options.bus === 'Headphones') {
+			return
+		}
+
+		else {
+			const busID = feedback.options.bus === 'Master' ? 'master' : ( 'bus' + feedback.options.bus);
+			const bus = this.data.audio.find(output => output.bus === busID);
+			if (bus !== undefined) {
+				dBLeft = parseFloat(bus.meterF1);
+				dBRight = parseFloat(bus.meterF2);
+				}
+		}	
+
+		// dBLeft = parseFloat(input.meterF1);
+		// dBRight = parseFloat(input.meterF2);
+
+		dBLeft = (20 * Math.log(dBLeft) / Math.LN10);
+		dBRight = (20 * Math.log(dBRight) / Math.LN10);
+		
+		dB = Math.max(dBLeft, dBRight);
+		dB = +dB.toFixed(1);
+		
+		const color = () => {
+			if (dB > -1) {
+				return feedback.options.color;
+			}
+			else if (dB > -6) {
+				return feedback.options.color1;
+			}
+			else if (dB > -18) {
+				return feedback.options.color6;
+			}
+			else if (dB > -36) {
+				return feedback.options.color18;
+			}
+			return feedback.options.color36;
+		};
+
+		if (feedback.options.value == true) {
+			if (bank.text != '') {
+				return { color: color(), text: bank.text + `\\n ${dB} dB` };
+			} else {
+				return { color: color(), text: bank.text + `${dB} dB` };
+			}
+		} else {
+			return { color: color() };
+		}
+	}
+
 	else if (feedback.type === 'inputVolumeLevel') {
 		let input = getInput(feedback.options.input);
 		if (input === undefined || input.volume === undefined) {

@@ -63,6 +63,16 @@ exports.initAPI = function() {
 						data.position = input.position[0].$;
 					}
 
+					if (input.meterF1) {
+						data.meterF1 = input.meterF1[0].$;
+						// debug.log(data.meterF1);		
+					}
+
+					if (input.meterF2) {
+						data.meterF2 = input.meterF2[0].$;
+						// debug.log(data.meterF2);		
+					}
+
 					if (input.overlay) {
 						data.overlay = input.overlay.map(item => {
 							const overlay = {
@@ -206,6 +216,7 @@ exports.initAPI = function() {
 					changes.add('inputBusRouting');
 					changes.add('titleLayer');
 					changes.add('inputVolumeLevel');
+					changes.add('liveInputVolume');
 				}
 
 				// Check for status changes
@@ -217,6 +228,7 @@ exports.initAPI = function() {
 				if (!_.isEqual(data.audio, this.data.audio) || inputCheck) {
 					changes.add('busMute');
 					changes.add('busVolumeLevel');
+					changes.add('liveBusVolume');
 				}
 
 				// Update variables
