@@ -1,4 +1,4 @@
-exports.getConfigFields = function() {
+exports.getConfigFields = function () {
 	return [
 		{
 			type: 'textinput',
@@ -23,6 +23,14 @@ exports.getConfigFields = function() {
 			width: 3,
 			default: 8099,
 			regex: this.REGEX_PORT
+		},
+		{
+			type: 'textinput',
+			id: 'apiPollInterval',
+			label: 'API Polling interval (ms) (default: 100, 0 for disabled)',
+			width: 6,
+			default: 100,
+			regex: this.REGEX_NUMBER
 		}
 	];
 };

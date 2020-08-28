@@ -2,7 +2,7 @@ const got = require('got');
 const xml2js = require('xml2js');
 const _ = require('lodash');
 
-exports.initAPI = function() {
+exports.initAPI = function () {
 	const parseXML = body => {
 		xml2js.parseString(body, (err, xml) => {
 			if (err) {
@@ -92,7 +92,7 @@ exports.initAPI = function() {
 
 					return data;
 				};
-					
+
 
 				const overlayData = overlay => {
 					const data = {
@@ -236,7 +236,7 @@ exports.initAPI = function() {
 					if (input.type === 'VideoList') {
 						// // Remove symbols other than - _ . from the input title
 						let inputTitle = input.title.replace(/[^a-z0-9-_.]+/gi, '');
-						this.setVariable(`input_${input.number}_name`, inputTitle);						
+						this.setVariable(`input_${input.number}_name`, inputTitle);
 					} else {
 						// Remove symbols other than - _ . from the input title
 						let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '');
@@ -285,5 +285,11 @@ exports.initAPI = function() {
 			});
 	};
 
-	this.pollAPI = setInterval(getStatus, 100);
+	if (this.pollAPI) {
+		clearInterval(this.pollAPI);
+	}
+
+	if (this.config.apiPollInterval !== 0) {
+		this.pollAPI = setInterval(getStatus, this.config.apiPollInterval);
+	}
 };
