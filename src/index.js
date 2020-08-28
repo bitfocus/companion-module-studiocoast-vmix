@@ -27,12 +27,46 @@ class VMixInstance extends instance_skel {
 			preset: '',
 			audio: [],
 			inputs: [],
+			overlays: [
+				{ number: '1', preview: false },
+				{ number: '2', preview: false },
+				{ number: '3', preview: false },
+				{ number: '4', preview: false },
+				{ number: '5', preview: false },
+				{ number: '6', preview: false },
+			],
+			transition: [
+				{ number: '1', effect: 'fade', duration: '1000' },
+				{ number: '2', effect: 'fade', duration: '1000' },
+				{ number: '3', effect: 'fade', duration: '1000' },
+				{ number: '4', effect: 'fade', duration: '1000' },
+			],
 			mix: [
 				{ id: 1, active: false, preview: 0, program: 0 },
 				{ id: 2, active: false, preview: 0, program: 0 },
 				{ id: 3, active: false, preview: 0, program: 0 },
 				{ id: 4, active: false, preview: 0, program: 0 }
-			]
+			],
+			audio: [
+				{ volume: '100', muted: 'False', meterF1: '0', meterF2: '0', headphonesVolume: '100', bus: 'master' }
+			],
+			status: {
+				fadeToBlack: false,
+				recording: false,
+				external: false,
+				streaming: false,
+				stream: [false, false, false],
+				playList: false,
+				multiCorder: false,
+				fullscreen: false,
+			},
+			replay: {
+				recording: false,
+				live: false,
+				events: '1',
+				cameraA: '0',
+				cameraB: '0'
+			}
 		};
 
 		this.config.host = this.config.host || '127.0.0.1';
