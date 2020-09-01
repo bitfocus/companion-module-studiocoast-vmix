@@ -27,9 +27,9 @@ exports.getConfigFields = function () {
 		{
 			type: 'textinput',
 			id: 'apiPollInterval',
-			label: 'API Polling interval (ms) (default: 100, 0 for disabled)',
-			width: 6,
-			default: 100,
+			label: 'API Polling interval (ms) (default: 500, min: 100, 0 for disabled) - See the Help section for details.',
+			width: 12,
+			default: 500,
 			regex: this.REGEX_NUMBER
 		}
 	];

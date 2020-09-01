@@ -290,6 +290,6 @@ exports.initAPI = function () {
 	}
 
 	if (this.config.apiPollInterval !== 0) {
-		this.pollAPI = setInterval(getStatus, this.config.apiPollInterval);
+		this.pollAPI = setInterval(getStatus, this.config.apiPollInterval < 100 ? 100 : this.config.apiPollInterval);
 	}
 };
