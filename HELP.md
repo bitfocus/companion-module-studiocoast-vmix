@@ -11,10 +11,15 @@ vMix runs on Windows 7, Windows 8 and Windows 10 platforms.
 vMix is a complete live video production software solution with features including LIVE mixing, switching, recording and LIVE streaming of SD, full HD and 4K video sources including cameras, video files, DVDs, images, Powerpoint and much much more.
 
 **API Polling Interval**
-The majority of vMix data used by Companion for feedback and variables is retrieved through the vMix REST API, the frequency at which this data is polled can be changed in the instance config. All instances prior to 1.2.6 had a poll interval of 100ms, but from 1.2.6 the default has been changed to 500ms. It is recommended that users who need responsive feedbacks and had no previous issues to lower the interval in the config back to 100ms, and for users with a significantly large number of inputs or running on older hardware to either leave the interval at 500ms, or enter a slower interval should the server be insufficient for the number of inputs.
 
-Default: 500ms
-Minimum: 100ms
+The majority of vMix data used by Companion for feedback and variables is retrieved through the vMix REST API, the frequency at which this data is polled can be changed in the instance config.
+
+All instances prior to 1.2.6 had a poll interval of 100ms, but from 1.2.6 the default has been changed to 250ms. It is recommended that users who need responsive feedbacks and had no previous issues to lower the interval in the config back to 100ms, and for users with a significantly large number of inputs or running on older hardware to either leave the interval at 250ms, or enter a slower interval should the server be insufficient for the number of inputs.
+
+If you experience high vMix CPU usage while this Companion instance is enabled, increase the interval delay value to slow down the API Polling.
+
+Default: 250ms <br />
+Minimum: 100ms <br />
 Set to 0 to disable API Polling.
 
 

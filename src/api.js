@@ -289,7 +289,7 @@ exports.initAPI = function () {
 		clearInterval(this.pollAPI);
 	}
 
-	if (this.config.apiPollInterval !== 0) {
+	if (this.config.apiPollInterval != 0) {
 		this.pollAPI = setInterval(getStatus, this.config.apiPollInterval < 100 ? 100 : this.config.apiPollInterval);
 	}
 };
