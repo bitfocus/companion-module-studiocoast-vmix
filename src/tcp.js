@@ -22,7 +22,6 @@ exports.init = function() {
 		this.socket.on('connect', () => {
 			this.status(this.STATE_OK);
 			this.debug('Connected');
-			this.socket.send('SUBSCRIBE TALLY\r\n');
 		});
 	}
 };
