@@ -218,7 +218,7 @@ exports.initAPI = function () {
 				}
 
 				// Check for status changes
-				if (!_.isEqual(data.status, this.data.status) || inputCheck) {
+				if (!_.isEqual(data.status, this.data.status) || (data.connected !== this.data.connected) || inputCheck) {
 					changes.add('status');
 				}
 
@@ -281,6 +281,10 @@ exports.initAPI = function () {
 				}
 			})
 			.catch(err => {
+				if (this.data.connected) {
+					this.data.connected = false;
+					this.checkFeedbacks('status');
+				}
 				this.debug('vMix API err:' + JSON.stringify(err));
 			});
 	};
