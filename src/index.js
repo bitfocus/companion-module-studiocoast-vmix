@@ -73,6 +73,8 @@ class VMixInstance extends instance_skel {
 		this.config.httpPort = this.config.httpPort || 8088;
 		this.config.tcpPort = this.config.tcpPort || 8099;
 		this.config.apiPollInterval = this.config.apiPollInterval !== undefined ? this.config.apiPollInterval : 250;
+		this.config.username = '';
+		this.config.password = '';
 		this.updateVariableDefinitions = updateVariableDefinitions;
 	}
 

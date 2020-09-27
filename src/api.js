@@ -274,7 +274,13 @@ exports.initAPI = function () {
 	};
 
 	const getStatus = () => {
-		got.get(`http://${this.config.host}:${this.config.httpPort || 8088}/api/`)
+		const options = {
+			headers: {
+				Authorization: `Basic ${Buffer.from(this.config.username + ':' + this.config.password).toString('base64')}`
+			}
+		};
+
+		got.get(`http://${this.config.host}:${this.config.httpPort || 8088}/api/`, options)
 			.then(res => {
 				if (res.statusCode === 200) {
 					return parseXML(res.body);
