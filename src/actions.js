@@ -965,6 +965,20 @@ exports.getActions = function() {
 			]
 		},
 
+		ReplayPlaySelectedEventToOutput: { label: 'Replay - Play Selected Event To Output' },
+
+		ReplayPlayEventsByIDToOutput: {
+			label: 'Replay - Play Events By ID To Output',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Event ID',
+					id: 'value',
+					default: '0'
+				}
+			]
+		},
+
 		replayToggleCamera: {
 			label: 'Replay - Toggle Selected Event Camera',
 			options: [

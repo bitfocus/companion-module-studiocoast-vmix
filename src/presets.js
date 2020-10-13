@@ -121,7 +121,9 @@ exports.initPresets = function() {
 		{ id: 'ReplayLiveToggle', label: 'Live' },
 		{ id: 'ReplayJumpToNow', label: 'Jump to Now' },
 		{ id: 'ReplayPlay', label: 'Play Events' },
-		{ id: 'ReplayPause', label: 'Pause Events' }
+		{ id: 'ReplayPause', label: 'Pause Events' },
+		{ id: 'ReplayPlaySelectedEventToOutput', label: 'Play Selected Event' },
+		{ id: 'ReplayPlayEventsByIDToOutput', label: 'Play Events By ID' },
 	];
 
 	const replayMarks = [
@@ -154,6 +156,10 @@ exports.initPresets = function() {
 			feedbacks.push({ type: 'replayStatus', options: { status: 'live', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } });
 		}
 		
+		else if (item.id === 'ReplayPlayEventsByIDToOutput') {
+			actions.push({ action: item.id });
+		}
+
 		else {
 			actions.push({ action: item.id });
 		}

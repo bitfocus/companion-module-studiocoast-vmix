@@ -81,3 +81,6 @@ and if there is more than one parameter use "&" as a separator between them like
 * Added default state values to prevent crashing when feedbacks are checked before the API is polled
 * Added API Polling interval config option
 * Increased default API poll interval from 100ms to 250ms.
+
+**v1.2.7**
+* Added ReplayPlaySelectedEventToOutput and ReplayPlayEventsByIDToOutput to the list of suported functions
