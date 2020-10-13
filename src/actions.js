@@ -102,6 +102,73 @@ exports.getActions = function() {
 			]
 		},
 
+		SetTransitionEffect: {
+			label: 'Transition - Set Auto Transition Effect',			
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Select transition',
+					id: 'functionID',
+					default: 'SetTransitionEffect1',
+					choices: [
+						{ id: 'SetTransitionEffect1', label: 'Transition 1' },
+						{ id: 'SetTransitionEffect2', label: 'Transition 2' },
+						{ id: 'SetTransitionEffect3', label: 'Transition 3' },
+						{ id: 'SetTransitionEffect4', label: 'Transition 4' },
+					]
+				},
+				{
+					type: 'dropdown',
+					label: 'Select transition type',
+					id: 'value',
+					default: 'Cut',
+					choices: [
+						'Cut',
+						'Fade',
+						'Zoom',
+						'Wipe',
+						'Slide',
+						'Fly',
+						'CrossZoom',
+						'FlyRotate',
+						'Cube',
+						'CubeZoom',
+						'VerticalWipe',
+						'VerticalSlide',
+						'Merge',
+						'WipeReverse',
+						'SlideReverse',
+						'VerticalWipeReverse',
+						'VerticalSlideReverse'
+					].map(transition => ({ id: transition, label: transition }))
+				}
+			]
+		},
+
+		SetTransitionDuration: {
+			label: 'Transition - Set Auto Transition Duration',			
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Select transition',
+					id: 'functionID',
+					default: 'SetTransitionEffect1',
+					choices: [
+						{ id: 'SetTransitionDuration1', label: 'Transition 1' },
+						{ id: 'SetTransitionDuration2', label: 'Transition 2' },
+						{ id: 'SetTransitionDuration3', label: 'Transition 3' },
+						{ id: 'SetTransitionDuration4', label: 'Transition 4' },
+					]
+				},
+				{
+					type: 'textinput',
+					label: 'Duration',
+					id: 'duration',
+					default: 1000
+				}
+			]
+		},
+
 		QuickPlay: {
 			label: 'Transition - Quick Play input to Program',
 			options: [input]
