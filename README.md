@@ -83,4 +83,5 @@ and if there is more than one parameter use "&" as a separator between them like
 * Increased default API poll interval from 100ms to 250ms.
 
 **v1.2.7**
-* Added ReplayPlaySelectedEventToOutput and ReplayPlayEventsByIDToOutput to the list of suported functions
+* Added ReplayPlaySelectedEventToOutput and ReplayPlayEventsByIDToOutput to the list of suported functions, with included presets.
+* Added SetTransitionEffect and SetTransitionDuration to the list of actions, with presets.

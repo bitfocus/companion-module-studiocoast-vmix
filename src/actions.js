@@ -152,7 +152,7 @@ exports.getActions = function() {
 					type: 'dropdown',
 					label: 'Select transition',
 					id: 'functionID',
-					default: 'SetTransitionEffect1',
+					default: 'SetTransitionDuration1',
 					choices: [
 						{ id: 'SetTransitionDuration1', label: 'Transition 1' },
 						{ id: 'SetTransitionDuration2', label: 'Transition 2' },

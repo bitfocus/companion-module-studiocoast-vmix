@@ -347,6 +347,20 @@ exports.initPresets = function() {
 		{ id: 'Stinger2', size: '18', label: 'Stinger 2' }
 	];
 
+	const presetTransitionsEffect = [
+		{ id: 'SetTransitionEffect1', size: '18', label: 'T1 Set Cut', value: 'Cut' },
+		{ id: 'SetTransitionEffect2', size: '18', label: 'T2 Set Fade', value: 'Fade' },
+		{ id: 'SetTransitionEffect3', size: '18', label: 'T3 Set Zoom', value: 'Zoom' },
+		{ id: 'SetTransitionEffect4', size: '18', label: 'T4 Set Merge', value: 'Merge' },
+	];
+
+	const presetTransitionsDuration = [
+		{ id: 'SetTransitionDuration1', size: '18', label: 'T1 Set 250ms', value: '250' },
+		{ id: 'SetTransitionDuration1', size: '18', label: 'T1 Set 500ms', value: '500' },
+		{ id: 'SetTransitionDuration1', size: '18', label: 'T1 Set 1000ms', value: '1000' },
+		{ id: 'SetTransitionDuration1', size: '18', label: 'T1 Set 1500ms', value: '1500' },
+	];
+
 	const individualTransitions = [
 		{ id: 'Cut', size: '18', label: 'Cut' },
 		{ id: 'Fade', size: '18', label: 'Fade' },
@@ -368,7 +382,19 @@ exports.initPresets = function() {
 	];
 
 	presetTransitions.forEach(item => {
-		const actions = [{ action: 'transition', options: { functionID: item.id } }];
+		const actions = [{ action: 'Transitions', options: { functionID: item.id } }];
+		const preset = createPreset('Transitions', item, actions, []);
+		presets.push(preset);
+	});
+
+	presetTransitionsEffect.forEach(item => {
+		const actions = [{ action: 'SetTransitionEffect', options: { functionID: item.id, value: item.value } }];
+		const preset = createPreset('Transitions', item, actions, []);
+		presets.push(preset);
+	});
+
+	presetTransitionsDuration.forEach(item => {
+		const actions = [{ action: 'SetTransitionDuration', options: { functionID: item.id, duration: item.value } }];
 		const preset = createPreset('Transitions', item, actions, []);
 		presets.push(preset);
 	});
