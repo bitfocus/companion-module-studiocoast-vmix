@@ -138,7 +138,7 @@ exports.parseAPI = function (body) {
 				version: xml.vmix.version[0],
 				edition: xml.vmix.edition[0],
 				preset: xml.vmix.preset ? xml.vmix.preset[0] : '',
-				inputs: xml.vmix.inputs[0].input.map(inputData),
+				inputs: xml.vmix.inputs[0] !== '' ? xml.vmix.inputs[0].input.map(inputData) : [],
 				overlays: xml.vmix.overlays[0].overlay.map(overlayData),
 				transition: xml.vmix.transitions[0].transition.map(transition => transition.$),
 				mix: [
