@@ -21,7 +21,6 @@
 	],
 	"license": "MIT",
 	"dependencies": {
-		"got": "^6.7.1",
 		"lodash": "^4.17.19",
 		"xml2js": "^0.4.22"
 	}

@@ -1,8 +1,12 @@
 const tcp = require('../../../tcp');
+const { parseAPI } = require('./api');
 
 exports.init = function() {
 	if (this.socket !== undefined) {
 		this.socket.destroy();
+		if (this.pollAPI) {
+			clearInterval(this.pollAPI);
+		}
 		delete this.socket;
 	}
 
@@ -22,6 +26,21 @@ exports.init = function() {
 		this.socket.on('connect', () => {
 			this.status(this.STATE_OK);
 			this.debug('Connected');
+
+			this.pollAPI = setInterval(() => {
+				this.socket.send('XML\r\n');
+			}, this.config.apiPollInterval < 100 ? 100 : this.config.apiPollInterval);
+		});
+
+		this.socket.on('data', data => {
+			data = data.toString();
+
+			if (data.includes('<vmix>')) {
+				const start = data.indexOf('<vmix>');
+				const stop = data.indexOf('</vmix>') + 7;
+
+				parseAPI.bind(this)(data.slice(start, stop));
+			}
 		});
 	}
 };

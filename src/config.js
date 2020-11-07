@@ -10,33 +10,11 @@ exports.getConfigFields = function () {
 		},
 		{
 			type: 'textinput',
-			id: 'httpPort',
-			label: 'HTTP Port (Default: 8088)',
-			width: 3,
-			default: 8088,
-			regex: this.REGEX_PORT
-		},
-		{
-			type: 'textinput',
 			id: 'tcpPort',
 			label: 'TCP Port (Default: 8099)',
 			width: 3,
 			default: 8099,
 			regex: this.REGEX_PORT
-		},		
-		{
-			type: 'textinput',
-			id: 'username',
-			label: 'Username',
-			width: 6,
-			default: ''
-		},
-		{
-			type: 'textinput',
-			id: 'password',
-			label: 'Password',
-			width: 6,
-			default: ''
 		},
 		{
 			type: 'textinput',

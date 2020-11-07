@@ -1,6 +1,5 @@
 const instance_skel = require('../../../instance_skel');
 const { executeAction, getActions } = require('./actions');
-const { initAPI } = require('./api');
 const { getConfigFields } = require('./config');
 const { executeFeedback, initFeedbacks } = require('./feedback');
 const { initPresets } = require('./presets');
@@ -83,7 +82,6 @@ class VMixInstance extends instance_skel {
 		this.actions();
 		this.init_tcp();
 		this.init_feedbacks();
-		initAPI.bind(this)();
 		initPresets.bind(this)();
 		this.updateVariableDefinitions();
 	}
@@ -94,7 +92,6 @@ class VMixInstance extends instance_skel {
 		this.config = config;
 		this.init_tcp();
 		this.init_feedbacks();
-		initAPI.bind(this)();
 		initPresets.bind(this)();
 	}
 
