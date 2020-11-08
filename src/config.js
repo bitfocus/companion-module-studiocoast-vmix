@@ -21,7 +21,7 @@ exports.getConfigFields = function () {
 			id: 'apiPollInterval',
 			label: 'API Polling interval (ms) (default: 250, min: 100, 0 for disabled)',
 			width: 12,
-			default: 500,
+			default: 250,
 			regex: this.REGEX_NUMBER
 		},
 		{

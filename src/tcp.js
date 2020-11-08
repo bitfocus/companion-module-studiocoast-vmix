@@ -1,7 +1,7 @@
 const tcp = require('../../../tcp');
 const { parseAPI } = require('./api');
 
-exports.init = function() {
+exports.init = function () {
 	if (this.socket !== undefined) {
 		this.socket.destroy();
 		if (this.pollAPI) {
@@ -27,19 +27,36 @@ exports.init = function() {
 			this.status(this.STATE_OK);
 			this.debug('Connected');
 
-			this.pollAPI = setInterval(() => {
+			if (this.config.apiPollInterval != 0) {
 				this.socket.send('XML\r\n');
-			}, this.config.apiPollInterval < 100 ? 100 : this.config.apiPollInterval);
+				this.pollAPI = setInterval(() => {
+					this.socket.send('XML\r\n');
+				}, this.config.apiPollInterval < 100 ? 100 : this.config.apiPollInterval);
+			}
 		});
 
+
+		const processMessages = (message) => {
+
+			// vMix XML data
+			if (message.includes('<vmix>') && message.includes('</vmix>')) {
+				const start = message.indexOf('<vmix>');
+				const stop = message.indexOf('</vmix>') + 7;
+
+				parseAPI.bind(this)(message.slice(start, stop));
+			}
+		};
+		
+		let messageBuffer = '';
 		this.socket.on('data', data => {
-			data = data.toString();
+			messageBuffer += data.toString();
 
-			if (data.includes('<vmix>')) {
-				const start = data.indexOf('<vmix>');
-				const stop = data.indexOf('</vmix>') + 7;
+			if (messageBuffer.endsWith('\r\n')) {
+				messageBuffer.split('\r\n')
+					.filter(message => message != '')
+					.forEach(processMessages);
 
-				parseAPI.bind(this)(data.slice(start, stop));
+				messageBuffer = '';
 			}
 		});
 	}
