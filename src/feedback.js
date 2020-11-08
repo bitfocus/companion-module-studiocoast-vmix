@@ -1,5 +1,3 @@
-const { text } = require("express");
-
 exports.initFeedbacks = function() {
 	const feedbacks = {};
 

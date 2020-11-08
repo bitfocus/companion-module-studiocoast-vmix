@@ -85,3 +85,8 @@ and if there is more than one parameter use "&" as a separator between them like
 **v1.2.7**
 * Added ReplayPlaySelectedEventToOutput and ReplayPlayEventsByIDToOutput to the list of suported functions, with included presets.
 * Added SetTransitionEffect and SetTransitionDuration to the list of actions, with presets.
+
+**v1.2.8**
+* Changed API Polling from HTTP to the TCP connection
+* Removed HTTP Port, Username, and Password, config fields
+* Removed dependency `got`

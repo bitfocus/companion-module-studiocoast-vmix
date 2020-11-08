@@ -1,6 +1,5 @@
 const instance_skel = require('../../../instance_skel');
 const { executeAction, getActions } = require('./actions');
-const { initAPI } = require('./api');
 const { getConfigFields } = require('./config');
 const { executeFeedback, initFeedbacks } = require('./feedback');
 const { initPresets } = require('./presets');
@@ -70,11 +69,8 @@ class VMixInstance extends instance_skel {
 		};
 
 		this.config.host = this.config.host || '127.0.0.1';
-		this.config.httpPort = this.config.httpPort || 8088;
 		this.config.tcpPort = this.config.tcpPort || 8099;
 		this.config.apiPollInterval = this.config.apiPollInterval !== undefined ? this.config.apiPollInterval : 250;
-		this.config.username = '';
-		this.config.password = '';
 		this.updateVariableDefinitions = updateVariableDefinitions;
 	}
 
@@ -83,7 +79,6 @@ class VMixInstance extends instance_skel {
 		this.actions();
 		this.init_tcp();
 		this.init_feedbacks();
-		initAPI.bind(this)();
 		initPresets.bind(this)();
 		this.updateVariableDefinitions();
 	}
@@ -94,7 +89,6 @@ class VMixInstance extends instance_skel {
 		this.config = config;
 		this.init_tcp();
 		this.init_feedbacks();
-		initAPI.bind(this)();
 		initPresets.bind(this)();
 	}
 
