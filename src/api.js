@@ -13,7 +13,9 @@ exports.parseAPI = function (body) {
 					number,
 					active: false,
 					preview: null,
-					program: null
+					program: null,
+					previewTally: [],
+					programTally: []
 				};
 
 				if (xml.vmix.mix) {
@@ -82,6 +84,8 @@ exports.parseAPI = function (body) {
 
 						return overlay;
 					});
+				} else {
+					data.overlay = [];
 				}
 
 				if (input.replay) {
@@ -146,7 +150,9 @@ exports.parseAPI = function (body) {
 						number: 1,
 						active: true,
 						preview: parseInt(xml.vmix.preview, 10),
-						program: parseInt(xml.vmix.active, 10)
+						program: parseInt(xml.vmix.active, 10),
+						previewTally: [],
+						programTally: []
 					},
 					getMix(2),
 					getMix(3),
@@ -171,6 +177,31 @@ exports.parseAPI = function (body) {
 					cameraB: '0'
 				}
 			};
+
+			// Update layer tally
+			data.mix.forEach(mix => {
+				const checkTally = (type, input) => {
+					if (input && !mix[type].includes(input.key)) {
+						mix[type].push(input.key);
+
+						input.overlay.forEach(layer => {
+							checkTally(type, data.inputs.find(input => input.key === layer.key));
+						})
+					}
+				};
+
+				if (mix.preview !== null) {
+					checkTally('previewTally', data.inputs.find(input => input.number == mix.preview));
+				}
+				
+				if (mix.program !== null) {
+					checkTally('programTally', data.inputs.find(input => input.number == mix.program));
+				}
+
+				data.overlays.filter(overlay => overlay.input !== undefined).forEach(overlay => {
+					checkTally(overlay.preview ? 'previewTally' : 'programTally', data.inputs.find(input => input.number === overlay.input));
+				});
+			});
 
 			// Update stream Status
 			if (xml.vmix.streaming[0].$) {
