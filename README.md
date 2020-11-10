@@ -90,3 +90,6 @@ and if there is more than one parameter use "&" as a separator between them like
 * Changed API Polling from HTTP to the TCP connection
 * Removed HTTP Port, Username, and Password, config fields
 * Removed dependency `got`
+
+**v1.2.9**
+* Fixed a bug with preset send input to program buttons which would use `Cut` instead of `CutDirect`
