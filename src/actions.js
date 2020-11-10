@@ -448,7 +448,20 @@ exports.getActions = function() {
 
 		BusXAudio: {
 			label: 'Audio - Bus Mute',
-			options: [audioBusMaster]
+			options: [
+				audioBusMaster,
+				{
+					type: 'dropdown',
+					label: 'Option',
+					id: 'functionID',
+					default: 'BusXAudio',
+					choices: [
+						{ id: 'BusXAudio', label: 'Toggle Bus Mute' },
+						{ id: 'BusXAudioOn', label: 'Set Bus Audio ON' },
+						{ id: 'BusXAudioOff', label: 'Set Bus Audio OFF' },
+					]
+				},
+]
 		},
 
 		Audio: {
@@ -1198,6 +1211,16 @@ exports.executeAction = function(action) {
 			cmd = `FUNCTION SetPosition Input=0&Value=${text}`;
 		} else {
 			cmd = `FUNCTION SetPosition Input=${opt.input}&Value=${text}`;
+		}
+	}
+
+	else if (action.action === 'BusXAudio') {
+		if (opt.value == 'Master') {
+			if (opt.functionID == 'BusXAudio') {cmd = `FUNCTION MasterAudio`};
+			if (opt.functionID == 'BusXAudioOn') {cmd = `FUNCTION MasterAudioON`;}
+			if (opt.functionID == 'BusXAudioOff') {cmd = `FUNCTION MasterAudioOFF`;}
+		} else {
+			cmd = `FUNCTION ${opt.functionID} Value=${opt.value}`;
 		}
 	}
 
