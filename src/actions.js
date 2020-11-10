@@ -9,7 +9,7 @@ exports.getActions = function() {
 
 	const input = {
 		type: 'textinput',
-		label: 'Input',
+		label: 'Input (Nr/Name/GUID)',
 		id: 'input'
 	};
 

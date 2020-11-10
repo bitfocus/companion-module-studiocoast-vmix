@@ -24,7 +24,7 @@ exports.initFeedbacks = function() {
 
 	const input = {
 		type: 'textinput',
-		label: 'Input',
+		label: 'Input (Nr/Name/GUID)',
 		id: 'input',
 		default: '1'
 	};
@@ -429,8 +429,8 @@ exports.executeFeedback = function(feedback, bank) {
 		if (int.test(value)) {
 			input = this.data.inputs.find(item => item.number === value);
 		} else {
-			input = this.data.inputs.find(item => item.shortTitle === value || item.title === value);
-		}
+			input = this.data.inputs.find(item => item.shortTitle === value || item.title === value || item.key === value);
+		}	
 
 		return input;
 	};
@@ -444,9 +444,11 @@ exports.executeFeedback = function(feedback, bank) {
 		}
 
 		const previewTitle = this.data.inputs[this.data.mix[mix][type] - 1].shortTitle;
+		const guidKey = this.data.inputs[this.data.mix[mix][type] -1].key;	
 		const idCheck = int.test(feedback.options.input) && feedback.options.input == this.data.mix[mix][type];
 		const titleCheck = !int.test(feedback.options.input) && feedback.options.input === previewTitle;
-		if (idCheck || titleCheck) {
+		const guidCheck = feedback.options.input == guidKey;
+		if (idCheck || titleCheck || guidCheck) {
 			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
 		}
 	}
