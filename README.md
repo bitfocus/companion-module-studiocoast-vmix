@@ -90,3 +90,8 @@ and if there is more than one parameter use "&" as a separator between them like
 * Changed API Polling from HTTP to the TCP connection
 * Removed HTTP Port, Username, and Password, config fields
 * Removed dependency `got`
+
+**v1.2.9**
+* Fixed a bug with preset send input to program buttons which would use `Cut` instead of `CutDirect`
+* Fixed a bug with audio toggle on Master Bus, and added Toggle/On/Off action.
+* Added GUID Support in feedbacks, GUID can now be used in the input field in both actions and feedbacks.
