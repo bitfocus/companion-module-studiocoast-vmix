@@ -123,7 +123,7 @@ exports.initPresets = function() {
 		{ id: 'ReplayPlay', label: 'Play Events' },
 		{ id: 'ReplayPause', label: 'Pause Events' },
 		{ id: 'ReplayPlaySelectedEventToOutput', label: 'Play Selected Event' },
-		{ id: 'ReplayPlayEventsByIDToOutput', label: 'Play Events By ID' },
+		{ id: 'ReplayPlayEventsByIDToOutput', label: 'Play Events By ID' }
 	];
 
 	const replayMarks = [
@@ -202,6 +202,7 @@ exports.initPresets = function() {
 
 		if (item.id === 'VideoCallAudioSource') {
 			actions.push({ action: item.id, options: { input: item.input, value: item.value } });
+			feedbacks.push({ type: 'videoCallAudioSource', options: { source: item.value, fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } });
 		}
 		
 		else if (item.id === 'VideoCallVideoSource') {
@@ -221,7 +222,7 @@ exports.initPresets = function() {
 		{ id: 'SelectTitlePreset', label: 'Title Preset 1', input: '', value: '1' },
 		{ id: 'SelectTitlePreset', label: 'Title Preset 2', input: '', value: '2' },
 		{ id: 'SelectTitlePreset', label: 'Title Preset 3', input: '', value: '3' },
-		{ id: 'TitlePreset', size: '18', label: 'Nest Title', input: '', value: 'NextTitlePreset' },
+		{ id: 'TitlePreset', size: '18', label: 'Next Title', input: '', value: 'NextTitlePreset' },
 		{ id: 'TitlePreset', size: '18', label: 'Prev Title', input: '', value: 'PreviousTitlePreset' },
 		{ id: 'TitleBeginAnimation', size: '14', label: 'Title Transition In', input: '', value: 'TransitionIn' },
 		{ id: 'TitleBeginAnimation', size: '14', label: 'Title Transition Out', input: '', value: 'TransitionOut' },

@@ -9,7 +9,7 @@ exports.getActions = function() {
 
 	const input = {
 		type: 'textinput',
-		label: 'Input',
+		label: 'Input (Nr/Name/GUID)',
 		id: 'input'
 	};
 
@@ -448,7 +448,20 @@ exports.getActions = function() {
 
 		BusXAudio: {
 			label: 'Audio - Bus Mute',
-			options: [audioBusMaster]
+			options: [
+				audioBusMaster,
+				{
+					type: 'dropdown',
+					label: 'Option',
+					id: 'functionID',
+					default: 'BusXAudio',
+					choices: [
+						{ id: 'BusXAudio', label: 'Toggle Bus Mute' },
+						{ id: 'BusXAudioOn', label: 'Set Bus Audio ON' },
+						{ id: 'BusXAudioOff', label: 'Set Bus Audio OFF' },
+					]
+				},
+]
 		},
 
 		Audio: {
@@ -794,27 +807,53 @@ exports.getActions = function() {
 		},
 
 		replayACamera: {
-			label: 'Replay - Replay A Camera',
+			label: 'Replay - A Camera',
 			options: [
 				{
 					type: 'dropdown',
 					label: 'Camera',
 					id: 'functionID',
 					default: 'ReplayACamera1',
-					choices: ['ReplayACamera1', 'ReplayACamera2', 'ReplayACamera3', 'ReplayACamera4'].map((item, index) => ({ id: item, label: `Camera ${index + 1}` }))
+					choices: [1, 2, 3, 4, 5, 6, 7, 8].map((item) => ({ id: `ReplayACamera${item}`, label: `Camera ${item}` }))
 				}
 			]
 		},
 
 		replayBCamera: {
-			label: 'Replay - Replay B Camera',
+			label: 'Replay - B Camera',
 			options: [
 				{
 					type: 'dropdown',
 					label: 'Camera',
 					id: 'functionID',
 					default: 'ReplayBCamera1',
-					choices: ['ReplayBCamera1', 'ReplayBCamera2', 'ReplayBCamera3', 'ReplayBCamera4'].map((item, index) => ({ id: item, label: `Camera ${index + 1}` }))
+					choices: [1, 2, 3, 4, 5, 6, 7, 8].map((item) => ({ id: `ReplayBCamera${item}`, label: `Camera ${item}` }))
+				}
+			]
+		},
+
+		replayCamera: {
+			label: 'Replay - Selected Channel Camera',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Camera',
+					id: 'functionID',
+					default: 'ReplayCamera1',
+					choices: [1, 2, 3, 4, 5, 6, 7, 8].map((item) => ({ id: `ReplayCamera${item}`, label: `Camera ${item}` }))
+				}
+			]
+		},
+
+		replaySelectChannel: {
+			label: 'Replay - Select Channel',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Channel',
+					id: 'functionID',
+					default: 'ReplaySelectChannelAB',
+					choices: ['ReplaySelectChannelAB', 'ReplaySelectChannelA', 'ReplaySelectChannelB'].map((item) => ({ id: item, label: item.substr(19) }))
 				}
 			]
 		},
@@ -1198,6 +1237,16 @@ exports.executeAction = function(action) {
 			cmd = `FUNCTION SetPosition Input=0&Value=${text}`;
 		} else {
 			cmd = `FUNCTION SetPosition Input=${opt.input}&Value=${text}`;
+		}
+	}
+
+	else if (action.action === 'BusXAudio') {
+		if (opt.value == 'Master') {
+			if (opt.functionID == 'BusXAudio') {cmd = `FUNCTION MasterAudio`};
+			if (opt.functionID == 'BusXAudioOn') {cmd = `FUNCTION MasterAudioON`;}
+			if (opt.functionID == 'BusXAudioOff') {cmd = `FUNCTION MasterAudioOFF`;}
+		} else {
+			cmd = `FUNCTION ${opt.functionID} Value=${opt.value}`;
 		}
 	}
 
