@@ -1167,7 +1167,7 @@ exports.executeAction = function(action) {
 	}
 	
 	else if (action.action === 'SelectPlayList') {
-		cmd = `FUNCTION SelectPlayList ${opt.playlistName}`;
+		cmd = `FUNCTION SelectPlayList value=${opt.playlistName}`;
 	}
 	
 	else if (action.action === 'SetVolumeFade') {
