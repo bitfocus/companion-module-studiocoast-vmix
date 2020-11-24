@@ -1,5 +1,3 @@
-const { layerTally } = require('./indicators');
-
 exports.initFeedbacks = function() {
 	const feedbacks = {};
 
@@ -506,7 +504,7 @@ exports.executeFeedback = function (feedback, bank) {
 		}
 
 		if (feedback.options.tally !== undefined && feedback.options.tally !== '' && this.data.mix[mix][type + 'Tally'].includes(input.key)) {
-			return { png64: layerTally(feedback.options.tally, feedback.options.bg) };
+			return { img64: this.indicators.getImage(feedback.options.tally, feedback.options.bg) };
 		}
 	}
 
