@@ -2,6 +2,7 @@ const instance_skel = require('../../../instance_skel');
 const { executeAction, getActions } = require('./actions');
 const { getConfigFields } = require('./config');
 const { executeFeedback, initFeedbacks } = require('./feedback');
+const Indicators = require('./indicators');
 const { initPresets } = require('./presets');
 const { upgradeV1_2_0 } = require('./upgrade');
 const { updateVariableDefinitions } = require('./variables');
@@ -85,6 +86,7 @@ class VMixInstance extends instance_skel {
 	}
 
 	init() {
+		this.indicators = new Indicators(this);
 		this.status(1, 'Connecting');
 		this.actions();
 		this.init_tcp();
