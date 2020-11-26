@@ -95,3 +95,4 @@ and if there is more than one parameter use "&" as a separator between them like
 * Fixed a bug with preset send input to program buttons which would use `Cut` instead of `CutDirect`
 * Fixed a bug with audio toggle on Master Bus, and added Toggle/On/Off action.
 * Added GUID Support in feedbacks, GUID can now be used in the input field in both actions and feedbacks.
+* Fixed a bug where XML data containing a carriage return would break parsing
