@@ -1,6 +1,5 @@
 const tcp = require('../../../tcp');
 const { parseAPI } = require('./api');
-const { parseActivactor } = require('./activators');
 
 exports.init = function () {
 	if (this.socket !== undefined) {
@@ -30,7 +29,6 @@ exports.init = function () {
 
 			if (this.config.apiPollInterval != 0) {
 				this.socket.send('XML\r\n');
-				this.socket.send('SUBSCRIBE ACTS\r\n');
 				this.pollAPI = setInterval(() => {
 					this.socket.send('XML\r\n');
 				}, this.config.apiPollInterval < 100 ? 100 : this.config.apiPollInterval);
@@ -47,11 +45,6 @@ exports.init = function () {
 
 				parseAPI.bind(this)(message.slice(start, stop));
 			}
-			
-			// Activators
-			else if (message.includes('ACTS OK')) {
-				parseActivactor.bind(this)(message.substr(8));
-			}
 		};
 		
 		let messageBuffer = '';
@@ -59,9 +52,22 @@ exports.init = function () {
 			messageBuffer += data.toString();
 
 			if (messageBuffer.endsWith('\r\n')) {
+				let xmlBuffer = '';
+
 				messageBuffer.split('\r\n')
 					.filter(message => message != '')
-					.forEach(processMessages);
+					.forEach(message => {
+						// Check if fragment is XML data
+						if (message.startsWith('<vmix>') || xmlBuffer.length > 0) {
+							xmlBuffer += message;
+							if (xmlBuffer.includes('<vmix>') && xmlBuffer.includes('</vmix>')) {
+								processMessages(xmlBuffer);
+								xmlBuffer = '';
+							}
+						} else {
+							processMessages(message);
+						}
+					});
 
 				messageBuffer = '';
 			}

@@ -807,53 +807,27 @@ exports.getActions = function() {
 		},
 
 		replayACamera: {
-			label: 'Replay - A Camera',
+			label: 'Replay - Replay A Camera',
 			options: [
 				{
 					type: 'dropdown',
 					label: 'Camera',
 					id: 'functionID',
 					default: 'ReplayACamera1',
-					choices: [1, 2, 3, 4, 5, 6, 7, 8].map((item) => ({ id: `ReplayACamera${item}`, label: `Camera ${item}` }))
+					choices: ['ReplayACamera1', 'ReplayACamera2', 'ReplayACamera3', 'ReplayACamera4'].map((item, index) => ({ id: item, label: `Camera ${index + 1}` }))
 				}
 			]
 		},
 
 		replayBCamera: {
-			label: 'Replay - B Camera',
+			label: 'Replay - Replay B Camera',
 			options: [
 				{
 					type: 'dropdown',
 					label: 'Camera',
 					id: 'functionID',
 					default: 'ReplayBCamera1',
-					choices: [1, 2, 3, 4, 5, 6, 7, 8].map((item) => ({ id: `ReplayBCamera${item}`, label: `Camera ${item}` }))
-				}
-			]
-		},
-
-		replayCamera: {
-			label: 'Replay - Selected Channel Camera',
-			options: [
-				{
-					type: 'dropdown',
-					label: 'Camera',
-					id: 'functionID',
-					default: 'ReplayCamera1',
-					choices: [1, 2, 3, 4, 5, 6, 7, 8].map((item) => ({ id: `ReplayCamera${item}`, label: `Camera ${item}` }))
-				}
-			]
-		},
-
-		replaySelectChannel: {
-			label: 'Replay - Select Channel',
-			options: [
-				{
-					type: 'dropdown',
-					label: 'Channel',
-					id: 'functionID',
-					default: 'ReplaySelectChannelAB',
-					choices: ['ReplaySelectChannelAB', 'ReplaySelectChannelA', 'ReplaySelectChannelB'].map((item) => ({ id: item, label: item.substr(19) }))
+					choices: ['ReplayBCamera1', 'ReplayBCamera2', 'ReplayBCamera3', 'ReplayBCamera4'].map((item, index) => ({ id: item, label: `Camera ${index + 1}` }))
 				}
 			]
 		},
@@ -1167,7 +1141,7 @@ exports.executeAction = function(action) {
 	}
 	
 	else if (action.action === 'SelectPlayList') {
-		cmd = `FUNCTION SelectPlayList value=${opt.playlistName}`;
+		cmd = `FUNCTION SelectPlayList ${opt.playlistName}`;
 	}
 	
 	else if (action.action === 'SetVolumeFade') {

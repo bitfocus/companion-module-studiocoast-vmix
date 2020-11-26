@@ -123,7 +123,7 @@ exports.initPresets = function() {
 		{ id: 'ReplayPlay', label: 'Play Events' },
 		{ id: 'ReplayPause', label: 'Pause Events' },
 		{ id: 'ReplayPlaySelectedEventToOutput', label: 'Play Selected Event' },
-		{ id: 'ReplayPlayEventsByIDToOutput', label: 'Play Events By ID' }
+		{ id: 'ReplayPlayEventsByIDToOutput', label: 'Play Events By ID' },
 	];
 
 	const replayMarks = [
@@ -202,7 +202,6 @@ exports.initPresets = function() {
 
 		if (item.id === 'VideoCallAudioSource') {
 			actions.push({ action: item.id, options: { input: item.input, value: item.value } });
-			feedbacks.push({ type: 'videoCallAudioSource', options: { source: item.value, fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } });
 		}
 		
 		else if (item.id === 'VideoCallVideoSource') {

@@ -13,9 +13,7 @@ exports.parseAPI = function (body) {
 					number,
 					active: false,
 					preview: null,
-					program: null,
-					previewTally: [],
-					programTally: []
+					program: null
 				};
 
 				if (xml.vmix.mix) {
@@ -84,8 +82,6 @@ exports.parseAPI = function (body) {
 
 						return overlay;
 					});
-				} else {
-					data.overlay = [];
 				}
 
 				if (input.replay) {
@@ -120,19 +116,18 @@ exports.parseAPI = function (body) {
 					audio[key][0].$.bus = key;
 					data.push(audio[key][0].$);
 				});
-				
-				if (!this.data.connected) {
-					data.forEach(output => {
-						const busID = output.bus === 'master' ? 'master' : output.bus.substr(3).toLowerCase();
-						const volume = Math.round(parseFloat(output.volume));
-						this.setVariable(`bus_volume_${busID}`, volume);
 
-						if (output.bus === 'master') {
-							const headphonesVolume = Math.round(parseFloat(output.headphonesVolume));
-							this.setVariable('bus_volume_headphones', headphonesVolume);
-						}
-					});
-				}
+				data.forEach(output => {
+					const busID = output.bus === 'master' ? 'master' : output.bus.substr(3);
+					const volume = Math.round(parseFloat(output.volume));
+
+					this.setVariable(`bus_volume_${busID}`, volume);
+
+					if (output.bus === 'master') {
+						const headphonesVolume = Math.round(parseFloat(output.headphonesVolume));
+						this.setVariable('bus_volume_headphones', headphonesVolume);
+					}
+				});
 
 				return data;
 			};
@@ -151,9 +146,7 @@ exports.parseAPI = function (body) {
 						number: 1,
 						active: true,
 						preview: parseInt(xml.vmix.preview, 10),
-						program: parseInt(xml.vmix.active, 10),
-						previewTally: [],
-						programTally: []
+						program: parseInt(xml.vmix.active, 10)
 					},
 					getMix(2),
 					getMix(3),
@@ -179,31 +172,6 @@ exports.parseAPI = function (body) {
 				}
 			};
 
-			// Update layer tally
-			data.mix.forEach(mix => {
-				const checkTally = (type, input) => {
-					if (input && !mix[type].includes(input.key)) {
-						mix[type].push(input.key);
-
-						input.overlay.forEach(layer => {
-							checkTally(type, data.inputs.find(input => input.key === layer.key));
-						})
-					}
-				};
-
-				if (mix.preview !== null) {
-					checkTally('previewTally', data.inputs.find(input => input.number == mix.preview));
-				}
-				
-				if (mix.program !== null) {
-					checkTally('programTally', data.inputs.find(input => input.number == mix.program));
-				}
-
-				data.overlays.filter(overlay => overlay.input !== undefined).forEach(overlay => {
-					checkTally(overlay.preview ? 'previewTally' : 'programTally', data.inputs.find(input => input.number === overlay.input));
-				});
-			});
-
 			// Update stream Status
 			if (xml.vmix.streaming[0].$) {
 				data.status.stream[0] = xml.vmix.streaming[0].$.channel1 === 'True';
@@ -219,33 +187,7 @@ exports.parseAPI = function (body) {
 				data.replay.events = replayInput.replay.events;
 				data.replay.cameraA = replayInput.replay.cameraA;
 				data.replay.cameraB = replayInput.replay.cameraB;
-				data.replay.channelMode = replayInput.replay.channelMode; 
-
-				if (data.replay.channelMode === 'AB' && this.data.replay.cameraB) {
-					data.replay.cameraB = this.data.replay.cameraB;
-				}
 			}
-
-			// Update channel mixer
-			data.inputs.forEach(input => {
-				if (!this.activatorData.channelMixer[input.key]) {
-					this.activatorData.channelMixer[input.key] = [];
-					for (let i = 0; i < 16; i++) {
-						this.activatorData.channelMixer[input.key].push({ channel: i + 1, volume: 1 });
-					}
-				}
-
-				if (input.type === 'VideoCall' && !this.activatorData.videoCall[input.key]) {
-					this.activatorData.videoCall[input.key] = { audioSource: '' };
-				}
-			});
-
-			// Clean up removed inputs from channel mixer
-			Object.keys(this.activatorData.channelMixer).forEach(key => {
-				if (!data.inputs.map(input => input.key).includes(key)) {
-					delete this.activatorData.channelMixer[key];
-				}
-			});
 
 			// Check for changes to update feedbacks
 			const changes = new Set([]);
@@ -263,7 +205,7 @@ exports.parseAPI = function (body) {
 			}
 
 			// Check for input changes
-			if (!this.data.connected && (!_.isEqual(data.inputs, this.data.inputs) || inputCheck)) {
+			if (!_.isEqual(data.inputs, this.data.inputs) || inputCheck) {
 				changes.add('videoTimer');
 				changes.add('inputMute');
 				changes.add('inputAudio');
@@ -271,21 +213,16 @@ exports.parseAPI = function (body) {
 				changes.add('inputBusRouting');
 				changes.add('titleLayer');
 				changes.add('inputVolumeLevel');
-			}
-
-			if (!_.isEqual(data.inputs, this.data.inputs) || inputCheck) {
-				changes.add('videoTimer');
-				changes.add('titleLayer');
 				changes.add('liveInputVolume');
 			}
 
 			// Check for status changes
-			if (!_.isEqual(data.status, this.data.status)) {
+			if (!_.isEqual(data.status, this.data.status) || (data.connected !== this.data.connected) || inputCheck) {
 				changes.add('status');
 			}
 
 			// Check Audio status
-			if (!this.data.connected && (!_.isEqual(data.audio, this.data.audio) || inputCheck)) {
+			if (!_.isEqual(data.audio, this.data.audio) || inputCheck) {
 				changes.add('busMute');
 				changes.add('busVolumeLevel');
 				changes.add('liveBusVolume');
@@ -306,7 +243,7 @@ exports.parseAPI = function (body) {
 				}
 
 				// Check input has volume and a different or no previous volume
-				if (!this.data.connected && input.volume !== undefined && (previousState === undefined || input.volume !== previousState.volume)) {
+				if (input.volume !== undefined && (previousState === undefined || input.volume !== previousState.volume)) {
 					const volume = Math.round(parseFloat(input.volume));
 
 					// Remove symbols other than - _ . from the input title
@@ -320,7 +257,6 @@ exports.parseAPI = function (body) {
 				changes.add('replayStatus');
 				changes.add('replayEvents');
 				changes.add('replayCamera');
-				changes.add('replaySelectedChannel');
 			}
 
 			data.startup = false;
