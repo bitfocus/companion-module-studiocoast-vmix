@@ -52,9 +52,22 @@ exports.init = function () {
 			messageBuffer += data.toString();
 
 			if (messageBuffer.endsWith('\r\n')) {
+				let xmlBuffer = '';
+
 				messageBuffer.split('\r\n')
 					.filter(message => message != '')
-					.forEach(processMessages);
+					.forEach(message => {
+						// Check if fragment is XML data
+						if (message.startsWith('<vmix>') || xmlBuffer.length > 0) {
+							xmlBuffer += message;
+							if (xmlBuffer.includes('<vmix>') && xmlBuffer.includes('</vmix>')) {
+								processMessages(xmlBuffer);
+								xmlBuffer = '';
+							}
+						} else {
+							processMessages(message);
+						}
+					});
 
 				messageBuffer = '';
 			}
