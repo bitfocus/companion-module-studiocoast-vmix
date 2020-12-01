@@ -67,6 +67,16 @@ class VMixInstance extends instance_skel {
 				cameraB: '0'
 			}
 		};
+		this.activatorData = {
+			channelMixer: {},
+			replay: {
+				playForward: {
+					A: true,
+					B: true
+				}
+			},
+			videoCall: {}
+		};
 
 		this.config.host = this.config.host || '127.0.0.1';
 		this.config.tcpPort = this.config.tcpPort || 8099;
