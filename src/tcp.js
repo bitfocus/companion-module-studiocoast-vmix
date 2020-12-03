@@ -37,7 +37,6 @@ exports.init = function () {
 			}
 		});
 
-
 		const processMessages = (message) => {
 
 			// vMix XML data
@@ -47,7 +46,7 @@ exports.init = function () {
 
 				parseAPI.bind(this)(message.slice(start, stop));
 			}
-			
+					
 			// Activators
 			else if (message.includes('ACTS OK')) {
 				parseActivactor.bind(this)(message.substr(8));
@@ -59,9 +58,22 @@ exports.init = function () {
 			messageBuffer += data.toString();
 
 			if (messageBuffer.endsWith('\r\n')) {
+				let xmlBuffer = '';
+
 				messageBuffer.split('\r\n')
 					.filter(message => message != '')
-					.forEach(processMessages);
+					.forEach(message => {
+						// Check if fragment is XML data
+						if (message.startsWith('<vmix>') || xmlBuffer.length > 0) {
+							xmlBuffer += message;
+							if (xmlBuffer.includes('<vmix>') && xmlBuffer.includes('</vmix>')) {
+								processMessages(xmlBuffer);
+								xmlBuffer = '';
+							}
+						} else {
+							processMessages(message);
+						}
+					});
 
 				messageBuffer = '';
 			}
