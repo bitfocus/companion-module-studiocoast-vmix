@@ -1,4 +1,4 @@
-exports.initFeedbacks = function() {
+exports.initFeedbacks = function () {
 	const feedbacks = {};
 
 	const foregroundColor = {
@@ -190,7 +190,7 @@ exports.initFeedbacks = function() {
 		description: 'Indicate if an inputs Audio is ON',
 		options: [input, foregroundColor, backgroundColorProgram]
 	};
-
+	
 	feedbacks.inputSolo = {
 		label: 'Audio - Input solo',
 		description: 'Indicate if an input is set to Solo',
@@ -481,7 +481,7 @@ exports.executeFeedback = function (feedback, bank) {
 			input = this.data.inputs.find(item => item.number === value);
 		} else {
 			input = this.data.inputs.find(item => item.shortTitle === value || item.title === value || item.key === value);
-		}	
+		}
 
 		return input;
 	};
@@ -495,10 +495,11 @@ exports.executeFeedback = function (feedback, bank) {
 		}
 
 		const previewTitle = this.data.inputs[this.data.mix[mix][type] - 1].shortTitle;
-		const guidKey = this.data.inputs[this.data.mix[mix][type] -1].key;	
+		const guidKey = this.data.inputs[this.data.mix[mix][type] - 1].key;
 		const idCheck = int.test(feedback.options.input) && feedback.options.input == this.data.mix[mix][type];
 		const titleCheck = !int.test(feedback.options.input) && feedback.options.input === previewTitle;
 		const guidCheck = feedback.options.input == guidKey;
+
 		if (idCheck || titleCheck || guidCheck) {
 			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
 		}

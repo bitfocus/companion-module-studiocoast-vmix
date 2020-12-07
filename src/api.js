@@ -194,7 +194,6 @@ exports.parseAPI = function (body) {
 				if (mix.preview !== null) {
 					checkTally('previewTally', data.inputs.find(input => input.number == mix.preview));
 				}
-				
 				if (mix.program !== null) {
 					checkTally('programTally', data.inputs.find(input => input.number == mix.program));
 				}
