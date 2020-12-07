@@ -290,7 +290,7 @@ exports.parseActivactor = function (message) {
 		if (!input) {
 			return
 		}
-		
+
 		if (!this.activatorData.videoCall[input.key]) {
 			this.activatorData.videoCall[input.key] = {};
 		}
@@ -302,7 +302,7 @@ exports.parseActivactor = function (message) {
 	else if (params[0] === 'ButtonPress') {
 		// Unused
 	}
-	
+
 	else {
 		this.debug(`Unknown vMix activator: ${params[0]}`)
 	}

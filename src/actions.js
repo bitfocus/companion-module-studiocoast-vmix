@@ -1,4 +1,4 @@
-exports.getActions = function() {
+exports.getActions = function () {
 	const mixSelect = {
 		type: 'dropdown',
 		label: 'Mix',
@@ -103,7 +103,7 @@ exports.getActions = function() {
 		},
 
 		SetTransitionEffect: {
-			label: 'Transition - Set Auto Transition Effect',			
+			label: 'Transition - Set Auto Transition Effect',
 			options: [
 				{
 					type: 'dropdown',
@@ -146,7 +146,7 @@ exports.getActions = function() {
 		},
 
 		SetTransitionDuration: {
-			label: 'Transition - Set Auto Transition Duration',			
+			label: 'Transition - Set Auto Transition Duration',
 			options: [
 				{
 					type: 'dropdown',
@@ -326,7 +326,7 @@ exports.getActions = function() {
 					type: 'textinput',
 					label: 'MultiView Input',
 					id: 'input'
-				}, 
+				},
 				{
 					type: 'textinput',
 					label: 'Layer',
@@ -343,7 +343,7 @@ exports.getActions = function() {
 					type: 'textinput',
 					label: 'MultiView Input',
 					id: 'input'
-				},			
+				},
 				{
 					type: 'textinput',
 					label: 'Layer',
@@ -355,14 +355,14 @@ exports.getActions = function() {
 					label: 'Input to use on Layer',
 					id: 'LayerInput',
 					default: 1
-				},			 
+				},
 			]
 		},
 
 		VirtualSet: {
 			label: 'VirtualSet - Zoom To Selected Preset',
 			options: [
-				input, 
+				input,
 				{
 					type: 'textinput',
 					label: 'Preset (1-4)',
@@ -375,7 +375,7 @@ exports.getActions = function() {
 		VideoCallAudioSource: {
 			label: 'VideoCall - Select Audio Source',
 			options: [
-				input, 
+				input,
 				{
 					type: 'dropdown',
 					label: 'Bus',
@@ -399,7 +399,7 @@ exports.getActions = function() {
 		VideoCallVideoSource: {
 			label: 'VideoCall - Select Video Source',
 			options: [
-				input, 
+				input,
 				{
 					type: 'dropdown',
 					label: 'Select Output',
@@ -461,7 +461,7 @@ exports.getActions = function() {
 						{ id: 'BusXAudioOff', label: 'Set Bus Audio OFF' },
 					]
 				},
-]
+			]
 		},
 
 		Audio: {
@@ -1147,7 +1147,7 @@ exports.getActions = function() {
 	};
 };
 
-exports.executeAction = function(action) {
+exports.executeAction = function (action) {
 	var opt = action.options || {};
 	var cmd;
 
@@ -1158,26 +1158,26 @@ exports.executeAction = function(action) {
 			cmd = `FUNCTION Cut Input=${opt.input}&Mix=${opt.mix}`;
 		}
 	}
-	
+
 	else if (action.action === 'outputSet') {
 		cmd = `FUNCTION ${opt.functionID} Value=${opt.value}`;
 		if (opt.value === 'Input') {
 			cmd += `&Input=${opt.input}`;
 		}
 	}
-	
+
 	else if (action.action === 'SelectPlayList') {
 		cmd = `FUNCTION SelectPlayList value=${opt.playlistName}`;
 	}
-	
+
 	else if (action.action === 'SetVolumeFade') {
 		cmd = `FUNCTION SetVolumeFade Value=${opt.fadeMin},${opt.fadeTime !== undefined ? opt.fadeTime : '2000'}&input=${opt.input}`;
 	}
-	
+
 	else if (action.action === 'command') {
 		cmd = `FUNCTION ${opt.command}`;
 	}
-	
+
 	else if (action.action === 'MultiViewOverlay') {
 		cmd = `FUNCTION ${opt.functionID} Input=${opt.input}&Value=${opt.selectedIndex}`;
 	}
@@ -1202,7 +1202,7 @@ exports.executeAction = function(action) {
 
 		cmd = `FUNCTION SetText Input=${opt.input}&SelectedIndex=${opt.selectedIndex}&Value=${text}`;
 	}
-	
+
 	else if (action.action === 'SelectTitlePreset') {
 		cmd = `FUNCTION SelectTitlePreset Input=${opt.input}&Value=${opt.selectedIndex}`;
 	}
@@ -1217,7 +1217,7 @@ exports.executeAction = function(action) {
 
 	else if (action.action === 'videoActions' || action.action === 'videoMark') {
 		if (opt.inputType == true) {
-			cmd = `FUNCTION ${opt.functionID} Input=0`;	
+			cmd = `FUNCTION ${opt.functionID} Input=0`;
 		} else {
 			cmd = `FUNCTION ${opt.functionID} Input=${opt.input}`;
 		}
@@ -1242,9 +1242,9 @@ exports.executeAction = function(action) {
 
 	else if (action.action === 'BusXAudio') {
 		if (opt.value == 'Master') {
-			if (opt.functionID == 'BusXAudio') {cmd = `FUNCTION MasterAudio`};
-			if (opt.functionID == 'BusXAudioOn') {cmd = `FUNCTION MasterAudioON`;}
-			if (opt.functionID == 'BusXAudioOff') {cmd = `FUNCTION MasterAudioOFF`;}
+			if (opt.functionID == 'BusXAudio') { cmd = `FUNCTION MasterAudio` };
+			if (opt.functionID == 'BusXAudioOn') { cmd = `FUNCTION MasterAudioON`; }
+			if (opt.functionID == 'BusXAudioOff') { cmd = `FUNCTION MasterAudioOFF`; }
 		} else {
 			cmd = `FUNCTION ${opt.functionID} Value=${opt.value}`;
 		}
@@ -1269,11 +1269,11 @@ exports.executeAction = function(action) {
 			cmd = `FUNCTION ${opt.functionID}`;
 		}
 	}
-	
+
 	else if (action.action === 'replayToggleCamera') {
 		cmd = `FUNCTION ReplayToggleSelectedEventCamera${opt.camera}`;
 	}
-	
+
 	else {
 		const vMixFunction = opt.functionID || action.action;
 		const params = ['duration', 'input', 'mix', 'selectedIndex', 'value']

@@ -13,9 +13,7 @@ exports.parseAPI = function (body) {
 					number,
 					active: false,
 					preview: null,
-					program: null,
-					previewTally: [],
-					programTally: []
+					program: null
 				};
 
 				if (xml.vmix.mix) {
@@ -151,9 +149,7 @@ exports.parseAPI = function (body) {
 						number: 1,
 						active: true,
 						preview: parseInt(xml.vmix.preview, 10),
-						program: parseInt(xml.vmix.active, 10),
-						previewTally: [],
-						programTally: []
+						program: parseInt(xml.vmix.active, 10)
 					},
 					getMix(2),
 					getMix(3),

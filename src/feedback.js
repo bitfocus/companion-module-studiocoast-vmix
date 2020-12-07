@@ -51,28 +51,16 @@ exports.initFeedbacks = function () {
 		]
 	};
 
-	const layerTallyIndicator = {
-		type: 'dropdown',
-		label: 'Layer Tally Indicator',
-		id: 'tally',
-		default: '',
-		choices: [
-			{ id: '', label: 'None' },
-			{ id: 'border', label: 'Border' },
-			{ id: 'corner', label: 'Corner' }
-		]
-	};
-
 	feedbacks.inputPreview = {
 		label: 'Preview - Change colors based on previewed input',
 		description: 'If the specified input is previewed, change colors of the bank',
-		options: [input, mixInput, foregroundColor, backgroundColorPreview, layerTallyIndicator]
+		options: [input, mixInput, foregroundColor, backgroundColorPreview]
 	};
 
 	feedbacks.inputLive = {
 		label: 'Live - Change colors based on live input',
 		description: 'If the specified input is live, change colors of the bank',
-		options: [input, mixInput, foregroundColor, backgroundColorProgram, layerTallyIndicator]
+		options: [input, mixInput, foregroundColor, backgroundColorProgram]
 	};
 
 	feedbacks.overlayStatus = {
@@ -489,8 +477,8 @@ exports.executeFeedback = function (feedback, bank) {
 	if (feedback.type === 'inputPreview' || feedback.type === 'inputLive') {
 		const mix = feedback.options.mix !== undefined ? feedback.options.mix : 0;
 		const type = feedback.type === 'inputPreview' ? 'preview' : 'program';
-		const input = getInput(feedback.options.input);
-		if (!input || this.data.mix[mix][type] === 0 || !this.data.inputs[this.data.mix[mix][type] - 1]) {
+
+		if (this.data.mix[mix][type] === 0 || !this.data.inputs[this.data.mix[mix][type] - 1]) {
 			return;
 		}
 
