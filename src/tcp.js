@@ -1,5 +1,6 @@
 const tcp = require('../../../tcp');
 const { parseAPI } = require('./api');
+const { parseActivactor } = require('./activators');
 
 exports.init = function () {
 	if (this.socket !== undefined) {
@@ -29,12 +30,12 @@ exports.init = function () {
 
 			if (this.config.apiPollInterval != 0) {
 				this.socket.send('XML\r\n');
+				this.socket.send('SUBSCRIBE ACTS\r\n');
 				this.pollAPI = setInterval(() => {
 					this.socket.send('XML\r\n');
 				}, this.config.apiPollInterval < 100 ? 100 : this.config.apiPollInterval);
 			}
 		});
-
 
 		const processMessages = (message) => {
 
@@ -44,6 +45,11 @@ exports.init = function () {
 				const stop = message.indexOf('</vmix>') + 7;
 
 				parseAPI.bind(this)(message.slice(start, stop));
+			}
+					
+			// Activators
+			else if (message.includes('ACTS OK')) {
+				parseActivactor.bind(this)(message.substr(8));
 			}
 		};
 		

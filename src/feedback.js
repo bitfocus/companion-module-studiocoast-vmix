@@ -1,4 +1,4 @@
-exports.initFeedbacks = function() {
+exports.initFeedbacks = function () {
 	const feedbacks = {};
 
 	const foregroundColor = {
@@ -138,15 +138,15 @@ exports.initFeedbacks = function() {
 			backgroundColorProgram,
 			{
 				type: 'dropdown',
-					label: 'Stream Feedback Value',
-					id: 'value',
-					default: '',
-					choices: [
-						{ id: '', label: 'All' },
-						{ id: '0', label: '0' },
-						{ id: '1', label: '1' },
-						{ id: '2', label: '2' }
-					]
+				label: 'Stream Feedback Value',
+				id: 'value',
+				default: '',
+				choices: [
+					{ id: '', label: 'All' },
+					{ id: '0', label: '0' },
+					{ id: '1', label: '1' },
+					{ id: '2', label: '2' }
+				]
 			}
 		]
 	};
@@ -178,6 +178,7 @@ exports.initFeedbacks = function() {
 		description: 'Indicate if an inputs Audio is ON',
 		options: [input, foregroundColor, backgroundColorProgram]
 	};
+
 	feedbacks.inputSolo = {
 		label: 'Audio - Input solo',
 		description: 'Indicate if an input is set to Solo',
@@ -204,7 +205,7 @@ exports.initFeedbacks = function() {
 				default: this.rgb(255, 255, 0)
 			}
 		]
-  };
+	};
 
 	feedbacks.liveInputVolume = {
 		label: 'Audio - Input live dB value',
@@ -249,7 +250,7 @@ exports.initFeedbacks = function() {
 			}
 		]
 	};
-	
+
 	feedbacks.liveBusVolume = {
 		label: 'Audio - Bus live dB value',
 		description: 'Indicate what the live dB value on a bus is',
@@ -317,7 +318,7 @@ exports.initFeedbacks = function() {
 			backgroundColorPreview
 		]
 	};
-  
+
 	feedbacks.busVolumeLevel = {
 		label: 'Audio - Bus Volume',
 		description: 'Indicate if an output bus fader is within a set range',
@@ -392,7 +393,7 @@ exports.initFeedbacks = function() {
 	};
 
 	feedbacks.replayCamera = {
-		label: 'Replay - Recording/Live',
+		label: 'Replay - Camera Live',
 		description: 'Indicates current recording or live status of a replay input',
 		options: [
 			{
@@ -402,7 +403,8 @@ exports.initFeedbacks = function() {
 				default: 'A',
 				choices: [
 					{ id: 'A', label: 'Replay A' },
-					{ id: 'B', label: 'Replay B' }
+					{ id: 'B', label: 'Replay B' },
+					{ id: 'selected', label: 'Replay Selected' }
 				]
 			},
 			{
@@ -410,17 +412,54 @@ exports.initFeedbacks = function() {
 				label: 'Camera',
 				id: 'camera',
 				default: '1',
-				choices: ['1', '2', '3', '4'].map(id => ({ id, label: id }))
+				choices: ['1', '2', '3', '4', '5', '6', '7', '8'].map(id => ({ id, label: id }))
 			},
 			foregroundColor,
 			backgroundColorProgram
 		]
 	};
 
+	feedbacks.replaySelectedChannel = {
+		label: 'Replay - Selected Channel',
+		description: 'Indicates currently selected channel',
+		options: [
+			{
+				type: 'dropdown',
+				label: 'Replay Channel',
+				id: 'channel',
+				default: 'AB',
+				choices: [
+					{ id: 'AB', label: 'A|B' },
+					{ id: 'A', label: 'A' },
+					{ id: 'B', label: 'B' }
+				]
+			},
+			foregroundColor,
+			backgroundColorProgram
+		]
+	};
+
+	feedbacks.videoCallAudioSource = {
+		label: 'Video Call - Audio Source',
+		description: 'Indicates audio source for a video call',
+		options: [
+			input,
+			{
+				type: 'dropdown',
+				label: 'Source',
+				id: 'source',
+				default: 'Master',
+				choices: ['Master', 'Headphones', 'A', 'B', 'C', 'D', 'E', 'F', 'G'].map((id, index) => ({ id: index > 1 ? `Bus${id}` : id, label: id }))
+			},
+			foregroundColor,
+			backgroundColorProgram
+		]
+	}
+
 	return feedbacks;
 };
 
-exports.executeFeedback = function(feedback, bank) {
+exports.executeFeedback = function (feedback, bank) {
 	const int = RegExp(/^\d+$/);
 
 	const getInput = value => {
@@ -430,7 +469,7 @@ exports.executeFeedback = function(feedback, bank) {
 			input = this.data.inputs.find(item => item.number === value);
 		} else {
 			input = this.data.inputs.find(item => item.shortTitle === value || item.title === value || item.key === value);
-		}	
+		}
 
 		return input;
 	};
@@ -444,7 +483,7 @@ exports.executeFeedback = function(feedback, bank) {
 		}
 
 		const previewTitle = this.data.inputs[this.data.mix[mix][type] - 1].shortTitle;
-		const guidKey = this.data.inputs[this.data.mix[mix][type] -1].key;	
+		const guidKey = this.data.inputs[this.data.mix[mix][type] - 1].key;
 		const idCheck = int.test(feedback.options.input) && feedback.options.input == this.data.mix[mix][type];
 		const titleCheck = !int.test(feedback.options.input) && feedback.options.input === previewTitle;
 		const guidCheck = feedback.options.input == guidKey;
@@ -452,7 +491,7 @@ exports.executeFeedback = function(feedback, bank) {
 			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
 		}
 	}
-	
+
 	else if (feedback.type === 'overlayStatus') {
 		let input = getInput(feedback.options.input);
 		let preview = false;
@@ -482,7 +521,7 @@ exports.executeFeedback = function(feedback, bank) {
 			};
 		}
 	}
-	
+
 	else if (feedback.type === 'videoTimer') {
 		let input = getInput(feedback.options.input);
 
@@ -524,10 +563,10 @@ exports.executeFeedback = function(feedback, bank) {
 		if (bank.text != '') {
 			return { color: color(), text: bank.text + `\\n ${min}:${sec}.${ms}` };
 		} else {
-			return { color: color(), text: bank.text + `${min}:${sec}.${ms}` };	
+			return { color: color(), text: bank.text + `${min}:${sec}.${ms}` };
 		}
 	}
-	
+
 	else if (feedback.type === 'status') {
 		if (feedback.options.status === 'connection') {
 			if (this.data.connected) return { color: feedback.options.fg, bgcolor: feedback.options.bg };
@@ -539,7 +578,7 @@ exports.executeFeedback = function(feedback, bank) {
 			}
 		}
 	}
-	
+
 	else if (feedback.type === 'busMute') {
 		const busID = feedback.options.bus === 'Master' ? 'master' : `bus${feedback.options.bus}`;
 		const bus = this.data.audio.find(item => item.bus === busID);
@@ -548,7 +587,7 @@ exports.executeFeedback = function(feedback, bank) {
 			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
 		}
 	}
-	
+
 	else if (feedback.type === 'inputMute') {
 		let input = getInput(feedback.options.input);
 
@@ -572,7 +611,7 @@ exports.executeFeedback = function(feedback, bank) {
 			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
 		}
 	}
-	
+
 	else if (feedback.type === 'inputBusRouting') {
 		let input = getInput(feedback.options.input);
 		const busID = feedback.options.bus === 'Master' ? 'M' : feedback.options.bus;
@@ -581,7 +620,7 @@ exports.executeFeedback = function(feedback, bank) {
 			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
 		}
 	}
-	
+
 	else if (feedback.type === 'liveInputVolume') {
 		let input = getInput(feedback.options.input);
 
@@ -589,16 +628,16 @@ exports.executeFeedback = function(feedback, bank) {
 		if (!input) {
 			return
 		}
-		
+
 		var dBLeft = parseFloat(input.meterF1);
 		var dBRight = parseFloat(input.meterF2);
 
 		dBLeft = (20 * Math.log(dBLeft) / Math.LN10);
 		dBRight = (20 * Math.log(dBRight) / Math.LN10);
-		
+
 		dB = Math.max(dBLeft, dBRight);
 		dB = +dB.toFixed(1);
-		
+
 		const color = () => {
 			if (dB > -1) {
 				return feedback.options.color;
@@ -635,20 +674,20 @@ exports.executeFeedback = function(feedback, bank) {
 		}
 
 		else {
-			const busID = feedback.options.bus === 'Master' ? 'master' : ( 'bus' + feedback.options.bus);
+			const busID = feedback.options.bus === 'Master' ? 'master' : ('bus' + feedback.options.bus);
 			const bus = this.data.audio.find(output => output.bus === busID);
 			if (bus !== undefined) {
 				dBLeft = parseFloat(bus.meterF1);
 				dBRight = parseFloat(bus.meterF2);
-				}
-		}	
+			}
+		}
 
 		dBLeft = (20 * Math.log(dBLeft) / Math.LN10);
 		dBRight = (20 * Math.log(dBRight) / Math.LN10);
-		
+
 		dB = Math.max(dBLeft, dBRight);
 		dB = +dB.toFixed(1);
-		
+
 		const color = () => {
 			if (dB > -1) {
 				return feedback.options.color;
@@ -706,14 +745,14 @@ exports.executeFeedback = function(feedback, bank) {
 			const bus = this.data.audio.find(output => output.bus === 'master');
 			volume = parseFloat(bus.headphonesVolume);
 		}
-		
+
 		else {
-			const busID = feedback.options.bus === 'Master' ? 'master' : ( 'bus' + feedback.options.bus);
+			const busID = feedback.options.bus === 'Master' ? 'master' : ('bus' + feedback.options.bus);
 			const bus = this.data.audio.find(output => output.bus === busID);
 			if (bus !== undefined) {
 				volume = parseFloat(bus.volume);
 			}
-		}	
+		}
 
 		const volumeInRange = {
 			'eq': volume === value,
@@ -744,21 +783,42 @@ exports.executeFeedback = function(feedback, bank) {
 			return { text: bank.text + text.value };
 		}
 	}
-	
+
 	else if (feedback.type === 'replayStatus') {
 		if (this.data.replay[feedback.options.status]) {
 			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
 		}
 	}
-	
+
 	else if (feedback.type === 'replayEvents') {
 		if (this.data.replay.events === feedback.options.events) {
 			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
 		}
 	}
-	
+
 	else if (feedback.type === 'replayCamera') {
-		if (this.data.replay['camera' + feedback.options.channel] === feedback.options.camera) {
+		let channel = feedback.options.channel;
+		if (channel === 'selected') {
+			// Backways compatibility - Default to channel A if prior to v24
+			channel = this.data.replay.channelMode ? this.data.replay.channelMode : 'A';
+			if (channel === 'AB') channel = 'A';
+		}
+
+		if (this.data.replay['camera' + channel] === feedback.options.camera) {
+			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
+		}
+	}
+
+	else if (feedback.type === 'replaySelectedChannel') {
+		if (this.data.replay.channelMode && this.data.replay.channelMode === feedback.options.channel) {
+			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
+		}
+	}
+
+	else if (feedback.type === 'videoCallAudioSource') {
+		let input = getInput(feedback.options.input);
+
+		if (input && this.activatorData.videoCall[input.key] && this.activatorData.videoCall[input.key].audioSource === feedback.options.source) {
 			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
 		}
 	}
