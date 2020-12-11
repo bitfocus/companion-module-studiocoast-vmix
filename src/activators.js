@@ -152,6 +152,21 @@ exports.parseActivactor = function (message) {
 
 		if (state === '1') {
 			this.data.mix[mix][type] = parseInt(input, 10);
+
+			// Update layer tally
+			const checkTally = (layerType, input) => {
+				if (input && !this.data.mix[mix][layerType].includes(input.key)) {
+					this.data.mix[mix][layerType].push(input.key);
+
+					input.overlay.forEach(layer => {
+						checkTally(layerType, this.data.inputs.find(input => input.key === layer.key));
+					})
+				}
+			};
+
+			this.data.mix[mix][type + 'Tally'] = [];
+			checkTally(type + 'Tally', this.data.inputs.find(input => input.number == this.data.mix[mix][type]));
+
 			updateBuffer('feedback', type === 'program' ? 'inputLive' : 'inputPreview');
 		}
 	}

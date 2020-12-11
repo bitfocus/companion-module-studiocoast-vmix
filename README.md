@@ -102,3 +102,6 @@ and if there is more than one parameter use "&" as a separator between them like
 * Added support for up to 8 replay cameras
 * Added vMix Call audio source feedback
 * Fixed a bug with the SelectPlayList actions missing param name
+
+**v1.2.11**
+* Added 'Layer Indicator' option for input Preview/Program feedback to show if an input is in a layer or overlay going to Preview/Program

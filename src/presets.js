@@ -46,12 +46,12 @@ exports.initPresets = function() {
 
 		if (item.id === 'PreviewInput') {
 			actions.push({ action: item.id, options: { mix: item.mix, input: item.input } });
-			feedbacks.push({ type: 'inputPreview', options: { mix: item.mix, input: item.input, fg: this.rgb(255, 255, 255), bg: this.rgb(0, 255, 0) } });
+			feedbacks.push({ type: 'inputPreview', options: { mix: item.mix, input: item.input, fg: this.rgb(255, 255, 255), bg: this.rgb(0, 255, 0), tally: '' } });
 		}
 		
 		else if (item.id === 'programCut') {
 			actions.push({ action: item.id, options: { mix: item.mix, input: item.input } });
-			feedbacks.push({ type: 'inputLive', options: { mix: item.mix, input: item.input, fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } });
+			feedbacks.push({ type: 'inputLive', options: { mix: item.mix, input: item.input, fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0), tally: '' } });
 		}
 		
 		else if (item.id === 'transitionMix') {

@@ -13,7 +13,9 @@ exports.parseAPI = function (body) {
 					number,
 					active: false,
 					preview: null,
-					program: null
+					program: null,
+					previewTally: [],
+					programTally: []
 				};
 
 				if (xml.vmix.mix) {
@@ -149,7 +151,9 @@ exports.parseAPI = function (body) {
 						number: 1,
 						active: true,
 						preview: parseInt(xml.vmix.preview, 10),
-						program: parseInt(xml.vmix.active, 10)
+						program: parseInt(xml.vmix.active, 10),
+						previewTally: [],
+						programTally: []
 					},
 					getMix(2),
 					getMix(3),
@@ -250,6 +254,7 @@ exports.parseAPI = function (body) {
 			if (!_.isEqual(data.mix, this.data.mix) || inputCheck) {
 				changes.add('inputPreview');
 				changes.add('inputLive');
+				changes.add('overlayStatus');
 			}
 
 			// Check overlays
