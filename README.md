@@ -105,3 +105,4 @@ and if there is more than one parameter use "&" as a separator between them like
 
 **v1.2.11**
 * Added 'Layer Indicator' option for input Preview/Program feedback to show if an input is in a layer or overlay going to Preview/Program
+* Fixed a bug that caused a crash if vMix version was v22 or older

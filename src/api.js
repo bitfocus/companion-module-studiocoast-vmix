@@ -120,7 +120,7 @@ exports.parseAPI = function (body) {
 					audio[key][0].$.bus = key;
 					data.push(audio[key][0].$);
 				});
-				
+
 				if (!this.data.connected) {
 					data.forEach(output => {
 						const busID = output.bus === 'master' ? 'master' : output.bus.substr(3).toLowerCase();
@@ -218,7 +218,7 @@ exports.parseAPI = function (body) {
 				data.replay.events = replayInput.replay.events;
 				data.replay.cameraA = replayInput.replay.cameraA;
 				data.replay.cameraB = replayInput.replay.cameraB;
-				data.replay.channelMode = replayInput.replay.channelMode; 
+				data.replay.channelMode = replayInput.replay.channelMode;
 
 				if (data.replay.channelMode === 'AB' && this.data.replay.cameraB) {
 					data.replay.cameraB = this.data.replay.cameraB;
@@ -299,7 +299,7 @@ exports.parseAPI = function (body) {
 					// // Remove symbols other than - _ . from the input title
 					let inputTitle = input.title.replace(/[^a-z0-9-_.]+/gi, '');
 					this.setVariable(`input_${input.number}_name`, inputTitle);
-				} else {
+				} else if (input.shortTitle) {
 					// Remove symbols other than - _ . from the input title
 					let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '');
 					this.setVariable(`input_${input.number}_name`, inputName);
@@ -309,9 +309,11 @@ exports.parseAPI = function (body) {
 				if (!this.data.connected && input.volume !== undefined && (previousState === undefined || input.volume !== previousState.volume)) {
 					const volume = Math.round(parseFloat(input.volume));
 
-					// Remove symbols other than - _ . from the input title
-					let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '');
-					this.setVariable(`input_volume_${inputName}`, volume);
+					if (input.shortTitle) {
+						// Remove symbols other than - _ . from the input title
+						let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '');
+						this.setVariable(`input_volume_${inputName}`, volume);
+					}
 				}
 			});
 

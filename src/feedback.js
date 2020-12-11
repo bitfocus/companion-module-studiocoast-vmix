@@ -494,7 +494,7 @@ exports.executeFeedback = function (feedback, bank) {
 			return;
 		}
 
-		const previewTitle = this.data.inputs[this.data.mix[mix][type] - 1].shortTitle;
+		const previewTitle = this.data.inputs[this.data.mix[mix][type] - 1].shortTitle || this.data.inputs[this.data.mix[mix][type] - 1].title;
 		const guidKey = this.data.inputs[this.data.mix[mix][type] - 1].key;
 		const idCheck = int.test(feedback.options.input) && feedback.options.input == this.data.mix[mix][type];
 		const titleCheck = !int.test(feedback.options.input) && feedback.options.input === previewTitle;
