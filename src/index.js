@@ -2,6 +2,7 @@ const instance_skel = require('../../../instance_skel');
 const { executeAction, getActions } = require('./actions');
 const { getConfigFields } = require('./config');
 const { executeFeedback, initFeedbacks } = require('./feedback');
+const Indicators = require('./indicators');
 const { initPresets } = require('./presets');
 const { upgradeV1_2_0 } = require('./upgrade');
 const { updateVariableDefinitions } = require('./variables');
@@ -41,10 +42,10 @@ class VMixInstance extends instance_skel {
 				{ number: '4', effect: 'fade', duration: '1000' },
 			],
 			mix: [
-				{ id: 1, active: false, preview: 0, program: 0 },
-				{ id: 2, active: false, preview: 0, program: 0 },
-				{ id: 3, active: false, preview: 0, program: 0 },
-				{ id: 4, active: false, preview: 0, program: 0 }
+				{ id: 1, active: false, preview: 0, program: 0, previewTally: [], programTally: [] },
+				{ id: 2, active: false, preview: 0, program: 0, previewTally: [], programTally: [] },
+				{ id: 3, active: false, preview: 0, program: 0, previewTally: [], programTally: [] },
+				{ id: 4, active: false, preview: 0, program: 0, previewTally: [], programTally: [] }
 			],
 			audio: [
 				{ volume: '100', muted: 'False', meterF1: '0', meterF2: '0', headphonesVolume: '100', bus: 'master' }
@@ -85,6 +86,7 @@ class VMixInstance extends instance_skel {
 	}
 
 	init() {
+		this.indicators = new Indicators(this);
 		this.status(1, 'Connecting');
 		this.actions();
 		this.init_tcp();

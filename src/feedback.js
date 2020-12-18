@@ -51,16 +51,28 @@ exports.initFeedbacks = function () {
 		]
 	};
 
+	const layerTallyIndicator = {
+		type: 'dropdown',
+		label: 'Layer Tally Indicator',
+		id: 'tally',
+		default: '',
+		choices: [
+			{ id: '', label: 'None' },
+			{ id: 'border', label: 'Border' },
+			{ id: 'corner', label: 'Corner' }
+		]
+	};
+
 	feedbacks.inputPreview = {
 		label: 'Preview - Change colors based on previewed input',
 		description: 'If the specified input is previewed, change colors of the bank',
-		options: [input, mixInput, foregroundColor, backgroundColorPreview]
+		options: [input, mixInput, foregroundColor, backgroundColorPreview, layerTallyIndicator]
 	};
 
 	feedbacks.inputLive = {
 		label: 'Live - Change colors based on live input',
 		description: 'If the specified input is live, change colors of the bank',
-		options: [input, mixInput, foregroundColor, backgroundColorProgram]
+		options: [input, mixInput, foregroundColor, backgroundColorProgram, layerTallyIndicator]
 	};
 
 	feedbacks.overlayStatus = {
@@ -477,18 +489,23 @@ exports.executeFeedback = function (feedback, bank) {
 	if (feedback.type === 'inputPreview' || feedback.type === 'inputLive') {
 		const mix = feedback.options.mix !== undefined ? feedback.options.mix : 0;
 		const type = feedback.type === 'inputPreview' ? 'preview' : 'program';
-
-		if (this.data.mix[mix][type] === 0 || !this.data.inputs[this.data.mix[mix][type] - 1]) {
+		const input = getInput(feedback.options.input);
+		if (!input || this.data.mix[mix][type] === 0 || !this.data.inputs[this.data.mix[mix][type] - 1]) {
 			return;
 		}
 
-		const previewTitle = this.data.inputs[this.data.mix[mix][type] - 1].shortTitle;
+		const previewTitle = this.data.inputs[this.data.mix[mix][type] - 1].shortTitle || this.data.inputs[this.data.mix[mix][type] - 1].title;
 		const guidKey = this.data.inputs[this.data.mix[mix][type] - 1].key;
 		const idCheck = int.test(feedback.options.input) && feedback.options.input == this.data.mix[mix][type];
 		const titleCheck = !int.test(feedback.options.input) && feedback.options.input === previewTitle;
 		const guidCheck = feedback.options.input == guidKey;
+		const layerTallyCheck = feedback.options.tally !== undefined && feedback.options.tally !== '' && this.data.mix[mix][type + 'Tally'].includes(input.key);
+
 		if (idCheck || titleCheck || guidCheck) {
 			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
+		}
+		else if (layerTallyCheck) {
+			return { img64: this.indicators.getImage(feedback.options.tally, feedback.options.bg) };
 		}
 	}
 

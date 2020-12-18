@@ -13,7 +13,9 @@ exports.parseAPI = function (body) {
 					number,
 					active: false,
 					preview: null,
-					program: null
+					program: null,
+					previewTally: [],
+					programTally: []
 				};
 
 				if (xml.vmix.mix) {
@@ -118,7 +120,7 @@ exports.parseAPI = function (body) {
 					audio[key][0].$.bus = key;
 					data.push(audio[key][0].$);
 				});
-				
+
 				if (!this.data.connected) {
 					data.forEach(output => {
 						const busID = output.bus === 'master' ? 'master' : output.bus.substr(3).toLowerCase();
@@ -149,7 +151,9 @@ exports.parseAPI = function (body) {
 						number: 1,
 						active: true,
 						preview: parseInt(xml.vmix.preview, 10),
-						program: parseInt(xml.vmix.active, 10)
+						program: parseInt(xml.vmix.active, 10),
+						previewTally: [],
+						programTally: []
 					},
 					getMix(2),
 					getMix(3),
@@ -175,6 +179,30 @@ exports.parseAPI = function (body) {
 				}
 			};
 
+			// Update layer tally
+			data.mix.forEach(mix => {
+				const checkTally = (type, input) => {
+					if (input && !mix[type].includes(input.key)) {
+						mix[type].push(input.key);
+
+						input.overlay.forEach(layer => {
+							checkTally(type, data.inputs.find(input => input.key === layer.key));
+						})
+					}
+				};
+
+				if (mix.preview !== null) {
+					checkTally('previewTally', data.inputs.find(input => input.number == mix.preview));
+				}
+				if (mix.program !== null) {
+					checkTally('programTally', data.inputs.find(input => input.number == mix.program));
+				}
+
+				data.overlays.filter(overlay => overlay.input !== undefined).forEach(overlay => {
+					checkTally(overlay.preview ? 'previewTally' : 'programTally', data.inputs.find(input => input.number === overlay.input));
+				});
+			});
+
 			// Update stream Status
 			if (xml.vmix.streaming[0].$) {
 				data.status.stream[0] = xml.vmix.streaming[0].$.channel1 === 'True';
@@ -190,7 +218,7 @@ exports.parseAPI = function (body) {
 				data.replay.events = replayInput.replay.events;
 				data.replay.cameraA = replayInput.replay.cameraA;
 				data.replay.cameraB = replayInput.replay.cameraB;
-				data.replay.channelMode = replayInput.replay.channelMode; 
+				data.replay.channelMode = replayInput.replay.channelMode;
 
 				if (data.replay.channelMode === 'AB' && this.data.replay.cameraB) {
 					data.replay.cameraB = this.data.replay.cameraB;
@@ -226,6 +254,7 @@ exports.parseAPI = function (body) {
 			if (!_.isEqual(data.mix, this.data.mix) || inputCheck) {
 				changes.add('inputPreview');
 				changes.add('inputLive');
+				changes.add('overlayStatus');
 			}
 
 			// Check overlays
@@ -270,7 +299,7 @@ exports.parseAPI = function (body) {
 					// // Remove symbols other than - _ . from the input title
 					let inputTitle = input.title.replace(/[^a-z0-9-_.]+/gi, '');
 					this.setVariable(`input_${input.number}_name`, inputTitle);
-				} else {
+				} else if (input.shortTitle) {
 					// Remove symbols other than - _ . from the input title
 					let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '');
 					this.setVariable(`input_${input.number}_name`, inputName);
@@ -280,9 +309,11 @@ exports.parseAPI = function (body) {
 				if (!this.data.connected && input.volume !== undefined && (previousState === undefined || input.volume !== previousState.volume)) {
 					const volume = Math.round(parseFloat(input.volume));
 
-					// Remove symbols other than - _ . from the input title
-					let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '');
-					this.setVariable(`input_volume_${inputName}`, volume);
+					if (input.shortTitle) {
+						// Remove symbols other than - _ . from the input title
+						let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '');
+						this.setVariable(`input_volume_${inputName}`, volume);
+					}
 				}
 			});
 
