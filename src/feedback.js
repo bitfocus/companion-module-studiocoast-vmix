@@ -1,3 +1,5 @@
+const { volumeAmplitudeToLinear } = require('./utils');
+
 exports.initFeedbacks = function () {
 	const feedbacks = {};
 
@@ -331,8 +333,50 @@ exports.initFeedbacks = function () {
 		]
 	};
 
+	feedbacks.inputVolumeLevelLinear = {
+		label: 'Audio - Input Volume Linear',
+		description: 'Indicate if an input fader is in a set value',
+		options: [
+			input,
+			comparison,
+			{
+				type: 'textinput',
+				label: 'Value',
+				id: 'value',
+				default: '100',
+				regex: this.REGEX_FLOAT_OR_INT
+			},
+			foregroundColor,
+			backgroundColorPreview
+		]
+	};
+
 	feedbacks.busVolumeLevel = {
 		label: 'Audio - Bus Volume',
+		description: 'Indicate if an output bus fader is within a set range',
+		options: [
+			{
+				type: 'dropdown',
+				label: 'Bus',
+				id: 'bus',
+				default: 'Master',
+				choices: ['Master', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'Headphones'].map(id => ({ id, label: id }))
+			},
+			comparison,
+			{
+				type: 'textinput',
+				label: 'Value',
+				id: 'value',
+				default: '100',
+				regex: this.REGEX_FLOAT_OR_INT
+			},
+			foregroundColor,
+			backgroundColorPreview
+		]
+	};
+
+	feedbacks.busVolumeLevelLinear = {
+		label: 'Audio - Bus Volume Linear',
 		description: 'Indicate if an output bus fader is within a set range',
 		options: [
 			{
@@ -732,13 +776,13 @@ exports.executeFeedback = function (feedback, bank) {
 		}
 	}
 
-	else if (feedback.type === 'inputVolumeLevel') {
+	else if (['inputVolumeLevel', 'inputVolumeLevelLinear'].includes(feedback.type)) {
 		let input = getInput(feedback.options.input);
 		if (input === undefined || input.volume === undefined) {
 			return;
 		}
 
-		const volume = parseFloat(input.volume);
+		const volume = feedback.type === 'inputVolumeLevel' ? parseFloat(input.volume) : volumeAmplitudeToLinear(input.volume);
 		const value = parseFloat(feedback.options.value);
 
 		const volumeInRange = {
@@ -754,20 +798,20 @@ exports.executeFeedback = function (feedback, bank) {
 		}
 	}
 
-	else if (feedback.type === 'busVolumeLevel') {
+	else if (['busVolumeLevel', 'busVolumeLevelLinear'].includes(feedback.type)) {
 		const value = parseFloat(feedback.options.value);
 		let volume;
 
 		if (feedback.options.bus === 'Headphones') {
 			const bus = this.data.audio.find(output => output.bus === 'master');
-			volume = parseFloat(bus.headphonesVolume);
+			volume = feedback.type === 'busVolumeLevel' ? parseFloat(bus.headphonesVolume) : volumeAmplitudeToLinear(bus.headphonesVolume);
 		}
 
 		else {
 			const busID = feedback.options.bus === 'Master' ? 'master' : ('bus' + feedback.options.bus);
 			const bus = this.data.audio.find(output => output.bus === busID);
 			if (bus !== undefined) {
-				volume = parseFloat(bus.volume);
+				volume = feedback.type === 'busVolumeLevel' ? parseFloat(bus.volume) : volumeAmplitudeToLinear(bus.volume);
 			}
 		}
 
