@@ -188,6 +188,8 @@ exports.parseActivactor = function (message) {
 		else if (params[0] === 'InputVolume') {
 			const volume = Math.round(parseFloat(params[2] * 100));
 
+			input.volume = parseFloat(params[2]) * 100;
+
 			if (input.shortTitle) {
 				let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '');
 				updateBuffer('variable', `input_volume_${inputName}`, volume);
