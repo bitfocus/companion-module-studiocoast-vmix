@@ -265,7 +265,7 @@ exports.parseActivactor = function (message) {
 		else if (params[0].endsWith('Volume')) {
 			const bus = this.data.audio.find(item => item.bus === id);
 			if (bus) {
-				bus.volume = Math.round(parseFloat(params[2] * 100)).toString();
+				bus.volume = parseFloat(params[1]) * 100;
 			}
 
 			const variableID = params[0].startsWith('Master') ? 'master' : params[0][3];
