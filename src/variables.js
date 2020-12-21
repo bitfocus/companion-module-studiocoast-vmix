@@ -6,10 +6,6 @@ exports.updateVariableDefinitions = function() {
 			label: `Bus ${bus} Volume`,
 			name: `bus_volume_${bus.toLowerCase()}`
 		});
-		variables.push({
-			label: `Bus ${bus} Volume`,
-			name: `bus_volume_linear_${bus.toLowerCase()}`
-		});
 	});
 
 	this.data.inputs.forEach(input => {
@@ -19,10 +15,6 @@ exports.updateVariableDefinitions = function() {
 			variables.push({
 				label: `Input ${input.shortTitle} Volume`,
 				name: `input_volume_${inputName}`
-			})
-			variables.push({
-				label: `Input ${input.shortTitle} Volume Linear`,
-				name: `input_volume_linear_${inputName}`
 			})
 		};
 

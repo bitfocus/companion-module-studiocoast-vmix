@@ -126,14 +126,15 @@ exports.parseAPI = function (body) {
 					data.forEach(output => {
 						const busID = output.bus === 'master' ? 'master' : output.bus.substr(3).toLowerCase();
 						const volume = Math.round(parseFloat(output.volume));
+						const volumeLinear = volumeAmplitudeToLinear(output.volume);
 
-						this.setVariable(`bus_volume_${busID}`, volume);
-						this.setVariable(`bus_volume_linear_${busID}`, volumeAmplitudeToLinear(output.volume));
+						this.setVariable(`bus_volume_${busID}`, this.config.volumeLinear ? volumeLinear : volume);
 
 						if (output.bus === 'master') {
 							const headphonesVolume = Math.round(parseFloat(output.headphonesVolume));
-							this.setVariable('bus_volume_headphones', headphonesVolume);
-							this.setVariable('bus_volume_linear_headphones', volumeAmplitudeToLinear(output.headphonesVolume));
+							const volumeLinear = volumeAmplitudeToLinear(output.headphonesVolume);
+
+							this.setVariable('bus_volume_headphones', this.config.volumeLinear ? volumeLinear : headphonesVolume);
 						}
 					});
 				}
@@ -275,7 +276,6 @@ exports.parseAPI = function (body) {
 				changes.add('inputBusRouting');
 				changes.add('titleLayer');
 				changes.add('inputVolumeLevel');
-				changes.add('inputVolumeLevelLinear');
 			}
 
 			if (!_.isEqual(data.inputs, this.data.inputs) || inputCheck) {
@@ -293,7 +293,6 @@ exports.parseAPI = function (body) {
 			if (!this.data.connected && (!_.isEqual(data.audio, this.data.audio) || inputCheck)) {
 				changes.add('busMute');
 				changes.add('busVolumeLevel');
-				changes.add('busVolumeLevelLinear');
 				changes.add('liveBusVolume');
 			}
 
@@ -314,13 +313,12 @@ exports.parseAPI = function (body) {
 				// Check input has volume and a different or no previous volume
 				if (!this.data.connected && input.volume !== undefined && (previousState === undefined || input.volume !== previousState.volume)) {
 					const volume = Math.round(parseFloat(input.volume));
-					const volumeLevel = volumeAmplitudeToLinear(input.volume);
+					const volumeLinear = volumeAmplitudeToLinear(input.volume);
 
 					if (input.shortTitle) {
 						// Remove symbols other than - _ . from the input title
 						let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '');
-						this.setVariable(`input_volume_${inputName}`, volume);
-						this.setVariable(`input_volume_linear_${inputName}`, volumeLevel);
+						this.setVariable(`input_volume_${inputName}`, this.config.volumeLinear ? volumeLinear : volume);
 					}
 				}
 			});

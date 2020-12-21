@@ -194,11 +194,9 @@ exports.parseActivactor = function (message) {
 
 			if (input.shortTitle) {
 				let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '');
-				updateBuffer('variable', `input_volume_${inputName}`, volume);
-				updateBuffer('variable', `input_volume_linear_${inputName}`, volumeLinear);
+				updateBuffer('variable', `input_volume_${inputName}`, this.config.volumeLinear ? volumeLinear : volume);
 			}
 			updateBuffer('feedback', 'inputVolumeLevel');
-			updateBuffer('feedback', 'inputVolumeLevelLinear');
 		}
 
 		else if (params[0] === 'InputAudio') {
@@ -271,10 +269,8 @@ exports.parseActivactor = function (message) {
 			const bus = this.data.audio.find(item => item.bus === 'master');
 			bus.headphonesVolume = volume;
 		
-			updateBuffer('variable', 'bus_volume_headphones', Math.round(volume));
-			updateBuffer('variable', 'bus_volume_linear_headphones', volumeLinear);
+			updateBuffer('variable', 'bus_volume_headphones', this.config.volumeLinear ? volumeLinear : Math.round(volume));
 			updateBuffer('feedback', 'busVolumeLevel');
-			updateBuffer('feedback', 'busVolumeLevelLinear');
 		}
 		else if (params[0].endsWith('Volume')) {
 			const bus = this.data.audio.find(item => item.bus === id);
@@ -284,10 +280,8 @@ exports.parseActivactor = function (message) {
 			}
 
 			const variableID = params[0].startsWith('Master') ? 'master' : params[0][3];
-			updateBuffer('variable', `bus_volume_${variableID.toLowerCase()}`, Math.round(volume));
-			updateBuffer('variable', `bus_volume_linear_${variableID.toLowerCase()}`, volumeLinear);
+			updateBuffer('variable', `bus_volume_${variableID.toLowerCase()}`, this.config.volumeLinear ? volumeLinear : Math.round(volume));
 			updateBuffer('feedback', 'busVolumeLevel');
-			updateBuffer('feedback', 'busVolumeLevelLinear');
 			updateBuffer('feedback', 'liveBusVolume');
 
 		}
