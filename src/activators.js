@@ -204,6 +204,7 @@ exports.parseActivactor = function (message) {
 		else if (params[0] === 'InputAudio') {
 			input.muted = params[2] === '1' ? 'False' : 'True';
 			updateBuffer('feedback', 'inputMute');
+			updateBuffer('feedback', 'inputAudio');
 		}
 
 		else if (params[0] === 'InputSolo') {
