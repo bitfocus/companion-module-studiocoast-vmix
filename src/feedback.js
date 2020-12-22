@@ -1,3 +1,5 @@
+const { volumeAmplitudeToLinear } = require('./utils');
+
 exports.initFeedbacks = function () {
 	const feedbacks = {};
 
@@ -738,7 +740,7 @@ exports.executeFeedback = function (feedback, bank) {
 			return;
 		}
 
-		const volume = parseFloat(input.volume);
+		const volume = this.config.volumeLinear ? volumeAmplitudeToLinear(input.volume) : parseFloat(input.volume);
 		const value = parseFloat(feedback.options.value);
 
 		const volumeInRange = {
@@ -760,14 +762,14 @@ exports.executeFeedback = function (feedback, bank) {
 
 		if (feedback.options.bus === 'Headphones') {
 			const bus = this.data.audio.find(output => output.bus === 'master');
-			volume = parseFloat(bus.headphonesVolume);
+			volume = this.config.volumeLinear ? volumeAmplitudeToLinear(bus.headphonesVolume) : parseFloat(bus.headphonesVolume);
 		}
 
 		else {
 			const busID = feedback.options.bus === 'Master' ? 'master' : ('bus' + feedback.options.bus);
 			const bus = this.data.audio.find(output => output.bus === busID);
 			if (bus !== undefined) {
-				volume = parseFloat(bus.volume);
+				volume = this.config.volumeLinear ? volumeAmplitudeToLinear(bus.volume) : parseFloat(bus.volume);
 			}
 		}
 

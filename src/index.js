@@ -7,6 +7,7 @@ const { initPresets } = require('./presets');
 const { upgradeV1_2_0 } = require('./upgrade');
 const { updateVariableDefinitions } = require('./variables');
 const tcp = require('./tcp');
+const { updateVolumeVariables } = require('./utils');
 
 /**
  * Companion instance class for Studiocoast vMix
@@ -83,6 +84,7 @@ class VMixInstance extends instance_skel {
 		this.config.tcpPort = this.config.tcpPort || 8099;
 		this.config.apiPollInterval = this.config.apiPollInterval !== undefined ? this.config.apiPollInterval : 250;
 		this.updateVariableDefinitions = updateVariableDefinitions;
+		this.updateVolumeVariables = updateVolumeVariables;
 	}
 
 	init() {
@@ -102,6 +104,7 @@ class VMixInstance extends instance_skel {
 		this.init_tcp();
 		this.init_feedbacks();
 		initPresets.bind(this)();
+		this.updateVolumeVariables();
 	}
 
 	// Set config page fields

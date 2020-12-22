@@ -1,5 +1,6 @@
 const xml2js = require('xml2js');
 const _ = require('lodash');
+const { volumeAmplitudeToLinear } = require('./utils');
 
 exports.parseAPI = function (body) {
 	xml2js.parseString(body, (err, xml) => {
@@ -125,11 +126,15 @@ exports.parseAPI = function (body) {
 					data.forEach(output => {
 						const busID = output.bus === 'master' ? 'master' : output.bus.substr(3).toLowerCase();
 						const volume = Math.round(parseFloat(output.volume));
-						this.setVariable(`bus_volume_${busID}`, volume);
+						const volumeLinear = volumeAmplitudeToLinear(output.volume);
+
+						this.setVariable(`bus_volume_${busID}`, this.config.volumeLinear ? volumeLinear : volume);
 
 						if (output.bus === 'master') {
 							const headphonesVolume = Math.round(parseFloat(output.headphonesVolume));
-							this.setVariable('bus_volume_headphones', headphonesVolume);
+							const volumeLinear = volumeAmplitudeToLinear(output.headphonesVolume);
+
+							this.setVariable('bus_volume_headphones', this.config.volumeLinear ? volumeLinear : headphonesVolume);
 						}
 					});
 				}
@@ -308,11 +313,12 @@ exports.parseAPI = function (body) {
 				// Check input has volume and a different or no previous volume
 				if (!this.data.connected && input.volume !== undefined && (previousState === undefined || input.volume !== previousState.volume)) {
 					const volume = Math.round(parseFloat(input.volume));
+					const volumeLinear = volumeAmplitudeToLinear(input.volume);
 
 					if (input.shortTitle) {
 						// Remove symbols other than - _ . from the input title
 						let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '');
-						this.setVariable(`input_volume_${inputName}`, volume);
+						this.setVariable(`input_volume_${inputName}`, this.config.volumeLinear ? volumeLinear : volume);
 					}
 				}
 			});

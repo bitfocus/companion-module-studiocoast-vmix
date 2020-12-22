@@ -25,14 +25,21 @@ exports.getConfigFields = function () {
 			regex: this.REGEX_NUMBER
 		},
 		{
-      type: 'text',
-      id: 'apiPollInfo',
-      width: 12,
-      label: 'API Poll Interval warning',
-      value:
-        'Adjusting the API Polling Interval can impact performance. <br />' +
-        'A lower invterval allows for more responsive feedback, but may impact CPU usage. <br />' +
-        'See the help section for more details.' 
-    }
+			type: 'text',
+			id: 'apiPollInfo',
+			width: 12,
+			label: 'API Poll Interval warning',
+			value:
+				'Adjusting the API Polling Interval can impact performance. <br />' +
+				'A lower invterval allows for more responsive feedback, but may impact CPU usage. <br />' +
+				'See the help section for more details.'
+		},
+		{
+			type: 'checkbox',
+			id: 'volumeLinear',
+			label: 'Use a linear scale for volume related dynamic variables/feedbacks',
+			width: 12,
+			default: false,
+		}
 	];
 };
