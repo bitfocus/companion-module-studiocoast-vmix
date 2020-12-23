@@ -96,7 +96,6 @@ exports.parseAPI = function (body) {
 				return data;
 			};
 
-
 			const overlayData = overlay => {
 				const data = {
 					number: overlay.$.number,
@@ -141,7 +140,6 @@ exports.parseAPI = function (body) {
 
 				return data;
 			};
-
 
 			const data = {
 				connected: true,
@@ -217,7 +215,7 @@ exports.parseAPI = function (body) {
 
 			// Update Replay
 			const replayInput = data.inputs.find(input => input.type === 'Replay');
-			if (replayInput) {
+			if (replayInput && replayInput.replay) {
 				data.replay.recording = replayInput.replay.recording === 'True';
 				data.replay.live = replayInput.replay.live === 'True';
 				data.replay.events = replayInput.replay.events;
@@ -254,6 +252,7 @@ exports.parseAPI = function (body) {
 			// Check for changes to update feedbacks
 			const changes = new Set([]);
 			const inputCheck = data.inputs.map(input => input.key).join('') !== this.data.inputs.map(input => input.key).join('');
+			const inputNameCheck = data.inputs.map(input => input.title).join('') !== this.data.inputs.map(input => input.title).join('');
 
 			// Check mix 1 to 4
 			if (!_.isEqual(data.mix, this.data.mix) || inputCheck) {
@@ -337,7 +336,7 @@ exports.parseAPI = function (body) {
 			changes.forEach(change => this.checkFeedbacks(change));
 
 			// Update variable definitions
-			if (changes.size > 0) {
+			if (changes.size > 0 && inputNameCheck) {
 				this.updateVariableDefinitions();
 			}
 		}

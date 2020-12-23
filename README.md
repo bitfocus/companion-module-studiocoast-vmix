@@ -106,3 +106,9 @@ and if there is more than one parameter use "&" as a separator between them like
 **v1.2.11**
 * Added 'Layer Indicator' option for input Preview/Program feedback to show if an input is in a layer or overlay going to Preview/Program
 * Fixed a bug that caused a crash if vMix version was v22 or older
+
+**v1.2.12**
+* Added config option to display volume variables/feedback as a linear value (this will match the slider position within vMix, rather than the actual volume level)
+* Fixed serveral input/bus volume variables/feedbacks not correctly updating
+* Fixed handling of a bug where replay data from the API may be incomplete if polled at during load/unload of the input
+* Fixed a bug where variable definitions was being updated on any change to any input

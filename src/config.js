@@ -17,6 +17,13 @@ exports.getConfigFields = function () {
 			regex: this.REGEX_PORT
 		},
 		{
+			type: 'checkbox',
+			id: 'volumeLinear',
+			label: 'Linear volume scale',
+			width: 3,
+			default: false,
+		},
+		{
 			type: 'textinput',
 			id: 'apiPollInterval',
 			label: 'API Polling interval (ms) (default: 250, min: 100, 0 for disabled)',
@@ -33,13 +40,6 @@ exports.getConfigFields = function () {
 				'Adjusting the API Polling Interval can impact performance. <br />' +
 				'A lower invterval allows for more responsive feedback, but may impact CPU usage. <br />' +
 				'See the help section for more details.'
-		},
-		{
-			type: 'checkbox',
-			id: 'volumeLinear',
-			label: 'Use a linear scale for volume related dynamic variables/feedbacks',
-			width: 12,
-			default: false,
 		}
 	];
 };
