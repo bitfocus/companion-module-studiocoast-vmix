@@ -438,7 +438,22 @@ exports.getActions = function () {
 
 		AudioBus: {
 			label: 'Audio - Route Input to Bus',
-			options: [input, audioBusMaster]
+			options: [
+				input,
+				audioBusMaster, 
+				{
+					type: 'dropdown',
+					label: 'Option',
+					id: 'functionID',
+					default: 'AudioBus',
+					choices: [
+						{ id: 'AudioBus', label: 'Toggle' },
+						{ id: 'AudioBusOn', label: 'On' },
+						{ id: 'AudioBusOff', label: 'Off' },
+					]
+				},
+				
+			]
 		},
 
 		BusXSendToMaster: {
