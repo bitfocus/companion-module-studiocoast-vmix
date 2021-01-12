@@ -43,18 +43,17 @@ exports.parseAPI = function (body) {
 				}
 
 				if (input.list) {
-					if (input.list.length > 0) {
-						data.list = input.list[0].$;
+					if (typeof input.list[0] === 'string') {
+						data.list = [];
 					}
 					else {
-
 						data.list = input.list[0].item.map((item, index) => {
 							const location = typeof item === 'string' ? item : item._;
 							return {
 								index,
 								location,
 								filename: location.split('\\')[location.split('\\').length - 1],
-								selected: item.$ && item.$.selected && item.$.selected === 'true'
+								selected: !!item.$ && item.$.selected === 'true'
 							};
 						});
 					}
