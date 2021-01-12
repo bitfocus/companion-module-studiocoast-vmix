@@ -281,6 +281,7 @@ exports.parseAPI = function (body) {
 				changes.add('videoTimer');
 				changes.add('titleLayer');
 				changes.add('liveInputVolume');
+				changes.add('inputSelectedIndex');
 			}
 
 			// Check for status changes
@@ -303,6 +304,7 @@ exports.parseAPI = function (body) {
 					// // Remove symbols other than - _ . from the input title
 					let inputTitle = input.title.replace(/[^a-z0-9-_.]+/gi, '');
 					this.setVariable(`input_${input.number}_name`, inputTitle);
+					this.setVariable(`input_${input.number}_selected`, input.selectedIndex);
 				} else if (input.shortTitle) {
 					// Remove symbols other than - _ . from the input title
 					let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '');

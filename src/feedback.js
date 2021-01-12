@@ -31,6 +31,15 @@ exports.initFeedbacks = function () {
 		default: '1'
 	};
 
+	const selectedIndex = {
+		type: 'number',
+		label: 'Selected Index',
+		id: 'selectedIndex',
+		default: 0,
+		min: 0,
+		max: 9999,
+	};
+
 	const mixInput = {
 		type: 'dropdown',
 		label: 'Mix',
@@ -470,6 +479,12 @@ exports.initFeedbacks = function () {
 		]
 	}
 
+	feedbacks.inputSelectedIndex = {
+		label: 'List - Change colors based on selected index',
+		description: 'If the specified index is selected, change colors of the bank',
+		options: [input, selectedIndex, foregroundColor, backgroundColorProgram ]
+	};
+
 	return feedbacks;
 };
 
@@ -838,6 +853,14 @@ exports.executeFeedback = function (feedback, bank) {
 		let input = getInput(feedback.options.input);
 
 		if (input && this.activatorData.videoCall[input.key] && this.activatorData.videoCall[input.key].audioSource === feedback.options.source) {
+			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
+		}
+	}
+
+	else if (feedback.type === 'inputSelectedIndex') {
+		let input = getInput(feedback.options.input);
+
+		if (input && parseInt(input.selectedIndex) === parseInt(feedback.options.selectedIndex)) {
 			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
 		}
 	}
