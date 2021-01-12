@@ -732,13 +732,25 @@ exports.getActions = function () {
 		},
 
 		NextPicture: {
-			label: 'Slides - Next Picture/Slide',
+			label: 'Slides/Lists - Next Picture/Slide/Index',
 			options: [input]
 		},
 
 		PreviousPicture: {
-			label: 'Slides - Previous Picture/Slide',
+			label: 'Slides/Lists - Previous Picture/Slide/Index',
 			options: [input]
+		},
+
+		SelectIndex: {
+			label: 'Slides/Lists - Select Specific Picture/Slide/Index',
+			options: [
+				input,
+				{
+					type: 'textinput',
+					label: 'Index Nr.',
+					id: 'value'
+				}
+			]
 		},
 
 		videoActions: {

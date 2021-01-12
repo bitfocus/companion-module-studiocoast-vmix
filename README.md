@@ -112,3 +112,4 @@ and if there is more than one parameter use "&" as a separator between them like
 * Fixed serveral input/bus volume variables/feedbacks not correctly updating
 * Fixed handling of a bug where replay data from the API may be incomplete if polled at during load/unload of the input
 * Fixed a bug where variable definitions was being updated on any change to any input
+* Added Action "SelectIndex" to select specific slides and videos in list inputs
