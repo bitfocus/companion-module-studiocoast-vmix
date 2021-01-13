@@ -422,6 +422,42 @@ exports.initPresets = function() {
 		presets.push(preset);
 	});
 
+	// Slide and List Commands
+	const lists = [
+		{ id: 'NextPicture', size: '18', label: 'Next Index' },
+		{ id: 'PreviousPicture', size: '18', label: 'Prev Index' },
+		{ id: 'SelectIndex', size: '18', label: 'Select Index 1' },
+		{ id: 'Slide', size: 'auto', label: 'Slide: ' },
+		{ id: 'List', size: 'auto', label: 'List: ' },
+	];
+
+	lists.forEach(item => {
+		const actions = [];
+		const feedbacks = [];
+
+		if (['NextPicture', 'PreviousPicture'].includes(item.id)) {
+			actions.push({ action: item.id, options: { input: '1' } });
+		} 
+		else if (item.id === 'SelectIndex') {
+			actions.push({ action: item.id, options: { input: '1', selectedIndex: '1' } });
+			feedbacks.push({ type: 'inputSelectedIndex', options: { input: '1', selectedIndex: '1', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0), el: this.rgb(255, 255, 0)} });
+		}
+		else if (item.id === 'Slide') {
+			feedbacks.push(
+				{ type: 'inputSelectedIndex', options: { input: '1', selectedIndex: '1', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0), el: this.rgb(255, 255, 0)} },
+				{ type: 'inputSelectedIndexName', options: { input: '1', value1: false, value2: true} } 
+			);
+		}
+		else if (item.id === 'List') {
+			feedbacks.push(
+				{ type: 'inputSelectedIndex', options: { input: '1', selectedIndex: '1', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0), el: this.rgb(255, 255, 0)} },
+				{ type: 'inputSelectedIndexName', options: { input: '1', value1: true, value2: false} } 
+			);
+		}
+		const preset = createPreset('Slides And Lists', item, actions, feedbacks, []);
+		presets.push(preset);
+	});
+	
 	// Outputs
 	const outputRouting = [
 		{ id: 'SetOutput2', size: '14', label: 'Output2\\n-\\n' },

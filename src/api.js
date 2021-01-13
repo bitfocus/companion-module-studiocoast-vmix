@@ -44,7 +44,17 @@ exports.parseAPI = function (body) {
 
 				if (input.list) {
 					if (typeof input.list[0] === 'string') {
-						data.list = [];
+						let index = 0;
+						let location = '';
+						data.list = [
+							{	index,
+								location,
+								filename: 'Empty List',
+								selected: false,
+								empty: true
+							}
+						];
+							// ];
 					}
 					else {
 						data.list = input.list[0].item.map((item, index) => {
@@ -53,7 +63,8 @@ exports.parseAPI = function (body) {
 								index,
 								location,
 								filename: location.split('\\')[location.split('\\').length - 1],
-								selected: !!item.$ && item.$.selected === 'true'
+								selected: !!item.$ && item.$.selected === 'true',
+								empty: false
 							};
 						});
 					}
@@ -281,6 +292,7 @@ exports.parseAPI = function (body) {
 				changes.add('titleLayer');
 				changes.add('liveInputVolume');
 				changes.add('inputSelectedIndex');
+				changes.add('inputSelectedIndexName');
 			}
 
 			// Check for status changes
@@ -302,10 +314,15 @@ exports.parseAPI = function (body) {
 				if (input.type === 'VideoList') {
 					// // Remove symbols other than - _ . from the input title
 					let inputTitle = input.title.replace(/[^a-z0-9-_.]+/gi, '');
+					let selectedTitle = 'Empty List'; // If the list is empty this text will be used
+					if (input.list.find(list => list.selected === true)) {
+						selectedTitle = input.list.find(list => list.selected === true).filename.replace(/[^a-z0-9-_.]+/gi, '');
+					}
 					this.setVariable(`input_${input.number}_name`, inputTitle);
 					this.setVariable(`input_${input.number}_selected`, input.selectedIndex);
+					this.setVariable(`input_${input.number}_selected_name`, selectedTitle);
 				} else if (input.shortTitle) {
-					// Remove symbols other than - _ . from the input title
+					// Remove symbols other than - _ . from the input title	
 					let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '');
 					this.setVariable(`input_${input.number}_name`, inputName);
 				}

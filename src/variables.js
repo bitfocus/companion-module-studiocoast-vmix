@@ -30,6 +30,10 @@ exports.updateVariableDefinitions = function() {
 				label: `Input ${input.number} Selected Index`,
 				name: `input_${input.number}_selected`
 			});
+			variables.push({
+				label: `Input ${input.number} Selected Index Name`,
+				name: `input_${input.number}_selected_name`
+			});
 		}
 	});
 
