@@ -24,7 +24,17 @@ exports.updateVariableDefinitions = function() {
 		variables.push({
 			label: `Input ${input.number} Short Title`,
 			name: `input_${input.number}_name`
-		})
+		});
+		if (input.type === 'VideoList') {
+			variables.push({
+				label: `Input ${input.number} Selected Index`,
+				name: `input_${input.number}_selected`
+			});
+			variables.push({
+				label: `Input ${input.number} Selected Index Name`,
+				name: `input_${input.number}_selected_name`
+			});
+		}
 	});
 
 	this.setVariableDefinitions(variables);

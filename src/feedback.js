@@ -31,6 +31,15 @@ exports.initFeedbacks = function () {
 		default: '1'
 	};
 
+	const selectedIndex = {
+		type: 'number',
+		label: 'Selected Index',
+		id: 'selectedIndex',
+		default: 1,
+		min: 1,
+		max: 9999,
+	};
+
 	const mixInput = {
 		type: 'dropdown',
 		label: 'Mix',
@@ -470,6 +479,49 @@ exports.initFeedbacks = function () {
 		]
 	}
 
+	feedbacks.inputSelectedIndex = {
+		label: 'Slides/List - Change Colors Based On Selected Slide/Index',
+		description: 'If the specified slide/index is selected, change colors of the bank',
+		options: [
+			input, 
+			selectedIndex, 
+			foregroundColor, 
+			backgroundColorProgram,
+			{
+				type: 'colorpicker',
+				label: 'Empty List Warning Text',
+				id: 'et',
+				default: this.rgb(0,0,0)
+			},
+			{
+				type: 'colorpicker',
+				label: 'Empty List Warning Bagground',
+				id: 'eb',
+				default: this.rgb(255,255,0)
+			},
+		]
+	};
+
+	feedbacks.inputSelectedIndexName = {
+		label: 'Slides/List - Show Selected Slide/Index Name',
+		description: 'Indicates what slide/index is selected',
+		options: [
+			input,
+			{
+				type: 'checkbox',
+				label: 'Show Index Name',
+				id: 'value1',
+				default: true
+			},
+			{
+				type: 'checkbox',
+				label: 'Show Index nr.',
+				id: 'value2',
+				default: false
+			}
+		]
+	};
+
 	return feedbacks;
 };
 
@@ -841,4 +893,69 @@ exports.executeFeedback = function (feedback, bank) {
 			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
 		}
 	}
+
+	else if (feedback.type === 'inputSelectedIndex') {
+		let input = getInput(feedback.options.input);
+
+		if (!input) {
+			return
+		}
+
+		if (input.type === 'VideoList') {
+			if (input && parseInt(input.selectedIndex) === parseInt(feedback.options.selectedIndex)) {
+				return { color: feedback.options.fg, bgcolor: feedback.options.bg };
+			}
+
+			else if (input && input.list[0].empty === true) {
+				return { color: feedback.options.et, bgcolor: feedback.options.eb }
+			}
+		}
+		else if (input.type === 'PowerPoint') {
+			if (input && parseInt(input.selectedIndex) === parseInt(feedback.options.selectedIndex)) {
+				return { color: feedback.options.fg, bgcolor: feedback.options.bg };
+			}
+		}
+		else {
+			return { color: this.rgb(255,255,255), bgcolor: this.rgb(0,0,0) }
+		}
+	}
+
+	else if (feedback.type === 'inputSelectedIndexName') {
+		let input = getInput(feedback.options.input);
+		let selectedTitle = '';
+
+		if (!input) {
+			return
+		}
+
+		if (input.type === 'VideoList') {
+			if (feedback.options.value1 === true) {
+				selectedTitle = 'Empty List';
+				let x = '';
+			
+				if (input.list.find(list => list.selected === true)) {
+					x = input.list.find(list => list.selected === true).filename;
+				}	
+
+				if (feedback.options.value2 === true) {
+					selectedTitle = ': ' + x;
+				} 
+				else { selectedTitle = x; }
+			}
+			if (feedback.options.value2 === true){
+				selectedTitle = input.selectedIndex + selectedTitle;
+			}
+	
+		}
+		else if (input.type === 'PowerPoint') {
+			selectedTitle = input.selectedIndex;
+		}
+
+		if (bank.text != '') {
+			return { text: bank.text + `\\n${selectedTitle}` };
+		} else {
+			return { text: bank.text + `${selectedTitle}` };
+		}
+	}
+
 };

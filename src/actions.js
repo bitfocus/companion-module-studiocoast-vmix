@@ -732,23 +732,26 @@ exports.getActions = function () {
 		},
 
 		NextPicture: {
-			label: 'Slides/Lists - Next Picture/Slide/Index',
+			label: 'Slides/List - Next Picture/Slide/Index',
 			options: [input]
 		},
 
 		PreviousPicture: {
-			label: 'Slides/Lists - Previous Picture/Slide/Index',
+			label: 'Slides/List - Previous Picture/Slide/Index',
 			options: [input]
 		},
 
 		SelectIndex: {
-			label: 'Slides/Lists - Select Specific Picture/Slide/Index',
+			label: 'Slides/List - Select Specific Picture/Slide/Index',
 			options: [
 				input,
 				{
-					type: 'textinput',
-					label: 'Index Nr.',
-					id: 'value'
+					type: 'number',
+					label: 'Select Index',
+					id: 'value',
+					default: '1',
+					min: 1,
+					max: 999,
 				}
 			]
 		},
