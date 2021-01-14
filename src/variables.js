@@ -55,6 +55,10 @@ exports.updateVariableDefinitions = function() {
 			label: `Input ${input.number} Short Title`,
 			name: `input_${input.number}_name`
 		});
+		variables.push({
+			label: `Input ${input.number} GUID`,
+			name: `input_${input.number}_guid`
+		});
 		if (input.type === 'VideoList') {
 			variables.push({
 				label: `Input ${input.number} Selected Index`,

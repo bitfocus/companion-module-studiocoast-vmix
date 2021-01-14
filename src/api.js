@@ -350,12 +350,14 @@ exports.parseAPI = function (body) {
 						selectedTitle = input.list.find(list => list.selected === true).filename.replace(/[^a-z0-9-_.]+/gi, '');
 					}
 					this.setVariable(`input_${input.number}_name`, inputTitle);
+					this.setVariable(`input_${input.number}_guid`, input.key);
 					this.setVariable(`input_${input.number}_selected`, input.selectedIndex);
 					this.setVariable(`input_${input.number}_selected_name`, selectedTitle);
 				} else if (input.shortTitle) {
 					// Remove symbols other than - _ . from the input title	
 					let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '');
 					this.setVariable(`input_${input.number}_name`, inputName);
+					this.setVariable(`input_${input.number}_guid`, input.key);
 				}
 
 				// Check input has volume and a different or no previous volume
