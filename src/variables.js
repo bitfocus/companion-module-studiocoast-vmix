@@ -69,6 +69,24 @@ exports.updateVariableDefinitions = function() {
 				name: `input_${input.number}_selected_name`
 			});
 		}
+		else if (input.type === 'VideoCall') {
+			variables.push({
+				label: `Input ${input.number} Call Password`,
+				name: `input_${input.number}_call_password`
+			});
+			variables.push({
+				label: `Input ${input.number} Call Connected`,
+				name: `input_${input.number}_call_connected`
+			});
+			variables.push({
+				label: `Input ${input.number} Call Video Source`,
+				name: `input_${input.number}_call_video_source`
+			});
+			variables.push({
+				label: `Input ${input.number} Call Audio Source`,
+				name: `input_${input.number}_call_audio_source`
+			});
+		}
 	});
 
 	this.setVariableDefinitions(variables);

@@ -116,5 +116,6 @@ and if there is more than one parameter use "&" as a separator between them like
 * Added Feedbacks: inputSelectedIndex and inputSelectedIndexName, provides feedbacks depending on selected index in a list or powerpoints
 * Added Variables: input_X_selected_name and input_X_selected
 * Added Variables for mix 1-4 program and preview, these can be used with the new trigger menu to press buttons in companion
+* Added Variables for Video call password, call connected, audio source and video source
 * Added input GUID's as variables, for ease of use
 * Added presets for the new additions

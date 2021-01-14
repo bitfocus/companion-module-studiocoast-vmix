@@ -103,6 +103,22 @@ exports.parseAPI = function (body) {
 					data.replay = input.replay[0].$;
 				}
 
+				if (input.callPassword) {
+					data.callPassword = input.callPassword[0].$;
+				}
+
+				if (input.callConnected) {
+					data.callConnected = input.callConnected[0].$;
+				}
+
+				if (input.callVideoSource) {
+					data.callVideoSource = input.callVideoSource[0].$;
+				}
+
+				if (input.callAudioSource) {
+					data.callAudioSource = input.callAudioSource[0].$;
+				}
+
 				return data;
 			};
 
@@ -316,6 +332,8 @@ exports.parseAPI = function (body) {
 				changes.add('inputBusRouting');
 				changes.add('titleLayer');
 				changes.add('inputVolumeLevel');
+				changes.add('inputSelectedIndex');
+				changes.add('inputSelectedIndexName');
 			}
 
 			if (!_.isEqual(data.inputs, this.data.inputs) || inputCheck) {
@@ -324,6 +342,7 @@ exports.parseAPI = function (body) {
 				changes.add('liveInputVolume');
 				changes.add('inputSelectedIndex');
 				changes.add('inputSelectedIndexName');
+
 			}
 
 			// Check for status changes
@@ -353,7 +372,18 @@ exports.parseAPI = function (body) {
 					this.setVariable(`input_${input.number}_guid`, input.key);
 					this.setVariable(`input_${input.number}_selected`, input.selectedIndex);
 					this.setVariable(`input_${input.number}_selected_name`, selectedTitle);
-				} else if (input.shortTitle) {
+				} 
+				else if (input.type === 'VideoCall') {
+					// Remove symbols other than - _ . from the input title	
+					let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '');
+					this.setVariable(`input_${input.number}_name`, inputName);
+					this.setVariable(`input_${input.number}_guid`, input.key);
+					this.setVariable(`input_${input.number}_call_password`, input.callPassword);
+					this.setVariable(`input_${input.number}_call_connected`, input.callConnected);
+					this.setVariable(`input_${input.number}_call_video_source`, input.callVideoSource);
+					this.setVariable(`input_${input.number}_call_audio_source`, input.callAudioSource);
+				}
+				else if (input.shortTitle) {
 					// Remove symbols other than - _ . from the input title	
 					let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '');
 					this.setVariable(`input_${input.number}_name`, inputName);
