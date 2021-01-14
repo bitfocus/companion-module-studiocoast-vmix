@@ -251,7 +251,7 @@ exports.parseAPI = function (body) {
 					this.activatorData.videoCall[input.key] = { audioSource: '' };
 				}
 			});
-
+			
 			// Clean up removed inputs from channel mixer
 			Object.keys(this.activatorData.channelMixer).forEach(key => {
 				if (!data.inputs.map(input => input.key).includes(key)) {
@@ -271,6 +271,37 @@ exports.parseAPI = function (body) {
 				changes.add('overlayStatus');
 			}
 
+			// Update variables for each mix
+			data.mix.forEach(mix => {				
+				if (mix.program !== null ) {
+					if (mix.program !== 0){
+						let programInput = data.inputs.find(input => input.number == mix.program);
+						this.setVariable(`mix_${mix.number}_program`, mix.program);
+						this.setVariable(`mix_${mix.number}_program_name`, programInput.shortTitle.replace(/[^a-z0-9-_.]+/gi, ''));
+						this.setVariable(`mix_${mix.number}_program_guid`, programInput.key);	
+					}
+					else {
+						this.setVariable(`mix_${mix.number}_program`, '0');
+						this.setVariable(`mix_${mix.number}_program_name`, 'None');
+						this.setVariable(`mix_${mix.number}_program_guid`, 'None');	
+					}
+				}
+
+				if (mix.preview !== null) {
+					if (mix.preview !== 0) {
+						let previewInput = data.inputs.find(input => input.number == mix.preview);
+						this.setVariable(`mix_${mix.number}_preview`, mix.preview);
+						this.setVariable(`mix_${mix.number}_preview_name`, previewInput.shortTitle.replace(/[^a-z0-9-_.]+/gi, ''));
+						this.setVariable(`mix_${mix.number}_preview_guid`, previewInput.key);	
+					}
+					else {
+						this.setVariable(`mix_${mix.number}_preview`, '0');
+						this.setVariable(`mix_${mix.number}_preview_name`, 'None');
+						this.setVariable(`mix_${mix.number}_preview_guid`, 'None');	
+					}
+				}
+			});
+			
 			// Check overlays
 			if (!_.isEqual(data.overlays, this.data.overlays) || inputCheck) {
 				changes.add('overlayStatus');

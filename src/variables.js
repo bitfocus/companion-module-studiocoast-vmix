@@ -1,6 +1,36 @@
 exports.updateVariableDefinitions = function() {
 	const variables = [];
 
+	// Add variable for preview and program for each mix
+	this.data.mix.forEach(mix => {
+		if (mix.number !== undefined && mix.active) {
+			variables.push({
+				label: `Mix ${mix.number} Program`,
+				name: `mix_${mix.number}_program`
+			});
+			variables.push({
+				label: `Mix ${mix.number} Program Short Title`,
+				name: `mix_${mix.number}_program_name`
+			});
+			variables.push({
+				label: `Mix ${mix.number} Program GUID`,
+				name: `mix_${mix.number}_program_guid`
+			});
+			variables.push({
+				label: `Mix ${mix.number} Preview`,
+				name: `mix_${mix.number}_preview`
+			});
+			variables.push({
+				label: `Mix ${mix.number} Preview Short Title`,
+				name: `mix_${mix.number}_preview_name`
+			});
+			variables.push({
+				label: `Mix ${mix.number} Preview GUID`,
+				name: `mix_${mix.number}_preview_guid`
+			});
+		};
+	});
+	
 	['Master', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'Headphones'].forEach(bus => {
 		variables.push({
 			label: `Bus ${bus} Volume`,

@@ -115,4 +115,5 @@ and if there is more than one parameter use "&" as a separator between them like
 * Added Action "SelectIndex" to select specific slides and videos in list inputs
 * Added Feedbacks: inputSelectedIndex and inputSelectedIndexName, provides feedbacks depending on selected index in a list or powerpoints
 * Added Variables: input_X_selected_name and input_X_selected
+* Added Variables for mix 1-4 program and preview, these can be used with the new trigger menu to press buttons in companion.
 * Added presets for the new additions
