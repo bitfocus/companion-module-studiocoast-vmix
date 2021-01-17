@@ -242,6 +242,24 @@ exports.initFeedbacks = function () {
 				default: false
 			},
 			{
+				type: 'checkbox',
+				label: 'Color Text',
+				id: 'colortxt',
+				default: true
+			},
+			{
+				type: 'checkbox',
+				label: 'Color Baggroung',
+				id: 'colorbg',
+				default: false
+			},
+			{
+				type: 'colorpicker',
+				label: 'Basse Text Color',
+				id: 'colorbase',
+				default: this.rgb(255, 255, 255)
+			},
+			{
 				type: 'colorpicker',
 				label: 'Text color above -1 dB',
 				id: 'color',
@@ -290,6 +308,24 @@ exports.initFeedbacks = function () {
 				label: 'Show the actual dB value',
 				id: 'value',
 				default: false
+			},
+			{
+				type: 'checkbox',
+				label: 'Color Text',
+				id: 'colortxt',
+				default: true
+			},
+			{
+				type: 'checkbox',
+				label: 'Color Baggroung',
+				id: 'colorbg',
+				default: false
+			},
+			{
+				type: 'colorpicker',
+				label: 'Basse Text Color',
+				id: 'colorbase',
+				default: this.rgb(255, 255, 255)
 			},
 			{
 				type: 'colorpicker',
@@ -725,15 +761,32 @@ exports.executeFeedback = function (feedback, bank) {
 			return feedback.options.color36;
 		};
 
+		let txt = '';
+		let colorfg = '';
+		let colorbg = '';
+
 		if (feedback.options.value == true) {
 			if (bank.text != '') {
-				return { color: color(), text: bank.text + `\\n ${dB} dB` };
+				txt = bank.text + `\\n ${dB} dB`;
 			} else {
-				return { color: color(), text: bank.text + `${dB} dB` };
+				txt = bank.text + `${dB} dB`;
 			}
-		} else {
-			return { color: color() };
 		}
+		else {
+			txt = bank.text;
+		}
+
+		if (feedback.options.colortxt == true) {
+			colorfg = color();
+		}
+		else {
+			colorfg = feedback.options.colorbase;
+		}
+
+		if (feedback.options.colorbg == true) {
+			colorbg = color();
+		}
+		return {color: colorfg, bgcolor: colorbg, text: txt};
 	}
 
 	else if (feedback.type === 'liveBusVolume') {
@@ -775,15 +828,32 @@ exports.executeFeedback = function (feedback, bank) {
 			return feedback.options.color36;
 		};
 
+		let txt = '';
+		let colorfg = '';
+		let colorbg = '';
+
 		if (feedback.options.value == true) {
 			if (bank.text != '') {
-				return { color: color(), text: bank.text + `\\n ${dB} dB` };
+				txt = bank.text + `\\n ${dB} dB`;
 			} else {
-				return { color: color(), text: bank.text + `${dB} dB` };
+				txt = bank.text + `${dB} dB`;
 			}
-		} else {
-			return { color: color() };
 		}
+		else {
+			txt = bank.text;
+		}
+
+		if (feedback.options.colortxt == true) {
+			colorfg = color();
+		}
+		else {
+			colorfg = feedback.options.colorbase;
+		}
+
+		if (feedback.options.colorbg == true) {
+			colorbg = color();
+		}
+		return {color: colorfg, bgcolor: colorbg, text: txt};
 	}
 
 	else if (feedback.type === 'inputVolumeLevel') {
