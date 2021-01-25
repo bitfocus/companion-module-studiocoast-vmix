@@ -503,12 +503,38 @@ exports.getActions = function () {
 
 		BusXSolo: {
 			label: 'Audio - Bus Solo',
-			options: [audioBus]
+			options: [
+				audioBus,
+				{
+					type: 'dropdown',
+					label: 'Option',
+					id: 'functionID',
+					default: 'BusXSolo',
+					choices: [
+						{ id: 'BusXSolo', label: 'Toggle' },
+						{ id: 'BusXSoloOn', label: 'On' },
+						{ id: 'BusXSoloOff', label: 'Off' },
+					]
+				},
+			]
 		},
 
 		Solo: {
 			label: 'Audio - Input Solo',
-			options: [input]
+			options: [
+				input,
+				{
+					type: 'dropdown',
+					label: 'Option',
+					id: 'functionID',
+					default: 'Solo',
+					choices: [
+						{ id: 'Solo', label: 'Toggle' },
+						{ id: 'SoloOn', label: 'On' },
+						{ id: 'SoloOff', label: 'Off' },
+					]
+				}
+			]
 		},
 
 		StartCountdown: {
