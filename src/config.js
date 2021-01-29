@@ -40,6 +40,20 @@ exports.getConfigFields = function () {
 				'Adjusting the API Polling Interval can impact performance. <br />' +
 				'A lower invterval allows for more responsive feedback, but may impact CPU usage. <br />' +
 				'See the help section for more details.'
-		}
+		},
+		{
+			type: 'text',
+			id: 't-barInfo',
+			width: 10,
+			label: 'T-bar',
+			value: 'The module will listen to the variable $(internal:tbar) and when that value changes, it will send it to vMix'
+		},
+		{
+			type: 'checkbox',
+			id: 'tbarEnabled',
+			width: 1,
+			label: 'Enable',
+			default: false
+		},
 	];
 };
