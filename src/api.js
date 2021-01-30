@@ -340,6 +340,7 @@ exports.parseAPI = function (body) {
 				changes.add('videoTimer');
 				changes.add('titleLayer');
 				changes.add('liveInputVolume');
+				changes.add('liveBusVolume');
 				changes.add('inputSelectedIndex');
 				changes.add('inputSelectedIndexName');
 

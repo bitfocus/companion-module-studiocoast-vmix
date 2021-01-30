@@ -122,3 +122,4 @@ and if there is more than one parameter use "&" as a separator between them like
 
 **V1.2.13**
 * Added ON/OFF/Togle option to solo and bus solo action
+* Hotfix for LiveBusVolume feedback not updating corectly
