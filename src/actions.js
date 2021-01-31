@@ -1189,6 +1189,20 @@ exports.getActions = function () {
 
 		ScriptStopAll: { label: 'Scripting - Script stop all' },
 
+		tbar: {
+			label: 'Set t-bar position',
+			options: [
+				{
+					type: 'number',
+					label: 'postion 0-255',
+					id: 'fader',
+					min: 0,
+					max: 255,
+					default: 0
+				}
+			]
+		},
+
 		command: {
 			label: 'Run custom command',
 			options: [
@@ -1328,6 +1342,11 @@ exports.executeAction = function (action) {
 
 	else if (action.action === 'replayToggleCamera') {
 		cmd = `FUNCTION ReplayToggleSelectedEventCamera${opt.camera}`;
+	}
+
+	else if (action.action === 'tbar') {
+		cmd = `FUNCTION SetFader value=${opt.fader}`;
+		console.log(cmd)
 	}
 
 	else {
