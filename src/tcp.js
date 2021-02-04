@@ -22,6 +22,11 @@ exports.init = function () {
 			this.debug('Network error', err);
 			this.status(this.STATE_ERROR, err);
 			this.log('error', 'Network error: ' + err.message);
+
+			if (this.pollAPI) {
+				clearInterval(this.pollAPI);
+				delete this.pollAPI;
+			}
 		});
 
 		this.socket.on('connect', () => {
