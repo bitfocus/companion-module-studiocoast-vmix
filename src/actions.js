@@ -503,12 +503,38 @@ exports.getActions = function () {
 
 		BusXSolo: {
 			label: 'Audio - Bus Solo',
-			options: [audioBus]
+			options: [
+				audioBus,
+				{
+					type: 'dropdown',
+					label: 'Option',
+					id: 'functionID',
+					default: 'BusXSolo',
+					choices: [
+						{ id: 'BusXSolo', label: 'Toggle' },
+						{ id: 'BusXSoloOn', label: 'On' },
+						{ id: 'BusXSoloOff', label: 'Off' },
+					]
+				},
+			]
 		},
 
 		Solo: {
 			label: 'Audio - Input Solo',
-			options: [input]
+			options: [
+				input,
+				{
+					type: 'dropdown',
+					label: 'Option',
+					id: 'functionID',
+					default: 'Solo',
+					choices: [
+						{ id: 'Solo', label: 'Toggle' },
+						{ id: 'SoloOn', label: 'On' },
+						{ id: 'SoloOff', label: 'Off' },
+					]
+				}
+			]
 		},
 
 		StartCountdown: {
@@ -1163,6 +1189,20 @@ exports.getActions = function () {
 
 		ScriptStopAll: { label: 'Scripting - Script stop all' },
 
+		tbar: {
+			label: 'Set t-bar position',
+			options: [
+				{
+					type: 'number',
+					label: 'postion 0-255',
+					id: 'fader',
+					min: 0,
+					max: 255,
+					default: 0
+				}
+			]
+		},
+
 		command: {
 			label: 'Run custom command',
 			options: [
@@ -1302,6 +1342,11 @@ exports.executeAction = function (action) {
 
 	else if (action.action === 'replayToggleCamera') {
 		cmd = `FUNCTION ReplayToggleSelectedEventCamera${opt.camera}`;
+	}
+
+	else if (action.action === 'tbar') {
+		cmd = `FUNCTION SetFader value=${opt.fader}`;
+		console.log(cmd)
 	}
 
 	else {

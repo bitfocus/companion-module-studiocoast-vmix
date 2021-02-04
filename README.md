@@ -119,3 +119,7 @@ and if there is more than one parameter use "&" as a separator between them like
 * Added Variables for Video call password, call connected, audio source and video source
 * Added input GUID's as variables, for ease of use
 * Added presets for the new additions
+
+**V1.2.13**
+* Added ON/OFF/Togle option to solo and bus solo action
+* Hotfix for LiveBusVolume feedback not updating corectly

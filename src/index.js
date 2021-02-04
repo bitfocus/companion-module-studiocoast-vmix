@@ -95,6 +95,7 @@ class VMixInstance extends instance_skel {
 		this.init_feedbacks();
 		initPresets.bind(this)();
 		this.updateVariableDefinitions();
+		this.setupEventListeners();
 	}
 
 	// New config saved
@@ -122,6 +123,10 @@ class VMixInstance extends instance_skel {
 			clearInterval(this.pollAPI);
 		}
 
+		if (this.activeTBarListener) {
+			this.system.removeListener('variable_changed', this.activeTBarListener);
+			delete this.activeTBarListener;
+		}
 		this.debug('destroy', this.id);
 	}
 
@@ -149,6 +154,31 @@ class VMixInstance extends instance_skel {
 	// Execute feedback
 	feedback(feedback, bank) {
 		return executeFeedback.bind(this)(feedback, bank);
+	}
+
+	tbarListener(label, variable, value) {
+		const { tbarEnabled } = this.config;
+		if (!tbarEnabled || `${label}:${variable}` !== 'internal:t-bar') {
+			return;
+		}
+		
+		this.system.emit('action_run', {
+			action: 'tbar', 
+			options: {fader: value},
+			instance: this.id			
+		});
+	}
+
+	setupEventListeners() {
+		if (this.config.tbarEnabled) {
+			if (!this.activeTBarListener) {
+				this.activeTBarListener = this.tbarListener.bind(this);
+				this.system.on('variable_changed', this.activeTBarListener);
+			}
+		} else if (this.activeTBarListener) {
+			this.system.removeListener('variable_changed', this.activeTBarListener);
+			delete this.activeTBarListener;
+		}
 	}
 }
 
