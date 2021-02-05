@@ -678,10 +678,12 @@ exports.executeFeedback = function (feedback, bank) {
 		if (feedback.options.status === 'connection') {
 			if (this.data.connected) return { color: feedback.options.fg, bgcolor: feedback.options.bg };
 		} else {
-			if (feedback.options.status === 'streaming' && ['0', '1', '2'].includes(feedback.options.value)) {
-				if (this.data.status.stream[feedback.options.value]) return { color: feedback.options.fg, bgcolor: feedback.options.bg };
-			} else {
-				if (this.data.status[feedback.options.status]) return { color: feedback.options.fg, bgcolor: feedback.options.bg };
+			if (this.data.status !== undefined) {
+				if (feedback.options.status === 'streaming' && ['0', '1', '2'].includes(feedback.options.value)) {
+					if (this.data.status.stream[feedback.options.value]) return { color: feedback.options.fg, bgcolor: feedback.options.bg };
+				} else {
+					if (this.data.status[feedback.options.status]) return { color: feedback.options.fg, bgcolor: feedback.options.bg };
+				}
 			}
 		}
 	}
