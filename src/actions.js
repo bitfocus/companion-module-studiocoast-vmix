@@ -1346,7 +1346,6 @@ exports.executeAction = function (action) {
 
 	else if (action.action === 'tbar') {
 		cmd = `FUNCTION SetFader value=${opt.fader}`;
-		console.log(cmd)
 	}
 
 	else {
