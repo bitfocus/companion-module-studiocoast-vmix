@@ -122,4 +122,11 @@ and if there is more than one parameter use "&" as a separator between them like
 
 **V1.2.13**
 * Added ON/OFF/Togle option to solo and bus solo action
-* Hotfix for LiveBusVolume feedback not updating corectly
+* Hotfix: LiveBusVolume feedback not updating corectly
+
+**V1.2.14**
+* Hotfix: Make sure data.status is defined
+
+**V1.2.15**
+* Added SetMultiViewOverlayOnPreview and SetMultiViewOverlayOnProgram
+* Bug Fixed: Missing URI encoding on inputs and variables has now been added
