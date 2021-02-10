@@ -359,6 +359,44 @@ exports.getActions = function () {
 			]
 		},
 
+		SetMultiViewOverlayOnPreview: {
+			label: 'SetMultiViewOverlayOnPreview - Set Input as Multiview Overlay Layer on active Preview input',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Layer',
+					id: 'selectedIndex',
+					default: 1
+				},
+				{
+					type: 'textinput',
+					label: 'Input to use on Layer',
+					id: 'LayerInput',
+					default: 1
+				},
+				mixSelect
+			]
+		},
+
+		SetMultiViewOverlayOnProgram: {
+			label: 'SetMultiViewOverlayOnProgram - Set Input as Multiview Overlay Layer on active Program input',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Layer',
+					id: 'selectedIndex',
+					default: 1
+				},
+				{
+					type: 'textinput',
+					label: 'Input to use on Layer',
+					id: 'LayerInput',
+					default: 1
+				},
+				mixSelect
+			]
+		},
+
 		VirtualSet: {
 			label: 'VirtualSet - Zoom To Selected Preset',
 			options: [
@@ -1256,6 +1294,14 @@ exports.executeAction = function (action) {
 		cmd = `FUNCTION SetMultiViewOverlay Input=${opt.input}&Value=${opt.selectedIndex},${opt.LayerInput}`;
 	}
 
+	else if (action.action === 'SetMultiViewOverlayOnPreview') {
+		cmd = `FUNCTION SetMultiViewOverlay Input=${this.data.mix[opt.mix].preview}&Value=${opt.selectedIndex},${opt.LayerInput}`;
+	}
+
+	else if (action.action === 'SetMultiViewOverlayOnProgram') {
+		cmd = `FUNCTION SetMultiViewOverlay Input=${this.data.mix[opt.mix].program}&Value=${opt.selectedIndex},${opt.LayerInput}`;
+	}
+
 	else if (action.action === 'VirtualSet') {
 		cmd = `FUNCTION SelectIndex Input=${opt.input}&Value=${opt.selectedIndex}`;
 	}
@@ -1346,7 +1392,6 @@ exports.executeAction = function (action) {
 
 	else if (action.action === 'tbar') {
 		cmd = `FUNCTION SetFader value=${opt.fader}`;
-		console.log(cmd)
 	}
 
 	else {
