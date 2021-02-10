@@ -129,3 +129,4 @@ and if there is more than one parameter use "&" as a separator between them like
 
 **V1.2.15**
 * Added SetMultiViewOverlayOnPreview and SetMultiViewOverlayOnProgram
+* Bug Fixed: Missing URI encoding on inputs and variables has now been added
