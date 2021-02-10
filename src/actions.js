@@ -1218,12 +1218,12 @@ exports.getActions = function () {
 };
 
 exports.executeAction = function (action) {
-	var opt = action.options || {};
+	var opt = {};
 	var cmd;
 
 	// All input values should be encoded. See vMix TCP Api
-	for (const property in opt) {
-		opt[property] = encodeURIComponent(opt[property]);
+	for (const property in action.options) {
+		opt[property] = encodeURIComponent(action.options[property]);
 	}
 
 	if (action.action === 'programCut') {
@@ -1372,11 +1372,6 @@ exports.executeAction = function (action) {
 		} else {
 			this.debug('Socket not connected.');
 		}
-	}
-
-	// All input values should be decoded back after sending
-	for (const property in opt) {
-		opt[property] = decodeURIComponent(opt[property]);
 	}
 
 };
