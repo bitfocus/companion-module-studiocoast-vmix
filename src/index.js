@@ -8,6 +8,8 @@ const { upgradeV1_2_0 } = require('./upgrade');
 const { updateVariableDefinitions } = require('./variables');
 const tcp = require('./tcp');
 const { updateVolumeVariables } = require('./utils');
+const { reverse } = require('lodash');
+let reversed = false; // used for t-bar operation
 
 /**
  * Companion instance class for Studiocoast vMix
@@ -157,16 +159,34 @@ class VMixInstance extends instance_skel {
 	}
 
 	tbarListener(label, variable, value) {
-		const { tbarEnabled } = this.config;
+		const { tbarEnabled, tbarMin, tbarMax } = this.config;
 		if (!tbarEnabled || `${label}:${variable}` !== 'internal:t-bar') {
 			return;
 		}
-		
-		this.system.emit('action_run', {
-			action: 'tbar', 
-			options: {fader: value},
-			instance: this.id			
-		});
+
+		if(reversed) {
+			value = 255 - value;
+		}
+		if(value == tbarMax) { 
+			reversed = reversed ? false : true;
+			this.system.emit('action_run', {
+				action: 'tbar', 
+				options: {fader: 255},
+				instance: this.id			
+			});
+		} else if (value == tbarMin) {
+			this.system.emit('action_run', {
+				action: 'tbar', 
+				options: {fader: 0},
+				instance: this.id			
+			});
+		} else if (value < tbarMax && value > tbarMin) {
+			this.system.emit('action_run', {
+				action: 'tbar', 
+				options: {fader: value},
+				instance: this.id			
+			});
+		}
 	}
 
 	setupEventListeners() {

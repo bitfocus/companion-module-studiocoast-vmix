@@ -44,3 +44,7 @@ When usin vMix shortcodes, please follow this syntax/layout, with space before t
 and if there is more than one parameter use "&" as a separator between them like this example:
 
 ***"SetOutput2 Value=Input&Input=3"***
+
+**t-bar function from a variable**
+
+When using a xkeys with a t-bar you'll notice a variable t-bar is set to use. This module can use that function, enable it in the instance config. You can create an offset incase the xkeys is not calibrated correctly.
