@@ -44,7 +44,7 @@ exports.getConfigFields = function () {
 		{
 			type: 'text',
 			id: 't-barInfo',
-			width: 10,
+			width: 12,
 			label: 'T-bar',
 			value: 'The module will listen to the variable $(internal:tbar) and when that value changes, it will send it to vMix'
 		},
@@ -54,6 +54,24 @@ exports.getConfigFields = function () {
 			width: 1,
 			label: 'Enable',
 			default: false
+		},
+		{
+			type: 'number',
+			id: 'tbarMin',
+			width: 5,
+			label: 'lower min value',
+			default: 2,
+			min: 0,
+			max: 250
+		},
+		{
+			type: 'number',
+			id: 'tbarMax',
+			width: 5,
+			label: 'Upper max value',
+			default: 253,
+			min: 10,
+			max: 255
 		},
 	];
 };
