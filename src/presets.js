@@ -202,10 +202,12 @@ exports.initPresets = function() {
 
 		if (item.id === 'VideoCallAudioSource') {
 			actions.push({ action: item.id, options: { input: item.input, value: item.value } });
+			feedbacks.push({ type: 'videoCallAudioSource', options: { input: item.input, source: item.value, fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } });
 		}
 		
 		else if (item.id === 'VideoCallVideoSource') {
 			actions.push({ action: item.id, options: { input: item.input, functionID: item.value } });
+			feedbacks.push({ type: 'videoCallVideoSource', options: { input: item.input, source: item.value, fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } });
 		}
 		
 		const preset = createPreset('Vmix Call', item, actions, feedbacks);
@@ -629,6 +631,12 @@ exports.initPresets = function() {
 		{ size: '18', label: 'In 1 Vol 100%', volume: '100' }
 	];
 
+	const audioPluginOnOff = [
+		{ id: 'AudioPlugin', size: '14', label: 'Toggle Plugin', value: 'AudioPluginOnOff' },
+		{ id: 'AudioPlugin', size: '14', label: 'Set Plugin On', value: 'AudioPluginOn' },
+		{ id: 'AudioPlugin', size: '14', label: 'Set Plugin Off', value: 'AudioPluginOff' }
+	];
+
 	audioOnOff.forEach(item => {
 		const actions = [];
 		const feedbacks = [];
@@ -698,6 +706,18 @@ exports.initPresets = function() {
 	inputVolume.forEach(item => {
 		const actions = [{ action: 'SetVolumeFade', options: { input: '1', fadeMin: item.volume, fadeTime: '2000' } }];
 		const feedbacks =	[{ type: 'liveInputVolume', options: { input: '1', value: 'false', color: this.rgb(255, 0, 0), color1: this.rgb(255, 255, 0), color6: this.rgb(0, 255, 0), color18: this.rgb(0, 192, 0),  color36: this.rgb(0, 128, 0) } }];
+		const preset = createPreset('Audio', item, actions, feedbacks);
+		presets.push(preset);
+	});
+
+	audioPluginOnOff.forEach(item => {
+		const actions = [];
+		const feedbacks = [];
+		
+		if (item.id === 'AudioPluginOnOff') {
+			actions.push({ action: item.id, options: { input: '', functionID: item.value } });
+		}
+		
 		const preset = createPreset('Audio', item, actions, feedbacks);
 		presets.push(preset);
 	});

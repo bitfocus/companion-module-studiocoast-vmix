@@ -137,3 +137,4 @@ and if there is more than one parameter use "&" as a separator between them like
 **v1.2.17**
 * Added Feedback "Video Call - Video Source"
 * Added Action "Audio Plugin On/Off/Toggle On Input"
+* Updated Presets with new feedback's and action.
