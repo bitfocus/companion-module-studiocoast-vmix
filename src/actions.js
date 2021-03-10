@@ -96,7 +96,9 @@ exports.getActions = function () {
 						{ id: 'Transition3', label: 'Transition 3' },
 						{ id: 'Transition4', label: 'Transition 4' },
 						{ id: 'Stinger1', label: 'Stinger 1' },
-						{ id: 'Stinger2', label: 'Stinger 2' }
+						{ id: 'Stinger2', label: 'Stinger 2' },
+						{ id: 'Stinger3', label: 'Stinger 3' },
+						{ id: 'Stinger4', label: 'Stinger 4' }
 					]
 				}
 			]

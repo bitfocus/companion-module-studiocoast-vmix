@@ -346,7 +346,9 @@ exports.initPresets = function() {
 		{ id: 'Transition3', size: '14', label: 'Transition 3' },
 		{ id: 'Transition4', size: '14', label: 'Transition 4' },
 		{ id: 'Stinger1', size: '18', label: 'Stinger 1' },
-		{ id: 'Stinger2', size: '18', label: 'Stinger 2' }
+		{ id: 'Stinger2', size: '18', label: 'Stinger 2' },
+		{ id: 'Stinger3', size: '18', label: 'Stinger 3' },
+		{ id: 'Stinger4', size: '18', label: 'Stinger 4' }
 	];
 
 	const presetTransitionsEffect = [
@@ -384,7 +386,7 @@ exports.initPresets = function() {
 	];
 
 	presetTransitions.forEach(item => {
-		const actions = [{ action: 'Transitions', options: { functionID: item.id } }];
+		const actions = [{ action: 'transition', options: { functionID: item.id } }];
 		const preset = createPreset('Transitions', item, actions, []);
 		presets.push(preset);
 	});

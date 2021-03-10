@@ -96,7 +96,7 @@ exports.initFeedbacks = function () {
 				label: 'Overlay',
 				id: 'overlay',
 				default: '1',
-				choices: ['Any', '1', '2', '3', '4', 'Stinger 1', 'Stinger 2'].map((id, index) => ({ id: index.toString(), label: id }))
+				choices: ['Any', '1', '2', '3', '4', 'Stinger 1', 'Stinger 2', 'Stinger 3', 'Stinger 4'].map((id, index) => ({ id: index.toString(), label: id }))
 			},
 			foregroundColor,
 			{
@@ -134,7 +134,7 @@ exports.initFeedbacks = function () {
 				label: 'Overlay',
 				id: 'overlay',
 				default: '1',
-				choices: ['Any', '1', '2', '3', '4', 'Stinger 1', 'Stinger 2'].map((id, index) => ({ id: index.toString(), label: id }))
+				choices: ['Any', '1', '2', '3', '4', 'Stinger 1', 'Stinger 2', 'Stinger 3', 'Stinger 4'].map((id, index) => ({ id: index.toString(), label: id }))
 			},
 			foregroundColor,
 			{

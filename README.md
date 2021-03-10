@@ -138,4 +138,5 @@ and if there is more than one parameter use "&" as a separator between them like
 * Added Feedback "Video Call - Video Source"
 * Added Feedback "Overlay - Overlay on PGM or PRV"
 * Added Action "Audio Plugin On/Off/Toggle On Input"
+* Added Stinger 3 and 4 to actions and feedbacks
 * Updated Presets with new feedback's and action.
