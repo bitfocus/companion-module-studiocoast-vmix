@@ -410,6 +410,25 @@ exports.getActions = function () {
 			]
 		},
 
+		VideoCallVideoSource: {
+			label: 'VideoCall - Select Video Source',
+			options: [
+				input,
+				{
+					type: 'dropdown',
+					label: 'Select Output',
+					id: 'functionID',
+					default: 'Output1',
+					choices: [
+						{ id: 'Output1', label: 'Output 1' },
+						{ id: 'Output2', label: 'Output 2' },
+						{ id: 'Output3', label: 'Output 3' },
+						{ id: 'Output4', label: 'Output 4' },
+					]
+				},
+			]
+		},
+
 		VideoCallAudioSource: {
 			label: 'VideoCall - Select Audio Source',
 			options: [
@@ -429,25 +448,6 @@ exports.getActions = function () {
 						{ id: 'BusE', label: 'E' },
 						{ id: 'BusF', label: 'F' },
 						{ id: 'BusG', label: 'G' },
-					]
-				},
-			]
-		},
-
-		VideoCallVideoSource: {
-			label: 'VideoCall - Select Video Source',
-			options: [
-				input,
-				{
-					type: 'dropdown',
-					label: 'Select Output',
-					id: 'functionID',
-					default: 'Output1',
-					choices: [
-						{ id: 'Output1', label: 'Output 1' },
-						{ id: 'Output2', label: 'Output 2' },
-						{ id: 'Output3', label: 'Output 3' },
-						{ id: 'Output4', label: 'Output 4' },
 					]
 				},
 			]
@@ -572,6 +572,31 @@ exports.getActions = function () {
 						{ id: 'SoloOff', label: 'Off' },
 					]
 				}
+			]
+		},
+
+		AudioPlugin: {
+			label: 'Audio - Audio Plugin On/Off/Toggle On Input',
+			options: [
+				input,
+				{
+					type: 'textinput',
+					label: 'Plugin Number',
+					id: 'value',
+					default: '1',
+
+				},
+				{
+					type: 'dropdown',
+					label: 'Option',
+					id: 'functionID',
+					default: 'AudioPluginOnOff',
+					choices: [
+						{ id: 'AudioPluginOnOff', label: 'Toggle' },
+						{ id: 'AudioPluginOn', label: 'On' },
+						{ id: 'AudioPluginOff', label: 'Off' },
+					]
+				},			
 			]
 		},
 
