@@ -130,3 +130,10 @@ and if there is more than one parameter use "&" as a separator between them like
 **V1.2.15**
 * Added SetMultiViewOverlayOnPreview and SetMultiViewOverlayOnProgram
 * Bug Fixed: Missing URI encoding on inputs and variables has now been added
+
+**V1.2.16**
+* Bug fix: T-bar reworked
+
+**v1.2.17**
+* Added Feedback "Video Call - Video Source"
+* Added Action "Audio Plugin On/Off/Toggle On Input"

@@ -497,6 +497,28 @@ exports.initFeedbacks = function () {
 			backgroundColorProgram
 		]
 	};
+	
+	feedbacks.videoCallVideoSource = {
+		label: 'Video Call - Video Source',
+		description: 'Indicates video source for a video call',
+		options: [
+			input,
+			{
+				type: 'dropdown',
+				label: 'Select Source',
+				id: 'source',
+				default: 'Output1',
+				choices: [
+					{ id: 'Output1', label: 'Output 1' },
+					{ id: 'Output2', label: 'Output 2' },
+					{ id: 'Output3', label: 'Output 3' },
+					{ id: 'Output4', label: 'Output 4' },
+				]
+			},
+			foregroundColor,
+			backgroundColorProgram
+		]
+	}
 
 	feedbacks.videoCallAudioSource = {
 		label: 'Video Call - Audio Source',
@@ -954,6 +976,14 @@ exports.executeFeedback = function (feedback, bank) {
 
 	else if (feedback.type === 'replaySelectedChannel') {
 		if (this.data.replay.channelMode && this.data.replay.channelMode === feedback.options.channel) {
+			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
+		}
+	}
+
+	else if (feedback.type === 'videoCallVideoSource') {
+		let input = getInput(feedback.options.input);
+
+		if (input && input.callVideoSource === feedback.options.source) {
 			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
 		}
 	}

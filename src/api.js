@@ -377,12 +377,13 @@ exports.parseAPI = function (body) {
 				else if (input.type === 'VideoCall') {
 					// Remove symbols other than - _ . from the input title	
 					let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '');
-					this.setVariable(`input_${input.number}_name`, inputName);
+ 					this.setVariable(`input_${input.number}_name`, inputName);
 					this.setVariable(`input_${input.number}_guid`, input.key);
 					this.setVariable(`input_${input.number}_call_password`, input.callPassword);
 					this.setVariable(`input_${input.number}_call_connected`, input.callConnected);
 					this.setVariable(`input_${input.number}_call_video_source`, input.callVideoSource);
 					this.setVariable(`input_${input.number}_call_audio_source`, input.callAudioSource);
+					changes.add('videoCallVideoSource');
 				}
 				else if (input.shortTitle) {
 					// Remove symbols other than - _ . from the input title	
