@@ -114,6 +114,44 @@ exports.initFeedbacks = function () {
 		]
 	};
 
+	feedbacks.overlayStatusPGM = {
+		label: 'Overlay - Overlay on PGM or PRV',
+		description: 'Indicates if an overlay is previewed, or live',
+		options: [
+			{
+				type: 'dropdown',
+				label: 'Any input in overlay, active on',
+				id: 'value',
+				default: 'both',
+				choices: [
+					{ id: 'both', label: 'Program and Preview' },
+					{ id: 'pgm', label: 'Program Only' },
+					{ id: 'prv', label: 'Preview Only' }
+				]
+			},
+			{
+				type: 'dropdown',
+				label: 'Overlay',
+				id: 'overlay',
+				default: '1',
+				choices: ['Any', '1', '2', '3', '4', 'Stinger 1', 'Stinger 2'].map((id, index) => ({ id: index.toString(), label: id }))
+			},
+			foregroundColor,
+			{
+				type: 'colorpicker',
+				label: 'Preview Background Color',
+				id: 'bgPreview',
+				default: this.rgb(0, 255, 0)
+			},
+			{
+				type: 'colorpicker',
+				label: 'Program Background Color',
+				id: 'bgProgram',
+				default: this.rgb(255, 0, 0)
+			}
+		]
+	};
+
 	feedbacks.videoTimer = {
 		label: 'Video - Video Timer',
 		description: 'Time remaining on video input',
@@ -641,6 +679,54 @@ exports.executeFeedback = function (feedback, bank) {
 					program = true;
 				}
 			}
+		});
+
+		if (preview || program) {
+			return {
+				color: feedback.options.fg,
+				bgcolor: program ? feedback.options.bgProgram : feedback.options.bgPreview
+			};
+		}
+	}
+
+	else if (feedback.type === 'overlayStatusPGM') {
+		let preview = false;
+		let program = false;
+
+		this.data.overlays.forEach(overlay => {
+			const overlayNumberCheck = overlay.number === feedback.options.overlay || feedback.options.overlay === '0';
+			const overlayActive = overlay.input != undefined;
+
+			if (overlayNumberCheck && overlayActive) {
+				switch (feedback.options.value) {
+					case 'both':
+						if (overlay.preview) {
+							preview = true;
+						} else {
+							program = true;
+						}
+						break;
+
+					case 'pgm':
+						if (overlay.preview) {
+							// do nothing
+						} else {
+							program = true;
+						}
+						break;
+
+					case 'prv':
+						if (overlay.preview) {
+							preview = true;
+						} else {
+							// do nothing
+						}
+						break;
+				
+					default:
+						break;
+				}
+			}			
 		});
 
 		if (preview || program) {

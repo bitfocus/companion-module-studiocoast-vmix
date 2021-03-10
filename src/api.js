@@ -285,6 +285,7 @@ exports.parseAPI = function (body) {
 				changes.add('inputPreview');
 				changes.add('inputLive');
 				changes.add('overlayStatus');
+				changes.add('overlayStatusPGM');
 			}
 
 			// Update variables for each mix
@@ -321,6 +322,7 @@ exports.parseAPI = function (body) {
 			// Check overlays
 			if (!_.isEqual(data.overlays, this.data.overlays) || inputCheck) {
 				changes.add('overlayStatus');
+				changes.add('overlayStatusPGM');
 			}
 
 			// Check for input changes
