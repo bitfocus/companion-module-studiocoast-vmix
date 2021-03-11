@@ -38,6 +38,40 @@ exports.updateVariableDefinitions = function() {
 		});
 	});
 
+	// Add variable for Overlay input, PGM and PRV
+	for (let i = 0; i < 4; i++) {
+		let overlay = this.data.overlays;
+		variables.push({
+			label: `Overlay ${overlay[i].number} Input Short Title`,
+			name: `overlay_${overlay[i].number}_input_name`
+		});
+		variables.push({
+			label: `Overlay ${overlay[i].number} Input Number`,
+			name: `overlay_${overlay[i].number}_input`
+		});
+		variables.push({
+			label: `Overlay ${overlay[i].number} Active PGM`,
+			name: `overlay_${overlay[i].number}_pgm`
+		});
+		variables.push({
+			label: `Overlay ${overlay[i].number} Active PRV`,
+			name: `overlay_${overlay[i].number}_prv`
+		});
+	};
+
+	// Add variable for Stinger input
+	// Does not really work for Stingers, as they only report when OnAir :(
+	// for (let i = 1; i < 5; i++) {
+	// 	variables.push({
+	// 		label: `Stinger ${i} Input Short Title`,
+	// 		name: `stinger_${i}_input_name`
+	// 	});
+	// 	variables.push({
+	// 		label: `Stinger ${i} Input`,
+	// 		name: `stinger_${i}_input`
+	// 	});
+	// };
+
 	this.data.inputs.forEach(input => {
 		if (input.volume !== undefined && input.shortTitle) {
 			// Remove symbols other than - _ . from the input title
@@ -50,6 +84,7 @@ exports.updateVariableDefinitions = function() {
 
 	});
 
+	
 	this.data.inputs.forEach(input => {
 		variables.push({
 			label: `Input ${input.number} Short Title`,
