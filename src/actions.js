@@ -1315,7 +1315,12 @@ exports.executeAction = function (action) {
 	}
 
 	else if (action.action === 'command') {
-		cmd = `FUNCTION ${action.options.command}`;
+		var command = action.options.command.split(' ')[0];
+		var perams = encodeURIComponent(action.options.command.split(' ').splice(1).join(' '));
+
+		console.log(command);
+		console.log(perams);
+		cmd = `FUNCTION ${command} ${perams}`;
 	}
 
 	else if (action.action === 'MultiViewOverlay') {
