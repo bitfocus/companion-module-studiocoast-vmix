@@ -140,3 +140,4 @@ and if there is more than one parameter use "&" as a separator between them like
 * Added Action "Audio Plugin On/Off/Toggle On Input"
 * Added Stinger 3 and 4 to actions and feedbacks
 * Updated Presets with new feedback's and action.
+* Bugfix: Fixed custom command not working with the new URI encoding.

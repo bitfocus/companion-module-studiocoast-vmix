@@ -1315,7 +1315,9 @@ exports.executeAction = function (action) {
 	}
 
 	else if (action.action === 'command') {
-		cmd = `FUNCTION ${opt.command}`;
+		var command = action.options.command.split(' ')[0];
+		var perams = encodeURIComponent(action.options.command.split(' ').splice(1).join(' '));
+		cmd = `FUNCTION ${command} ${perams}`;
 	}
 
 	else if (action.action === 'MultiViewOverlay') {
