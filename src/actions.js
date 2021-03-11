@@ -1315,7 +1315,7 @@ exports.executeAction = function (action) {
 	}
 
 	else if (action.action === 'command') {
-		cmd = `FUNCTION ${opt.command}`;
+		cmd = `FUNCTION ${action.options.command}`;
 	}
 
 	else if (action.action === 'MultiViewOverlay') {
