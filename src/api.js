@@ -1,6 +1,7 @@
 const xml2js = require('xml2js');
 const _ = require('lodash');
 const { volumeAmplitudeToLinear } = require('./utils');
+const { uniqueId } = require('lodash');
 
 exports.parseAPI = function (body) {
 	xml2js.parseString(body, (err, xml) => {
@@ -426,6 +427,47 @@ exports.parseAPI = function (body) {
 					}
 				}
 			});
+
+			// Update Overlay Variables
+			data.overlays.forEach(overlay => {
+				let input;
+				let preview = false;
+				let program = false;
+				
+				if (overlay.input != undefined) {
+					input = data.inputs.find(input => input.number == overlay.input);
+				} else {
+					input = {
+						title: 'NaN',
+						shortTitle: 'NaN',
+						number: 'NaN'
+					};
+				}
+
+				const overlayActive = overlay.input != undefined;
+
+				if (overlayActive) {
+					if (overlay.preview) {
+						preview = true;
+					} else {
+						program = true;
+					}
+				}
+
+				if (overlay.number <= 4) {
+					this.setVariable(`overlay_${overlay.number}_input_name`, input.shortTitle.replace(/[^a-z0-9-_.]+/gi, ''));
+					this.setVariable(`overlay_${overlay.number}_input`, input.number);
+					this.setVariable(`overlay_${overlay.number}_pgm`, program);
+					this.setVariable(`overlay_${overlay.number}_prv`, preview);
+				}
+
+				// Does not really work for Stingers, as they only report when OnAir :(
+				// else if (overlay.number <= 8) {
+				// 	let x = overlay.number - 4;
+				// 	this.setVariable(`stinger_${x}_input_name`, input.shortTitle.replace(/[^a-z0-9-_.]+/gi, ''));
+				// 	this.setVariable(`stinger_${x}_input`, input.number);
+				// }
+			});	
 
 			// Check Replay
 			if (!_.isEqual(data.replay, this.data.replay)) {

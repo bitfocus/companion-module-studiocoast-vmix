@@ -578,7 +578,7 @@ exports.getActions = function () {
 		},
 
 		AudioPlugin: {
-			label: 'Audio - Audio Plugin On/Off/Toggle On Input',
+			label: 'Audio - Audio Plugin On/Off/Toggle/Show On Input',
 			options: [
 				input,
 				{
@@ -597,6 +597,7 @@ exports.getActions = function () {
 						{ id: 'AudioPluginOnOff', label: 'Toggle' },
 						{ id: 'AudioPluginOn', label: 'On' },
 						{ id: 'AudioPluginOff', label: 'Off' },
+						{ id: 'AudioPluginShow', label: 'Show' },
 					]
 				},			
 			]

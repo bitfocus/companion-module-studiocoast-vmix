@@ -135,10 +135,11 @@ and if there is more than one parameter use "&" as a separator between them like
 * Bug fix: T-bar reworked
 
 **v1.2.17**
+* Added Action "Audio Plugin On/Off/Toggle/Show On Input"
+* Added Action for Dynamic Inputs and Values support
+* Added Stinger 3 and 4 to actions and feedbacks
 * Added Feedback "Video Call - Video Source"
 * Added Feedback "Overlay - Overlay on PGM or PRV"
-* Added Action "Audio Plugin On/Off/Toggle On Input"
-* Added Stinger 3 and 4 to actions and feedbacks
-* Added Action for Dynamic Inputs and Values support
+* Added Variables for overlay 1-4 (PGM, PRV, Input name, Input NR). Variables on Stingers don't give any benefits
 * Updated Presets with new feedback's and action.
 * Bugfix: Fixed custom command not working with the new URI encoding.
