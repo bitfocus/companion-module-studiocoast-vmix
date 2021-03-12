@@ -1268,6 +1268,40 @@ exports.getActions = function () {
 				}
 			]
 		},
+		
+		Dynamic: {
+			label: 'Set Dynamic Inputs and Values',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Select Type',
+					id: 'type',
+					default: 'Input',
+					choices: [
+						{ id: 'Input', label: 'Dynamic Input' },
+						{ id: 'Value', label: 'Dynamic Value' }
+					]
+				},
+				{
+					type: 'dropdown',
+					label: 'Select Number',
+					id: 'number',
+					default: '1',
+					choices: [
+						{ id: '1', label: '1' },
+						{ id: '2', label: '2' },
+						{ id: '3', label: '3' },
+						{ id: '4', label: '4' }
+					]
+				},
+				{
+					type: 'textinput',
+					label: 'Value',
+					id: 'value',
+					default: ''
+				}
+			]
+		},
 
 		command: {
 			label: 'Run custom command',
@@ -1427,6 +1461,10 @@ exports.executeAction = function (action) {
 
 	else if (action.action === 'tbar') {
 		cmd = `FUNCTION SetFader value=${opt.fader}`;
+	}
+	
+	else if (action.action === 'Dynamic') {
+		cmd = `FUNCTION SetDynamic${opt.type}${opt.number} Value=${opt.value}`;
 	}
 
 	else {

@@ -123,6 +123,14 @@ exports.updateVariableDefinitions = function() {
 			});
 		}
 	});
+	
+	this.data.dynamic.forEach(dynamic => {
+		let typeCapitalized = dynamic.type.charAt(0).toUpperCase() + dynamic.type.slice(1);
+		variables.push({
+			label: `Dynamic ${typeCapitalized} ${dynamic.number} value`,
+			name: `dynamic_${dynamic.type}_${dynamic.number}`
+		});
+	});
 
 	this.setVariableDefinitions(variables);
 };

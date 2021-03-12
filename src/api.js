@@ -167,6 +167,21 @@ exports.parseAPI = function (body) {
 
 				return data;
 			};
+			
+			const dynamicData = dynamic => {
+				const data = [];
+				
+				Object.keys(dynamic).forEach(key => {
+					const matches = key.match(/(input|value)([0-9]+)/i);
+					data.push(dynamic[key] = {
+						type:   matches[1],
+						number: matches[2],
+						value:  dynamic[key][0]
+						});
+				});
+
+				return data;
+			};
 
 			const data = {
 				connected: true,
@@ -206,9 +221,14 @@ exports.parseAPI = function (body) {
 					events: '1',
 					cameraA: '0',
 					cameraB: '0'
-				}
+				},
+				dynamic: xml.vmix.hasOwnProperty('dynamic') ? dynamicData(xml.vmix.dynamic[0]) : []
 			};
-
+			
+			data.dynamic.forEach(dynamic => {
+				this.setVariable(`dynamic_${dynamic.type}_${dynamic.number}`, dynamic.value);
+			});
+			
 			// Update layer tally
 			data.mix.forEach(mix => {
 				const checkTally = (type, input) => {
