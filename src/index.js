@@ -69,7 +69,8 @@ class VMixInstance extends instance_skel {
 				events: '1',
 				cameraA: '0',
 				cameraB: '0'
-			}
+			},
+			dynamic: []
 		};
 		this.activatorData = {
 			channelMixer: {},
