@@ -636,7 +636,8 @@ exports.initPresets = function() {
 	const audioPluginOnOff = [
 		{ id: 'AudioPlugin', size: '14', label: 'Toggle Plugin', value: 'AudioPluginOnOff' },
 		{ id: 'AudioPlugin', size: '14', label: 'Set Plugin On', value: 'AudioPluginOn' },
-		{ id: 'AudioPlugin', size: '14', label: 'Set Plugin Off', value: 'AudioPluginOff' }
+		{ id: 'AudioPlugin', size: '14', label: 'Set Plugin Off', value: 'AudioPluginOff' },
+		{ id: 'AudioPlugin', size: '14', label: 'Show Plugin', value: 'AudioPluginShow' }
 	];
 
 	audioOnOff.forEach(item => {
