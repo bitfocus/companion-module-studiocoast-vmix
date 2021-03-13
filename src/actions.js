@@ -602,6 +602,19 @@ exports.getActions = function () {
 				},			
 			]
 		},
+		
+		AudioChannelMatrixApplyPreset: {
+			label: 'Audio - Channel Matrix Preset',
+			options: [
+				input,
+				{
+					type: 'textinput',
+					label: 'Preset Name',
+					id: 'value',
+					default: ''
+				},			
+			]
+		},
 
 		StartCountdown: {
 			label: 'Title - Start Countdown',
