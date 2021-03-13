@@ -604,7 +604,7 @@ exports.getActions = function () {
 		},
 		
 		AudioChannelMatrixApplyPreset: {
-			label: 'Audio - Channel Matrix Preset',
+			label: 'Audio - Channel Matrix Apply Preset',
 			options: [
 				input,
 				{
