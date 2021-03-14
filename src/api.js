@@ -431,8 +431,8 @@ exports.parseAPI = function (body) {
 			// Update Overlay Variables
 			data.overlays.forEach(overlay => {
 				let input;
-				let preview = false;
-				let program = false;
+				let preview = 'false';
+				let program = 'false';
 				
 				if (overlay.input != undefined) {
 					input = data.inputs.find(input => input.number == overlay.input);
@@ -448,9 +448,9 @@ exports.parseAPI = function (body) {
 
 				if (overlayActive) {
 					if (overlay.preview) {
-						preview = true;
+						preview = 'true';
 					} else {
-						program = true;
+						program = 'true';
 					}
 				}
 
