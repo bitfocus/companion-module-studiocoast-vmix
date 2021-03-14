@@ -1,6 +1,43 @@
 exports.updateVariableDefinitions = function() {
 	const variables = [];
 
+	// Add variable for instance Status an other status info
+	variables.push({
+		label: `Connected to vMix`,
+		name: `connected_state`
+	})
+	variables.push({
+		label: `Fade To Black Active`,
+		name: `ftb_active`
+	})	
+	variables.push({
+		label: `playList Active`,
+		name: `playlist_active`
+	})	
+	variables.push({
+		label: `Fullscreen Output Active`,
+		name: `fullscreen_active`
+	})	
+	variables.push({
+		label: `External Output Active`,
+		name: `external_active`
+	})	
+	for (let i = 0; i < this.data.status.stream.length; i++) {
+		const x = i + 1;
+		variables.push({
+			label: `Stream ${x} Active`,
+			name: `stream_${x}_active`
+		})				
+	}
+	variables.push({
+		label: `Recording Active`,
+		name: `recording_active`
+	})	
+	variables.push({
+		label: `MultiCorder Active`,
+		name: `multicorder_active`
+	})	
+
 	// Add variable for preview and program for each mix
 	this.data.mix.forEach(mix => {
 		if (mix.number !== undefined && mix.active) {

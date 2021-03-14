@@ -142,5 +142,6 @@ and if there is more than one parameter use "&" as a separator between them like
 * Added Feedback "Video Call - Video Source"
 * Added Feedback "Overlay - Overlay on PGM or PRV"
 * Added Variables for overlay 1-4 (PGM, PRV, Input name, Input NR). Variables on Stingers don't give any benefits
+* Added Variables For vMix States (recording, streaming, fullscreen, ect)
 * Updated Presets with new feedback's and action.
 * Bugfix: Fixed custom command not working with the new URI encoding.

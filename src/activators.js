@@ -254,6 +254,35 @@ exports.parseActivactor = function (message) {
 
 		this.data.status[status] = params[2] === '1';
 		updateBuffer('feedback', 'status');
+
+		let state_1;
+		if (params[1] == '1') {state_1 = 'True'}
+		else if (params[1] == '0') {state_1 = 'False'}
+
+		switch (params[0]) {
+			case 'FadeToBlack':
+				this.setVariable(`ftb_active`, state_1);
+				break
+			
+			case 'Fullscreen':
+				this.setVariable(`fullscreen_active`, state_1);
+				break
+			
+			case 'External':
+				this.setVariable(`external_active`, state_1);
+				break;
+
+			case 'Recording':
+				this.setVariable(`recording_active`, state_1);
+				break
+
+			case 'MultiCorder':
+				this.setVariable(`multicorder_active`, state_1);
+				break
+	
+			default:
+				break;
+		}
 	}
 
 	else if (events.busAudio.includes(params[0])) {

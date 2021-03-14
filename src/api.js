@@ -9,6 +9,7 @@ exports.parseAPI = function (body) {
 			this.debug('info', JSON.stringify(err));
 			this.data.connected = false;
 			this.checkFeedbacks('status');
+			this.setVariable(`connected_state`, 'False');
 		} else {
 			const getMix = number => {
 				const mix = {
@@ -428,11 +429,39 @@ exports.parseAPI = function (body) {
 				}
 			});
 
+			// Update Status Variables
+			if (data.connected) { this.setVariable(`connected_state`, 'True'); }
+			else { this.setVariable(`connected_state`, 'False'); }
+			
+			if (data.status.fadeToBlack == true) { this.setVariable(`ftb_active`, 'True'); }
+			else { this.setVariable(`ftb_active`, 'False'); }
+			
+			if (data.status.playList == true) { this.setVariable(`playlist_active`, 'True'); }
+			else { this.setVariable(`playlist_active`, 'False'); }
+			
+			if (data.status.fullscreen == true) { this.setVariable(`fullscreen_active`, 'True'); }
+			else { this.setVariable(`fullscreen_active`, 'False'); }
+
+			if (data.status.external == true) { this.setVariable(`external_active`, 'True'); }
+			else { this.setVariable(`external_active`, 'False'); }
+			
+			for (let i = 0; i < data.status.stream.length; i++) {
+				const x = i + 1;
+				if (data.status.stream[i] == true) { this.setVariable(`stream_${x}_active`, 'True'); }
+				else { this.setVariable(`stream_${x}_active`, 'False'); }
+			}		
+
+			if (data.status.recording == true) { this.setVariable(`recording_active`, 'True'); }
+			else { this.setVariable(`recording_active`, 'False'); }
+
+			if (data.status.multiCorder == true) { this.setVariable(`multicorder_active`, 'True'); }
+			else { this.setVariable(`multicorder_active`, 'False'); }
+
 			// Update Overlay Variables
 			data.overlays.forEach(overlay => {
 				let input;
-				let preview = 'false';
-				let program = 'false';
+				let preview = 'False';
+				let program = 'False';
 				
 				if (overlay.input != undefined) {
 					input = data.inputs.find(input => input.number == overlay.input);
@@ -448,9 +477,9 @@ exports.parseAPI = function (body) {
 
 				if (overlayActive) {
 					if (overlay.preview) {
-						preview = 'true';
+						preview = 'True';
 					} else {
-						program = 'true';
+						program = 'True';
 					}
 				}
 
