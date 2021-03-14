@@ -136,6 +136,7 @@ and if there is more than one parameter use "&" as a separator between them like
 
 **v1.2.17**
 * Added Action "Audio Plugin On/Off/Toggle/Show On Input"
+* Added Action "Channel Matrix Apply Preset"
 * Added Action for Dynamic Inputs and Values support
 * Added Stinger 3 and 4 to actions and feedbacks
 * Added Feedback "Video Call - Video Source"
