@@ -39,11 +39,11 @@ If you want to use more than one video Mix in Vmix, make sure you create them as
 
 When usin vMix shortcodes, please follow this syntax/layout, with space before the first value:
 
-***"ReplayMarkInOut Value=5000"***
+**ReplayMarkInOut Value=5000**
 
 and if there is more than one parameter use "&" as a separator between them like this example:
 
-***"SetOutput2 Value=Input&Input=3"***
+**SetOutput2 Value=Input&Input=3**
 
 **t-bar function from a variable**
 
