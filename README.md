@@ -145,3 +145,6 @@ and if there is more than one parameter use "&" as a separator between them like
 * Added Variables For vMix States (recording, streaming, fullscreen, ect)
 * Updated Presets with new feedback's and action.
 * Bugfix: Fixed custom command not working with the new URI encoding.
+
+**V1.2.18**
+* Hotfix for "Custom Commands" not working

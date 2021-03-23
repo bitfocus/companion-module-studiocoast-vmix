@@ -1364,7 +1364,7 @@ exports.executeAction = function (action) {
 
 	else if (action.action === 'command') {
 		var command = action.options.command.split(' ')[0];
-		var perams = encodeURIComponent(action.options.command.split(' ').splice(1).join(' '));
+		var perams = encodeURI(action.options.command.split(' ').splice(1).join(' '));
 		cmd = `FUNCTION ${command} ${perams}`;
 	}
 
