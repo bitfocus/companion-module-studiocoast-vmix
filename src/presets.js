@@ -413,6 +413,7 @@ exports.initPresets = function() {
 	const toggleFunctions = [
 		{ id: 'StartStopMultiCorder', size: '18', label: 'Toggle Multi', status: 'multiCorder' },
 		{ id: 'StartStopRecording', size: '18', label: 'Toggle Rec', status: 'recording' },
+		{ id: 'RecordingDuration', size: '18', label: 'Rec\\n$(vmix:recording_hms)', status: 'recording' },	
 		{ id: 'StartStopStreaming', size: '18', label: 'Toggle Stream', status: 'streaming' },
 		{ id: 'StartStopExternal', size: '18', label: 'Toggle Ext', status: 'external' },
 		{ id: 'Fullscreen', size: '18', label: 'Toggle Full', status: 'fullscreen' },
@@ -420,11 +421,21 @@ exports.initPresets = function() {
 	];
 
 	toggleFunctions.forEach(item => {
-		const actions = [{ action: 'toggleFunctions', options: { functionID: item.id, value: '' } }];
-		const feedbacks = [{ type: 'status', options: { status: item.status, color: this.rgb(255, 255, 255), bgcolor: this.rgb(255, 0, 0), value: '' } }];
-		const preset = createPreset('vMix Functions', item, actions, feedbacks);
+		const actions = [];
+		const feedbacks = [];
+
+		if (['RecordingDuration'].includes(item.id)) {
+			feedbacks.push({ type: 'status', options: { status: item.status, color: this.rgb(255, 255, 255), bgcolor: this.rgb(255, 0, 0), value: '' } });	
+		} 
+
+		else {
+			actions.push({ action: 'toggleFunctions', options: { functionID: item.id, value: '' } });
+			feedbacks.push({ type: 'status', options: { status: item.status, color: this.rgb(255, 255, 255), bgcolor: this.rgb(255, 0, 0), value: '' } });	
+		}
+
+		const preset = createPreset('vMix Functions', item, actions, feedbacks, []);
 		presets.push(preset);
-	});
+});
 
 	// Slide and List Commands
 	const lists = [

@@ -11,6 +11,14 @@ exports.parseAPI = function (body) {
 			this.checkFeedbacks('status');
 			this.setVariable(`connected_state`, 'False');
 		} else {
+			const pad =value => {
+				if(value < 10) {
+					return '0' + value;
+				} else {
+					return value;
+				}
+			}
+
 			const getMix = number => {
 				const mix = {
 					number,
@@ -216,6 +224,12 @@ exports.parseAPI = function (body) {
 					multiCorder: xml.vmix.multiCorder[0] === 'True',
 					fullscreen: xml.vmix.fullscreen[0] === 'True'
 				},
+				recTimecode: {
+					hours: xml.vmix.recording[0].$ !== undefined ?  pad(Math.floor(xml.vmix.recording[0].$.duration / 3600)).toString() : '00',
+					minutes: xml.vmix.recording[0].$ !== undefined ? pad(Math.floor((xml.vmix.recording[0].$.duration %= 3600) / 60)).toString() : '00',
+					seconds: xml.vmix.recording[0].$ !== undefined ? pad(xml.vmix.recording[0].$.duration % 60).toString() : '00',
+					durationSec: xml.vmix.recording[0].$ !== undefined ? xml.vmix.recording[0].$.duration : '0'
+				},	
 				replay: {
 					recording: false,
 					live: false,
@@ -445,6 +459,9 @@ exports.parseAPI = function (body) {
 			if (data.status.external == true) { this.setVariable(`external_active`, 'True'); }
 			else { this.setVariable(`external_active`, 'False'); }
 			
+			if (data.status.multiCorder == true) { this.setVariable(`multicorder_active`, 'True'); }
+			else { this.setVariable(`multicorder_active`, 'False'); }
+
 			for (let i = 0; i < data.status.stream.length; i++) {
 				const x = i + 1;
 				if (data.status.stream[i] == true) { this.setVariable(`stream_${x}_active`, 'True'); }
@@ -454,8 +471,11 @@ exports.parseAPI = function (body) {
 			if (data.status.recording == true) { this.setVariable(`recording_active`, 'True'); }
 			else { this.setVariable(`recording_active`, 'False'); }
 
-			if (data.status.multiCorder == true) { this.setVariable(`multicorder_active`, 'True'); }
-			else { this.setVariable(`multicorder_active`, 'False'); }
+			if (data.status.recording == true) { this.setVariable(`recording_duration`, data.recTimecode.durationSec); }
+			else { this.setVariable(`recording_duration`, '0'); }
+
+			if (data.status.recording == true) { this.setVariable(`recording_hms`, data.recTimecode.hours + ':' + data.recTimecode.minutes + ':' + data.recTimecode.seconds); }
+			else { this.setVariable(`recording_hms`, '00:00:00'); }
 
 			// Update Overlay Variables
 			data.overlays.forEach(overlay => {

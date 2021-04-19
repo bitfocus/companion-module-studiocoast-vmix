@@ -63,6 +63,12 @@ class VMixInstance extends instance_skel {
 				multiCorder: false,
 				fullscreen: false,
 			},
+			recTimecode: {
+				hours: '0',
+				minutes: '0',
+				seconds: '0',
+				durationSec: '0'
+			},
 			replay: {
 				recording: false,
 				live: false,

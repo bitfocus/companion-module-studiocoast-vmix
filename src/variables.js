@@ -22,6 +22,10 @@ exports.updateVariableDefinitions = function() {
 		label: `External Output Active`,
 		name: `external_active`
 	})	
+	variables.push({
+		label: `MultiCorder Active`,
+		name: `multicorder_active`
+	})	
 	for (let i = 0; i < this.data.status.stream.length; i++) {
 		const x = i + 1;
 		variables.push({
@@ -34,8 +38,12 @@ exports.updateVariableDefinitions = function() {
 		name: `recording_active`
 	})	
 	variables.push({
-		label: `MultiCorder Active`,
-		name: `multicorder_active`
+		label: `Recording Duration`,
+		name: `recording_duration`
+	})	
+	variables.push({
+		label: `Recording HH:MM:SS`,
+		name: `recording_hms`
 	})	
 
 	// Add variable for preview and program for each mix

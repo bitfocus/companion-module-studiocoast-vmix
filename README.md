@@ -148,3 +148,9 @@ and if there is more than one parameter use "&" as a separator between them like
 
 **V1.2.18**
 * Hotfix for "Custom Commands" not working
+
+**V1.2.19**
+* Rolled back changed to "Custom Command" so it's identical to in v2.1.2, with no encoding.
+* Added a note in the config page about TCP port vs HTTP port in vMix.
+* Added option to disable error logs flodding the Log when vmix is closed.
+* Added Variables for recording time, both in full duration (Seconds) and in HH:MM:SS format.

@@ -260,7 +260,7 @@ exports.getActions = function () {
 		},
 
 		SelectPlayList: {
-			label: 'Playlist - Open Playlist',
+			label: 'Playlist - Open/Select Playlist',
 			options: [
 				{
 					type: 'textinput',
@@ -1363,9 +1363,12 @@ exports.executeAction = function (action) {
 	}
 
 	else if (action.action === 'command') {
-		var command = action.options.command.split(' ')[0];
-		var perams = encodeURI(action.options.command.split(' ').splice(1).join(' '));
-		cmd = `FUNCTION ${command} ${perams}`;
+		// If this should be done then it should be done manualy i thing and not by me xD, there is a lot of pit falls that can break working configs.
+		// var command = action.options.command.split(' ')[0];
+		// var perams = encodeURI(action.options.command.split(' ').splice(1).join(' '));
+		// var perams = action.options.command.split(' ').splice(1).join(' ');
+		// cmd = `FUNCTION ${command} ${perams}`;
+		cmd = `FUNCTION ${action.options.command}`;
 	}
 
 	else if (action.action === 'MultiViewOverlay') {

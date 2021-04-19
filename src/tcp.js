@@ -11,6 +11,11 @@ exports.init = function () {
 		delete this.socket;
 	}
 
+	// Notify the user at startup that they have disabled connection errors in the log
+	if (this.config.errorLog == false) {
+		this.log('warn', 'Network errors has been disabled and will not be shown in this Log. Please enabled them in the config if you want to see them again.');
+	}
+
 	if (this.config.host) {
 		this.socket = new tcp(this.config.host, this.config.tcpPort);
 
@@ -21,7 +26,10 @@ exports.init = function () {
 		this.socket.on('error', err => {
 			this.debug('Network error', err);
 			this.status(this.STATE_ERROR, err);
-			this.log('error', 'Network error: ' + err.message);
+			
+			if (this.config.errorLog == true) {
+				this.log('error', 'Network error: ' + err.message);
+			}
 
 			if (this.pollAPI) {
 				clearInterval(this.pollAPI);
