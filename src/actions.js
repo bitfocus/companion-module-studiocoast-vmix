@@ -1233,6 +1233,40 @@ exports.getActions = function () {
 			]
 		},
 
+		browser: {
+			label: 'Browser - Functions',
+			options: [
+				input,
+				{
+					type: 'dropdown',
+					label: 'Function',
+					id: 'functionID',
+					default: 'BrowserReload',
+					choices: [
+						{ id: 'BrowserReload', label: 'Reload' },
+						{ id: 'BrowserBack', label: 'Back' },
+						{ id: 'BrowserForward', label: 'Forward' },
+						{ id: 'BrowserKeyboardDisabled', label: 'Keyboard Disabled' },
+						{ id: 'BrowserKeyboardEnabled', label: 'Keyboard Enabled' },
+						{ id: 'BrowserMouseDisabled', label: 'Mouse Disabled' },
+						{ id: 'BrowserMouseEnabled', label: 'Mousen Enabled' },
+					]
+				}
+			]
+		},
+
+		BrowserNavigate: {
+			label: 'Browser - Navigate',
+			options: [
+				input,
+				{
+					type: 'textinput',
+					label: 'URL',
+					id: 'value'
+				}
+			]
+		},
+
 		KeyPress: {
 			label: 'General - KeyPress',
 			options: [

@@ -154,3 +154,4 @@ and if there is more than one parameter use "&" as a separator between them like
 * Added a note in the config page about TCP port vs HTTP port in vMix.
 * Added option to disable error logs flodding the Log when vmix is closed.
 * Added Variables for recording time, both in full duration (Seconds) and in HH:MM:SS format.
+* Added some new actions for Browser inputs, like "Browser - Navigate" and more.

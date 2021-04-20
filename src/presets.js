@@ -750,7 +750,7 @@ exports.initPresets = function() {
 	];
 
 	countdownFunctions.forEach(item => {
-		const actions = [{ action: item.id, options: { intput: '1' } }];
+		const actions = [{ action: item.id, options: { input: '1' } }];
 		if (item.id === 'SetCountdown') {
 			actions[0].options.value = item.time;
 		}
@@ -760,6 +760,22 @@ exports.initPresets = function() {
 		}
 
 		const preset = createPreset('Countdown', item, actions, []);
+		presets.push(preset);
+	});
+
+	const browserFunctions = [
+		{ id: 'BrowserReload', size: '14', label: 'Browser\\nReload' },
+		{ id: 'BrowserBack', size: '14', label: 'Browser\\nBack' },
+		{ id: 'BrowserForward', size: '14', label: 'Browser\\nForward' },
+		{ id: 'BrowserKeyboardDisabled', size: '14', label: 'Browser\\nDisable\\nKeyboard' },	
+		{ id: 'BrowserKeyboardEnabled', size: '14', label: 'Browser\\nEnable\\nKeyboard' },
+		{ id: 'BrowserMouseDisabled', size: '14', label: 'Browser\\nDisable\\nMouse' },
+		{ id: 'BrowserMouseEnabled', size: '14', label: 'Browser\\nEnable\\nMouse' },
+	];
+
+	browserFunctions.forEach(item => {
+		const actions = [{ action: 'browser', options: { input: '1', functionID: item.id } }];
+		const preset = createPreset('Browser', item, actions, []);
 		presets.push(preset);
 	});
 
