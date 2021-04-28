@@ -22,7 +22,6 @@ Default: 250ms <br />
 Minimum: 100ms <br />
 Set to 0 to disable API Polling.
 
-
 **Functions**
 
 Most commonly used vMix commands have been made available as actions to Companion users, as well as feedback which includes Tally for Mixes 1 to 4, Audio muting, solo, and routing, time remaining countdown for video inputs, title input feedback, and more.
@@ -39,11 +38,11 @@ If you want to use more than one video Mix in Vmix, make sure you create them as
 
 When usin vMix shortcodes, please follow this syntax/layout, with space before the first value:
 
-***"ReplayMarkInOut Value=5000"***
+**_"ReplayMarkInOut Value=5000"_**
 
 and if there is more than one parameter use "&" as a separator between them like this example:
 
-***"SetOutput2 Value=Input&Input=3"***
+**_"SetOutput2 Value=Input&Input=3"_**
 
 **t-bar function from a variable**
 

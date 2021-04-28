@@ -1,5 +1,5 @@
-exports.initPresets = function() {
-	const presets = [];
+exports.initPresets = function () {
+	const presets = []
 
 	const createPreset = (category, item, actions, feedbacks) => {
 		return {
@@ -10,12 +10,12 @@ exports.initPresets = function() {
 				text: item.label,
 				size: item.size || 'auto',
 				color: item.color || this.rgb(255, 255, 255),
-				bgcolor: item.bgcolor || this.rgb(0, 0, 0)
+				bgcolor: item.bgcolor || this.rgb(0, 0, 0),
 			},
 			actions,
-			feedbacks
-		};
-	};
+			feedbacks,
+		}
+	}
 
 	// Mix 1
 	const mix1PreviewProgram = [
@@ -37,34 +37,34 @@ exports.initPresets = function() {
 		{ id: 'programCut', mix: 0, input: '8', label: 'PRGM 8', size: '24' },
 		{ id: 'transitionMix', mix: 0, type: 'Cut', label: 'Cut', size: '24' },
 		{ id: 'transitionMix', mix: 0, type: 'Fade', label: 'Fade', size: '24' },
-		{ id: 'transition', label: 'AUTO', size: '24'}
-	];
+		{ id: 'transition', label: 'AUTO', size: '24' },
+	]
 
-	mix1PreviewProgram.forEach(item => {
-		const actions = [];
-		const feedbacks = [];
+	mix1PreviewProgram.forEach((item) => {
+		const actions = []
+		const feedbacks = []
 
 		if (item.id === 'PreviewInput') {
-			actions.push({ action: item.id, options: { mix: item.mix, input: item.input } });
-			feedbacks.push({ type: 'inputPreview', options: { mix: item.mix, input: item.input, fg: this.rgb(255, 255, 255), bg: this.rgb(0, 255, 0), tally: '' } });
-		}
-		
-		else if (item.id === 'programCut') {
-			actions.push({ action: item.id, options: { mix: item.mix, input: item.input } });
-			feedbacks.push({ type: 'inputLive', options: { mix: item.mix, input: item.input, fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0), tally: '' } });
-		}
-		
-		else if (item.id === 'transitionMix') {
-			actions.push({ action: item.id, options: { mix: item.mix, functionID: item.type } });
-		}
-		
-		else {
-			actions.push({ action: item.id, options: { functionID: 'Transition1' } });
+			actions.push({ action: item.id, options: { mix: item.mix, input: item.input } })
+			feedbacks.push({
+				type: 'inputPreview',
+				options: { mix: item.mix, input: item.input, fg: this.rgb(255, 255, 255), bg: this.rgb(0, 255, 0), tally: '' },
+			})
+		} else if (item.id === 'programCut') {
+			actions.push({ action: item.id, options: { mix: item.mix, input: item.input } })
+			feedbacks.push({
+				type: 'inputLive',
+				options: { mix: item.mix, input: item.input, fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0), tally: '' },
+			})
+		} else if (item.id === 'transitionMix') {
+			actions.push({ action: item.id, options: { mix: item.mix, functionID: item.type } })
+		} else {
+			actions.push({ action: item.id, options: { functionID: 'Transition1' } })
 		}
 
-		const preset = createPreset('Mix 1', item, actions, feedbacks);
-		presets.push(preset);
-	});
+		const preset = createPreset('Mix 1', item, actions, feedbacks)
+		presets.push(preset)
+	})
 
 	// Mix 2-4
 	const mix2PreviewProgram = [
@@ -80,30 +80,32 @@ exports.initPresets = function() {
 		{ id: 'transitionMix', mix: 1, type: 'Fade', label: 'Fade MIX 2', size: '24' },
 		{ id: 'transitionMix', mix: 2, type: 'Fade', label: 'Fade MIX 3', size: '24' },
 		{ id: 'transitionMix', mix: 3, type: 'Fade', label: 'Fade MIX 4', size: '24' },
-	];
+	]
 
-	mix2PreviewProgram.forEach(item => {
-		const actions = [];
-		const feedbacks = [];
+	mix2PreviewProgram.forEach((item) => {
+		const actions = []
+		const feedbacks = []
 
 		if (item.id === 'PreviewInput') {
-			actions.push({ action: item.id, options: { mix: item.mix, input: item.input } });
-			feedbacks.push({ type: 'inputPreview', options: { mix: item.mix, input: item.input, fg: this.rgb(255, 255, 255), bg: this.rgb(0, 255, 0) } });
+			actions.push({ action: item.id, options: { mix: item.mix, input: item.input } })
+			feedbacks.push({
+				type: 'inputPreview',
+				options: { mix: item.mix, input: item.input, fg: this.rgb(255, 255, 255), bg: this.rgb(0, 255, 0) },
+			})
+		} else if (item.id === 'programCut') {
+			actions.push({ action: item.id, options: { mix: item.mix, input: item.input } })
+			feedbacks.push({
+				type: 'inputLive',
+				options: { mix: item.mix, input: item.input, fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) },
+			})
+		} else if (item.id === 'transitionMix') {
+			actions.push({ action: item.id, options: { mix: item.mix, functionID: item.type } })
 		}
-		
-		else if (item.id === 'programCut') {
-			actions.push({ action: item.id, options: { mix: item.mix, input: item.input } });
-			feedbacks.push({ type: 'inputLive', options: { mix: item.mix, input: item.input, fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } });
-		}
-		
-		else if (item.id === 'transitionMix') {
-			actions.push({ action: item.id, options: { mix: item.mix, functionID: item.type } });
-		}
-		
-		const preset = createPreset('Mix 2-4', item, actions, feedbacks);
-		presets.push(preset);
-	});
-	
+
+		const preset = createPreset('Mix 2-4', item, actions, feedbacks)
+		presets.push(preset)
+	})
+
 	// Replay
 	const replayCameras = [
 		{ channel: 'A', camera: '1', size: '24', label: 'A Cam 1' },
@@ -113,8 +115,8 @@ exports.initPresets = function() {
 		{ channel: 'B', camera: '1', size: '24', label: 'B Cam 1' },
 		{ channel: 'B', camera: '2', size: '24', label: 'B Cam 2' },
 		{ channel: 'B', camera: '3', size: '24', label: 'B Cam 3' },
-		{ channel: 'B', camera: '4', size: '24', label: 'B Cam 4' }
-	];
+		{ channel: 'B', camera: '4', size: '24', label: 'B Cam 4' },
+	]
 
 	const replayFunctions = [
 		{ id: 'replayRecording', label: 'Rec' },
@@ -124,7 +126,7 @@ exports.initPresets = function() {
 		{ id: 'ReplayPause', label: 'Pause Events' },
 		{ id: 'ReplayPlaySelectedEventToOutput', label: 'Play Selected Event' },
 		{ id: 'ReplayPlayEventsByIDToOutput', label: 'Play Events By ID' },
-	];
+	]
 
 	const replayMarks = [
 		{ id: 'replayMark', functionID: 'ReplayMarkIn', label: 'Mark In' },
@@ -132,52 +134,62 @@ exports.initPresets = function() {
 		{ id: 'replayMark', functionID: 'ReplayMarkInOut', value: '10', label: 'Mark Last 10' },
 		{ id: 'replayMark', functionID: 'ReplayMarkInOut', value: '30', label: 'Mark Last 30' },
 		{ id: 'replayUpdateInOut', functionID: 'ReplayUpdateSelectedInPoint', size: '18', label: 'Update In' },
-		{ id: 'replayUpdateInOut', functionID: 'ReplayUpdateSelectedOutPoint', size: '18', label: 'Update Out' }
-	];
+		{ id: 'replayUpdateInOut', functionID: 'ReplayUpdateSelectedOutPoint', size: '18', label: 'Update Out' },
+	]
 
-	replayCameras.forEach(item => {
-		const actions = [{ action: item.channel === 'A' ? 'replayACamera' : 'replayBCamera', options: { functionID: `Replay${item.channel}Camera${item.camera}` } }];
-		const feedbacks = [{ type: 'replayCamera', options: { channel: item.channel, camera: item.camera, fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } }];
-		const preset = createPreset('Replay', item, actions, feedbacks);
-		presets.push(preset);
-	});
+	replayCameras.forEach((item) => {
+		const actions = [
+			{
+				action: item.channel === 'A' ? 'replayACamera' : 'replayBCamera',
+				options: { functionID: `Replay${item.channel}Camera${item.camera}` },
+			},
+		]
+		const feedbacks = [
+			{
+				type: 'replayCamera',
+				options: { channel: item.channel, camera: item.camera, fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) },
+			},
+		]
+		const preset = createPreset('Replay', item, actions, feedbacks)
+		presets.push(preset)
+	})
 
-	replayFunctions.forEach(item => {
-		const actions = [];
-		const feedbacks = [];
+	replayFunctions.forEach((item) => {
+		const actions = []
+		const feedbacks = []
 
 		if (item.id === 'replayRecording') {
-			actions.push({ action: item.id, options: { functionID: 'ReplayStartRecording' } });
-			feedbacks.push({ type: 'replayStatus', options: { status: 'recording', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } });
-		}
-		
-		else if (item.id === 'ReplayLiveToggle') {
-			actions.push({ action: item.id });
-			feedbacks.push({ type: 'replayStatus', options: { status: 'live', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } });
-		}
-		
-		else if (item.id === 'ReplayPlayEventsByIDToOutput') {
-			actions.push({ action: item.id });
+			actions.push({ action: item.id, options: { functionID: 'ReplayStartRecording' } })
+			feedbacks.push({
+				type: 'replayStatus',
+				options: { status: 'recording', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) },
+			})
+		} else if (item.id === 'ReplayLiveToggle') {
+			actions.push({ action: item.id })
+			feedbacks.push({
+				type: 'replayStatus',
+				options: { status: 'live', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) },
+			})
+		} else if (item.id === 'ReplayPlayEventsByIDToOutput') {
+			actions.push({ action: item.id })
+		} else {
+			actions.push({ action: item.id })
 		}
 
-		else {
-			actions.push({ action: item.id });
-		}
+		const preset = createPreset('Replay', item, actions, feedbacks)
+		presets.push(preset)
+	})
 
-		const preset = createPreset('Replay', item, actions, feedbacks);
-		presets.push(preset);
-	});
-
-	replayMarks.forEach(item => {
-		const actions = [{ action: item.id, options: { functionID: item.functionID } }];
+	replayMarks.forEach((item) => {
+		const actions = [{ action: item.id, options: { functionID: item.functionID } }]
 
 		if (item.value) {
-			actions[0].options.value = item.value;
+			actions[0].options.value = item.value
 		}
 
-		const preset = createPreset('Replay', item, actions, []);
-		presets.push(preset);
-	});
+		const preset = createPreset('Replay', item, actions, [])
+		presets.push(preset)
+	})
 
 	// Vmix Call Audio and Video
 	const vmixCall = [
@@ -194,26 +206,30 @@ exports.initPresets = function() {
 		{ id: 'VideoCallVideoSource', size: '18', label: 'Call 1 Out 2', input: '', value: 'Output2' },
 		{ id: 'VideoCallVideoSource', size: '18', label: 'Call 1 Out 3', input: '', value: 'Output3' },
 		{ id: 'VideoCallVideoSource', size: '18', label: 'Call 1 Out 4', input: '', value: 'Output4' },
-	];
+	]
 
-	vmixCall.forEach(item => {
-		const actions = [];
-		const feedbacks = [];
+	vmixCall.forEach((item) => {
+		const actions = []
+		const feedbacks = []
 
 		if (item.id === 'VideoCallAudioSource') {
-			actions.push({ action: item.id, options: { input: item.input, value: item.value } });
-			feedbacks.push({ type: 'videoCallAudioSource', options: { input: item.input, source: item.value, fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } });
+			actions.push({ action: item.id, options: { input: item.input, value: item.value } })
+			feedbacks.push({
+				type: 'videoCallAudioSource',
+				options: { input: item.input, source: item.value, fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) },
+			})
+		} else if (item.id === 'VideoCallVideoSource') {
+			actions.push({ action: item.id, options: { input: item.input, functionID: item.value } })
+			feedbacks.push({
+				type: 'videoCallVideoSource',
+				options: { input: item.input, source: item.value, fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) },
+			})
 		}
-		
-		else if (item.id === 'VideoCallVideoSource') {
-			actions.push({ action: item.id, options: { input: item.input, functionID: item.value } });
-			feedbacks.push({ type: 'videoCallVideoSource', options: { input: item.input, source: item.value, fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } });
-		}
-		
-		const preset = createPreset('Vmix Call', item, actions, feedbacks);
-		presets.push(preset);
-	});	
-	
+
+		const preset = createPreset('Vmix Call', item, actions, feedbacks)
+		presets.push(preset)
+	})
+
 	// Titles and Graphics
 	const title = [
 		{ id: 'SetText', label: 'Set Title', input: '', layer: '0', adjustment: 'Set', value: '0' },
@@ -241,36 +257,33 @@ exports.initPresets = function() {
 		{ id: 'TitleBeginAnimation', size: '14', label: 'Title Data Change In', input: '', value: 'DataChangeIn' },
 		{ id: 'TitleBeginAnimation', size: '14', label: 'Title Data Change Out', input: '', value: 'DataChangeOut' },
 		{ id: 'ShowTitle', label: 'Title:', input: '', layer: '0' },
-	];
+	]
 
-	title.forEach(item => {
-		const actions = [];
-		const feedbacks = [];
+	title.forEach((item) => {
+		const actions = []
+		const feedbacks = []
 
 		if (item.id === 'SetText') {
-			actions.push({ action: item.id, options: { input: item.input, selectedIndex: item.layer, adjustment: item.adjustment, value: item.value } });
+			actions.push({
+				action: item.id,
+				options: { input: item.input, selectedIndex: item.layer, adjustment: item.adjustment, value: item.value },
+			})
 		}
 
 		if (item.id === 'SelectTitlePreset') {
-			actions.push({ action: item.id, options: { input: item.input, selectedIndex: item.value } });
-		}
-		
-		else if (item.id === 'TitlePreset') {
-			actions.push({ action: item.id, options: { input: item.input, functionID: item.value } });
-		}
-		
-		else if (item.id === 'ShowTitle') {
-			feedbacks.push({ type: 'titleLayer', options: { input: item.input, layer: item.value, bg: this.rgb(255, 0, 0) } });
+			actions.push({ action: item.id, options: { input: item.input, selectedIndex: item.value } })
+		} else if (item.id === 'TitlePreset') {
+			actions.push({ action: item.id, options: { input: item.input, functionID: item.value } })
+		} else if (item.id === 'ShowTitle') {
+			feedbacks.push({ type: 'titleLayer', options: { input: item.input, layer: item.value, bg: this.rgb(255, 0, 0) } })
+		} else if (item.id === 'TitleBeginAnimation') {
+			actions.push({ action: item.id, options: { input: item.input, value: item.value } })
 		}
 
-		else if (item.id === 'TitleBeginAnimation') {
-			actions.push({ action: item.id, options: { input: item.input, value: item.value } });
-		}
+		const preset = createPreset('Titles and Graphics', item, actions, feedbacks)
+		presets.push(preset)
+	})
 
-		const preset = createPreset('Titles and Graphics', item, actions, feedbacks);
-		presets.push(preset);
-	});	
-	
 	// Video Playback
 	const videoActionsList = [
 		{ id: 'videoActions', input: '0', inputType: 'true', type: 'Play', label: 'Play', size: '18' },
@@ -279,39 +292,74 @@ exports.initPresets = function() {
 		{ id: 'videoActions', input: '0', inputType: 'true', type: 'Restart', label: 'Restart', size: '18' },
 		{ id: 'videoActions', input: '0', inputType: 'true', type: 'LoopOn', label: 'Loop ON', size: '18' },
 		{ id: 'videoActions', input: '0', inputType: 'true', type: 'LoopOff', label: 'Loop OFF', size: '18' },
-		{ id: 'videoPlayhead', input: '0', inputType: 'true', type: 'Set', value: '10000', label: 'Playhead 10 sec', size: '14' },
-		{ id: 'videoPlayhead', input: '0', inputType: 'true', type: 'Increment', value: '10000',label: 'Playhead +10 sec', size: '14' },
-		{ id: 'videoPlayhead', input: '0', inputType: 'true', type: 'Decrement', value: '10000', label: 'Playhead -10 sec', size: '14' },
+		{
+			id: 'videoPlayhead',
+			input: '0',
+			inputType: 'true',
+			type: 'Set',
+			value: '10000',
+			label: 'Playhead 10 sec',
+			size: '14',
+		},
+		{
+			id: 'videoPlayhead',
+			input: '0',
+			inputType: 'true',
+			type: 'Increment',
+			value: '10000',
+			label: 'Playhead +10 sec',
+			size: '14',
+		},
+		{
+			id: 'videoPlayhead',
+			input: '0',
+			inputType: 'true',
+			type: 'Decrement',
+			value: '10000',
+			label: 'Playhead -10 sec',
+			size: '14',
+		},
 		{ id: 'videoMark', input: '0', inputType: 'true', type: 'MarkIn', label: 'Mark In', size: '18' },
 		{ id: 'videoMark', input: '0', inputType: 'true', type: 'MarkOut', label: 'Mark Out', size: '18' },
 		{ id: 'videoMark', input: '0', inputType: 'true', type: 'MarkReset', label: 'Clear In/Out', size: '18' },
 		{ id: 'videoMark', input: '0', inputType: 'true', type: 'MarkResetIn', label: 'Clear In', size: '18' },
 		{ id: 'videoMark', input: '0', inputType: 'true', type: 'MarkResetOut', label: 'Clear Out', size: '18' },
-		{ id: 'videoTimer', input: '0', label: 'Video Timecode',},
-	];
+		{ id: 'videoTimer', input: '0', label: 'Video Timecode' },
+	]
 
-	videoActionsList.forEach(item => {
-		const actions = [];
-		const feedbacks = [];
+	videoActionsList.forEach((item) => {
+		const actions = []
+		const feedbacks = []
 
 		if (item.id === 'videoActions') {
-			actions.push({ action: item.id, options: { input: item.input, inputType: item.inputType, functionID: item.type } });
+			actions.push({
+				action: item.id,
+				options: { input: item.input, inputType: item.inputType, functionID: item.type },
+			})
+		} else if (item.id === 'videoPlayhead') {
+			actions.push({
+				action: item.id,
+				options: { input: item.input, inputType: item.inputType, adjustment: item.type, value: item.value },
+			})
+		} else if (item.id === 'videoMark') {
+			actions.push({
+				action: item.id,
+				options: { input: item.input, inputType: item.inputType, functionID: item.type },
+			})
+		} else if (item.id === 'videoMark') {
+			feedbacks.push({
+				type: 'videoTimer',
+				options: {
+					input: item.input,
+					color: this.rgb(255, 255, 255),
+					color30: this.rgb(255, 255, 0),
+					color10: this.rgb(255, 0, 0),
+				},
+			})
 		}
-		
-		else if (item.id === 'videoPlayhead') {
-			actions.push({ action: item.id, options: { input: item.input, inputType: item.inputType, adjustment: item.type, value: item.value } });
-		}
-		
-		else if (item.id === 'videoMark') {
-			actions.push({ action: item.id, options: { input: item.input, inputType: item.inputType, functionID: item.type } });
-		}
-		
-		else if (item.id === 'videoMark') {
-			feedbacks.push({ type: 'videoTimer', options: { input: item.input, color: this.rgb(255, 255, 255), color30: this.rgb(255, 255, 0), color10: this.rgb(255, 0, 0) } });
-		}
-		const preset = createPreset('Video Playback input', item, actions, feedbacks);
-		presets.push(preset);
-	});
+		const preset = createPreset('Video Playback input', item, actions, feedbacks)
+		presets.push(preset)
+	})
 
 	// General Commands
 	const commands = [
@@ -321,23 +369,23 @@ exports.initPresets = function() {
 		{ id: 'ScriptStart', size: '18', label: 'Script Start' },
 		{ id: 'ScriptStop', size: '18', label: 'Script Stop' },
 		{ id: 'ScriptStopAll', size: '14', label: 'Script Stop All' },
-		{ id: 'command', size: '14', label: 'Custom Command' }
-	];
+		{ id: 'command', size: '14', label: 'Custom Command' },
+	]
 
-	commands.forEach(item => {
-		const actions = [];
+	commands.forEach((item) => {
+		const actions = []
 
 		if (['NextPicture', 'PreviousPicture'].includes(item.id)) {
-			actions.push({ action: item.id, options: { input: '1' } });
+			actions.push({ action: item.id, options: { input: '1' } })
 		} else if (['KeyPress', 'ScriptStart', 'ScriptStop', 'ScriptStopAll'].includes(item.id)) {
-			actions.push({ action: item.id, options: { value: '' } });
+			actions.push({ action: item.id, options: { value: '' } })
 		} else if (item.id === 'command') {
-			actions.push({ action: item.id, options: { command: '' } });
+			actions.push({ action: item.id, options: { command: '' } })
 		}
 
-		const preset = createPreset('General Commands', item, actions, []);
-		presets.push(preset);
-	});
+		const preset = createPreset('General Commands', item, actions, [])
+		presets.push(preset)
+	})
 
 	// Transitions
 	const presetTransitions = [
@@ -348,22 +396,22 @@ exports.initPresets = function() {
 		{ id: 'Stinger1', size: '18', label: 'Stinger 1' },
 		{ id: 'Stinger2', size: '18', label: 'Stinger 2' },
 		{ id: 'Stinger3', size: '18', label: 'Stinger 3' },
-		{ id: 'Stinger4', size: '18', label: 'Stinger 4' }
-	];
+		{ id: 'Stinger4', size: '18', label: 'Stinger 4' },
+	]
 
 	const presetTransitionsEffect = [
 		{ id: 'SetTransitionEffect1', size: '18', label: 'T1 Set Cut', value: 'Cut' },
 		{ id: 'SetTransitionEffect2', size: '18', label: 'T2 Set Fade', value: 'Fade' },
 		{ id: 'SetTransitionEffect3', size: '18', label: 'T3 Set Zoom', value: 'Zoom' },
 		{ id: 'SetTransitionEffect4', size: '18', label: 'T4 Set Merge', value: 'Merge' },
-	];
+	]
 
 	const presetTransitionsDuration = [
 		{ id: 'SetTransitionDuration1', size: '18', label: 'T1 Set 250ms', value: '250' },
 		{ id: 'SetTransitionDuration1', size: '18', label: 'T1 Set 500ms', value: '500' },
 		{ id: 'SetTransitionDuration1', size: '18', label: 'T1 Set 1000ms', value: '1000' },
 		{ id: 'SetTransitionDuration1', size: '18', label: 'T1 Set 1500ms', value: '1500' },
-	];
+	]
 
 	const individualTransitions = [
 		{ id: 'Cut', size: '18', label: 'Cut' },
@@ -382,60 +430,64 @@ exports.initPresets = function() {
 		{ id: 'WipeReverse', size: '18', label: 'Wipe Reverse' },
 		{ id: 'SlideReverse', size: '18', label: 'Slide Reverse' },
 		{ id: 'VerticalWipeReverse', size: '14', label: 'Vertical Wipe Reverse' },
-		{ id: 'VerticalSlideReverse', size: '14', label: 'Vertical Slide Reverse' }
-	];
+		{ id: 'VerticalSlideReverse', size: '14', label: 'Vertical Slide Reverse' },
+	]
 
-	presetTransitions.forEach(item => {
-		const actions = [{ action: 'transition', options: { functionID: item.id } }];
-		const preset = createPreset('Transitions', item, actions, []);
-		presets.push(preset);
-	});
+	presetTransitions.forEach((item) => {
+		const actions = [{ action: 'transition', options: { functionID: item.id } }]
+		const preset = createPreset('Transitions', item, actions, [])
+		presets.push(preset)
+	})
 
-	presetTransitionsEffect.forEach(item => {
-		const actions = [{ action: 'SetTransitionEffect', options: { functionID: item.id, value: item.value } }];
-		const preset = createPreset('Transitions', item, actions, []);
-		presets.push(preset);
-	});
+	presetTransitionsEffect.forEach((item) => {
+		const actions = [{ action: 'SetTransitionEffect', options: { functionID: item.id, value: item.value } }]
+		const preset = createPreset('Transitions', item, actions, [])
+		presets.push(preset)
+	})
 
-	presetTransitionsDuration.forEach(item => {
-		const actions = [{ action: 'SetTransitionDuration', options: { functionID: item.id, duration: item.value } }];
-		const preset = createPreset('Transitions', item, actions, []);
-		presets.push(preset);
-	});
+	presetTransitionsDuration.forEach((item) => {
+		const actions = [{ action: 'SetTransitionDuration', options: { functionID: item.id, duration: item.value } }]
+		const preset = createPreset('Transitions', item, actions, [])
+		presets.push(preset)
+	})
 
-	individualTransitions.forEach(item => {
-		const actions = [{ action: 'transitionMix', options: { functionID: item.id, mix: 0, duration: 1000 } }];
-		const preset = createPreset('Transitions', item, actions, []);
-		presets.push(preset);
-	});
+	individualTransitions.forEach((item) => {
+		const actions = [{ action: 'transitionMix', options: { functionID: item.id, mix: 0, duration: 1000 } }]
+		const preset = createPreset('Transitions', item, actions, [])
+		presets.push(preset)
+	})
 
 	// vMix Functions
 	const toggleFunctions = [
 		{ id: 'StartStopMultiCorder', size: '18', label: 'Toggle Multi', status: 'multiCorder' },
 		{ id: 'StartStopRecording', size: '18', label: 'Toggle Rec', status: 'recording' },
-		{ id: 'RecordingDuration', size: '18', label: 'Rec\\n$(vmix:recording_hms)', status: 'recording' },	
+		{ id: 'RecordingDuration', size: '18', label: 'Rec\\n$(vmix:recording_hms)', status: 'recording' },
 		{ id: 'StartStopStreaming', size: '18', label: 'Toggle Stream', status: 'streaming' },
 		{ id: 'StartStopExternal', size: '18', label: 'Toggle Ext', status: 'external' },
 		{ id: 'Fullscreen', size: '18', label: 'Toggle Full', status: 'fullscreen' },
-		{ id: 'FadeToBlack', size: '18', label: 'Toggle FTB', status: 'fadeToBlack' }
-	];
+		{ id: 'FadeToBlack', size: '18', label: 'Toggle FTB', status: 'fadeToBlack' },
+	]
 
-	toggleFunctions.forEach(item => {
-		const actions = [];
-		const feedbacks = [];
+	toggleFunctions.forEach((item) => {
+		const actions = []
+		const feedbacks = []
 
 		if (['RecordingDuration'].includes(item.id)) {
-			feedbacks.push({ type: 'status', options: { status: item.status, color: this.rgb(255, 255, 255), bgcolor: this.rgb(255, 0, 0), value: '' } });	
-		} 
-
-		else {
-			actions.push({ action: 'toggleFunctions', options: { functionID: item.id, value: '' } });
-			feedbacks.push({ type: 'status', options: { status: item.status, color: this.rgb(255, 255, 255), bgcolor: this.rgb(255, 0, 0), value: '' } });	
+			feedbacks.push({
+				type: 'status',
+				options: { status: item.status, color: this.rgb(255, 255, 255), bgcolor: this.rgb(255, 0, 0), value: '' },
+			})
+		} else {
+			actions.push({ action: 'toggleFunctions', options: { functionID: item.id, value: '' } })
+			feedbacks.push({
+				type: 'status',
+				options: { status: item.status, color: this.rgb(255, 255, 255), bgcolor: this.rgb(255, 0, 0), value: '' },
+			})
 		}
 
-		const preset = createPreset('vMix Functions', item, actions, feedbacks, []);
-		presets.push(preset);
-});
+		const preset = createPreset('vMix Functions', item, actions, feedbacks, [])
+		presets.push(preset)
+	})
 
 	// Slide and List Commands
 	const lists = [
@@ -444,35 +496,59 @@ exports.initPresets = function() {
 		{ id: 'SelectIndex', size: '18', label: 'Select Index 1' },
 		{ id: 'Slide', size: 'auto', label: 'Slide: ' },
 		{ id: 'List', size: 'auto', label: 'List: ' },
-	];
+	]
 
-	lists.forEach(item => {
-		const actions = [];
-		const feedbacks = [];
+	lists.forEach((item) => {
+		const actions = []
+		const feedbacks = []
 
 		if (['NextPicture', 'PreviousPicture'].includes(item.id)) {
-			actions.push({ action: item.id, options: { input: '1' } });
-		} 
-		else if (item.id === 'SelectIndex') {
-			actions.push({ action: item.id, options: { input: '1', selectedIndex: '1' } });
-			feedbacks.push({ type: 'inputSelectedIndex', options: { input: '1', selectedIndex: '1', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0), el: this.rgb(255, 255, 0)} });
-		}
-		else if (item.id === 'Slide') {
+			actions.push({ action: item.id, options: { input: '1' } })
+		} else if (item.id === 'SelectIndex') {
+			actions.push({ action: item.id, options: { input: '1', selectedIndex: '1' } })
+			feedbacks.push({
+				type: 'inputSelectedIndex',
+				options: {
+					input: '1',
+					selectedIndex: '1',
+					fg: this.rgb(255, 255, 255),
+					bg: this.rgb(255, 0, 0),
+					el: this.rgb(255, 255, 0),
+				},
+			})
+		} else if (item.id === 'Slide') {
 			feedbacks.push(
-				{ type: 'inputSelectedIndex', options: { input: '1', selectedIndex: '1', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0), el: this.rgb(255, 255, 0)} },
-				{ type: 'inputSelectedIndexName', options: { input: '1', value1: false, value2: true} } 
-			);
-		}
-		else if (item.id === 'List') {
+				{
+					type: 'inputSelectedIndex',
+					options: {
+						input: '1',
+						selectedIndex: '1',
+						fg: this.rgb(255, 255, 255),
+						bg: this.rgb(255, 0, 0),
+						el: this.rgb(255, 255, 0),
+					},
+				},
+				{ type: 'inputSelectedIndexName', options: { input: '1', value1: false, value2: true } }
+			)
+		} else if (item.id === 'List') {
 			feedbacks.push(
-				{ type: 'inputSelectedIndex', options: { input: '1', selectedIndex: '1', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0), el: this.rgb(255, 255, 0)} },
-				{ type: 'inputSelectedIndexName', options: { input: '1', value1: true, value2: false} } 
-			);
+				{
+					type: 'inputSelectedIndex',
+					options: {
+						input: '1',
+						selectedIndex: '1',
+						fg: this.rgb(255, 255, 255),
+						bg: this.rgb(255, 0, 0),
+						el: this.rgb(255, 255, 0),
+					},
+				},
+				{ type: 'inputSelectedIndexName', options: { input: '1', value1: true, value2: false } }
+			)
 		}
-		const preset = createPreset('Slides And Lists', item, actions, feedbacks, []);
-		presets.push(preset);
-	});
-	
+		const preset = createPreset('Slides And Lists', item, actions, feedbacks, [])
+		presets.push(preset)
+	})
+
 	// Outputs
 	const outputRouting = [
 		{ id: 'SetOutput2', size: '14', label: 'Output2\\n-\\n' },
@@ -480,38 +556,38 @@ exports.initPresets = function() {
 		{ id: 'SetOutput4', size: '14', label: 'Output4\\n-\\n' },
 		{ id: 'SetOutputExternal2', size: '14', label: 'External\\n-\\n' },
 		{ id: 'SetOutputFullscreen', size: '14', label: 'FS 1\\n-\\n' },
-		{ id: 'SetOutputFullscreen2', size: '14', label: 'FS 2\\n-\\n' }
-	];
+		{ id: 'SetOutputFullscreen2', size: '14', label: 'FS 2\\n-\\n' },
+	]
 
 	const outputTypes = [
 		{ id: 'Output', short: 'PGM' },
 		{ id: 'Preview', short: 'Prev' },
 		{ id: 'MultiView', short: 'Multi' },
-		{ id: 'Input', short: 'In' }
-	];
+		{ id: 'Input', short: 'In' },
+	]
 
-	outputRouting.forEach(item => {
-		outputTypes.forEach(type => {
-			const presetItem = { ...item, label: item.label + type.short };
-			const actions = [{ action: 'outputSet', options: { functionID: item.id, value: type.id, input: '1' } }];
-			const preset = createPreset('Outputs', presetItem, actions, []);
-			presets.push(preset);
-		});
-	});
+	outputRouting.forEach((item) => {
+		outputTypes.forEach((type) => {
+			const presetItem = { ...item, label: item.label + type.short }
+			const actions = [{ action: 'outputSet', options: { functionID: item.id, value: type.id, input: '1' } }]
+			const preset = createPreset('Outputs', presetItem, actions, [])
+			presets.push(preset)
+		})
+	})
 
 	// Playlist
 	const playlistFunctions = [
 		{ id: 'StartPlayList', size: '18', label: 'Playlist Start' },
 		{ id: 'StopPlayList', size: '18', label: 'Playlist Stop' },
 		{ id: 'NextPlayListEntry', size: '18', label: 'Playlist Next' },
-		{ id: 'PreviousPlayListEntry', size: '18', label: 'Playlist Prev' }
-	];
+		{ id: 'PreviousPlayListEntry', size: '18', label: 'Playlist Prev' },
+	]
 
-	playlistFunctions.forEach(item => {
-		const actions = [{ action: 'playListFunctions', options: { functionID: item.id } }];
-		const preset = createPreset('PlayList', item, actions, []);
-		presets.push(preset);
-	});
+	playlistFunctions.forEach((item) => {
+		const actions = [{ action: 'playListFunctions', options: { functionID: item.id } }]
+		const preset = createPreset('PlayList', item, actions, [])
+		presets.push(preset)
+	})
 
 	// Overlays
 	const overlayFunctions = [
@@ -535,57 +611,75 @@ exports.initPresets = function() {
 		{ id: 'OverlayInput2Off', size: '18', label: 'Set OVL 2 OFF' },
 		{ id: 'OverlayInput3Off', size: '18', label: 'Set OVL 3 OFF' },
 		{ id: 'OverlayInput4Off', size: '18', label: 'Set OVL 4 OFF' },
-		{ id: 'OverlayInputAllOff', size: '14', label: 'Set All OVL OFF', },
+		{ id: 'OverlayInputAllOff', size: '14', label: 'Set All OVL OFF' },
 		{ id: 'OverlayInput1Zoom', size: '18', label: 'PIP OVL 1 Z/F' },
 		{ id: 'OverlayInput2Zoom', size: '18', label: 'PIP OVL 2 Z/F' },
 		{ id: 'OverlayInput3Zoom', size: '18', label: 'PIP OVL 3 Z/F' },
-		{ id: 'OverlayInput4Zoom', size: '18', label: 'PIP OVL 4 Z/F' }
-	];
+		{ id: 'OverlayInput4Zoom', size: '18', label: 'PIP OVL 4 Z/F' },
+	]
 
-	overlayFunctions.forEach(item => {
-		const actions = [{ action: 'overlayFunctions', options: { functionID: item.id, input: 1 } }];
-		const feedbacks = [];
+	overlayFunctions.forEach((item) => {
+		const actions = [{ action: 'overlayFunctions', options: { functionID: item.id, input: 1 } }]
+		const feedbacks = []
 
-		if (item.id === 'OverlayInput1' || item.id === 'OverlayInput2' || item.id === 'OverlayInput3' || item.id === 'OverlayInput4' || item.id === 'PreviewOverlayInput1' || item.id === 'PreviewOverlayInput2' || item.id === 'PreviewOverlayInput3' || item.id === 'PreviewOverlayInput4') {
-		feedbacks.push ({ type: 'overlayStatus', options: { input: item.input, overlay: item.overlay, fg: this.rgb(255, 255, 255), bgPreview: this.rgb(0, 255, 0), bgProgram: this.rgb(255, 0, 0) } });
-		};
+		if (
+			item.id === 'OverlayInput1' ||
+			item.id === 'OverlayInput2' ||
+			item.id === 'OverlayInput3' ||
+			item.id === 'OverlayInput4' ||
+			item.id === 'PreviewOverlayInput1' ||
+			item.id === 'PreviewOverlayInput2' ||
+			item.id === 'PreviewOverlayInput3' ||
+			item.id === 'PreviewOverlayInput4'
+		) {
+			feedbacks.push({
+				type: 'overlayStatus',
+				options: {
+					input: item.input,
+					overlay: item.overlay,
+					fg: this.rgb(255, 255, 255),
+					bgPreview: this.rgb(0, 255, 0),
+					bgProgram: this.rgb(255, 0, 0),
+				},
+			})
+		}
 
-		const preset = createPreset('Overlays', item, actions, feedbacks);
-		presets.push(preset);
-	});
+		const preset = createPreset('Overlays', item, actions, feedbacks)
+		presets.push(preset)
+	})
 
 	// Multiview Overlays
 	const multiviewoverlay = [
-		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L1',  type: 'MultiViewOverlay', input: '', layer: '1' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L2',  type: 'MultiViewOverlay', input: '', layer: '2' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L3',  type: 'MultiViewOverlay', input: '', layer: '3' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L4',  type: 'MultiViewOverlay', input: '', layer: '4' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L5',  type: 'MultiViewOverlay', input: '', layer: '5' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L6',  type: 'MultiViewOverlay', input: '', layer: '6' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L7',  type: 'MultiViewOverlay', input: '', layer: '7' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L8',  type: 'MultiViewOverlay', input: '', layer: '8' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L9',  type: 'MultiViewOverlay', input: '', layer: '9' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L10',  type: 'MultiViewOverlay', input: '', layer: '10' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Set L1 Off',  type: 'MultiViewOverlayOff', input: '', layer: '1' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Set L2 Off',  type: 'MultiViewOverlayOff', input: '', layer: '2' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Set L3 Off',  type: 'MultiViewOverlayOff', input: '', layer: '3' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Set L4 Off',  type: 'MultiViewOverlayOff', input: '', layer: '4' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Set L5 Off',  type: 'MultiViewOverlayOff', input: '', layer: '5' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Set L6 Off',  type: 'MultiViewOverlayOff', input: '', layer: '6' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Set L7 Off',  type: 'MultiViewOverlayOff', input: '', layer: '7' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Set L8 Off',  type: 'MultiViewOverlayOff', input: '', layer: '8' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Set L9 Off',  type: 'MultiViewOverlayOff', input: '', layer: '9' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Set L10 Off',  type: 'MultiViewOverlayOff', input: '', layer: '10' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Set L1 On',  type: 'MultiViewOverlayOn', input: '', layer: '1' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Set L2 On',  type: 'MultiViewOverlayOn', input: '', layer: '2' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Set L3 On',  type: 'MultiViewOverlayOn', input: '', layer: '3' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Set L4 On',  type: 'MultiViewOverlayOn', input: '', layer: '4' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Set L5 On',  type: 'MultiViewOverlayOn', input: '', layer: '5' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Set L6 On',  type: 'MultiViewOverlayOn', input: '', layer: '6' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Set L7 On',  type: 'MultiViewOverlayOn', input: '', layer: '7' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Set L8 On',  type: 'MultiViewOverlayOn', input: '', layer: '8' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Set L9 On',  type: 'MultiViewOverlayOn', input: '', layer: '9' },
-		{ id: 'MultiViewOverlay', size: '18', label: 'Set L10 On',  type: 'MultiViewOverlayOn', input: '', layer: '10' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L1', type: 'MultiViewOverlay', input: '', layer: '1' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L2', type: 'MultiViewOverlay', input: '', layer: '2' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L3', type: 'MultiViewOverlay', input: '', layer: '3' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L4', type: 'MultiViewOverlay', input: '', layer: '4' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L5', type: 'MultiViewOverlay', input: '', layer: '5' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L6', type: 'MultiViewOverlay', input: '', layer: '6' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L7', type: 'MultiViewOverlay', input: '', layer: '7' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L8', type: 'MultiViewOverlay', input: '', layer: '8' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L9', type: 'MultiViewOverlay', input: '', layer: '9' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Toggle L10', type: 'MultiViewOverlay', input: '', layer: '10' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L1 Off', type: 'MultiViewOverlayOff', input: '', layer: '1' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L2 Off', type: 'MultiViewOverlayOff', input: '', layer: '2' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L3 Off', type: 'MultiViewOverlayOff', input: '', layer: '3' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L4 Off', type: 'MultiViewOverlayOff', input: '', layer: '4' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L5 Off', type: 'MultiViewOverlayOff', input: '', layer: '5' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L6 Off', type: 'MultiViewOverlayOff', input: '', layer: '6' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L7 Off', type: 'MultiViewOverlayOff', input: '', layer: '7' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L8 Off', type: 'MultiViewOverlayOff', input: '', layer: '8' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L9 Off', type: 'MultiViewOverlayOff', input: '', layer: '9' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L10 Off', type: 'MultiViewOverlayOff', input: '', layer: '10' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L1 On', type: 'MultiViewOverlayOn', input: '', layer: '1' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L2 On', type: 'MultiViewOverlayOn', input: '', layer: '2' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L3 On', type: 'MultiViewOverlayOn', input: '', layer: '3' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L4 On', type: 'MultiViewOverlayOn', input: '', layer: '4' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L5 On', type: 'MultiViewOverlayOn', input: '', layer: '5' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L6 On', type: 'MultiViewOverlayOn', input: '', layer: '6' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L7 On', type: 'MultiViewOverlayOn', input: '', layer: '7' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L8 On', type: 'MultiViewOverlayOn', input: '', layer: '8' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L9 On', type: 'MultiViewOverlayOn', input: '', layer: '9' },
+		{ id: 'MultiViewOverlay', size: '18', label: 'Set L10 On', type: 'MultiViewOverlayOn', input: '', layer: '10' },
 		{ id: 'SetMultiViewOverlay', size: '18', label: 'Set L1 To IN1', input: '', layer: '1', layerInput: '1' },
 		{ id: 'SetMultiViewOverlay', size: '18', label: 'Set L2 To IN1', input: '', layer: '2', layerInput: '1' },
 		{ id: 'SetMultiViewOverlay', size: '18', label: 'Set L3 To IN1', input: '', layer: '3', layerInput: '1' },
@@ -596,30 +690,34 @@ exports.initPresets = function() {
 		{ id: 'SetMultiViewOverlay', size: '18', label: 'Set L8 To IN1', input: '', layer: '8', layerInput: '1' },
 		{ id: 'SetMultiViewOverlay', size: '18', label: 'Set L9 To IN1', input: '', layer: '9', layerInput: '1' },
 		{ id: 'SetMultiViewOverlay', size: '18', label: 'Set L10 To IN1', input: '', layer: '10', layerInput: '1' },
-	];
+	]
 
-	multiviewoverlay.forEach(item => {
-		const actions = [];
-		const feedbacks = [];
+	multiviewoverlay.forEach((item) => {
+		const actions = []
+		const feedbacks = []
 
 		if (item.id === 'MultiViewOverlay') {
-			actions.push({ action: item.id, options: { functionID: item.type, input: item.input, selectedIndex: item.layer } });
+			actions.push({
+				action: item.id,
+				options: { functionID: item.type, input: item.input, selectedIndex: item.layer },
+			})
+		} else if (item.id === 'SetMultiViewOverlay') {
+			actions.push({
+				action: item.id,
+				options: { input: item.multiview, selectedIndex: item.layer, LayerInput: item.layerInput },
+			})
 		}
-		
-		else if (item.id === 'SetMultiViewOverlay') {
-			actions.push({ action: item.id, options: { input: item.multiview, selectedIndex: item.layer, LayerInput: item.layerInput  } });
-		}
-		
-		const preset = createPreset('MultiView Overlays', item, actions, feedbacks);
-		presets.push(preset);
-	});	
+
+		const preset = createPreset('MultiView Overlays', item, actions, feedbacks)
+		presets.push(preset)
+	})
 
 	// Audio
 	const audioOnOff = [
-		{ id: 'Audio', size: '18', label: 'Toggle Audio'},
+		{ id: 'Audio', size: '18', label: 'Toggle Audio' },
 		{ id: 'AudioOnOff', size: '14', label: 'Set Audio On', value: 'AudioOn' },
-		{ id: 'AudioOnOff', size: '14', label: 'Set Audio Off', value: 'AudioOff' }
-	];
+		{ id: 'AudioOnOff', size: '14', label: 'Set Audio Off', value: 'AudioOff' },
+	]
 
 	const audioRouting = [
 		{ id: 'Audio', size: '18', label: 'Input Mute' },
@@ -627,8 +725,8 @@ exports.initPresets = function() {
 		{ id: 'Solo', size: '18', label: 'Input Solo' },
 		{ id: 'BusXSolo', size: '18', label: 'Bus Solo' },
 		{ id: 'BusXSendToMaster', size: '14', label: 'Send Bus to Master' },
-		{ id: 'AudioBus', size: '14', label: 'Send Input to Bus' }
-	];
+		{ id: 'AudioBus', size: '14', label: 'Send Input to Bus' },
+	]
 
 	const inputVolume = [
 		{ size: '18', label: 'In 1 Vol 0%', volume: '0' },
@@ -641,143 +739,206 @@ exports.initPresets = function() {
 		{ size: '18', label: 'In 1 Vol 70%', volume: '70' },
 		{ size: '18', label: 'In 1 Vol 80%', volume: '80' },
 		{ size: '18', label: 'In 1 Vol 90%', volume: '90' },
-		{ size: '18', label: 'In 1 Vol 100%', volume: '100' }
-	];
+		{ size: '18', label: 'In 1 Vol 100%', volume: '100' },
+	]
 
 	const audioPluginOnOff = [
 		{ id: 'AudioPlugin', size: '14', label: 'Toggle Plugin', value: 'AudioPluginOnOff' },
 		{ id: 'AudioPlugin', size: '14', label: 'Set Plugin On', value: 'AudioPluginOn' },
 		{ id: 'AudioPlugin', size: '14', label: 'Set Plugin Off', value: 'AudioPluginOff' },
-		{ id: 'AudioPlugin', size: '14', label: 'Show Plugin', value: 'AudioPluginShow' }
-	];
+		{ id: 'AudioPlugin', size: '14', label: 'Show Plugin', value: 'AudioPluginShow' },
+	]
 
-	audioOnOff.forEach(item => {
-		const actions = [];
-		const feedbacks = [];
+	audioOnOff.forEach((item) => {
+		const actions = []
+		const feedbacks = []
 
 		if (item.id === 'Audio') {
-			actions.push({ action: item.id, options: { input: '' } });
+			actions.push({ action: item.id, options: { input: '' } })
 			feedbacks.push(
 				{ type: 'inputAudio', options: { input: '1', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } },
-				{ type: 'liveInputVolume', options: { input: '1', value: 'false', color: this.rgb(255, 0, 0), color1: this.rgb(255, 255, 0), color6: this.rgb(0, 255, 0), color18: this.rgb(0, 192, 0),  color36: this.rgb(0, 128, 0) } }
-			);
-		}
-		
-		else if (item.id === 'AudioOnOff') {
-			actions.push({ action: item.id, options: { input: item.input, functionID: item.value } });
+				{
+					type: 'liveInputVolume',
+					options: {
+						input: '1',
+						value: 'false',
+						color: this.rgb(255, 0, 0),
+						color1: this.rgb(255, 255, 0),
+						color6: this.rgb(0, 255, 0),
+						color18: this.rgb(0, 192, 0),
+						color36: this.rgb(0, 128, 0),
+					},
+				}
+			)
+		} else if (item.id === 'AudioOnOff') {
+			actions.push({ action: item.id, options: { input: item.input, functionID: item.value } })
 			feedbacks.push(
 				{ type: 'inputAudio', options: { input: '1', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } },
-				{ type: 'liveInputVolume', options: { input: '1', value: 'false', color: this.rgb(255, 0, 0), color1: this.rgb(255, 255, 0), color6: this.rgb(0, 255, 0), color18: this.rgb(0, 192, 0),  color36: this.rgb(0, 128, 0) } }
-			);
+				{
+					type: 'liveInputVolume',
+					options: {
+						input: '1',
+						value: 'false',
+						color: this.rgb(255, 0, 0),
+						color1: this.rgb(255, 255, 0),
+						color6: this.rgb(0, 255, 0),
+						color18: this.rgb(0, 192, 0),
+						color36: this.rgb(0, 128, 0),
+					},
+				}
+			)
 		}
-		
-		const preset = createPreset('Audio', item, actions, feedbacks);
-		presets.push(preset);
-	});
 
-	audioRouting.forEach(item => {
-		const actions = [{ action: item.id, options: {} }];
+		const preset = createPreset('Audio', item, actions, feedbacks)
+		presets.push(preset)
+	})
+
+	audioRouting.forEach((item) => {
+		const actions = [{ action: item.id, options: {} }]
 
 		if (['Audio', 'Solo', 'AudioBus'].includes(item.id)) {
-			actions[0].options.input = '1';
+			actions[0].options.input = '1'
 		}
 
 		if (['AudioBus', 'BusXAudio', 'BusXSolo', 'BusXSendToMaster'].includes(item.id)) {
-			actions[0].options.value = 'A';
+			actions[0].options.value = 'A'
 		}
 
-		const feedbacks = [];
+		const feedbacks = []
 
 		if (item.id === 'BusXAudio') {
 			feedbacks.push(
 				{ type: 'busMute', options: { bus: 'A', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } },
-				{ type: 'liveBusVolume', options: { bus: 'A', value: 'false', color: this.rgb(255, 0, 0), color1: this.rgb(255, 255, 0), color6: this.rgb(0, 255, 0), color18: this.rgb(0, 192, 0),  color36: this.rgb(0, 128, 0) } }
-			);
-		}
-		
-		else if (item.id === 'Audio') {
+				{
+					type: 'liveBusVolume',
+					options: {
+						bus: 'A',
+						value: 'false',
+						color: this.rgb(255, 0, 0),
+						color1: this.rgb(255, 255, 0),
+						color6: this.rgb(0, 255, 0),
+						color18: this.rgb(0, 192, 0),
+						color36: this.rgb(0, 128, 0),
+					},
+				}
+			)
+		} else if (item.id === 'Audio') {
 			feedbacks.push(
 				{ type: 'inputMute', options: { input: '1', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 0, 0) } },
-				{ type: 'liveInputVolume', options: { input: '1', value: 'false', color: this.rgb(255, 0, 0), color1: this.rgb(255, 255, 0), color6: this.rgb(0, 255, 0), color18: this.rgb(0, 192, 0),  color36: this.rgb(0, 128, 0) } }
-			);
-		}
-
-		else if (item.id === 'Solo') {
+				{
+					type: 'liveInputVolume',
+					options: {
+						input: '1',
+						value: 'false',
+						color: this.rgb(255, 0, 0),
+						color1: this.rgb(255, 255, 0),
+						color6: this.rgb(0, 255, 0),
+						color18: this.rgb(0, 192, 0),
+						color36: this.rgb(0, 128, 0),
+					},
+				}
+			)
+		} else if (item.id === 'Solo') {
 			feedbacks.push(
 				{ type: 'inputSolo', options: { input: '1', fg: this.rgb(255, 255, 255), bg: this.rgb(255, 255, 0) } },
-				{ type: 'liveInputVolume', options: { input: '1', value: 'false', color: this.rgb(255, 0, 0), color1: this.rgb(255, 255, 0), color6: this.rgb(0, 255, 0), color18: this.rgb(0, 192, 0),  color36: this.rgb(0, 128, 0) } }
-			);
+				{
+					type: 'liveInputVolume',
+					options: {
+						input: '1',
+						value: 'false',
+						color: this.rgb(255, 0, 0),
+						color1: this.rgb(255, 255, 0),
+						color6: this.rgb(0, 255, 0),
+						color18: this.rgb(0, 192, 0),
+						color36: this.rgb(0, 128, 0),
+					},
+				}
+			)
+		} else if (item.id === 'AudioBus') {
+			feedbacks.push({
+				type: 'inputBusRouting',
+				options: { input: '1', bus: 'A', fg: this.rgb(255, 255, 255), bg: this.rgb(0, 255, 0) },
+			})
 		}
-		
-		else if (item.id === 'AudioBus') {
-			feedbacks.push({ type: 'inputBusRouting', options: { input: '1', bus: 'A', fg: this.rgb(255, 255, 255), bg: this.rgb(0, 255, 0) } });
-		}
 
-		const preset = createPreset('Audio', item, actions, feedbacks);
-		presets.push(preset);
-	});
+		const preset = createPreset('Audio', item, actions, feedbacks)
+		presets.push(preset)
+	})
 
-	inputVolume.forEach(item => {
-		const actions = [{ action: 'SetVolumeFade', options: { input: '1', fadeMin: item.volume, fadeTime: '2000' } }];
-		const feedbacks =	[{ type: 'liveInputVolume', options: { input: '1', value: 'false', color: this.rgb(255, 0, 0), color1: this.rgb(255, 255, 0), color6: this.rgb(0, 255, 0), color18: this.rgb(0, 192, 0),  color36: this.rgb(0, 128, 0) } }];
-		const preset = createPreset('Audio', item, actions, feedbacks);
-		presets.push(preset);
-	});
+	inputVolume.forEach((item) => {
+		const actions = [{ action: 'SetVolumeFade', options: { input: '1', fadeMin: item.volume, fadeTime: '2000' } }]
+		const feedbacks = [
+			{
+				type: 'liveInputVolume',
+				options: {
+					input: '1',
+					value: 'false',
+					color: this.rgb(255, 0, 0),
+					color1: this.rgb(255, 255, 0),
+					color6: this.rgb(0, 255, 0),
+					color18: this.rgb(0, 192, 0),
+					color36: this.rgb(0, 128, 0),
+				},
+			},
+		]
+		const preset = createPreset('Audio', item, actions, feedbacks)
+		presets.push(preset)
+	})
 
-	audioPluginOnOff.forEach(item => {
-		const actions = [];
-		const feedbacks = [];
-		
+	audioPluginOnOff.forEach((item) => {
+		const actions = []
+		const feedbacks = []
+
 		if (item.id === 'AudioPluginOnOff') {
-			actions.push({ action: item.id, options: { input: '', functionID: item.value } });
+			actions.push({ action: item.id, options: { input: '', functionID: item.value } })
 		}
-		
-		const preset = createPreset('Audio', item, actions, feedbacks);
-		presets.push(preset);
-	});
+
+		const preset = createPreset('Audio', item, actions, feedbacks)
+		presets.push(preset)
+	})
 
 	// Countdown
 	const countdownFunctions = [
 		{ id: 'StartCountdown', size: '18', label: 'CND Start' },
 		{ id: 'StopCountdown', size: '18', label: 'CND Stop' },
 		{ id: 'PauseCountdown', size: '18', label: 'CND Pause' },
-		{ id: 'ChangeCountdown', size: '14', label: 'Change 0 sec', time: '00:00:00' },	
+		{ id: 'ChangeCountdown', size: '14', label: 'Change 0 sec', time: '00:00:00' },
 		{ id: 'SetCountdown', size: '18', label: 'CND 0 sec', time: '00:00:00' },
 		{ id: 'SetCountdown', size: '18', label: 'CND 10 sec', time: '00:00:10' },
 		{ id: 'SetCountdown', size: '18', label: 'CND 30 sec', time: '00:00:30' },
 		{ id: 'SetCountdown', size: '18', label: 'CND 60 sec', time: '00:01:00' },
-		{ id: 'SetCountdown', size: '18', label: 'CND 120 sec', time: '00:02:00' }
-	];
+		{ id: 'SetCountdown', size: '18', label: 'CND 120 sec', time: '00:02:00' },
+	]
 
-	countdownFunctions.forEach(item => {
-		const actions = [{ action: item.id, options: { input: '1' } }];
+	countdownFunctions.forEach((item) => {
+		const actions = [{ action: item.id, options: { input: '1' } }]
 		if (item.id === 'SetCountdown') {
-			actions[0].options.value = item.time;
+			actions[0].options.value = item.time
 		}
 
 		if (item.id === 'ChangeCountdown') {
-			actions[0].options.value = item.time;
+			actions[0].options.value = item.time
 		}
 
-		const preset = createPreset('Countdown', item, actions, []);
-		presets.push(preset);
-	});
+		const preset = createPreset('Countdown', item, actions, [])
+		presets.push(preset)
+	})
 
 	const browserFunctions = [
 		{ id: 'BrowserReload', size: '14', label: 'Browser\\nReload' },
 		{ id: 'BrowserBack', size: '14', label: 'Browser\\nBack' },
 		{ id: 'BrowserForward', size: '14', label: 'Browser\\nForward' },
-		{ id: 'BrowserKeyboardDisabled', size: '14', label: 'Browser\\nDisable\\nKeyboard' },	
+		{ id: 'BrowserKeyboardDisabled', size: '14', label: 'Browser\\nDisable\\nKeyboard' },
 		{ id: 'BrowserKeyboardEnabled', size: '14', label: 'Browser\\nEnable\\nKeyboard' },
 		{ id: 'BrowserMouseDisabled', size: '14', label: 'Browser\\nDisable\\nMouse' },
 		{ id: 'BrowserMouseEnabled', size: '14', label: 'Browser\\nEnable\\nMouse' },
-	];
+	]
 
-	browserFunctions.forEach(item => {
-		const actions = [{ action: 'browser', options: { input: '1', functionID: item.id } }];
-		const preset = createPreset('Browser', item, actions, []);
-		presets.push(preset);
-	});
+	browserFunctions.forEach((item) => {
+		const actions = [{ action: 'browser', options: { input: '1', functionID: item.id } }]
+		const preset = createPreset('Browser', item, actions, [])
+		presets.push(preset)
+	})
 
-	this.setPresetDefinitions(presets);
-};
+	this.setPresetDefinitions(presets)
+}
