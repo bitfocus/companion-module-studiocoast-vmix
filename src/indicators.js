@@ -18,6 +18,8 @@ class indicators {
 		this.debug = instance.debug
 		this.system = instance.system
 
+		this.remove_topbar;
+
 		this.borderDepth = 3
 		this.triangleDepth = 20
 
@@ -35,6 +37,11 @@ class indicators {
 		var img;
 
 		this.system.emit('get_userconfig', (userconfig) => {
+			if (userconfig.remove_topbar !== this.remove_topbar) {
+				this.savedIcons = {}
+				this.remove_topbar = userconfig.remove_topbar
+			}
+
 			if  (userconfig.remove_topbar !== undefined && userconfig.remove_topbar === true) {
 				img = new this.Image(72, 72)
 			} else {
@@ -59,7 +66,7 @@ class indicators {
 		var out
 
 		if (this.savedIcons[id] === undefined) {
-			var img = new this.createImage()
+			var img = this.createImage()
 
 			img.backgroundColor(bgcolor)
 			img.drawBorder(this.borderDepth, color)
@@ -87,7 +94,7 @@ class indicators {
 		var out
 
 		if (this.savedIcons[id] === undefined) {
-			var img = new this.createImage()
+			var img = this.createImage()
 
 			img.backgroundColor(bgcolor)
 			img.drawCornerTriangle(this.triangleDepth, color, 'left', 'top')
@@ -116,7 +123,7 @@ class indicators {
 		var out
 
 		if (this.savedIcons[id] === undefined) {
-			var img = new this.createImage()
+			var img = this.createImage()
 
 			img.backgroundColor(bgcolor)
 			img.drawCornerTriangle(this.triangleDepth, color, 'right', 'top')
@@ -145,7 +152,7 @@ class indicators {
 		var out
 
 		if (this.savedIcons[id] === undefined) {
-			var img = new this.createImage()
+			var img = this.createImage()
 
 			img.backgroundColor(bgcolor)
 			img.drawCornerTriangle(this.triangleDepth, color, 'left', 'bottom')
@@ -174,7 +181,7 @@ class indicators {
 		var out
 
 		if (this.savedIcons[id] === undefined) {
-			var img = new this.createImage()
+			var img = this.createImage()
 
 			img.backgroundColor(bgcolor)
 			img.drawCornerTriangle(this.triangleDepth, color, 'right', 'bottom')
@@ -203,7 +210,7 @@ class indicators {
 		var out
 
 		if (this.savedIcons[id] === undefined) {
-			var img = new this.createImage()
+			var img = this.createImage()
 
 			img.backgroundColor(bgcolor)
 			img.drawCornerTriangle(this.triangleDepth, color, 'left', 'top')
