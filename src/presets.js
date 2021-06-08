@@ -708,9 +708,81 @@ exports.initPresets = function () {
 			})
 		}
 
-		const preset = createPreset('MultiView Overlays', item, actions, feedbacks)
+		const preset = createPreset('Layers / MultiView Overlays', item, actions, feedbacks)
 		presets.push(preset)
 	})
+
+	// X/Y Layers / Multiview
+	const routableMultiview = [
+		{ id: 'SetMultiViewOverlayDestinationInput', size: '18', label: 'Dest Input ' },
+		{ id: 'SetMultiViewOverlayDestinationLayer', size: '18', label: 'Dest Layer ' },
+		{ id: 'SetMultiViewOverlaySourceInput', size: '18', label: 'Source Input ' },
+	]
+	for (let i = 0; i < 10; i++) {
+		x = i+1
+		presets.push({
+			category: 'X/Y Layers / Multiview',
+			label: 'Destination Input ' + x,
+			bank: {
+				style: 'text',
+				text: 'Dest Input ' + x,
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0)
+			},
+			actions: [{ action: 'SetMultiViewOverlayDestinationInput', options: { destinationInput: x }}],	
+			feedbacks: [
+				{ 
+					type: 'selectedDestinationInput',	
+					options: { input: x, fgBlack: this.rgb(0, 0, 0), bgDestination: this.rgb(255, 255, 0) },
+				},
+			],
+		})			
+	}
+
+	for (let i = 0; i < 10; i++) {
+		x = i+1
+		presets.push({
+			category: 'X/Y Layers / Multiview',
+			label: 'Destination Layer ' + x,
+			bank: {
+				style: 'text',
+				text: 'Dest Layer ' + x,
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0)
+			},
+			actions: [{ action: 'SetMultiViewOverlayDestinationLayer', options: { destinationLayer: x }}],	
+			feedbacks: [
+				{ 
+					type: 'selectedDestinationLayer',	
+					options: { selectedIndex: x, fgBlack: this.rgb(0, 0, 0), bgDestination: this.rgb(255, 255, 0) },
+				},
+			],
+		})			
+	}
+
+	for (let i = 0; i < 10; i++) {
+		x = i+1
+		presets.push({
+			category: 'X/Y Layers / Multiview',
+			label: 'Source Input ' + x,
+			bank: {
+				style: 'text',
+				text: 'Source Layer ' + x,
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0)
+			},
+			actions: [{ action: 'SetMultiViewOverlaySourceInput', options: { sourceIndex: x }}],	
+			feedbacks: [
+				{ 
+					type: 'routableMultiviewLayer',	
+					options: { input: x, fgBlack: this.rgb(0, 0, 0), bgSource: this.rgb(255, 255, 255)}
+				},
+			],
+		})			
+	}
 
 	// Audio
 	const audioOnOff = [

@@ -182,3 +182,9 @@ and if there is more than one parameter use "&" as a separator between them like
 - Added Feedback for if input is used on a multiview layer.
 - Added Feedback to show what input is selected on a multiview layer.
 - Renamed Multiview actions to match v24 and v23 namings.
+
+**V1.2.20**
+
+- Added Actions and Feedbacks for Routable "multiview overlays" / "Layers" (Check help guide for more info)
+- Updated Help.md file
+- Added Presets for new Actions

@@ -388,6 +388,7 @@ exports.parseAPI = function (body) {
 				changes.add('inputSelectedIndexName')
 				changes.add('multiviewLayer')
 				changes.add('inputOnMultiview')
+				changes.add('routableMultiviewLayer')
 			}
 
 			if (!_.isEqual(data.inputs, this.data.inputs) || inputCheck) {
@@ -399,6 +400,7 @@ exports.parseAPI = function (body) {
 				changes.add('inputSelectedIndexName')
 				changes.add('multiviewLayer')
 				changes.add('inputOnMultiview')
+				changes.add('routableMultiviewLayer')
 			}
 
 			// Check for status changes

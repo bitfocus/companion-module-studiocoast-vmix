@@ -399,6 +399,44 @@ exports.getActions = function () {
 			],
 		},
 
+		SetMultiViewOverlayDestinationInput: {
+			label: 'Layers / MultiView - Set Destination Input for Routable Multiview Overlay Layer',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Destination MV Input',
+					id: 'destinationInput',
+					default: 1,
+				}
+			],
+		},
+
+		SetMultiViewOverlayDestinationLayer: {
+			label: 'Layers / MultiView - Set Destination Layer for Routable Multiview Overlay Layer',
+			options: [
+				{
+					type: 'number',
+					label: 'Destination Layer of destination Input',
+					id: 'destinationLayer',
+					default: 1,
+					min: 1,
+					max: 10,
+				}
+			],
+		},
+
+		SetMultiViewOverlaySourceInput: {
+			label: 'Layers / MultiView - Set Source Input for Routable Multiview Overlay Layer',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Input to be routed to destination layer of destination input',
+					id: 'sourceIndex',
+					default: 1,
+				}
+			],
+		},
+
 		VirtualSet: {
 			label: 'VirtualSet - Zoom To Selected Preset',
 			options: [
@@ -1410,6 +1448,20 @@ exports.executeAction = function (action) {
 		cmd = `FUNCTION SetMultiViewOverlay Input=${this.data.mix[opt.mix].program}&Value=${opt.selectedIndex},${
 			opt.LayerInput
 		}`
+	} else if (action.action === 'SetMultiViewOverlayDestinationInput') {
+		this.destinationInput = parseInt(opt.destinationInput)
+		this.checkFeedbacks("selectedDestinationInput")
+	} else if (action.action === 'SetMultiViewOverlayDestinationLayer') {
+		this.destinationLayer = opt.destinationLayer
+		this.checkFeedbacks("selectedDestinationLayer")
+	} else if (action.action === 'SetMultiViewOverlaySourceInput') {
+		if (opt.sourceIndex == "0") {
+			cmd = `FUNCTION SetMultiViewOverlay Input=${this.destinationInput}&Value=${this.destinationLayer},`
+		} else {
+			cmd = `FUNCTION SetMultiViewOverlay Input=${this.destinationInput}&Value=${this.destinationLayer},${
+				opt.sourceIndex
+			}`
+		}
 	} else if (action.action === 'VirtualSet') {
 		cmd = `FUNCTION SelectIndex Input=${opt.input}&Value=${opt.selectedIndex}`
 	} else if (action.action === 'SetText') {

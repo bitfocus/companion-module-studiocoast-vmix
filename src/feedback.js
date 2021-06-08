@@ -11,6 +11,13 @@ exports.initFeedbacks = function () {
 		default: this.rgb(255, 255, 255),
 	}
 
+	const foregroundColorBlack = {
+		type: 'colorpicker',
+		label: 'Foreground color',
+		id: 'fgBlack',
+		default: this.rgb(0, 0, 0),
+	}
+
 	const backgroundColorPreview = {
 		type: 'colorpicker',
 		label: 'Background color',
@@ -30,6 +37,20 @@ exports.initFeedbacks = function () {
 		label: 'Background color',
 		id: 'bgLayer',
 		default: this.rgb(0, 51, 204),
+	}
+
+	const backgroundColorDestination = {
+		type: 'colorpicker',
+		label: 'Background color',
+		id: 'bgDestination',
+		default: this.rgb(255, 255, 0),
+	}
+
+	const backgroundColorSource = {
+		type: 'colorpicker',
+		label: 'Background color',
+		id: 'bgSource',
+		default: this.rgb(255, 255, 255),
 	}
 
 	const input = {
@@ -720,6 +741,36 @@ exports.initFeedbacks = function () {
 		],
 	}
 
+	feedbacks.selectedDestinationInput = {
+		label: 'Layers / MultiView - check selected destination input',
+		description: 'If the input is selected as destination Input, change colors of the bank',
+		options: [
+			input,
+			foregroundColorBlack,
+			backgroundColorDestination,
+		],
+	}
+
+	feedbacks.selectedDestinationLayer = {
+		label: 'Layers / MultiView - check selected destination layer',
+		description: 'If the layer is selected as destination Layer, change colors of the bank',
+		options: [
+			selectedIndex,
+			foregroundColorBlack,
+			backgroundColorDestination,
+		],
+	}
+
+	feedbacks.routableMultiviewLayer = {
+		label: 'Layers / MultiView - check if input in on destination Layer / MultiView of destination input',
+		description: 'If the specified input is on destination Layer of destination input, change colors of the bank',
+		options: [
+			input,
+			foregroundColorBlack,
+			backgroundColorSource,
+		],
+	}
+
 	return feedbacks
 }
 
@@ -1255,5 +1306,37 @@ exports.executeFeedback = function (feedback, bank) {
 			}
 			return { img64: this.indicators.getImage(feedback.options.tally, feedback.options.bgLayer) }
 		}
+
+	} else if (feedback.type === 'selectedDestinationInput'){
+		this.checkFeedbacks("routableMultiviewLayer")
+		if (parseInt(feedback.options.input) == this.destinationInput) {
+			return { color: feedback.options.fgBlack, bgcolor: feedback.options.bgDestination }
+		}
+
+	} else if (feedback.type === 'selectedDestinationLayer'){
+		this.checkFeedbacks("routableMultiviewLayer")
+		if (parseInt(feedback.options.selectedIndex) == this.destinationLayer) {
+			return { color: feedback.options.fgBlack, bgcolor: feedback.options.bgDestination }
+		}
+
+	} else if (feedback.type === 'routableMultiviewLayer') {
+		const input = getInput(feedback.options.input)
+		const inputMV = getInput(this.destinationInput.toString(10))
+		const layer = this.destinationLayer - 1
+		var tally = false
+
+		if (inputMV && inputMV.overlay) {
+			let x = inputMV.overlay.find((item) => parseInt(item.index) === layer)
+			if (x != undefined) {
+				tally = x.key == input.key
+			}
+		}
+
+		if (tally == true) {
+			return { color: feedback.options.fgBlack, bgcolor: feedback.options.bgSource }
+		} else if (input === inputMV) {
+			return { color: this.rgb(128, 128, 128), bgcolor: this.rgb(16, 16, 16)}
+		}
+
 	}
 }

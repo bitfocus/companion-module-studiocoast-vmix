@@ -92,6 +92,8 @@ class VMixInstance extends instance_skel {
 		this.config.apiPollInterval = this.config.apiPollInterval !== undefined ? this.config.apiPollInterval : 250
 		this.updateVariableDefinitions = updateVariableDefinitions
 		this.updateVolumeVariables = updateVolumeVariables
+		this.destinationInput = 1
+		this.destinationLayer = 1
 	}
 
 	init() {
@@ -156,6 +158,8 @@ class VMixInstance extends instance_skel {
 	init_feedbacks() {
 		const feedbacks = initFeedbacks.bind(this)()
 		this.setFeedbackDefinitions(feedbacks)
+		this.checkFeedbacks("selectedDestinationInput")
+		this.checkFeedbacks("selectedDestinationLayer")
 	}
 
 	// Execute feedback
