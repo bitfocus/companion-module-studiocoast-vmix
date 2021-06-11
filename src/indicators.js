@@ -18,8 +18,18 @@ class indicators {
 		this.debug = instance.debug
 		this.system = instance.system
 
-		this.remove_topbar;
+		this.remove_topbar = false
 
+		this.instance.getUserSetting('remove_topbar', (_remove_topbar) => {
+			this.remove_topbar = _remove_topbar
+		})
+
+		this.instance.subscribeUserSetting('remove_topbar', (_remove_topbar) => {
+			if (this.remove_topbar !== _remove_topbar) {
+				this.remove_topbar = _remove_topbar
+				this.savedIcons = {}
+			}
+		})
 		this.borderDepth = 3
 		this.triangleDepth = 20
 
@@ -31,25 +41,18 @@ class indicators {
 	 *
 	 * @returns {Image} the image object
 	 * @access protected
-	 * @since 1.2.20
+	 * @since 1.2.22
 	 */
 	createImage() {
-		var img;
+		var img
 
-		this.system.emit('get_userconfig', (userconfig) => {
-			if (userconfig.remove_topbar !== this.remove_topbar) {
-				this.savedIcons = {}
-				this.remove_topbar = userconfig.remove_topbar
-			}
+		if (this.remove_topbar === true) {
+			img = new this.Image(72, 72)
+		} else {
+			img = new this.Image(72, 58)
+		}
 
-			if  (userconfig.remove_topbar !== undefined && userconfig.remove_topbar === true) {
-				img = new this.Image(72, 72)
-			} else {
-				img = new this.Image(72, 58)
-			}
-		})
-
-		return img;
+		return img
 	}
 
 	/**
