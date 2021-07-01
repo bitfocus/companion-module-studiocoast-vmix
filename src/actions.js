@@ -1413,7 +1413,7 @@ exports.executeAction = function (action) {
 	}
 
 	if (action.action === 'programCut') {
-		if (opt.mix === undefined || opt.mix === 0) {
+		if (opt.mix == undefined || opt.mix == 0) {
 			cmd = `FUNCTION CutDirect Input=${opt.input}`
 		} else {
 			cmd = `FUNCTION Cut Input=${opt.input}&Mix=${opt.mix}`
