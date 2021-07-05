@@ -16,11 +16,43 @@ class indicators {
 		this.Image = instance.Image
 		this.log = instance.log
 		this.debug = instance.debug
+		this.system = instance.system
 
+		this.remove_topbar = false
+
+		this.instance.getUserSetting('remove_topbar', (_remove_topbar) => {
+			this.remove_topbar = _remove_topbar
+		})
+
+		this.instance.subscribeUserSetting('remove_topbar', (_remove_topbar) => {
+			if (this.remove_topbar !== _remove_topbar) {
+				this.remove_topbar = _remove_topbar
+				this.savedIcons = {}
+			}
+		})
 		this.borderDepth = 3
 		this.triangleDepth = 20
 
 		this.savedIcons = {}
+	}
+
+	/**
+	 * Returns an icon with the desired border color.
+	 *
+	 * @returns {Image} the image object
+	 * @access protected
+	 * @since 1.2.22
+	 */
+	createImage() {
+		var img
+
+		if (this.remove_topbar === true) {
+			img = new this.Image(72, 72)
+		} else {
+			img = new this.Image(72, 58)
+		}
+
+		return img
 	}
 
 	/**
@@ -37,7 +69,7 @@ class indicators {
 		var out
 
 		if (this.savedIcons[id] === undefined) {
-			var img = new this.Image()
+			var img = this.createImage()
 
 			img.backgroundColor(bgcolor)
 			img.drawBorder(this.borderDepth, color)
@@ -65,7 +97,7 @@ class indicators {
 		var out
 
 		if (this.savedIcons[id] === undefined) {
-			var img = new this.Image()
+			var img = this.createImage()
 
 			img.backgroundColor(bgcolor)
 			img.drawCornerTriangle(this.triangleDepth, color, 'left', 'top')
@@ -94,7 +126,7 @@ class indicators {
 		var out
 
 		if (this.savedIcons[id] === undefined) {
-			var img = new this.Image()
+			var img = this.createImage()
 
 			img.backgroundColor(bgcolor)
 			img.drawCornerTriangle(this.triangleDepth, color, 'right', 'top')
@@ -123,7 +155,7 @@ class indicators {
 		var out
 
 		if (this.savedIcons[id] === undefined) {
-			var img = new this.Image()
+			var img = this.createImage()
 
 			img.backgroundColor(bgcolor)
 			img.drawCornerTriangle(this.triangleDepth, color, 'left', 'bottom')
@@ -152,7 +184,7 @@ class indicators {
 		var out
 
 		if (this.savedIcons[id] === undefined) {
-			var img = new this.Image()
+			var img = this.createImage()
 
 			img.backgroundColor(bgcolor)
 			img.drawCornerTriangle(this.triangleDepth, color, 'right', 'bottom')
@@ -181,7 +213,7 @@ class indicators {
 		var out
 
 		if (this.savedIcons[id] === undefined) {
-			var img = new this.Image()
+			var img = this.createImage()
 
 			img.backgroundColor(bgcolor)
 			img.drawCornerTriangle(this.triangleDepth, color, 'left', 'top')
