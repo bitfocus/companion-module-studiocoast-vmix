@@ -443,7 +443,7 @@ exports.getActions = function () {
 				input,
 				{
 					type: 'textinput',
-					label: 'Preset (1-4)',
+					label: 'Preset (1-10)',
 					id: 'selectedIndex',
 					default: 1,
 				},
