@@ -188,3 +188,8 @@ and if there is more than one parameter use "&" as a separator between them like
 - Added Actions and Feedbacks for Routable "multiview overlays" / "Layers" (Check help guide for more info)
 - Updated Help.md file
 - Added Presets for new Actions
+
+**V1.2.22**
+
+- Added support for variables in all text fields inside Actions (but currently only support one variable pr field)
+- Added support for variables in all text fields inside Feedbacks (but currently only support one variable pr field)
