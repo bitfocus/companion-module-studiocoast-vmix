@@ -191,5 +191,5 @@ and if there is more than one parameter use "&" as a separator between them like
 
 **V1.2.22**
 
-- Added support for variables in all text fields inside Actions (but currently only support one variable pr field)
-- Added support for variables in all text fields inside Feedbacks (but currently only support one variable pr field)
+- Added support for variables in all text fields inside Actions
+- Added support for variables in all text fields inside Feedbacks

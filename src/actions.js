@@ -1411,15 +1411,10 @@ exports.executeAction = function (action) {
 	for (const property in action.options) {
 		// if an option includes a variable, get it's value and replace the name for the actual value
 		if (String(action.options[property]).includes('$(')) {
-			x = String(action.options[property].split('$(')[1]).split(')')[0]
-			var str = x.split(':') // Split instance and variable
-			var selctInstances = str[0]
-			var selctVariable = str[1]
-			var temp
-
-			// Gets the value of the selected value
-			this.system.emit('variable_get', selctInstances, selctVariable, (definitions) => (temp = definitions))
-			opt[property] = String(action.options[property]).split('$(')[0] + temp + String(action.options[property]).split('$(')[1].split(')')[1]
+			// Replaces all variables with their selected values
+			this.parseVariables(action.options[property], (temp) => {
+				opt[property] = temp
+			})
 		} else {
 			opt[property] = action.options[property]
 		}

@@ -780,19 +780,16 @@ exports.executeFeedback = function (feedback, bank) {
 
 	// If an option includes a variable, get it's value and replace the name for the actual value
 	for (const property in feedback.options) {
+		// if an option includes a variable, get it's value and replace the name for the actual value
 		if (String(feedback.options[property]).includes('$(')) {
-			x = String(feedback.options[property].split('$(')[1]).split(')')[0]
-			var str = x.split(':') // Split instance and variable
-			var selctInstances = str[0]
-			var selctVariable = str[1]
-			var temp
-
-			// Gets the value of the selected value
-			this.system.emit('variable_get', selctInstances, selctVariable, (definitions) => (temp = definitions))
-			opt[property] = String(feedback.options[property]).split('$(')[0] + temp + String(feedback.options[property]).split('$(')[1].split(')')[1]
+			// Replaces all variables with their selected values
+			this.parseVariables(feedback.options[property], (temp) => {
+				opt[property] = temp
+			})
 		} else {
 			opt[property] = feedback.options[property]
 		}
+			opt[property] = encodeURIComponent(opt[property])
 	}
 
 	const getInput = (value) => {
