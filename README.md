@@ -193,3 +193,7 @@ and if there is more than one parameter use "&" as a separator between them like
 
 - Added support for variables in all text fields inside Actions
 - Added support for variables in all text fields inside Feedbacks
+
+**V1.2.23**
+
+- Hotfix for feedbacks that got broken in the last update

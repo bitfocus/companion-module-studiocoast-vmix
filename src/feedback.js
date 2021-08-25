@@ -1028,7 +1028,7 @@ exports.executeFeedback = function (feedback, bank) {
 		let colorfg = ''
 		let colorbg = ''
 
-		if (opt.value == true) {
+		if (feedback.options.value == true) {
 			if (bank.text != '') {
 				txt = bank.text + `\\n ${dB} dB`
 			} else {
@@ -1038,13 +1038,13 @@ exports.executeFeedback = function (feedback, bank) {
 			txt = bank.text
 		}
 
-		if (opt.colortxt == true) {
+		if (feedback.options.colortxt == true) {
 			colorfg = color()
 		} else {
 			colorfg = opt.colorbase
 		}
 
-		if (opt.colorbg == true) {
+		if (feedback.options.colorbg == true) {
 			colorbg = color()
 		}
 		return { color: colorfg, bgcolor: colorbg, text: txt }
@@ -1086,7 +1086,7 @@ exports.executeFeedback = function (feedback, bank) {
 		let colorfg = ''
 		let colorbg = ''
 
-		if (opt.value == true) {
+		if (feedback.options.value == true) {
 			if (bank.text != '') {
 				txt = bank.text + `\\n ${dB} dB`
 			} else {
@@ -1096,13 +1096,13 @@ exports.executeFeedback = function (feedback, bank) {
 			txt = bank.text
 		}
 
-		if (opt.colortxt == true) {
+		if (feedback.options.colortxt == true) {
 			colorfg = color()
 		} else {
 			colorfg = opt.colorbase
 		}
 
-		if (opt.colorbg == true) {
+		if (feedback.options.colorbg == true) {
 			colorbg = color()
 		}
 		return { color: colorfg, bgcolor: colorbg, text: txt }
@@ -1152,17 +1152,17 @@ exports.executeFeedback = function (feedback, bank) {
 		}
 
 		if (volumeInRange[opt.comparison]) {
-			return { color: opt.fg, bgcolor: temp_opt.bg }
+			return { color: opt.fg, bgcolor: opt.bg }
 		}
 	} else if (feedback.type === 'titleLayer') {
-		let input = getInput(temp_opt.input)
+		let input = getInput(opt.input)
 		let text
 
 		if (input && input.text) {
-			if (int.test(temp_opt.layer)) {
-				text = input.text.find((item) => item.index === temp_opt.layer)
+			if (int.test(opt.layer)) {
+				text = input.text.find((item) => item.index === opt.layer)
 			} else {
-				text = input.text.find((item) => item.name === temp_opt.layer)
+				text = input.text.find((item) => item.name === opt.layer)
 			}
 		}
 
@@ -1170,66 +1170,66 @@ exports.executeFeedback = function (feedback, bank) {
 			return { text: bank.text + text.value }
 		}
 	} else if (feedback.type === 'replayStatus') {
-		if (this.data.replay[temp_opt.status]) {
-			return { color: temp_opt.fg, bgcolor: temp_opt.bg }
+		if (this.data.replay[opt.status]) {
+			return { color: opt.fg, bgcolor: opt.bg }
 		}
 	} else if (feedback.type === 'replayEvents') {
-		if (this.data.replay.events === temp_opt.events) {
-			return { color: temp_opt.fg, bgcolor: temp_opt.bg }
+		if (this.data.replay.events === opt.events) {
+			return { color: opt.fg, bgcolor: opt.bg }
 		}
 	} else if (feedback.type === 'replayCamera') {
-		let channel = temp_opt.channel
+		let channel = opt.channel
 		if (channel === 'selected') {
 			// Backways compatibility - Default to channel A if prior to v24
 			channel = this.data.replay.channelMode ? this.data.replay.channelMode : 'A'
 			if (channel === 'AB') channel = 'A'
 		}
 
-		if (this.data.replay['camera' + channel] === temp_opt.camera) {
-			return { color: temp_opt.fg, bgcolor: temp_opt.bg }
+		if (this.data.replay['camera' + channel] === opt.camera) {
+			return { color: opt.fg, bgcolor: opt.bg }
 		}
 	} else if (feedback.type === 'replaySelectedChannel') {
-		if (this.data.replay.channelMode && this.data.replay.channelMode === temp_opt.channel) {
-			return { color: temp_opt.fg, bgcolor: temp_opt.bg }
+		if (this.data.replay.channelMode && this.data.replay.channelMode === opt.channel) {
+			return { color: opt.fg, bgcolor: opt.bg }
 		}
 	} else if (feedback.type === 'videoCallVideoSource') {
-		let input = getInput(temp_opt.input)
+		let input = getInput(opt.input)
 
-		if (input && input.callVideoSource === temp_opt.source) {
-			return { color: temp_opt.fg, bgcolor: temp_opt.bg }
+		if (input && input.callVideoSource === opt.source) {
+			return { color: opt.fg, bgcolor: opt.bg }
 		}
 	} else if (feedback.type === 'videoCallAudioSource') {
-		let input = getInput(temp_opt.input)
+		let input = getInput(opt.input)
 
 		if (
 			input &&
 			this.activatorData.videoCall[input.key] &&
-			this.activatorData.videoCall[input.key].audioSource === temp_opt.source
+			this.activatorData.videoCall[input.key].audioSource === opt.source
 		) {
-			return { color: temp_opt.fg, bgcolor: temp_opt.bg }
+			return { color: opt.fg, bgcolor: opt.bg }
 		}
 	} else if (feedback.type === 'inputSelectedIndex') {
-		let input = getInput(temp_opt.input)
+		let input = getInput(opt.input)
 
 		if (!input) {
 			return
 		}
 
 		if (input.type === 'VideoList') {
-			if (input && parseInt(input.selectedIndex) === parseInt(temp_opt.selectedIndex)) {
-				return { color: temp_opt.fg, bgcolor: temp_opt.bg }
+			if (input && parseInt(input.selectedIndex) === parseInt(opt.selectedIndex)) {
+				return { color: opt.fg, bgcolor: opt.bg }
 			} else if (input && input.list[0].empty === true) {
-				return { color: temp_opt.et, bgcolor: temp_opt.eb }
+				return { color: opt.et, bgcolor: opt.eb }
 			}
 		} else if (input.type === 'PowerPoint') {
-			if (input && parseInt(input.selectedIndex) === parseInt(temp_opt.selectedIndex)) {
-				return { color: temp_opt.fg, bgcolor: temp_opt.bg }
+			if (input && parseInt(input.selectedIndex) === parseInt(opt.selectedIndex)) {
+				return { color: opt.fg, bgcolor: opt.bg }
 			}
 		} else {
 			return { color: this.rgb(255, 255, 255), bgcolor: this.rgb(0, 0, 0) }
 		}
 	} else if (feedback.type === 'inputSelectedIndexName') {
-		let input = getInput(temp_opt.input)
+		let input = getInput(opt.input)
 		let selectedTitle = ''
 
 		if (!input) {
@@ -1237,7 +1237,7 @@ exports.executeFeedback = function (feedback, bank) {
 		}
 
 		if (input.type === 'VideoList') {
-			if (temp_opt.value1 === true) {
+			if (feedback.options.value1 === true) {
 				selectedTitle = 'Empty List'
 				let x = ''
 
@@ -1245,13 +1245,13 @@ exports.executeFeedback = function (feedback, bank) {
 					x = input.list.find((list) => list.selected === true).filename
 				}
 
-				if (temp_opt.value2 === true) {
+				if (feedback.options.value2 === true) {
 					selectedTitle = ': ' + x
 				} else {
 					selectedTitle = x
 				}
 			}
-			if (temp_opt.value2 === true) {
+			if (feedback.options.value2 === true) {
 				selectedTitle = input.selectedIndex + selectedTitle
 			}
 		} else if (input.type === 'PowerPoint') {
@@ -1264,8 +1264,8 @@ exports.executeFeedback = function (feedback, bank) {
 			return { text: bank.text + `${selectedTitle}` }
 		}
 	} else if (feedback.type === 'multiviewLayer') {
-		const inputMV = getInput(temp_opt.input)
-		const layer = temp_opt.layer - 1
+		const inputMV = getInput(opt.input)
+		const layer = opt.layer - 1
 		let text = ''
 
 		if (inputMV && inputMV.overlay) {
@@ -1274,13 +1274,14 @@ exports.executeFeedback = function (feedback, bank) {
 				let shortTitle = getInput(x.key).shortTitle
 				let number = getInput(x.key).number
 
-				if (temp_opt.value2 == true) {
+				if (feedback.options.value2 == true) {
 					text = text + number
 				}
-				if (temp_opt.value == true && temp_opt.value2 == true) {
+
+				if (feedback.options.value == true && feedback.options.value2 == true) {
 					text = text + ' '
 				}
-				if (temp_opt.value == true) {
+				if (feedback.options.value == true) {
 					text = text + shortTitle
 				}
 			}
@@ -1296,13 +1297,13 @@ exports.executeFeedback = function (feedback, bank) {
 			return { text: bank.text + `${text}` }
 		}
 	} else if (feedback.type === 'inputOnMultiview') {
-		const input = getInput(temp_opt.input)
-		const inputMV = getInput(temp_opt.inputMV)
-		const layer = temp_opt.layer - 1
+		const input = getInput(opt.input)
+		const inputMV = getInput(opt.inputMV)
+		const layer = opt.layer - 1
 		var tally = false
 
 		if (inputMV && inputMV.overlay) {
-			if (temp_opt.layer == '0') {
+			if (opt.layer == '0') {
 				// Check any layer
 				tally = inputMV.overlay.find((item) => item.key === input.key) ? true : false
 			} else {
@@ -1316,26 +1317,26 @@ exports.executeFeedback = function (feedback, bank) {
 		}
 
 		if (tally == true) {
-			if (temp_opt.tally == 'full') {
-				return { color: temp_opt.fg, bgcolor: temp_opt.bgLayer }
+			if (opt.tally == 'full') {
+				return { color: opt.fg, bgcolor: opt.bgLayer }
 			}
-			return { img64: this.indicators.getImage(temp_opt.tally, temp_opt.bgLayer) }
+			return { img64: this.indicators.getImage(opt.tally, opt.bgLayer) }
 		}
 
 	} else if (feedback.type === 'selectedDestinationInput'){
 		this.checkFeedbacks("routableMultiviewLayer")
-		if (parseInt(temp_opt.input) == this.destinationInput) {
-			return { color: temp_opt.fgBlack, bgcolor: temp_opt.bgDestination }
+		if (parseInt(opt.input) == this.destinationInput) {
+			return { color: opt.fgBlack, bgcolor: opt.bgDestination }
 		}
 
 	} else if (feedback.type === 'selectedDestinationLayer'){
 		this.checkFeedbacks("routableMultiviewLayer")
-		if (parseInt(temp_opt.selectedIndex) == this.destinationLayer) {
-			return { color: temp_opt.fgBlack, bgcolor: temp_opt.bgDestination }
+		if (parseInt(opt.selectedIndex) == this.destinationLayer) {
+			return { color: opt.fgBlack, bgcolor: opt.bgDestination }
 		}
 
 	} else if (feedback.type === 'routableMultiviewLayer') {
-		const input = getInput(temp_opt.input)
+		const input = getInput(opt.input)
 		const inputMV = getInput(this.destinationInput.toString(10))
 		const layer = this.destinationLayer - 1
 		var tally = false
@@ -1348,7 +1349,7 @@ exports.executeFeedback = function (feedback, bank) {
 		}
 
 		if (tally == true) {
-			return { color: temp_opt.fgBlack, bgcolor: temp_opt.bgSource }
+			return { color: opt.fgBlack, bgcolor: opt.bgSource }
 		} else if (input === inputMV) {
 			return { color: this.rgb(128, 128, 128), bgcolor: this.rgb(16, 16, 16)}
 		}
