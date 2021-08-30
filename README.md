@@ -197,3 +197,4 @@ and if there is more than one parameter use "&" as a separator between them like
 **V1.2.23**
 
 - Hotfix for feedbacks that got broken in the last update
+- Hotfix for Input names not working in feedbacks

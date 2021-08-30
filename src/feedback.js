@@ -789,7 +789,6 @@ exports.executeFeedback = function (feedback, bank) {
 		} else {
 			opt[property] = feedback.options[property]
 		}
-			opt[property] = encodeURIComponent(opt[property])
 	}
 
 	const getInput = (value) => {
