@@ -2,7 +2,7 @@
  * Companion instance indicators class for Studiocoast vMix.
  * Utilized to generate/recall button designs for tally.
  *
- * @since 1.2.11
+ * @since 1.2.24
  * @author Keith Rocheck <keith.rocheck@gmail.com>
  */
 class indicators {
@@ -10,7 +10,7 @@ class indicators {
 	 * Create an instance of a vMix indicators module.
 	 *
 	 * @param {instance} instance - the parent instance
-	 * @since 1.2.11
+	 * @since 1.2.24
 	 */
 	constructor(instance) {
 		this.Image = instance.Image
@@ -18,18 +18,9 @@ class indicators {
 		this.debug = instance.debug
 		this.system = instance.system
 
-		this.remove_topbar = false
+		this.width = 72
+		this.height = 58
 
-		this.instance.getUserSetting('remove_topbar', (_remove_topbar) => {
-			this.remove_topbar = _remove_topbar
-		})
-
-		this.instance.subscribeUserSetting('remove_topbar', (_remove_topbar) => {
-			if (this.remove_topbar !== _remove_topbar) {
-				this.remove_topbar = _remove_topbar
-				this.savedIcons = {}
-			}
-		})
 		this.borderDepth = 3
 		this.triangleDepth = 20
 
@@ -37,22 +28,14 @@ class indicators {
 	}
 
 	/**
-	 * Returns an icon with the desired border color.
+	 * Returns a new image with a proper raster
 	 *
-	 * @returns {Image} the image object
+	 * @returns {Image} the new image
 	 * @access protected
-	 * @since 1.2.22
+	 * @since 1.2.24
 	 */
-	createImage() {
-		var img
-
-		if (this.remove_topbar === true) {
-			img = new this.Image(72, 72)
-		} else {
-			img = new this.Image(72, 58)
-		}
-
-		return img
+	getBaseImage() {
+		return new this.Image(this.width, this.height)
 	}
 
 	/**
@@ -62,14 +45,14 @@ class indicators {
 	 * @param {number} color - the color of the border
 	 * @returns {String} base64 encoded PNG
 	 * @access public
-	 * @since 1.2.11
+	 * @since 1.2.24
 	 */
 	getBorder(bgcolor, color) {
 		var id = 'borderB' + bgcolor + 'C' + color
 		var out
 
 		if (this.savedIcons[id] === undefined) {
-			var img = this.createImage()
+			var img = this.getBaseImage()
 
 			img.backgroundColor(bgcolor)
 			img.drawBorder(this.borderDepth, color)
@@ -90,14 +73,14 @@ class indicators {
 	 * @param {number} color - the color of the triangle
 	 * @returns {String} base64 encoded PNG
 	 * @access public
-	 * @since 1.2.11
+	 * @since 1.2.24
 	 */
 	getCorner(bgcolor, color) {
 		var id = 'cornerB' + bgcolor + 'C' + color
 		var out
 
 		if (this.savedIcons[id] === undefined) {
-			var img = this.createImage()
+			var img = this.getBaseImage()
 
 			img.backgroundColor(bgcolor)
 			img.drawCornerTriangle(this.triangleDepth, color, 'left', 'top')
@@ -119,14 +102,14 @@ class indicators {
 	 * @param {number} color - the color of the triangle
 	 * @returns {String} base64 encoded PNG
 	 * @access public
-	 * @since 1.2.11
+	 * @since 1.2.24
 	 */
 	getCornerR(bgcolor, color) {
 		var id = 'cornerBR' + bgcolor + 'C' + color
 		var out
 
 		if (this.savedIcons[id] === undefined) {
-			var img = this.createImage()
+			var img = this.getBaseImage()
 
 			img.backgroundColor(bgcolor)
 			img.drawCornerTriangle(this.triangleDepth, color, 'right', 'top')
@@ -148,14 +131,14 @@ class indicators {
 	 * @param {number} color - the color of the triangle
 	 * @returns {String} base64 encoded PNG
 	 * @access public
-	 * @since 1.2.11
+	 * @since 1.2.24
 	 */
 	getCornerBL(bgcolor, color) {
 		var id = 'cornerBBL' + bgcolor + 'C' + color
 		var out
 
 		if (this.savedIcons[id] === undefined) {
-			var img = this.createImage()
+			var img = this.getBaseImage()
 
 			img.backgroundColor(bgcolor)
 			img.drawCornerTriangle(this.triangleDepth, color, 'left', 'bottom')
@@ -177,14 +160,14 @@ class indicators {
 	 * @param {number} color - the color of the triangle
 	 * @returns {String} base64 encoded PNG
 	 * @access public
-	 * @since 1.2.11
+	 * @since 1.2.24
 	 */
 	getCornerBR(bgcolor, color) {
 		var id = 'cornerBBR' + bgcolor + 'C' + color
 		var out
 
 		if (this.savedIcons[id] === undefined) {
-			var img = this.createImage()
+			var img = this.getBaseImage()
 
 			img.backgroundColor(bgcolor)
 			img.drawCornerTriangle(this.triangleDepth, color, 'right', 'bottom')
@@ -206,14 +189,14 @@ class indicators {
 	 * @param {number} color - the color of the triangles
 	 * @returns {String} base64 encoded PNG
 	 * @access public
-	 * @since 1.2.11
+	 * @since 1.2.24
 	 */
 	getCorners(bgcolor, color) {
 		var id = 'cornersB' + bgcolor + 'C' + color
 		var out
 
 		if (this.savedIcons[id] === undefined) {
-			var img = this.createImage()
+			var img = this.getBaseImage()
 
 			img.backgroundColor(bgcolor)
 			img.drawCornerTriangle(this.triangleDepth, color, 'left', 'top')
@@ -235,12 +218,15 @@ class indicators {
 	 *
 	 * @param {String} type - the type of overlay to draw
 	 * @param {number} color - the color of the overlay
+	 * @param {object} info - the raster information
 	 * @returns {String} base64 encoded PNG
 	 * @access public
-	 * @since 1.2.11
+	 * @since 1.2.24
 	 */
-	getImage(type, color) {
+	getImage(type, color, info) {
 		var out
+
+		this.setRaster(info)
 
 		switch (type) {
 			case 'border': // Border
@@ -261,6 +247,21 @@ class indicators {
 		}
 
 		return out
+	}
+
+	/**
+	 * Set the raster to the current setting
+	 *
+	 * @param {Object} info - the bank configuration
+	 * @access public
+	 * @since 1.2.24
+	 */
+	setRaster(info) {
+		if (info.height !== this.height || info.width !== this.width) {
+			this.height = info.height
+			this.width = info.width
+			this.savedIcons = {}
+		}
 	}
 }
 

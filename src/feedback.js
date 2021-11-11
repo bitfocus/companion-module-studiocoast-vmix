@@ -723,7 +723,7 @@ exports.initFeedbacks = function () {
 	return feedbacks
 }
 
-exports.executeFeedback = function (feedback, bank) {
+exports.executeFeedback = function (feedback, bank, info) {
 	const int = RegExp(/^\d+$/)
 
 	const getInput = (value) => {
@@ -763,7 +763,7 @@ exports.executeFeedback = function (feedback, bank) {
 			if (feedback.options.tally == 'full') {
 				return { color: feedback.options.fg, bgcolor: feedback.options.bgLayer }
 			}
-			return { img64: this.indicators.getImage(feedback.options.tally, feedback.options.bgLayer) }
+			return { img64: this.indicators.getImage(feedback.options.tally, feedback.options.bgLayer, info) }
 		}
 	} else if (feedback.type === 'overlayStatus') {
 		let input = getInput(feedback.options.input)
@@ -1253,7 +1253,7 @@ exports.executeFeedback = function (feedback, bank) {
 			if (feedback.options.tally == 'full') {
 				return { color: feedback.options.fg, bgcolor: feedback.options.bgLayer }
 			}
-			return { img64: this.indicators.getImage(feedback.options.tally, feedback.options.bgLayer) }
+			return { img64: this.indicators.getImage(feedback.options.tally, feedback.options.bgLayer, info) }
 		}
 	}
 }
