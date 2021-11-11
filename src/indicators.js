@@ -2,7 +2,7 @@
  * Companion instance indicators class for Studiocoast vMix.
  * Utilized to generate/recall button designs for tally.
  *
- * @since 1.2.24
+ * @since 1.2.11
  * @author Keith Rocheck <keith.rocheck@gmail.com>
  */
 class indicators {
@@ -10,7 +10,7 @@ class indicators {
 	 * Create an instance of a vMix indicators module.
 	 *
 	 * @param {instance} instance - the parent instance
-	 * @since 1.2.24
+	 * @since 1.2.11
 	 */
 	constructor(instance) {
 		this.Image = instance.Image
@@ -45,7 +45,7 @@ class indicators {
 	 * @param {number} color - the color of the border
 	 * @returns {String} base64 encoded PNG
 	 * @access public
-	 * @since 1.2.24
+	 * @since 1.2.11
 	 */
 	getBorder(bgcolor, color) {
 		var id = 'borderB' + bgcolor + 'C' + color
@@ -73,7 +73,7 @@ class indicators {
 	 * @param {number} color - the color of the triangle
 	 * @returns {String} base64 encoded PNG
 	 * @access public
-	 * @since 1.2.24
+	 * @since 1.2.11
 	 */
 	getCorner(bgcolor, color) {
 		var id = 'cornerB' + bgcolor + 'C' + color
@@ -102,7 +102,7 @@ class indicators {
 	 * @param {number} color - the color of the triangle
 	 * @returns {String} base64 encoded PNG
 	 * @access public
-	 * @since 1.2.24
+	 * @since 1.2.11
 	 */
 	getCornerR(bgcolor, color) {
 		var id = 'cornerBR' + bgcolor + 'C' + color
@@ -131,7 +131,7 @@ class indicators {
 	 * @param {number} color - the color of the triangle
 	 * @returns {String} base64 encoded PNG
 	 * @access public
-	 * @since 1.2.24
+	 * @since 1.2.11
 	 */
 	getCornerBL(bgcolor, color) {
 		var id = 'cornerBBL' + bgcolor + 'C' + color
@@ -160,7 +160,7 @@ class indicators {
 	 * @param {number} color - the color of the triangle
 	 * @returns {String} base64 encoded PNG
 	 * @access public
-	 * @since 1.2.24
+	 * @since 1.2.11
 	 */
 	getCornerBR(bgcolor, color) {
 		var id = 'cornerBBR' + bgcolor + 'C' + color
@@ -189,7 +189,7 @@ class indicators {
 	 * @param {number} color - the color of the triangles
 	 * @returns {String} base64 encoded PNG
 	 * @access public
-	 * @since 1.2.24
+	 * @since 1.2.11
 	 */
 	getCorners(bgcolor, color) {
 		var id = 'cornersB' + bgcolor + 'C' + color
@@ -221,7 +221,7 @@ class indicators {
 	 * @param {object} info - the raster information
 	 * @returns {String} base64 encoded PNG
 	 * @access public
-	 * @since 1.2.24
+	 * @since 1.2.11
 	 */
 	getImage(type, color, info) {
 		var out
