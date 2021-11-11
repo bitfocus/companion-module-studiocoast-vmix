@@ -165,8 +165,8 @@ class VMixInstance extends instance_skel {
 	}
 
 	// Execute feedback
-	feedback(feedback, bank) {
-		return executeFeedback.bind(this)(feedback, bank)
+	feedback(feedback, bank, info) {
+		return executeFeedback.bind(this)(feedback, bank, info)
 	}
 
 	tbarListener(label, variable, value) {
