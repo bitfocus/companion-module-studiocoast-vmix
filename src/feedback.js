@@ -11,6 +11,13 @@ exports.initFeedbacks = function () {
 		default: this.rgb(255, 255, 255),
 	}
 
+	const foregroundColorBlack = {
+		type: 'colorpicker',
+		label: 'Foreground color',
+		id: 'fgBlack',
+		default: this.rgb(0, 0, 0),
+	}
+
 	const backgroundColorPreview = {
 		type: 'colorpicker',
 		label: 'Background color',
@@ -30,6 +37,20 @@ exports.initFeedbacks = function () {
 		label: 'Background color',
 		id: 'bgLayer',
 		default: this.rgb(0, 51, 204),
+	}
+
+	const backgroundColorDestination = {
+		type: 'colorpicker',
+		label: 'Background color',
+		id: 'bgDestination',
+		default: this.rgb(255, 255, 0),
+	}
+
+	const backgroundColorSource = {
+		type: 'colorpicker',
+		label: 'Background color',
+		id: 'bgSource',
+		default: this.rgb(255, 255, 255),
 	}
 
 	const input = {
@@ -720,11 +741,43 @@ exports.initFeedbacks = function () {
 		],
 	}
 
+	feedbacks.selectedDestinationInput = {
+		label: 'Layers / MultiView - check selected destination input',
+		description: 'If the input is selected as destination Input, change colors of the bank',
+		options: [input, foregroundColorBlack, backgroundColorDestination],
+	}
+
+	feedbacks.selectedDestinationLayer = {
+		label: 'Layers / MultiView - check selected destination layer',
+		description: 'If the layer is selected as destination Layer, change colors of the bank',
+		options: [selectedIndex, foregroundColorBlack, backgroundColorDestination],
+	}
+
+	feedbacks.routableMultiviewLayer = {
+		label: 'Layers / MultiView - check if input in on destination Layer / MultiView of destination input',
+		description: 'If the specified input is on destination Layer of destination input, change colors of the bank',
+		options: [input, foregroundColorBlack, backgroundColorSource],
+	}
+
 	return feedbacks
 }
 
 exports.executeFeedback = function (feedback, bank, info) {
 	const int = RegExp(/^\d+$/)
+	var opt = {}
+
+	// If an option includes a variable, get it's value and replace the name for the actual value
+	for (const property in feedback.options) {
+		// if an option includes a variable, get it's value and replace the name for the actual value
+		if (String(feedback.options[property]).includes('$(')) {
+			// Replaces all variables with their selected values
+			this.parseVariables(feedback.options[property], (temp) => {
+				opt[property] = temp
+			})
+		} else {
+			opt[property] = feedback.options[property]
+		}
+	}
 
 	const getInput = (value) => {
 		let input
@@ -739,9 +792,9 @@ exports.executeFeedback = function (feedback, bank, info) {
 	}
 
 	if (feedback.type === 'inputPreview' || feedback.type === 'inputLive') {
-		const mix = feedback.options.mix !== undefined ? feedback.options.mix : 0
+		const mix = opt.mix !== undefined ? opt.mix : 0
 		const type = feedback.type === 'inputPreview' ? 'preview' : 'program'
-		const input = getInput(feedback.options.input)
+		const input = getInput(opt.input)
 		if (!input || this.data.mix[mix][type] === 0 || !this.data.inputs[this.data.mix[mix][type] - 1]) {
 			return
 		}
@@ -749,24 +802,22 @@ exports.executeFeedback = function (feedback, bank, info) {
 		const previewTitle =
 			this.data.inputs[this.data.mix[mix][type] - 1].shortTitle || this.data.inputs[this.data.mix[mix][type] - 1].title
 		const guidKey = this.data.inputs[this.data.mix[mix][type] - 1].key
-		const idCheck = int.test(feedback.options.input) && feedback.options.input == this.data.mix[mix][type]
-		const titleCheck = !int.test(feedback.options.input) && feedback.options.input === previewTitle
-		const guidCheck = feedback.options.input == guidKey
+		const idCheck = int.test(opt.input) && opt.input == this.data.mix[mix][type]
+		const titleCheck = !int.test(opt.input) && opt.input === previewTitle
+		const guidCheck = opt.input == guidKey
 		const layerTallyCheck =
-			feedback.options.tally !== undefined &&
-			feedback.options.tally !== '' &&
-			this.data.mix[mix][type + 'Tally'].includes(input.key)
+			opt.tally !== undefined && opt.tally !== '' && this.data.mix[mix][type + 'Tally'].includes(input.key)
 
 		if (idCheck || titleCheck || guidCheck) {
-			return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+			return { color: opt.fg, bgcolor: opt.bg }
 		} else if (layerTallyCheck) {
-			if (feedback.options.tally == 'full') {
-				return { color: feedback.options.fg, bgcolor: feedback.options.bgLayer }
+			if (opt.tally == 'full') {
+				return { color: opt.fg, bgcolor: opt.bgLayer }
 			}
-			return { img64: this.indicators.getImage(feedback.options.tally, feedback.options.bgLayer, info) }
+			return { img64: this.indicators.getImage(opt.tally, opt.bgLayer, info) }
 		}
 	} else if (feedback.type === 'overlayStatus') {
-		let input = getInput(feedback.options.input)
+		let input = getInput(opt.input)
 		let preview = false
 		let program = false
 
@@ -775,7 +826,7 @@ exports.executeFeedback = function (feedback, bank, info) {
 		}
 
 		this.data.overlays.forEach((overlay) => {
-			const overlayNumberCheck = overlay.number === feedback.options.overlay || feedback.options.overlay === '0'
+			const overlayNumberCheck = overlay.number === opt.overlay || opt.overlay === '0'
 			const overlayInputCheck = overlay.input === input.number
 
 			if (overlayNumberCheck && overlayInputCheck) {
@@ -789,8 +840,8 @@ exports.executeFeedback = function (feedback, bank, info) {
 
 		if (preview || program) {
 			return {
-				color: feedback.options.fg,
-				bgcolor: program ? feedback.options.bgProgram : feedback.options.bgPreview,
+				color: opt.fg,
+				bgcolor: program ? opt.bgProgram : opt.bgPreview,
 			}
 		}
 	} else if (feedback.type === 'overlayStatusPGM') {
@@ -798,11 +849,11 @@ exports.executeFeedback = function (feedback, bank, info) {
 		let program = false
 
 		this.data.overlays.forEach((overlay) => {
-			const overlayNumberCheck = overlay.number === feedback.options.overlay || feedback.options.overlay === '0'
+			const overlayNumberCheck = overlay.number === opt.overlay || opt.overlay === '0'
 			const overlayActive = overlay.input != undefined
 
 			if (overlayNumberCheck && overlayActive) {
-				switch (feedback.options.value) {
+				switch (opt.value) {
 					case 'both':
 						if (overlay.preview) {
 							preview = true
@@ -835,12 +886,12 @@ exports.executeFeedback = function (feedback, bank, info) {
 
 		if (preview || program) {
 			return {
-				color: feedback.options.fg,
-				bgcolor: program ? feedback.options.bgProgram : feedback.options.bgPreview,
+				color: opt.fg,
+				bgcolor: program ? opt.bgProgram : opt.bgPreview,
 			}
 		}
 	} else if (feedback.type === 'videoTimer') {
-		let input = getInput(feedback.options.input)
+		let input = getInput(opt.input)
 
 		if (!input || input.duration === '0') {
 			return
@@ -860,13 +911,13 @@ exports.executeFeedback = function (feedback, bank, info) {
 		let min = Math.floor(remaining / 60000)
 
 		const color = () => {
-			if (feedback.options.loop || sec > 30 || min > 0) {
-				return feedback.options.color
+			if (opt.loop || sec > 30 || min > 0) {
+				return opt.color
 			}
 			if (sec > 10) {
-				return feedback.options.color30
+				return opt.color30
 			}
-			return feedback.options.color10
+			return opt.color10
 		}
 
 		if (sec < 10) {
@@ -883,53 +934,51 @@ exports.executeFeedback = function (feedback, bank, info) {
 			return { color: color(), text: bank.text + `${min}:${sec}.${ms}` }
 		}
 	} else if (feedback.type === 'status') {
-		if (feedback.options.status === 'connection') {
-			if (this.data.connected) return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+		if (opt.status === 'connection') {
+			if (this.data.connected) return { color: opt.fg, bgcolor: opt.bg }
 		} else {
 			if (this.data.status !== undefined) {
-				if (feedback.options.status === 'streaming' && ['0', '1', '2'].includes(feedback.options.value)) {
-					if (this.data.status.stream[feedback.options.value])
-						return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+				if (opt.status === 'streaming' && ['0', '1', '2'].includes(opt.value)) {
+					if (this.data.status.stream[opt.value]) return { color: opt.fg, bgcolor: opt.bg }
 				} else {
-					if (this.data.status[feedback.options.status])
-						return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+					if (this.data.status[opt.status]) return { color: opt.fg, bgcolor: opt.bg }
 				}
 			}
 		}
 	} else if (feedback.type === 'busMute') {
-		const busID = feedback.options.bus === 'Master' ? 'master' : `bus${feedback.options.bus}`
+		const busID = opt.bus === 'Master' ? 'master' : `bus${opt.bus}`
 		const bus = this.data.audio.find((item) => item.bus === busID)
 
 		if (bus && bus.muted === 'True') {
-			return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+			return { color: opt.fg, bgcolor: opt.bg }
 		}
 	} else if (feedback.type === 'inputMute') {
-		let input = getInput(feedback.options.input)
+		let input = getInput(opt.input)
 
 		if (input && input.muted === 'True') {
-			return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+			return { color: opt.fg, bgcolor: opt.bg }
 		}
 	} else if (feedback.type === 'inputAudio') {
-		let input = getInput(feedback.options.input)
+		let input = getInput(opt.input)
 
 		if (input && input.muted === 'False') {
-			return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+			return { color: opt.fg, bgcolor: opt.bg }
 		}
 	} else if (feedback.type === 'inputSolo') {
-		let input = getInput(feedback.options.input)
+		let input = getInput(opt.input)
 
 		if (input && input.solo === 'True') {
-			return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+			return { color: opt.fg, bgcolor: opt.bg }
 		}
 	} else if (feedback.type === 'inputBusRouting') {
-		let input = getInput(feedback.options.input)
-		const busID = feedback.options.bus === 'Master' ? 'M' : feedback.options.bus
+		let input = getInput(opt.input)
+		const busID = opt.bus === 'Master' ? 'M' : opt.bus
 
 		if (input && input.audiobusses && input.audiobusses.includes(busID)) {
-			return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+			return { color: opt.fg, bgcolor: opt.bg }
 		}
 	} else if (feedback.type === 'liveInputVolume') {
-		let input = getInput(feedback.options.input)
+		let input = getInput(opt.input)
 
 		// Detect if there is sound enabled on an input
 		if (!input) {
@@ -947,15 +996,15 @@ exports.executeFeedback = function (feedback, bank, info) {
 
 		const color = () => {
 			if (dB > -1) {
-				return feedback.options.color
+				return opt.color
 			} else if (dB > -6) {
-				return feedback.options.color1
+				return opt.color1
 			} else if (dB > -18) {
-				return feedback.options.color6
+				return opt.color6
 			} else if (dB > -36) {
-				return feedback.options.color18
+				return opt.color18
 			}
-			return feedback.options.color36
+			return opt.color36
 		}
 
 		let txt = ''
@@ -975,7 +1024,7 @@ exports.executeFeedback = function (feedback, bank, info) {
 		if (feedback.options.colortxt == true) {
 			colorfg = color()
 		} else {
-			colorfg = feedback.options.colorbase
+			colorfg = opt.colorbase
 		}
 
 		if (feedback.options.colorbg == true) {
@@ -986,10 +1035,10 @@ exports.executeFeedback = function (feedback, bank, info) {
 		var dBLeft
 		var dBRight
 
-		if (feedback.options.bus === 'Headphones') {
+		if (opt.bus === 'Headphones') {
 			return
 		} else {
-			const busID = feedback.options.bus === 'Master' ? 'master' : 'bus' + feedback.options.bus
+			const busID = opt.bus === 'Master' ? 'master' : 'bus' + opt.bus
 			const bus = this.data.audio.find((output) => output.bus === busID)
 			if (bus !== undefined) {
 				dBLeft = parseFloat(bus.meterF1)
@@ -1005,15 +1054,15 @@ exports.executeFeedback = function (feedback, bank, info) {
 
 		const color = () => {
 			if (dB > -1) {
-				return feedback.options.color
+				return opt.color
 			} else if (dB > -6) {
-				return feedback.options.color1
+				return opt.color1
 			} else if (dB > -18) {
-				return feedback.options.color6
+				return opt.color6
 			} else if (dB > -36) {
-				return feedback.options.color18
+				return opt.color18
 			}
-			return feedback.options.color36
+			return opt.color36
 		}
 
 		let txt = ''
@@ -1033,7 +1082,7 @@ exports.executeFeedback = function (feedback, bank, info) {
 		if (feedback.options.colortxt == true) {
 			colorfg = color()
 		} else {
-			colorfg = feedback.options.colorbase
+			colorfg = opt.colorbase
 		}
 
 		if (feedback.options.colorbg == true) {
@@ -1041,13 +1090,13 @@ exports.executeFeedback = function (feedback, bank, info) {
 		}
 		return { color: colorfg, bgcolor: colorbg, text: txt }
 	} else if (feedback.type === 'inputVolumeLevel') {
-		let input = getInput(feedback.options.input)
+		let input = getInput(opt.input)
 		if (input === undefined || input.volume === undefined) {
 			return
 		}
 
 		const volume = this.config.volumeLinear ? volumeAmplitudeToLinear(input.volume) : parseFloat(input.volume)
-		const value = parseFloat(feedback.options.value)
+		const value = parseFloat(opt.value)
 
 		const volumeInRange = {
 			eq: volume === value,
@@ -1057,20 +1106,20 @@ exports.executeFeedback = function (feedback, bank, info) {
 			gte: volume >= value,
 		}
 
-		if (volumeInRange[feedback.options.comparison]) {
-			return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+		if (volumeInRange[opt.comparison]) {
+			return { color: opt.fg, bgcolor: opt.bg }
 		}
 	} else if (feedback.type === 'busVolumeLevel') {
-		const value = parseFloat(feedback.options.value)
+		const value = parseFloat(opt.value)
 		let volume
 
-		if (feedback.options.bus === 'Headphones') {
+		if (opt.bus === 'Headphones') {
 			const bus = this.data.audio.find((output) => output.bus === 'master')
 			volume = this.config.volumeLinear
 				? volumeAmplitudeToLinear(bus.headphonesVolume)
 				: parseFloat(bus.headphonesVolume)
 		} else {
-			const busID = feedback.options.bus === 'Master' ? 'master' : 'bus' + feedback.options.bus
+			const busID = opt.bus === 'Master' ? 'master' : 'bus' + opt.bus
 			const bus = this.data.audio.find((output) => output.bus === busID)
 			if (bus !== undefined) {
 				volume = this.config.volumeLinear ? volumeAmplitudeToLinear(bus.volume) : parseFloat(bus.volume)
@@ -1085,18 +1134,18 @@ exports.executeFeedback = function (feedback, bank, info) {
 			gte: volume >= value,
 		}
 
-		if (volumeInRange[feedback.options.comparison]) {
-			return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+		if (volumeInRange[opt.comparison]) {
+			return { color: opt.fg, bgcolor: opt.bg }
 		}
 	} else if (feedback.type === 'titleLayer') {
-		let input = getInput(feedback.options.input)
+		let input = getInput(opt.input)
 		let text
 
 		if (input && input.text) {
-			if (int.test(feedback.options.layer)) {
-				text = input.text.find((item) => item.index === feedback.options.layer)
+			if (int.test(opt.layer)) {
+				text = input.text.find((item) => item.index === opt.layer)
 			} else {
-				text = input.text.find((item) => item.name === feedback.options.layer)
+				text = input.text.find((item) => item.name === opt.layer)
 			}
 		}
 
@@ -1104,66 +1153,66 @@ exports.executeFeedback = function (feedback, bank, info) {
 			return { text: bank.text + text.value }
 		}
 	} else if (feedback.type === 'replayStatus') {
-		if (this.data.replay[feedback.options.status]) {
-			return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+		if (this.data.replay[opt.status]) {
+			return { color: opt.fg, bgcolor: opt.bg }
 		}
 	} else if (feedback.type === 'replayEvents') {
-		if (this.data.replay.events === feedback.options.events) {
-			return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+		if (this.data.replay.events === opt.events) {
+			return { color: opt.fg, bgcolor: opt.bg }
 		}
 	} else if (feedback.type === 'replayCamera') {
-		let channel = feedback.options.channel
+		let channel = opt.channel
 		if (channel === 'selected') {
 			// Backways compatibility - Default to channel A if prior to v24
 			channel = this.data.replay.channelMode ? this.data.replay.channelMode : 'A'
 			if (channel === 'AB') channel = 'A'
 		}
 
-		if (this.data.replay['camera' + channel] === feedback.options.camera) {
-			return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+		if (this.data.replay['camera' + channel] === opt.camera) {
+			return { color: opt.fg, bgcolor: opt.bg }
 		}
 	} else if (feedback.type === 'replaySelectedChannel') {
-		if (this.data.replay.channelMode && this.data.replay.channelMode === feedback.options.channel) {
-			return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+		if (this.data.replay.channelMode && this.data.replay.channelMode === opt.channel) {
+			return { color: opt.fg, bgcolor: opt.bg }
 		}
 	} else if (feedback.type === 'videoCallVideoSource') {
-		let input = getInput(feedback.options.input)
+		let input = getInput(opt.input)
 
-		if (input && input.callVideoSource === feedback.options.source) {
-			return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+		if (input && input.callVideoSource === opt.source) {
+			return { color: opt.fg, bgcolor: opt.bg }
 		}
 	} else if (feedback.type === 'videoCallAudioSource') {
-		let input = getInput(feedback.options.input)
+		let input = getInput(opt.input)
 
 		if (
 			input &&
 			this.activatorData.videoCall[input.key] &&
-			this.activatorData.videoCall[input.key].audioSource === feedback.options.source
+			this.activatorData.videoCall[input.key].audioSource === opt.source
 		) {
-			return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+			return { color: opt.fg, bgcolor: opt.bg }
 		}
 	} else if (feedback.type === 'inputSelectedIndex') {
-		let input = getInput(feedback.options.input)
+		let input = getInput(opt.input)
 
 		if (!input) {
 			return
 		}
 
 		if (input.type === 'VideoList') {
-			if (input && parseInt(input.selectedIndex) === parseInt(feedback.options.selectedIndex)) {
-				return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+			if (input && parseInt(input.selectedIndex) === parseInt(opt.selectedIndex)) {
+				return { color: opt.fg, bgcolor: opt.bg }
 			} else if (input && input.list[0].empty === true) {
-				return { color: feedback.options.et, bgcolor: feedback.options.eb }
+				return { color: opt.et, bgcolor: opt.eb }
 			}
 		} else if (input.type === 'PowerPoint') {
-			if (input && parseInt(input.selectedIndex) === parseInt(feedback.options.selectedIndex)) {
-				return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+			if (input && parseInt(input.selectedIndex) === parseInt(opt.selectedIndex)) {
+				return { color: opt.fg, bgcolor: opt.bg }
 			}
 		} else {
 			return { color: this.rgb(255, 255, 255), bgcolor: this.rgb(0, 0, 0) }
 		}
 	} else if (feedback.type === 'inputSelectedIndexName') {
-		let input = getInput(feedback.options.input)
+		let input = getInput(opt.input)
 		let selectedTitle = ''
 
 		if (!input) {
@@ -1198,8 +1247,8 @@ exports.executeFeedback = function (feedback, bank, info) {
 			return { text: bank.text + `${selectedTitle}` }
 		}
 	} else if (feedback.type === 'multiviewLayer') {
-		const inputMV = getInput(feedback.options.input)
-		const layer = feedback.options.layer - 1
+		const inputMV = getInput(opt.input)
+		const layer = opt.layer - 1
 		let text = ''
 
 		if (inputMV && inputMV.overlay) {
@@ -1211,6 +1260,7 @@ exports.executeFeedback = function (feedback, bank, info) {
 				if (feedback.options.value2 == true) {
 					text = text + number
 				}
+
 				if (feedback.options.value == true && feedback.options.value2 == true) {
 					text = text + ' '
 				}
@@ -1230,13 +1280,13 @@ exports.executeFeedback = function (feedback, bank, info) {
 			return { text: bank.text + `${text}` }
 		}
 	} else if (feedback.type === 'inputOnMultiview') {
-		const input = getInput(feedback.options.input)
-		const inputMV = getInput(feedback.options.inputMV)
-		const layer = feedback.options.layer - 1
+		const input = getInput(opt.input)
+		const inputMV = getInput(opt.inputMV)
+		const layer = opt.layer - 1
 		var tally = false
 
 		if (inputMV && inputMV.overlay) {
-			if (feedback.options.layer == '0') {
+			if (opt.layer == '0') {
 				// Check any layer
 				tally = inputMV.overlay.find((item) => item.key === input.key) ? true : false
 			} else {
@@ -1250,10 +1300,38 @@ exports.executeFeedback = function (feedback, bank, info) {
 		}
 
 		if (tally == true) {
-			if (feedback.options.tally == 'full') {
-				return { color: feedback.options.fg, bgcolor: feedback.options.bgLayer }
+			if (opt.tally == 'full') {
+				return { color: opt.fg, bgcolor: opt.bgLayer }
 			}
-			return { img64: this.indicators.getImage(feedback.options.tally, feedback.options.bgLayer, info) }
+			return { img64: this.indicators.getImage(opt.tally, opt.bgLayer, info) }
+		}
+	} else if (feedback.type === 'selectedDestinationInput') {
+		this.checkFeedbacks('routableMultiviewLayer')
+		if (parseInt(opt.input) == this.destinationInput) {
+			return { color: opt.fgBlack, bgcolor: opt.bgDestination }
+		}
+	} else if (feedback.type === 'selectedDestinationLayer') {
+		this.checkFeedbacks('routableMultiviewLayer')
+		if (parseInt(opt.selectedIndex) == this.destinationLayer) {
+			return { color: opt.fgBlack, bgcolor: opt.bgDestination }
+		}
+	} else if (feedback.type === 'routableMultiviewLayer') {
+		const input = getInput(opt.input)
+		const inputMV = getInput(this.destinationInput.toString(10))
+		const layer = this.destinationLayer - 1
+		var tally = false
+
+		if (inputMV && inputMV.overlay) {
+			let x = inputMV.overlay.find((item) => parseInt(item.index) === layer)
+			if (x != undefined) {
+				tally = x.key == input.key
+			}
+		}
+
+		if (tally == true) {
+			return { color: opt.fgBlack, bgcolor: opt.bgSource }
+		} else if (input === inputMV) {
+			return { color: this.rgb(128, 128, 128), bgcolor: this.rgb(16, 16, 16) }
 		}
 	}
 }

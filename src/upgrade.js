@@ -1,15 +1,17 @@
-exports.upgradeV1_2_0 = function (config, actions, releaseActions, feedbacks) {
+exports.upgradeV1_2_0 = function (context, config, actions, feedbacks) {
 	let changed = false
 
-	if (config.port) {
-		changed = true
-		config.tcpPort = config.port
-		delete config.port
-	}
+	if (config) {
+		if (config.port) {
+			changed = true
+			config.tcpPort = config.port
+			delete config.port
+		}
 
-	if (!config.httpPort) {
-		changed = true
-		config.httpPort = 8088
+		if (!config.httpPort) {
+			changed = true
+			config.httpPort = 8088
+		}
 	}
 
 	const actionUpgrade = (action) => {
@@ -107,7 +109,6 @@ exports.upgradeV1_2_0 = function (config, actions, releaseActions, feedbacks) {
 	}
 
 	actions.forEach(actionUpgrade)
-	releaseActions.forEach(actionUpgrade)
 
 	feedbacks.forEach((feedback) => {
 		if (feedback.type === 'input_preview') {
@@ -119,5 +120,6 @@ exports.upgradeV1_2_0 = function (config, actions, releaseActions, feedbacks) {
 		}
 	})
 
-	return changed
+	// return changed
+	return true
 }

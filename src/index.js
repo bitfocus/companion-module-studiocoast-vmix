@@ -8,7 +8,6 @@ const { upgradeV1_2_0 } = require('./upgrade')
 const { updateVariableDefinitions } = require('./variables')
 const tcp = require('./tcp')
 const { updateVolumeVariables } = require('./utils')
-const { reverse } = require('lodash')
 let reversed = false // used for t-bar operation
 
 /**
@@ -17,9 +16,6 @@ let reversed = false // used for t-bar operation
 class VMixInstance extends instance_skel {
 	constructor(system, id, config) {
 		super(system, id, config)
-
-		// Upgrade scripts
-		this.addUpgradeScript(upgradeV1_2_0)
 
 		// Default instance state
 		this.data = {
@@ -92,6 +88,14 @@ class VMixInstance extends instance_skel {
 		this.config.apiPollInterval = this.config.apiPollInterval !== undefined ? this.config.apiPollInterval : 250
 		this.updateVariableDefinitions = updateVariableDefinitions
 		this.updateVolumeVariables = updateVolumeVariables
+		this.destinationInput = 1
+		this.destinationLayer = 1
+	}
+
+	static GetUpgradeScripts() {
+		return [
+			upgradeV1_2_0,
+		]
 	}
 
 	init() {
@@ -156,6 +160,8 @@ class VMixInstance extends instance_skel {
 	init_feedbacks() {
 		const feedbacks = initFeedbacks.bind(this)()
 		this.setFeedbackDefinitions(feedbacks)
+		this.checkFeedbacks("selectedDestinationInput")
+		this.checkFeedbacks("selectedDestinationLayer")
 	}
 
 	// Execute feedback
