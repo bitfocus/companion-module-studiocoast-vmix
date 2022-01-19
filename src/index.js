@@ -135,7 +135,7 @@ class VMixInstance extends instance_skel {
 		}
 
 		if (this.activeTBarListener) {
-			this.system.removeListener('variable_changed', this.activeTBarListener)
+			this.system.removeListener('variables_changed', this.activeTBarListener)
 			delete this.activeTBarListener
 		}
 		this.debug('destroy', this.id)
@@ -169,11 +169,12 @@ class VMixInstance extends instance_skel {
 		return executeFeedback.bind(this)(feedback, bank)
 	}
 
-	tbarListener(label, variable, value) {
+	tbarListener(changed_variables) {
 		const { tbarEnabled, tbarMin, tbarMax } = this.config
-		if (!tbarEnabled || `${label}:${variable}` !== 'internal:t-bar') {
+		if (!tbarEnabled || !('internal:t-bar' in changed_variables)) {
 			return
 		}
+		let value = changed_variables['internal:t-bar']
 
 		if (reversed) {
 			value = 255 - value
@@ -204,10 +205,10 @@ class VMixInstance extends instance_skel {
 		if (this.config.tbarEnabled) {
 			if (!this.activeTBarListener) {
 				this.activeTBarListener = this.tbarListener.bind(this)
-				this.system.on('variable_changed', this.activeTBarListener)
+				this.system.on('variables_changed', this.activeTBarListener)
 			}
 		} else if (this.activeTBarListener) {
-			this.system.removeListener('variable_changed', this.activeTBarListener)
+			this.system.removeListener('variables_changed', this.activeTBarListener)
 			delete this.activeTBarListener
 		}
 	}

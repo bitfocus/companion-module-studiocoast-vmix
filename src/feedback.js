@@ -1,4 +1,3 @@
-const { uniqueId } = require('lodash')
 const { volumeAmplitudeToLinear } = require('./utils')
 
 exports.initFeedbacks = function () {

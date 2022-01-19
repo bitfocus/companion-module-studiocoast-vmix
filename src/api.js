@@ -1,7 +1,6 @@
 const xml2js = require('xml2js')
 const _ = require('lodash')
 const { volumeAmplitudeToLinear } = require('./utils')
-const { uniqueId } = require('lodash')
 
 exports.parseAPI = function (body) {
 	xml2js.parseString(body, (err, xml) => {
