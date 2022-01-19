@@ -94,6 +94,7 @@ exports.init = function () {
 
 			while ((i = messageBuffer.indexOf('\r\n')) !== -1) {
 				message = messageBuffer.substr(0, i + 2)
+				messageBuffer = messageBuffer.substr(i + 2)
 
 				if (message.startsWith('<vmix>') || xmlBuffer.length > 0) {
 					xmlBuffer += message
@@ -104,8 +105,6 @@ exports.init = function () {
 				} else {
 					processMessages(message)
 				}
-
-				messageBuffer = messageBuffer.substr(i + 2)
 			}
 		})
 	}
