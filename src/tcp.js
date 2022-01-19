@@ -72,29 +72,40 @@ exports.init = function () {
 		}
 
 		let messageBuffer = ''
+		let errorNotificationSent = false
+
 		this.socket.on('data', (data) => {
-			messageBuffer += data.toString()
+			let i = 0,
+				message = '',
+				xmlBuffer = ''
 
-			if (messageBuffer.endsWith('\r\n')) {
-				let xmlBuffer = ''
-
-				messageBuffer
-					.split('\r\n')
-					.filter((message) => message != '')
-					.forEach((message) => {
-						// Check if fragment is XML data
-						if (message.startsWith('<vmix>') || xmlBuffer.length > 0) {
-							xmlBuffer += message
-							if (xmlBuffer.includes('<vmix>') && xmlBuffer.includes('</vmix>')) {
-								processMessages(xmlBuffer)
-								xmlBuffer = ''
-							}
-						} else {
-							processMessages(message)
-						}
-					})
-
+			try {
+				messageBuffer += data
+			} catch (e) {
+				if (errorNotificationSent === false) {
+					this.log(
+						'error',
+						'Feedback data discarded due to buffer overload.  Try increasing the API Polling Interval.  This is a one-time message.'
+					)
+					errorNotificationSent = true
+				}
 				messageBuffer = ''
+			}
+
+			while ((i = messageBuffer.indexOf('\r\n')) !== -1) {
+				message = messageBuffer.substr(0, i + 2)
+
+				if (message.startsWith('<vmix>') || xmlBuffer.length > 0) {
+					xmlBuffer += message
+					if (xmlBuffer.includes('<vmix>') && xmlBuffer.includes('</vmix>')) {
+						processMessages(xmlBuffer)
+						xmlBuffer = ''
+					}
+				} else {
+					processMessages(message)
+				}
+
+				messageBuffer = messageBuffer.substr(i + 2)
 			}
 		})
 	}

@@ -198,3 +198,7 @@ and if there is more than one parameter use "&" as a separator between them like
 
 - Hotfix for feedbacks that got broken in the last update
 - Hotfix for Input names not working in feedbacks
+
+**V1.2.24**
+
+- Replacement receive buffer extraction to help prevent buffer overflows
