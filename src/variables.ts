@@ -48,6 +48,7 @@ export class Variables {
     }
 
     this.instance.setVariables(newVariables)
+    this.instance.checkFeedbacks('buttonText')
   }
 
   /**
