@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2019",
+    "strict": true,
+    "alwaysStrict": false,
+    "strictPropertyInitialization": true,
+    "strictFunctionTypes": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "moduleResolution": "node",
+    "sourceMap": false,
+    "outDir": "dist",
+    "baseUrl": "./",
+    "paths": {
+      "*": ["node_modules/*", "types/*"]
+    },
+    "declaration": false,
+    "importHelpers": false,
+    "listFiles": false,
+    "traceResolution": false,
+    "pretty": true,
+    "lib": ["es6", "es2019"],
+    "types": ["node"],
+    "typeRoots": ["./node_modules/@types", "./types"],
+    "esModuleInterop": true
+  },
+  "include": ["src/*.ts"],
+  "compileOnSave": false,
+  "exclude": ["node_modules/**"]
+}
