@@ -165,25 +165,3 @@ class VMixInstance extends instance_skel<Config> {
 }
 
 export = VMixInstance
-/*
-"@typescript-eslint/eslint-plugin": "~2.31.0",
-"@typescript-eslint/parser": "~2.31.0",
-
-		"@types/jest": "^26.0.22",
-		"@types/lodash": "^4.14.168",
-		"@types/node": "^12.0.4",
-		"@types/xml2js": "^0.4.7",
-		"@typescript-eslint/eslint-plugin": "^5.10.1",
-		"@typescript-eslint/parser": "^5.10.1",
-		"eslint": "^6.8.0",
-		"eslint-config-prettier": "^6.11.0",
-		"eslint-plugin-prettier": "^3.1.3",
-		"husky": "^3.0.5",
-		"jest": "^26.6.3",
-		"lint-staged": "^9.2.5",
-		"prettier": "^1.17.1",
-		"rimraf": "^3.0.2",
-		"ts-jest": "^26.5.4",
-		"typescript": "^4.2.3"
-
-*/

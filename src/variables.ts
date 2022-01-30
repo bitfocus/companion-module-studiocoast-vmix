@@ -212,6 +212,33 @@ export class Variables {
       inputKeyVariables.add({ label: `Input ${input.key} Short Title`, name: `input_${input.key}_name` })
       inputKeyVariables.add({ label: `Input ${input.key} Number`, name: `input_${input.key}_number` })
 
+      this.instance.data.mix.forEach((mix) => {
+        inputNumberVariables.add({
+          label: `Input ${input.number} Mix ${mix.number} Tally Preview`,
+          name: `input_${input.number}_mix_${mix.number}_tally_preview`,
+        })
+        inputNumberVariables.add({
+          label: `Input ${input.number} Mix ${mix.number} Tally Program`,
+          name: `input_${input.number}_mix_${mix.number}_tally_program`,
+        })
+        inputNameVariables.add({
+          label: `Input ${input.shortTitle || input.title} Mix ${mix.number} Tally Preview`,
+          name: `input_${input.shortTitle || input.title}_mix_${mix.number}_tally_preview`,
+        })
+        inputNameVariables.add({
+          label: `Input ${input.shortTitle || input.title} Mix ${mix.number} Tally Program`,
+          name: `input_${input.shortTitle || input.title}_mix_${mix.number}_tally_program`,
+        })
+        inputKeyVariables.add({
+          label: `Input ${input.key} Mix ${mix.number} Tally Preview`,
+          name: `input_${input.key}_mix_${mix.number}_tally_preview`,
+        })
+        inputKeyVariables.add({
+          label: `Input ${input.key} Mix ${mix.number} Tally Program`,
+          name: `input_${input.key}_mix_${mix.number}_tally_program`,
+        })
+      })
+
       if (input.duration > 1) {
         inputNumberVariables.add({ label: `Input ${input.number} Duration`, name: `input_${input.number}_duration` })
         inputNameVariables.add({
@@ -528,6 +555,17 @@ export class Variables {
         newVariables[`input_${inputName.toLowerCase()}_number`] = input.number
         newVariables[`input_${inputName.toLowerCase()}_guid`] = input.key
       }
+
+      this.instance.data.mix.forEach((mix) => {
+        const tallyPreview = this.instance.data.mix[0].previewTally.includes(input.key).toString()
+        const tallyProgram = this.instance.data.mix[0].programTally.includes(input.key).toString()
+        newVariables[`input_${input.number}_mix_${mix.number}_tally_preview`] = tallyPreview
+        newVariables[`input_${input.number}_mix_${mix.number}_tally_program`] = tallyProgram
+        newVariables[`input_${input.shortTitle || input.title}_mix_${mix.number}_tally_preview`] = tallyPreview
+        newVariables[`input_${input.shortTitle || input.title}_mix_${mix.number}_tally_program`] = tallyProgram
+        newVariables[`input_${input.key}_mix_${mix.number}_tally_preview`] = tallyPreview
+        newVariables[`input_${input.key}_mix_${mix.number}_tally_program`] = tallyProgram
+      })
 
       const meterF1 = input.meterF1 !== undefined ? volumeTodB(input.meterF1).toFixed(1) : ''
       const meterF2 = input.meterF2 !== undefined ? volumeTodB(input.meterF2).toFixed(1) : ''
