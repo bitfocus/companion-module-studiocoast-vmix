@@ -1,3 +1,4 @@
+import { CompanionPreset } from '../../../instance_skel_types'
 import VMixInstance from './index'
 import { ActionCallbacks } from './actions'
 import { FeedbackCallbacks } from './feedback'
@@ -20,20 +21,15 @@ export type PresetCategory =
   | 'Video Playback'
   | 'vMix Functions'
 
-export interface VMixPreset {
+interface VMixPresetAdditions {
   category: PresetCategory
-  label: string
-  bank: {
-    style: 'text'
-    text: string
-    size: 'auto' | '7' | '14' | '18' | '24' | '30' | '44'
-    color: number
-    bgcolor: number
-  }
   actions: ActionCallbacks[]
   release_actions?: ActionCallbacks[]
   feedbacks: FeedbackCallbacks[]
 }
+
+export type VMixPreset = Exclude<CompanionPreset, 'category' | 'actions' | 'release_actions' | 'feedbacks'> &
+  VMixPresetAdditions
 
 export function getPresets(instance: VMixInstance): VMixPreset[] {
   return [

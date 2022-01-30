@@ -190,9 +190,9 @@ export class Variables {
     ])
 
     // Inputs
-    const inputNumberVariables: Set<InstanceVariableDefinition> = new Set([])
-    const inputNameVariables: Set<InstanceVariableDefinition> = new Set([])
-    const inputKeyVariables: Set<InstanceVariableDefinition> = new Set([])
+    const inputNumberVariables = new Set<InstanceVariableDefinition>()
+    const inputNameVariables = new Set<InstanceVariableDefinition>()
+    const inputKeyVariables = new Set<InstanceVariableDefinition>()
 
     this.instance.data.inputs.forEach((input) => {
       const inputName = input.shortTitle
@@ -216,7 +216,7 @@ export class Variables {
       })
       inputKeyVariables.add({ label: `Input ${input.key} Short Title`, name: `input_${input.key}_name` })
       inputKeyVariables.add({ label: `Input ${input.key} Number`, name: `input_${input.key}_number` })
-      inputKeyVariables.add({ label: `Input ${input.key} Type`, name: `input_${input.key}_type`  })
+      inputKeyVariables.add({ label: `Input ${input.key} Type`, name: `input_${input.key}_type` })
 
       this.instance.data.mix.forEach((mix) => {
         inputNumberVariables.add({

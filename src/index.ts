@@ -65,7 +65,6 @@ class VMixInstance extends instance_skel<Config> {
     },
     mix: 0,
   }
-  public readonly system
   public readonly tcp
   public readonly variables
 
@@ -77,7 +76,7 @@ class VMixInstance extends instance_skel<Config> {
    * @description triggered on instance being enabled
    */
   public init(): void {
-    this.status(1, 'Connecting')
+    this.status(this.STATUS_WARNING, 'Connecting')
     this.updateInstance()
     this.setPresetDefinitions(getPresets(this) as CompanionPreset[])
     this.variables.updateDefinitions()

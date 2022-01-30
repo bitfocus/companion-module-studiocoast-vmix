@@ -13,7 +13,7 @@
 	"main": "dist/index.js",
 	"scripts": {
 		"dev": "yarn build:watch",
-		"build": "npx rimraf dist && npx typescript@^4.2.3 -p tsconfig.build.json",
+		"build": "npx rimraf dist && npx typescript@~4.5.5 -p tsconfig.build.json",
 		"build:main": "tsc -p tsconfig.build.json",
 		"build:watch": "tsc -p tsconfig.build.json --watch",
 		"lint": "eslint . --ext .ts",
@@ -28,11 +28,6 @@
 	],
 	"bugs": {
 		"url": "https://github.com/bitfocus/companion-module-studiocoast-vmix/issues"
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "lint-staged"
-		}
 	},
 	"lint-staged": {
 		"*.{js,json,md}": [
