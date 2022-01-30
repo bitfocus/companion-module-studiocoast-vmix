@@ -201,6 +201,7 @@ export class Variables {
 
       inputNumberVariables.add({ label: `Input ${input.number} Short Title`, name: `input_${input.number}_name` })
       inputNumberVariables.add({ label: `Input ${input.number} GUID`, name: `input_${input.number}_guid` })
+      inputNumberVariables.add({ label: `Input ${input.number} Type`, name: `input_${input.number}_type` })
       inputNameVariables.add({
         label: `Input ${input.shortTitle || input.title} Number`,
         name: `input_${inputName.toLowerCase()}_number`,
@@ -209,8 +210,40 @@ export class Variables {
         label: `Input ${input.shortTitle || input.title} GUID`,
         name: `input_${inputName.toLowerCase()}_guid`,
       })
+      inputNameVariables.add({
+        label: `Input ${input.shortTitle || input.title} Type`,
+        name: `input_${inputName.toLowerCase()}_type`,
+      })
       inputKeyVariables.add({ label: `Input ${input.key} Short Title`, name: `input_${input.key}_name` })
       inputKeyVariables.add({ label: `Input ${input.key} Number`, name: `input_${input.key}_number` })
+      inputKeyVariables.add({ label: `Input ${input.key} Type`, name: `input_${input.key}_type`  })
+
+      this.instance.data.mix.forEach((mix) => {
+        inputNumberVariables.add({
+          label: `Input ${input.number} Mix ${mix.number} Tally Preview`,
+          name: `input_${input.number}_mix_${mix.number}_tally_preview`,
+        })
+        inputNumberVariables.add({
+          label: `Input ${input.number} Mix ${mix.number} Tally Program`,
+          name: `input_${input.number}_mix_${mix.number}_tally_program`,
+        })
+        inputNameVariables.add({
+          label: `Input ${input.shortTitle || input.title} Mix ${mix.number} Tally Preview`,
+          name: `input_${input.shortTitle || input.title}_mix_${mix.number}_tally_preview`,
+        })
+        inputNameVariables.add({
+          label: `Input ${input.shortTitle || input.title} Mix ${mix.number} Tally Program`,
+          name: `input_${input.shortTitle || input.title}_mix_${mix.number}_tally_program`,
+        })
+        inputKeyVariables.add({
+          label: `Input ${input.key} Mix ${mix.number} Tally Preview`,
+          name: `input_${input.key}_mix_${mix.number}_tally_preview`,
+        })
+        inputKeyVariables.add({
+          label: `Input ${input.key} Mix ${mix.number} Tally Program`,
+          name: `input_${input.key}_mix_${mix.number}_tally_program`,
+        })
+      })
 
       this.instance.data.mix.forEach((mix) => {
         inputNumberVariables.add({
@@ -548,12 +581,15 @@ export class Variables {
 
       newVariables[`input_${input.number}_name`] = input.shortTitle || input.title
       newVariables[`input_${input.number}_guid`] = input.key
+      newVariables[`input_${input.number}_type`] = input.type
       newVariables[`input_${input.key}_number`] = input.number
       newVariables[`input_${input.key}_name`] = input.shortTitle || input.title
+      newVariables[`input_${input.key}_type`] = input.type
 
       if (useNamedInput) {
         newVariables[`input_${inputName.toLowerCase()}_number`] = input.number
         newVariables[`input_${inputName.toLowerCase()}_guid`] = input.key
+        newVariables[`input_${inputName.toLowerCase()}_type`] = input.type
       }
 
       this.instance.data.mix.forEach((mix) => {
