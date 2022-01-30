@@ -190,9 +190,9 @@ export class Variables {
     ])
 
     // Inputs
-    const inputNumberVariables: Set<InstanceVariableDefinition> = new Set([])
-    const inputNameVariables: Set<InstanceVariableDefinition> = new Set([])
-    const inputKeyVariables: Set<InstanceVariableDefinition> = new Set([])
+    const inputNumberVariables = new Set<InstanceVariableDefinition>()
+    const inputNameVariables = new Set<InstanceVariableDefinition>()
+    const inputKeyVariables = new Set<InstanceVariableDefinition>()
 
     this.instance.data.inputs.forEach((input) => {
       const inputName = input.shortTitle
@@ -216,34 +216,7 @@ export class Variables {
       })
       inputKeyVariables.add({ label: `Input ${input.key} Short Title`, name: `input_${input.key}_name` })
       inputKeyVariables.add({ label: `Input ${input.key} Number`, name: `input_${input.key}_number` })
-      inputKeyVariables.add({ label: `Input ${input.key} Type`, name: `input_${input.key}_type`  })
-
-      this.instance.data.mix.forEach((mix) => {
-        inputNumberVariables.add({
-          label: `Input ${input.number} Mix ${mix.number} Tally Preview`,
-          name: `input_${input.number}_mix_${mix.number}_tally_preview`,
-        })
-        inputNumberVariables.add({
-          label: `Input ${input.number} Mix ${mix.number} Tally Program`,
-          name: `input_${input.number}_mix_${mix.number}_tally_program`,
-        })
-        inputNameVariables.add({
-          label: `Input ${input.shortTitle || input.title} Mix ${mix.number} Tally Preview`,
-          name: `input_${input.shortTitle || input.title}_mix_${mix.number}_tally_preview`,
-        })
-        inputNameVariables.add({
-          label: `Input ${input.shortTitle || input.title} Mix ${mix.number} Tally Program`,
-          name: `input_${input.shortTitle || input.title}_mix_${mix.number}_tally_program`,
-        })
-        inputKeyVariables.add({
-          label: `Input ${input.key} Mix ${mix.number} Tally Preview`,
-          name: `input_${input.key}_mix_${mix.number}_tally_preview`,
-        })
-        inputKeyVariables.add({
-          label: `Input ${input.key} Mix ${mix.number} Tally Program`,
-          name: `input_${input.key}_mix_${mix.number}_tally_program`,
-        })
-      })
+      inputKeyVariables.add({ label: `Input ${input.key} Type`, name: `input_${input.key}_type` })
 
       this.instance.data.mix.forEach((mix) => {
         inputNumberVariables.add({

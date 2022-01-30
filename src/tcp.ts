@@ -71,7 +71,12 @@ export class TCP {
     this.sockets.functions = new tcp(this.tcpHost, this.tcpPort)
 
     this.sockets.functions.on('status_change', (status: TCPStatus, message: string) => {
-      this.instance.status(status, message)
+      let state: 0 | 1 | 2 | null = this.instance.STATUS_UNKNOWN
+      if (status === 0) state = this.instance.STATUS_OK
+      if (status === 1) state = this.instance.STATUS_WARNING
+      if (status === 2) state = this.instance.STATUS_ERROR
+
+      this.instance.status(state, message)
       this.instance.connected = status === 0
     })
 
