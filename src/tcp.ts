@@ -1,4 +1,3 @@
-// @ts-expect-error: Could not find a declaration file for module
 import tcp from '../../../tcp'
 import VMixInstance from './'
 
@@ -11,9 +10,9 @@ interface MessageBuffer {
 type TCPStatus = 0 | 1 | 2 | null
 
 interface TCPSockets {
-  activator: typeof tcp
-  functions: typeof tcp
-  xml: typeof tcp
+  activator: tcp | null
+  functions: tcp | null
+  xml: tcp | null
 }
 
 export class TCP {
@@ -82,7 +81,10 @@ export class TCP {
 
     this.sockets.functions.on('error', (err: Error) => {
       this.instance.status(this.instance.STATUS_ERROR, err.message)
-      this.instance.log('error', 'Function Socket err: ' + err.message)
+      this.instance.log(
+        this.instance.config.connectionErrorLog ? 'error' : 'debug',
+        'Function Socket err: ' + err.message
+      )
     })
 
     this.sockets.functions.on('connect', () => {
@@ -106,16 +108,18 @@ export class TCP {
    * @description Create connection and Listeners for Activator socket
    */
   private readonly initActivators = (): void => {
-    this.sockets.activator.on('error', (err: Error) => {
-      this.instance.log('error', 'ACT Socket err: ' + err.message)
+    this.sockets.activator?.on('error', (err: Error) => {
+      this.instance.log('debug', 'ACT Socket err: ' + err.message)
     })
 
-    this.sockets.activator.on('connect', () => {
+    this.sockets.activator?.on('connect', () => {
       this.instance.log('debug', 'Connected Activator Socket')
-      this.sockets.activator.send('SUBSCRIBE ACTS\r\n')
+      this.sockets.activator?.write('SUBSCRIBE ACTS\r\n', (err) => {
+        if (err) this.instance.log('debug', err.message)
+      })
     })
 
-    this.sockets.activator.on('data', (data: Buffer) => {
+    this.sockets.activator?.on('data', (data: Buffer) => {
       const messages = data.toString().split(/\r?\n/)
 
       messages.forEach((message) => {
@@ -144,27 +148,25 @@ export class TCP {
       'ACTS BusGSolo',
     ]
 
-    this.sockets.activator.send(initialRequests.join('\r\n'))
+    this.sockets.activator?.write(initialRequests.join('\r\n'), (err) => {
+      if (err) this.instance.log('debug', err.message)
+    })
   }
 
   /**
    * @description Create Listeners for XML and Command socket
    */
   private readonly initXML = (): void => {
-    this.sockets.xml.on('error', (err: Error) => {
-      this.instance.log('error', 'XML Socket err: ' + err.message)
-
-      if (this.sockets.xml) {
-        this.sockets.xml.destroy()
-      }
+    this.sockets.xml?.on('error', (err: Error) => {
+      this.instance.log('debug', 'XML Socket err: ' + err.message)
     })
 
-    this.sockets.xml.on('connect', () => {
+    this.sockets.xml?.on('connect', () => {
       this.instance.log('debug', 'Connected XML Socket')
       this.initXMLPolling()
     })
 
-    this.sockets.xml.on('data', (data: Buffer) => {
+    this.sockets.xml?.on('data', (data: Buffer) => {
       const splitData = data.toString().split(/\r?\n/)
 
       // Ignore version message on connection establishment
@@ -209,11 +211,17 @@ export class TCP {
 
     // Check if API Polling is disabled
     if (this.instance.config.apiPollInterval != 0) {
-      this.sockets.xml.send('XML\r\n')
+      this.sockets.xml?.write('XML\r\n', (err) => {
+        if (err) this.instance.log('debug', err.message)
+      })
 
       this.pollAPI = setInterval(
         () => {
-          if (this.sockets.xml.connected) this.sockets.xml.send('XML\r\n')
+          // @ts-expect-error Types doesn't include 'connected' property
+          if (this.sockets.xml?.connected)
+            this.sockets.xml?.write('XML\r\n', (err) => {
+              if (err) this.instance.log('debug', err.message)
+            })
         },
         this.instance.config.apiPollInterval < 100 ? 100 : this.instance.config.apiPollInterval
       )
@@ -225,10 +233,13 @@ export class TCP {
    * @description Check TCP connection status and format command to send to vMix
    */
   public readonly sendCommand = (command: string): void => {
+    // @ts-expect-error Types doesn't include 'connected' property
     if (this.sockets.functions && this.sockets.functions.connected) {
       const message = `${command}\r\n`
 
-      this.sockets.functions.send(message)
+      this.sockets.functions.write(message, (err) => {
+        if (err) this.instance.log('debug', err.message)
+      })
       this.instance.log('debug', `Sending command: ${message}`)
     }
   }
@@ -245,17 +256,9 @@ export class TCP {
         clearInterval(this.pollAPI)
       }
 
-      if (this.sockets.activator && this.sockets.activator.connected) {
-        this.sockets.activator.close()
-      }
-
-      if (this.sockets.functions && this.sockets.functions.connected) {
-        this.sockets.functions.close()
-      }
-
-      if (this.sockets.xml && this.sockets.xml.connected) {
-        this.sockets.xml.close()
-      }
+      if (this.sockets.activator) this.sockets.activator.destroy()
+      if (this.sockets.functions) this.sockets.functions.destroy()
+      if (this.sockets.xml) this.sockets.xml.destroy()
 
       this.init()
     } else if (pollIntervalCheck) {
