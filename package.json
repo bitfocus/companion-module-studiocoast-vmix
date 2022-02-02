@@ -23,5 +23,13 @@
 	"dependencies": {
 		"lodash": "^4.17.21",
 		"xml2js": "^0.4.22"
+	},
+	"homepage": "https://github.com/bitfocus/companion-module-studiocoast-vmix#readme",
+	"bugs": {
+		"url": "https://github.com/bitfocus/companion-module-studiocoast-vmix/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bitfocus/companion-module-studiocoast-vmix.git"
 	}
 }
