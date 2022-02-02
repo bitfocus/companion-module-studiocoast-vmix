@@ -148,7 +148,7 @@ class VMixInstance extends instance_skel {
 
 	// Set available actions
 	actions() {
-		this.system.emit('instance_actions', this.id, getActions.bind(this)())
+		this.setActions(getActions.bind(this)())
 	}
 
 	// Execute action
