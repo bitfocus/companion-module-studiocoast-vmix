@@ -44,8 +44,8 @@
 	],
 	"license": "MIT",
 	"dependencies": {
-		"lodash": "^4.17.19",
-		"xml2js": "^0.4.22"
+		"lodash": "^4.17.21",
+		"xml2js": "^0.4.23"
 	},
 	"devDependencies": {
 		"@types/jest": "^27.4.0",
