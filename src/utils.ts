@@ -57,6 +57,8 @@ export const TRANSITIONS = [
   'SlideReverse',
   'VerticalWipeReverse',
   'VerticalSlideReverse',
+  'BarnDoor',
+  'RollerDoor',
 ] as const
 
 /**

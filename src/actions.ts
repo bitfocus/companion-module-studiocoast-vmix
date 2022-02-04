@@ -67,6 +67,7 @@ export interface VMixActions {
   changeCountdown: VMixAction<ChangeCountdownCallback>
   adjustCountdown: VMixAction<AdjustCountdownCallback>
   setText: VMixAction<SetTextCallback>
+  setColor: VMixAction<SetColorCallback>
   selectTitlePreset: VMixAction<SelectTitlePresetCallback>
   titlePreset: VMixAction<TitlePresetCallback>
   titleBeginAnimation: VMixAction<TitleBeginAnimationCallback>
@@ -512,6 +513,14 @@ interface SetTextCallback {
     input: string
     selectedIndex: string
     adjustment: 'Set' | 'Increment' | 'Decrement'
+    value: string
+  }>
+}
+interface SetColorCallback {
+  action: 'setColor'
+  options: Readonly<{
+    input: string
+    selectedIndex: string
     value: string
   }>
 }
@@ -1016,6 +1025,7 @@ export type ActionCallbacks =
   | ChangeCountdownCallback
   | AdjustCountdownCallback
   | SetTextCallback
+  | SetColorCallback
   | SelectTitlePresetCallback
   | TitlePresetCallback
   | TitleBeginAnimationCallback
@@ -2155,7 +2165,7 @@ export function getActions(instance: VMixInstance): VMixActions {
         },
         {
           type: 'textinput',
-          label: 'value',
+          label: 'Value',
           id: 'value',
           default: '',
         },
@@ -2192,6 +2202,42 @@ export function getActions(instance: VMixInstance): VMixActions {
             )
           }
         }
+      },
+    },
+
+    setColor: {
+      label: 'Title - Adjust title shape color',
+      description: 'Requires vMix v25. only works on solid colors',
+      options: [
+        options.input,
+        {
+          type: 'textinput',
+          label: 'Layer',
+          id: 'selectedIndex',
+          default: '0',
+        },
+        {
+          type: 'textinput',
+          label: 'Value (#RRGGBB or #AARRGGBB)',
+          id: 'value',
+          default: '',
+        },
+      ],
+      callback: (action) => {
+        const input = instance.parseOption(action.options.input)[instance.buttonShift.state]
+        const index = instance.parseOption(action.options.selectedIndex)[instance.buttonShift.state]
+        let value = instance.parseOption(action.options.value)[instance.buttonShift.state]
+
+        if (!value.includes('#')) value = '#' + value
+
+        // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
+        const indexNaNCheck = isNaN(parseInt(index, 10))
+
+        instance.tcp.sendCommand(
+          `FUNCTION SetColor Input=${encodeURIComponent(input)}&${
+            indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+          }=${index}&Value=${encodeURIComponent(value)}`
+        )
       },
     },
 
