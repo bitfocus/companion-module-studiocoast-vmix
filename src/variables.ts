@@ -302,11 +302,47 @@ export class Variables {
         })
       }
 
+      for (let i = 0; i < 10; i++) {
+        inputNumberVariables.add({
+          label: `Input ${input.number} layer ${i} Name`,
+          name: `input_${input.number}_layer_${i}_name`,
+        })
+        inputNumberVariables.add({
+          label: `Input ${input.number} layer ${i} Number`,
+          name: `input_${input.number}_layer_${i}_number`,
+        })
+        inputNameVariables.add({
+          label: `Input ${input.shortTitle || input.title} layer ${i} Name`,
+          name: `input_${inputName.toLowerCase()}_layer_${i}_name`,
+        })
+        inputNameVariables.add({
+          label: `Input ${input.shortTitle || input.title} layer ${i} Number`,
+          name: `input_${inputName.toLowerCase()}_layer_${i}_number`,
+        })
+        inputKeyVariables.add({
+          label: `Input ${input.key} layer ${i} Name`,
+          name: `input_${input.key}_layer_${i}_name`,
+        })
+        inputKeyVariables.add({
+          label: `Input ${input.key} layer ${i} Number`,
+          name: `input_${input.key}_layer_${i}_number`,
+        })
+      }
+
       if (input.text) {
-        input.text.forEach(textLayer => {
-          inputNumberVariables.add({ label: `Input ${input.number} layer ${textLayer.index} Text`, name: `input_${input.number}_layer_${textLayer.index}_text` })
-          inputNameVariables.add({ label: `Input ${input.shortTitle || input.title} `, name: `input_${inputName.toLowerCase()}_layer_${textLayer.index}_text` })
-          inputKeyVariables.add({ label: `Input ${input.key}`, name: `input_${input.key}_layer_${textLayer.index}_text` })
+        input.text.forEach((textLayer) => {
+          inputNumberVariables.add({
+            label: `Input ${input.number} layer ${textLayer.index} Title Text`,
+            name: `input_${input.number}_layer_${textLayer.index}_titletext`,
+          })
+          inputNameVariables.add({
+            label: `Input ${input.shortTitle || input.title} layer ${textLayer.index} Title Text`,
+            name: `input_${inputName.toLowerCase()}_layer_${textLayer.index}_titletext`,
+          })
+          inputKeyVariables.add({
+            label: `Input ${input.key} layer ${textLayer.index} Title Text`,
+            name: `input_${input.key}_layer_${textLayer.index}_titletext`,
+          })
         })
       }
 
@@ -648,13 +684,33 @@ export class Variables {
         }
       }
 
+      for (let i = 0; i < 10; i++) {
+        const overlayInput = this.instance.data.getInput(input?.overlay?.[i]?.key || '')
+        let overlayinputName = ''
+
+        if (overlayInput)
+          overlayinputName = overlayInput.shortTitle
+            ? overlayInput.shortTitle.replace(/[^a-z0-9-_.]+/gi, '')
+            : overlayInput.title.replace(/[^a-z0-9-_.]+/gi, '')
+
+        newVariables[`input_${input.number}_layer_${i}_name`] = overlayinputName
+        newVariables[`input_${input.number}_layer_${i}_number`] = overlayInput?.number || ''
+        newVariables[`input_${input.key}_layer_${i}_name`] = overlayinputName
+        newVariables[`input_${input.key}_layer_${i}_number`] = overlayInput?.number || ''
+
+        if (useNamedInput) {
+          newVariables[`input_${inputName.toLowerCase()}_layer_${i}_name`] = overlayinputName
+          newVariables[`input_${inputName.toLowerCase()}_layer_${i}_number`] = overlayInput?.number || ''
+        }
+      }
+
       if (input.text) {
-        input.text.forEach(textLayer => {
-          newVariables[`input_${input.number}_layer_${textLayer.index}_text`] = textLayer.value
-          newVariables[`input_${input.key}_layer_${textLayer.index}_text`] = textLayer.value
+        input.text.forEach((textLayer) => {
+          newVariables[`input_${input.number}_layer_${textLayer.index}_titletext`] = textLayer.value
+          newVariables[`input_${input.key}_layer_${textLayer.index}_titletext`] = textLayer.value
 
           if (useNamedInput) {
-            newVariables[`input_${inputName.toLowerCase()}_layer_${textLayer.index}_text`] = textLayer.value
+            newVariables[`input_${inputName.toLowerCase()}_layer_${textLayer.index}_titletext`] = textLayer.value
           }
         })
       }
