@@ -468,7 +468,15 @@ export class VMixData {
             inputData.text = input.$.text.map((text: any) => ({
               index: parseInt(text.$.index, 10),
               name: text.$.name,
-              value: text._,
+              value: text._ || '',
+            }))
+          }
+
+          if (input.text && input.text.length > 0) {
+            inputData.text = input.text.map((text: any) => ({
+              index: parseInt(text.$.index, 10),
+              name: text.$.name,
+              value: text._ || '',
             }))
           }
 

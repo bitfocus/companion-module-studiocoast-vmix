@@ -302,6 +302,14 @@ export class Variables {
         })
       }
 
+      if (input.text) {
+        input.text.forEach(textLayer => {
+          inputNumberVariables.add({ label: `Input ${input.number} layer ${textLayer.index} Text`, name: `input_${input.number}_layer_${textLayer.index}_text` })
+          inputNameVariables.add({ label: `Input ${input.shortTitle || input.title} `, name: `input_${inputName.toLowerCase()}_layer_${textLayer.index}_text` })
+          inputKeyVariables.add({ label: `Input ${input.key}`, name: `input_${input.key}_layer_${textLayer.index}_text` })
+        })
+      }
+
       if (input.type === 'VideoList') {
         inputNumberVariables.add({
           label: `Input ${input.number} Selected Index`,
@@ -638,6 +646,17 @@ export class Variables {
             duration
           )}`
         }
+      }
+
+      if (input.text) {
+        input.text.forEach(textLayer => {
+          newVariables[`input_${input.number}_layer_${textLayer.index}_text`] = textLayer.value
+          newVariables[`input_${input.key}_layer_${textLayer.index}_text`] = textLayer.value
+
+          if (useNamedInput) {
+            newVariables[`input_${inputName.toLowerCase()}_layer_${textLayer.index}_text`] = textLayer.value
+          }
+        })
       }
 
       if (input.type === 'VideoList') {
