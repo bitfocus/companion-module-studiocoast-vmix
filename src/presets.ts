@@ -845,11 +845,11 @@ export function getPresets(instance: VMixInstance): VMixPreset[] {
       },
       actions: [{ action: 'busXAudio', options: { value: 'A', functionID: 'BusXAudio' } }],
       feedbacks: [
-        { type: 'busMute', options: { bus: 'A', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) } },
+        { type: 'busMute', options: { value: 'A', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) } },
         {
           type: 'liveBusVolume',
           options: {
-            bus: 'A',
+            value: 'A',
             dBShow: false,
             colorTxt: false,
             colorBG: false,
@@ -918,7 +918,7 @@ export function getPresets(instance: VMixInstance): VMixPreset[] {
       feedbacks: [
         {
           type: 'inputBusRouting',
-          options: { input: '1', bus: 'A', fg: instance.rgb(255, 255, 255), bg: instance.rgb(0, 255, 0) },
+          options: { input: '1', value: 'A', fg: instance.rgb(255, 255, 255), bg: instance.rgb(0, 255, 0) },
         },
       ],
     },

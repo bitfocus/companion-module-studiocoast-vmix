@@ -128,7 +128,7 @@ interface StatusCallback {
 interface BusMuteCallback {
   type: 'busMute'
   options: Readonly<{
-    bus: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
+    value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
     fg: number
     bg: number
   }>
@@ -166,7 +166,7 @@ interface InputBusRoutingCallback {
   type: 'inputBusRouting'
   options: Readonly<{
     input: string
-    bus: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
+    value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
     fg: number
     bg: number
   }>
@@ -175,7 +175,7 @@ interface InputBusRoutingCallback {
 interface LiveBusVolumeCallback {
   type: 'liveBusVolume'
   options: Readonly<{
-    bus: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
+    value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
     dBShow: boolean
     colorTxt: boolean
     colorBG: boolean
@@ -766,7 +766,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicate if a bus is muted',
       options: [options.audioBusMaster, options.foregroundColor, options.backgroundColorProgram],
       callback: (feedback) => {
-        const busID = feedback.options.bus === 'Master' ? 'master' : `bus${feedback.options.bus}`
+        const busID = feedback.options.value === 'Master' ? 'master' : `bus${feedback.options.value}`
         const bus = instance.data.getAudioBus(busID)
 
         return bus?.muted ? { color: feedback.options.fg, bgcolor: feedback.options.bg } : undefined
@@ -854,7 +854,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       ],
       callback: (feedback) => {
         const input = instance.data.getInput(instance.parseOption(feedback.options.input)[instance.buttonShift.state])
-        const busID = feedback.options.bus === 'Master' ? 'M' : feedback.options.bus
+        const busID = feedback.options.value === 'Master' ? 'M' : feedback.options.value
 
         if (input?.audioBusses?.[busID]) {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
@@ -926,7 +926,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         },
       ],
       callback: (feedback, bank) => {
-        const busID = feedback.options.bus === 'Master' ? 'master' : 'bus' + feedback.options.bus
+        const busID = feedback.options.value === 'Master' ? 'master' : 'bus' + feedback.options.value
         const bus = instance.data.getAudioBus(busID)
 
         if (bus) {
