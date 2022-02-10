@@ -613,7 +613,7 @@ interface SelectIndexCallback {
   action: 'selectIndex'
   options: Readonly<{
     input: string
-    value: number
+    value: string
   }>
 }
 
@@ -2386,12 +2386,10 @@ export function getActions(instance: VMixInstance): VMixActions {
       options: [
         options.input,
         {
-          type: 'number',
+          type: 'textinput',
           label: 'Select Index',
           id: 'value',
-          default: 1,
-          min: 1,
-          max: 999,
+          default: '1',
         },
       ],
       callback: sendBasicCommand,

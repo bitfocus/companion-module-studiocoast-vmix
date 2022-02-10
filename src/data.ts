@@ -809,6 +809,11 @@ export class VMixData {
       changes.add('inputSelectedIndex')
       changes.add('inputSelectedIndexName')
       changes.add('routableMultiviewLayer')
+
+      // DEPRECATED
+      changes.add('titleLayer')
+      changes.add('inputSelectedIndexName')
+      changes.add('multiviewLayer')
     }
 
     // Check Video Call changes

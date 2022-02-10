@@ -56,6 +56,11 @@ export interface VMixFeedbacks {
   buttonShift: VMixFeedback<ButtonShiftCallback>
   buttonText: VMixFeedback<ButtonTextCallback>
 
+  // DEPRECATED
+  titleLayer: VMixFeedback<TitleLayerCallback>
+  inputSelectedIndexName: VMixFeedback<InputSelectedIndexNameCallback>
+  multiviewLayer: VMixFeedback<MultiviewLayerCallback>
+
   // Index signature
   [key: string]: VMixFeedback<any>
 }
@@ -363,6 +368,33 @@ interface ButtonTextCallback {
   }>
 }
 
+interface TitleLayerCallback {
+  type: 'titleLayer'
+  options: Readonly<{
+    input: string
+    layer: string
+  }>
+}
+
+interface InputSelectedIndexNameCallback {
+  type: 'inputSelectedIndexName'
+  options: Readonly<{
+    input: string
+    value1: boolean
+    value2: boolean
+  }>
+}
+
+interface MultiviewLayerCallback {
+  type: 'multiviewLayer '
+  options: Readonly<{
+    input: string
+    layer: number
+    value: boolean
+    value2: boolean
+  }>
+}
+
 // Callback type for Presets
 export type FeedbackCallbacks =
   // Tally
@@ -408,6 +440,11 @@ export type FeedbackCallbacks =
   | MixSelectCallback
   | ButtonShiftCallback
   | ButtonTextCallback
+
+  // DEPRECATED
+  | TitleLayerCallback
+  | InputSelectedIndexNameCallback
+  | MultiviewLayerCallback
 
 type TallySelection = '' | 'border' | 'cornerTL' | 'cornerTR' | 'cornerBL' | 'cornerBR' | 'full'
 
@@ -1624,6 +1661,164 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         const textSplit = instance.parseOption(feedback.options.text)[instance.buttonShift.state]
 
         return { text: (bank?.text || '') + (textSplit || '') }
+      },
+    },
+
+    // DEPRECATED
+    titleLayer: {
+      type: 'advanced',
+      label: '<DEPRECATED> Title - Layer',
+      description: 'Please use the available instance variables for text feedback',
+      options: [
+        options.input,
+        {
+          type: 'textinput',
+          label: 'Layer',
+          id: 'layer',
+          default: '',
+        },
+      ],
+      callback: (feedback, bank) => {
+        const input = instance.data.getInput(feedback.options.input)
+        let text
+
+        if (input && input.text) {
+          const layer = parseInt(feedback.options.layer, 10)
+
+          if (!isNaN(layer)) {
+            text = input.text.find((item) => item.index === layer)
+          } else {
+            text = input.text.find((item) => item.name === feedback.options.layer)
+          }
+        }
+
+        if (!bank) return
+
+        if (text && text.value) {
+          return { text: bank.text + text.value }
+        }
+
+        return
+      },
+    },
+
+    inputSelectedIndexName: {
+      type: 'advanced',
+      label: '<DEPRECATED> Slides/List - Show Selected Slide/Index Name',
+      description: 'Please use the available instance variables for text feedback',
+      options: [
+        options.input,
+        {
+          type: 'checkbox',
+          label: 'Show Index Name',
+          id: 'value1',
+          default: true,
+        },
+        {
+          type: 'checkbox',
+          label: 'Show Index nr.',
+          id: 'value2',
+          default: false,
+        },
+      ],
+      callback: (feedback, bank) => {
+        const input = instance.data.getInput(feedback.options.input)
+        let selectedTitle = ''
+
+        if (!input) return
+
+        if (input.type === 'VideoList' && input.list) {
+          if (feedback.options.value1 === true) {
+            selectedTitle = 'Empty List'
+            const filename = input.list.find((list) => list.selected === true)?.filename || ''
+
+            if (feedback.options.value2 === true) {
+              selectedTitle = ': ' + filename
+            } else {
+              selectedTitle = filename
+            }
+          }
+
+          if (feedback.options.value2 === true) {
+            selectedTitle = input.selectedIndex + selectedTitle
+          }
+        } else if (input.type === 'PowerPoint') {
+          selectedTitle = input.selectedIndex?.toString() || ''
+        }
+
+        if (!bank) return
+
+        if (bank.text != '') {
+          return { text: bank.text + `\\n${selectedTitle}` }
+        } else {
+          return { text: bank.text + `${selectedTitle}` }
+        }
+      },
+    },
+
+    multiviewLayer: {
+      type: 'advanced',
+      label: '<DEPRECATED> Layers / MultiView - Display what input is on X Layer',
+      description: 'Please use the available instance variables for text feedback',
+      options: [
+        options.input,
+        {
+          type: 'number',
+          label: 'Layer (1-10)',
+          id: 'layer',
+          default: 1,
+          min: 1,
+          max: 10,
+        },
+        {
+          type: 'checkbox',
+          label: 'Show input title',
+          id: 'value',
+          default: true,
+        },
+        {
+          type: 'checkbox',
+          label: 'Show input nr.',
+          id: 'value2',
+          default: false,
+        },
+      ],
+      callback: (feedback, bank) => {
+        const input = instance.data.getInput(feedback.options.input)
+        const layer = feedback.options.layer - 1
+        let text = ''
+
+        if (input && input.overlay) {
+          const overlay = input.overlay.find((item) => item.index === layer)
+
+          if (overlay) {
+            const shortTitle = instance.data.getInput(overlay.key)?.shortTitle || ''
+            const number = instance.data.getInput(overlay.key)?.number || ''
+
+            if (feedback.options.value2 == true) {
+              text = text + number
+            }
+
+            if (feedback.options.value == true && feedback.options.value2 == true) {
+              text = text + ' '
+            }
+
+            if (feedback.options.value == true) {
+              text = text + shortTitle
+            }
+          }
+        }
+
+        // if nothing is selected then only display what is int buttons title
+        if (text == '' || !bank) {
+          return
+        }
+
+        if (bank.text != '') {
+          return { text: bank.text + `\\n${text}` }
+        } else {
+          return { text: bank.text + `${text}` }
+        }
       },
     },
   }
