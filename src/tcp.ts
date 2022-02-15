@@ -66,6 +66,14 @@ export class TCP {
    * @description Create a TCP connection to vMix and start API polling
    */
   public readonly init = (): void => {
+    if (this.tcpHost === undefined || this.tcpPort === undefined) {
+      this.instance.log(
+        'warn',
+        `Unable to connect to vMix, please confugre a host and port in the instance configuration`
+      )
+      return
+    }
+
     // The functions socket is primary and controls the module status and startup of activator and xml sockets
     this.sockets.functions = new tcp(this.tcpHost, this.tcpPort)
 
@@ -126,7 +134,7 @@ export class TCP {
         if (message.startsWith('VERSION') || message.startsWith('SUBSCRIBE OK') || message === '') {
           return
         } else if (message.startsWith('ACTS OK')) {
-          this.instance.activators.parse(message.substr(8).trim())
+          if (this.instance.activators) this.instance.activators.parse(message.substr(8).trim())
         } else {
           this.instance.log('debug', `Unknown activator message: ${message}`)
         }
@@ -256,12 +264,31 @@ export class TCP {
         clearInterval(this.pollAPI)
       }
 
-      if (this.sockets.activator) this.sockets.activator.destroy()
-      if (this.sockets.functions) this.sockets.functions.destroy()
-      if (this.sockets.xml) this.sockets.xml.destroy()
+      this.tcpHost = this.instance.config.host
+      this.tcpPort = this.instance.config.tcpPort
 
-      this.init()
+      let ready = true
+
+      const destorySocket = (type: 'activator' | 'functions' | 'xml') => {
+        console.log('instance', this.instance)
+        const socket = this.sockets[type] as any
+        if (socket && (socket.connected || socket.socket.connecting)) {
+          socket.destroy()
+        } else {
+          if (socket !== null) {
+            this.instance.log('debug', `vMix socket error: Cannot update connections while they're initializing`)
+            ready = false
+          }
+        }
+      }
+
+      if (this.sockets.activator) destorySocket('activator')
+      if (this.sockets.functions) destorySocket('functions')
+      if (this.sockets.xml) destorySocket('xml')
+
+      if (ready) this.init()
     } else if (pollIntervalCheck) {
+      console.log(456)
       this.initXMLPolling()
     }
   }

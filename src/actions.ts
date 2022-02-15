@@ -1143,7 +1143,7 @@ export function getActions(instance: VMixInstance): VMixActions {
       const instanceVariable = RegExp(/\$\(([^:$)]+):([^)$]+)\)/)
 
       if (instanceVariable.test(param[1].toString())) {
-        const value = instance.variables.get(param[1].toString())
+        const value = instance.variables?.get(param[1].toString())
         return value === undefined ? param : [param[0], value]
       } else {
         return param
@@ -1158,7 +1158,7 @@ export function getActions(instance: VMixInstance): VMixActions {
       .map((param) => `${param[0]}=${encodeURIComponent(param[1])}`)
       .join('&')
 
-    instance.tcp.sendCommand(`FUNCTION ${functionName} ${params}`)
+    if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${functionName} ${params}`)
   }
 
   return {
@@ -1346,7 +1346,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           command += `&Input=${encodeURIComponent(input)}`
         }
 
-        instance.tcp.sendCommand(command)
+        if (instance.tcp) instance.tcp.sendCommand(command)
       },
     },
 
@@ -1387,7 +1387,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           command += ` value=${action.options.value}`
         }
 
-        instance.tcp.sendCommand(command)
+        if (instance.tcp) instance.tcp.sendCommand(command)
       },
     },
 
@@ -1514,11 +1514,12 @@ export function getActions(instance: VMixInstance): VMixActions {
           prefix = '-%3D'
         }
 
-        instance.tcp.sendCommand(
-          `FUNCTION ${action.options.functionID} Input=${encodeURIComponent(input)}&value=${prefix}${
-            action.options.value
-          }`
-        )
+        if (instance.tcp)
+          instance.tcp.sendCommand(
+            `FUNCTION ${action.options.functionID} Input=${encodeURIComponent(input)}&value=${prefix}${
+              action.options.value
+            }`
+          )
       },
     },
 
@@ -1580,11 +1581,12 @@ export function getActions(instance: VMixInstance): VMixActions {
       callback: (action) => {
         const input = instance.parseOption(action.options.input)[instance.buttonShift.state]
         const layer = instance.parseOption(action.options.layerInput)[instance.buttonShift.state]
-        instance.tcp.sendCommand(
-          `FUNCTION SetMultiViewOverlay Input=${encodeURIComponent(input)}&Value=${
-            action.options.layer
-          },${encodeURIComponent(layer)}`
-        )
+        if (instance.tcp)
+          instance.tcp.sendCommand(
+            `FUNCTION SetMultiViewOverlay Input=${encodeURIComponent(input)}&Value=${
+              action.options.layer
+            },${encodeURIComponent(layer)}`
+          )
       },
     },
 
@@ -1609,11 +1611,12 @@ export function getActions(instance: VMixInstance): VMixActions {
       ],
       callback: (action) => {
         const input = instance.parseOption(action.options.layerInput)[instance.buttonShift.state]
-        instance.tcp.sendCommand(
-          `FUNCTION SetMultiViewOverlay Input=${instance.data.mix[action.options.mix].preview}&Value=${
-            action.options.layer
-          },${encodeURIComponent(input)}`
-        )
+        if (instance.tcp)
+          instance.tcp.sendCommand(
+            `FUNCTION SetMultiViewOverlay Input=${instance.data.mix[action.options.mix].preview}&Value=${
+              action.options.layer
+            },${encodeURIComponent(input)}`
+          )
       },
     },
 
@@ -1638,11 +1641,12 @@ export function getActions(instance: VMixInstance): VMixActions {
       ],
       callback: (action) => {
         const input = instance.parseOption(action.options.layerInput)[instance.buttonShift.state]
-        instance.tcp.sendCommand(
-          `FUNCTION SetMultiViewOverlay Input=${instance.data.mix[action.options.mix].program}&Value=${
-            action.options.layer
-          },${encodeURIComponent(input)}`
-        )
+        if (instance.tcp)
+          instance.tcp.sendCommand(
+            `FUNCTION SetMultiViewOverlay Input=${instance.data.mix[action.options.mix].program}&Value=${
+              action.options.layer
+            },${encodeURIComponent(input)}`
+          )
       },
     },
 
@@ -1657,24 +1661,12 @@ export function getActions(instance: VMixInstance): VMixActions {
         },
       ],
       callback: (action) => {
-        const input = instance.data.getInput(
-          instance.parseOption(action.options.destinationInput)[instance.buttonShift.state]
-        )
-        let value = ''
+        const desination = instance.parseOption(action.options.destinationInput)[instance.buttonShift.state]
 
-        if (input !== null) {
-          const inputName = input.shortTitle
-            ? input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '')
-            : input.title.replace(/[^a-z0-9-_.]+/gi, '')
-          instance.routingData.layer.destinationInput = inputName
-          value = inputName
-        } else {
-          instance.routingData.layer.destinationInput = null
-        }
-
-        instance.variables.set({ layer_routing_input: value })
+        instance.routingData.layer.destinationInput = desination
         instance.checkFeedbacks('selectedDestinationInput')
         instance.checkFeedbacks('routableMultiviewLayer')
+        instance.variables?.updateVariables()
       },
     },
 
@@ -1690,17 +1682,17 @@ export function getActions(instance: VMixInstance): VMixActions {
       ],
       callback: (action) => {
         const layerOption = parseFloat(
-          instance.parseOption(action.options.destinationLayer)[instance.buttonShift.state]
+          instance.parseOption(action.options.destinationLayer + '')[instance.buttonShift.state]
         )
         const checkNaN = isNaN(layerOption)
         const checkValid = layerOption % 1 === 0 && layerOption > 0 && layerOption <= 10
 
         if (!checkNaN && checkValid) {
           instance.routingData.layer.destinationLayer = layerOption.toString()
-          instance.variables.set({ layer_routing_layer: layerOption })
 
           instance.checkFeedbacks('selectedDestinationLayer')
           instance.checkFeedbacks('routableMultiviewLayer')
+          instance.variables?.updateVariables()
         } else {
           instance.log('warn', `Setting Multview Destination layer must be a whole number, 1 to 10`)
         }
@@ -1725,11 +1717,12 @@ export function getActions(instance: VMixInstance): VMixActions {
           instance.routingData.layer.destinationLayer !== null
         ) {
           const inputValue = input === '0' || input === '' ? '' : input
-          instance.tcp.sendCommand(
-            `FUNCTION SetMultiViewOverlay Input=${instance.routingData.layer.destinationInput}&Value=${
-              instance.routingData.layer.destinationLayer
-            },${encodeURIComponent(inputValue)}`
-          )
+          if (instance.tcp)
+            instance.tcp.sendCommand(
+              `FUNCTION SetMultiViewOverlay Input=${encodeURIComponent(
+                instance.routingData.layer.destinationInput
+              )}&Value=${instance.routingData.layer.destinationLayer},${encodeURIComponent(inputValue)}`
+            )
         }
       },
     },
@@ -1744,7 +1737,7 @@ export function getActions(instance: VMixInstance): VMixActions {
         instance.checkFeedbacks('selectedDestinationInput')
         instance.checkFeedbacks('selectedDestinationLayer')
         instance.checkFeedbacks('routableMultiviewLayer')
-        instance.variables.updateVariables()
+        instance.variables?.updateVariables()
       },
     },
 
@@ -1763,9 +1756,10 @@ export function getActions(instance: VMixInstance): VMixActions {
       ],
       callback: (action) => {
         const input = instance.parseOption(action.options.input)[instance.buttonShift.state]
-        instance.tcp.sendCommand(
-          `FUNCTION SelectIndex Input=${encodeURIComponent(input)}&Value=${action.options.value}`
-        )
+        if (instance.tcp)
+          instance.tcp.sendCommand(
+            `FUNCTION SelectIndex Input=${encodeURIComponent(input)}&Value=${action.options.value}`
+          )
       },
     },
 
@@ -1870,7 +1864,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           command += `${action.options.functionID} Value=${action.options.value}`
         }
 
-        instance.tcp.sendCommand(command)
+        if (instance.tcp) instance.tcp.sendCommand(command)
       },
     },
 
@@ -1954,11 +1948,12 @@ export function getActions(instance: VMixInstance): VMixActions {
       ],
       callback: (action) => {
         const input = instance.parseOption(action.options.input)[instance.buttonShift.state]
-        instance.tcp.sendCommand(
-          `FUNCTION SetVolumeFade Value=${action.options.fadeMin},${action.options.fadeTime}&input=${encodeURIComponent(
-            input
-          )}`
-        )
+        if (instance.tcp)
+          instance.tcp.sendCommand(
+            `FUNCTION SetVolumeFade Value=${action.options.fadeMin},${
+              action.options.fadeTime
+            }&input=${encodeURIComponent(input)}`
+          )
       },
     },
 
@@ -2034,11 +2029,12 @@ export function getActions(instance: VMixInstance): VMixActions {
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10))
 
-        instance.tcp.sendCommand(
-          `FUNCTION ${action.options.functionID} Input=${encodeURIComponent(input)}&${
-            indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
-          }=${encodeURIComponent(index)}`
-        )
+        if (instance.tcp)
+          instance.tcp.sendCommand(
+            `FUNCTION ${action.options.functionID} Input=${encodeURIComponent(input)}&${
+              indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+            }=${encodeURIComponent(index)}`
+          )
       },
     },
 
@@ -2067,11 +2063,12 @@ export function getActions(instance: VMixInstance): VMixActions {
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10))
 
-        instance.tcp.sendCommand(
-          `FUNCTION SetCountdown Input=${encodeURIComponent(input)}&${
-            indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
-          }=${encodeURIComponent(index)}&value=${action.options.value}`
-        )
+        if (instance.tcp)
+          instance.tcp.sendCommand(
+            `FUNCTION SetCountdown Input=${encodeURIComponent(input)}&${
+              indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+            }=${encodeURIComponent(index)}&value=${action.options.value}`
+          )
       },
     },
 
@@ -2100,11 +2097,12 @@ export function getActions(instance: VMixInstance): VMixActions {
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10))
 
-        instance.tcp.sendCommand(
-          `FUNCTION ChangeCountdown Input=${encodeURIComponent(input)}&${
-            indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
-          }=${encodeURIComponent(index)}&value=${action.options.value}`
-        )
+        if (instance.tcp)
+          instance.tcp.sendCommand(
+            `FUNCTION ChangeCountdown Input=${encodeURIComponent(input)}&${
+              indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+            }=${encodeURIComponent(index)}&value=${action.options.value}`
+          )
       },
     },
 
@@ -2137,11 +2135,12 @@ export function getActions(instance: VMixInstance): VMixActions {
         if (isNaN(parseFloat(value)) || parseFloat(value) % 1 != 0) {
           instance.log('warn', "'Seconds' for adjusting a countdown must be a whole number")
         } else {
-          instance.tcp.sendCommand(
-            `FUNCTION AdjustCountdown Input=${encodeURIComponent(input)}&${
-              indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
-            }=${encodeURIComponent(index)}&Value=${value}`
-          )
+          if (instance.tcp)
+            instance.tcp.sendCommand(
+              `FUNCTION AdjustCountdown Input=${encodeURIComponent(input)}&${
+                indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+              }=${encodeURIComponent(index)}&Value=${value}`
+            )
         }
       },
     },
@@ -2179,11 +2178,12 @@ export function getActions(instance: VMixInstance): VMixActions {
         const indexNaNCheck = isNaN(parseInt(index, 10))
 
         if (action.options.adjustment === 'Set') {
-          instance.tcp.sendCommand(
-            `FUNCTION SetText Input=${encodeURIComponent(input)}&${
-              indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
-            }=${index}&Value=${text}`
-          )
+          if (instance.tcp)
+            instance.tcp.sendCommand(
+              `FUNCTION SetText Input=${encodeURIComponent(input)}&${
+                indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+              }=${index}&Value=${text}`
+            )
         } else {
           if (isNaN(parseFloat(text))) {
             instance.log('warn', 'Increasing/Decreasing a title requires Value to be a number')
@@ -2195,11 +2195,12 @@ export function getActions(instance: VMixInstance): VMixActions {
               text = '-%3d' + text
             }
 
-            instance.tcp.sendCommand(
-              `FUNCTION SetText Input=${encodeURIComponent(input)}&${
-                indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
-              }=${index}&Value=${text}`
-            )
+            if (instance.tcp)
+              instance.tcp.sendCommand(
+                `FUNCTION SetText Input=${encodeURIComponent(input)}&${
+                  indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+                }=${index}&Value=${text}`
+              )
           }
         }
       },
@@ -2233,11 +2234,12 @@ export function getActions(instance: VMixInstance): VMixActions {
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10))
 
-        instance.tcp.sendCommand(
-          `FUNCTION SetColor Input=${encodeURIComponent(input)}&${
-            indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
-          }=${index}&Value=${encodeURIComponent(value)}`
-        )
+        if (instance.tcp)
+          instance.tcp.sendCommand(
+            `FUNCTION SetColor Input=${encodeURIComponent(input)}&${
+              indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+            }=${index}&Value=${encodeURIComponent(value)}`
+          )
       },
     },
 
@@ -2424,9 +2426,10 @@ export function getActions(instance: VMixInstance): VMixActions {
       callback: (action) => {
         const input = instance.parseOption(action.options.input)[instance.buttonShift.state]
 
-        instance.tcp.sendCommand(
-          `FUNCTION ${action.options.functionID} Input=${action.options.inputType ? '0' : encodeURIComponent(input)}`
-        )
+        if (instance.tcp)
+          instance.tcp.sendCommand(
+            `FUNCTION ${action.options.functionID} Input=${action.options.inputType ? '0' : encodeURIComponent(input)}`
+          )
       },
     },
 
@@ -2467,9 +2470,10 @@ export function getActions(instance: VMixInstance): VMixActions {
           text = '-%3d' + text
         }
 
-        instance.tcp.sendCommand(
-          `FUNCTION SetPosition Input=${action.options.inputType ? '0' : encodeURIComponent(input)}&Value=${text}`
-        )
+        if (instance.tcp)
+          instance.tcp.sendCommand(
+            `FUNCTION SetPosition Input=${action.options.inputType ? '0' : encodeURIComponent(input)}&Value=${text}`
+          )
       },
     },
 
@@ -2500,9 +2504,10 @@ export function getActions(instance: VMixInstance): VMixActions {
       callback: (action) => {
         const input = instance.parseOption(action.options.input)[instance.buttonShift.state]
 
-        instance.tcp.sendCommand(
-          `FUNCTION ${action.options.functionID} Input=${action.options.inputType ? '0' : encodeURIComponent(input)}`
-        )
+        if (instance.tcp)
+          instance.tcp.sendCommand(
+            `FUNCTION ${action.options.functionID} Input=${action.options.inputType ? '0' : encodeURIComponent(input)}`
+          )
       },
     },
 
@@ -2864,8 +2869,9 @@ export function getActions(instance: VMixInstance): VMixActions {
           choices: [1, 2, 3, 4, 5, 6, 7, 8].map((item) => ({ id: item, label: `Camera ${item}` })),
         },
       ],
-      callback: (action) =>
-        instance.tcp.sendCommand(`FUNCTION ReplayToggleSelectedEventCamera${action.options.camera}`),
+      callback: (action) => {
+        if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ReplayToggleSelectedEventCamera${action.options.camera}`)
+      },
     },
 
     // Browser
@@ -2969,7 +2975,8 @@ export function getActions(instance: VMixInstance): VMixActions {
       ],
       callback: (action) => {
         const value = instance.parseOption(action.options.value)[instance.buttonShift.state]
-        instance.tcp.sendCommand(`FUNCTION SetDynamic${action.options.type}${action.options.number} Value=${value}`)
+        if (instance.tcp)
+          instance.tcp.sendCommand(`FUNCTION SetDynamic${action.options.type}${action.options.number} Value=${value}`)
       },
     },
 
@@ -3026,7 +3033,8 @@ export function getActions(instance: VMixInstance): VMixActions {
         const commandString = instance.parseOption(action.options.command)[instance.buttonShift.state]
         const command = commandString.split(' ')[0]
         const params = commandString.split(' ').slice(1, commandString.split(' ').length).join(' ')
-        instance.tcp.sendCommand(`FUNCTION ${command} ${action.options.encode ? encodeURIComponent(params) : params}`)
+        if (instance.tcp)
+          instance.tcp.sendCommand(`FUNCTION ${command} ${action.options.encode ? encodeURIComponent(params) : params}`)
       },
     },
 
@@ -3050,7 +3058,7 @@ export function getActions(instance: VMixInstance): VMixActions {
       ],
       callback: (action) => {
         instance.routingData.mix = action.options.mix
-        instance.variables.set({ mix_selected: action.options.mix + 1 })
+        instance.variables?.set({ mix_selected: action.options.mix + 1 })
         instance.checkFeedbacks('mixSelect', 'inputPreview', 'inputLive')
       },
     },

@@ -302,7 +302,7 @@ export class Variables {
         })
       }
 
-      for (let i = 0; i < 10; i++) {
+      for (let i = 1; i < 11; i++) {
         inputNumberVariables.add({
           label: `Input ${input.number} layer ${i} Name`,
           name: `input_${input.number}_layer_${i}_name`,
@@ -684,25 +684,40 @@ export class Variables {
         }
       }
 
-      for (let i = 0; i < 10; i++) {
-        const overlayInput = this.instance.data.getInput(input?.overlay?.[i]?.key || '')
+      for (let i = 1; i < 11; i++) {
+        newVariables[`input_${input.number}_layer_${i + 1}_name`] = ''
+        newVariables[`input_${input.number}_layer_${i + 1}_number`] = ''
+        newVariables[`input_${input.key}_layer_${i + 1}_name`] = ''
+        newVariables[`input_${input.key}_layer_${i + 1}_number`] = ''
+
+        if (useNamedInput) {
+          newVariables[`input_${inputName.toLowerCase()}_layer_${i + 1}_name`] = ''
+          newVariables[`input_${inputName.toLowerCase()}_layer_${i + 1}_number`] = ''
+        }
+      }
+
+      input.overlay?.forEach((layer) => {
+        const overlayInput = this.instance.data.getInput(layer.key)
         let overlayinputName = ''
 
         if (overlayInput)
           overlayinputName = overlayInput.shortTitle
-            ? overlayInput.shortTitle.replace(/[^a-z0-9-_.]+/gi, '')
-            : overlayInput.title.replace(/[^a-z0-9-_.]+/gi, '')
+            ? overlayInput.shortTitle.replace(/[^a-z0-9-_. ]+/gi, '')
+            : overlayInput.title.replace(/[^a-z0-9-_. ]+/gi, '')
 
-        newVariables[`input_${input.number}_layer_${i}_name`] = overlayinputName
-        newVariables[`input_${input.number}_layer_${i}_number`] = overlayInput?.number || ''
-        newVariables[`input_${input.key}_layer_${i}_name`] = overlayinputName
-        newVariables[`input_${input.key}_layer_${i}_number`] = overlayInput?.number || ''
+        newVariables[`input_${input.number}_layer_${layer.index + 1}_name`] = overlayinputName
+        newVariables[`input_${input.number}_layer_${layer.index + 1}_number`] = overlayInput?.number || ''
+        newVariables[`input_${input.number}_layer_${layer.index + 1}_key`] = overlayInput?.key || ''
+        newVariables[`input_${input.key}_layer_${layer.index + 1}_name`] = overlayinputName
+        newVariables[`input_${input.key}_layer_${layer.index + 1}_number`] = overlayInput?.number || ''
+        newVariables[`input_${input.key}_layer_${layer.index + 1}_key`] = overlayInput?.key || ''
 
         if (useNamedInput) {
-          newVariables[`input_${inputName.toLowerCase()}_layer_${i}_name`] = overlayinputName
-          newVariables[`input_${inputName.toLowerCase()}_layer_${i}_number`] = overlayInput?.number || ''
+          newVariables[`input_${inputName.toLowerCase()}_layer_${layer.index + 1}_name`] = overlayinputName
+          newVariables[`input_${inputName.toLowerCase()}_layer_${layer.index + 1}_number`] = overlayInput?.number || ''
+          newVariables[`input_${inputName.toLowerCase()}_layer_${layer.index + 1}_key`] = overlayInput?.key || ''
         }
-      }
+      })
 
       if (input.text) {
         input.text.forEach((textLayer) => {

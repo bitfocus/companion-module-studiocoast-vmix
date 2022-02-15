@@ -326,7 +326,7 @@ export class VMixData {
     let input
 
     if (typeof value !== 'number' && instanceVariable.test(value)) {
-      const getVariable = this.instance.variables.get(value)
+      const getVariable = this.instance.variables ? this.instance.variables.get(value) : undefined
       if (getVariable !== undefined) {
         parsedVariable = getVariable
       }
@@ -867,7 +867,7 @@ export class VMixData {
     // Trigger updates for changes
     if (changes.size > 0) {
       this.instance.checkFeedbacks(...changes)
-      this.instance.variables.updateVariables()
+      if (this.instance.variables) this.instance.variables.updateVariables()
     }
   }
 
@@ -880,7 +880,7 @@ export class VMixData {
       .then((newData) => {
         this.setData(newData)
 
-        if (!this.loaded) {
+        if (!this.loaded && this.instance.tcp) {
           this.loaded = true
           this.instance.tcp.initActivatorData()
         }

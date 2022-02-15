@@ -178,7 +178,7 @@ export class Activators {
   private executeBuffer = (): void => {
     this.instance.checkFeedbacks(...this.bufferFeedback)
     this.bufferFeedback.clear()
-    this.instance.variables.updateVariables()
+    if (this.instance.variables) this.instance.variables.updateVariables()
     this.bufferTimeout = null
   }
 

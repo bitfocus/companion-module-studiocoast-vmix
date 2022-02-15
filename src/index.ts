@@ -42,12 +42,8 @@ class VMixInstance extends instance_skel<Config> {
     super(system, id, config)
     this.system = system
     this.config = config
-    this.variables = new Variables(this)
-    this.activators = new Activators(this)
-    this.tcp = new TCP(this)
   }
-
-  public readonly activators
+  public activators: Activators | null = null
   public buttonShift: ButtonShift = {
     state: 0,
     blink: false,
@@ -65,8 +61,8 @@ class VMixInstance extends instance_skel<Config> {
     },
     mix: 0,
   }
-  public readonly tcp
-  public readonly variables
+  public tcp: TCP | null = null
+  public variables: Variables | null = null
 
   static GetUpgradeScripts(): CompanionStaticUpgradeScript[] {
     return getUpgrades()
@@ -76,6 +72,16 @@ class VMixInstance extends instance_skel<Config> {
    * @description triggered on instance being enabled
    */
   public init(): void {
+    // New Module warning
+    this.log(
+      'info',
+      `The vMix module has undergone a significant upgrade, please check all actions/feedbacks and if there are issues trying to delete the action/feedback and create it again`
+    )
+
+    this.variables = new Variables(this)
+    this.activators = new Activators(this)
+    this.tcp = new TCP(this)
+
     this.status(this.STATUS_WARNING, 'Connecting')
     this.updateInstance()
     this.setPresetDefinitions(getPresets(this) as CompanionPreset[])
@@ -116,16 +122,16 @@ class VMixInstance extends instance_skel<Config> {
     this.config = config
     this.updateInstance()
     this.setPresetDefinitions(getPresets(this) as CompanionPreset[])
-    this.tcp.update()
-    this.variables.updateDefinitions()
+    if (this.tcp) this.tcp.update()
+    if (this.variables) this.variables.updateDefinitions()
   }
 
   /**
    * @description close connections and stop timers/intervals
    */
   public readonly destroy = (): void => {
-    this.tcp.destroy()
-    this.activators.destroy()
+    if (this.tcp) this.tcp.destroy()
+    if (this.activators) this.activators.destroy()
     if (this.buttonShift.blinkInterval !== null) {
       clearInterval(this.buttonShift.blinkInterval)
     }
@@ -143,7 +149,7 @@ class VMixInstance extends instance_skel<Config> {
 
     return option.split(this.config.shiftDelimiter).map((value) => {
       if (instanceVariable.test(value)) {
-        return this.variables.get(value) || ''
+        return this.variables ? this.variables.get(value) || '' : ''
       } else {
         return value
       }

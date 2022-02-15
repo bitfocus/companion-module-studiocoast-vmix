@@ -1473,8 +1473,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         options.backgroundColorYellow,
       ],
       callback: (feedback) => {
-        //const getIndexValue = parseOption(feedback.options.selectedIndex) as string;
-        const getIndexValue = instance.parseOption(feedback.options.selectedIndex)
+        const getIndexValue = instance.parseOption(feedback.options.selectedIndex + '')
         let blink = false
         if (
           instance.routingData.layer.destinationLayer !== null &&

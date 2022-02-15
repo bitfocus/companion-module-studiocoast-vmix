@@ -229,7 +229,7 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript = (context, config, actions, f
       action.action = action.action.charAt(0).toLowerCase() + action.action.substr(1)
     }
 
-    // Oprion Changes
+    // Action Changes
     if (action.action === 'transitionMix') {
       action.options.duration = stringToInt(action.options.duration, 1000, 0, 9999)
     } else if (action.action === 'setTransitionDuration') {
@@ -255,7 +255,7 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript = (context, config, actions, f
       action.options.layerInput = action.options.LayerInput
       delete action.options.selectedIndex
       delete action.options.LayerInput
-    } else if (action.action === 'SetMultiViewOverlayDestinationLayer') {
+    } else if (action.action === 'setMultiViewOverlayDestinationLayer') {
       action.options.destinationLayer = action.options.destinationLayer + ''
     } else if (action.action === 'virtualSet') {
       action.options.selectedIndex = stringToInt(action.options.selectedIndex, 1, 1, 4) + ''
@@ -379,6 +379,26 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript = (context, config, actions, f
   return true
 }
 
+/* eslint-disable */
+const upgradeV2_0_6: CompanionStaticUpgradeScript = (_context, _config, actions, feedbacks) => {
+
+  actions.forEach(action => {
+    if (action.action === 'SetMultiViewOverlayDestinationLayer' || action.action === 'setMultiViewOverlayDestinationLayer') {
+      action.action = 'setMultiViewOverlayDestinationLayer'
+      action.options.destinationLayer = action.options.destinationLayer + ''
+    }
+  })
+
+  feedbacks.forEach(feedback => {
+    if (feedback.type === 'selectedDestinationLayer' || feedback.type === 'SelectedDestinationLayer') {
+      feedback.type = 'selectedDestinationLayer'
+      feedback.options.selectedIndex = feedback.options.selectedIndex + ''
+    }
+  })
+
+  return true
+}
+
 export const getUpgrades = (): CompanionStaticUpgradeScript[] => {
-  return [upgradeV1_2_0, upgradeV2_0_0]
+  return [upgradeV1_2_0, upgradeV2_0_0, upgradeV2_0_6]
 }
