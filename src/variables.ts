@@ -464,7 +464,7 @@ export class Variables {
     if (this.instance.config.variablesShowInputGUID) filteredVariables = [...filteredVariables, ...inputKeyVariables]
 
     // Prevent triggering a definitions update unless there's a change
-    if (!_.isEqual(filteredVariables, this.currentDefinitions)) {
+    if (!_.isEqual(filteredVariables, [...this.currentDefinitions])) {
       this.currentDefinitions = new Set(filteredVariables)
 
       this.instance.setVariableDefinitions(filteredVariables)
