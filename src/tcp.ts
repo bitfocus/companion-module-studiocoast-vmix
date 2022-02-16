@@ -270,7 +270,6 @@ export class TCP {
       let ready = true
 
       const destorySocket = (type: 'activator' | 'functions' | 'xml') => {
-        console.log('instance', this.instance)
         const socket = this.sockets[type] as any
         if (socket && (socket.connected || socket.socket.connecting)) {
           socket.destroy()
@@ -288,7 +287,6 @@ export class TCP {
 
       if (ready) this.init()
     } else if (pollIntervalCheck) {
-      console.log(456)
       this.initXMLPolling()
     }
   }
