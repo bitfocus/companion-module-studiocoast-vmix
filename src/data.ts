@@ -851,6 +851,9 @@ export class VMixData {
       changes.add('replaySelectedChannel')
     }
 
+    // Dynamic Input / Value
+    const dynamicChange = (!_.isEqual(newData.dynamicInput, this.dynamicInput) || !_.isEqual(newData.dynamicValue, this.dynamicValue))
+
     // Overwrite old data with new data
     this.version = newData.version
     this.edition = newData.edition
@@ -863,10 +866,14 @@ export class VMixData {
     this.status = newData.status
     this.replay = newData.replay
     this.channelMixer = newData.channelMixer
+    this.dynamicInput = newData.dynamicInput
+    this.dynamicValue = newData.dynamicValue
 
     // Trigger updates for changes
     if (changes.size > 0) {
       this.instance.checkFeedbacks(...changes)
+      if (this.instance.variables) this.instance.variables.updateVariables()
+    } else if (dynamicChange) {
       if (this.instance.variables) this.instance.variables.updateVariables()
     }
   }

@@ -99,6 +99,14 @@ export class TCP {
       this.instance.status(0)
       this.instance.log('debug', 'Connected Function Socket')
 
+      if (this.sockets.activator) {
+        this.sockets.activator.destroy()
+      }
+
+      if (this.sockets.xml) {
+        this.sockets.xml.destroy()
+      }
+
       this.sockets.activator = new tcp(this.tcpHost, this.tcpPort)
       this.sockets.xml = new tcp(this.tcpHost, this.tcpPort)
 
@@ -269,6 +277,7 @@ export class TCP {
 
       let ready = true
 
+      // Protect against edge case of attempting to destroy a socket that's not in a state where it can be destroyed
       const destorySocket = (type: 'activator' | 'functions' | 'xml') => {
         const socket = this.sockets[type] as any
         if (socket && (socket.connected || socket.socket.connecting)) {
