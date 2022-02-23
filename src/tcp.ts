@@ -280,7 +280,7 @@ export class TCP {
       // Protect against edge case of attempting to destroy a socket that's not in a state where it can be destroyed
       const destorySocket = (type: 'activator' | 'functions' | 'xml') => {
         const socket = this.sockets[type] as any
-        if (socket && (socket.connected || socket.socket.connecting)) {
+        if (socket && (socket.connected || socket.socket.connecting || socket.try_timer)) {
           socket.destroy()
         } else {
           if (socket !== null) {
