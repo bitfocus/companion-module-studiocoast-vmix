@@ -894,7 +894,8 @@ interface BrowserNavigateCallback {
   action: 'browserNavigate'
   options: Readonly<{
     input: string
-    url: string
+    value: string
+    url?: string
   }>
 }
 
@@ -2909,7 +2910,12 @@ export function getActions(instance: VMixInstance): VMixActions {
           default: '',
         },
       ],
-      callback: sendBasicCommand,
+      callback: (action) => {
+        if (instance.tcp)
+          instance.tcp.sendCommand(
+            `FUNCTION BrowserNavigate Input=${action.options.input}&Value=${action.options.url || action.options.value}`
+          )
+      },
     },
 
     // General

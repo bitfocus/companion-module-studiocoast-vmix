@@ -852,7 +852,8 @@ export class VMixData {
     }
 
     // Dynamic Input / Value
-    const dynamicChange = (!_.isEqual(newData.dynamicInput, this.dynamicInput) || !_.isEqual(newData.dynamicValue, this.dynamicValue))
+    const dynamicChange =
+      !_.isEqual(newData.dynamicInput, this.dynamicInput) || !_.isEqual(newData.dynamicValue, this.dynamicValue)
 
     // Overwrite old data with new data
     this.version = newData.version
