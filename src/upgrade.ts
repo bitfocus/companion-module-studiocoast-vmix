@@ -281,8 +281,8 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript = (context, config, actions, f
       action.action = 'controlCountdown'
       action.options.functionID = 'PauseCountdown'
       action.options.selectedIndex = action.options.selectedIndex + ''
-    } else if (action.action === 'SelectTitlePreset') {
-      action.options.value = action.options.selectedIndex
+    } else if (action.action === 'selectTitlePreset') {
+      action.options.value = action.options.selectedIndex + ''
       delete action.options.selectedIndex
     } else if (action.action === 'videoPlayhead') {
       action.options.value = stringToInt(action.options.value, 0, 0, Infinity)
