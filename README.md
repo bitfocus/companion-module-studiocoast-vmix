@@ -24,7 +24,7 @@ For some feedback, such as Tally and Layer Routing it's possible to enable 'blin
 
 
 # Recent Patches
-**V2.0.0**
+**V2.0.10**
 - Rewrite in TypeScript
 - Significant overhaul of instance variables
 - standardized actions/feedback/variables structure
@@ -35,5 +35,6 @@ For some feedback, such as Tally and Layer Routing it's possible to enable 'blin
 - Loads more Instance Variables
 - Deprecated titleLayer, inputSelectedIndexName, and multiviewLayer Feedbacks
 - Deprecated input_volume_${input.number} and input_volume_${inputName} instance variables
+- Numerous minor fixees
 
 Older patch notes available in [docs/PATCH_NOTES.md](./docs/PATCH_NOTES.md)
