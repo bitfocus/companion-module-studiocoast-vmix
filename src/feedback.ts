@@ -1576,7 +1576,8 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           if (feedback.options.layer === 0) {
             return inputYValue[state]?.overlay?.find((layer) => layer.key === inputXValue[state]) !== undefined
           } else {
-            return inputYValue[state]?.overlay?.[feedback.options.layer - 1]?.key === inputXValue[state]
+            const layer = inputYValue[state]?.overlay?.find((layer) => layer.index === feedback.options.layer - 1)
+            return layer?.key === inputXValue[state]
           }
         }
 
