@@ -855,6 +855,10 @@ export class VMixData {
     const dynamicChange =
       !_.isEqual(newData.dynamicInput, this.dynamicInput) || !_.isEqual(newData.dynamicValue, this.dynamicValue)
 
+    if (this.recording.duration !== newData.recording.duration) {
+      changes.add('recording')
+    }
+
     // Overwrite old data with new data
     this.version = newData.version
     this.edition = newData.edition
@@ -865,6 +869,7 @@ export class VMixData {
     this.mix = newData.mix
     this.audio = newData.audio
     this.status = newData.status
+    this.recording = newData.recording
     this.replay = newData.replay
     this.channelMixer = newData.channelMixer
     this.dynamicInput = newData.dynamicInput
