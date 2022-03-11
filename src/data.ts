@@ -384,6 +384,7 @@ export class VMixData {
             volume: parseFloat(input.$.volume || '100'),
             muted: input.$.muted,
             solo: input.$.solo,
+            selectedIndex: parseInt(input.$.selectedIndex, 10),
             panX: 0,
             panY: 0,
             zoomX: 1,

@@ -245,6 +245,19 @@ export class Variables {
         })
       })
 
+      inputNumberVariables.add({ label: `Input ${input.number} Muted`, name: `input_${input.number}_mute` })
+      inputNumberVariables.add({ label: `Input ${input.number} Audio`, name: `input_${input.number}_audio` })
+      inputNameVariables.add({
+        label: `Input ${input.shortTitle || input.title} Muted`,
+        name: `input_${inputName.toLowerCase()}_mute`,
+      })
+      inputNameVariables.add({
+        label: `Input ${input.shortTitle || input.title} Audio`,
+        name: `input_${inputName.toLowerCase()}_audio`,
+      })
+      inputKeyVariables.add({ label: `Input ${input.key} Muted`, name: `input_${input.key}_mute` })
+      inputKeyVariables.add({ label: `Input ${input.key} Audio`, name: `input_${input.key}_audio` })
+
       if (input.duration > 1) {
         inputNumberVariables.add({ label: `Input ${input.number} Duration`, name: `input_${input.number}_duration` })
         inputNameVariables.add({
@@ -614,11 +627,26 @@ export class Variables {
         const tallyProgram = this.instance.data.mix[0].programTally.includes(input.key).toString()
         newVariables[`input_${input.number}_mix_${mix.number}_tally_preview`] = tallyPreview
         newVariables[`input_${input.number}_mix_${mix.number}_tally_program`] = tallyProgram
-        newVariables[`input_${input.shortTitle || input.title}_mix_${mix.number}_tally_preview`] = tallyPreview
-        newVariables[`input_${input.shortTitle || input.title}_mix_${mix.number}_tally_program`] = tallyProgram
+        if (useNamedInput) {
+          newVariables[`input_${input.shortTitle || input.title}_mix_${mix.number}_tally_preview`] = tallyPreview
+          newVariables[`input_${input.shortTitle || input.title}_mix_${mix.number}_tally_program`] = tallyProgram
+        }
         newVariables[`input_${input.key}_mix_${mix.number}_tally_preview`] = tallyPreview
         newVariables[`input_${input.key}_mix_${mix.number}_tally_program`] = tallyProgram
       })
+
+      const inputAudio = input.muted === undefined ? false : input.muted
+
+      newVariables[`input_${input.number}_mute`] = inputAudio.toString()
+      newVariables[`input_${input.number}_audio`] = (!inputAudio).toString()
+
+      if (useNamedInput) {
+        newVariables[`input_${input.shortTitle || input.title}_mute`] = inputAudio.toString()
+        newVariables[`input_${input.shortTitle || input.title}_audio`] = (!inputAudio).toString()
+      }
+
+      newVariables[`input_${input.key}_mute`] = inputAudio.toString()
+      newVariables[`input_${input.key}_audio`] = (!inputAudio).toString()
 
       const meterF1 = input.meterF1 !== undefined ? volumeTodB(input.meterF1).toFixed(1) : ''
       const meterF2 = input.meterF2 !== undefined ? volumeTodB(input.meterF2).toFixed(1) : ''

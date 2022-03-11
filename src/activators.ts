@@ -272,6 +272,7 @@ export class Activators {
     } else if (params[0] === 'InputAudio') {
       input.muted = params[2] !== '1'
       this.updateBuffer('inputMute')
+      this.updateBuffer('inputAudio')
     } else if (params[0] === 'InputSolo') {
       input.solo = params[2] !== '0'
       this.updateBuffer('inputSolo')
