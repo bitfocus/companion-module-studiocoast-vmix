@@ -211,7 +211,27 @@ export class TCP {
         if (message.startsWith('<vmix>') && message.endsWith('</vmix>')) {
           this.instance.data.update(message)
         } else {
-          this.instance.log('debug', `Unknown TCP message: ${message}`)
+          // Debugging for issue #159
+          if (
+            this.messageBuffer.message.toString().includes('<vmix>') &&
+            this.messageBuffer.message.toString().includes('</vmix>')
+          ) {
+            const dataStart = this.messageBuffer.message.toString().indexOf('<vmix>')
+            const dataStop = this.messageBuffer.message.toString().indexOf('</vmix>')
+
+            if (dataStart !== -1 && dataStop !== -1) {
+              const data = this.messageBuffer.message.toString().slice(dataStart, dataStop + 7)
+              this.instance.log(
+                'debug',
+                `Message prefix issue - Message length: ${this.messageBuffer.message.length}, Buffer length: ${
+                  this.messageBuffer.dataLength
+                }, Full Message: ${this.messageBuffer.message.toString()}`
+              )
+              this.instance.data.update(data)
+            }
+          } else {
+            this.instance.log('debug', `Unknown TCP message: ${message}`)
+          }
         }
       }
     })
