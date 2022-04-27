@@ -85,6 +85,7 @@ export class TCP {
 
       this.instance.status(state, message)
       this.instance.connected = status === 0
+      this.instance.setVariable('connected_state', this.instance.connected.toString()); // update connected state variable as an exception to the normal variable updates
     })
 
     this.sockets.functions.on('error', (err: Error) => {

@@ -24,6 +24,9 @@ For some feedback, such as Tally and Layer Routing it's possible to enable 'blin
 
 
 # Recent Patches
+**V2.0.11**
+- Fix Connection Status Variable not updating when closing vmix
+
 **V2.0.10**
 - Rewrite in TypeScript
 - Significant overhaul of instance variables
