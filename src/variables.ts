@@ -559,16 +559,23 @@ export class Variables {
     const getOverlayInput = (id: number): Input | null => {
       const overlay = this.instance.data.overlays[id - 1]
 
-      return overlay?.input !== null ? this.instance.data.getInput(overlay.input) : null
+      return overlay && overlay.input !== null ? this.instance.data.getInput(overlay.input) : null
     }
 
     const overlays = [0, 1, 2, 3]
     overlays.forEach((id) => {
-      newVariables[`overlay_${id + 1}_input_name`] =
-        getOverlayInput(id + 1)?.shortTitle || getOverlayInput(id + 1)?.title || ''
-      newVariables[`overlay_${id + 1}_input`] = getOverlayInput(id + 1)?.number || ''
-      newVariables[`overlay_${id + 1}_pgm`] = (!this.instance.data.overlays[id].preview).toString()
-      newVariables[`overlay_${id + 1}_prv`] = this.instance.data.overlays[id].preview.toString()
+      if (this.instance.data.overlays[id] && this.instance.data.overlays[id].input !== null) {
+        newVariables[`overlay_${id + 1}_input_name`] =
+          getOverlayInput(id + 1)?.shortTitle || getOverlayInput(id + 1)?.title || ''
+        newVariables[`overlay_${id + 1}_input`] = getOverlayInput(id + 1)?.number || ''
+        newVariables[`overlay_${id + 1}_pgm`] = (!this.instance.data.overlays[id].preview).toString()
+        newVariables[`overlay_${id + 1}_prv`] = this.instance.data.overlays[id].preview.toString()
+      } else {
+        newVariables[`overlay_${id + 1}_input_name`] = ''
+        newVariables[`overlay_${id + 1}_input`] = ''
+        newVariables[`overlay_${id + 1}_pgm`] = 'false'
+        newVariables[`overlay_${id + 1}_prv`] = 'false'
+      }
     })
 
     // Layers
