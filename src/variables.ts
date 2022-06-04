@@ -501,7 +501,7 @@ export class Variables {
     newVariables['stream_2_active'] = this.instance.data.status.stream[1].toString()
     newVariables['stream_3_active'] = this.instance.data.status.stream[2].toString()
     newVariables['recording_active'] = this.instance.data.status.recording.toString()
-    newVariables['recording_duration'] = formatTime(this.instance.data.recording.duration, 's', 'mm:ss')
+    newVariables['recording_duration'] = formatTime(this.instance.data.recording.duration, 's', 'auto')
     newVariables['recording_hms'] = formatTime(this.instance.data.recording.duration, 's', 'hh:mm:ss')
 
     // Mix

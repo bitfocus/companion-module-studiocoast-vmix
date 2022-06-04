@@ -5,7 +5,7 @@ import {
   CompanionInputFieldTextInput,
 } from '../../../instance_skel_types'
 
-type TimeFormat = 'hh:mm:ss' | 'hh:mm:ss.ms' | 'mm:ss' | 'mm:ss.ms'
+type TimeFormat = 'hh:mm:ss' | 'hh:mm:ss.ms' | 'mm:ss' | 'mm:ss.ms' | 'auto'
 
 interface NumericDropdownChoice {
   id: number
@@ -228,11 +228,14 @@ export const formatTime = (time: number, interval: 'ms' | 's', format: TimeForma
   const timeMS = time * (interval === 'ms' ? 1 : 1000)
   const padding = (value: number): string => (value < 10 ? '0' + value : value.toString())
 
-  const hh = padding(Math.floor(timeMS / 360000))
+  const hh = padding(Math.floor(timeMS / 3600000))
   const mm = padding(Math.floor(timeMS / 60000) % 60)
   const ss = padding(Math.floor(timeMS / 1000) % 60)
   const ms = (timeMS % 1000) / 100
 
-  const result = `${format.includes('hh') ? `${hh}:` : ''}${mm}:${ss}${format.includes('ms') ? `.${ms}` : ''}`
-  return result
+  if (format === 'auto') {
+    return`${hh !== '00' ? hh + ':' : ''}${(mm !== '00' || hh !== '00') ? mm + ':' : ''}${ss}`
+  } else {
+    return`${format.includes('hh') ? `${hh}:` : ''}${mm}:${ss}${format.includes('ms') ? `.${ms}` : ''}`
+  }
 }
