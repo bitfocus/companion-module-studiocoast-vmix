@@ -1,5 +1,10 @@
 # Patch Notes
 
+**V2.1.0**
+- Added support for Companions instance HTTP requests
+- Added instance timers to support greater complexity that vMix native countdowns
+- Adjusted Audio - Input Mute feedback to use buttons foreground color when not muted
+
 **V2.0.15**
 - Fix time parsing for instance variables
 

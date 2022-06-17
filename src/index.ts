@@ -6,6 +6,8 @@ import {
   CompanionSystem,
   CompanionPreset,
   CompanionStaticUpgradeScript,
+  CompanionInstanceHTTPRequest,
+  CompanionInstanceHTTPResponse,
 } from '../../../instance_skel_types'
 import { Config } from './config'
 import { getActions } from './actions'
@@ -13,11 +15,19 @@ import { Activators } from './activators'
 import { getConfigFields } from './config'
 import { VMixData } from './data'
 import { getFeedbacks } from './feedback'
+import { httpHandler } from './http'
 import { getPresets } from './presets'
 import { Indicator } from './indicators'
 import { TCP } from './tcp'
+import { Timer } from './timers'
 import { getUpgrades } from './upgrade'
 import { Variables } from './variables'
+
+interface ButtonShift {
+  state: number
+  blink: boolean
+  blinkInterval: NodeJS.Timer | null
+}
 
 interface RoutingData {
   audio: Record<string, unknown>
@@ -26,12 +36,6 @@ interface RoutingData {
     destinationLayer: null | string
   }
   mix: 0 | 1 | 2 | 3
-}
-
-interface ButtonShift {
-  state: number
-  blink: boolean
-  blinkInterval: NodeJS.Timer | null
 }
 
 /**
@@ -62,6 +66,8 @@ class VMixInstance extends instance_skel<Config> {
     mix: 0,
   }
   public tcp: TCP | null = null
+  public timers: Timer[] = []
+  public timerInterval: NodeJS.Timer | null = null
   public variables: Variables | null = null
 
   static GetUpgradeScripts(): CompanionStaticUpgradeScript[] {
@@ -76,6 +82,12 @@ class VMixInstance extends instance_skel<Config> {
     this.log(
       'info',
       `The vMix module has undergone a significant upgrade, please check all actions/feedbacks and if there are issues trying to delete the action/feedback and create it again`
+    )
+
+    this.log(
+      'info',
+      `The vMix module now supports a HTTP api, allowing for integrations with 3rd party applications and providing Data Sources such as input information and controllable timers.
+    Find out more at https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/master/docs/HTTP_API.md`
     )
 
     this.variables = new Variables(this)
@@ -104,6 +116,10 @@ class VMixInstance extends instance_skel<Config> {
     }, 333)
 
     this.checkFeedbacks('mixSelect', 'buttonText')
+
+    this.timerInterval = setInterval(() => {
+      if (this.variables !== null && this.timers.length > 0) this.variables.updateTimerVariables()
+    }, 100)
   }
 
   /**
@@ -135,6 +151,7 @@ class VMixInstance extends instance_skel<Config> {
     if (this.buttonShift.blinkInterval !== null) {
       clearInterval(this.buttonShift.blinkInterval)
     }
+    if (this.timerInterval) clearInterval(this.timerInterval)
 
     this.log('debug', `Instance destroyed: ${this.id}`)
   }
@@ -166,6 +183,14 @@ class VMixInstance extends instance_skel<Config> {
 
     this.setActions(actions)
     this.setFeedbackDefinitions(feedbacks)
+  }
+
+  /**
+   * @param request HTTP request from Companion
+   * @returns HTTP response
+   */
+  public handleHttpRequest(request: CompanionInstanceHTTPRequest): Promise<CompanionInstanceHTTPResponse> {
+    return httpHandler(this, request)
   }
 }
 

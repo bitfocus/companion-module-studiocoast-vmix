@@ -469,6 +469,24 @@ export class Variables {
       }
     })
 
+    this.instance.timers.forEach((timer) => {
+      const formats = ['hh:mm:ss', 'mm:ss', 'mm:ss.ms', 'mm:ss.sss']
+      const dataArr = [
+        timer.get({ defaultValue: '00:00:00', format: 'hh:mm:ss' }),
+        timer.get({ defaultValue: '00:00', format: 'mm:ss' }),
+        timer.get({ defaultValue: '00:00.0', format: 'mm:ss.ms' }),
+        timer.get({ defaultValue: '00:00.000', format: 'mm:ss.sss' }),
+      ]
+
+      dataArr.forEach((data, index) => {
+        const prefix = `timer_${timer.id}_${formats[index]}_`
+
+        for (const key in data) {
+          variables.add({ label: `Timer ${timer.id} ${formats[index]} ${key}`, name: prefix + key })
+        }
+      })
+    })
+
     // Filter variables displayed based on Config settings
     let filteredVariables = [...variables]
     if (this.instance.config.variablesShowInputs) filteredVariables = [...filteredVariables, ...inputNameVariables]
@@ -482,6 +500,33 @@ export class Variables {
 
       this.instance.setVariableDefinitions(filteredVariables)
     }
+  }
+
+  /**
+   * @description Update variables for Timers
+   */
+  public readonly updateTimerVariables = (): void => {
+    const newVariables: InstanceVariableValue = {}
+
+    this.instance.timers.forEach((timer) => {
+      const formats = ['hh:mm:ss', 'mm:ss', 'mm:ss.ms', 'mm:ss.sss']
+      const dataArr = [
+        timer.get({ defaultValue: '00:00:00', format: 'hh:mm:ss' }),
+        timer.get({ defaultValue: '00:00', format: 'mm:ss' }),
+        timer.get({ defaultValue: '00:00.0', format: 'mm:ss.ms' }),
+        timer.get({ defaultValue: '00:00.000', format: 'mm:ss.sss' }),
+      ]
+
+      dataArr.forEach((data, index) => {
+        const prefix = `timer_${timer.id}_${formats[index]}_`
+
+        for (const key in data) {
+          newVariables[prefix + key] = data[key]
+        }
+      })
+    })
+
+    this.set(newVariables)
   }
 
   /**

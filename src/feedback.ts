@@ -853,7 +853,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         if (input.muted) {
           return { color: feedback.options.fg, bgcolor: feedback.options.bgMuted }
         } else {
-          return { color: feedback.options.fg, bgcolor: feedback.options.bgLive }
+          return { bgcolor: feedback.options.bgLive }
         }
       },
     },

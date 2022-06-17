@@ -1,5 +1,6 @@
 import { CompanionActionEventInfo, CompanionActionEvent, SomeCompanionInputField } from '../../../instance_skel_types'
 import { options, TRANSITIONS } from './utils'
+import { Timer } from './timers'
 import VMixInstance from './index'
 
 type ActionOptionEntry = [string, string | number | boolean]
@@ -132,6 +133,10 @@ export interface VMixActions {
   // Util
   mixSelect: VMixAction<MixSelectCallback>
   buttonShift: VMixAction<ButtonShiftCallback>
+  dataSourceTimer: VMixAction<DataSourceTimer>
+  dataSourceTimerSet: VMixAction<DataSourceTimerSet>
+  dataSourceTimerCreateTime: VMixAction<DataSourceTimerCreateTime>
+  dataSourceTimerUpdateTime: VMixAction<DataSourceTimerUpdateTime>
 
   // Index signature
   [key: string]: VMixAction<any>
@@ -516,6 +521,7 @@ interface SetTextCallback {
     value: string
   }>
 }
+
 interface SetColorCallback {
   action: 'setColor'
   options: Readonly<{
@@ -964,6 +970,40 @@ interface ButtonShiftCallback {
   options: Record<string, never>
 }
 
+interface DataSourceTimer {
+  action: 'dataSourceTimer'
+  options: Readonly<{
+    id: string
+    state: 'start' | 'stop' | 'reset'
+  }>
+}
+
+interface DataSourceTimerSet {
+  action: 'dataSourceTimerSet'
+  options: Readonly<{
+    id: string
+    time: string
+  }>
+}
+
+interface DataSourceTimerCreateTime {
+  action: 'dataSourceTimerCreateTime'
+  options: Readonly<{
+    id: string
+    time: number
+  }>
+}
+
+interface DataSourceTimerUpdateTime {
+  action: 'dataSourceTimerCreateTime'
+  options: Readonly<{
+    id: string
+    type: 'set' | 'reset'
+    time: number
+    value: string
+  }>
+}
+
 export type ActionCallbacks =
   // Input
   | PreviewInputCallback
@@ -1091,6 +1131,9 @@ export type ActionCallbacks =
   // Util
   | MixSelectCallback
   | ButtonShiftCallback
+  | DataSourceTimer
+  | DataSourceTimerCreateTime
+  | DataSourceTimerUpdateTime
 
 // Force options to have a default to prevent sending undefined values
 type InputFieldWithDefault = Exclude<SomeCompanionInputField, 'default'> & { default: string | number | boolean | null }
@@ -3092,6 +3135,138 @@ export function getActions(instance: VMixInstance): VMixActions {
         ]
 
         instance.checkFeedbacks(...feedbacks)
+      },
+    },
+
+    dataSourceTimer: {
+      label: 'Util - DataSource Timer State',
+      description: '',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'State',
+          id: 'state',
+          default: 'start',
+          choices: [
+            { id: 'start', label: 'Start' },
+            { id: 'stop', label: 'Stop' },
+            { id: 'reset', label: 'Reset' },
+          ],
+        },
+        {
+          type: 'textinput',
+          label: 'Timer ID',
+          id: 'id',
+          default: '',
+        },
+      ],
+      callback: (action) => {
+        if (action.options.id === '') return
+
+        let timer = instance.timers.find((timer) => timer.id === action.options.id)
+        if (!timer) {
+          timer = new Timer(action.options.id)
+          timer.setState(action.options.state)
+
+          instance.timers.push(timer)
+        } else {
+          timer.setState(action.options.state)
+        }
+      },
+    },
+
+    dataSourceTimerSet: {
+      label: 'Util - DataSource Timer Set Time',
+      description: '',
+      options: [
+        {
+          type: 'textinput',
+          label: 'Timer ID',
+          id: 'id',
+          default: '',
+        },
+        {
+          type: 'textinput',
+          label: 'Time',
+          id: 'time',
+          default: '00:00:00.000',
+        },
+      ],
+      callback: (action) => {
+        const timer = instance.timers.find((timer) => timer.id === action.options.id)
+        if (!timer) return
+
+        timer.setStart(action.options.time)
+      },
+    },
+
+    dataSourceTimerCreateTime: {
+      label: 'Util - DataSource Timer Create Laptime',
+      description: '',
+      options: [
+        {
+          type: 'textinput',
+          label: 'Timer ID',
+          id: 'id',
+          default: '',
+        },
+        {
+          type: 'number',
+          label: 'Lap ID (0 for next lap)',
+          id: 'time',
+          default: 0,
+          min: 0,
+          max: 1000,
+        },
+      ],
+      callback: (action) => {
+        const timer = instance.timers.find((timer) => timer.id === action.options.id)
+        if (!timer) return
+
+        timer.setTime(action.options.time, new Date().getTime())
+      },
+    },
+
+    dataSourceTimerUpdateTime: {
+      label: 'Util - DataSource Timer Update Time',
+      description: '',
+      options: [
+        {
+          type: 'textinput',
+          label: 'Timer ID',
+          id: 'id',
+          default: '',
+        },
+        {
+          type: 'dropdown',
+          label: 'State',
+          id: 'type',
+          default: 'set',
+          choices: [
+            { id: 'set', label: 'Set' },
+            { id: 'reset', label: 'Reset' },
+          ],
+        },
+        {
+          type: 'number',
+          label: 'Lap ID',
+          id: 'time',
+          default: 1,
+          min: 1,
+          max: 1000,
+        },
+        {
+          type: 'textinput',
+          label: 'Time',
+          id: 'value',
+          default: '00:00:00.000',
+        },
+      ],
+      callback: (action) => {
+        const timer = instance.timers.find((timer) => timer.id === action.options.id)
+        if (!timer) return
+
+        timer.setTime(action.options.time, action.options.type === 'set' ? action.options.value : undefined)
       },
     },
   }

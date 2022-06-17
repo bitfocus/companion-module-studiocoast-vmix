@@ -5,7 +5,7 @@ import {
   CompanionInputFieldTextInput,
 } from '../../../instance_skel_types'
 
-type TimeFormat = 'hh:mm:ss' | 'hh:mm:ss.ms' | 'mm:ss' | 'mm:ss.ms' | 'auto'
+export type TimeFormat = 'hh:mm:ss' | 'hh:mm:ss.ms' | 'mm:ss' | 'mm:ss.ms' | 'mm:ss.sss' | 'auto'
 
 interface NumericDropdownChoice {
   id: number
@@ -231,11 +231,37 @@ export const formatTime = (time: number, interval: 'ms' | 's', format: TimeForma
   const hh = padding(Math.floor(timeMS / 3600000))
   const mm = padding(Math.floor(timeMS / 60000) % 60)
   const ss = padding(Math.floor(timeMS / 1000) % 60)
-  const ms = (timeMS % 1000) / 100
+  const ms = Math.floor((timeMS % 1000) / 100)
+  let sss: string | number = timeMS % 1000
+  if (sss < 10) {
+    sss = '00' + sss
+  } else if (sss < 100) {
+    sss = '0' + sss
+  }
 
   if (format === 'auto') {
-    return`${hh !== '00' ? hh + ':' : ''}${(mm !== '00' || hh !== '00') ? mm + ':' : ''}${ss}`
+    return `${hh !== '00' ? hh + ':' : ''}${mm !== '00' || hh !== '00' ? mm + ':' : ''}${ss}`
   } else {
-    return`${format.includes('hh') ? `${hh}:` : ''}${mm}:${ss}${format.includes('ms') ? `.${ms}` : ''}`
+    return `${format.includes('hh') ? `${hh}:` : ''}${mm}:${ss}${format.includes('ms') ? `.${ms}` : ''}${
+      format.includes('sss') ? `.${sss}` : ''
+    }`
   }
+}
+
+/**
+ * @param value time in hh:mm:ss or hh:mm:ss.SSS format
+ * @returns time in ms or null if not parseable
+ * @description parses time string
+ */
+export const parseTime = (value: string): number | null => {
+  const timeSplit = value.split(':')
+  if (timeSplit.length !== 3) return null
+
+  const hh = parseFloat(timeSplit[0])
+  const mm = parseFloat(timeSplit[1])
+  const ss = parseFloat(timeSplit[2])
+
+  const ms = ss * 1000 + mm * 60 * 1000 + hh * 60 * 60 * 1000
+
+  return ms
 }

@@ -22,25 +22,14 @@ The ability to modify the action and feedback options by using the Toggle Shift 
 
 For some feedback, such as Tally and Layer Routing it's possible to enable 'blinking' which causes the feedback to indicate a solid color if the current Shift layer is active, or flash that color if it's an one of the inactive Shift layers that is showing feedback. For example, if you have a feedback to show the preview with the input set to "Cam1/Cam2", when shift is not toggled it would show a solid green when "Cam1" is in preview, or flash if "cam2" is in preivew, and when Shift is toggled on the reverse would happen.
 
+# HTTP API
+This module now supports Companions HTTP API, providing endpoints that can be used by 3rd party applications, and as a Data Source in vMix itself. Information on the API endpoints is available in [docs/HTTP_API.md](./docs/HTTP_API.md)
 
 # Recent Patches
-**V2.0.15**
-- Fix time parsing for instance variables
+**V2.1.0**
+- Added support for Companions instance HTTP requests
+- Added instance timers to support greater complexity that vMix native countdowns
+- Adjusted Audio - Input Mute feedback to use buttons foreground color when not muted
 
-**V2.0.14**
-- Fix Connection Status Variable not updating when closing vmix
-
-**V2.0.10**
-- Rewrite in TypeScript
-- Significant overhaul of instance variables
-- standardized actions/feedback/variables structure
-- 3 TCP sockets to split traffic for XML data, Activators, and Functions
-- Better TCP message handling
-- Added vMix v25 Actions, Feedback, and Activator handlers
-- Added button shifting feature
-- Loads more Instance Variables
-- Deprecated titleLayer, inputSelectedIndexName, and multiviewLayer Feedbacks
-- Deprecated input_volume_${input.number} and input_volume_${inputName} instance variables
-- Numerous minor fixees
 
 Older patch notes available in [docs/PATCH_NOTES.md](./docs/PATCH_NOTES.md)
