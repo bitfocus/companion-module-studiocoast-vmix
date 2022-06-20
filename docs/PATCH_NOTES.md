@@ -1,5 +1,9 @@
 # Patch Notes
 
+**V2.1.1**
+- Fixed some HTTP request types
+- Fixed some variable names
+
 **V2.1.0**
 - Added support for Companions instance HTTP requests
 - Added instance timers to support greater complexity that vMix native countdowns

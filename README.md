@@ -26,6 +26,10 @@ For some feedback, such as Tally and Layer Routing it's possible to enable 'blin
 This module now supports Companions HTTP API, providing endpoints that can be used by 3rd party applications, and as a Data Source in vMix itself. Information on the API endpoints is available in [docs/HTTP_API.md](./docs/HTTP_API.md)
 
 # Recent Patches
+**V2.1.1**
+- Fixed some HTTP request types
+- Fixed some variable names
+
 **V2.1.0**
 - Added support for Companions instance HTTP requests
 - Added instance timers to support greater complexity that vMix native countdowns
