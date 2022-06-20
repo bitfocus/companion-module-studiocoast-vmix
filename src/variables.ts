@@ -682,6 +682,8 @@ export class Variables {
         if (useNamedInput) {
           newVariables[`input_${input.shortTitle || input.title}_mix_${mix.number}_tally_preview`] = tallyPreview
           newVariables[`input_${input.shortTitle || input.title}_mix_${mix.number}_tally_program`] = tallyProgram
+          newVariables[`input_${inputName.toLowerCase()}_mix_${mix.number}_tally_preview`] = tallyPreview
+          newVariables[`input_${inputName.toLowerCase()}_mix_${mix.number}_tally_program`] = tallyProgram
         }
         newVariables[`input_${input.key}_mix_${mix.number}_tally_preview`] = tallyPreview
         newVariables[`input_${input.key}_mix_${mix.number}_tally_program`] = tallyProgram
@@ -695,6 +697,8 @@ export class Variables {
       if (useNamedInput) {
         newVariables[`input_${input.shortTitle || input.title}_mute`] = inputAudio.toString()
         newVariables[`input_${input.shortTitle || input.title}_audio`] = (!inputAudio).toString()
+        newVariables[`input_${inputName.toLowerCase()}_mute`] = inputAudio.toString()
+        newVariables[`input_${inputName.toLowerCase()}_audio`] = (!inputAudio).toString()
       }
 
       newVariables[`input_${input.key}_mute`] = inputAudio.toString()
@@ -764,7 +768,7 @@ export class Variables {
         }
       }
 
-      for (let i = 1; i < 11; i++) {
+      for (let i = 0; i < 10; i++) {
         newVariables[`input_${input.number}_layer_${i + 1}_name`] = ''
         newVariables[`input_${input.number}_layer_${i + 1}_number`] = ''
         newVariables[`input_${input.key}_layer_${i + 1}_name`] = ''
