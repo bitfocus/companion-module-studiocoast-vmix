@@ -32,7 +32,7 @@ interface Endpoints {
  * @description Creates a basic HTTP request to be used internally to call the HTTP handler functions
  */
 export const defaultHTTPRequest = (): CompanionInstanceHTTPRequest => {
-  return { method: 'GET', path: '', headers: {}, baseURL: '', hostname: '', ip: '', originalURL: '', query: {} }
+  return { method: 'GET', path: '', headers: {}, baseUrl: '', hostname: '', ip: '', originalUrl: '', query: {} }
 }
 
 /**
