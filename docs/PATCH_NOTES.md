@@ -1,5 +1,10 @@
 # Patch Notes
 
+**V2.1.2**
+- Added v26 support for 15 Mixes
+- Fixed selected mix on setMultiviewOverlay
+- Fixed some missing variables for Mixes
+
 **V2.1.1**
 - Fixed some HTTP request types
 - Fixed some variable names
