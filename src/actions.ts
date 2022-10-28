@@ -961,7 +961,7 @@ interface CommandCallback {
 interface MixSelectCallback {
   action: 'mixSelect'
   options: Readonly<{
-    mix: 0 | 1 | 2 | 3
+    mix: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14
   }>
 }
 
@@ -3106,6 +3106,17 @@ export function getActions(instance: VMixInstance): VMixActions {
             { id: 1, label: '2' },
             { id: 2, label: '3' },
             { id: 3, label: '4' },
+            { id: 4, label: '5' },
+            { id: 5, label: '6' },
+            { id: 6, label: '7' },
+            { id: 7, label: '8' },
+            { id: 8, label: '9' },
+            { id: 9, label: '10' },
+            { id: 10, label: '1' },
+            { id: 11, label: '12' },
+            { id: 12, label: '13' },
+            { id: 13, label: '14' },
+            { id: 14, label: '15' },
           ],
         },
       ],

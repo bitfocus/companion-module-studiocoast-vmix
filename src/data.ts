@@ -163,7 +163,7 @@ export interface VMixData {
   inputs: Input[]
   overlays: Overlay[]
   transitions: Transition[]
-  mix: [Mix, Mix, Mix, Mix]
+  mix: Mix[]
   audio: AudioBus[]
   status: Status
   recording: Recording
@@ -208,7 +208,7 @@ export class VMixData {
   inputs: Input[]
   overlays: Overlay[]
   transitions: Transition[]
-  mix: [Mix, Mix, Mix, Mix]
+  mix: Mix[]
   audio: AudioBus[]
   status: Status
   recording: Recording
@@ -226,40 +226,17 @@ export class VMixData {
     this.inputs = []
     this.overlays = []
     this.transitions = []
-    this.mix = [
-      {
-        number: 1,
-        active: true,
+    this.mix = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((mixNumber) => {
+      return {
+        number: mixNumber,
+        active: mixNumber === 1,
         preview: 0,
         program: 0,
         previewTally: [],
         programTally: [],
-      },
-      {
-        number: 2,
-        active: false,
-        preview: 0,
-        program: 0,
-        previewTally: [],
-        programTally: [],
-      },
-      {
-        number: 3,
-        active: false,
-        preview: 0,
-        program: 0,
-        previewTally: [],
-        programTally: [],
-      },
-      {
-        number: 4,
-        active: false,
-        preview: 0,
-        program: 0,
-        previewTally: [],
-        programTally: [],
-      },
-    ]
+      }
+    })
+
     this.audio = []
     this.status = {
       fadeToBlack: false,
