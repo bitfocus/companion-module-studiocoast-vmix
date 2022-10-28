@@ -535,6 +535,44 @@ export class Variables {
   public readonly updateVariables = (): void => {
     const newVariables: InstanceVariableValue = {}
 
+    const calcDuration = (input: Input): { mm: string; ss: string; ms: string } | null => {
+      if (input.duration > 1) {
+        const inPosition = input.markIn ? input.markIn : 0
+        const outPosition = input.markOut ? input.markOut : input.duration
+        const duration = outPosition - inPosition
+        const padding = (time: number): string => (time < 10 ? '0' + time : time + '')
+
+        const mm = (time: number): string => padding(Math.floor(time / 60000))
+        const ss = (time: number): string => padding(Math.floor(time / 1000) % 60)
+        const ms = (time: number): string => Math.floor((time / 100) % 10) + ''
+
+        return { mm: mm(duration), ss: ss(duration), ms: ms(duration) }
+      }
+
+      return null
+    }
+
+    const calcRemaining = (input: Input): { ss: string; ssms: string; mmss: string; mmssms: string } | null => {
+      if (input.position !== undefined) {
+        const inPosition = input.position
+        const outPosition = input.markOut ? input.markOut : input.duration
+        const duration = outPosition - inPosition
+        const padding = (time: number): string => (time < 10 ? '0' + time : time + '')
+
+        const mm = (time: number): string => padding(Math.floor(time / 60000))
+        const ss = (time: number): string => padding(Math.floor(time / 1000) % 60)
+        const ms = (time: number): string => Math.floor((time / 100) % 10) + ''
+
+        return {
+          ss: `${padding(Math.floor(duration / 1000))}`,
+          ssms: `${padding(Math.floor(duration / 1000))}.${ms(duration)}`,
+          mmss: `${mm(duration)}:${ss(duration)}`,
+          mmssms: `${mm(duration)}:${ss(duration)}.${ms(duration)}`,
+        }
+      }
+      return null
+    }
+
     // Status
     newVariables['connected_state'] = this.instance.connected.toString()
     newVariables['ftb_active'] = this.instance.data.status.fadeToBlack.toString()
@@ -552,16 +590,63 @@ export class Variables {
     // Mix
     const mixId = [0, 1, 2, 3]
     mixId.forEach((id) => {
-      newVariables[`mix_${id + 1}_program`] = this.instance.data.mix[id].program
-      newVariables[`mix_${id + 1}_program_name`] = this.instance.data.getInputTitle(this.instance.data.mix[id].program)
-      newVariables[`mix_${id + 1}_program_guid`] = this.instance.data.getInput(this.instance.data.mix[id].program)
-        ? this.instance.data.getInput(this.instance.data.mix[id].program)?.key
-        : ''
-      newVariables[`mix_${id + 1}_preview`] = this.instance.data.mix[id].preview
-      newVariables[`mix_${id + 1}_preview_name`] = this.instance.data.getInputTitle(this.instance.data.mix[id].preview)
-      newVariables[`mix_${id + 1}_preview_guid`] = this.instance.data.getInput(this.instance.data.mix[id].preview)
-        ? this.instance.data.getInput(this.instance.data.mix[id].preview)?.key
-        : ''
+      const mixProgramInput = this.instance.data.getInput(this.instance.data.mix[id].program)
+      const mixPreviewInput = this.instance.data.getInput(this.instance.data.mix[id].preview)
+
+      if (mixProgramInput) {
+        const inputAudio = mixProgramInput.muted === undefined ? false : mixProgramInput.muted
+        newVariables[`mix_${id + 1}_program`] = this.instance.data.mix[id].program
+        newVariables[`mix_${id + 1}_program_name`] = this.instance.data.getInputTitle(
+          this.instance.data.mix[id].program
+        )
+        newVariables[`mix_${id + 1}_program_guid`] = mixProgramInput ? mixProgramInput?.key : ''
+        newVariables[`mix_${id + 1}_program_audio`] = (!inputAudio).toString()
+        newVariables[`mix_${id + 1}_program_meterf1`] = mixProgramInput.meterF1
+        newVariables[`mix_${id + 1}_program_meterf2`] = mixProgramInput.meterF2
+
+        const inputDuration = calcDuration(mixProgramInput)
+
+        if (inputDuration !== null) {
+          newVariables[`mix_${id + 1}_program_duration`] = `${inputDuration.mm}:${inputDuration.ss}.${inputDuration.ms}`
+        }
+
+        const inputRemaining = calcRemaining(mixProgramInput)
+
+        if (inputRemaining !== null) {
+          newVariables[`mix_${id + 1}_program_remaining_ss`] = inputRemaining.ss
+          newVariables[`mix_${id + 1}_program_remaining_ss.ms`] = inputRemaining.ssms
+          newVariables[`mix_${id + 1}_program_remaining_mm:ss`] = inputRemaining.mmss
+          newVariables[`mix_${id + 1}_program_remaining_mm:ss.ms`] = inputRemaining.mmssms
+        }
+      }
+
+      if (mixPreviewInput) {
+        const inputAudio = mixPreviewInput.muted === undefined ? false : mixPreviewInput.muted
+        newVariables[`mix_${id + 1}_preview`] = this.instance.data.mix[id].preview
+        newVariables[`mix_${id + 1}_preview_name`] = this.instance.data.getInputTitle(
+          this.instance.data.mix[id].preview
+        )
+        newVariables[`mix_${id + 1}_preview_guid`] = mixPreviewInput?.key
+        newVariables[`mix_${id + 1}_preview_mute`] = inputAudio.toString()
+        newVariables[`mix_${id + 1}_preview_audio`] = (!inputAudio).toString()
+        newVariables[`mix_${id + 1}_preview_meterf1`] = mixPreviewInput.meterF1
+        newVariables[`mix_${id + 1}_preview_meterf2`] = mixPreviewInput.meterF2
+
+        const inputDuration = calcDuration(mixPreviewInput)
+
+        if (inputDuration !== null) {
+          newVariables[`mix_${id + 1}_preview_duration`] = `${inputDuration.mm}:${inputDuration.ss}.${inputDuration.ms}`
+        }
+
+        const inputRemaining = calcRemaining(mixPreviewInput)
+
+        if (inputRemaining !== null) {
+          newVariables[`mix_${id + 1}_preview_remaining_ss`] = inputRemaining.ss
+          newVariables[`mix_${id + 1}_preview_remaining_ss.ms`] = inputRemaining.ssms
+          newVariables[`mix_${id + 1}_preview_remaining_mm:ss`] = inputRemaining.mmss
+          newVariables[`mix_${id + 1}_preview_remaining_mm:ss.ms`] = inputRemaining.mmssms
+        }
+      }
     })
 
     newVariables['mix_selected'] = this.instance.routingData.mix + 1
@@ -735,36 +820,36 @@ export class Variables {
         }
       }
 
-      if (input.position !== undefined) {
-        const inPosition = input.position
-        const outPosition = input.markOut ? input.markOut : input.duration
-        const duration = outPosition - inPosition
-        const padding = (time: number): string => (time < 10 ? '0' + time : time + '')
+      const inputDuration = calcDuration(input)
 
-        const mm = (time: number): string => padding(Math.floor(time / 60000))
-        const ss = (time: number): string => padding(Math.floor(time / 1000) % 60)
-        const ms = (time: number): string => Math.floor((time / 100) % 10) + ''
-
-        newVariables[`input_${input.number}_remaining_ss`] = `${padding(Math.floor(duration / 1000))}`
-        newVariables[`input_${input.number}_remaining_ss.ms`] = `${padding(Math.floor(duration / 1000))}.${ms(
-          duration
-        )}`
-        newVariables[`input_${input.number}_remaining_mm:ss`] = `${mm(duration)}:${ss(duration)}`
-        newVariables[`input_${input.number}_remaining_mm:ss.ms`] = `${mm(duration)}:${ss(duration)}.${ms(duration)}`
-        newVariables[`input_${input.key}_remaining_ss`] = `${padding(Math.floor(duration / 1000))}`
-        newVariables[`input_${input.key}_remaining_ss.ms`] = `${padding(Math.floor(duration / 1000))}.${ms(duration)}`
-        newVariables[`input_${input.key}_remaining_mm:ss`] = `${mm(duration)}:${ss(duration)}`
-        newVariables[`input_${input.key}_remaining_mm:ss.ms`] = `${mm(duration)}:${ss(duration)}.${ms(duration)}`
+      if (inputDuration !== null) {
+        newVariables[`input_${input.number}_duration`] = `${inputDuration.mm}:${inputDuration.ss}.${inputDuration.ms}`
+        newVariables[`input_${input.key}_duration`] = `${inputDuration.mm}:${inputDuration.ss}.${inputDuration.ms}`
 
         if (useNamedInput) {
-          newVariables[`input_${inputName.toLowerCase()}_remaining_ss`] = `${padding(Math.floor(duration / 1000))}`
-          newVariables[`input_${inputName.toLowerCase()}_remaining_ss.ms`] = `${padding(
-            Math.floor(duration / 1000)
-          )}.${ms(duration)}`
-          newVariables[`input_${inputName.toLowerCase()}_remaining_mm:ss`] = `${mm(duration)}:${ss(duration)}`
-          newVariables[`input_${inputName.toLowerCase()}_remaining_mm:ss.ms`] = `${mm(duration)}:${ss(duration)}.${ms(
-            duration
-          )}`
+          newVariables[
+            `input_${inputName.toLowerCase()}_duration`
+          ] = `${inputDuration.mm}:${inputDuration.ss}.${inputDuration.ms}`
+        }
+      }
+
+      const inputRemaining = calcRemaining(input)
+
+      if (inputRemaining !== null) {
+        newVariables[`input_${input.number}_remaining_ss`] = inputRemaining.ss
+        newVariables[`input_${input.number}_remaining_ss.ms`] = inputRemaining.ssms
+        newVariables[`input_${input.number}_remaining_mm:ss`] = inputRemaining.mmss
+        newVariables[`input_${input.number}_remaining_mm:ss.ms`] = inputRemaining.mmssms
+        newVariables[`input_${input.key}_remaining_ss`] = inputRemaining.ss
+        newVariables[`input_${input.key}_remaining_ss.ms`] = inputRemaining.ssms
+        newVariables[`input_${input.key}_remaining_mm:ss`] = inputRemaining.mmss
+        newVariables[`input_${input.key}_remaining_mm:ss.ms`] = inputRemaining.mmssms
+
+        if (useNamedInput) {
+          newVariables[`input_${inputName.toLowerCase()}_remaining_ss`] = inputRemaining.ss
+          newVariables[`input_${inputName.toLowerCase()}_remaining_ss.ms`] = inputRemaining.ssms
+          newVariables[`input_${inputName.toLowerCase()}_remaining_mm:ss`] = inputRemaining.mmss
+          newVariables[`input_${inputName.toLowerCase()}_remaining_mm:ss.ms`] = inputRemaining.mmssms
         }
       }
 
