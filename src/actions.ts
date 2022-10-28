@@ -1655,9 +1655,11 @@ export function getActions(instance: VMixInstance): VMixActions {
       ],
       callback: (action) => {
         const input = instance.parseOption(action.options.layerInput)[instance.buttonShift.state]
+        const mix = action.options.mix === -1 ? instance.routingData.mix : action.options.mix
+
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION SetMultiViewOverlay Input=${instance.data.mix[action.options.mix].preview}&Value=${
+            `FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].preview}&Value=${
               action.options.layer
             },${encodeURIComponent(input)}`
           )
@@ -1685,9 +1687,11 @@ export function getActions(instance: VMixInstance): VMixActions {
       ],
       callback: (action) => {
         const input = instance.parseOption(action.options.layerInput)[instance.buttonShift.state]
+        const mix = action.options.mix === -1 ? instance.routingData.mix : action.options.mix
+
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION SetMultiViewOverlay Input=${instance.data.mix[action.options.mix].program}&Value=${
+            `FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].program}&Value=${
               action.options.layer
             },${encodeURIComponent(input)}`
           )
