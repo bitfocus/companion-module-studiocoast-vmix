@@ -206,7 +206,7 @@ export const httpHandler = async (
   // Send API functions to vMix
   const postActions = () => {
     try {
-      let body = JSON.parse(request.body || '')
+      const body = JSON.parse(request.body || '')
 
       body.forEach((action: string) => {
         console.log(action)
@@ -217,8 +217,7 @@ export const httpHandler = async (
 
       response.status = 200
       response.body = JSON.stringify({ status: 200, message: `sent: ${request.body}` })
-    }
-    catch (err) {
+    } catch (err) {
       response.status = 500
       response.body = JSON.stringify({ status: 500, message: `err: ${err}` })
 
@@ -235,8 +234,8 @@ export const httpHandler = async (
       timers: getTimers,
     },
     POST: {
-      actions: postActions
-    }
+      actions: postActions,
+    },
   }
 
   const endpoint = request.path.replace('/', '').toLowerCase()

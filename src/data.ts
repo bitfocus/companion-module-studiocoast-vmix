@@ -180,7 +180,7 @@ interface APIData {
   inputs: Input[]
   overlays: Overlay[]
   transitions: Transition[]
-  mix: [Mix, Mix, Mix, Mix]
+  mix: [Mix, Mix, Mix, Mix, Mix, Mix, Mix, Mix, Mix, Mix, Mix, Mix, Mix, Mix, Mix, Mix]
   audio: AudioBus[]
   status: Status
   recording: Recording
@@ -641,7 +641,24 @@ export class VMixData {
         inputs: getInputs(),
         overlays: getOverlays(),
         transitions: getTransitions(),
-        mix: [getMix(1), getMix(2), getMix(3), getMix(4)],
+        mix: [
+          getMix(1),
+          getMix(2),
+          getMix(3),
+          getMix(4),
+          getMix(5),
+          getMix(6),
+          getMix(7),
+          getMix(8),
+          getMix(9),
+          getMix(10),
+          getMix(11),
+          getMix(12),
+          getMix(13),
+          getMix(14),
+          getMix(15),
+          getMix(16),
+        ],
         audio: getAudio(),
         status: {
           fadeToBlack: parsedData.fadeToBlack[0],
