@@ -26,6 +26,10 @@ For some feedback, such as Tally and Layer Routing it's possible to enable 'blin
 This module now supports Companions HTTP API, providing endpoints that can be used by 3rd party applications, and as a Data Source in vMix itself. Information on the API endpoints is available in [docs/HTTP_API.md](./docs/HTTP_API.md)
 
 # Recent Patches
+**V2.1.3**
+- Added HTTP POST endpoint to send actions to a vMix instance
+- Minor fixes for v26 support
+
 **V2.1.2**
 - Added v26 support for 15 Mixes
 - Fixed selected mix on setMultiviewOverlay
