@@ -203,6 +203,29 @@ export const httpHandler = async (
     response.body = JSON.stringify(request.query.flat ? flatData : data, null, 2)
   }
 
+  // Send API functions to vMix
+  const postActions = () => {
+    try {
+      let body = JSON.parse(request.body || '')
+
+      body.forEach((action: string) => {
+        console.log(action)
+        if (instance.tcp) {
+          instance.tcp.sendCommand(`FUNCTION ${action}`)
+        }
+      })
+
+      response.status = 200
+      response.body = JSON.stringify({ status: 200, message: `sent: ${request.body}` })
+    }
+    catch (err) {
+      response.status = 500
+      response.body = JSON.stringify({ status: 500, message: `err: ${err}` })
+
+      console.warn(err)
+    }
+  }
+
   const endpoints: Endpoints = {
     GET: {
       data: getData,
@@ -211,6 +234,9 @@ export const httpHandler = async (
       transitions: getTransitions,
       timers: getTimers,
     },
+    POST: {
+      actions: postActions
+    }
   }
 
   const endpoint = request.path.replace('/', '').toLowerCase()
