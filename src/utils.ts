@@ -3,7 +3,7 @@ import {
   CompanionInputFieldDropdown,
   CompanionInputFieldNumber,
   CompanionInputFieldTextInput,
-} from '../../../instance_skel_types'
+} from '@companion-module/base'
 
 export type TimeFormat = 'hh:mm:ss' | 'hh:mm:ss.ms' | 'mm:ss' | 'mm:ss.ms' | 'mm:ss.sss' | 'auto'
 
@@ -226,7 +226,7 @@ export const volumeTodB = (volume: number): number => {
  * @description Returns volume as specified here https://www.vmix.com/knowledgebase/article.aspx/144/vmix-api-audio-levels
  */
 export const volumeToLinear = (volume: number): number => {
-  return Math.round(Math.pow(volume / 100, 0.25) * 100)
+  return Math.pow(volume / 100, 0.25) * 100
 }
 
 /**

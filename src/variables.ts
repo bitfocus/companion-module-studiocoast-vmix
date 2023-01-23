@@ -1,13 +1,8 @@
 import VMixInstance from './'
+import { CompanionVariableDefinition } from '@companion-module/base'
 import { volumeTodB, volumeToLinear, formatTime, AUDIOBUSSESMASTER } from './utils'
 import { Input } from './data'
 import _ from 'lodash'
-
-interface InstanceVariableDefinition {
-  label: string
-  name: string
-  type?: string
-}
 
 interface InstanceVariableValue {
   [key: string]: string | number | undefined
@@ -15,25 +10,10 @@ interface InstanceVariableValue {
 
 export class Variables {
   private readonly instance: VMixInstance
-  private currentDefinitions: Set<InstanceVariableDefinition> = new Set()
+  private currentDefinitions: Set<CompanionVariableDefinition> = new Set()
 
   constructor(instance: VMixInstance) {
     this.instance = instance
-  }
-
-  /**
-   * @param name Instance variable name
-   * @returns Value of instance variable or undefined
-   * @description Retrieves instance variable from any vMix instances
-   */
-  public readonly get = (variable: string): string | undefined => {
-    let data
-
-    this.instance.parseVariables(variable, (value) => {
-      data = value
-    })
-
-    return data
   }
 
   /**
@@ -47,7 +27,7 @@ export class Variables {
       newVariables[name] = variables[name]?.toString()
     }
 
-    this.instance.setVariables(newVariables)
+    this.instance.setVariableValues(newVariables)
     this.instance.checkFeedbacks('buttonText')
   }
 
@@ -55,417 +35,398 @@ export class Variables {
    * @description Sets variable definitions
    */
   public readonly updateDefinitions = (): void => {
-    const variables: Set<InstanceVariableDefinition> = new Set([
+    const variables: Set<CompanionVariableDefinition> = new Set([
       // Status
-      { label: 'Connected to vMix', name: 'connected_state' },
-      { label: 'Fade To Black Active', name: 'ftb_active' },
-      { label: 'playList Active', name: 'playlist_active' },
-      { label: 'Fullscreen Output Active', name: 'fullscreen_active' },
-      { label: 'External Output Active', name: 'external_active' },
-      { label: 'MultiCorder Active', name: 'multicorder_active' },
-      { label: 'Stream 1 Active', name: 'stream_1_active' },
-      { label: 'Stream 2 Active', name: 'stream_2_active' },
-      { label: 'Stream 3 Active', name: 'stream_3_active' },
-      { label: 'Recording Active', name: 'recording_active' },
-      { label: 'Recording Duration', name: 'recording_duration' },
-      { label: 'Recording HH:MM:SS', name: 'recording_hms' },
+      { name: 'Connected to vMix', variableId: 'connected_state' },
+      { name: 'Fade To Black Active', variableId: 'ftb_active' },
+      { name: 'playList Active', variableId: 'playlist_active' },
+      { name: 'Fullscreen Output Active', variableId: 'fullscreen_active' },
+      { name: 'External Output Active', variableId: 'external_active' },
+      { name: 'MultiCorder Active', variableId: 'multicorder_active' },
+      { name: 'Stream 1 Active', variableId: 'stream_1_active' },
+      { name: 'Stream 2 Active', variableId: 'stream_2_active' },
+      { name: 'Stream 3 Active', variableId: 'stream_3_active' },
+      { name: 'Recording Active', variableId: 'recording_active' },
+      { name: 'Recording Duration', variableId: 'recording_duration' },
+      { name: 'Recording HH:MM:SS', variableId: 'recording_hms' },
 
       // Mix
-      { label: 'Mix 1 Program', name: 'mix_1_program' },
-      { label: 'Mix 1 Program Short Title', name: 'mix_1_program_name' },
-      { label: 'Mix 1 Program GUID', name: 'mix_1_program_guid' },
-      { label: 'Mix 1 Preview', name: 'mix_1_preview' },
-      { label: 'Mix 1 Preview Short Title', name: 'mix_1_preview_name' },
-      { label: 'Mix 1 Preview GUID', name: 'mix_1_preview_guid' },
-      { label: 'Mix 2 Program', name: 'mix_2_program' },
-      { label: 'Mix 2 Program Short Title', name: 'mix_2_program_name' },
-      { label: 'Mix 2 Program GUID', name: 'mix_2_program_guid' },
-      { label: 'Mix 2 Preview', name: 'mix_2_preview' },
-      { label: 'Mix 2 Preview Short Title', name: 'mix_2_preview_name' },
-      { label: 'Mix 2 Preview GUID', name: 'mix_2_preview_guid' },
-      { label: 'Mix 3 Program', name: 'mix_3_program' },
-      { label: 'Mix 3 Program Short Title', name: 'mix_3_program_name' },
-      { label: 'Mix 3 Program GUID', name: 'mix_3_program_guid' },
-      { label: 'Mix 3 Preview', name: 'mix_3_preview' },
-      { label: 'Mix 3 Preview Short Title', name: 'mix_3_preview_name' },
-      { label: 'Mix 3 Preview GUID', name: 'mix_3_preview_guid' },
-      { label: 'Mix 4 Program', name: 'mix_4_program' },
-      { label: 'Mix 4 Program Short Title', name: 'mix_4_program_name' },
-      { label: 'Mix 4 Program GUID', name: 'mix_4_program_guid' },
-      { label: 'Mix 4 Preview', name: 'mix_4_preview' },
-      { label: 'Mix 4 Preview Short Title', name: 'mix_4_preview_name' },
-      { label: 'Mix 4 Preview GUID', name: 'mix_4_preview_guid' },
-      { label: 'Mix Selected', name: 'mix_selected' },
+      { name: 'Mix 1 Program', variableId: 'mix_1_program' },
+      { name: 'Mix 1 Program Short Title', variableId: 'mix_1_program_name' },
+      { name: 'Mix 1 Program GUID', variableId: 'mix_1_program_guid' },
+      { name: 'Mix 1 Preview', variableId: 'mix_1_preview' },
+      { name: 'Mix 1 Preview Short Title', variableId: 'mix_1_preview_name' },
+      { name: 'Mix 1 Preview GUID', variableId: 'mix_1_preview_guid' },
+      { name: 'Mix 2 Program', variableId: 'mix_2_program' },
+      { name: 'Mix 2 Program Short Title', variableId: 'mix_2_program_name' },
+      { name: 'Mix 2 Program GUID', variableId: 'mix_2_program_guid' },
+      { name: 'Mix 2 Preview', variableId: 'mix_2_preview' },
+      { name: 'Mix 2 Preview Short Title', variableId: 'mix_2_preview_name' },
+      { name: 'Mix 2 Preview GUID', variableId: 'mix_2_preview_guid' },
+      { name: 'Mix 3 Program', variableId: 'mix_3_program' },
+      { name: 'Mix 3 Program Short Title', variableId: 'mix_3_program_name' },
+      { name: 'Mix 3 Program GUID', variableId: 'mix_3_program_guid' },
+      { name: 'Mix 3 Preview', variableId: 'mix_3_preview' },
+      { name: 'Mix 3 Preview Short Title', variableId: 'mix_3_preview_name' },
+      { name: 'Mix 3 Preview GUID', variableId: 'mix_3_preview_guid' },
+      { name: 'Mix 4 Program', variableId: 'mix_4_program' },
+      { name: 'Mix 4 Program Short Title', variableId: 'mix_4_program_name' },
+      { name: 'Mix 4 Program GUID', variableId: 'mix_4_program_guid' },
+      { name: 'Mix 4 Preview', variableId: 'mix_4_preview' },
+      { name: 'Mix 4 Preview Short Title', variableId: 'mix_4_preview_name' },
+      { name: 'Mix 4 Preview GUID', variableId: 'mix_4_preview_guid' },
+      { name: 'Mix Selected', variableId: 'mix_selected' },
 
       // Audio
-      { label: 'Bus Master Volume', name: 'bus_master_volume' },
-      { label: 'Bus Master dB', name: 'bus_master_volume_db' },
-      { label: 'Bus Master Volume Linear', name: 'bus_master_volume_linear' },
-      { label: 'Bus Master MeterF1', name: 'bus_master_meterf1' },
-      { label: 'Bus Master MeterF2', name: 'bus_master_meterf2' },
-      { label: 'Bus Headphones Volume', name: 'bus_headphones_volume' },
-      { label: 'Bus Headphones dB', name: 'bus_headphones_volume_db' },
-      { label: 'Bus Headphones Volume Linear', name: 'bus_headphones_volume_linear' },
-      { label: 'Bus A Volume', name: 'bus_a_volume' },
-      { label: 'Bus A dB', name: 'bus_a_volume_db' },
-      { label: 'Bus A Volume Linear', name: 'bus_a_volume_linear' },
-      { label: 'Bus A MeterF1', name: 'bus_a_meterf1' },
-      { label: 'Bus A MeterFz', name: 'bus_a_meterf2' },
-      { label: 'Bus A Mute', name: 'bus_a_mute' },
-      { label: 'Bus A Solo', name: 'bus_a_solo' },
-      { label: 'Bus B Volume', name: 'bus_b_volume' },
-      { label: 'Bus B dB', name: 'bus_b_volume_db' },
-      { label: 'Bus B Volume Linear', name: 'bus_b_volume_linear' },
-      { label: 'Bus B MeterF1', name: 'bus_b_meterf1' },
-      { label: 'Bus B MeterFz', name: 'bus_b_meterf2' },
-      { label: 'Bus B Mute', name: 'bus_b_mute' },
-      { label: 'Bus B Solo', name: 'bus_b_solo' },
-      { label: 'Bus C Volume', name: 'bus_c_volume' },
-      { label: 'Bus C dB', name: 'bus_c_volume_db' },
-      { label: 'Bus C Volume Linear', name: 'bus_c_volume_linear' },
-      { label: 'Bus C MeterF1', name: 'bus_c_meterf1' },
-      { label: 'Bus C MeterFz', name: 'bus_c_meterf2' },
-      { label: 'Bus C Mute', name: 'bus_c_mute' },
-      { label: 'Bus C Solo', name: 'bus_c_solo' },
-      { label: 'Bus D Volume', name: 'bus_d_volume' },
-      { label: 'Bus D dB', name: 'bus_d_volume_db' },
-      { label: 'Bus D Volume Linear', name: 'bus_d_volume_linear' },
-      { label: 'Bus D MeterF1', name: 'bus_d_meterf1' },
-      { label: 'Bus D MeterFz', name: 'bus_d_meterf2' },
-      { label: 'Bus D Mute', name: 'bus_d_mute' },
-      { label: 'Bus D Solo', name: 'bus_d_solo' },
-      { label: 'Bus E Volume', name: 'bus_e_volume' },
-      { label: 'Bus E dB', name: 'bus_e_volume_db' },
-      { label: 'Bus E Volume Linear', name: 'bus_e_volume_linear' },
-      { label: 'Bus E MeterF1', name: 'bus_e_meterf1' },
-      { label: 'Bus E MeterFz', name: 'bus_e_meterf2' },
-      { label: 'Bus E Mute', name: 'bus_e_mute' },
-      { label: 'Bus E Solo', name: 'bus_e_solo' },
-      { label: 'Bus F Volume', name: 'bus_f_volume' },
-      { label: 'Bus F dB', name: 'bus_f_volume_db' },
-      { label: 'Bus F Volume Linear', name: 'bus_f_volume_linear' },
-      { label: 'Bus F MeterF1', name: 'bus_f_meterf1' },
-      { label: 'Bus F MeterFz', name: 'bus_f_meterf2' },
-      { label: 'Bus F Mute', name: 'bus_f_mute' },
-      { label: 'Bus F Solo', name: 'bus_f_solo' },
-      { label: 'Bus G Volume', name: 'bus_g_volume' },
-      { label: 'Bus G dB', name: 'bus_g_volume_db' },
-      { label: 'Bus G Volume Linear', name: 'bus_g_volume_linear' },
-      { label: 'Bus G MeterF1', name: 'bus_g_meterf1' },
-      { label: 'Bus G MeterFz', name: 'bus_g_meterf2' },
-      { label: 'Bus G Mute', name: 'bus_g_mute' },
-      { label: 'Bus G Solo', name: 'bus_g_solo' },
+      { name: 'Bus Master Volume', variableId: 'bus_master_volume' },
+      { name: 'Bus Master dB', variableId: 'bus_master_volume_db' },
+      { name: 'Bus Master Volume Linear', variableId: 'bus_master_volume_linear' },
+      { name: 'Bus Master MeterF1', variableId: 'bus_master_meterf1' },
+      { name: 'Bus Master MeterF2', variableId: 'bus_master_meterf2' },
+      { name: 'Bus Headphones Volume', variableId: 'bus_headphones_volume' },
+      { name: 'Bus Headphones dB', variableId: 'bus_headphones_volume_db' },
+      { name: 'Bus Headphones Volume Linear', variableId: 'bus_headphones_volume_linear' },
+      { name: 'Bus A Volume', variableId: 'bus_a_volume' },
+      { name: 'Bus A dB', variableId: 'bus_a_volume_db' },
+      { name: 'Bus A Volume Linear', variableId: 'bus_a_volume_linear' },
+      { name: 'Bus A MeterF1', variableId: 'bus_a_meterf1' },
+      { name: 'Bus A MeterFz', variableId: 'bus_a_meterf2' },
+      { name: 'Bus A Mute', variableId: 'bus_a_mute' },
+      { name: 'Bus A Solo', variableId: 'bus_a_solo' },
+      { name: 'Bus B Volume', variableId: 'bus_b_volume' },
+      { name: 'Bus B dB', variableId: 'bus_b_volume_db' },
+      { name: 'Bus B Volume Linear', variableId: 'bus_b_volume_linear' },
+      { name: 'Bus B MeterF1', variableId: 'bus_b_meterf1' },
+      { name: 'Bus B MeterFz', variableId: 'bus_b_meterf2' },
+      { name: 'Bus B Mute', variableId: 'bus_b_mute' },
+      { name: 'Bus B Solo', variableId: 'bus_b_solo' },
+      { name: 'Bus C Volume', variableId: 'bus_c_volume' },
+      { name: 'Bus C dB', variableId: 'bus_c_volume_db' },
+      { name: 'Bus C Volume Linear', variableId: 'bus_c_volume_linear' },
+      { name: 'Bus C MeterF1', variableId: 'bus_c_meterf1' },
+      { name: 'Bus C MeterFz', variableId: 'bus_c_meterf2' },
+      { name: 'Bus C Mute', variableId: 'bus_c_mute' },
+      { name: 'Bus C Solo', variableId: 'bus_c_solo' },
+      { name: 'Bus D Volume', variableId: 'bus_d_volume' },
+      { name: 'Bus D dB', variableId: 'bus_d_volume_db' },
+      { name: 'Bus D Volume Linear', variableId: 'bus_d_volume_linear' },
+      { name: 'Bus D MeterF1', variableId: 'bus_d_meterf1' },
+      { name: 'Bus D MeterFz', variableId: 'bus_d_meterf2' },
+      { name: 'Bus D Mute', variableId: 'bus_d_mute' },
+      { name: 'Bus D Solo', variableId: 'bus_d_solo' },
+      { name: 'Bus E Volume', variableId: 'bus_e_volume' },
+      { name: 'Bus E dB', variableId: 'bus_e_volume_db' },
+      { name: 'Bus E Volume Linear', variableId: 'bus_e_volume_linear' },
+      { name: 'Bus E MeterF1', variableId: 'bus_e_meterf1' },
+      { name: 'Bus E MeterFz', variableId: 'bus_e_meterf2' },
+      { name: 'Bus E Mute', variableId: 'bus_e_mute' },
+      { name: 'Bus E Solo', variableId: 'bus_e_solo' },
+      { name: 'Bus F Volume', variableId: 'bus_f_volume' },
+      { name: 'Bus F dB', variableId: 'bus_f_volume_db' },
+      { name: 'Bus F Volume Linear', variableId: 'bus_f_volume_linear' },
+      { name: 'Bus F MeterF1', variableId: 'bus_f_meterf1' },
+      { name: 'Bus F MeterFz', variableId: 'bus_f_meterf2' },
+      { name: 'Bus F Mute', variableId: 'bus_f_mute' },
+      { name: 'Bus F Solo', variableId: 'bus_f_solo' },
+      { name: 'Bus G Volume', variableId: 'bus_g_volume' },
+      { name: 'Bus G dB', variableId: 'bus_g_volume_db' },
+      { name: 'Bus G Volume Linear', variableId: 'bus_g_volume_linear' },
+      { name: 'Bus G MeterF1', variableId: 'bus_g_meterf1' },
+      { name: 'Bus G MeterFz', variableId: 'bus_g_meterf2' },
+      { name: 'Bus G Mute', variableId: 'bus_g_mute' },
+      { name: 'Bus G Solo', variableId: 'bus_g_solo' },
 
       // Overlay
-      { label: 'Overlay 1 Input Short Title', name: 'overlay_1_input_name' },
-      { label: 'Overlay 1 Input Number', name: 'overlay_1_input' },
-      { label: 'Overlay 1 Active PGM', name: 'overlay_1_pgm' },
-      { label: 'Overlay 1 Active PRV', name: 'overlay_1_prv' },
-      { label: 'Overlay 2 Input Short Title', name: 'overlay_2_input_name' },
-      { label: 'Overlay 2 Input Number', name: 'overlay_2_input' },
-      { label: 'Overlay 2 Active PGM', name: 'overlay_2_pgm' },
-      { label: 'Overlay 2 Active PRV', name: 'overlay_2_prv' },
-      { label: 'Overlay 3 Input Short Title', name: 'overlay_3_input_name' },
-      { label: 'Overlay 3 Input Number', name: 'overlay_3_input' },
-      { label: 'Overlay 3 Active PGM', name: 'overlay_3_pgm' },
-      { label: 'Overlay 3 Active PRV', name: 'overlay_3_prv' },
-      { label: 'Overlay 4 Input Short Title', name: 'overlay_4_input_name' },
-      { label: 'Overlay 4 Input Number', name: 'overlay_4_input' },
-      { label: 'Overlay 4 Active PGM', name: 'overlay_4_pgm' },
-      { label: 'Overlay 4 Active PRV', name: 'overlay_4_prv' },
+      { name: 'Overlay 1 Input Short Title', variableId: 'overlay_1_input_name' },
+      { name: 'Overlay 1 Input Number', variableId: 'overlay_1_input' },
+      { name: 'Overlay 1 Active PGM', variableId: 'overlay_1_pgm' },
+      { name: 'Overlay 1 Active PRV', variableId: 'overlay_1_prv' },
+      { name: 'Overlay 2 Input Short Title', variableId: 'overlay_2_input_name' },
+      { name: 'Overlay 2 Input Number', variableId: 'overlay_2_input' },
+      { name: 'Overlay 2 Active PGM', variableId: 'overlay_2_pgm' },
+      { name: 'Overlay 2 Active PRV', variableId: 'overlay_2_prv' },
+      { name: 'Overlay 3 Input Short Title', variableId: 'overlay_3_input_name' },
+      { name: 'Overlay 3 Input Number', variableId: 'overlay_3_input' },
+      { name: 'Overlay 3 Active PGM', variableId: 'overlay_3_pgm' },
+      { name: 'Overlay 3 Active PRV', variableId: 'overlay_3_prv' },
+      { name: 'Overlay 4 Input Short Title', variableId: 'overlay_4_input_name' },
+      { name: 'Overlay 4 Input Number', variableId: 'overlay_4_input' },
+      { name: 'Overlay 4 Active PGM', variableId: 'overlay_4_pgm' },
+      { name: 'Overlay 4 Active PRV', variableId: 'overlay_4_prv' },
 
       // Dyanmic Inputs/Values
-      { label: 'Dynamic Input 1', name: 'dynamic_input_1' },
-      { label: 'Dynamic Input 2', name: 'dynamic_input_2' },
-      { label: 'Dynamic Input 3', name: 'dynamic_input_3' },
-      { label: 'Dynamic Input 4', name: 'dynamic_input_4' },
-      { label: 'Dynamic Value 1', name: 'dynamic_value_1' },
-      { label: 'Dynamic Value 2', name: 'dynamic_value_2' },
-      { label: 'Dynamic Value 3', name: 'dynamic_value_3' },
-      { label: 'Dynamic Value 4', name: 'dynamic_value_4' },
+      { name: 'Dynamic Input 1', variableId: 'dynamic_input_1' },
+      { name: 'Dynamic Input 2', variableId: 'dynamic_input_2' },
+      { name: 'Dynamic Input 3', variableId: 'dynamic_input_3' },
+      { name: 'Dynamic Input 4', variableId: 'dynamic_input_4' },
+      { name: 'Dynamic Value 1', variableId: 'dynamic_value_1' },
+      { name: 'Dynamic Value 2', variableId: 'dynamic_value_2' },
+      { name: 'Dynamic Value 3', variableId: 'dynamic_value_3' },
+      { name: 'Dynamic Value 4', variableId: 'dynamic_value_4' },
 
       // Layers
-      { label: 'Layer Routing Input', name: 'layer_routing_input' },
-      { label: 'Layer Routing Layer', name: 'layer_routing_layer' },
+      { name: 'Layer Routing Input', variableId: 'layer_routing_input' },
+      { name: 'Layer Routing Layer', variableId: 'layer_routing_layer' },
     ])
 
     // Inputs
-    const inputNumberVariables = new Set<InstanceVariableDefinition>()
-    const inputNameVariables = new Set<InstanceVariableDefinition>()
-    const inputKeyVariables = new Set<InstanceVariableDefinition>()
+    const inputNumberVariables = new Set<CompanionVariableDefinition>()
+    const inputNameVariables = new Set<CompanionVariableDefinition>()
+    const inputKeyVariables = new Set<CompanionVariableDefinition>()
 
     this.instance.data.inputs.forEach((input) => {
-      const inputName = input.shortTitle
-        ? input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '')
-        : input.title.replace(/[^a-z0-9-_.]+/gi, '')
+      let inputName = input.shortTitle ? input.shortTitle : input.title
+      inputName = inputName.replace(/[^a-z0-9-_.]+/gi, '').toLowerCase()
 
-      inputNumberVariables.add({ label: `Input ${input.number} Short Title`, name: `input_${input.number}_name` })
-      inputNumberVariables.add({ label: `Input ${input.number} GUID`, name: `input_${input.number}_guid` })
-      inputNumberVariables.add({ label: `Input ${input.number} Type`, name: `input_${input.number}_type` })
+      inputNumberVariables.add({ name: `Input ${input.number} Short Title`, variableId: `input_${input.number}_name` })
+      inputNumberVariables.add({ name: `Input ${input.number} GUID`, variableId: `input_${input.number}_guid` })
+      inputNumberVariables.add({ name: `Input ${input.number} Type`, variableId: `input_${input.number}_type` })
       inputNameVariables.add({
-        label: `Input ${input.shortTitle || input.title} Number`,
-        name: `input_${inputName.toLowerCase()}_number`,
+        name: `Input ${input.shortTitle || input.title} Number`,
+        variableId: `input_${inputName}_number`,
       })
       inputNameVariables.add({
-        label: `Input ${input.shortTitle || input.title} GUID`,
-        name: `input_${inputName.toLowerCase()}_guid`,
+        name: `Input ${input.shortTitle || input.title} GUID`,
+        variableId: `input_${inputName}_guid`,
       })
       inputNameVariables.add({
-        label: `Input ${input.shortTitle || input.title} Type`,
-        name: `input_${inputName.toLowerCase()}_type`,
+        name: `Input ${input.shortTitle || input.title} Type`,
+        variableId: `input_${inputName}_type`,
       })
-      inputKeyVariables.add({ label: `Input ${input.key} Short Title`, name: `input_${input.key}_name` })
-      inputKeyVariables.add({ label: `Input ${input.key} Number`, name: `input_${input.key}_number` })
-      inputKeyVariables.add({ label: `Input ${input.key} Type`, name: `input_${input.key}_type` })
+      inputKeyVariables.add({ name: `Input ${input.key} Short Title`, variableId: `input_${input.key}_name` })
+      inputKeyVariables.add({ name: `Input ${input.key} Number`, variableId: `input_${input.key}_number` })
+      inputKeyVariables.add({ name: `Input ${input.key} Type`, variableId: `input_${input.key}_type` })
 
       this.instance.data.mix.forEach((mix) => {
         inputNumberVariables.add({
-          label: `Input ${input.number} Mix ${mix.number} Tally Preview`,
-          name: `input_${input.number}_mix_${mix.number}_tally_preview`,
+          name: `Input ${input.number} Mix ${mix.number} Tally Preview`,
+          variableId: `input_${input.number}_mix_${mix.number}_tally_preview`,
         })
         inputNumberVariables.add({
-          label: `Input ${input.number} Mix ${mix.number} Tally Program`,
-          name: `input_${input.number}_mix_${mix.number}_tally_program`,
+          name: `Input ${input.number} Mix ${mix.number} Tally Program`,
+          variableId: `input_${input.number}_mix_${mix.number}_tally_program`,
         })
         inputNameVariables.add({
-          label: `Input ${input.shortTitle || input.title} Mix ${mix.number} Tally Preview`,
-          name: `input_${input.shortTitle || input.title}_mix_${mix.number}_tally_preview`,
+          name: `Input ${input.shortTitle || input.title} Mix ${mix.number} Tally Preview`,
+          variableId: `input_${inputName}_mix_${mix.number}_tally_preview`,
         })
         inputNameVariables.add({
-          label: `Input ${input.shortTitle || input.title} Mix ${mix.number} Tally Program`,
-          name: `input_${input.shortTitle || input.title}_mix_${mix.number}_tally_program`,
+          name: `Input ${input.shortTitle || input.title} Mix ${mix.number} Tally Program`,
+          variableId: `input_${inputName}_mix_${mix.number}_tally_program`,
         })
         inputKeyVariables.add({
-          label: `Input ${input.key} Mix ${mix.number} Tally Preview`,
-          name: `input_${input.key}_mix_${mix.number}_tally_preview`,
+          name: `Input ${input.key} Mix ${mix.number} Tally Preview`,
+          variableId: `input_${input.key}_mix_${mix.number}_tally_preview`,
         })
         inputKeyVariables.add({
-          label: `Input ${input.key} Mix ${mix.number} Tally Program`,
-          name: `input_${input.key}_mix_${mix.number}_tally_program`,
+          name: `Input ${input.key} Mix ${mix.number} Tally Program`,
+          variableId: `input_${input.key}_mix_${mix.number}_tally_program`,
         })
       })
 
-      inputNumberVariables.add({ label: `Input ${input.number} Muted`, name: `input_${input.number}_mute` })
-      inputNumberVariables.add({ label: `Input ${input.number} Audio`, name: `input_${input.number}_audio` })
+      inputNumberVariables.add({ name: `Input ${input.number} Muted`, variableId: `input_${input.number}_mute` })
+      inputNumberVariables.add({ name: `Input ${input.number} Audio`, variableId: `input_${input.number}_audio` })
       inputNameVariables.add({
-        label: `Input ${input.shortTitle || input.title} Muted`,
-        name: `input_${inputName.toLowerCase()}_mute`,
+        name: `Input ${input.shortTitle || input.title} Muted`,
+        variableId: `input_${inputName}_mute`,
       })
       inputNameVariables.add({
-        label: `Input ${input.shortTitle || input.title} Audio`,
-        name: `input_${inputName.toLowerCase()}_audio`,
+        name: `Input ${input.shortTitle || input.title} Audio`,
+        variableId: `input_${inputName}_audio`,
       })
-      inputKeyVariables.add({ label: `Input ${input.key} Muted`, name: `input_${input.key}_mute` })
-      inputKeyVariables.add({ label: `Input ${input.key} Audio`, name: `input_${input.key}_audio` })
+      inputKeyVariables.add({ name: `Input ${input.key} Muted`, variableId: `input_${input.key}_mute` })
+      inputKeyVariables.add({ name: `Input ${input.key} Audio`, variableId: `input_${input.key}_audio` })
 
       if (input.duration > 1) {
-        inputNumberVariables.add({ label: `Input ${input.number} Duration`, name: `input_${input.number}_duration` })
-        inputNameVariables.add({
-          label: `Input ${input.shortTitle || input.title} Duration`,
-          name: `input_${inputName.toLowerCase()}_duration`,
+        inputNumberVariables.add({
+          name: `Input ${input.number} Duration`,
+          variableId: `input_${input.number}_duration`,
         })
-        inputKeyVariables.add({ label: `Input ${input.key} Duration`, name: `input_${input.key}_duration` })
+        inputNameVariables.add({
+          name: `Input ${input.shortTitle || input.title} Duration`,
+          variableId: `input_${inputName}_duration`,
+        })
+        inputKeyVariables.add({ name: `Input ${input.key} Duration`, variableId: `input_${input.key}_duration` })
       }
 
       if (input.position !== undefined) {
         inputNumberVariables.add({
-          label: `Input ${input.number} Remaining ss`,
-          name: `input_${input.number}_remaining_ss`,
-        })
-        inputNumberVariables.add({
-          label: `Input ${input.number} Remaining ss.ms`,
-          name: `input_${input.number}_remaining_ss.ms`,
-        })
-        inputNumberVariables.add({
-          label: `Input ${input.number} Remaining mm:ss`,
-          name: `input_${input.number}_remaining_mm:ss`,
-        })
-        inputNumberVariables.add({
-          label: `Input ${input.number} Remaining mm:ss.ms`,
-          name: `input_${input.number}_remaining_mm:ss.ms`,
+          name: `Input ${input.number} Remaining`,
+          variableId: `input_${input.number}_remaining`,
         })
         inputNameVariables.add({
-          label: `Input ${input.shortTitle || input.title} Remaining ss`,
-          name: `input_${inputName.toLowerCase()}_remaining_ss`,
-        })
-        inputNameVariables.add({
-          label: `Input ${input.shortTitle || input.title} Remaining ss.ms`,
-          name: `input_${inputName.toLowerCase()}_remaining_ss.ms`,
-        })
-        inputNameVariables.add({
-          label: `Input ${input.shortTitle || input.title} Remaining mm:ss`,
-          name: `input_${inputName.toLowerCase()}_remaining_mm:ss`,
-        })
-        inputNameVariables.add({
-          label: `Input ${input.shortTitle || input.title} Remaining mm:ss.ms`,
-          name: `input_${inputName.toLowerCase()}_remaining_mm:ss.ms`,
-        })
-        inputKeyVariables.add({ label: `Input ${input.key} Remaining ss`, name: `input_${input.key}_remaining_ss` })
-        inputKeyVariables.add({
-          label: `Input ${input.key} Remaining ss.ms`,
-          name: `input_${input.key}_remaining_ss.ms`,
+          name: `Input ${input.shortTitle || input.title} Remaining`,
+          variableId: `input_${inputName}_remaining`,
         })
         inputKeyVariables.add({
-          label: `Input ${input.key} Remaining mm:ss`,
-          name: `input_${input.key}_remaining_mm:ss`,
-        })
-        inputKeyVariables.add({
-          label: `Input ${input.key} Remaining mm:ss.ms`,
-          name: `input_${input.key}_remaining_mm:ss.ms`,
+          name: `Input ${input.key} Remaining`,
+          variableId: `input_${input.key}_remaining`,
         })
       }
 
       for (let i = 1; i < 11; i++) {
         inputNumberVariables.add({
-          label: `Input ${input.number} layer ${i} Name`,
-          name: `input_${input.number}_layer_${i}_name`,
+          name: `Input ${input.number} layer ${i} Name`,
+          variableId: `input_${input.number}_layer_${i}_name`,
         })
         inputNumberVariables.add({
-          label: `Input ${input.number} layer ${i} Number`,
-          name: `input_${input.number}_layer_${i}_number`,
+          name: `Input ${input.number} layer ${i} Number`,
+          variableId: `input_${input.number}_layer_${i}_number`,
         })
         inputNameVariables.add({
-          label: `Input ${input.shortTitle || input.title} layer ${i} Name`,
-          name: `input_${inputName.toLowerCase()}_layer_${i}_name`,
+          name: `Input ${input.shortTitle || input.title} layer ${i} Name`,
+          variableId: `input_${inputName}_layer_${i}_name`,
         })
         inputNameVariables.add({
-          label: `Input ${input.shortTitle || input.title} layer ${i} Number`,
-          name: `input_${inputName.toLowerCase()}_layer_${i}_number`,
+          name: `Input ${input.shortTitle || input.title} layer ${i} Number`,
+          variableId: `input_${inputName}_layer_${i}_number`,
         })
         inputKeyVariables.add({
-          label: `Input ${input.key} layer ${i} Name`,
-          name: `input_${input.key}_layer_${i}_name`,
+          name: `Input ${input.key} layer ${i} Name`,
+          variableId: `input_${input.key}_layer_${i}_name`,
         })
         inputKeyVariables.add({
-          label: `Input ${input.key} layer ${i} Number`,
-          name: `input_${input.key}_layer_${i}_number`,
+          name: `Input ${input.key} layer ${i} Number`,
+          variableId: `input_${input.key}_layer_${i}_number`,
         })
       }
 
       if (input.text) {
         input.text.forEach((textLayer) => {
           inputNumberVariables.add({
-            label: `Input ${input.number} layer ${textLayer.index} Title Text`,
-            name: `input_${input.number}_layer_${textLayer.index}_titletext`,
+            name: `Input ${input.number} layer ${textLayer.index} Title Text`,
+            variableId: `input_${input.number}_layer_${textLayer.index}_titletext`,
           })
           inputNameVariables.add({
-            label: `Input ${input.shortTitle || input.title} layer ${textLayer.index} Title Text`,
-            name: `input_${inputName.toLowerCase()}_layer_${textLayer.index}_titletext`,
+            name: `Input ${input.shortTitle || input.title} layer ${textLayer.index} Title Text`,
+            variableId: `input_${inputName.toLowerCase()}_layer_${textLayer.index}_titletext`,
           })
           inputKeyVariables.add({
-            label: `Input ${input.key} layer ${textLayer.index} Title Text`,
-            name: `input_${input.key}_layer_${textLayer.index}_titletext`,
+            name: `Input ${input.key} layer ${textLayer.index} Title Text`,
+            variableId: `input_${input.key}_layer_${textLayer.index}_titletext`,
           })
         })
       }
 
       if (input.type === 'VideoList') {
         inputNumberVariables.add({
-          label: `Input ${input.number} Selected Index`,
-          name: `input_${input.number}_selected`,
+          name: `Input ${input.number} Selected Index`,
+          variableId: `input_${input.number}_selected`,
         })
         inputNumberVariables.add({
-          label: `Input ${input.number} Selected Index Name`,
-          name: `input_${input.number}_selected_name`,
+          name: `Input ${input.number} Selected Index Name`,
+          variableId: `input_${input.number}_selected_name`,
         })
         inputNameVariables.add({
-          label: `Input ${input.shortTitle || input.title} Selected Index`,
-          name: `input_${inputName.toLowerCase()}_selected`,
+          name: `Input ${input.shortTitle || input.title} Selected Index`,
+          variableId: `input_${inputName}_selected`,
         })
         inputNameVariables.add({
-          label: `Input ${input.shortTitle || input.title} Selected Index Name`,
-          name: `input_${inputName.toLowerCase()}_selected_name`,
+          name: `Input ${input.shortTitle || input.title} Selected Index Name`,
+          variableId: `input_${inputName}_selected_name`,
         })
-        inputKeyVariables.add({ label: `Input ${input.key} Selected Index`, name: `input_${input.key}_selected` })
+        inputKeyVariables.add({ name: `Input ${input.key} Selected Index`, variableId: `input_${input.key}_selected` })
         inputKeyVariables.add({
-          label: `Input ${input.key} Selected Index Name`,
-          name: `input_${input.key}_selected_name`,
+          name: `Input ${input.key} Selected Index Name`,
+          variableId: `input_${input.key}_selected_name`,
         })
       }
 
       if (input.type === 'VideoCall') {
         inputNumberVariables.add({
-          label: `Input ${input.number} Call Password`,
-          name: `input_${input.number}_call_password`,
+          name: `Input ${input.number} Call Password`,
+          variableId: `input_${input.number}_call_password`,
         })
         inputNumberVariables.add({
-          label: `Input ${input.number} Call Connected`,
-          name: `input_${input.number}_call_connected`,
+          name: `Input ${input.number} Call Connected`,
+          variableId: `input_${input.number}_call_connected`,
         })
         inputNumberVariables.add({
-          label: `Input ${input.number} Call Video Source`,
-          name: `input_${input.number}_call_video_source`,
+          name: `Input ${input.number} Call Video Source`,
+          variableId: `input_${input.number}_call_video_source`,
         })
         inputNumberVariables.add({
-          label: `Input ${input.number} Call Audio Source`,
-          name: `input_${input.number}_call_audio_source`,
+          name: `Input ${input.number} Call Audio Source`,
+          variableId: `input_${input.number}_call_audio_source`,
         })
         inputNameVariables.add({
-          label: `Input ${input.shortTitle || input.title} Call Password`,
-          name: `input_${inputName.toLowerCase()}_call_password`,
+          name: `Input ${input.shortTitle || input.title} Call Password`,
+          variableId: `input_${inputName}_call_password`,
         })
         inputNameVariables.add({
-          label: `Input ${input.shortTitle || input.title} Call Connected`,
-          name: `input_${inputName.toLowerCase()}_call_connected`,
+          name: `Input ${input.shortTitle || input.title} Call Connected`,
+          variableId: `input_${inputName}_call_connected`,
         })
         inputNameVariables.add({
-          label: `Input ${input.shortTitle || input.title} Call Video Source`,
-          name: `input_${inputName.toLowerCase()}_call_video_source`,
+          name: `Input ${input.shortTitle || input.title} Call Video Source`,
+          variableId: `input_${inputName}_call_video_source`,
         })
         inputNameVariables.add({
-          label: `Input ${input.shortTitle || input.title} Call Audio Source`,
-          name: `input_${inputName.toLowerCase()}_call_audio_source`,
-        })
-        inputKeyVariables.add({ label: `Input ${input.key} Call Password`, name: `input_${input.key}_call_password` })
-        inputKeyVariables.add({ label: `Input ${input.key} Call Connected`, name: `input_${input.key}_call_connected` })
-        inputKeyVariables.add({
-          label: `Input ${input.key} Call Video Source`,
-          name: `input_${input.key}_call_video_source`,
+          name: `Input ${input.shortTitle || input.title} Call Audio Source`,
+          variableId: `input_${inputName}_call_audio_source`,
         })
         inputKeyVariables.add({
-          label: `Input ${input.key} Call Audio Source`,
-          name: `input_${input.key}_call_audio_source`,
+          name: `Input ${input.key} Call Password`,
+          variableId: `input_${input.key}_call_password`,
+        })
+        inputKeyVariables.add({
+          name: `Input ${input.key} Call Connected`,
+          variableId: `input_${input.key}_call_connected`,
+        })
+        inputKeyVariables.add({
+          name: `Input ${input.key} Call Video Source`,
+          variableId: `input_${input.key}_call_video_source`,
+        })
+        inputKeyVariables.add({
+          name: `Input ${input.key} Call Audio Source`,
+          variableId: `input_${input.key}_call_audio_source`,
         })
       }
 
-      inputNumberVariables.add({ label: `Input ${input.number} Volume`, name: `input_${input.number}_volume` })
-      inputNumberVariables.add({ label: `Input ${input.number} Volume dB`, name: `input_${input.number}_volume_db` })
+      inputNumberVariables.add({ name: `Input ${input.number} Volume`, variableId: `input_${input.number}_volume` })
       inputNumberVariables.add({
-        label: `Input ${input.number} Volume Linear`,
-        name: `input_${input.number}_volume_linear`,
+        name: `Input ${input.number} Volume dB`,
+        variableId: `input_${input.number}_volume_db`,
+      })
+      inputNumberVariables.add({
+        name: `Input ${input.number} Volume Linear`,
+        variableId: `input_${input.number}_volume_linear`,
       })
       inputNameVariables.add({
-        label: `Input ${input.shortTitle || input.title} Volume`,
-        name: `input_${inputName.toLowerCase()}_volume`,
+        name: `Input ${input.shortTitle || input.title} Volume`,
+        variableId: `input_${inputName}_volume`,
       })
       inputNameVariables.add({
-        label: `Input ${input.shortTitle || input.title} Volume dB`,
-        name: `input_${inputName.toLowerCase()}_volume_db`,
+        name: `Input ${input.shortTitle || input.title} Volume dB`,
+        variableId: `input_${inputName}_volume_db`,
       })
       inputNameVariables.add({
-        label: `Input ${input.shortTitle || input.title} Volume Linear`,
-        name: `input_${inputName.toLowerCase()}_volume_linear`,
+        name: `Input ${input.shortTitle || input.title} Volume Linear`,
+        variableId: `input_${inputName}_volume_linear`,
       })
-      inputKeyVariables.add({ label: `Input ${input.key} Volume`, name: `input_${input.key}_volume` })
-      inputKeyVariables.add({ label: `Input ${input.key} Volume dB`, name: `input_${input.key}_volume_db` })
-      inputKeyVariables.add({ label: `Input ${input.key} Volume Linear`, name: `input_${input.key}_volume_linear` })
+      inputKeyVariables.add({ name: `Input ${input.key} Volume`, variableId: `input_${input.key}_volume` })
+      inputKeyVariables.add({ name: `Input ${input.key} Volume dB`, variableId: `input_${input.key}_volume_db` })
+      inputKeyVariables.add({
+        name: `Input ${input.key} Volume Linear`,
+        variableId: `input_${input.key}_volume_linear`,
+      })
 
       if (input.meterF1 !== undefined) {
-        inputNumberVariables.add({ label: `Input ${input.number} MeterF1`, name: `input_${input.number}_meterf1` })
+        inputNumberVariables.add({ name: `Input ${input.number} MeterF1`, variableId: `input_${input.number}_meterf1` })
         inputNameVariables.add({
-          label: `Input ${input.shortTitle || input.title} MeterF1`,
-          name: `input_${inputName.toLowerCase()}_meterf1`,
+          name: `Input ${input.shortTitle || input.title} MeterF1`,
+          variableId: `input_${inputName}_meterf1`,
         })
-        inputKeyVariables.add({ label: `Input ${input.key} MeterF1`, name: `input_${input.key}_meterf1` })
+        inputKeyVariables.add({ name: `Input ${input.key} MeterF1`, variableId: `input_${input.key}_meterf1` })
       }
 
       if (input.meterF2 !== undefined) {
-        inputNumberVariables.add({ label: `Input ${input.number} MeterF2`, name: `input_${input.number}_meterf2` })
+        inputNumberVariables.add({ name: `Input ${input.number} MeterF2`, variableId: `input_${input.number}_meterf2` })
         inputNameVariables.add({
-          label: `Input ${input.shortTitle || input.title} MeterF2`,
-          name: `input_${inputName.toLowerCase()}_meterf2`,
+          name: `Input ${input.shortTitle || input.title} MeterF2`,
+          variableId: `input_${inputName}_meterf2`,
         })
-        inputKeyVariables.add({ label: `Input ${input.key} MeterF2`, name: `input_${input.key}_meterf2` })
+        inputKeyVariables.add({ name: `Input ${input.key} MeterF2`, variableId: `input_${input.key}_meterf2` })
       }
     })
 
@@ -482,7 +443,7 @@ export class Variables {
         const prefix = `timer_${timer.id}_${formats[index]}_`
 
         for (const key in data) {
-          variables.add({ label: `Timer ${timer.id} ${formats[index]} ${key}`, name: prefix + key })
+          variables.add({ name: `Timer ${timer.id} ${formats[index]} ${key}`, variableId: prefix + key })
         }
       })
     })
@@ -532,7 +493,7 @@ export class Variables {
   /**
    * @description Update variables
    */
-  public readonly updateVariables = (): void => {
+  public readonly updateVariables = async (): Promise<void> => {
     const newVariables: InstanceVariableValue = {}
 
     const calcDuration = (input: Input): { mm: string; ss: string; ms: string } | null => {
@@ -552,7 +513,9 @@ export class Variables {
       return null
     }
 
-    const calcRemaining = (input: Input): { ss: string; ssms: string; mmss: string; mmssms: string } | null => {
+    const calcRemaining = (
+      input: Input
+    ): { ms: string; ss: string; ssms: string; mmss: string; mmssms: string } | null => {
       if (input.position !== undefined) {
         const inPosition = input.position
         const outPosition = input.markOut ? input.markOut : input.duration
@@ -564,6 +527,7 @@ export class Variables {
         const ms = (time: number): string => Math.floor((time / 100) % 10) + ''
 
         return {
+          ms: duration.toString(),
           ss: `${padding(Math.floor(duration / 1000))}`,
           ssms: `${padding(Math.floor(duration / 1000))}.${ms(duration)}`,
           mmss: `${mm(duration)}:${ss(duration)}`,
@@ -589,14 +553,15 @@ export class Variables {
 
     // Mix
     const mixId = [0, 1, 2, 3]
-    mixId.forEach((id) => {
-      const mixProgramInput = this.instance.data.getInput(this.instance.data.mix[id].program)
-      const mixPreviewInput = this.instance.data.getInput(this.instance.data.mix[id].preview)
+
+    for (const id of mixId) {
+      const mixProgramInput = await this.instance.data.getInput(this.instance.data.mix[id].program)
+      const mixPreviewInput = await this.instance.data.getInput(this.instance.data.mix[id].preview)
 
       if (mixProgramInput) {
         const inputAudio = mixProgramInput.muted === undefined ? false : mixProgramInput.muted
         newVariables[`mix_${id + 1}_program`] = this.instance.data.mix[id].program
-        newVariables[`mix_${id + 1}_program_name`] = this.instance.data.getInputTitle(
+        newVariables[`mix_${id + 1}_program_name`] = await this.instance.data.getInputTitle(
           this.instance.data.mix[id].program
         )
         newVariables[`mix_${id + 1}_program_guid`] = mixProgramInput ? mixProgramInput?.key : ''
@@ -607,23 +572,20 @@ export class Variables {
         const inputDuration = calcDuration(mixProgramInput)
 
         if (inputDuration !== null) {
-          newVariables[`mix_${id + 1}_program_duration`] = `${inputDuration.mm}:${inputDuration.ss}.${inputDuration.ms}`
+          newVariables[`mix_${id + 1}_program_duration`] = inputDuration.ms
         }
 
         const inputRemaining = calcRemaining(mixProgramInput)
 
         if (inputRemaining !== null) {
-          newVariables[`mix_${id + 1}_program_remaining_ss`] = inputRemaining.ss
-          newVariables[`mix_${id + 1}_program_remaining_ss.ms`] = inputRemaining.ssms
-          newVariables[`mix_${id + 1}_program_remaining_mm:ss`] = inputRemaining.mmss
-          newVariables[`mix_${id + 1}_program_remaining_mm:ss.ms`] = inputRemaining.mmssms
+          newVariables[`mix_${id + 1}_program_remaining`] = inputRemaining.ms
         }
       }
 
       if (mixPreviewInput) {
         const inputAudio = mixPreviewInput.muted === undefined ? false : mixPreviewInput.muted
         newVariables[`mix_${id + 1}_preview`] = this.instance.data.mix[id].preview
-        newVariables[`mix_${id + 1}_preview_name`] = this.instance.data.getInputTitle(
+        newVariables[`mix_${id + 1}_preview_name`] = await this.instance.data.getInputTitle(
           this.instance.data.mix[id].preview
         )
         newVariables[`mix_${id + 1}_preview_guid`] = mixPreviewInput?.key
@@ -635,19 +597,16 @@ export class Variables {
         const inputDuration = calcDuration(mixPreviewInput)
 
         if (inputDuration !== null) {
-          newVariables[`mix_${id + 1}_preview_duration`] = `${inputDuration.mm}:${inputDuration.ss}.${inputDuration.ms}`
+          newVariables[`mix_${id + 1}_preview_duration`] = inputDuration.ms
         }
 
         const inputRemaining = calcRemaining(mixPreviewInput)
 
         if (inputRemaining !== null) {
-          newVariables[`mix_${id + 1}_preview_remaining_ss`] = inputRemaining.ss
-          newVariables[`mix_${id + 1}_preview_remaining_ss.ms`] = inputRemaining.ssms
-          newVariables[`mix_${id + 1}_preview_remaining_mm:ss`] = inputRemaining.mmss
-          newVariables[`mix_${id + 1}_preview_remaining_mm:ss.ms`] = inputRemaining.mmssms
+          newVariables[`mix_${id + 1}_preview_remaining`] = inputRemaining.ms
         }
       }
-    })
+    }
 
     newVariables['mix_selected'] = this.instance.routingData.mix + 1
 
@@ -661,7 +620,6 @@ export class Variables {
       const meterF2 = audioBus?.meterF2 ? volumeTodB(audioBus.meterF2).toFixed(1) : ''
 
       if (volume !== undefined) {
-        volume = Math.round(volume)
         volumedB = volumeTodB(volume).toFixed(1)
         volumeLinear = volumeToLinear(volume)
       } else {
@@ -670,7 +628,7 @@ export class Variables {
         volumeLinear = ''
       }
 
-      newVariables[`bus_${id.toLowerCase()}_volume`] = volume
+      newVariables[`bus_${id.toLowerCase()}_volume`] = parseFloat(volume + '').toFixed(2)
       newVariables[`bus_${id.toLowerCase()}_volume_db`] = volumedB
       newVariables[`bus_${id.toLowerCase()}_volume_linear`] = volumeLinear
 
@@ -686,18 +644,18 @@ export class Variables {
     })
 
     // Overlay
-    const getOverlayInput = (id: number): Input | null => {
+    const getOverlayInput = async (id: number): Promise<Input | null> => {
       const overlay = this.instance.data.overlays[id - 1]
 
-      return overlay && overlay.input !== null ? this.instance.data.getInput(overlay.input) : null
+      return overlay && overlay.input !== null ? await this.instance.data.getInput(overlay.input) : null
     }
 
     const overlays = [0, 1, 2, 3]
-    overlays.forEach((id) => {
+    for (const id of overlays) {
       if (this.instance.data.overlays[id] && this.instance.data.overlays[id].input !== null) {
-        newVariables[`overlay_${id + 1}_input_name`] =
-          getOverlayInput(id + 1)?.shortTitle || getOverlayInput(id + 1)?.title || ''
-        newVariables[`overlay_${id + 1}_input`] = getOverlayInput(id + 1)?.number || ''
+        const overlay = await getOverlayInput(id + 1)
+        newVariables[`overlay_${id + 1}_input_name`] = overlay?.shortTitle || overlay?.title || ''
+        newVariables[`overlay_${id + 1}_input`] = overlay?.number || ''
         newVariables[`overlay_${id + 1}_pgm`] = (!this.instance.data.overlays[id].preview).toString()
         newVariables[`overlay_${id + 1}_prv`] = this.instance.data.overlays[id].preview.toString()
       } else {
@@ -706,10 +664,10 @@ export class Variables {
         newVariables[`overlay_${id + 1}_pgm`] = 'false'
         newVariables[`overlay_${id + 1}_prv`] = 'false'
       }
-    })
+    }
 
     // Layers
-    const layerRoutingInput = this.instance.data.getInput(this.instance.routingData.layer.destinationInput || '')
+    const layerRoutingInput = await this.instance.data.getInput(this.instance.routingData.layer.destinationInput || '')
     if (layerRoutingInput) {
       const inputName = layerRoutingInput.shortTitle
         ? layerRoutingInput.shortTitle.replace(/[^a-z0-9-_.]+/gi, '')
@@ -734,7 +692,7 @@ export class Variables {
     // Inputs
     const inputNames: string[] = []
 
-    this.instance.data.inputs.forEach((input) => {
+    for (const input of this.instance.data.inputs) {
       const inputName = input.shortTitle
         ? input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '')
         : input.title.replace(/[^a-z0-9-_.]+/gi, '')
@@ -836,16 +794,19 @@ export class Variables {
       const inputRemaining = calcRemaining(input)
 
       if (inputRemaining !== null) {
+        newVariables[`input_${input.number}_remaining`] = inputRemaining.ms
         newVariables[`input_${input.number}_remaining_ss`] = inputRemaining.ss
         newVariables[`input_${input.number}_remaining_ss.ms`] = inputRemaining.ssms
         newVariables[`input_${input.number}_remaining_mm:ss`] = inputRemaining.mmss
         newVariables[`input_${input.number}_remaining_mm:ss.ms`] = inputRemaining.mmssms
+        newVariables[`input_${input.key}_remaining`] = inputRemaining.ms
         newVariables[`input_${input.key}_remaining_ss`] = inputRemaining.ss
         newVariables[`input_${input.key}_remaining_ss.ms`] = inputRemaining.ssms
         newVariables[`input_${input.key}_remaining_mm:ss`] = inputRemaining.mmss
         newVariables[`input_${input.key}_remaining_mm:ss.ms`] = inputRemaining.mmssms
 
         if (useNamedInput) {
+          newVariables[`input_${inputName.toLowerCase()}_remaining`] = inputRemaining.ms
           newVariables[`input_${inputName.toLowerCase()}_remaining_ss`] = inputRemaining.ss
           newVariables[`input_${inputName.toLowerCase()}_remaining_ss.ms`] = inputRemaining.ssms
           newVariables[`input_${inputName.toLowerCase()}_remaining_mm:ss`] = inputRemaining.mmss
@@ -865,8 +826,8 @@ export class Variables {
         }
       }
 
-      input.overlay?.forEach((layer) => {
-        const overlayInput = this.instance.data.getInput(layer.key)
+      for (const layer of input.overlay || []) {
+        const overlayInput = await this.instance.data.getInput(layer.key)
         let overlayinputName = ''
 
         if (overlayInput)
@@ -886,7 +847,7 @@ export class Variables {
           newVariables[`input_${inputName.toLowerCase()}_layer_${layer.index + 1}_number`] = overlayInput?.number || ''
           newVariables[`input_${inputName.toLowerCase()}_layer_${layer.index + 1}_key`] = overlayInput?.key || ''
         }
-      })
+      }
 
       if (input.text) {
         input.text.forEach((textLayer) => {
@@ -948,7 +909,7 @@ export class Variables {
       let volumeLinear
 
       if (input.volume !== undefined) {
-        volume = Math.round(input.volume)
+        volume = input.volume.toFixed(2)
         volumedB = volumeTodB(input.volume).toFixed(1)
         volumeLinear = volumeToLinear(input.volume)
       } else {
@@ -969,7 +930,7 @@ export class Variables {
         newVariables[`input_${inputName.toLowerCase()}_volume_db`] = volumedB
         newVariables[`input_${inputName.toLowerCase()}_volume_linear`] = volumeLinear
       }
-    })
+    }
 
     this.set(newVariables)
 

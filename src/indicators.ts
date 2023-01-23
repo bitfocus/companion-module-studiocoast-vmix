@@ -1,69 +1,53 @@
-import { CompanionFeedbackEventInfo } from '../../../instance_skel_types'
-
-interface IndicatorImages {
-  [key: string]: string
-}
-
-export interface CornerPosition {
-  vertical: 'top' | 'bottom'
-  horizontal: 'left' | 'right'
-}
-
-export type IndicatorType = 'border' | 'cornerTL' | 'cornerTR' | 'cornerBL' | 'cornerBR'
-
-// Cache of indicators
-const indicatorImages: IndicatorImages = {}
+export type IndicatorType = '' | 'border' | 'cornerTL' | 'cornerTR' | 'cornerBL' | 'cornerBR' | 'full'
 
 export class Indicator {
-  private readonly instance: any
-  private settings = {
-    borderDepth: 3,
-    triangleDepth: 20,
-    stale: true,
-  }
-
-  constructor(instance: any) {
-    this.instance = instance
-  }
-
   /**
-   * @param type indicator style
-   * @param color forground color
-   * @param bgColor background color
-   * @param info feedback info object for button width and height
-   * @returns base64 encoded image
-   * @description generates border or corner indicators
+   * @param width bank width
+   * @param height bank height
+   * @param color RGB number
+   * @param type Indicator type
+   * @returns ARGB buffer for the button image
+   * @description Generates a border, or corner indicator, for feedback of an input that's in preview/program as a layer
    */
-  public readonly getImage = (
-    type: IndicatorType,
+  public readonly drawIndicator = (
+    width: number,
+    height: number,
     color: number,
-    bgColor = 0,
-    info: CompanionFeedbackEventInfo
-  ): string => {
-    const img = new this.instance.Image(info.width, info.height)
-    img.backgroundColor(bgColor)
+    type: IndicatorType
+  ): Uint8Array | string => {
+    if (type === '' || type === 'full') return ''
+    if (width <= 5 || width > 72 || height <= 5 || height > 72) throw new Error('Depth out of range')
+    const buffer = Buffer.alloc(width * height * 4)
+    color = color + 0xff000000
 
-    const id = `${type}-${info.width}-${info.height}-${color}-${bgColor}`
+    const borderThickness = 4
 
-    // Use cached indicator if available
-    if (indicatorImages[id]) {
-      return indicatorImages[id]
-    } else {
-      if (type === 'border') {
-        img.drawBorder(this.settings.borderDepth, color)
-      } else if (type === 'cornerTL') {
-        img.drawCornerTriangle(this.settings.triangleDepth, color, 'left', 'top')
-      } else if (type === 'cornerTR') {
-        img.drawCornerTriangle(this.settings.triangleDepth, color, 'right', 'top')
-      } else if (type === 'cornerBL') {
-        img.drawCornerTriangle(this.settings.triangleDepth, color, 'left', 'bottom')
-      } else if (type === 'cornerBR') {
-        img.drawCornerTriangle(this.settings.triangleDepth, color, 'right', 'bottom')
+    if (type === 'border') {
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          const innerRect =
+            x > borderThickness && x < width - borderThickness && y > borderThickness && y < height - borderThickness
+          if (!innerRect) {
+            const index = y * width + x
+            buffer.writeUint32BE(color, index * 4)
+          }
+        }
       }
+    } else {
+      const hAlign = type.endsWith('R') ? 'right' : 'left'
+      const vAlign = type.includes('T') ? 'top' : 'bottom'
 
-      indicatorImages[id] = img.toBase64()
+      for (let y = 0; y < height * 0.33; y++) {
+        const trueY = vAlign == 'bottom' ? height - 1 - y : y
+        for (let x = 0; x < width * 0.33 - y; x++) {
+          const trueX = hAlign == 'right' ? width - 1 - x : x
 
-      return indicatorImages[id]
+          const index = trueY * width + trueX
+          buffer.writeUint32BE(color, index * 4)
+        }
+      }
     }
+
+    return buffer
   }
 }

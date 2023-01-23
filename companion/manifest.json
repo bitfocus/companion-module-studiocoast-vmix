@@ -1,0 +1,44 @@
+{
+	"id": "studiocoast-vmix",
+	"name": "studiocoast-vmix",
+	"shortname": "vmix",
+	"description": "Module to control StudioCoast vMix",
+	"version": "3.0.0",
+	"license": "MIT",
+	"repository": "git+https://github.com/bitfocus/companion-module-studiocoast-vmix.git",
+	"bugs": "https://github.com/bitfocus/companion-module-studiocoast-vmix/issues",
+	"maintainers": [
+		{
+			"name": "Jeff Martin",
+			"email": "dist@dist.dev",
+			"url": "https://dist.dev"
+		},
+		{
+			"name": "Per Røine",
+			"email": "per.roine@gmail.com"
+		},
+		{
+			"name": "Andreas H. Thomsen",
+			"email": "mc-hauge@hotmail.com"
+		},
+		{
+			"name": "Keith Rocheck",
+			"email": "keith.rocheck@gmail.com"
+		}
+	],
+	"legacyIds": [],
+	"runtime": {
+		"type": "node18",
+		"api": "nodejs-ipc",
+		"apiVersion": "0.0.0",
+		"entrypoint": "..\\dist\\index.js"
+	},
+	"manufacturer": "StudioCoast",
+	"products": [
+		"vMix"
+	],
+	"keywords": [
+		"Software",
+		"Vision Mixer"
+	]
+}

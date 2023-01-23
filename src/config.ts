@@ -1,4 +1,4 @@
-import { SomeCompanionConfigField } from '../../../instance_skel_types'
+import { SomeCompanionConfigField } from '@companion-module/base'
 
 export interface Config {
   label: string
@@ -18,6 +18,13 @@ export interface Config {
 
 export const getConfigFields = (): SomeCompanionConfigField[] => {
   return [
+    {
+      type: 'static-text',
+      id: 'connectionInfo',
+      width: 12,
+      label: 'Connection Info',
+      value: `Companion uses vMix's TCP port (8099). Do NOT enter your Web Controller port, and ensure that the Web Controller is NOT set to 8099 as that will cause a conflict.`,
+    },
     {
       type: 'textinput',
       id: 'host',
@@ -43,7 +50,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       default: true,
     },
     {
-      type: 'text',
+      type: 'static-text',
       id: 'errorInfo',
       width: 11,
       label: 'Log connection errors (Default: Enabled)',
@@ -59,7 +66,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       max: 60000,
     },
     {
-      type: 'text',
+      type: 'static-text',
       id: 'apiPollInfo',
       width: 12,
       label: 'API Poll Interval warning',
@@ -69,7 +76,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
         'See the help section for more details.',
     },
     {
-      type: 'text',
+      type: 'static-text',
       id: 'tbarInfo',
       width: 10,
       label: 'T-bar',
@@ -91,7 +98,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
     },
     { type: 'textinput', id: 'shiftDelimiter', width: 12, label: 'Shift Separator', default: '/' },
     {
-      type: 'text',
+      type: 'static-text',
       id: 'shiftBlinkInfo',
       width: 12,
       label: 'Feedback Blink',
@@ -112,7 +119,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       default: true,
     },
     {
-      type: 'text',
+      type: 'static-text',
       id: 'variablesInfo',
       width: 12,
       label: 'Instance Variables',

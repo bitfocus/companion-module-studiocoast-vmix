@@ -1,15 +1,15 @@
 import { Input } from './data'
 import VMixInstance from './index'
 import { options, volumeToLinear } from './utils'
-import { IndicatorType } from './indicators'
 import {
-  CompanionFeedbackEvent,
-  SomeCompanionInputField,
-  CompanionBankRequiredProps,
-  CompanionBankAdditionalStyleProps,
-  CompanionFeedbackEventInfo,
-  CompanionBankPNG,
-} from '../../../instance_skel_types'
+  combineRgb,
+  CompanionAdvancedFeedbackResult,
+  CompanionFeedbackButtonStyleResult,
+  CompanionFeedbackAdvancedEvent,
+  CompanionFeedbackBooleanEvent,
+  CompanionFeedbackContext,
+  SomeCompanionFeedbackInputField,
+} from '@companion-module/base'
 
 export interface VMixFeedbacks {
   // Tally
@@ -56,18 +56,13 @@ export interface VMixFeedbacks {
   buttonShift: VMixFeedback<ButtonShiftCallback>
   buttonText: VMixFeedback<ButtonTextCallback>
 
-  // DEPRECATED
-  titleLayer: VMixFeedback<TitleLayerCallback>
-  inputSelectedIndexName: VMixFeedback<InputSelectedIndexNameCallback>
-  multiviewLayer: VMixFeedback<MultiviewLayerCallback>
-
   // Index signature
   [key: string]: VMixFeedback<any>
 }
 
 // Tally
 interface InputPreviewCallback {
-  type: 'inputPreview'
+  feedbackId: 'inputPreview'
   options: Readonly<{
     input: string
     mix: number
@@ -78,7 +73,7 @@ interface InputPreviewCallback {
 }
 
 interface InputLiveCallback {
-  type: 'inputLive'
+  feedbackId: 'inputLive'
   options: Readonly<{
     input: string
     mix: number
@@ -89,7 +84,7 @@ interface InputLiveCallback {
 }
 
 interface OverlayStatusCallback {
-  type: 'overlayStatus'
+  feedbackId: 'overlayStatus'
   options: Readonly<{
     input: string
     overlay: string
@@ -101,7 +96,7 @@ interface OverlayStatusCallback {
 
 // General
 interface VideoTimerCallback {
-  type: 'videoTimer'
+  feedbackId: 'videoTimer'
   options: Readonly<{
     input: string
     color: number
@@ -112,7 +107,7 @@ interface VideoTimerCallback {
 }
 
 interface StatusCallback {
-  type: 'status'
+  feedbackId: 'status'
   options: Readonly<{
     status:
       | 'connection'
@@ -131,7 +126,7 @@ interface StatusCallback {
 
 // Audio
 interface BusMuteCallback {
-  type: 'busMute'
+  feedbackId: 'busMute'
   options: Readonly<{
     value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
     fg: number
@@ -140,7 +135,7 @@ interface BusMuteCallback {
 }
 
 interface BusSoloCallback {
-  type: 'busSolo'
+  feedbackId: 'busSolo'
   options: Readonly<{
     value: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
     fg: number
@@ -149,7 +144,7 @@ interface BusSoloCallback {
 }
 
 interface InputAudioCallback {
-  type: 'inputAudio'
+  feedbackId: 'inputAudio'
   options: Readonly<{
     input: string
     fg: number
@@ -159,7 +154,7 @@ interface InputAudioCallback {
 }
 
 interface InputSoloCallback {
-  type: 'inputSolo'
+  feedbackId: 'inputSolo'
   options: Readonly<{
     input: string
     fg: number
@@ -168,7 +163,7 @@ interface InputSoloCallback {
 }
 
 interface InputBusRoutingCallback {
-  type: 'inputBusRouting'
+  feedbackId: 'inputBusRouting'
   options: Readonly<{
     input: string
     value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
@@ -178,10 +173,9 @@ interface InputBusRoutingCallback {
 }
 
 interface LiveBusVolumeCallback {
-  type: 'liveBusVolume'
+  feedbackId: 'liveBusVolume'
   options: Readonly<{
     value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
-    dBShow: boolean
     colorTxt: boolean
     colorBG: boolean
     colorBase: number
@@ -194,10 +188,9 @@ interface LiveBusVolumeCallback {
 }
 
 interface LiveInputVolumeCallback {
-  type: 'liveInputVolume'
+  feedbackId: 'liveInputVolume'
   options: Readonly<{
     input: string
-    dBShow: boolean
     colorTxt: boolean
     colorBG: boolean
     colorBase: number
@@ -210,7 +203,7 @@ interface LiveInputVolumeCallback {
 }
 
 interface BusVolumeLevelCallback {
-  type: 'busVolumeLevel'
+  feedbackId: 'busVolumeLevel'
   options: Readonly<{
     bus: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'Headphones'
     comparison: 'eq' | 'lt' | 'lte' | 'gt' | 'gte'
@@ -221,7 +214,7 @@ interface BusVolumeLevelCallback {
 }
 
 interface InputVolumeLevelCallback {
-  type: 'inputVolumeLevel'
+  feedbackId: 'inputVolumeLevel'
   options: Readonly<{
     input: string
     comparison: 'eq' | 'lt' | 'lte' | 'gt' | 'gte'
@@ -233,7 +226,7 @@ interface InputVolumeLevelCallback {
 
 // Replay
 interface ReplayStatusCallback {
-  type: 'replayStatus'
+  feedbackId: 'replayStatus'
   options: Readonly<{
     status: 'recording' | 'live'
     fg: number
@@ -242,7 +235,7 @@ interface ReplayStatusCallback {
 }
 
 interface ReplayEventsCallback {
-  type: 'replayEvents'
+  feedbackId: 'replayEvents'
   options: Readonly<{
     events: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20
     fg: number
@@ -251,7 +244,7 @@ interface ReplayEventsCallback {
 }
 
 interface ReplayCameraCallback {
-  type: 'replayCamera'
+  feedbackId: 'replayCamera'
   options: Readonly<{
     channel: 'A' | 'B' | 'selected'
     camera: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
@@ -261,7 +254,7 @@ interface ReplayCameraCallback {
 }
 
 interface ReplaySelectedChannelCallback {
-  type: 'replaySelectedChannel'
+  feedbackId: 'replaySelectedChannel'
   options: Readonly<{
     channel: 'AB' | 'A' | 'B'
     fg: number
@@ -271,7 +264,7 @@ interface ReplaySelectedChannelCallback {
 
 // Video Call
 interface VideoCallAudioSourceCallback {
-  type: 'videoCallAudioSource'
+  feedbackId: 'videoCallAudioSource'
   options: Readonly<{
     input: string
     source: 'Master' | 'Headphones' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
@@ -281,7 +274,7 @@ interface VideoCallAudioSourceCallback {
 }
 
 interface VideoCallVideoSourceCallback {
-  type: 'videoCallVideoSource'
+  feedbackId: 'videoCallVideoSource'
   options: Readonly<{
     input: string
     source: 'Output1' | 'Output2' | 'Output3' | 'Output4' | 'None'
@@ -292,7 +285,7 @@ interface VideoCallVideoSourceCallback {
 
 // Slides / List
 interface InputSelectedIndexCallback {
-  type: 'inputSelectedIndex'
+  feedbackId: 'inputSelectedIndex'
   options: Readonly<{
     input: string
     selectedIndex: number
@@ -305,7 +298,7 @@ interface InputSelectedIndexCallback {
 
 // Layers
 interface SelectedDestinationInputCallback {
-  type: 'selectedDestinationInput'
+  feedbackId: 'selectedDestinationInput'
   options: Readonly<{
     input: string
     fg: number
@@ -314,7 +307,7 @@ interface SelectedDestinationInputCallback {
 }
 
 interface SelectedDestinationLayerCallback {
-  type: 'selectedDestinationLayer'
+  feedbackId: 'selectedDestinationLayer'
   options: Readonly<{
     selectedIndex: string
     fg: number
@@ -323,7 +316,7 @@ interface SelectedDestinationLayerCallback {
 }
 
 interface RoutableMultiviewLayerCallback {
-  type: 'routableMultiviewLaye'
+  feedbackId: 'routableMultiviewLaye'
   options: Readonly<{
     input: string
     fg: number
@@ -332,7 +325,7 @@ interface RoutableMultiviewLayerCallback {
 }
 
 interface InputOnMultiviewCallback {
-  type: 'inputOnMultiview'
+  feedbackId: 'inputOnMultiview'
   options: Readonly<{
     inputX: string
     inputY: string
@@ -345,7 +338,7 @@ interface InputOnMultiviewCallback {
 
 // Util
 interface MixSelectCallback {
-  type: 'mixSelect'
+  feedbackId: 'mixSelect'
   options: Readonly<{
     mix: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14
     fg: number
@@ -354,7 +347,7 @@ interface MixSelectCallback {
 }
 
 interface ButtonShiftCallback {
-  type: 'buttonShift'
+  feedbackId: 'buttonShift'
   options: Readonly<{
     fg: number
     bg: number
@@ -362,36 +355,9 @@ interface ButtonShiftCallback {
 }
 
 interface ButtonTextCallback {
-  type: 'buttonText'
+  feedbackId: 'buttonText'
   options: Readonly<{
     text: string
-  }>
-}
-
-interface TitleLayerCallback {
-  type: 'titleLayer'
-  options: Readonly<{
-    input: string
-    layer: string
-  }>
-}
-
-interface InputSelectedIndexNameCallback {
-  type: 'inputSelectedIndexName'
-  options: Readonly<{
-    input: string
-    value1: boolean
-    value2: boolean
-  }>
-}
-
-interface MultiviewLayerCallback {
-  type: 'multiviewLayer '
-  options: Readonly<{
-    input: string
-    layer: number
-    value: boolean
-    value2: boolean
   }>
 }
 
@@ -441,48 +407,45 @@ export type FeedbackCallbacks =
   | ButtonShiftCallback
   | ButtonTextCallback
 
-  // DEPRECATED
-  | TitleLayerCallback
-  | InputSelectedIndexNameCallback
-  | MultiviewLayerCallback
+// DEPRECATED
 
 type TallySelection = '' | 'border' | 'cornerTL' | 'cornerTR' | 'cornerBL' | 'cornerBR' | 'full'
 
 // Force options to have a default to prevent sending undefined values
-type InputFieldWithDefault = Exclude<SomeCompanionInputField, 'default'> & { default: string | number | boolean | null }
+type InputFieldWithDefault = Exclude<SomeCompanionFeedbackInputField, 'default'> & {
+  default: string | number | boolean | null
+}
 
 // vMix Boolean and Advanced feedback types
 interface VMixFeedbackBoolean<T> {
   type: 'boolean'
-  label: string
+  name: string
   description: string
-  style: Partial<CompanionBankRequiredProps & CompanionBankAdditionalStyleProps>
+  style: Partial<CompanionFeedbackButtonStyleResult>
   options: InputFieldWithDefault[]
-  callback?: (
-    feedback: Readonly<Omit<CompanionFeedbackEvent, 'options' | 'type'> & T>,
-    bank: Readonly<CompanionBankPNG | null>,
-    info: Readonly<CompanionFeedbackEventInfo | null>
-  ) => boolean
-  subscribe?: (feedback: Readonly<Omit<CompanionFeedbackEvent, 'options' | 'type'> & T>) => boolean
-  unsubscribe?: (feedback: Readonly<Omit<CompanionFeedbackEvent, 'options' | 'type'> & T>) => boolean
+  callback: (
+    feedback: Readonly<Omit<CompanionFeedbackBooleanEvent, 'options' | 'type'> & T>,
+    context: CompanionFeedbackContext
+  ) => boolean | Promise<boolean>
+  subscribe?: (feedback: Readonly<Omit<CompanionFeedbackBooleanEvent, 'options' | 'type'> & T>) => boolean
+  unsubscribe?: (feedback: Readonly<Omit<CompanionFeedbackBooleanEvent, 'options' | 'type'> & T>) => boolean
 }
 
 interface VMixFeedbackAdvanced<T> {
   type: 'advanced'
-  label: string
+  name: string
   description: string
   options: InputFieldWithDefault[]
-  callback?: (
-    feedback: Readonly<Omit<CompanionFeedbackEvent, 'options' | 'type'> & T>,
-    bank: Readonly<CompanionBankPNG | null>,
-    info: Readonly<CompanionFeedbackEventInfo | null>
-  ) => Partial<CompanionBankRequiredProps & CompanionBankAdditionalStyleProps> | void
+  callback: (
+    feedback: Readonly<Omit<CompanionFeedbackAdvancedEvent, 'options' | 'type'> & T>,
+    context: CompanionFeedbackContext
+  ) => CompanionAdvancedFeedbackResult | Promise<CompanionAdvancedFeedbackResult>
   subscribe?: (
-    feedback: Readonly<Omit<CompanionFeedbackEvent, 'options' | 'type'> & T>
-  ) => Partial<CompanionBankRequiredProps & CompanionBankAdditionalStyleProps> | void
+    feedback: Readonly<Omit<CompanionFeedbackAdvancedEvent, 'options' | 'type'> & T>
+  ) => CompanionAdvancedFeedbackResult
   unsubscribe?: (
-    feedback: Readonly<Omit<CompanionFeedbackEvent, 'options' | 'type'> & T>
-  ) => Partial<CompanionBankRequiredProps & CompanionBankAdditionalStyleProps> | void
+    feedback: Readonly<Omit<CompanionFeedbackAdvancedEvent, 'options' | 'type'> & T>
+  ) => CompanionAdvancedFeedbackResult
 }
 
 export type VMixFeedback<T> = VMixFeedbackBoolean<T> | VMixFeedbackAdvanced<T>
@@ -492,7 +455,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
     // Tally
     inputPreview: {
       type: 'advanced',
-      label: 'Tally - Preview state',
+      name: 'Tally - Preview state',
       description: 'Indicates if an input is in Preview (or is a layer of an input that is if layer tally is selected)',
       options: [
         options.input,
@@ -501,7 +464,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         options.backgroundColorPreview,
         options.layerTallyIndicator,
       ],
-      callback: (feedback, bank, info) => {
+      callback: async (feedback, context) => {
         let mix = feedback.options.mix
 
         if (mix === -1) mix = instance.routingData.mix
@@ -525,34 +488,37 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           }
         }
 
-        const optionsInput = instance
-          .parseOption(feedback.options.input)
-          .map((value) => instance.data.getInput(value))
-          .map(checkInput)
+        let optionsInput: any = await instance.parseOption(feedback.options.input, context)
+        optionsInput = await Promise.all(optionsInput.map((value: any) => instance.data.getInput(value)))
+        optionsInput = optionsInput.map(checkInput)
 
         if (
           optionsInput[instance.buttonShift.state] === 1 ||
           (optionsInput.includes(1) && instance.config.shiftBlinkPrvPrgm && instance.buttonShift.blink)
         ) {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
-        } else if (optionsInput[instance.buttonShift.state] === 2 && bank && info) {
+        } else if (optionsInput[instance.buttonShift.state] === 2) {
+          if (!feedback.image?.width || !feedback.image?.height) return {}
+
+          const indicatorBuffer = instance.indicator.drawIndicator(
+            feedback.image.width,
+            feedback.image.height,
+            feedback.options.bg,
+            feedback.options.tally
+          )
+
           return {
-            img64: instance.indicator.getImage(
-              feedback.options.tally as IndicatorType,
-              feedback.options.bg,
-              bank.bgcolor,
-              info
-            ),
+            imageBuffer: indicatorBuffer,
           }
         } else {
-          return
+          return {}
         }
       },
     },
 
     inputLive: {
       type: 'advanced',
-      label: 'Tally - Program state',
+      name: 'Tally - Program state',
       description: 'Indicates if an input is in Program (or is a layer of an input that is if layer tally is selected)',
       options: [
         options.input,
@@ -561,7 +527,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         options.backgroundColorProgram,
         options.layerTallyIndicator,
       ],
-      callback: (feedback, bank, info) => {
+      callback: async (feedback, context) => {
         let mix = feedback.options.mix
 
         if (mix === -1) mix = instance.routingData.mix
@@ -585,34 +551,37 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           }
         }
 
-        const optionsInput = instance
-          .parseOption(feedback.options.input)
-          .map((value) => instance.data.getInput(value))
-          .map(checkInput)
+        let optionsInput: any = await instance.parseOption(feedback.options.input, context)
+        optionsInput = await Promise.all(optionsInput.map((value: any) => instance.data.getInput(value)))
+        optionsInput = optionsInput.map(checkInput)
 
         if (
           optionsInput[instance.buttonShift.state] === 1 ||
           (optionsInput.includes(1) && instance.config.shiftBlinkPrvPrgm && instance.buttonShift.blink)
         ) {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
-        } else if (optionsInput[instance.buttonShift.state] === 2 && bank && info) {
+        } else if (optionsInput[instance.buttonShift.state] === 2) {
+          if (!feedback.image?.width || !feedback.image?.height) return {}
+
+          const indicatorBuffer = instance.indicator.drawIndicator(
+            feedback.image.width,
+            feedback.image.height,
+            feedback.options.bg,
+            feedback.options.tally
+          )
+
           return {
-            img64: instance.indicator.getImage(
-              feedback.options.tally as IndicatorType,
-              feedback.options.bg,
-              bank.bgcolor,
-              info
-            ),
+            imageBuffer: indicatorBuffer,
           }
         } else {
-          return
+          return {}
         }
       },
     },
 
     overlayStatus: {
       type: 'advanced',
-      label: 'Tally - Overlay state',
+      name: 'Tally - Overlay state',
       description: 'Indicates if an input (or any if left blank) is previewed, or live, as an overlay',
       options: [
         options.input,
@@ -631,19 +600,19 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           type: 'colorpicker',
           label: 'Preview Background Color',
           id: 'bgPreview',
-          default: instance.rgb(0, 255, 0),
+          default: combineRgb(0, 255, 0),
         },
         {
           type: 'colorpicker',
           label: 'Program Background Color',
           id: 'bgProgram',
-          default: instance.rgb(255, 0, 0),
+          default: combineRgb(255, 0, 0),
         },
       ],
-      callback: (feedback) => {
-        const inputOptions = instance
-          .parseOption(feedback.options.input)
-          .map((value) => instance.data.getInput(value)?.number)
+      callback: async (feedback, context) => {
+        let inputOptions: any = await instance.parseOption(feedback.options.input, context)
+        inputOptions = await Promise.all(inputOptions.map((value: any) => instance.data.getInput(value)))
+        inputOptions = inputOptions.map((input: Input) => input.number)
 
         let preview = false
         let program = false
@@ -671,34 +640,34 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           }
         }
 
-        return
+        return {}
       },
     },
 
     // General
     videoTimer: {
       type: 'advanced',
-      label: 'Video - Video Timer',
-      description: 'Time remaining on video input',
+      name: 'Video - Video Timer',
+      description: 'Indicate time remaining on video input',
       options: [
         options.input,
         {
           type: 'colorpicker',
           label: 'Text color',
           id: 'color',
-          default: instance.rgb(255, 255, 255),
+          default: combineRgb(255, 255, 255),
         },
         {
           type: 'colorpicker',
           label: 'Text color under 30s',
           id: 'color30',
-          default: instance.rgb(255, 255, 0),
+          default: combineRgb(255, 255, 0),
         },
         {
           type: 'colorpicker',
           label: 'Text color under 10s',
           id: 'color10',
-          default: instance.rgb(255, 0, 0),
+          default: combineRgb(255, 0, 0),
         },
         {
           type: 'checkbox',
@@ -707,19 +676,17 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           default: false,
         },
       ],
-      callback: (feedback, bank) => {
-        const inputOption = instance.parseOption(feedback.options.input)[instance.buttonShift.state]
-        const input = instance.data.getInput(inputOption)
+      callback: async (feedback, context) => {
+        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+        const input = await instance.data.getInput(inputOption)
 
         if (!input || input.duration === 0) {
-          return
+          return {}
         }
 
         const outPosition = input.markOut ? input.markOut : input.duration
-
         const remaining = outPosition - input.position
 
-        const ms = Math.floor((remaining % 1000) / 100)
         const sec = Math.floor((remaining % 60000) / 1000)
         const min = Math.floor(remaining / 60000)
 
@@ -733,17 +700,13 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           return feedback.options.color10
         }
 
-        const getText = () => {
-          return `${min < 10 ? '0' + min : min}:${sec < 10 ? '0' + sec : sec}.${ms}`
-        }
-
-        return { color: color(), text: (bank ? bank.text : '') + `${getText()}` }
+        return { color: color() }
       },
     },
 
     status: {
       type: 'advanced',
-      label: 'vMix - status',
+      name: 'vMix - status',
       description: 'Current status of vMix, such as recording, external, etc...',
       options: [
         {
@@ -792,40 +755,40 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
             }
           }
         }
-        return
+        return {}
       },
     },
 
     // Audio
     busMute: {
       type: 'advanced',
-      label: 'Audio - Bus mute',
+      name: 'Audio - Bus mute',
       description: 'Indicate if a bus is muted',
       options: [options.audioBusMaster, options.foregroundColor, options.backgroundColorProgram],
       callback: (feedback) => {
         const busID = feedback.options.value === 'Master' ? 'master' : `bus${feedback.options.value}`
         const bus = instance.data.getAudioBus(busID)
 
-        return bus?.muted ? { color: feedback.options.fg, bgcolor: feedback.options.bg } : undefined
+        return bus?.muted ? { color: feedback.options.fg, bgcolor: feedback.options.bg } : {}
       },
     },
 
     busSolo: {
       type: 'advanced',
-      label: 'Audio - Bus solo',
+      name: 'Audio - Bus solo',
       description: 'Requires vMix v25',
       options: [options.audioBus, options.foregroundColorBlack, options.backgroundColorYellow],
       callback: (feedback) => {
         const busID = `bus${feedback.options.value}`
         const bus = instance.data.getAudioBus(busID)
 
-        return bus?.solo ? { color: feedback.options.fg, bgcolor: feedback.options.bg } : undefined
+        return bus?.solo ? { color: feedback.options.fg, bgcolor: feedback.options.bg } : {}
       },
     },
 
     inputAudio: {
       type: 'advanced',
-      label: 'Audio - Input mute',
+      name: 'Audio - Input mute',
       description: 'Indicate if an input is muted or enabled',
       options: [
         options.input,
@@ -834,20 +797,21 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           type: 'colorpicker',
           label: 'Audio Live color',
           id: 'bgLive',
-          default: instance.rgb(0, 255, 0),
+          default: combineRgb(0, 255, 0),
         },
         {
           type: 'colorpicker',
           label: 'Audio Muted color',
           id: 'bgMuted',
-          default: instance.rgb(255, 0, 0),
+          default: combineRgb(255, 0, 0),
         },
       ],
-      callback: (feedback) => {
-        const input = instance.data.getInput(instance.parseOption(feedback.options.input)[instance.buttonShift.state])
+      callback: async (feedback, context) => {
+        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+        const input = await instance.data.getInput(inputOption)
 
         if (!input) {
-          return
+          return {}
         }
 
         if (input.muted) {
@@ -860,23 +824,24 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
 
     inputSolo: {
       type: 'advanced',
-      label: 'Audio - Input solo',
+      name: 'Audio - Input solo',
       description: 'Indicate if an input is set to Solo',
       options: [options.input, options.foregroundColor, options.backgroundColorProgram],
-      callback: (feedback) => {
-        const input = instance.data.getInput(instance.parseOption(feedback.options.input)[instance.buttonShift.state])
+      callback: async (feedback, context) => {
+        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+        const input = await instance.data.getInput(inputOption)
 
         if (input?.solo) {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         }
 
-        return
+        return {}
       },
     },
 
     inputBusRouting: {
       type: 'advanced',
-      label: 'Audio - Input Bus Routing',
+      name: 'Audio - Input Bus Routing',
       description: 'Indicate which busses an input will output to',
       options: [
         options.input,
@@ -886,33 +851,28 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           type: 'colorpicker',
           label: 'Background color',
           id: 'bg',
-          default: instance.rgb(255, 255, 0),
+          default: combineRgb(255, 255, 0),
         },
       ],
-      callback: (feedback) => {
-        const input = instance.data.getInput(instance.parseOption(feedback.options.input)[instance.buttonShift.state])
+      callback: async (feedback, context) => {
+        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+        const input = await instance.data.getInput(inputOption)
         const busID = feedback.options.value === 'Master' ? 'M' : feedback.options.value
 
         if (input?.audioBusses?.[busID]) {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         }
 
-        return
+        return {}
       },
     },
 
     liveBusVolume: {
       type: 'advanced',
-      label: 'Audio - Bus live dB value',
+      name: 'Audio - Bus live dB value',
       description: 'Indicate what the live dB value on a bus is',
       options: [
         options.audioBusMaster,
-        {
-          type: 'checkbox',
-          label: 'Show the actual dB value',
-          id: 'dBShow',
-          default: false,
-        },
         {
           type: 'checkbox',
           label: 'Color Text',
@@ -929,40 +889,40 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           type: 'colorpicker',
           label: 'Base Text Color',
           id: 'colorBase',
-          default: instance.rgb(255, 255, 255),
+          default: combineRgb(255, 255, 255),
         },
         {
           type: 'colorpicker',
           label: 'Text color above -1 dB',
           id: 'color',
-          default: instance.rgb(255, 0, 0),
+          default: combineRgb(255, 0, 0),
         },
         {
           type: 'colorpicker',
           label: 'Text color below -1 dB',
           id: 'color1',
-          default: instance.rgb(255, 255, 0),
+          default: combineRgb(255, 255, 0),
         },
         {
           type: 'colorpicker',
           label: 'Text color below -6 dB',
           id: 'color6',
-          default: instance.rgb(0, 255, 0),
+          default: combineRgb(0, 255, 0),
         },
         {
           type: 'colorpicker',
           label: 'Text color below -18 dB',
           id: 'color18',
-          default: instance.rgb(0, 192, 0),
+          default: combineRgb(0, 192, 0),
         },
         {
           type: 'colorpicker',
           label: 'Text color below -36 dB',
           id: 'color36',
-          default: instance.rgb(0, 128, 0),
+          default: combineRgb(0, 128, 0),
         },
       ],
-      callback: (feedback, bank) => {
+      callback: (feedback) => {
         const busID = feedback.options.value === 'Master' ? 'master' : 'bus' + feedback.options.value
         const bus = instance.data.getAudioBus(busID)
 
@@ -985,39 +945,22 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
             return feedback.options.color36
           }
 
-          let txt = ''
           const colorFg = feedback.options.colorTxt ? color() : feedback.options.colorBase
-          const colorBg = feedback.options.colorBG ? color() : bank?.bgcolor || 0
+          const colorBg = feedback.options.colorBG ? color() : undefined
 
-          if (feedback.options.dBShow) {
-            if (bank?.text != '') {
-              txt = bank?.text + `\\n ${dB} dB`
-            } else {
-              txt = bank.text + `${dB} dB`
-            }
-          } else {
-            txt = bank?.text || ''
-          }
-
-          return { color: colorFg, bgcolor: colorBg, text: txt }
+          return { color: colorFg, bgcolor: colorBg }
         }
 
-        return
+        return {}
       },
     },
 
     liveInputVolume: {
       type: 'advanced',
-      label: 'Audio - Input live dB value',
+      name: 'Audio - Input live dB value',
       description: 'Indicate what the live dB value on an input is',
       options: [
         options.input,
-        {
-          type: 'checkbox',
-          label: 'Show the actual dB Value',
-          id: 'dBShow',
-          default: false,
-        },
         {
           type: 'checkbox',
           label: 'Color Text',
@@ -1034,45 +977,46 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           type: 'colorpicker',
           label: 'Basse Text Color',
           id: 'colorBase',
-          default: instance.rgb(255, 255, 255),
+          default: combineRgb(255, 255, 255),
         },
         {
           type: 'colorpicker',
           label: 'Text color above -1 dB',
           id: 'color',
-          default: instance.rgb(255, 0, 0),
+          default: combineRgb(255, 0, 0),
         },
         {
           type: 'colorpicker',
           label: 'Text color below -1 dB',
           id: 'color1',
-          default: instance.rgb(255, 255, 0),
+          default: combineRgb(255, 255, 0),
         },
         {
           type: 'colorpicker',
           label: 'Text color below -6 dB',
           id: 'color6',
-          default: instance.rgb(0, 255, 0),
+          default: combineRgb(0, 255, 0),
         },
         {
           type: 'colorpicker',
           label: 'Text color below -18 dB',
           id: 'color18',
-          default: instance.rgb(0, 192, 0),
+          default: combineRgb(0, 192, 0),
         },
         {
           type: 'colorpicker',
           label: 'Text color below -36 dB',
           id: 'color36',
-          default: instance.rgb(0, 128, 0),
+          default: combineRgb(0, 128, 0),
         },
       ],
-      callback: (feedback, bank) => {
-        const input = instance.data.getInput(instance.parseOption(feedback.options.input)[instance.buttonShift.state])
+      callback: async (feedback, context) => {
+        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+        const input = await instance.data.getInput(inputOption)
 
         // Detect if there is sound enabled on an input
         if (!input?.meterF1 || !input?.meterF2) {
-          return
+          return {}
         }
 
         const dBLeft = (20 * Math.log(input.meterF1)) / Math.LN10
@@ -1092,23 +1036,16 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           return feedback.options.color36
         }
 
-        let txt = ''
         const colorFg = feedback.options.colorTxt ? color() : feedback.options.colorBase
-        const colorBg = feedback.options.colorBG ? color() : bank?.bgcolor || 0
+        const colorBg = feedback.options.colorBG ? color() : undefined
 
-        if (feedback.options.dBShow) {
-          txt = (bank?.text || '') + `${dB} dB`
-        } else {
-          txt = bank?.text || ''
-        }
-
-        return { color: colorFg, bgcolor: colorBg, text: txt }
+        return { color: colorFg, bgcolor: colorBg }
       },
     },
 
     busVolumeLevel: {
       type: 'advanced',
-      label: 'Audio - Bus Volume',
+      name: 'Audio - Bus Volume',
       description: 'Indicate if an output bus fader is within a set range',
       options: [
         {
@@ -1156,13 +1093,13 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         }
 
-        return
+        return {}
       },
     },
 
     inputVolumeLevel: {
       type: 'advanced',
-      label: 'Audio - Input Volume',
+      name: 'Audio - Input Volume',
       description: 'Indicate if an input fader is in a set value',
       options: [
         options.input,
@@ -1178,11 +1115,11 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         options.foregroundColor,
         options.backgroundColorPreview,
       ],
-      callback: (feedback) => {
-        const input = instance.data.getInput(feedback.options.input)
+      callback: async (feedback) => {
+        const input = await instance.data.getInput(feedback.options.input)
 
         if (input?.volume === undefined) {
-          return
+          return {}
         }
 
         const volume = instance.config.volumeLinear ? volumeToLinear(input.volume) : input.volume
@@ -1199,14 +1136,14 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         }
 
-        return
+        return {}
       },
     },
 
     // Replay
     replayStatus: {
       type: 'advanced',
-      label: 'Replay - Recording/Live',
+      name: 'Replay - Recording/Live',
       description: 'Indicates current recording or live status of a replay input',
       options: [
         {
@@ -1227,13 +1164,13 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         }
 
-        return
+        return {}
       },
     },
 
     replayEvents: {
       type: 'advanced',
-      label: 'Replay - Events Tab',
+      name: 'Replay - Events Tab',
       description: 'Indicates currently selected Events tab',
       options: [
         {
@@ -1254,13 +1191,13 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         }
 
-        return
+        return {}
       },
     },
 
     replayCamera: {
       type: 'advanced',
-      label: 'Replay - Camera Live',
+      name: 'Replay - Camera Live',
       description: 'Indicates current replay camera being live on a channel',
       options: [
         {
@@ -1301,13 +1238,13 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         }
 
-        return
+        return {}
       },
     },
 
     replaySelectedChannel: {
       type: 'advanced',
-      label: 'Replay - Selected Channel',
+      name: 'Replay - Selected Channel',
       description: 'Indicates currently selected channel',
       options: [
         {
@@ -1329,14 +1266,14 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         }
 
-        return
+        return {}
       },
     },
 
     // Video Call
     videoCallAudioSource: {
       type: 'advanced',
-      label: 'Video Call - Audio Source',
+      name: 'Video Call - Audio Source',
       description: 'Indicates audio source for a video call',
       options: [
         options.input,
@@ -1353,20 +1290,20 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         options.foregroundColor,
         options.backgroundColorProgram,
       ],
-      callback: (feedback) => {
-        const input = instance.data.getInput(feedback.options.input)
+      callback: async (feedback) => {
+        const input = await instance.data.getInput(feedback.options.input)
 
         if (input?.callAudioSource === feedback.options.source) {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         }
 
-        return
+        return {}
       },
     },
 
     videoCallVideoSource: {
       type: 'advanced',
-      label: 'Video Call - Video Source',
+      name: 'Video Call - Video Source',
       description: 'Indicates video source for a video call',
       options: [
         options.input,
@@ -1380,21 +1317,21 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         options.foregroundColor,
         options.backgroundColorProgram,
       ],
-      callback: (feedback) => {
-        const input = instance.data.getInput(feedback.options.input)
+      callback: async (feedback) => {
+        const input = await instance.data.getInput(feedback.options.input)
 
         if (input?.callVideoSource === feedback.options.source) {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         }
 
-        return
+        return {}
       },
     },
 
     // Slides / List
     inputSelectedIndex: {
       type: 'advanced',
-      label: 'Slides/List - Change Colors Based On Selected Slide/Index',
+      name: 'Slides/List - Change Colors Based On Selected Slide/Index',
       description: 'If the specified slide/index is selected, change colors of the bank',
       options: [
         options.input,
@@ -1405,17 +1342,17 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           type: 'colorpicker',
           label: 'Empty List Warning Text',
           id: 'et',
-          default: instance.rgb(0, 0, 0),
+          default: combineRgb(0, 0, 0),
         },
         {
           type: 'colorpicker',
           label: 'Empty List Warning Background',
           id: 'eb',
-          default: instance.rgb(255, 255, 0),
+          default: combineRgb(255, 255, 0),
         },
       ],
-      callback: (feedback) => {
-        const input = instance.data.getInput(feedback.options.input)
+      callback: async (feedback) => {
+        const input = await instance.data.getInput(feedback.options.input)
 
         if (input?.type === 'VideoList') {
           if (input.selectedIndex === feedback.options.selectedIndex) {
@@ -1429,23 +1366,27 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           }
         }
 
-        return
+        return {}
       },
     },
 
     // Layers
     selectedDestinationInput: {
       type: 'advanced',
-      label: 'Layers - Destination Input Indicator',
+      name: 'Layers - Destination Input Indicator',
       description: 'Indicates if input is currently selected for Layer Routing',
       options: [options.input, options.foregroundColorBlack, options.backgroundColorYellow],
-      callback: (feedback) => {
-        if (instance.routingData.layer.destinationInput === null) return
+      callback: async (feedback, context) => {
+        if (instance.routingData.layer.destinationInput === null) return {}
 
-        const selectInput = instance.data.getInput(instance.routingData.layer.destinationInput)?.key || ''
-        const getInputValue = instance
-          .parseOption(feedback.options.input)
-          .map((input) => instance.data.getInput(input)?.key || null)
+        const selectInput = (await instance.data.getInput(instance.routingData.layer.destinationInput))?.key || ''
+        const parseInputValue = await instance.parseOption(feedback.options.input, context)
+
+        const getInputValue = []
+        for (const input of parseInputValue) {
+          const getInput = await instance.data.getInput(input)
+          getInputValue.push(getInput?.key || null)
+        }
 
         if (
           getInputValue[instance.buttonShift.state] === selectInput ||
@@ -1454,13 +1395,13 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         }
 
-        return
+        return {}
       },
     },
 
     selectedDestinationLayer: {
       type: 'advanced',
-      label: 'Layers - Destination Layer Indicator',
+      name: 'Layers - Destination Layer Indicator',
       description: 'Indicates if layer is currently selected for Layer Routing',
       options: [
         {
@@ -1472,8 +1413,8 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         options.foregroundColorBlack,
         options.backgroundColorYellow,
       ],
-      callback: (feedback) => {
-        const getIndexValue = instance.parseOption(feedback.options.selectedIndex + '')
+      callback: async (feedback, context) => {
+        const getIndexValue = await instance.parseOption(feedback.options.selectedIndex + '', context)
         let blink = false
         if (
           instance.routingData.layer.destinationLayer !== null &&
@@ -1488,28 +1429,33 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         }
 
-        return
+        return {}
       },
     },
 
     routableMultiviewLayer: {
       type: 'advanced',
-      label: 'Layers - check if input is on destination Layer of destination input',
+      name: 'Layers - check if input is on destination Layer of destination input',
       description: '',
       options: [options.input, options.foregroundColor, options.backgroundColorYellow],
-      callback: (feedback) => {
-        const getInputValue = instance
-          .parseOption(feedback.options.input)
-          .map((input) => instance.data.getInput(input)?.key || null)
+      callback: async (feedback, context) => {
+        const parseInputValue = await instance.parseOption(feedback.options.input, context)
+        const getInputValue = []
+
+        for (const input of parseInputValue) {
+          const value = (await instance.data.getInput(input))?.key || null
+          getInputValue.push(value)
+        }
 
         if (
           getInputValue[instance.buttonShift.state] === null ||
           instance.routingData.layer.destinationInput === null ||
           instance.routingData.layer.destinationLayer === null
-        )
-          return
+        ) {
+          return {}
+        }
 
-        const selectedInput = instance.data.getInput(instance.routingData.layer.destinationInput)
+        const selectedInput = await instance.data.getInput(instance.routingData.layer.destinationInput)
         const index = parseInt(instance.routingData.layer.destinationLayer) - 1
 
         if (selectedInput !== null && selectedInput.overlay) {
@@ -1530,13 +1476,13 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           }
         }
 
-        return
+        return {}
       },
     },
 
     inputOnMultiview: {
       type: 'advanced',
-      label: 'Layers - check if X input is on Layer on Y input',
+      name: 'Layers - check if X input is on Layer on Y input',
       description: '',
       options: [
         {
@@ -1565,24 +1511,34 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         options.foregroundColor,
         options.backgroundColorYellow,
       ],
-      callback: (feedback) => {
-        const inputXValue = instance
-          .parseOption(feedback.options.inputX)
-          .map((input) => instance.data.getInput(input)?.key || null)
+      callback: async (feedback, context) => {
+        const parseInputXValue = await instance.parseOption(feedback.options.inputX, context)
+        const inputXValue: any = []
 
-        const inputYValue = instance.parseOption(feedback.options.inputY).map((input) => instance.data.getInput(input))
+        for (const input of parseInputXValue) {
+          const value = (await instance.data.getInput(input))?.key || null
+          inputXValue.push(value)
+        }
+
+        const parseInputYValue = await instance.parseOption(feedback.options.inputY, context)
+        const inputYValue: any = []
+
+        for (const input of parseInputYValue) {
+          const value = await instance.data.getInput(input)
+          inputYValue.push(value)
+        }
 
         const check = (state: number): boolean => {
           if (feedback.options.layer === 0) {
-            return inputYValue[state]?.overlay?.find((layer) => layer.key === inputXValue[state]) !== undefined
+            return inputYValue[state]?.overlay?.find((layer: any) => layer.key === inputXValue[state]) !== undefined
           } else {
-            const layer = inputYValue[state]?.overlay?.find((layer) => layer.index === feedback.options.layer - 1)
+            const layer = inputYValue[state]?.overlay?.find((layer: any) => layer.index === feedback.options.layer - 1)
             return layer?.key === inputXValue[state]
           }
         }
 
         const primaryCheck = check(instance.buttonShift.state)
-        const secondaryCheck = inputYValue.map((input, index) => {
+        const secondaryCheck = inputYValue.map((input: Input, index: number) => {
           if (input !== null && inputXValue[index] !== null) {
             return check(index)
           } else {
@@ -1597,14 +1553,14 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         }
 
-        return
+        return {}
       },
     },
 
     // Util
     mixSelect: {
       type: 'advanced',
-      label: 'Util - Mix Selected',
+      name: 'Util - Mix Selected',
       description: '',
       options: [
         {
@@ -1628,6 +1584,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
             { id: 12, label: '13' },
             { id: 13, label: '14' },
             { id: 14, label: '15' },
+            { id: 15, label: '16' },
           ],
         },
         options.foregroundColor,
@@ -1638,13 +1595,13 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         }
 
-        return
+        return {}
       },
     },
 
     buttonShift: {
       type: 'advanced',
-      label: 'Util - Button Shift state',
+      name: 'Util - Button Shift state',
       description: '',
       options: [options.foregroundColorBlack, options.backgroundColorYellow],
       callback: (feedback) => {
@@ -1652,13 +1609,13 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         }
 
-        return
+        return {}
       },
     },
 
     buttonText: {
       type: 'advanced',
-      label: 'Util - Shift text',
+      name: 'Util - Shift text',
       description: '',
       options: [
         {
@@ -1668,168 +1625,10 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           default: instance.config.shiftDelimiter,
         },
       ],
-      callback: (feedback, bank) => {
-        const textSplit = instance.parseOption(feedback.options.text)[instance.buttonShift.state]
+      callback: async (feedback, context) => {
+        const textSplit = (await instance.parseOption(feedback.options.text, context))[instance.buttonShift.state]
 
-        return { text: (bank?.text || '') + (textSplit || '') }
-      },
-    },
-
-    // DEPRECATED
-    titleLayer: {
-      type: 'advanced',
-      label: '<DEPRECATED> Title - Layer',
-      description: 'Please use the available instance variables for text feedback',
-      options: [
-        options.input,
-        {
-          type: 'textinput',
-          label: 'Layer',
-          id: 'layer',
-          default: '',
-        },
-      ],
-      callback: (feedback, bank) => {
-        const input = instance.data.getInput(feedback.options.input)
-        let text
-
-        if (input && input.text) {
-          const layer = parseInt(feedback.options.layer, 10)
-
-          if (!isNaN(layer)) {
-            text = input.text.find((item) => item.index === layer)
-          } else {
-            text = input.text.find((item) => item.name === feedback.options.layer)
-          }
-        }
-
-        if (!bank) return
-
-        if (text && text.value) {
-          return { text: bank.text + text.value }
-        }
-
-        return
-      },
-    },
-
-    inputSelectedIndexName: {
-      type: 'advanced',
-      label: '<DEPRECATED> Slides/List - Show Selected Slide/Index Name',
-      description: 'Please use the available instance variables for text feedback',
-      options: [
-        options.input,
-        {
-          type: 'checkbox',
-          label: 'Show Index Name',
-          id: 'value1',
-          default: true,
-        },
-        {
-          type: 'checkbox',
-          label: 'Show Index nr.',
-          id: 'value2',
-          default: false,
-        },
-      ],
-      callback: (feedback, bank) => {
-        const input = instance.data.getInput(feedback.options.input)
-        let selectedTitle = ''
-
-        if (!input) return
-
-        if (input.type === 'VideoList' && input.list) {
-          if (feedback.options.value1 === true) {
-            selectedTitle = 'Empty List'
-            const filename = input.list.find((list) => list.selected === true)?.filename || ''
-
-            if (feedback.options.value2 === true) {
-              selectedTitle = ': ' + filename
-            } else {
-              selectedTitle = filename
-            }
-          }
-
-          if (feedback.options.value2 === true) {
-            selectedTitle = input.selectedIndex + selectedTitle
-          }
-        } else if (input.type === 'PowerPoint') {
-          selectedTitle = input.selectedIndex?.toString() || ''
-        }
-
-        if (!bank) return
-
-        if (bank.text != '') {
-          return { text: bank.text + `\\n${selectedTitle}` }
-        } else {
-          return { text: bank.text + `${selectedTitle}` }
-        }
-      },
-    },
-
-    multiviewLayer: {
-      type: 'advanced',
-      label: '<DEPRECATED> Layers / MultiView - Display what input is on X Layer',
-      description: 'Please use the available instance variables for text feedback',
-      options: [
-        options.input,
-        {
-          type: 'number',
-          label: 'Layer (1-10)',
-          id: 'layer',
-          default: 1,
-          min: 1,
-          max: 10,
-        },
-        {
-          type: 'checkbox',
-          label: 'Show input title',
-          id: 'value',
-          default: true,
-        },
-        {
-          type: 'checkbox',
-          label: 'Show input nr.',
-          id: 'value2',
-          default: false,
-        },
-      ],
-      callback: (feedback, bank) => {
-        const input = instance.data.getInput(feedback.options.input)
-        const layer = feedback.options.layer - 1
-        let text = ''
-
-        if (input && input.overlay) {
-          const overlay = input.overlay.find((item) => item.index === layer)
-
-          if (overlay) {
-            const shortTitle = instance.data.getInput(overlay.key)?.shortTitle || ''
-            const number = instance.data.getInput(overlay.key)?.number || ''
-
-            if (feedback.options.value2 == true) {
-              text = text + number
-            }
-
-            if (feedback.options.value == true && feedback.options.value2 == true) {
-              text = text + ' '
-            }
-
-            if (feedback.options.value == true) {
-              text = text + shortTitle
-            }
-          }
-        }
-
-        // if nothing is selected then only display what is int buttons title
-        if (text == '' || !bank) {
-          return
-        }
-
-        if (bank.text != '') {
-          return { text: bank.text + `\\n${text}` }
-        } else {
-          return { text: bank.text + `${text}` }
-        }
+        return { text: textSplit || undefined }
       },
     },
   }

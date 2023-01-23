@@ -295,7 +295,7 @@ export class VMixData {
    * @returns Input or null if not found
    * @description any instance variables are parsed, and then input numbers take priority over other types
    */
-  public getInput(value: string | number): Input | null {
+  public async getInput(value: string | number): Promise<Input | null> {
     const int = RegExp(/^\d+$/)
     const instanceVariable = RegExp(/\$\(([^:$)]+):([^)$]+)\)/)
 
@@ -303,9 +303,11 @@ export class VMixData {
     let input
 
     if (typeof value !== 'number' && instanceVariable.test(value)) {
-      const getVariable = this.instance.variables ? this.instance.variables.get(value) : undefined
+      const getVariable = await this.instance.parseOption(value)
       if (getVariable !== undefined) {
-        parsedVariable = getVariable
+        if (Array.isArray(getVariable)) {
+          parsedVariable = getVariable[0]
+        }
       }
     }
 
@@ -324,14 +326,10 @@ export class VMixData {
    * @param value accepts input number, shortTitle, title, GUID, or instance variable
    * @returns shortTitle, title, or an empty string
    */
-  public getInputTitle(value: string | number): string {
-    const input = this.getInput(value)
+  public async getInputTitle(value: string | number): Promise<string> {
+    const input = await this.getInput(value)
 
-    if (input) {
-      return input.shortTitle || input.title
-    } else {
-      return ''
-    }
+    return input ? input.shortTitle || input.title : ''
   }
 
   /**
@@ -736,7 +734,7 @@ export class VMixData {
    * @param newData newly parsed API data
    * @description compare new and old data to check for changes and trigger feedback/variable updates
    */
-  private setData(newData: APIData): void {
+  private async setData(newData: APIData): Promise<void> {
     const changes: Set<string> = new Set()
 
     // Check inputs for additions/deletions or change in index order
@@ -744,11 +742,13 @@ export class VMixData {
       newData.inputs.map((input) => input.key).join('') !== this.inputs.map((input) => input.key).join('')
 
     // Copy any existing Channel Mixer data from activator updates
-    newData.inputs.forEach((input) => {
-      const oldInput = this.getInput(input.key)
+    const updateChannelMixer = async (input: Input) => {
+      const oldInput = await this.getInput(input.key)
 
       if (oldInput && oldInput.channelMixer) input.channelMixer = oldInput.channelMixer
-    })
+    }
+
+    await Promise.all(newData.inputs.map((input) => updateChannelMixer(input)))
 
     // Add activator data
     newData.audio.forEach((bus) => {

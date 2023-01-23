@@ -2,3 +2,5 @@ node_modules/
 .vscode/
 dist/
 package-lock.json
+/pkg
+/pkg.tgz

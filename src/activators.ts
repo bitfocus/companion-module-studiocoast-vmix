@@ -231,8 +231,8 @@ export class Activators {
    * @param params [event, input number, state]
    * @description Updates input routing to busses
    */
-  private readonly handlerInputAudio = (params: string[]): void => {
-    const input = this.instance.data.getInput(params[1])
+  private readonly handlerInputAudio = async (params: string[]): Promise<void> => {
+    const input = await this.instance.data.getInput(params[1])
 
     if (!input || !input.audioBusses) {
       return
@@ -256,8 +256,8 @@ export class Activators {
    * @param params [event, input number, volume or state]
    * @description Updates input playing, volume, mute, and solo
    */
-  private readonly handlerInputState = (params: string[]): void => {
-    const input = this.instance.data.getInput(params[1])
+  private readonly handlerInputState = async (params: string[]): Promise<void> => {
+    const input = await this.instance.data.getInput(params[1])
 
     if (!input) {
       return
@@ -283,7 +283,7 @@ export class Activators {
    * @param params [event, input, state]
    * @description Updates preview and program state for each mix
    */
-  private readonly handlerPreviewProgram = (params: string[]): void => {
+  private readonly handlerPreviewProgram = async (params: string[]): Promise<void> => {
     let mix = 0
     const type = params[0].includes('Preview') ? 'preview' : 'program'
     const inputNumber = params[1]
@@ -307,8 +307,8 @@ export class Activators {
         if (!this.instance.data.mix[mix][tallyType].includes(input.key)) {
           this.instance.data.mix[mix][tallyType].push(input.key)
 
-          input.overlay?.forEach((layer) => {
-            const layerInput = this.instance.data.getInput(layer.key)
+          input.overlay?.forEach(async (layer) => {
+            const layerInput = await this.instance.data.getInput(layer.key)
 
             if (layerInput) {
               checkTally(layerInput)
@@ -317,7 +317,7 @@ export class Activators {
         }
       }
 
-      const input = this.instance.data.getInput(inputNumber)
+      const input = await this.instance.data.getInput(inputNumber)
 
       if (input) {
         checkTally(input)
@@ -325,8 +325,8 @@ export class Activators {
 
       this.instance.data.overlays
         .filter((overlay) => overlay.input !== null)
-        .forEach((overlay) => {
-          const overlayInput = this.instance.data.getInput(overlay.input as number)
+        .forEach(async (overlay) => {
+          const overlayInput = await this.instance.data.getInput(overlay.input as number)
 
           if (overlayInput) {
             checkTally(overlayInput)
@@ -390,8 +390,8 @@ export class Activators {
    * @param params [audio source, input, state]
    * @description
    */
-  private readonly handlerVideoCall = (params: string[]): void => {
-    const input = this.instance.data.getInput(params[1])
+  private readonly handlerVideoCall = async (params: string[]): Promise<void> => {
+    const input = await this.instance.data.getInput(params[1])
 
     if (!input) return
 
@@ -416,9 +416,9 @@ export class Activators {
    * @param params [channel, input, value]
    * @description Currently unused until further tetsing on load from updating up to 16 variables/feedback per input
    */
-  private readonly handlerVolumeChannelMixer = (params: string[]): void => {
+  private readonly handlerVolumeChannelMixer = async (params: string[]): Promise<void> => {
     const channel = parseInt(params[0].substring(23), 10)
-    const input = this.instance.data.getInput(params[1])
+    const input = await this.instance.data.getInput(params[1])
     const value = parseFloat(params[2])
 
     if (input) {

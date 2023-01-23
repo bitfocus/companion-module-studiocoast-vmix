@@ -1,4 +1,4 @@
-import { CompanionPreset } from '../../../instance_skel_types'
+import { combineRgb, CompanionButtonPresetDefinition, CompanionPresetDefinitions } from '@companion-module/base'
 import VMixInstance from './index'
 import { ActionCallbacks } from './actions'
 import { FeedbackCallbacks } from './feedback'
@@ -23,1221 +23,1630 @@ export type PresetCategory =
 
 interface VMixPresetAdditions {
   category: PresetCategory
-  actions: ActionCallbacks[]
-  release_actions?: ActionCallbacks[]
+  steps: {
+    down: ActionCallbacks[]
+    up: ActionCallbacks[]
+  }[]
   feedbacks: FeedbackCallbacks[]
 }
 
-export type VMixPreset = Exclude<CompanionPreset, 'category' | 'actions' | 'release_actions' | 'feedbacks'> &
+export type VMixPreset = Exclude<CompanionButtonPresetDefinition, 'category' | 'steps' | 'feedbacks'> &
   VMixPresetAdditions
 
-export function getPresets(instance: VMixInstance): VMixPreset[] {
-  return [
+export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
+  const presets: VMixPreset[] = [
     // Mix 1
     {
       category: 'Mix 1',
-      label: 'PRV 1',
-      bank: {
-        style: 'text',
+      name: 'PRV 1',
+      type: 'button',
+      style: {
         text: 'PRV 1',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'previewInput', options: { mix: 0, input: '1' } }],
+      steps: [
+        {
+          down: [{ actionId: 'previewInput', options: { mix: 0, input: '1' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'inputPreview',
-          options: { mix: 0, input: '1', fg: instance.rgb(255, 255, 255), bg: instance.rgb(0, 255, 0), tally: '' },
+          feedbackId: 'inputPreview',
+          options: { mix: 0, input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 1',
-      label: 'PRV 2',
-      bank: {
-        style: 'text',
+      name: 'PRV 2',
+      type: 'button',
+      style: {
         text: 'PRV 2',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'previewInput', options: { mix: 0, input: '2' } }],
+      steps: [
+        {
+          down: [{ actionId: 'previewInput', options: { mix: 0, input: '2' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputPreview',
-          options: { mix: 0, input: '2', fg: instance.rgb(255, 255, 255), bg: instance.rgb(0, 255, 0), tally: '' },
+          feedbackId: 'inputPreview',
+          options: { mix: 0, input: '2', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 1',
-      label: 'PRV 3',
-      bank: {
-        style: 'text',
+      name: 'PRV 3',
+      type: 'button',
+      style: {
         text: 'PRV 3',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'previewInput', options: { mix: 0, input: '3' } }],
+      steps: [
+        {
+          down: [{ actionId: 'previewInput', options: { mix: 0, input: '3' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputPreview',
-          options: { mix: 0, input: '3', fg: instance.rgb(255, 255, 255), bg: instance.rgb(0, 255, 0), tally: '' },
+          feedbackId: 'inputPreview',
+          options: { mix: 0, input: '3', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 1',
-      label: 'PRV 4',
-      bank: {
-        style: 'text',
+      name: 'PRV 4',
+      type: 'button',
+      style: {
         text: 'PRV 4',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'previewInput', options: { mix: 0, input: '4' } }],
+      steps: [
+        {
+          down: [{ actionId: 'previewInput', options: { mix: 0, input: '4' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputPreview',
-          options: { mix: 0, input: '4', fg: instance.rgb(255, 255, 255), bg: instance.rgb(0, 255, 0), tally: '' },
+          feedbackId: 'inputPreview',
+          options: { mix: 0, input: '4', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 1',
-      label: 'PRV 5',
-      bank: {
-        style: 'text',
+      name: 'PRV 5',
+      type: 'button',
+      style: {
         text: 'PRV 5',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'previewInput', options: { mix: 0, input: '5' } }],
+      steps: [
+        {
+          down: [{ actionId: 'previewInput', options: { mix: 0, input: '5' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputPreview',
-          options: { mix: 0, input: '5', fg: instance.rgb(255, 255, 255), bg: instance.rgb(0, 255, 0), tally: '' },
+          feedbackId: 'inputPreview',
+          options: { mix: 0, input: '5', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 1',
-      label: 'PRV 6',
-      bank: {
-        style: 'text',
+      name: 'PRV 6',
+      type: 'button',
+      style: {
         text: 'PRV 6',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'previewInput', options: { mix: 0, input: '6' } }],
+      steps: [
+        {
+          down: [{ actionId: 'previewInput', options: { mix: 0, input: '6' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputPreview',
-          options: { mix: 0, input: '6', fg: instance.rgb(255, 255, 255), bg: instance.rgb(0, 255, 0), tally: '' },
+          feedbackId: 'inputPreview',
+          options: { mix: 0, input: '6', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 1',
-      label: 'PRV 7',
-      bank: {
-        style: 'text',
+      name: 'PRV 7',
+      type: 'button',
+      style: {
         text: 'PRV 7',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'previewInput', options: { mix: 0, input: '7' } }],
+      steps: [
+        {
+          down: [{ actionId: 'previewInput', options: { mix: 0, input: '7' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputPreview',
-          options: { mix: 0, input: '7', fg: instance.rgb(255, 255, 255), bg: instance.rgb(0, 255, 0), tally: '' },
+          feedbackId: 'inputPreview',
+          options: { mix: 0, input: '7', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 1',
-      label: 'PRV 8',
-      bank: {
-        style: 'text',
+      name: 'PRV 8',
+      type: 'button',
+      style: {
         text: 'PRV 8',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'previewInput', options: { mix: 0, input: '8' } }],
+      steps: [
+        {
+          down: [{ actionId: 'previewInput', options: { mix: 0, input: '8' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputPreview',
-          options: { mix: 0, input: '8', fg: instance.rgb(255, 255, 255), bg: instance.rgb(0, 255, 0), tally: '' },
+          feedbackId: 'inputPreview',
+          options: { mix: 0, input: '8', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 1',
-      label: 'PGM 1',
-      bank: {
-        style: 'text',
+      name: 'PGM 1',
+      type: 'button',
+      style: {
         text: 'PGM 1',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'programCut', options: { mix: 0, input: '1' } }],
+      steps: [
+        {
+          down: [{ actionId: 'programCut', options: { mix: 0, input: '1' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputLive',
-          options: { mix: 0, input: '1', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0), tally: '' },
+          feedbackId: 'inputLive',
+          options: { mix: 0, input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 1',
-      label: 'PGM 2',
-      bank: {
-        style: 'text',
+      name: 'PGM 2',
+      type: 'button',
+      style: {
         text: 'PGM 2',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'programCut', options: { mix: 0, input: '2' } }],
+      steps: [
+        {
+          down: [{ actionId: 'programCut', options: { mix: 0, input: '2' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputLive',
-          options: { mix: 0, input: '2', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0), tally: '' },
+          feedbackId: 'inputLive',
+          options: { mix: 0, input: '2', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 1',
-      label: 'PGM 3',
-      bank: {
-        style: 'text',
+      name: 'PGM 3',
+      type: 'button',
+      style: {
         text: 'PGM 3',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'programCut', options: { mix: 0, input: '3' } }],
+      steps: [
+        {
+          down: [{ actionId: 'programCut', options: { mix: 0, input: '3' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputLive',
-          options: { mix: 0, input: '3', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0), tally: '' },
+          feedbackId: 'inputLive',
+          options: { mix: 0, input: '3', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 1',
-      label: 'PGM 4',
-      bank: {
-        style: 'text',
+      name: 'PGM 4',
+      type: 'button',
+      style: {
         text: 'PGM 4',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'programCut', options: { mix: 0, input: '4' } }],
+      steps: [
+        {
+          down: [{ actionId: 'programCut', options: { mix: 0, input: '4' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputLive',
-          options: { mix: 0, input: '4', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0), tally: '' },
+          feedbackId: 'inputLive',
+          options: { mix: 0, input: '4', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 1',
-      label: 'PGM 5',
-      bank: {
-        style: 'text',
+      name: 'PGM 5',
+      type: 'button',
+      style: {
         text: 'PGM 5',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'programCut', options: { mix: 0, input: '5' } }],
+      steps: [
+        {
+          down: [{ actionId: 'programCut', options: { mix: 0, input: '5' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputLive',
-          options: { mix: 0, input: '5', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0), tally: '' },
+          feedbackId: 'inputLive',
+          options: { mix: 0, input: '5', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 1',
-      label: 'PGM 6',
-      bank: {
-        style: 'text',
+      name: 'PGM 6',
+      type: 'button',
+      style: {
         text: 'PGM 6',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'programCut', options: { mix: 0, input: '6' } }],
+      steps: [
+        {
+          down: [{ actionId: 'programCut', options: { mix: 0, input: '6' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputLive',
-          options: { mix: 0, input: '6', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0), tally: '' },
+          feedbackId: 'inputLive',
+          options: { mix: 0, input: '6', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 1',
-      label: 'PGM 7',
-      bank: {
-        style: 'text',
+      name: 'PGM 7',
+      type: 'button',
+      style: {
         text: 'PGM 7',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'programCut', options: { mix: 0, input: '7' } }],
+      steps: [
+        {
+          down: [{ actionId: 'programCut', options: { mix: 0, input: '7' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputLive',
-          options: { mix: 0, input: '7', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0), tally: '' },
+          feedbackId: 'inputLive',
+          options: { mix: 0, input: '7', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 1',
-      label: 'PGM 8',
-      bank: {
-        style: 'text',
+      name: 'PGM 8',
+      type: 'button',
+      style: {
         text: 'PGM 8',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'programCut', options: { mix: 0, input: '8' } }],
+      steps: [
+        {
+          down: [{ actionId: 'programCut', options: { mix: 0, input: '8' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputLive',
-          options: { mix: 0, input: '8', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0), tally: '' },
+          feedbackId: 'inputLive',
+          options: { mix: 0, input: '8', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 1',
-      label: 'Cut',
-      bank: {
-        style: 'text',
+      name: 'Cut',
+      type: 'button',
+      style: {
         text: 'Cut',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { mix: 0, functionID: 'Cut', duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { mix: 0, functionID: 'Cut', duration: 1000 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Mix 1',
-      label: 'Fade',
-      bank: {
-        style: 'text',
+      name: 'Fade',
+      type: 'button',
+      style: {
         text: 'Fade',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { mix: 0, functionID: 'Fade', duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { mix: 0, functionID: 'Fade', duration: 1000 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Mix 1',
-      label: 'Auto',
-      bank: {
-        style: 'text',
+      name: 'Auto',
+      type: 'button',
+      style: {
         text: 'Fade',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transition', options: { functionID: 'Transition1' } }],
+      steps: [
+        {
+          down: [{ actionId: 'transition', options: { functionID: 'Transition1' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
 
     // Mix 2-4
     {
       category: 'Mix 2-4',
-      label: 'PRV Mix 2',
-      bank: {
-        style: 'text',
+      name: 'PRV Mix 2',
+      type: 'button',
+      style: {
         text: 'PRV Mix 2',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'previewInput', options: { mix: 1, input: '1' } }],
+      steps: [
+        {
+          down: [{ actionId: 'previewInput', options: { mix: 1, input: '1' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputPreview',
-          options: { mix: 1, input: '1', fg: instance.rgb(255, 255, 255), bg: instance.rgb(0, 255, 0), tally: '' },
+          feedbackId: 'inputPreview',
+          options: { mix: 1, input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 2-4',
-      label: 'PRV Mix 3',
-      bank: {
-        style: 'text',
+      name: 'PRV Mix 3',
+      type: 'button',
+      style: {
         text: 'PRV Mix 3',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'previewInput', options: { mix: 2, input: '1' } }],
+      steps: [
+        {
+          down: [{ actionId: 'previewInput', options: { mix: 2, input: '1' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputPreview',
-          options: { mix: 2, input: '1', fg: instance.rgb(255, 255, 255), bg: instance.rgb(0, 255, 0), tally: '' },
+          feedbackId: 'inputPreview',
+          options: { mix: 2, input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 2-4',
-      label: 'PRV Mix 4',
-      bank: {
-        style: 'text',
+      name: 'PRV Mix 4',
+      type: 'button',
+      style: {
         text: 'PRV Mix 4',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'previewInput', options: { mix: 3, input: '1' } }],
+      steps: [
+        {
+          down: [{ actionId: 'previewInput', options: { mix: 3, input: '1' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputPreview',
-          options: { mix: 3, input: '1', fg: instance.rgb(255, 255, 255), bg: instance.rgb(0, 255, 0), tally: '' },
+          feedbackId: 'inputPreview',
+          options: { mix: 3, input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 2-4',
-      label: 'PGM Mix 2',
-      bank: {
-        style: 'text',
+      name: 'PGM Mix 2',
+      type: 'button',
+      style: {
         text: 'PGM Mix 2',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'programCut', options: { mix: 1, input: '1' } }],
+      steps: [
+        {
+          down: [{ actionId: 'programCut', options: { mix: 1, input: '1' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputLive',
-          options: { mix: 1, input: '1', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0), tally: '' },
+          feedbackId: 'inputLive',
+          options: { mix: 1, input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 2-4',
-      label: 'PGM Mix 3',
-      bank: {
-        style: 'text',
+      name: 'PGM Mix 3',
+      type: 'button',
+      style: {
         text: 'PGM Mix 3',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'programCut', options: { mix: 2, input: '1' } }],
+      steps: [
+        {
+          down: [{ actionId: 'programCut', options: { mix: 2, input: '1' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputLive',
-          options: { mix: 2, input: '1', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0), tally: '' },
+          feedbackId: 'inputLive',
+          options: { mix: 2, input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 2-4',
-      label: 'PGM Mix 4',
-      bank: {
-        style: 'text',
+      name: 'PGM Mix 4',
+      type: 'button',
+      style: {
         text: 'PGM Mix 4',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'programCut', options: { mix: 3, input: '1' } }],
+      steps: [
+        {
+          down: [{ actionId: 'programCut', options: { mix: 3, input: '1' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputLive',
-          options: { mix: 3, input: '1', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0), tally: '' },
+          feedbackId: 'inputLive',
+          options: { mix: 3, input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
     {
       category: 'Mix 2-4',
-      label: 'Cut Mix 2',
-      bank: {
-        style: 'text',
+      name: 'Cut Mix 2',
+      type: 'button',
+      style: {
         text: 'Cut Mix 2',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { mix: 1, functionID: 'Cut', duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { mix: 1, functionID: 'Cut', duration: 1000 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Mix 2-4',
-      label: 'Cut Mix 3',
-      bank: {
-        style: 'text',
+      name: 'Cut Mix 3',
+      type: 'button',
+      style: {
         text: 'Cut Mix 3',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { mix: 2, functionID: 'Cut', duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { mix: 2, functionID: 'Cut', duration: 1000 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Mix 2-4',
-      label: 'Cut Mix 4',
-      bank: {
-        style: 'text',
+      name: 'Cut Mix 4',
+      type: 'button',
+      style: {
         text: 'Cut Mix 4',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { mix: 3, functionID: 'Cut', duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { mix: 3, functionID: 'Cut', duration: 1000 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Mix 2-4',
-      label: 'Fade Mix 2',
-      bank: {
-        style: 'text',
+      name: 'Fade Mix 2',
+      type: 'button',
+      style: {
         text: 'Fade Mix 2',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { mix: 1, functionID: 'Fade', duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { mix: 1, functionID: 'Fade', duration: 1000 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Mix 2-4',
-      label: 'Fade Mix 3',
-      bank: {
-        style: 'text',
+      name: 'Fade Mix 3',
+      type: 'button',
+      style: {
         text: 'Fade Mix 3',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { mix: 2, functionID: 'Fade', duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { mix: 2, functionID: 'Fade', duration: 1000 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Mix 2-4',
-      label: 'Fade Mix 4',
-      bank: {
-        style: 'text',
+      name: 'Fade Mix 4',
+      type: 'button',
+      style: {
         text: 'Fade Mix 4',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { mix: 3, functionID: 'Fade', duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { mix: 3, functionID: 'Fade', duration: 1000 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
 
     // Button Shift
     {
       category: 'Button Shift',
-      label: 'Shift',
-      bank: {
-        style: 'text',
+      name: 'Shift',
+      type: 'button',
+      style: {
         text: 'Shift',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'buttonShift', options: <any>[] }],
-      release_actions: [{ action: 'buttonShift', options: <any>[] }],
-      feedbacks: [{ type: 'buttonShift', options: { fg: instance.rgb(0, 0, 0), bg: instance.rgb(255, 255, 0) } }],
+      steps: [
+        {
+          down: [{ actionId: 'buttonShift', options: <any>[] }],
+          up: [{ actionId: 'buttonShift', options: <any>[] }],
+        },
+      ],
+      feedbacks: [{ feedbackId: 'buttonShift', options: { fg: combineRgb(0, 0, 0), bg: combineRgb(255, 255, 0) } }],
     },
     {
       category: 'Button Shift',
-      label: 'PRV 1 / 5',
-      bank: { style: 'text', text: '', size: '24', color: instance.rgb(255, 255, 255), bgcolor: instance.rgb(0, 0, 0) },
-      actions: [{ action: 'previewInput', options: { mix: 0, input: `1${instance.config.shiftDelimiter}5` } }],
+      name: 'PRV 1 / 5',
+      type: 'button',
+      style: { text: '', size: '24', color: combineRgb(255, 255, 255), bgcolor: combineRgb(0, 0, 0) },
+      steps: [
+        {
+          down: [{ actionId: 'previewInput', options: { mix: 0, input: `1${instance.config.shiftDelimiter}5` } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputPreview',
+          feedbackId: 'inputPreview',
           options: {
             mix: 0,
             input: `1${instance.config.shiftDelimiter}5`,
-            fg: instance.rgb(255, 255, 255),
-            bg: instance.rgb(0, 255, 0),
+            fg: combineRgb(255, 255, 255),
+            bg: combineRgb(0, 255, 0),
             tally: '',
           },
         },
-        { type: 'buttonText', options: { text: `PRV 1${instance.config.shiftDelimiter}PRV 5` } },
+        { feedbackId: 'buttonText', options: { text: `PRV 1${instance.config.shiftDelimiter}PRV 5` } },
       ],
     },
     {
       category: 'Button Shift',
-      label: 'PRV 2 / 6',
-      bank: { style: 'text', text: '', size: '24', color: instance.rgb(255, 255, 255), bgcolor: instance.rgb(0, 0, 0) },
-      actions: [{ action: 'previewInput', options: { mix: 0, input: `2${instance.config.shiftDelimiter}6` } }],
+      name: 'PRV 2 / 6',
+      type: 'button',
+      style: { text: '', size: '24', color: combineRgb(255, 255, 255), bgcolor: combineRgb(0, 0, 0) },
+      steps: [
+        {
+          down: [{ actionId: 'previewInput', options: { mix: 0, input: `2${instance.config.shiftDelimiter}6` } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputPreview',
+          feedbackId: 'inputPreview',
           options: {
             mix: 0,
             input: `2${instance.config.shiftDelimiter}6`,
-            fg: instance.rgb(255, 255, 255),
-            bg: instance.rgb(0, 255, 0),
+            fg: combineRgb(255, 255, 255),
+            bg: combineRgb(0, 255, 0),
             tally: '',
           },
         },
-        { type: 'buttonText', options: { text: `PRV 2${instance.config.shiftDelimiter}PRV 6` } },
+        { feedbackId: 'buttonText', options: { text: `PRV 2${instance.config.shiftDelimiter}PRV 6` } },
       ],
     },
     {
       category: 'Button Shift',
-      label: 'PRV 3 / 7',
-      bank: { style: 'text', text: '', size: '24', color: instance.rgb(255, 255, 255), bgcolor: instance.rgb(0, 0, 0) },
-      actions: [{ action: 'previewInput', options: { mix: 0, input: `3${instance.config.shiftDelimiter}7` } }],
+      name: 'PRV 3 / 7',
+      type: 'button',
+      style: { text: '', size: '24', color: combineRgb(255, 255, 255), bgcolor: combineRgb(0, 0, 0) },
+      steps: [
+        {
+          down: [{ actionId: 'previewInput', options: { mix: 0, input: `3${instance.config.shiftDelimiter}7` } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputPreview',
+          feedbackId: 'inputPreview',
           options: {
             mix: 0,
             input: `3${instance.config.shiftDelimiter}7`,
-            fg: instance.rgb(255, 255, 255),
-            bg: instance.rgb(0, 255, 0),
+            fg: combineRgb(255, 255, 255),
+            bg: combineRgb(0, 255, 0),
             tally: '',
           },
         },
-        { type: 'buttonText', options: { text: `PRV 3${instance.config.shiftDelimiter}PRV 7` } },
+        { feedbackId: 'buttonText', options: { text: `PRV 3${instance.config.shiftDelimiter}PRV 7` } },
       ],
     },
     {
       category: 'Button Shift',
-      label: 'PRV 4 / 8',
-      bank: { style: 'text', text: '', size: '24', color: instance.rgb(255, 255, 255), bgcolor: instance.rgb(0, 0, 0) },
-      actions: [{ action: 'previewInput', options: { mix: 0, input: `4${instance.config.shiftDelimiter}8` } }],
+      name: 'PRV 4 / 8',
+      type: 'button',
+      style: { text: '', size: '24', color: combineRgb(255, 255, 255), bgcolor: combineRgb(0, 0, 0) },
+      steps: [
+        {
+          down: [{ actionId: 'previewInput', options: { mix: 0, input: `4${instance.config.shiftDelimiter}8` } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputPreview',
+          feedbackId: 'inputPreview',
           options: {
             mix: 0,
             input: `4${instance.config.shiftDelimiter}8`,
-            fg: instance.rgb(255, 255, 255),
-            bg: instance.rgb(0, 255, 0),
+            fg: combineRgb(255, 255, 255),
+            bg: combineRgb(0, 255, 0),
             tally: '',
           },
         },
-        { type: 'buttonText', options: { text: `PRV 4${instance.config.shiftDelimiter}PRV 8` } },
+        { feedbackId: 'buttonText', options: { text: `PRV 4${instance.config.shiftDelimiter}PRV 8` } },
       ],
     },
     {
       category: 'Button Shift',
-      label: 'PGM 1 / 5',
-      bank: { style: 'text', text: '', size: '24', color: instance.rgb(255, 255, 255), bgcolor: instance.rgb(0, 0, 0) },
-      actions: [{ action: 'programCut', options: { mix: 0, input: `1${instance.config.shiftDelimiter}5` } }],
+      name: 'PGM 1 / 5',
+      type: 'button',
+      style: { text: '', size: '24', color: combineRgb(255, 255, 255), bgcolor: combineRgb(0, 0, 0) },
+      steps: [
+        {
+          down: [{ actionId: 'programCut', options: { mix: 0, input: `1${instance.config.shiftDelimiter}5` } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputLive',
+          feedbackId: 'inputLive',
           options: {
             mix: 0,
             input: `1${instance.config.shiftDelimiter}5`,
-            fg: instance.rgb(255, 255, 255),
-            bg: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bg: combineRgb(255, 0, 0),
             tally: '',
           },
         },
-        { type: 'buttonText', options: { text: `PRV 1${instance.config.shiftDelimiter}PRV 5` } },
+        { feedbackId: 'buttonText', options: { text: `PRV 1${instance.config.shiftDelimiter}PRV 5` } },
       ],
     },
     {
       category: 'Button Shift',
-      label: 'PGM 2 / 6',
-      bank: { style: 'text', text: '', size: '24', color: instance.rgb(255, 255, 255), bgcolor: instance.rgb(0, 0, 0) },
-      actions: [{ action: 'programCut', options: { mix: 0, input: `2${instance.config.shiftDelimiter}6` } }],
+      name: 'PGM 2 / 6',
+      type: 'button',
+      style: { text: '', size: '24', color: combineRgb(255, 255, 255), bgcolor: combineRgb(0, 0, 0) },
+      steps: [
+        {
+          down: [{ actionId: 'programCut', options: { mix: 0, input: `2${instance.config.shiftDelimiter}6` } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputLive',
+          feedbackId: 'inputLive',
           options: {
             mix: 0,
             input: `2${instance.config.shiftDelimiter}6`,
-            fg: instance.rgb(255, 255, 255),
-            bg: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bg: combineRgb(255, 0, 0),
             tally: '',
           },
         },
-        { type: 'buttonText', options: { text: `PRV 2${instance.config.shiftDelimiter}PRV 6` } },
+        { feedbackId: 'buttonText', options: { text: `PRV 2${instance.config.shiftDelimiter}PRV 6` } },
       ],
     },
     {
       category: 'Button Shift',
-      label: 'PGM 3 / 7',
-      bank: { style: 'text', text: '', size: '24', color: instance.rgb(255, 255, 255), bgcolor: instance.rgb(0, 0, 0) },
-      actions: [{ action: 'programCut', options: { mix: 0, input: `3${instance.config.shiftDelimiter}7` } }],
+      name: 'PGM 3 / 7',
+      type: 'button',
+      style: { text: '', size: '24', color: combineRgb(255, 255, 255), bgcolor: combineRgb(0, 0, 0) },
+      steps: [
+        {
+          down: [{ actionId: 'programCut', options: { mix: 0, input: `3${instance.config.shiftDelimiter}7` } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputLive',
+          feedbackId: 'inputLive',
           options: {
             mix: 0,
             input: `3${instance.config.shiftDelimiter}7`,
-            fg: instance.rgb(255, 255, 255),
-            bg: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bg: combineRgb(255, 0, 0),
             tally: '',
           },
         },
-        { type: 'buttonText', options: { text: `PRV 3${instance.config.shiftDelimiter}PRV 7` } },
+        { feedbackId: 'buttonText', options: { text: `PRV 3${instance.config.shiftDelimiter}PRV 7` } },
       ],
     },
     {
       category: 'Button Shift',
-      label: 'PGM 4 / 8',
-      bank: { style: 'text', text: '', size: '24', color: instance.rgb(255, 255, 255), bgcolor: instance.rgb(0, 0, 0) },
-      actions: [{ action: 'programCut', options: { mix: 0, input: `4${instance.config.shiftDelimiter}8` } }],
+      name: 'PGM 4 / 8',
+      type: 'button',
+      style: { text: '', size: '24', color: combineRgb(255, 255, 255), bgcolor: combineRgb(0, 0, 0) },
+      steps: [
+        {
+          down: [{ actionId: 'programCut', options: { mix: 0, input: `4${instance.config.shiftDelimiter}8` } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputLive',
+          feedbackId: 'inputLive',
           options: {
             mix: 0,
             input: `4${instance.config.shiftDelimiter}8`,
-            fg: instance.rgb(255, 255, 255),
-            bg: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bg: combineRgb(255, 0, 0),
             tally: '',
           },
         },
-        { type: 'buttonText', options: { text: `PRV 4${instance.config.shiftDelimiter}PRV 8` } },
+        { feedbackId: 'buttonText', options: { text: `PRV 4${instance.config.shiftDelimiter}PRV 8` } },
       ],
     },
 
     // Audio
     {
       category: 'Audio',
-      label: 'Toggle Audio',
-      bank: {
-        style: 'text',
+      name: 'Toggle Audio',
+      type: 'button',
+      style: {
         text: 'Toggle Audio',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'audio', options: { input: '1', functionID: 'Audio' } }],
+      steps: [
+        {
+          down: [{ actionId: 'audio', options: { input: '1', functionID: 'Audio' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputAudio',
+          feedbackId: 'inputAudio',
           options: {
             input: '1',
-            fg: instance.rgb(255, 255, 255),
-            bgLive: instance.rgb(0, 255, 0),
-            bgMuted: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgLive: combineRgb(0, 255, 0),
+            bgMuted: combineRgb(255, 0, 0),
           },
         },
         {
-          type: 'liveInputVolume',
+          feedbackId: 'liveInputVolume',
           options: {
             input: '1',
             dBShow: false,
             colorTxt: false,
             colorBG: false,
-            colorBase: instance.rgb(255, 255, 255),
-            color: instance.rgb(255, 0, 0),
-            color1: instance.rgb(255, 255, 0),
-            color6: instance.rgb(0, 255, 0),
-            color18: instance.rgb(0, 192, 0),
-            color36: instance.rgb(0, 128, 0),
+            colorBase: combineRgb(255, 255, 255),
+            color: combineRgb(255, 0, 0),
+            color1: combineRgb(255, 255, 0),
+            color6: combineRgb(0, 255, 0),
+            color18: combineRgb(0, 192, 0),
+            color36: combineRgb(0, 128, 0),
           },
         },
       ],
     },
     {
       category: 'Audio',
-      label: 'Set Audio On',
-      bank: {
-        style: 'text',
+      name: 'Set Audio On',
+      type: 'button',
+      style: {
         text: 'Set Audio On',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'audio', options: { input: '1', functionID: 'AudioOn' } }],
+      steps: [
+        {
+          down: [{ actionId: 'audio', options: { input: '1', functionID: 'AudioOn' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputAudio',
+          feedbackId: 'inputAudio',
           options: {
             input: '1',
-            fg: instance.rgb(255, 255, 255),
-            bgLive: instance.rgb(0, 255, 0),
-            bgMuted: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgLive: combineRgb(0, 255, 0),
+            bgMuted: combineRgb(255, 0, 0),
           },
         },
         {
-          type: 'liveInputVolume',
+          feedbackId: 'liveInputVolume',
           options: {
             input: '1',
             dBShow: false,
             colorTxt: false,
             colorBG: false,
-            colorBase: instance.rgb(255, 255, 255),
-            color: instance.rgb(255, 0, 0),
-            color1: instance.rgb(255, 255, 0),
-            color6: instance.rgb(0, 255, 0),
-            color18: instance.rgb(0, 192, 0),
-            color36: instance.rgb(0, 128, 0),
+            colorBase: combineRgb(255, 255, 255),
+            color: combineRgb(255, 0, 0),
+            color1: combineRgb(255, 255, 0),
+            color6: combineRgb(0, 255, 0),
+            color18: combineRgb(0, 192, 0),
+            color36: combineRgb(0, 128, 0),
           },
         },
       ],
     },
     {
       category: 'Audio',
-      label: 'Set Audio Off',
-      bank: {
-        style: 'text',
+      name: 'Set Audio Off',
+      type: 'button',
+      style: {
         text: 'Set Audio Off',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'audio', options: { input: '1', functionID: 'AudioOff' } }],
+      steps: [
+        {
+          down: [{ actionId: 'audio', options: { input: '1', functionID: 'AudioOff' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'inputAudio',
+          feedbackId: 'inputAudio',
           options: {
             input: '1',
-            fg: instance.rgb(255, 255, 255),
-            bgLive: instance.rgb(0, 255, 0),
-            bgMuted: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgLive: combineRgb(0, 255, 0),
+            bgMuted: combineRgb(255, 0, 0),
           },
         },
         {
-          type: 'liveInputVolume',
+          feedbackId: 'liveInputVolume',
           options: {
             input: '1',
             dBShow: false,
             colorTxt: false,
             colorBG: false,
-            colorBase: instance.rgb(255, 255, 255),
-            color: instance.rgb(255, 0, 0),
-            color1: instance.rgb(255, 255, 0),
-            color6: instance.rgb(0, 255, 0),
-            color18: instance.rgb(0, 192, 0),
-            color36: instance.rgb(0, 128, 0),
+            colorBase: combineRgb(255, 255, 255),
+            color: combineRgb(255, 0, 0),
+            color1: combineRgb(255, 255, 0),
+            color6: combineRgb(0, 255, 0),
+            color18: combineRgb(0, 192, 0),
+            color36: combineRgb(0, 128, 0),
           },
         },
       ],
     },
     {
       category: 'Audio',
-      label: 'Bus Mute',
-      bank: {
-        style: 'text',
+      name: 'Bus Mute',
+      type: 'button',
+      style: {
         text: 'Bus Mute',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'busXAudio', options: { value: 'A', functionID: 'BusXAudio' } }],
-      feedbacks: [
-        { type: 'busMute', options: { value: 'A', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) } },
+      steps: [
         {
-          type: 'liveBusVolume',
+          down: [{ actionId: 'busXAudio', options: { value: 'A', functionID: 'BusXAudio' } }],
+          up: [],
+        },
+      ],
+
+      feedbacks: [
+        { feedbackId: 'busMute', options: { value: 'A', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) } },
+        {
+          feedbackId: 'liveBusVolume',
           options: {
             value: 'A',
             dBShow: false,
             colorTxt: false,
             colorBG: false,
-            colorBase: instance.rgb(255, 255, 255),
-            color: instance.rgb(255, 0, 0),
-            color1: instance.rgb(255, 255, 0),
-            color6: instance.rgb(0, 255, 0),
-            color18: instance.rgb(0, 192, 0),
-            color36: instance.rgb(0, 128, 0),
+            colorBase: combineRgb(255, 255, 255),
+            color: combineRgb(255, 0, 0),
+            color1: combineRgb(255, 255, 0),
+            color6: combineRgb(0, 255, 0),
+            color18: combineRgb(0, 192, 0),
+            color36: combineRgb(0, 128, 0),
           },
         },
       ],
     },
     {
       category: 'Audio',
-      label: 'Input Solo',
-      bank: {
-        style: 'text',
+      name: 'Input Solo',
+      type: 'button',
+      style: {
         text: 'Input Solo',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'solo', options: { input: '1', functionID: 'Solo' } }],
-      feedbacks: [
-        { type: 'inputSolo', options: { input: '1', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 255, 0) } },
+      steps: [
+        {
+          down: [{ actionId: 'solo', options: { input: '1', functionID: 'Solo' } }],
+          up: [],
+        },
       ],
-    },
-    {
-      category: 'Audio',
-      label: 'Bus Solo',
-      bank: {
-        style: 'text',
-        text: 'Bus Solo',
-        size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
-      },
-      actions: [{ action: 'busXSolo', options: { value: 'A', functionID: 'BusXSolo' } }],
-      feedbacks: [],
-    },
-    {
-      category: 'Audio',
-      label: 'Send Bus to Master',
-      bank: {
-        style: 'text',
-        text: 'Send Bus to Master',
-        size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
-      },
-      actions: [{ action: 'busXSendToMaster', options: { value: 'A' } }],
-      feedbacks: [],
-    },
-    {
-      category: 'Audio',
-      label: 'Send Input to Bus',
-      bank: {
-        style: 'text',
-        text: 'Send Input to Bus',
-        size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
-      },
-      actions: [{ action: 'audioBus', options: { input: '1', value: 'A', functionID: 'AudioBus' } }],
+
       feedbacks: [
         {
-          type: 'inputBusRouting',
-          options: { input: '1', value: 'A', fg: instance.rgb(255, 255, 255), bg: instance.rgb(0, 255, 0) },
+          feedbackId: 'inputSolo',
+          options: { input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 255, 0) },
         },
       ],
     },
     {
       category: 'Audio',
-      label: 'In 1 Vol 0%',
-      bank: {
-        style: 'text',
+      name: 'Bus Solo',
+      type: 'button',
+      style: {
+        text: 'Bus Solo',
+        size: '18',
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
+      },
+      steps: [
+        {
+          down: [{ actionId: 'busXSolo', options: { value: 'A', functionID: 'BusXSolo' } }],
+          up: [],
+        },
+      ],
+
+      feedbacks: [],
+    },
+    {
+      category: 'Audio',
+      name: 'Send Bus to Master',
+      type: 'button',
+      style: {
+        text: 'Send Bus to Master',
+        size: '14',
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
+      },
+      steps: [
+        {
+          down: [{ actionId: 'busXSendToMaster', options: { value: 'A' } }],
+          up: [],
+        },
+      ],
+
+      feedbacks: [],
+    },
+    {
+      category: 'Audio',
+      name: 'Send Input to Bus',
+      type: 'button',
+      style: {
+        text: 'Send Input to Bus',
+        size: '14',
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
+      },
+      steps: [
+        {
+          down: [{ actionId: 'audioBus', options: { input: '1', value: 'A', functionID: 'AudioBus' } }],
+          up: [],
+        },
+      ],
+
+      feedbacks: [
+        {
+          feedbackId: 'inputBusRouting',
+          options: { input: '1', value: 'A', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0) },
+        },
+      ],
+    },
+    {
+      category: 'Audio',
+      name: 'In 1 Vol 0%',
+      type: 'button',
+      style: {
         text: 'In 1 Vol 0%',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setVolumeFade', options: { input: '1', fadeMin: 0, fadeTime: 2000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: 0, fadeTime: 2000 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Audio',
-      label: 'In 1 Vol 25%',
-      bank: {
-        style: 'text',
+      name: 'In 1 Vol 25%',
+      type: 'button',
+      style: {
         text: 'In 1 Vol 25%',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setVolumeFade', options: { input: '1', fadeMin: 25, fadeTime: 2000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: 25, fadeTime: 2000 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Audio',
-      label: 'In 1 Vol 50%',
-      bank: {
-        style: 'text',
+      name: 'In 1 Vol 50%',
+      type: 'button',
+      style: {
         text: 'In 1 Vol 50%',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setVolumeFade', options: { input: '1', fadeMin: 50, fadeTime: 2000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: 50, fadeTime: 2000 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Audio',
-      label: 'In 1 Vol 75%',
-      bank: {
-        style: 'text',
+      name: 'In 1 Vol 75%',
+      type: 'button',
+      style: {
         text: 'In 1 Vol 75%',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setVolumeFade', options: { input: '1', fadeMin: 75, fadeTime: 2000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: 75, fadeTime: 2000 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Audio',
-      label: 'In 1 Vol 100%',
-      bank: {
-        style: 'text',
+      name: 'In 1 Vol 100%',
+      type: 'button',
+      style: {
         text: 'In 1 Vol 100%',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setVolumeFade', options: { input: '1', fadeMin: 100, fadeTime: 2000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: 100, fadeTime: 2000 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
 
     // Call
     {
       category: 'Call',
-      label: 'Call 1 Master',
-      bank: {
-        style: 'text',
+      name: 'Call 1 Master',
+      type: 'button',
+      style: {
         text: 'Call 1 Master',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoCallAudioSource', options: { input: '', value: 'Master' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoCallAudioSource', options: { input: '', value: 'Master' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'videoCallAudioSource',
-          options: { input: '', source: 'Master', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'videoCallAudioSource',
+          options: { input: '', source: 'Master', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Call',
-      label: 'Call 1 Headphones',
-      bank: {
-        style: 'text',
+      name: 'Call 1 Headphones',
+      type: 'button',
+      style: {
         text: 'Call 1 Headphones',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoCallAudioSource', options: { input: '', value: 'Headphones' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoCallAudioSource', options: { input: '', value: 'Headphones' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'videoCallAudioSource',
-          options: { input: '', source: 'Headphones', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'videoCallAudioSource',
+          options: { input: '', source: 'Headphones', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Call',
-      label: 'Call 1 Bus A',
-      bank: {
-        style: 'text',
+      name: 'Call 1 Bus A',
+      type: 'button',
+      style: {
         text: 'Call 1 Bus A',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoCallAudioSource', options: { input: '', value: 'BusA' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoCallAudioSource', options: { input: '', value: 'BusA' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'videoCallAudioSource',
-          options: { input: '', source: 'A', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'videoCallAudioSource',
+          options: { input: '', source: 'A', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Call',
-      label: 'Call 1 Bus B',
-      bank: {
-        style: 'text',
+      name: 'Call 1 Bus B',
+      type: 'button',
+      style: {
         text: 'Call 1 Bus B',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoCallAudioSource', options: { input: '', value: 'BusB' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoCallAudioSource', options: { input: '', value: 'BusB' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'videoCallAudioSource',
-          options: { input: '', source: 'B', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'videoCallAudioSource',
+          options: { input: '', source: 'B', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Call',
-      label: 'Call 1 Bus C',
-      bank: {
-        style: 'text',
+      name: 'Call 1 Bus C',
+      type: 'button',
+      style: {
         text: 'Call 1 Bus C',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoCallAudioSource', options: { input: '', value: 'BusC' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoCallAudioSource', options: { input: '', value: 'BusC' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'videoCallAudioSource',
-          options: { input: '', source: 'C', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'videoCallAudioSource',
+          options: { input: '', source: 'C', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Call',
-      label: 'Call 1 Bus D',
-      bank: {
-        style: 'text',
+      name: 'Call 1 Bus D',
+      type: 'button',
+      style: {
         text: 'Call 1 Bus D',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoCallAudioSource', options: { input: '', value: 'BusD' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoCallAudioSource', options: { input: '', value: 'BusD' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'videoCallAudioSource',
-          options: { input: '', source: 'D', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'videoCallAudioSource',
+          options: { input: '', source: 'D', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Call',
-      label: 'Call 1 Bus E',
-      bank: {
-        style: 'text',
+      name: 'Call 1 Bus E',
+      type: 'button',
+      style: {
         text: 'Call 1 Bus E',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoCallAudioSource', options: { input: '', value: 'BusE' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoCallAudioSource', options: { input: '', value: 'BusE' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'videoCallAudioSource',
-          options: { input: '', source: 'E', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'videoCallAudioSource',
+          options: { input: '', source: 'E', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Call',
-      label: 'Call 1 Bus F',
-      bank: {
-        style: 'text',
+      name: 'Call 1 Bus F',
+      type: 'button',
+      style: {
         text: 'Call 1 Bus F',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoCallAudioSource', options: { input: '', value: 'BusF' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoCallAudioSource', options: { input: '', value: 'BusF' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'videoCallAudioSource',
-          options: { input: '', source: 'F', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'videoCallAudioSource',
+          options: { input: '', source: 'F', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Call',
-      label: 'Call 1 Bus G',
-      bank: {
-        style: 'text',
+      name: 'Call 1 Bus G',
+      type: 'button',
+      style: {
         text: 'Call 1 Bus G',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoCallAudioSource', options: { input: '', value: 'BusG' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoCallAudioSource', options: { input: '', value: 'BusG' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'videoCallAudioSource',
-          options: { input: '', source: 'G', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'videoCallAudioSource',
+          options: { input: '', source: 'G', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Call',
-      label: 'Call 1 Out 1',
-      bank: {
-        style: 'text',
+      name: 'Call 1 Out 1',
+      type: 'button',
+      style: {
         text: 'Call 1 Out 1',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoCallVideoSource', options: { input: '', value: 'Output1' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoCallVideoSource', options: { input: '', value: 'Output1' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'videoCallVideoSource',
-          options: { input: '', source: 'Output1', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'videoCallVideoSource',
+          options: { input: '', source: 'Output1', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Call',
-      label: 'Call 1 Out 2',
-      bank: {
-        style: 'text',
+      name: 'Call 1 Out 2',
+      type: 'button',
+      style: {
         text: 'Call 1 Out 2',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoCallVideoSource', options: { input: '', value: 'Output2' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoCallVideoSource', options: { input: '', value: 'Output2' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'videoCallVideoSource',
-          options: { input: '', source: 'Output2', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'videoCallVideoSource',
+          options: { input: '', source: 'Output2', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Call',
-      label: 'Call 1 Out 3',
-      bank: {
-        style: 'text',
+      name: 'Call 1 Out 3',
+      type: 'button',
+      style: {
         text: 'Call 1 Out 3',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoCallVideoSource', options: { input: '', value: 'Output3' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoCallVideoSource', options: { input: '', value: 'Output3' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'videoCallVideoSource',
-          options: { input: '', source: 'Output3', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'videoCallVideoSource',
+          options: { input: '', source: 'Output3', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Call',
-      label: 'Call 1 Out 4',
-      bank: {
-        style: 'text',
+      name: 'Call 1 Out 4',
+      type: 'button',
+      style: {
         text: 'Call 1 Out 4',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoCallVideoSource', options: { input: '', value: 'Output4' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoCallVideoSource', options: { input: '', value: 'Output4' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'videoCallVideoSource',
-          options: { input: '', source: 'Output4', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'videoCallVideoSource',
+          options: { input: '', source: 'Output4', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Call',
-      label: 'Call 1 No Video',
-      bank: {
-        style: 'text',
+      name: 'Call 1 No Video',
+      type: 'button',
+      style: {
         text: 'Call 1 No Video',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoCallVideoSource', options: { input: '', value: 'None' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoCallVideoSource', options: { input: '', value: 'None' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [
         {
-          type: 'videoCallVideoSource',
-          options: { input: '', source: 'None', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'videoCallVideoSource',
+          options: { input: '', source: 'None', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
@@ -1245,2176 +1654,2963 @@ export function getPresets(instance: VMixInstance): VMixPreset[] {
     // General
     {
       category: 'General',
-      label: 'Send Key Press',
-      bank: {
-        style: 'text',
+      name: 'Send Key Press',
+      type: 'button',
+      style: {
         text: 'Send Key Press',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'keyPress', options: { value: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'keyPress', options: { value: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'General',
-      label: 'Script Start',
-      bank: {
-        style: 'text',
+      name: 'Script Start',
+      type: 'button',
+      style: {
         text: 'Script Start',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'scriptStart', options: { value: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'scriptStart', options: { value: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'General',
-      label: 'Script Stop',
-      bank: {
-        style: 'text',
+      name: 'Script Stop',
+      type: 'button',
+      style: {
         text: 'Script Stop',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'scriptStop', options: { value: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'scriptStop', options: { value: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'General',
-      label: 'Script Stop All',
-      bank: {
-        style: 'text',
+      name: 'Script Stop All',
+      type: 'button',
+      style: {
         text: 'Script Stop All',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'scriptStopAll', options: {} }],
+      steps: [
+        {
+          down: [{ actionId: 'scriptStopAll', options: {} }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'General',
-      label: 'Custom Command',
-      bank: {
-        style: 'text',
+      name: 'Custom Command',
+      type: 'button',
+      style: {
         text: 'Custom Command',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'command', options: { command: '', encode: false } }],
+      steps: [
+        {
+          down: [{ actionId: 'command', options: { command: '', encode: false } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
 
     // MultiView Layers
     {
       category: 'MultiView Layers',
-      label: 'Toggle L1',
-      bank: {
-        style: 'text',
+      name: 'Toggle L1',
+      type: 'button',
+      style: {
         text: 'Toggle L1',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: 1 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: 1 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Toggle L2',
-      bank: {
-        style: 'text',
+      name: 'Toggle L2',
+      type: 'button',
+      style: {
         text: 'Toggle L2',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: 2 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: 2 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Toggle L3',
-      bank: {
-        style: 'text',
+      name: 'Toggle L3',
+      type: 'button',
+      style: {
         text: 'Toggle L3',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: 3 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: 3 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Toggle L4',
-      bank: {
-        style: 'text',
+      name: 'Toggle L4',
+      type: 'button',
+      style: {
         text: 'Toggle L4',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: 4 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: 4 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Toggle L5',
-      bank: {
-        style: 'text',
+      name: 'Toggle L5',
+      type: 'button',
+      style: {
         text: 'Toggle L5',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: 5 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: 5 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Toggle L6',
-      bank: {
-        style: 'text',
+      name: 'Toggle L6',
+      type: 'button',
+      style: {
         text: 'Toggle L6',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: 6 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: 6 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Toggle L7',
-      bank: {
-        style: 'text',
+      name: 'Toggle L7',
+      type: 'button',
+      style: {
         text: 'Toggle L7',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: 7 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: 7 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Toggle L8',
-      bank: {
-        style: 'text',
+      name: 'Toggle L8',
+      type: 'button',
+      style: {
         text: 'Toggle L8',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: 8 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: 8 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Toggle L9',
-      bank: {
-        style: 'text',
+      name: 'Toggle L9',
+      type: 'button',
+      style: {
         text: 'Toggle L9',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: 9 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: 9 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Toggle L10',
-      bank: {
-        style: 'text',
+      name: 'Toggle L10',
+      type: 'button',
+      style: {
         text: 'Toggle L10',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: 10 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: 10 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L1 On',
-      bank: {
-        style: 'text',
+      name: 'Set L1 On',
+      type: 'button',
+      style: {
         text: 'Set L1 On',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: 1 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: 1 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L2 On',
-      bank: {
-        style: 'text',
+      name: 'Set L2 On',
+      type: 'button',
+      style: {
         text: 'Set L2 On',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: 2 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: 2 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L3 On',
-      bank: {
-        style: 'text',
+      name: 'Set L3 On',
+      type: 'button',
+      style: {
         text: 'Set L3 On',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: 3 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: 3 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L4 On',
-      bank: {
-        style: 'text',
+      name: 'Set L4 On',
+      type: 'button',
+      style: {
         text: 'Set L4 On',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: 4 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: 4 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L5 On',
-      bank: {
-        style: 'text',
+      name: 'Set L5 On',
+      type: 'button',
+      style: {
         text: 'Set L5 On',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: 5 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: 5 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L6 On',
-      bank: {
-        style: 'text',
+      name: 'Set L6 On',
+      type: 'button',
+      style: {
         text: 'Set L6 On',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: 6 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: 6 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L7 On',
-      bank: {
-        style: 'text',
+      name: 'Set L7 On',
+      type: 'button',
+      style: {
         text: 'Set L7 On',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: 7 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: 7 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L8 On',
-      bank: {
-        style: 'text',
+      name: 'Set L8 On',
+      type: 'button',
+      style: {
         text: 'Set L8 On',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: 8 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: 8 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L9 On',
-      bank: {
-        style: 'text',
+      name: 'Set L9 On',
+      type: 'button',
+      style: {
         text: 'Set L9 On',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: 9 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: 9 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L10 On',
-      bank: {
-        style: 'text',
+      name: 'Set L10 On',
+      type: 'button',
+      style: {
         text: 'Set L10 On',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: 10 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: 10 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L1 Off',
-      bank: {
-        style: 'text',
+      name: 'Set L1 Off',
+      type: 'button',
+      style: {
         text: 'Set L1 Off',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: 1 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: 1 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L2 Off',
-      bank: {
-        style: 'text',
+      name: 'Set L2 Off',
+      type: 'button',
+      style: {
         text: 'Set L2 Off',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: 2 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: 2 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L3 Off',
-      bank: {
-        style: 'text',
+      name: 'Set L3 Off',
+      type: 'button',
+      style: {
         text: 'Set L3 Off',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: 3 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: 3 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L4 Off',
-      bank: {
-        style: 'text',
+      name: 'Set L4 Off',
+      type: 'button',
+      style: {
         text: 'Set L4 Off',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: 4 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: 4 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L5 Off',
-      bank: {
-        style: 'text',
+      name: 'Set L5 Off',
+      type: 'button',
+      style: {
         text: 'Set L5 Off',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: 5 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: 5 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L6 Off',
-      bank: {
-        style: 'text',
+      name: 'Set L6 Off',
+      type: 'button',
+      style: {
         text: 'Set L6 Off',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: 6 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: 6 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L7 Off',
-      bank: {
-        style: 'text',
+      name: 'Set L7 Off',
+      type: 'button',
+      style: {
         text: 'Set L7 Off',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: 7 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: 7 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L8 Off',
-      bank: {
-        style: 'text',
+      name: 'Set L8 Off',
+      type: 'button',
+      style: {
         text: 'Set L8 Off',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: 8 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: 8 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L9 Off',
-      bank: {
-        style: 'text',
+      name: 'Set L9 Off',
+      type: 'button',
+      style: {
         text: 'Set L9 Off',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: 9 } }],
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: 9 } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L10 Off',
-      bank: {
-        style: 'text',
+      name: 'Set L10 Off',
+      type: 'button',
+      style: {
         text: 'Set L10 Off',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: 10 } }],
+      steps: [
+        {
+          down: [
+            { actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: 10 } },
+          ],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L1 Input',
-      bank: {
-        style: 'text',
+      name: 'Set L1 Input',
+      type: 'button',
+      style: {
         text: 'Set L1 to Input',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setMultiViewOverlay', options: { input: '', layer: 1, layerInput: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'setMultiViewOverlay', options: { input: '', layer: 1, layerInput: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L2 Input',
-      bank: {
-        style: 'text',
+      name: 'Set L2 Input',
+      type: 'button',
+      style: {
         text: 'Set L2 to Input',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setMultiViewOverlay', options: { input: '', layer: 2, layerInput: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'setMultiViewOverlay', options: { input: '', layer: 2, layerInput: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L3 Input',
-      bank: {
-        style: 'text',
+      name: 'Set L3 Input',
+      type: 'button',
+      style: {
         text: 'Set L3 to Input',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setMultiViewOverlay', options: { input: '', layer: 3, layerInput: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'setMultiViewOverlay', options: { input: '', layer: 3, layerInput: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L4 Input',
-      bank: {
-        style: 'text',
+      name: 'Set L4 Input',
+      type: 'button',
+      style: {
         text: 'Set L4 to Input',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setMultiViewOverlay', options: { input: '', layer: 4, layerInput: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'setMultiViewOverlay', options: { input: '', layer: 4, layerInput: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L5 Input',
-      bank: {
-        style: 'text',
+      name: 'Set L5 Input',
+      type: 'button',
+      style: {
         text: 'Set L5 to Input',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setMultiViewOverlay', options: { input: '', layer: 5, layerInput: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'setMultiViewOverlay', options: { input: '', layer: 5, layerInput: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L6 Input',
-      bank: {
-        style: 'text',
+      name: 'Set L6 Input',
+      type: 'button',
+      style: {
         text: 'Set L6 to Input',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setMultiViewOverlay', options: { input: '', layer: 6, layerInput: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'setMultiViewOverlay', options: { input: '', layer: 6, layerInput: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L7 Input',
-      bank: {
-        style: 'text',
+      name: 'Set L7 Input',
+      type: 'button',
+      style: {
         text: 'Set L7 to Input',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setMultiViewOverlay', options: { input: '', layer: 7, layerInput: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'setMultiViewOverlay', options: { input: '', layer: 7, layerInput: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L8 Input',
-      bank: {
-        style: 'text',
+      name: 'Set L8 Input',
+      type: 'button',
+      style: {
         text: 'Set L8 to Input',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setMultiViewOverlay', options: { input: '', layer: 8, layerInput: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'setMultiViewOverlay', options: { input: '', layer: 8, layerInput: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L9 Input',
-      bank: {
-        style: 'text',
+      name: 'Set L9 Input',
+      type: 'button',
+      style: {
         text: 'Set L9 to Input',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setMultiViewOverlay', options: { input: '', layer: 9, layerInput: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'setMultiViewOverlay', options: { input: '', layer: 9, layerInput: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'MultiView Layers',
-      label: 'Set L10 Input',
-      bank: {
-        style: 'text',
+      name: 'Set L10 Input',
+      type: 'button',
+      style: {
         text: 'Set L10 to Input',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setMultiViewOverlay', options: { input: '', layer: 10, layerInput: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'setMultiViewOverlay', options: { input: '', layer: 10, layerInput: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
 
     // Outputs
     {
       category: 'Outputs',
-      label: 'Output 2\nPGM',
-      bank: {
-        style: 'text',
+      name: 'Output 2\nPGM',
+      type: 'button',
+      style: {
         text: 'Output 2\nPGM',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutput2', value: 'Output', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutput2', value: 'Output', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Output 2\nPRV',
-      bank: {
-        style: 'text',
+      name: 'Output 2\nPRV',
+      type: 'button',
+      style: {
         text: 'Output 2\nPRV',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutput2', value: 'Preview', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutput2', value: 'Preview', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Output 2\nMulti',
-      bank: {
-        style: 'text',
+      name: 'Output 2\nMulti',
+      type: 'button',
+      style: {
         text: 'Output 2\nMulti',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutput2', value: 'MultiView', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutput2', value: 'MultiView', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Output 2\nReplay',
-      bank: {
-        style: 'text',
+      name: 'Output 2\nReplay',
+      type: 'button',
+      style: {
         text: 'Output 2\nReplay',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutput2', value: 'Replay', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutput2', value: 'Replay', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Output 2\nInput',
-      bank: {
-        style: 'text',
+      name: 'Output 2\nInput',
+      type: 'button',
+      style: {
         text: 'Output 2\nInput',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutput2', value: 'Input', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutput2', value: 'Input', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Output 3\nPGM',
-      bank: {
-        style: 'text',
+      name: 'Output 3\nPGM',
+      type: 'button',
+      style: {
         text: 'Output 3\nPGM',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutput3', value: 'Output', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutput3', value: 'Output', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Output 3\nPRV',
-      bank: {
-        style: 'text',
+      name: 'Output 3\nPRV',
+      type: 'button',
+      style: {
         text: 'Output 3\nPRV',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutput3', value: 'Preview', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutput3', value: 'Preview', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Output 3\nMulti',
-      bank: {
-        style: 'text',
+      name: 'Output 3\nMulti',
+      type: 'button',
+      style: {
         text: 'Output 3\nMulti',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutput3', value: 'MultiView', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutput3', value: 'MultiView', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Output 3\nReplay',
-      bank: {
-        style: 'text',
+      name: 'Output 3\nReplay',
+      type: 'button',
+      style: {
         text: 'Output 3\nReplay',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutput3', value: 'Replay', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutput3', value: 'Replay', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Output 3\nInput',
-      bank: {
-        style: 'text',
+      name: 'Output 3\nInput',
+      type: 'button',
+      style: {
         text: 'Output 3\nInput',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutput3', value: 'Input', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutput3', value: 'Input', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Output 4\nPGM',
-      bank: {
-        style: 'text',
+      name: 'Output 4\nPGM',
+      type: 'button',
+      style: {
         text: 'Output 4\nPGM',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutput4', value: 'Output', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutput4', value: 'Output', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Output 4\nPRV',
-      bank: {
-        style: 'text',
+      name: 'Output 4\nPRV',
+      type: 'button',
+      style: {
         text: 'Output 4\nPRV',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutput4', value: 'Preview', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutput4', value: 'Preview', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Output 4\nMulti',
-      bank: {
-        style: 'text',
+      name: 'Output 4\nMulti',
+      type: 'button',
+      style: {
         text: 'Output 4\nMulti',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutput4', value: 'MultiView', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutput4', value: 'MultiView', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Output 4\nReplay',
-      bank: {
-        style: 'text',
+      name: 'Output 4\nReplay',
+      type: 'button',
+      style: {
         text: 'Output 4\nReplay',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutput4', value: 'Replay', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutput4', value: 'Replay', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Output 4\nInput',
-      bank: {
-        style: 'text',
+      name: 'Output 4\nInput',
+      type: 'button',
+      style: {
         text: 'Output 4\nInput',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutput4', value: 'Input', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutput4', value: 'Input', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'External 2\nPGM',
-      bank: {
-        style: 'text',
+      name: 'External 2\nPGM',
+      type: 'button',
+      style: {
         text: 'External 2\nPGM',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutputExternal2', value: 'Output', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutputExternal2', value: 'Output', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'External 2\nPRV',
-      bank: {
-        style: 'text',
+      name: 'External 2\nPRV',
+      type: 'button',
+      style: {
         text: 'External 2\nPRV',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutputExternal2', value: 'Preview', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutputExternal2', value: 'Preview', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'External 2\nMulti',
-      bank: {
-        style: 'text',
+      name: 'External 2\nMulti',
+      type: 'button',
+      style: {
         text: 'External 2\nMulti',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutputExternal2', value: 'MultiView', input: '' } }],
+      steps: [
+        {
+          down: [
+            { actionId: 'outputSet', options: { functionID: 'SetOutputExternal2', value: 'MultiView', input: '' } },
+          ],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'External 2\nReplay',
-      bank: {
-        style: 'text',
+      name: 'External 2\nReplay',
+      type: 'button',
+      style: {
         text: 'External 2\nReplay',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutputExternal2', value: 'Replay', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutputExternal2', value: 'Replay', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'External 2\nInput',
-      bank: {
-        style: 'text',
+      name: 'External 2\nInput',
+      type: 'button',
+      style: {
         text: 'External 2\nInput',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutputExternal2', value: 'Input', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutputExternal2', value: 'Input', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Fullscreen\nPGM',
-      bank: {
-        style: 'text',
+      name: 'Fullscreen\nPGM',
+      type: 'button',
+      style: {
         text: 'Fullscreen\nPGM',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutputFullscreen', value: 'Output', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutputFullscreen', value: 'Output', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Fullscreen\nPRV',
-      bank: {
-        style: 'text',
+      name: 'Fullscreen\nPRV',
+      type: 'button',
+      style: {
         text: 'Fullscreen\nPRV',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutputFullscreen', value: 'Preview', input: '' } }],
+      steps: [
+        {
+          down: [
+            { actionId: 'outputSet', options: { functionID: 'SetOutputFullscreen', value: 'Preview', input: '' } },
+          ],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Fullscreen\nMulti',
-      bank: {
-        style: 'text',
+      name: 'Fullscreen\nMulti',
+      type: 'button',
+      style: {
         text: 'Fullscreen\nMulti',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutputFullscreen', value: 'MultiView', input: '' } }],
+      steps: [
+        {
+          down: [
+            { actionId: 'outputSet', options: { functionID: 'SetOutputFullscreen', value: 'MultiView', input: '' } },
+          ],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Fullscreen\nReplay',
-      bank: {
-        style: 'text',
+      name: 'Fullscreen\nReplay',
+      type: 'button',
+      style: {
         text: 'Fullscreen\nReplay',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutputFullscreen', value: 'Replay', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutputFullscreen', value: 'Replay', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Fullscreen\nInput',
-      bank: {
-        style: 'text',
+      name: 'Fullscreen\nInput',
+      type: 'button',
+      style: {
         text: 'Fullscreen\nInput',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutputFullscreen', value: 'Input', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutputFullscreen', value: 'Input', input: '' } }],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Fullscreen 2\nPGM',
-      bank: {
-        style: 'text',
+      name: 'Fullscreen 2\nPGM',
+      type: 'button',
+      style: {
         text: 'Fullscreen 2\nPGM',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutputFullscreen2', value: 'Output', input: '' } }],
+      steps: [
+        {
+          down: [
+            { actionId: 'outputSet', options: { functionID: 'SetOutputFullscreen2', value: 'Output', input: '' } },
+          ],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Fullscreen 2\nPRV',
-      bank: {
-        style: 'text',
+      name: 'Fullscreen 2\nPRV',
+      type: 'button',
+      style: {
         text: 'Fullscreen 2\nPRV',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutputFullscreen2', value: 'Preview', input: '' } }],
+      steps: [
+        {
+          down: [
+            { actionId: 'outputSet', options: { functionID: 'SetOutputFullscreen2', value: 'Preview', input: '' } },
+          ],
+          up: [],
+        },
+      ],
+
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Fullscreen 2\nMulti',
-      bank: {
-        style: 'text',
+      name: 'Fullscreen 2\nMulti',
+      type: 'button',
+      style: {
         text: 'Fullscreen 2\nMulti',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [
-        { action: 'outputSet', options: { functionID: 'SetOutputFullscreen2', value: 'MultiView', input: '' } },
+      steps: [
+        {
+          down: [
+            { actionId: 'outputSet', options: { functionID: 'SetOutputFullscreen2', value: 'MultiView', input: '' } },
+          ],
+          up: [],
+        },
       ],
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Fullscreen 2\nReplay',
-      bank: {
-        style: 'text',
+      name: 'Fullscreen 2\nReplay',
+      type: 'button',
+      style: {
         text: 'Fullscreen 2\nReplay',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutputFullscreen2', value: 'Replay', input: '' } }],
+      steps: [
+        {
+          down: [
+            { actionId: 'outputSet', options: { functionID: 'SetOutputFullscreen2', value: 'Replay', input: '' } },
+          ],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Outputs',
-      label: 'Fullscreen 2\nInput',
-      bank: {
-        style: 'text',
+      name: 'Fullscreen 2\nInput',
+      type: 'button',
+      style: {
         text: 'Fullscreen 2\nInput',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'outputSet', options: { functionID: 'SetOutputFullscreen2', value: 'Input', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'outputSet', options: { functionID: 'SetOutputFullscreen2', value: 'Input', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
 
     // Overlays
     {
       category: 'Overlays',
-      label: 'PGM OVL 1',
-      bank: {
-        style: 'text',
+      name: 'PGM OVL 1',
+      type: 'button',
+      style: {
         text: 'PGM OVL 1',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInput1', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInput1', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'overlayStatus',
+          feedbackId: 'overlayStatus',
           options: {
             input: '',
             overlay: '1',
-            fg: instance.rgb(255, 255, 255),
-            bgPreview: instance.rgb(0, 255, 0),
-            bgProgram: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgPreview: combineRgb(0, 255, 0),
+            bgProgram: combineRgb(255, 0, 0),
           },
         },
       ],
     },
     {
       category: 'Overlays',
-      label: 'PGM OVL 2',
-      bank: {
-        style: 'text',
+      name: 'PGM OVL 2',
+      type: 'button',
+      style: {
         text: 'PGM OVL 2',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInput2', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInput2', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'overlayStatus',
+          feedbackId: 'overlayStatus',
           options: {
             input: '',
             overlay: '2',
-            fg: instance.rgb(255, 255, 255),
-            bgPreview: instance.rgb(0, 255, 0),
-            bgProgram: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgPreview: combineRgb(0, 255, 0),
+            bgProgram: combineRgb(255, 0, 0),
           },
         },
       ],
     },
     {
       category: 'Overlays',
-      label: 'PGM OVL 3',
-      bank: {
-        style: 'text',
+      name: 'PGM OVL 3',
+      type: 'button',
+      style: {
         text: 'PGM OVL 3',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInput3', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInput3', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'overlayStatus',
+          feedbackId: 'overlayStatus',
           options: {
             input: '',
             overlay: '3',
-            fg: instance.rgb(255, 255, 255),
-            bgPreview: instance.rgb(0, 255, 0),
-            bgProgram: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgPreview: combineRgb(0, 255, 0),
+            bgProgram: combineRgb(255, 0, 0),
           },
         },
       ],
     },
     {
       category: 'Overlays',
-      label: 'PGM OVL 4',
-      bank: {
-        style: 'text',
+      name: 'PGM OVL 4',
+      type: 'button',
+      style: {
         text: 'PGM OVL 4',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInput4', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInput4', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'overlayStatus',
+          feedbackId: 'overlayStatus',
           options: {
             input: '',
             overlay: '4',
-            fg: instance.rgb(255, 255, 255),
-            bgPreview: instance.rgb(0, 255, 0),
-            bgProgram: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgPreview: combineRgb(0, 255, 0),
+            bgProgram: combineRgb(255, 0, 0),
           },
         },
       ],
     },
     {
       category: 'Overlays',
-      label: 'PRV OVL 1',
-      bank: {
-        style: 'text',
+      name: 'PRV OVL 1',
+      type: 'button',
+      style: {
         text: 'PRV OVL 1',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'PreviewOverlayInput1', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'PreviewOverlayInput1', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'overlayStatus',
+          feedbackId: 'overlayStatus',
           options: {
             input: '',
             overlay: '1',
-            fg: instance.rgb(255, 255, 255),
-            bgPreview: instance.rgb(0, 255, 0),
-            bgProgram: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgPreview: combineRgb(0, 255, 0),
+            bgProgram: combineRgb(255, 0, 0),
           },
         },
       ],
     },
     {
       category: 'Overlays',
-      label: 'PRV OVL 2',
-      bank: {
-        style: 'text',
+      name: 'PRV OVL 2',
+      type: 'button',
+      style: {
         text: 'PRV OVL 2',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'PreviewOverlayInput2', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'PreviewOverlayInput2', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'overlayStatus',
+          feedbackId: 'overlayStatus',
           options: {
             input: '',
             overlay: '2',
-            fg: instance.rgb(255, 255, 255),
-            bgPreview: instance.rgb(0, 255, 0),
-            bgProgram: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgPreview: combineRgb(0, 255, 0),
+            bgProgram: combineRgb(255, 0, 0),
           },
         },
       ],
     },
     {
       category: 'Overlays',
-      label: 'PRV OVL 3',
-      bank: {
-        style: 'text',
+      name: 'PRV OVL 3',
+      type: 'button',
+      style: {
         text: 'PRV OVL 3',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'PreviewOverlayInput3', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'PreviewOverlayInput3', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'overlayStatus',
+          feedbackId: 'overlayStatus',
           options: {
             input: '',
             overlay: '3',
-            fg: instance.rgb(255, 255, 255),
-            bgPreview: instance.rgb(0, 255, 0),
-            bgProgram: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgPreview: combineRgb(0, 255, 0),
+            bgProgram: combineRgb(255, 0, 0),
           },
         },
       ],
     },
     {
       category: 'Overlays',
-      label: 'PRV OVL 4',
-      bank: {
-        style: 'text',
+      name: 'PRV OVL 4',
+      type: 'button',
+      style: {
         text: 'PRV OVL 4',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'PreviewOverlayInput4', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'PreviewOverlayInput4', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'overlayStatus',
+          feedbackId: 'overlayStatus',
           options: {
             input: '',
             overlay: '4',
-            fg: instance.rgb(255, 255, 255),
-            bgPreview: instance.rgb(0, 255, 0),
-            bgProgram: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgPreview: combineRgb(0, 255, 0),
+            bgProgram: combineRgb(255, 0, 0),
           },
         },
       ],
     },
     {
       category: 'Overlays',
-      label: 'OVL 1 In',
-      bank: {
-        style: 'text',
+      name: 'OVL 1 In',
+      type: 'button',
+      style: {
         text: 'OVL 1 In',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInput1In', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInput1In', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'overlayStatus',
+          feedbackId: 'overlayStatus',
           options: {
             input: '',
             overlay: '1',
-            fg: instance.rgb(255, 255, 255),
-            bgPreview: instance.rgb(0, 255, 0),
-            bgProgram: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgPreview: combineRgb(0, 255, 0),
+            bgProgram: combineRgb(255, 0, 0),
           },
         },
       ],
     },
     {
       category: 'Overlays',
-      label: 'OVL 2 In',
-      bank: {
-        style: 'text',
+      name: 'OVL 2 In',
+      type: 'button',
+      style: {
         text: 'OVL 2 In',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInput2In', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInput2In', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'overlayStatus',
+          feedbackId: 'overlayStatus',
           options: {
             input: '',
             overlay: '2',
-            fg: instance.rgb(255, 255, 255),
-            bgPreview: instance.rgb(0, 255, 0),
-            bgProgram: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgPreview: combineRgb(0, 255, 0),
+            bgProgram: combineRgb(255, 0, 0),
           },
         },
       ],
     },
     {
       category: 'Overlays',
-      label: 'OVL 3 In',
-      bank: {
-        style: 'text',
+      name: 'OVL 3 In',
+      type: 'button',
+      style: {
         text: 'OVL 3 In',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInput3In', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInput3In', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'overlayStatus',
+          feedbackId: 'overlayStatus',
           options: {
             input: '',
             overlay: '3',
-            fg: instance.rgb(255, 255, 255),
-            bgPreview: instance.rgb(0, 255, 0),
-            bgProgram: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgPreview: combineRgb(0, 255, 0),
+            bgProgram: combineRgb(255, 0, 0),
           },
         },
       ],
     },
     {
       category: 'Overlays',
-      label: 'OVL 4 In',
-      bank: {
-        style: 'text',
+      name: 'OVL 4 In',
+      type: 'button',
+      style: {
         text: 'OVL 4 In',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInput4In', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInput4In', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'overlayStatus',
+          feedbackId: 'overlayStatus',
           options: {
             input: '',
             overlay: '4',
-            fg: instance.rgb(255, 255, 255),
-            bgPreview: instance.rgb(0, 255, 0),
-            bgProgram: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgPreview: combineRgb(0, 255, 0),
+            bgProgram: combineRgb(255, 0, 0),
           },
         },
       ],
     },
     {
       category: 'Overlays',
-      label: 'OVL 1 Out',
-      bank: {
-        style: 'text',
+      name: 'OVL 1 Out',
+      type: 'button',
+      style: {
         text: 'OVL 1 Out',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInput1Out', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInput1Out', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'overlayStatus',
+          feedbackId: 'overlayStatus',
           options: {
             input: '',
             overlay: '1',
-            fg: instance.rgb(255, 255, 255),
-            bgPreview: instance.rgb(0, 255, 0),
-            bgProgram: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgPreview: combineRgb(0, 255, 0),
+            bgProgram: combineRgb(255, 0, 0),
           },
         },
       ],
     },
     {
       category: 'Overlays',
-      label: 'OVL 2 Out',
-      bank: {
-        style: 'text',
+      name: 'OVL 2 Out',
+      type: 'button',
+      style: {
         text: 'OVL 2 Out',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInput2Out', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInput2Out', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'overlayStatus',
+          feedbackId: 'overlayStatus',
           options: {
             input: '',
             overlay: '2',
-            fg: instance.rgb(255, 255, 255),
-            bgPreview: instance.rgb(0, 255, 0),
-            bgProgram: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgPreview: combineRgb(0, 255, 0),
+            bgProgram: combineRgb(255, 0, 0),
           },
         },
       ],
     },
     {
       category: 'Overlays',
-      label: 'OVL 3 Out',
-      bank: {
-        style: 'text',
+      name: 'OVL 3 Out',
+      type: 'button',
+      style: {
         text: 'OVL 3 Out',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInput3Out', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInput3Out', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'overlayStatus',
+          feedbackId: 'overlayStatus',
           options: {
             input: '',
             overlay: '3',
-            fg: instance.rgb(255, 255, 255),
-            bgPreview: instance.rgb(0, 255, 0),
-            bgProgram: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgPreview: combineRgb(0, 255, 0),
+            bgProgram: combineRgb(255, 0, 0),
           },
         },
       ],
     },
     {
       category: 'Overlays',
-      label: 'OVL 4 Out',
-      bank: {
-        style: 'text',
+      name: 'OVL 4 Out',
+      type: 'button',
+      style: {
         text: 'OVL 4 Out',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInput4Out', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInput4Out', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'overlayStatus',
+          feedbackId: 'overlayStatus',
           options: {
             input: '',
             overlay: '4',
-            fg: instance.rgb(255, 255, 255),
-            bgPreview: instance.rgb(0, 255, 0),
-            bgProgram: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgPreview: combineRgb(0, 255, 0),
+            bgProgram: combineRgb(255, 0, 0),
           },
         },
       ],
     },
     {
       category: 'Overlays',
-      label: 'OVL 1 Off',
-      bank: {
-        style: 'text',
+      name: 'OVL 1 Off',
+      type: 'button',
+      style: {
         text: 'OVL 1 Off',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInput1Off', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInput1Off', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'overlayStatus',
+          feedbackId: 'overlayStatus',
           options: {
             input: '',
             overlay: '1',
-            fg: instance.rgb(255, 255, 255),
-            bgPreview: instance.rgb(0, 255, 0),
-            bgProgram: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgPreview: combineRgb(0, 255, 0),
+            bgProgram: combineRgb(255, 0, 0),
           },
         },
       ],
     },
     {
       category: 'Overlays',
-      label: 'OVL 2 Off',
-      bank: {
-        style: 'text',
+      name: 'OVL 2 Off',
+      type: 'button',
+      style: {
         text: 'OVL 2 Off',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInput2Off', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInput2Off', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'overlayStatus',
+          feedbackId: 'overlayStatus',
           options: {
             input: '',
             overlay: '2',
-            fg: instance.rgb(255, 255, 255),
-            bgPreview: instance.rgb(0, 255, 0),
-            bgProgram: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgPreview: combineRgb(0, 255, 0),
+            bgProgram: combineRgb(255, 0, 0),
           },
         },
       ],
     },
     {
       category: 'Overlays',
-      label: 'OVL 3 Off',
-      bank: {
-        style: 'text',
+      name: 'OVL 3 Off',
+      type: 'button',
+      style: {
         text: 'OVL 3 Off',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInput3Off', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInput3Off', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'overlayStatus',
+          feedbackId: 'overlayStatus',
           options: {
             input: '',
             overlay: '3',
-            fg: instance.rgb(255, 255, 255),
-            bgPreview: instance.rgb(0, 255, 0),
-            bgProgram: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgPreview: combineRgb(0, 255, 0),
+            bgProgram: combineRgb(255, 0, 0),
           },
         },
       ],
     },
     {
       category: 'Overlays',
-      label: 'OVL 4 Off',
-      bank: {
-        style: 'text',
+      name: 'OVL 4 Off',
+      type: 'button',
+      style: {
         text: 'OVL 4 Off',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInput4Off', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInput4Off', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'overlayStatus',
+          feedbackId: 'overlayStatus',
           options: {
             input: '',
             overlay: '4',
-            fg: instance.rgb(255, 255, 255),
-            bgPreview: instance.rgb(0, 255, 0),
-            bgProgram: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgPreview: combineRgb(0, 255, 0),
+            bgProgram: combineRgb(255, 0, 0),
           },
         },
       ],
     },
     {
       category: 'Overlays',
-      label: 'OVL 4 Off',
-      bank: {
-        style: 'text',
+      name: 'OVL 4 Off',
+      type: 'button',
+      style: {
         text: 'OVL 4 Off',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInput4Off', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInput4Off', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'overlayStatus',
+          feedbackId: 'overlayStatus',
           options: {
             input: '',
             overlay: '4',
-            fg: instance.rgb(255, 255, 255),
-            bgPreview: instance.rgb(0, 255, 0),
-            bgProgram: instance.rgb(255, 0, 0),
+            fg: combineRgb(255, 255, 255),
+            bgPreview: combineRgb(0, 255, 0),
+            bgProgram: combineRgb(255, 0, 0),
           },
         },
       ],
     },
     {
       category: 'Overlays',
-      label: 'OVL All Off',
-      bank: {
-        style: 'text',
+      name: 'OVL All Off',
+      type: 'button',
+      style: {
         text: 'OVL All Off',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInputAllOff', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInputAllOff', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Overlays',
-      label: 'OVL 1 Zoom',
-      bank: {
-        style: 'text',
+      name: 'OVL 1 Zoom',
+      type: 'button',
+      style: {
         text: 'OVL 1 Zoom',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInput1Zoom', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInput1Zoom', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Overlays',
-      label: 'OVL2Zoom',
-      bank: {
-        style: 'text',
+      name: 'OVL2Zoom',
+      type: 'button',
+      style: {
         text: 'OVL2Zoom',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInput2Zoom', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInput2Zoom', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Overlays',
-      label: 'OVL3Zoom',
-      bank: {
-        style: 'text',
+      name: 'OVL3Zoom',
+      type: 'button',
+      style: {
         text: 'OVL3Zoom',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInput3Zoom', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInput3Zoom', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Overlays',
-      label: 'OVL4Zoom',
-      bank: {
-        style: 'text',
+      name: 'OVL4Zoom',
+      type: 'button',
+      style: {
         text: 'OVL4Zoom',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'overlayFunctions', options: { functionID: 'OverlayInput4Zoom', input: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInput4Zoom', input: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
 
     // PlayList
     {
       category: 'PlayList',
-      label: 'PlayList Start',
-      bank: {
-        style: 'text',
+      name: 'PlayList Start',
+      type: 'button',
+      style: {
         text: 'PlayList Start',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'playListFunctions', options: { functionID: 'StartPlayList' } }],
+      steps: [
+        {
+          down: [{ actionId: 'playListFunctions', options: { functionID: 'StartPlayList' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'PlayList',
-      label: 'PlayList Stop',
-      bank: {
-        style: 'text',
+      name: 'PlayList Stop',
+      type: 'button',
+      style: {
         text: 'PlayList Stop',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'playListFunctions', options: { functionID: 'StopPlayList' } }],
+      steps: [
+        {
+          down: [{ actionId: 'playListFunctions', options: { functionID: 'StopPlayList' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'PlayList',
-      label: 'PlayList Next',
-      bank: {
-        style: 'text',
+      name: 'PlayList Next',
+      type: 'button',
+      style: {
         text: 'PlayList Next',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'playListFunctions', options: { functionID: 'NextPlayListEntry' } }],
+      steps: [
+        {
+          down: [{ actionId: 'playListFunctions', options: { functionID: 'NextPlayListEntry' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'PlayList',
-      label: 'PlayList Prev',
-      bank: { style: 'text', text: '', size: '18', color: instance.rgb(255, 255, 255), bgcolor: instance.rgb(0, 0, 0) },
-      actions: [{ action: 'playListFunctions', options: { functionID: 'PreviousPlayListEntry' } }],
+      name: 'PlayList Prev',
+      type: 'button',
+      style: { text: '', size: '18', color: combineRgb(255, 255, 255), bgcolor: combineRgb(0, 0, 0) },
+      steps: [
+        {
+          down: [{ actionId: 'playListFunctions', options: { functionID: 'PreviousPlayListEntry' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
 
     // Replay
     {
       category: 'Replay',
-      label: 'A Cam 1',
-      bank: {
-        style: 'text',
+      name: 'A Cam 1',
+      type: 'button',
+      style: {
         text: 'A Cam 1',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayACamera', options: { functionID: `ReplayACamera1` } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayACamera', options: { functionID: `ReplayACamera1` } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'replayCamera',
-          options: { channel: 'A', camera: 1, fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'replayCamera',
+          options: { channel: 'A', camera: 1, fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Replay',
-      label: 'A Cam 2',
-      bank: {
-        style: 'text',
+      name: 'A Cam 2',
+      type: 'button',
+      style: {
         text: 'A Cam 2',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayACamera', options: { functionID: `ReplayACamera2` } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayACamera', options: { functionID: `ReplayACamera2` } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'replayCamera',
-          options: { channel: 'A', camera: 1, fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'replayCamera',
+          options: { channel: 'A', camera: 1, fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Replay',
-      label: 'A Cam 3',
-      bank: {
-        style: 'text',
+      name: 'A Cam 3',
+      type: 'button',
+      style: {
         text: 'A Cam 3',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayACamera', options: { functionID: `ReplayACamera3` } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayACamera', options: { functionID: `ReplayACamera3` } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'replayCamera',
-          options: { channel: 'A', camera: 1, fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'replayCamera',
+          options: { channel: 'A', camera: 1, fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Replay',
-      label: 'A Cam 4',
-      bank: {
-        style: 'text',
+      name: 'A Cam 4',
+      type: 'button',
+      style: {
         text: 'A Cam 4',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayACamera', options: { functionID: `ReplayACamera4` } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayACamera', options: { functionID: `ReplayACamera4` } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'replayCamera',
-          options: { channel: 'A', camera: 1, fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'replayCamera',
+          options: { channel: 'A', camera: 1, fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Replay',
-      label: 'A Cam 5',
-      bank: {
-        style: 'text',
+      name: 'A Cam 5',
+      type: 'button',
+      style: {
         text: 'A Cam 5',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayACamera', options: { functionID: `ReplayACamera5` } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayACamera', options: { functionID: `ReplayACamera5` } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'replayCamera',
-          options: { channel: 'A', camera: 1, fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'replayCamera',
+          options: { channel: 'A', camera: 1, fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Replay',
-      label: 'A Cam 6',
-      bank: {
-        style: 'text',
+      name: 'A Cam 6',
+      type: 'button',
+      style: {
         text: 'A Cam 6',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayACamera', options: { functionID: `ReplayACamera6` } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayACamera', options: { functionID: `ReplayACamera6` } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'replayCamera',
-          options: { channel: 'A', camera: 1, fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'replayCamera',
+          options: { channel: 'A', camera: 1, fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Replay',
-      label: 'A Cam 7',
-      bank: {
-        style: 'text',
+      name: 'A Cam 7',
+      type: 'button',
+      style: {
         text: 'A Cam 7',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayACamera', options: { functionID: `ReplayACamera7` } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayACamera', options: { functionID: `ReplayACamera7` } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'replayCamera',
-          options: { channel: 'A', camera: 1, fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'replayCamera',
+          options: { channel: 'A', camera: 1, fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Replay',
-      label: 'A Cam 8',
-      bank: {
-        style: 'text',
+      name: 'A Cam 8',
+      type: 'button',
+      style: {
         text: 'A Cam 8',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayACamera', options: { functionID: `ReplayACamera8` } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayACamera', options: { functionID: `ReplayACamera8` } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'replayCamera',
-          options: { channel: 'A', camera: 1, fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'replayCamera',
+          options: { channel: 'A', camera: 1, fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Replay',
-      label: 'B Cam 1',
-      bank: {
-        style: 'text',
+      name: 'B Cam 1',
+      type: 'button',
+      style: {
         text: 'B Cam 1',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayBCamera', options: { functionID: `ReplayBCamera1` } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayBCamera', options: { functionID: `ReplayBCamera1` } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'replayCamera',
-          options: { channel: 'B', camera: 1, fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'replayCamera',
+          options: { channel: 'B', camera: 1, fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Replay',
-      label: 'B Cam 2',
-      bank: {
-        style: 'text',
+      name: 'B Cam 2',
+      type: 'button',
+      style: {
         text: 'B Cam 2',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayBCamera', options: { functionID: `ReplayBCamera2` } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayBCamera', options: { functionID: `ReplayBCamera2` } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'replayCamera',
-          options: { channel: 'B', camera: 1, fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'replayCamera',
+          options: { channel: 'B', camera: 1, fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Replay',
-      label: 'B Cam 3',
-      bank: {
-        style: 'text',
+      name: 'B Cam 3',
+      type: 'button',
+      style: {
         text: 'B Cam 3',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayBCamera', options: { functionID: `ReplayBCamera3` } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayBCamera', options: { functionID: `ReplayBCamera3` } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'replayCamera',
-          options: { channel: 'B', camera: 1, fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'replayCamera',
+          options: { channel: 'B', camera: 1, fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Replay',
-      label: 'B Cam 4',
-      bank: {
-        style: 'text',
+      name: 'B Cam 4',
+      type: 'button',
+      style: {
         text: 'B Cam 4',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayBCamera', options: { functionID: `ReplayBCamera4` } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayBCamera', options: { functionID: `ReplayBCamera4` } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'replayCamera',
-          options: { channel: 'B', camera: 1, fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'replayCamera',
+          options: { channel: 'B', camera: 1, fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Replay',
-      label: 'B Cam 5',
-      bank: {
-        style: 'text',
+      name: 'B Cam 5',
+      type: 'button',
+      style: {
         text: 'B Cam 5',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayBCamera', options: { functionID: `ReplayBCamera5` } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayBCamera', options: { functionID: `ReplayBCamera5` } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'replayCamera',
-          options: { channel: 'B', camera: 1, fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'replayCamera',
+          options: { channel: 'B', camera: 1, fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Replay',
-      label: 'B Cam 6',
-      bank: {
-        style: 'text',
+      name: 'B Cam 6',
+      type: 'button',
+      style: {
         text: 'B Cam 6',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayBCamera', options: { functionID: `ReplayBCamera6` } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayBCamera', options: { functionID: `ReplayBCamera6` } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'replayCamera',
-          options: { channel: 'B', camera: 1, fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'replayCamera',
+          options: { channel: 'B', camera: 1, fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Replay',
-      label: 'B Cam 7',
-      bank: {
-        style: 'text',
+      name: 'B Cam 7',
+      type: 'button',
+      style: {
         text: 'B Cam 7',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayBCamera', options: { functionID: `ReplayBCamera7` } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayBCamera', options: { functionID: `ReplayBCamera7` } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'replayCamera',
-          options: { channel: 'B', camera: 1, fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'replayCamera',
+          options: { channel: 'B', camera: 1, fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Replay',
-      label: 'B Cam 8',
-      bank: {
-        style: 'text',
+      name: 'B Cam 8',
+      type: 'button',
+      style: {
         text: 'B Cam 8',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayBCamera', options: { functionID: `ReplayBCamera8` } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayBCamera', options: { functionID: `ReplayBCamera8` } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'replayCamera',
-          options: { channel: 'B', camera: 1, fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'replayCamera',
+          options: { channel: 'B', camera: 1, fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Replay',
-      label: 'Channel\nA|B',
-      bank: {
-        style: 'text',
+      name: 'Channel\nA|B',
+      type: 'button',
+      style: {
         text: 'Channel\nA|B',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replaySelectChannel', options: { functionID: `replaySelectChannelAB` } }],
+      steps: [
+        {
+          down: [{ actionId: 'replaySelectChannel', options: { functionID: `replaySelectChannelAB` } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'replaySelectedChannel',
-          options: { channel: 'AB', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'replaySelectedChannel',
+          options: { channel: 'AB', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Replay',
-      label: 'Channel\nA',
-      bank: {
-        style: 'text',
+      name: 'Channel\nA',
+      type: 'button',
+      style: {
         text: 'Channel\nA',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replaySelectChannel', options: { functionID: `replaySelectChannelA` } }],
+      steps: [
+        {
+          down: [{ actionId: 'replaySelectChannel', options: { functionID: `replaySelectChannelA` } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'replaySelectedChannel',
-          options: { channel: 'A', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'replaySelectedChannel',
+          options: { channel: 'A', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Replay',
-      label: 'Channel\nB',
-      bank: {
-        style: 'text',
+      name: 'Channel\nB',
+      type: 'button',
+      style: {
         text: 'Channel\nB',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replaySelectChannel', options: { functionID: `replaySelectChannelB` } }],
+      steps: [
+        {
+          down: [{ actionId: 'replaySelectChannel', options: { functionID: `replaySelectChannelB` } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'replaySelectedChannel',
-          options: { channel: 'B', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'replaySelectedChannel',
+          options: { channel: 'B', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Replay',
-      label: 'Rec',
-      bank: {
-        style: 'text',
+      name: 'Rec',
+      type: 'button',
+      style: {
         text: 'Rec',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayRecording', options: { functionID: `ReplayStartStopRecording` } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayRecording', options: { functionID: `ReplayStartStopRecording` } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'replayStatus',
-          options: { status: 'recording', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'replayStatus',
+          options: { status: 'recording', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Replay',
-      label: 'Live',
-      bank: {
-        style: 'text',
+      name: 'Live',
+      type: 'button',
+      style: {
         text: 'Live',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayLiveToggle', options: {} }],
+      steps: [
+        {
+          down: [{ actionId: 'replayLiveToggle', options: {} }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'replayStatus',
-          options: { status: 'live', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0) },
+          feedbackId: 'replayStatus',
+          options: { status: 'live', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0) },
         },
       ],
     },
     {
       category: 'Replay',
-      label: 'Jump to Now',
-      bank: {
-        style: 'text',
+      name: 'Jump to Now',
+      type: 'button',
+      style: {
         text: 'Jump to Now',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayJumpToNow', options: { channel: 'Current' } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayJumpToNow', options: { channel: 'Current' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Replay',
-      label: 'Play Events',
-      bank: {
-        style: 'text',
+      name: 'Play Events',
+      type: 'button',
+      style: {
         text: 'Play Events',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayPlay', options: { channel: 'Current' } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayPlay', options: { channel: 'Current' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Replay',
-      label: 'Pause Events',
-      bank: {
-        style: 'text',
+      name: 'Pause Events',
+      type: 'button',
+      style: {
         text: 'Pause Events',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayPause', options: { channel: 'Current' } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayPause', options: { channel: 'Current' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Replay',
-      label: 'Play Selected Event',
-      bank: {
-        style: 'text',
+      name: 'Play Selected Event',
+      type: 'button',
+      style: {
         text: 'Play Selected Event',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayPlaySelectedEventToOutput', options: { channel: 'Current' } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayPlaySelectedEventToOutput', options: { channel: 'Current' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Replay',
-      label: 'Play Events by ID',
-      bank: {
-        style: 'text',
+      name: 'Play Events by ID',
+      type: 'button',
+      style: {
         text: 'Play Events by ID',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayPlayEventsByIDToOutput', options: { channel: 'Current', value: 0 } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayPlayEventsByIDToOutput', options: { channel: 'Current', value: 0 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Replay',
-      label: 'Mark In',
-      bank: {
-        style: 'text',
+      name: 'Mark In',
+      type: 'button',
+      style: {
         text: 'Mark In',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayMark', options: { functionID: 'ReplayMarkIn', value: 0 } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayMark', options: { functionID: 'ReplayMarkIn', value: 0 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Replay',
-      label: 'Mark Out',
-      bank: {
-        style: 'text',
+      name: 'Mark Out',
+      type: 'button',
+      style: {
         text: 'Mark Out',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayMark', options: { functionID: 'ReplayMarkOut', value: 0 } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayMark', options: { functionID: 'ReplayMarkOut', value: 0 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Replay',
-      label: 'Mark Last 10s',
-      bank: {
-        style: 'text',
+      name: 'Mark Last 10s',
+      type: 'button',
+      style: {
         text: 'Mark Last 10s',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayMark', options: { functionID: 'ReplayMarkInOut', value: 10 } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayMark', options: { functionID: 'ReplayMarkInOut', value: 10 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Replay',
-      label: 'Mark Last 30s',
-      bank: {
-        style: 'text',
+      name: 'Mark Last 30s',
+      type: 'button',
+      style: {
         text: 'Mark Last 30s',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayMark', options: { functionID: 'ReplayMarkInOut', value: 30 } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayMark', options: { functionID: 'ReplayMarkInOut', value: 30 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Replay',
-      label: 'Update In',
-      bank: {
-        style: 'text',
+      name: 'Update In',
+      type: 'button',
+      style: {
         text: 'Update In',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayUpdateInOut', options: { functionID: 'ReplayUpdateSelectedInPoint' } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayUpdateInOut', options: { functionID: 'ReplayUpdateSelectedInPoint' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Replay',
-      label: 'Update Out',
-      bank: {
-        style: 'text',
+      name: 'Update Out',
+      type: 'button',
+      style: {
         text: 'Update Out',
         size: '24',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'replayUpdateInOut', options: { functionID: 'ReplayUpdateSelectedOutPoint' } }],
+      steps: [
+        {
+          down: [{ actionId: 'replayUpdateInOut', options: { functionID: 'ReplayUpdateSelectedOutPoint' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
 
     // Slides & Lists
     {
       category: 'Slides & Lists',
-      label: 'Next Photo',
-      bank: {
-        style: 'text',
+      name: 'Next Photo',
+      type: 'button',
+      style: {
         text: 'Next Photo',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'nextPicture', options: { input: '1' } }],
+      steps: [
+        {
+          down: [{ actionId: 'nextPicture', options: { input: '1' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Slides & Lists',
-      label: 'Prev Photo',
-      bank: {
-        style: 'text',
+      name: 'Prev Photo',
+      type: 'button',
+      style: {
         text: 'Prev Photo',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'previousPicture', options: { input: '1' } }],
+      steps: [
+        {
+          down: [{ actionId: 'previousPicture', options: { input: '1' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Slides & Lists',
-      label: 'Select Index 1',
-      bank: {
-        style: 'text',
+      name: 'Select Index 1',
+      type: 'button',
+      style: {
         text: 'Select Index 1',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'previousPicture', options: { input: '1' } }],
+      steps: [
+        {
+          down: [{ actionId: 'previousPicture', options: { input: '1' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'inputSelectedIndex',
+          feedbackId: 'inputSelectedIndex',
           options: {
             input: '1',
             selectedIndex: 1,
-            fg: instance.rgb(255, 255, 255),
-            bg: instance.rgb(255, 0, 0),
-            et: instance.rgb(0, 0, 0),
-            eb: instance.rgb(255, 255, 0),
+            fg: combineRgb(255, 255, 255),
+            bg: combineRgb(255, 0, 0),
+            et: combineRgb(0, 0, 0),
+            eb: combineRgb(255, 255, 0),
           },
         },
       ],
@@ -3423,1068 +4619,1473 @@ export function getPresets(instance: VMixInstance): VMixPreset[] {
     // Titles & Graphics
     {
       category: 'Titles & Graphics',
-      label: 'Set Title',
-      bank: {
-        style: 'text',
+      name: 'Set Title',
+      type: 'button',
+      style: {
         text: 'Set Title',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setText', options: { input: '1', selectedIndex: '0', adjustment: 'Set', value: '0' } }],
+      steps: [
+        {
+          down: [{ actionId: 'setText', options: { input: '1', selectedIndex: '0', adjustment: 'Set', value: '0' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Set Title +1',
-      bank: {
-        style: 'text',
+      name: 'Set Title +1',
+      type: 'button',
+      style: {
         text: 'Set Title +1',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [
-        { action: 'setText', options: { input: '1', selectedIndex: '0', adjustment: 'Increment', value: '1' } },
+      steps: [
+        {
+          down: [
+            { actionId: 'setText', options: { input: '1', selectedIndex: '0', adjustment: 'Increment', value: '1' } },
+          ],
+          up: [],
+        },
       ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Set Title -1',
-      bank: {
-        style: 'text',
+      name: 'Set Title -1',
+      type: 'button',
+      style: {
         text: 'Set Title -1',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [
-        { action: 'setText', options: { input: '1', selectedIndex: '0', adjustment: 'Decrement', value: '1' } },
+      steps: [
+        {
+          down: [
+            { actionId: 'setText', options: { input: '1', selectedIndex: '0', adjustment: 'Decrement', value: '1' } },
+          ],
+          up: [],
+        },
       ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Title Preset 0',
-      bank: {
-        style: 'text',
+      name: 'Title Preset 0',
+      type: 'button',
+      style: {
         text: 'Title Preset 0',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'selectTitlePreset', options: { input: '', value: '0' } }],
+      steps: [
+        {
+          down: [{ actionId: 'selectTitlePreset', options: { input: '', value: '0' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Title Preset 1',
-      bank: {
-        style: 'text',
+      name: 'Title Preset 1',
+      type: 'button',
+      style: {
         text: 'Title Preset 1',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'selectTitlePreset', options: { input: '', value: '1' } }],
+      steps: [
+        {
+          down: [{ actionId: 'selectTitlePreset', options: { input: '', value: '1' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Title Preset 2',
-      bank: {
-        style: 'text',
+      name: 'Title Preset 2',
+      type: 'button',
+      style: {
         text: 'Title Preset 2',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'selectTitlePreset', options: { input: '', value: '2' } }],
+      steps: [
+        {
+          down: [{ actionId: 'selectTitlePreset', options: { input: '', value: '2' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Title Preset 3',
-      bank: {
-        style: 'text',
+      name: 'Title Preset 3',
+      type: 'button',
+      style: {
         text: 'Title Preset 3',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'selectTitlePreset', options: { input: '', value: '3' } }],
+      steps: [
+        {
+          down: [{ actionId: 'selectTitlePreset', options: { input: '', value: '3' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Next Title',
-      bank: {
-        style: 'text',
+      name: 'Next Title',
+      type: 'button',
+      style: {
         text: 'Next Title',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'titlePreset', options: { input: '', functionID: 'NextTitlePreset' } }],
+      steps: [
+        {
+          down: [{ actionId: 'titlePreset', options: { input: '', functionID: 'NextTitlePreset' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Prev Title',
-      bank: {
-        style: 'text',
+      name: 'Prev Title',
+      type: 'button',
+      style: {
         text: 'Prev Title',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'titlePreset', options: { input: '', functionID: 'PreviousTitlePreset' } }],
+      steps: [
+        {
+          down: [{ actionId: 'titlePreset', options: { input: '', functionID: 'PreviousTitlePreset' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Title Transition In',
-      bank: {
-        style: 'text',
+      name: 'Title Transition In',
+      type: 'button',
+      style: {
         text: 'Title Transition In',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'titleBeginAnimation', options: { input: '', value: 'TransitionIn' } }],
+      steps: [
+        {
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'TransitionIn' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Title Transition In',
-      bank: {
-        style: 'text',
+      name: 'Title Transition In',
+      type: 'button',
+      style: {
         text: 'Title Transition In',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'titleBeginAnimation', options: { input: '', value: 'TransitionIn' } }],
+      steps: [
+        {
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'TransitionIn' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Title Transition Out',
-      bank: {
-        style: 'text',
+      name: 'Title Transition Out',
+      type: 'button',
+      style: {
         text: 'Title Transition Out',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'titleBeginAnimation', options: { input: '', value: 'TransitionOut' } }],
+      steps: [
+        {
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'TransitionOut' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Title Page 1',
-      bank: {
-        style: 'text',
+      name: 'Title Page 1',
+      type: 'button',
+      style: {
         text: 'Title Page 1',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'titleBeginAnimation', options: { input: '', value: 'Page1' } }],
+      steps: [
+        {
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'Page1' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Title Page 2',
-      bank: {
-        style: 'text',
+      name: 'Title Page 2',
+      type: 'button',
+      style: {
         text: 'Title Page 2',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'titleBeginAnimation', options: { input: '', value: 'Page2' } }],
+      steps: [
+        {
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'Page2' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Title Page 3',
-      bank: {
-        style: 'text',
+      name: 'Title Page 3',
+      type: 'button',
+      style: {
         text: 'Title Page 3',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'titleBeginAnimation', options: { input: '', value: 'Page3' } }],
+      steps: [
+        {
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'Page3' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Title Page 4',
-      bank: {
-        style: 'text',
+      name: 'Title Page 4',
+      type: 'button',
+      style: {
         text: 'Title Page 4',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'titleBeginAnimation', options: { input: '', value: 'Page4' } }],
+      steps: [
+        {
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'Page4' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Title Page 5',
-      bank: {
-        style: 'text',
+      name: 'Title Page 5',
+      type: 'button',
+      style: {
         text: 'Title Page 5',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'titleBeginAnimation', options: { input: '', value: 'Page5' } }],
+      steps: [
+        {
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'Page5' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Title Page 6',
-      bank: {
-        style: 'text',
+      name: 'Title Page 6',
+      type: 'button',
+      style: {
         text: 'Title Page 6',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'titleBeginAnimation', options: { input: '', value: 'Page6' } }],
+      steps: [
+        {
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'Page6' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Title Page 7',
-      bank: {
-        style: 'text',
+      name: 'Title Page 7',
+      type: 'button',
+      style: {
         text: 'Title Page 7',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'titleBeginAnimation', options: { input: '', value: 'Page7' } }],
+      steps: [
+        {
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'Page7' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Title Page 8',
-      bank: {
-        style: 'text',
+      name: 'Title Page 8',
+      type: 'button',
+      style: {
         text: 'Title Page 8',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'titleBeginAnimation', options: { input: '', value: 'Page8' } }],
+      steps: [
+        {
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'Page8' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Title Page 9',
-      bank: {
-        style: 'text',
+      name: 'Title Page 9',
+      type: 'button',
+      style: {
         text: 'Title Page 9',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'titleBeginAnimation', options: { input: '', value: 'Page9' } }],
+      steps: [
+        {
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'Page9' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Title Page 10',
-      bank: {
-        style: 'text',
+      name: 'Title Page 10',
+      type: 'button',
+      style: {
         text: 'Title Page 10',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'titleBeginAnimation', options: { input: '', value: 'Page10' } }],
+      steps: [
+        {
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'Page10' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Title Continuous',
-      bank: {
-        style: 'text',
+      name: 'Title Continuous',
+      type: 'button',
+      style: {
         text: 'Title Continuous',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'titleBeginAnimation', options: { input: '', value: 'Continuous' } }],
+      steps: [
+        {
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'Continuous' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Title Data Change In',
-      bank: {
-        style: 'text',
+      name: 'Title Data Change In',
+      type: 'button',
+      style: {
         text: 'Title Data Change In',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'titleBeginAnimation', options: { input: '', value: 'DataChangeIn' } }],
+      steps: [
+        {
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'DataChangeIn' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'Title Data Change Out',
-      bank: {
-        style: 'text',
+      name: 'Title Data Change Out',
+      type: 'button',
+      style: {
         text: 'Title Data Change Out',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'titleBeginAnimation', options: { input: '', value: 'DataChangeOut' } }],
+      steps: [
+        {
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'DataChangeOut' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'CND Start',
-      bank: {
-        style: 'text',
+      name: 'CND Start',
+      type: 'button',
+      style: {
         text: 'CND Start',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [
-        { action: 'controlCountdown', options: { functionID: 'StartCountdown', input: '', selectedIndex: '0' } },
+      steps: [
+        {
+          down: [
+            { actionId: 'controlCountdown', options: { functionID: 'StartCountdown', input: '', selectedIndex: '0' } },
+          ],
+          up: [],
+        },
       ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'CND Stop',
-      bank: {
-        style: 'text',
+      name: 'CND Stop',
+      type: 'button',
+      style: {
         text: 'CND Stop',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [
-        { action: 'controlCountdown', options: { functionID: 'StopCountdown', input: '', selectedIndex: '0' } },
+      steps: [
+        {
+          down: [
+            { actionId: 'controlCountdown', options: { functionID: 'StopCountdown', input: '', selectedIndex: '0' } },
+          ],
+          up: [],
+        },
       ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'CND Pause',
-      bank: {
-        style: 'text',
+      name: 'CND Pause',
+      type: 'button',
+      style: {
         text: 'CND Pause',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [
-        { action: 'controlCountdown', options: { functionID: 'PauseCountdown', input: '', selectedIndex: '0' } },
+      steps: [
+        {
+          down: [
+            { actionId: 'controlCountdown', options: { functionID: 'PauseCountdown', input: '', selectedIndex: '0' } },
+          ],
+          up: [],
+        },
       ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'CND Change',
-      bank: {
-        style: 'text',
+      name: 'CND Change',
+      type: 'button',
+      style: {
         text: 'CND Change',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'changeCountdown', options: { value: '00:10:00', input: '', selectedIndex: '0' } }],
+      steps: [
+        {
+          down: [{ actionId: 'changeCountdown', options: { value: '00:10:00', input: '', selectedIndex: '0' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'CND 0 sec',
-      bank: {
-        style: 'text',
+      name: 'CND 0 sec',
+      type: 'button',
+      style: {
         text: 'CND 0 sec',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setCountdown', options: { value: '00:00:00', input: '', selectedIndex: '0' } }],
+      steps: [
+        {
+          down: [{ actionId: 'setCountdown', options: { value: '00:00:00', input: '', selectedIndex: '0' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'CND 10 sec',
-      bank: {
-        style: 'text',
+      name: 'CND 10 sec',
+      type: 'button',
+      style: {
         text: 'CND 1 sec',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setCountdown', options: { value: '00:00:10', input: '', selectedIndex: '0' } }],
+      steps: [
+        {
+          down: [{ actionId: 'setCountdown', options: { value: '00:00:10', input: '', selectedIndex: '0' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'CND 30 sec',
-      bank: {
-        style: 'text',
+      name: 'CND 30 sec',
+      type: 'button',
+      style: {
         text: 'CND 30 sec',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setCountdown', options: { value: '00:00:30', input: '', selectedIndex: '0' } }],
+      steps: [
+        {
+          down: [{ actionId: 'setCountdown', options: { value: '00:00:30', input: '', selectedIndex: '0' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'CND 60 sec',
-      bank: {
-        style: 'text',
+      name: 'CND 60 sec',
+      type: 'button',
+      style: {
         text: 'CND 60 sec',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setCountdown', options: { value: '00:01:00', input: '', selectedIndex: '0' } }],
+      steps: [
+        {
+          down: [{ actionId: 'setCountdown', options: { value: '00:01:00', input: '', selectedIndex: '0' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
-      label: 'CND 120 sec',
-      bank: {
-        style: 'text',
+      name: 'CND 120 sec',
+      type: 'button',
+      style: {
         text: 'CND 120 sec',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setCountdown', options: { value: '00:02:00', input: '', selectedIndex: '0' } }],
+      steps: [
+        {
+          down: [{ actionId: 'setCountdown', options: { value: '00:02:00', input: '', selectedIndex: '0' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
 
     // Transitions
     {
       category: 'Transitions',
-      label: 'Transition 1',
-      bank: {
-        style: 'text',
+      name: 'Transition 1',
+      type: 'button',
+      style: {
         text: 'Transition 1',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transition', options: { functionID: 'Transition1' } }],
+      steps: [
+        {
+          down: [{ actionId: 'transition', options: { functionID: 'Transition1' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Transition 2',
-      bank: {
-        style: 'text',
+      name: 'Transition 2',
+      type: 'button',
+      style: {
         text: 'Transition 2',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transition', options: { functionID: 'Transition2' } }],
+      steps: [
+        {
+          down: [{ actionId: 'transition', options: { functionID: 'Transition2' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Transition 3',
-      bank: {
-        style: 'text',
+      name: 'Transition 3',
+      type: 'button',
+      style: {
         text: 'Transition 3',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transition', options: { functionID: 'Transition3' } }],
+      steps: [
+        {
+          down: [{ actionId: 'transition', options: { functionID: 'Transition3' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Transition 4',
-      bank: {
-        style: 'text',
+      name: 'Transition 4',
+      type: 'button',
+      style: {
         text: 'Transition 4',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transition', options: { functionID: 'Transition4' } }],
+      steps: [
+        {
+          down: [{ actionId: 'transition', options: { functionID: 'Transition4' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Stinger 1',
-      bank: {
-        style: 'text',
+      name: 'Stinger 1',
+      type: 'button',
+      style: {
         text: 'Stinger1',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transition', options: { functionID: 'Stinger1' } }],
+      steps: [
+        {
+          down: [{ actionId: 'transition', options: { functionID: 'Stinger1' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Stinger 2',
-      bank: {
-        style: 'text',
+      name: 'Stinger 2',
+      type: 'button',
+      style: {
         text: 'Stinger 2',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transition', options: { functionID: 'Stinger2' } }],
+      steps: [
+        {
+          down: [{ actionId: 'transition', options: { functionID: 'Stinger2' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'T1 Set Cut',
-      bank: {
-        style: 'text',
+      name: 'T1 Set Cut',
+      type: 'button',
+      style: {
         text: 'T1 Set Cut',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setTransitionEffect', options: { functionID: 'SetTransitionEffect1', value: 'Cut' } }],
+      steps: [
+        {
+          down: [{ actionId: 'setTransitionEffect', options: { functionID: 'SetTransitionEffect1', value: 'Cut' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'T2 Set Fade',
-      bank: {
-        style: 'text',
+      name: 'T2 Set Fade',
+      type: 'button',
+      style: {
         text: 'T2 Set Fade',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setTransitionEffect', options: { functionID: 'SetTransitionEffect2', value: 'Fade' } }],
+      steps: [
+        {
+          down: [{ actionId: 'setTransitionEffect', options: { functionID: 'SetTransitionEffect2', value: 'Fade' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'T3 Set Zoom',
-      bank: {
-        style: 'text',
+      name: 'T3 Set Zoom',
+      type: 'button',
+      style: {
         text: 'T3 Set Zoom',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setTransitionEffect', options: { functionID: 'SetTransitionEffect3', value: 'Zoom' } }],
+      steps: [
+        {
+          down: [{ actionId: 'setTransitionEffect', options: { functionID: 'SetTransitionEffect3', value: 'Zoom' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'T4 Set Merge',
-      bank: {
-        style: 'text',
+      name: 'T4 Set Merge',
+      type: 'button',
+      style: {
         text: 'T4 Set Merge',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setTransitionEffect', options: { functionID: 'SetTransitionEffect4', value: 'Merge' } }],
+      steps: [
+        {
+          down: [{ actionId: 'setTransitionEffect', options: { functionID: 'SetTransitionEffect4', value: 'Merge' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'T1 Set 250ms',
-      bank: {
-        style: 'text',
+      name: 'T1 Set 250ms',
+      type: 'button',
+      style: {
         text: 'T1 Set 250ms',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 250 } }],
+      steps: [
+        {
+          down: [{ actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 250 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'T1 Set 500ms',
-      bank: {
-        style: 'text',
+      name: 'T1 Set 500ms',
+      type: 'button',
+      style: {
         text: 'T1 Set 500ms',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 500 } }],
+      steps: [
+        {
+          down: [{ actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 500 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'T1 Set 1000ms',
-      bank: {
-        style: 'text',
+      name: 'T1 Set 1000ms',
+      type: 'button',
+      style: {
         text: 'T1 Set 1000ms',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 1000 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'T1 Set 1500ms',
-      bank: {
-        style: 'text',
+      name: 'T1 Set 1500ms',
+      type: 'button',
+      style: {
         text: 'T1 Set 1500ms',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 1500 } }],
+      steps: [
+        {
+          down: [{ actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 1500 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Cut',
-      bank: {
-        style: 'text',
+      name: 'Cut',
+      type: 'button',
+      style: {
         text: 'Cut',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { functionID: 'Cut', mix: 0, duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Cut', mix: 0, duration: 1000 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Fade',
-      bank: {
-        style: 'text',
+      name: 'Fade',
+      type: 'button',
+      style: {
         text: 'Fade',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { functionID: 'Fade', mix: 0, duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Fade', mix: 0, duration: 1000 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Zoom',
-      bank: {
-        style: 'text',
+      name: 'Zoom',
+      type: 'button',
+      style: {
         text: 'Zoom',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { functionID: 'Zoom', mix: 0, duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Zoom', mix: 0, duration: 1000 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Wipe',
-      bank: {
-        style: 'text',
+      name: 'Wipe',
+      type: 'button',
+      style: {
         text: 'Wipe',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { functionID: 'Wipe', mix: 0, duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Wipe', mix: 0, duration: 1000 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Slide',
-      bank: {
-        style: 'text',
+      name: 'Slide',
+      type: 'button',
+      style: {
         text: 'Slide',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { functionID: 'Slide', mix: 0, duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Slide', mix: 0, duration: 1000 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Fly',
-      bank: {
-        style: 'text',
+      name: 'Fly',
+      type: 'button',
+      style: {
         text: 'Fly',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { functionID: 'Fly', mix: 0, duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Fly', mix: 0, duration: 1000 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Cross Zoom',
-      bank: {
-        style: 'text',
+      name: 'Cross Zoom',
+      type: 'button',
+      style: {
         text: 'Cross Zoom',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { functionID: 'CrossZoom', mix: 0, duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { functionID: 'CrossZoom', mix: 0, duration: 1000 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Fly Rotate',
-      bank: {
-        style: 'text',
+      name: 'Fly Rotate',
+      type: 'button',
+      style: {
         text: 'Fly Rotate',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { functionID: 'FlyRotate', mix: 0, duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { functionID: 'FlyRotate', mix: 0, duration: 1000 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Cube',
-      bank: {
-        style: 'text',
+      name: 'Cube',
+      type: 'button',
+      style: {
         text: 'Cube',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { functionID: 'Cube', mix: 0, duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Cube', mix: 0, duration: 1000 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Cube Zoom',
-      bank: {
-        style: 'text',
+      name: 'Cube Zoom',
+      type: 'button',
+      style: {
         text: 'Cube Zoom',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { functionID: 'CubeZoom', mix: 0, duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { functionID: 'CubeZoom', mix: 0, duration: 1000 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Vertical Wipe',
-      bank: {
-        style: 'text',
+      name: 'Vertical Wipe',
+      type: 'button',
+      style: {
         text: 'Vertical Wipe',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { functionID: 'VerticalWipe', mix: 0, duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { functionID: 'VerticalWipe', mix: 0, duration: 1000 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Vertical Slide',
-      bank: {
-        style: 'text',
+      name: 'Vertical Slide',
+      type: 'button',
+      style: {
         text: 'Vertical Slide',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { functionID: 'VerticalSlide', mix: 0, duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { functionID: 'VerticalSlide', mix: 0, duration: 1000 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Merge',
-      bank: {
-        style: 'text',
+      name: 'Merge',
+      type: 'button',
+      style: {
         text: 'Merge',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { functionID: 'Merge', mix: 0, duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Merge', mix: 0, duration: 1000 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Wipe Reverse',
-      bank: {
-        style: 'text',
+      name: 'Wipe Reverse',
+      type: 'button',
+      style: {
         text: 'Wipe Reverse',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { functionID: 'WipeReverse', mix: 0, duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { functionID: 'WipeReverse', mix: 0, duration: 1000 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Slide Reverse',
-      bank: {
-        style: 'text',
+      name: 'Slide Reverse',
+      type: 'button',
+      style: {
         text: 'Slide Reverse',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { functionID: 'SlideReverse', mix: 0, duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { functionID: 'SlideReverse', mix: 0, duration: 1000 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Vertical Wipe Reverse',
-      bank: {
-        style: 'text',
+      name: 'Vertical Wipe Reverse',
+      type: 'button',
+      style: {
         text: 'Vertical Wipe Reverse',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { functionID: 'VerticalWipeReverse', mix: 0, duration: 1000 } }],
+      steps: [
+        {
+          down: [{ actionId: 'transitionMix', options: { functionID: 'VerticalWipeReverse', mix: 0, duration: 1000 } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Transitions',
-      label: 'Vertical Slide Reverse',
-      bank: {
-        style: 'text',
+      name: 'Vertical Slide Reverse',
+      type: 'button',
+      style: {
         text: 'Vertical Slide Reverse',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'transitionMix', options: { functionID: 'VerticalSlideReverse', mix: 0, duration: 1000 } }],
+      steps: [
+        {
+          down: [
+            { actionId: 'transitionMix', options: { functionID: 'VerticalSlideReverse', mix: 0, duration: 1000 } },
+          ],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
 
     // Video Playback
     {
       category: 'Video Playback',
-      label: 'play',
-      bank: {
-        style: 'text',
+      name: 'play',
+      type: 'button',
+      style: {
         text: 'play',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoActions', options: { input: '', inputType: true, functionID: 'Play' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoActions', options: { input: '', inputType: true, functionID: 'Play' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Video Playback',
-      label: 'Pause',
-      bank: {
-        style: 'text',
+      name: 'Pause',
+      type: 'button',
+      style: {
         text: 'Pause',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoActions', options: { input: '', inputType: true, functionID: 'Pause' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoActions', options: { input: '', inputType: true, functionID: 'Pause' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Video Playback',
-      label: 'Play Pause',
-      bank: {
-        style: 'text',
+      name: 'Play Pause',
+      type: 'button',
+      style: {
         text: 'Play Pause',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoActions', options: { input: '', inputType: true, functionID: 'PlayPause' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoActions', options: { input: '', inputType: true, functionID: 'PlayPause' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Video Playback',
-      label: 'Restart',
-      bank: {
-        style: 'text',
+      name: 'Restart',
+      type: 'button',
+      style: {
         text: 'Restart',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoActions', options: { input: '', inputType: true, functionID: 'Restart' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoActions', options: { input: '', inputType: true, functionID: 'Restart' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Video Playback',
-      label: 'Loop ON',
-      bank: {
-        style: 'text',
+      name: 'Loop ON',
+      type: 'button',
+      style: {
         text: 'Loop ON',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoActions', options: { input: '', inputType: true, functionID: 'LoopOn' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoActions', options: { input: '', inputType: true, functionID: 'LoopOn' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Video Playback',
-      label: 'Loop OFF',
-      bank: {
-        style: 'text',
+      name: 'Loop OFF',
+      type: 'button',
+      style: {
         text: 'Loop OFF',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoActions', options: { input: '', inputType: true, functionID: 'LoopOff' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoActions', options: { input: '', inputType: true, functionID: 'LoopOff' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Video Playback',
-      label: 'Playhead 10 sec',
-      bank: {
-        style: 'text',
+      name: 'Playhead 10 sec',
+      type: 'button',
+      style: {
         text: 'Playhead 10 sec',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoPlayhead', options: { input: '', inputType: true, adjustment: 'Set', value: 10000 } }],
+      steps: [
+        {
+          down: [
+            { actionId: 'videoPlayhead', options: { input: '', inputType: true, adjustment: 'Set', value: 10000 } },
+          ],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Video Playback',
-      label: 'Playhead +10 sec',
-      bank: {
-        style: 'text',
+      name: 'Playhead +10 sec',
+      type: 'button',
+      style: {
         text: 'Playhead +10 sec',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [
-        { action: 'videoPlayhead', options: { input: '', inputType: true, adjustment: 'Increment', value: 10000 } },
+      steps: [
+        {
+          down: [
+            {
+              actionId: 'videoPlayhead',
+              options: { input: '', inputType: true, adjustment: 'Increment', value: 10000 },
+            },
+          ],
+          up: [],
+        },
       ],
       feedbacks: [],
     },
     {
       category: 'Video Playback',
-      label: 'Playhead -10 sec',
-      bank: {
-        style: 'text',
+      name: 'Playhead -10 sec',
+      type: 'button',
+      style: {
         text: 'Playhead -10 sec',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [
-        { action: 'videoPlayhead', options: { input: '', inputType: true, adjustment: 'Decrement', value: 10000 } },
+      steps: [
+        {
+          down: [
+            {
+              actionId: 'videoPlayhead',
+              options: { input: '', inputType: true, adjustment: 'Decrement', value: 10000 },
+            },
+          ],
+          up: [],
+        },
       ],
       feedbacks: [],
     },
     {
       category: 'Video Playback',
-      label: 'Mark In',
-      bank: {
-        style: 'text',
+      name: 'Mark In',
+      type: 'button',
+      style: {
         text: 'Mark In',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoMark', options: { input: '', inputType: true, functionID: 'MarkIn' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoMark', options: { input: '', inputType: true, functionID: 'MarkIn' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Video Playback',
-      label: 'Mark Out',
-      bank: {
-        style: 'text',
+      name: 'Mark Out',
+      type: 'button',
+      style: {
         text: 'Mark Out',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoMark', options: { input: '', inputType: true, functionID: 'MarkOut' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoMark', options: { input: '', inputType: true, functionID: 'MarkOut' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Video Playback',
-      label: 'Clear In/Out',
-      bank: {
-        style: 'text',
+      name: 'Clear In/Out',
+      type: 'button',
+      style: {
         text: 'Clear In/Out',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoMark', options: { input: '', inputType: true, functionID: 'MarkReset' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoMark', options: { input: '', inputType: true, functionID: 'MarkReset' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Video Playback',
-      label: 'Clear In',
-      bank: {
-        style: 'text',
+      name: 'Clear In',
+      type: 'button',
+      style: {
         text: 'Clear In',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoMark', options: { input: '', inputType: true, functionID: 'MarkResetIn' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoMark', options: { input: '', inputType: true, functionID: 'MarkResetIn' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Video Playback',
-      label: 'Clear Out',
-      bank: {
-        style: 'text',
+      name: 'Clear Out',
+      type: 'button',
+      style: {
         text: 'Clear Out',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'videoMark', options: { input: '', inputType: true, functionID: 'MarkResetOut' } }],
+      steps: [
+        {
+          down: [{ actionId: 'videoMark', options: { input: '', inputType: true, functionID: 'MarkResetOut' } }],
+          up: [],
+        },
+      ],
       feedbacks: [],
     },
     {
       category: 'Video Playback',
-      label: 'Video Timecode',
-      bank: {
-        style: 'text',
+      name: 'Video Timecode',
+      type: 'button',
+      style: {
         text: 'Video Timecode',
         size: '14',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [],
+      steps: [],
       feedbacks: [
         {
-          type: 'videoTimer',
+          feedbackId: 'videoTimer',
           options: {
             input: '',
-            color: instance.rgb(255, 255, 255),
-            color30: instance.rgb(255, 255, 0),
-            color10: instance.rgb(255, 0, 0),
+            color: combineRgb(255, 255, 255),
+            color30: combineRgb(255, 255, 0),
+            color10: combineRgb(255, 0, 0),
             loop: false,
           },
         },
@@ -4494,111 +6095,143 @@ export function getPresets(instance: VMixInstance): VMixPreset[] {
     // vMix Functions
     {
       category: 'vMix Functions',
-      label: 'Toggle Multicorder',
-      bank: {
-        style: 'text',
+      name: 'Toggle Multicorder',
+      type: 'button',
+      style: {
         text: 'Toggle Multicorder',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'toggleFunctions', options: { functionID: 'StartStopMultiCorder', value: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'toggleFunctions', options: { functionID: 'StartStopMultiCorder', value: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'status',
-          options: { status: 'multiCorder', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0), value: '' },
+          feedbackId: 'status',
+          options: { status: 'multiCorder', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), value: '' },
         },
       ],
     },
     {
       category: 'vMix Functions',
-      label: 'Toggle Recording',
-      bank: {
-        style: 'text',
+      name: 'Toggle Recording',
+      type: 'button',
+      style: {
         text: 'Toggle Recording',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'toggleFunctions', options: { functionID: 'StartStopRecording', value: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'toggleFunctions', options: { functionID: 'StartStopRecording', value: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'status',
-          options: { status: 'recording', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0), value: '' },
+          feedbackId: 'status',
+          options: { status: 'recording', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), value: '' },
         },
       ],
     },
     {
       category: 'vMix Functions',
-      label: 'Toggle Stream',
-      bank: {
-        style: 'text',
+      name: 'Toggle Stream',
+      type: 'button',
+      style: {
         text: 'Toggle Stream',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'toggleFunctions', options: { functionID: 'StartStopStreaming', value: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'toggleFunctions', options: { functionID: 'StartStopStreaming', value: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'status',
-          options: { status: 'streaming', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0), value: '' },
+          feedbackId: 'status',
+          options: { status: 'streaming', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), value: '' },
         },
       ],
     },
     {
       category: 'vMix Functions',
-      label: 'Toggle Ext',
-      bank: {
-        style: 'text',
+      name: 'Toggle Ext',
+      type: 'button',
+      style: {
         text: 'Toggle Ext',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'toggleFunctions', options: { functionID: 'StartStopExternal', value: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'toggleFunctions', options: { functionID: 'StartStopExternal', value: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'status',
-          options: { status: 'external', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0), value: '' },
+          feedbackId: 'status',
+          options: { status: 'external', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), value: '' },
         },
       ],
     },
     {
       category: 'vMix Functions',
-      label: 'Toggle Fullscreen',
-      bank: {
-        style: 'text',
+      name: 'Toggle Fullscreen',
+      type: 'button',
+      style: {
         text: 'Toggle Fullscreen',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'toggleFunctions', options: { functionID: 'Fullscreen', value: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'toggleFunctions', options: { functionID: 'Fullscreen', value: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'status',
-          options: { status: 'fullscreen', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0), value: '' },
+          feedbackId: 'status',
+          options: { status: 'fullscreen', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), value: '' },
         },
       ],
     },
     {
       category: 'vMix Functions',
-      label: 'Toggle FTB',
-      bank: {
-        style: 'text',
+      name: 'Toggle FTB',
+      type: 'button',
+      style: {
         text: 'Toggle FTB',
         size: '18',
-        color: instance.rgb(255, 255, 255),
-        bgcolor: instance.rgb(0, 0, 0),
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(0, 0, 0),
       },
-      actions: [{ action: 'toggleFunctions', options: { functionID: 'FadeToBlack', value: '' } }],
+      steps: [
+        {
+          down: [{ actionId: 'toggleFunctions', options: { functionID: 'FadeToBlack', value: '' } }],
+          up: [],
+        },
+      ],
       feedbacks: [
         {
-          type: 'status',
-          options: { status: 'fadeToBlack', fg: instance.rgb(255, 255, 255), bg: instance.rgb(255, 0, 0), value: '' },
+          feedbackId: 'status',
+          options: { status: 'fadeToBlack', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), value: '' },
         },
       ],
     },
   ]
+
+  return presets as unknown as CompanionPresetDefinitions
 }

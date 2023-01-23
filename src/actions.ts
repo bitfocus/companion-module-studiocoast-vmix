@@ -1,10 +1,10 @@
-import { CompanionActionEventInfo, CompanionActionEvent, SomeCompanionInputField } from '../../../instance_skel_types'
+import { CompanionActionEvent, SomeCompanionActionInputField } from '@companion-module/base'
 import { options, TRANSITIONS } from './utils'
 import { Timer } from './timers'
 import VMixInstance from './index'
 
 type ActionOptionEntry = [string, string | number | boolean]
-type MixOptionEntry = 0 | 1 | 2 | 3 | -1
+type MixOptionEntry = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | -1
 
 export interface VMixActions {
   // Input
@@ -144,7 +144,7 @@ export interface VMixActions {
 
 // Input
 interface PreviewInputCallback {
-  action: 'previewInput'
+  actionId: 'previewInput'
   options: Readonly<{
     input: string
     mix: MixOptionEntry
@@ -152,18 +152,18 @@ interface PreviewInputCallback {
 }
 
 interface PreviewInputNextCallback {
-  action: 'previewInputNext'
+  actionId: 'previewInputNext'
   options: Record<string, never>
 }
 
 interface PreviewInputPreviousCallback {
-  action: 'previewInputPrevious'
+  actionId: 'previewInputPrevious'
   options: Record<string, never>
 }
 
 // Transition
 interface ProgramCutCallback {
-  action: 'programCut'
+  actionId: 'programCut'
   options: Readonly<{
     input: string
     mix: MixOptionEntry
@@ -171,16 +171,16 @@ interface ProgramCutCallback {
 }
 
 interface TransitionMixCallback {
-  action: 'transitionMix'
+  actionId: 'transitionMix'
   options: Readonly<{
     mix: MixOptionEntry
-    functionID: typeof TRANSITIONS[number]
+    functionID: (typeof TRANSITIONS)[number]
     duration: number
   }>
 }
 
 interface TransitionCallback {
-  action: 'transition'
+  actionId: 'transition'
   options: Readonly<{
     functionID:
       | 'Transition1'
@@ -195,15 +195,15 @@ interface TransitionCallback {
 }
 
 interface SetTransitionEffectCallback {
-  action: 'setTransitionEffect'
+  actionId: 'setTransitionEffect'
   options: Readonly<{
     functionID: 'SetTransitionEffect1' | 'SetTransitionEffect2' | 'SetTransitionEffect3' | 'SetTransitionEffect4'
-    value: typeof TRANSITIONS[number]
+    value: (typeof TRANSITIONS)[number]
   }>
 }
 
 interface SetTransitionDurationCallback {
-  action: 'setTransitionDuration'
+  actionId: 'setTransitionDuration'
   options: Readonly<{
     functionID:
       | 'SetTransitionDuration1'
@@ -215,7 +215,7 @@ interface SetTransitionDurationCallback {
 }
 
 interface QuickPlayCallback {
-  action: 'quickPlay'
+  actionId: 'quickPlay'
   options: Readonly<{
     input: string
   }>
@@ -223,7 +223,7 @@ interface QuickPlayCallback {
 
 // Output
 interface OutputSetCallback {
-  action: 'outputSet'
+  actionId: 'outputSet'
   options: Readonly<{
     functionID:
       | 'SetOutput2'
@@ -238,7 +238,7 @@ interface OutputSetCallback {
 }
 
 interface ToggleFunctionsCallback {
-  action: 'toggleFunctions'
+  actionId: 'toggleFunctions'
   options: Readonly<{
     functionID:
       | 'StartStopMultiCorder'
@@ -253,14 +253,14 @@ interface ToggleFunctionsCallback {
 
 // Playlist
 interface PlayListFunctionsCallback {
-  action: 'playListFunctions'
+  actionId: 'playListFunctions'
   options: Readonly<{
     functionID: 'StartPlayList' | 'StopPlayList' | 'NextPlayListEntry' | 'PreviousPlayListEntry'
   }>
 }
 
 interface SelectPlayListCallback {
-  action: 'selectPlayList'
+  actionId: 'selectPlayList'
   options: Readonly<{
     value: string
   }>
@@ -268,7 +268,7 @@ interface SelectPlayListCallback {
 
 // Overlay
 interface OverlayFunctionsCallback {
-  action: 'overlayFunctions'
+  actionId: 'overlayFunctions'
   options: Readonly<{
     functionID:
       | 'OverlayInput1'
@@ -302,7 +302,7 @@ interface OverlayFunctionsCallback {
 
 // Position
 interface SetInputPositionCallback {
-  action: 'SetPosition'
+  actionId: 'SetPosition'
   options: Readonly<{
     functionID: 'SetPanX' | 'SetPanY' | 'SetZoom'
     input: string
@@ -313,7 +313,7 @@ interface SetInputPositionCallback {
 
 // Layer
 interface MultiViewOverlayCallback {
-  action: 'multiViewOverlay'
+  actionId: 'multiViewOverlay'
   options: Readonly<{
     functionID: 'MultiViewOverlay' | 'MultiViewOverlayOff' | 'MultiViewOverlayOn'
     input: string
@@ -322,7 +322,7 @@ interface MultiViewOverlayCallback {
 }
 
 interface SetMultiViewOverlayCallback {
-  action: 'setMultiViewOverlay'
+  actionId: 'setMultiViewOverlay'
   options: Readonly<{
     input: string
     layer: number
@@ -331,7 +331,7 @@ interface SetMultiViewOverlayCallback {
 }
 
 interface SetMultiViewOverlayOnPreviewCallback {
-  action: 'setMultiViewOverlayOnPreview'
+  actionId: 'setMultiViewOverlayOnPreview'
   options: Readonly<{
     layer: number
     layerInput: string
@@ -340,7 +340,7 @@ interface SetMultiViewOverlayOnPreviewCallback {
 }
 
 interface SetMultiViewOverlayOnProgramCallback {
-  action: 'setMultiViewOverlayOnProgram'
+  actionId: 'setMultiViewOverlayOnProgram'
   options: Readonly<{
     layer: number
     layerInput: string
@@ -349,34 +349,34 @@ interface SetMultiViewOverlayOnProgramCallback {
 }
 
 interface SetMultiViewOverlayDestinationInputCallback {
-  action: 'setMultiViewOverlayDestinationInput'
+  actionId: 'setMultiViewOverlayDestinationInput'
   options: Readonly<{
     destinationInput: string
   }>
 }
 
 interface SetMultiViewOverlayDestinationLayerCallback {
-  action: 'setMultiViewOverlayDestinationLayer'
+  actionId: 'setMultiViewOverlayDestinationLayer'
   options: Readonly<{
     destinationLayer: string
   }>
 }
 
 interface SetMultiViewOverlaySourceInputCallback {
-  action: 'setMultiViewOverlaySourceInput'
+  actionId: 'setMultiViewOverlaySourceInput'
   options: Readonly<{
     sourceIndex: string
   }>
 }
 
 interface ClearMultiViewOverlaySelectionCallback {
-  action: 'clearMultiViewOverlaySelection'
+  actionId: 'clearMultiViewOverlaySelection'
   options: Record<string, never>
 }
 
 // Virtual Set
 interface VirtualSetCallback {
-  action: 'virtualSet'
+  actionId: 'virtualSet'
   options: Readonly<{
     input: string
     value: '1' | '2' | '3' | '4'
@@ -385,7 +385,7 @@ interface VirtualSetCallback {
 
 // Video Call
 interface VideoCallAudioSourceCallback {
-  action: 'videoCallAudioSource'
+  actionId: 'videoCallAudioSource'
   options: Readonly<{
     input: string
     value: 'Master' | 'Headphones' | 'BusA' | 'BusB' | 'BusC' | 'BusD' | 'BusE' | 'BusF' | 'BusG'
@@ -393,7 +393,7 @@ interface VideoCallAudioSourceCallback {
 }
 
 interface VideoCallVideoSourceCallback {
-  action: 'videoCallVideoSource'
+  actionId: 'videoCallVideoSource'
   options: Readonly<{
     input: string
     value: 'Output1' | 'Output2' | 'Output3' | 'Output4' | 'None'
@@ -402,7 +402,7 @@ interface VideoCallVideoSourceCallback {
 
 // Audio
 interface AudioBusCallback {
-  action: 'audioBus'
+  actionId: 'audioBus'
   options: Readonly<{
     input: string
     value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
@@ -411,14 +411,14 @@ interface AudioBusCallback {
 }
 
 interface BusXSendToMasterCallback {
-  action: 'busXSendToMaster'
+  actionId: 'busXSendToMaster'
   options: Readonly<{
     value: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
   }>
 }
 
 interface BusXAudioCallback {
-  action: 'busXAudio'
+  actionId: 'busXAudio'
   options: Readonly<{
     value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
     functionID: 'BusXAudio' | 'BusXAudioOn' | 'BusXAudioOff'
@@ -426,7 +426,7 @@ interface BusXAudioCallback {
 }
 
 interface AudioCallback {
-  action: 'audio'
+  actionId: 'audio'
   options: Readonly<{
     input: string
     functionID: 'Audio' | 'AudioOn' | 'AudioOff'
@@ -434,7 +434,7 @@ interface AudioCallback {
 }
 
 interface BusXSoloCallback {
-  action: 'busXSolo'
+  actionId: 'busXSolo'
   options: Readonly<{
     value: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
     functionID: 'BusXSolo' | 'BusXSoloOn' | 'BusXSoloOff'
@@ -442,7 +442,7 @@ interface BusXSoloCallback {
 }
 
 interface SoloCallback {
-  action: 'solo'
+  actionId: 'solo'
   options: Readonly<{
     input: string
     functionID: 'Solo' | 'SoloOn' | 'SoloOff'
@@ -450,7 +450,7 @@ interface SoloCallback {
 }
 
 interface SetVolumeFadeCallback {
-  action: 'setVolumeFade'
+  actionId: 'setVolumeFade'
   options: Readonly<{
     fadeMin: number
     fadeTime: number
@@ -459,7 +459,7 @@ interface SetVolumeFadeCallback {
 }
 
 interface AudioPluginCallback {
-  action: 'audioPlugin'
+  actionId: 'audioPlugin'
   options: Readonly<{
     input: string
     value: number
@@ -468,7 +468,7 @@ interface AudioPluginCallback {
 }
 
 interface AudioChannelMatrixApplyPresetCallback {
-  action: 'audioChannelMatrixApplyPreset'
+  actionId: 'audioChannelMatrixApplyPreset'
   options: Readonly<{
     input: string
     value: string
@@ -477,7 +477,7 @@ interface AudioChannelMatrixApplyPresetCallback {
 
 // Title
 interface ControlCountdownCallback {
-  action: 'controlCountdown'
+  actionId: 'controlCountdown'
   options: Readonly<{
     functionID: 'StartCountdown' | 'StopCountdown' | 'PauseCountdown'
     input: string
@@ -486,7 +486,7 @@ interface ControlCountdownCallback {
 }
 
 interface SetCountdownCallback {
-  action: 'setCountdown'
+  actionId: 'setCountdown'
   options: Readonly<{
     value: string
     input: string
@@ -495,7 +495,7 @@ interface SetCountdownCallback {
 }
 
 interface ChangeCountdownCallback {
-  action: 'changeCountdown'
+  actionId: 'changeCountdown'
   options: Readonly<{
     value: string
     input: string
@@ -504,7 +504,7 @@ interface ChangeCountdownCallback {
 }
 
 interface AdjustCountdownCallback {
-  action: 'adjustCountdown'
+  actionId: 'adjustCountdown'
   options: Readonly<{
     value: string
     input: string
@@ -513,7 +513,7 @@ interface AdjustCountdownCallback {
 }
 
 interface SetTextCallback {
-  action: 'setText'
+  actionId: 'setText'
   options: Readonly<{
     input: string
     selectedIndex: string
@@ -523,7 +523,7 @@ interface SetTextCallback {
 }
 
 interface SetColorCallback {
-  action: 'setColor'
+  actionId: 'setColor'
   options: Readonly<{
     input: string
     selectedIndex: string
@@ -532,7 +532,7 @@ interface SetColorCallback {
 }
 
 interface SelectTitlePresetCallback {
-  action: 'selectTitlePreset'
+  actionId: 'selectTitlePreset'
   options: Readonly<{
     input: string
     value: string
@@ -540,7 +540,7 @@ interface SelectTitlePresetCallback {
 }
 
 interface TitlePresetCallback {
-  action: 'titlePreset'
+  actionId: 'titlePreset'
   options: Readonly<{
     input: string
     functionID: 'NextTitlePreset' | 'PreviousTitlePreset'
@@ -548,7 +548,7 @@ interface TitlePresetCallback {
 }
 
 interface TitleBeginAnimationCallback {
-  action: 'titleBeginAnimation'
+  actionId: 'titleBeginAnimation'
   options: Readonly<{
     input: string
     value:
@@ -572,7 +572,7 @@ interface TitleBeginAnimationCallback {
 
 // Data Source
 interface DataSourceAutoNextCallback {
-  action: 'dataSourceAutoNext'
+  actionId: 'dataSourceAutoNext'
   options: Readonly<{
     functionID: 'DataSourceAutoNextOn' | 'DataSourceAutoNextOff' | 'DataSourceAutoNextOnOff'
     value: string
@@ -580,21 +580,21 @@ interface DataSourceAutoNextCallback {
 }
 
 interface DataSourceNextRowCallback {
-  action: 'dataSourceNextRow'
+  actionId: 'dataSourceNextRow'
   options: Readonly<{
     value: string
   }>
 }
 
 interface DataSourcePreviousRowCallback {
-  action: 'dataSourcePreviousRow'
+  actionId: 'dataSourcePreviousRow'
   options: Readonly<{
     value: string
   }>
 }
 
 interface DataSourceSelectRowCallback {
-  action: 'dataSourceSelectRow'
+  actionId: 'dataSourceSelectRow'
   options: Readonly<{
     value: string
   }>
@@ -602,21 +602,21 @@ interface DataSourceSelectRowCallback {
 
 // Slide / List
 interface NextPictureCallback {
-  action: 'nextPicture'
+  actionId: 'nextPicture'
   options: Readonly<{
     input: string
   }>
 }
 
 interface PreviousPictureCallback {
-  action: 'previousPicture'
+  actionId: 'previousPicture'
   options: Readonly<{
     input: string
   }>
 }
 
 interface SelectIndexCallback {
-  action: 'selectIndex'
+  actionId: 'selectIndex'
   options: Readonly<{
     input: string
     value: string
@@ -625,7 +625,7 @@ interface SelectIndexCallback {
 
 // Media
 interface VideoActionsCallback {
-  action: 'videoActions'
+  actionId: 'videoActions'
   options: Readonly<{
     input: string
     inputType: boolean
@@ -634,7 +634,7 @@ interface VideoActionsCallback {
 }
 
 interface VideoPlayheadCallback {
-  action: 'videoPlayhead'
+  actionId: 'videoPlayhead'
   options: Readonly<{
     input: string
     inputType: boolean
@@ -644,7 +644,7 @@ interface VideoPlayheadCallback {
 }
 
 interface VideoMarkCallback {
-  action: 'videoMark'
+  actionId: 'videoMark'
   options: Readonly<{
     input: string
     inputType: boolean
@@ -654,7 +654,7 @@ interface VideoMarkCallback {
 
 // Replay
 interface ReplayACameraCallback {
-  action: 'replayACamera'
+  actionId: 'replayACamera'
   options: Readonly<{
     functionID:
       | 'ReplayACamera1'
@@ -669,7 +669,7 @@ interface ReplayACameraCallback {
 }
 
 interface ReplayBCameraCallback {
-  action: 'replayBCamera'
+  actionId: 'replayBCamera'
   options: Readonly<{
     functionID:
       | 'ReplayBCamera1'
@@ -684,7 +684,7 @@ interface ReplayBCameraCallback {
 }
 
 interface ReplayCameraCallback {
-  action: 'replayCamera'
+  actionId: 'replayCamera'
   options: Readonly<{
     functionID:
       | 'ReplayCamera1'
@@ -699,19 +699,19 @@ interface ReplayCameraCallback {
 }
 
 interface ReplaySelectChannelCallback {
-  action: 'replaySelectChannel'
+  actionId: 'replaySelectChannel'
   options: Readonly<{
     functionID: 'replaySelectChannelAB' | 'replaySelectChannelA' | 'replaySelectChannelB'
   }>
 }
 
 interface ReplaySwapChannelsCallback {
-  action: 'replaySwapChannels'
+  actionId: 'replaySwapChannels'
   options: Record<string, never>
 }
 
 interface ReplayMarkCallback {
-  action: 'replayMark'
+  actionId: 'replayMark'
   options: Readonly<{
     functionID:
       | 'ReplayMarkCancel'
@@ -728,7 +728,7 @@ interface ReplayMarkCallback {
 }
 
 interface ReplayMoveInOutCallback {
-  action: 'replayMoveInOut'
+  actionId: 'replayMoveInOut'
   options: Readonly<{
     functionID: 'ReplayMoveSelectedInPoint' | 'ReplayMoveSelectedOutPoint'
     value: number
@@ -736,14 +736,14 @@ interface ReplayMoveInOutCallback {
 }
 
 interface ReplayUpdateInOutCallback {
-  action: 'replayUpdateInOut'
+  actionId: 'replayUpdateInOut'
   options: Readonly<{
     functionID: 'ReplayUpdateSelectedInPoint' | 'ReplayUpdateSelectedOutPoint'
   }>
 }
 
 interface ReplaySelectEventsCallback {
-  action: 'replaySelectEvents'
+  actionId: 'replaySelectEvents'
   options: Readonly<{
     functionID:
       | 'ReplaySelectEvents1'
@@ -771,14 +771,14 @@ interface ReplaySelectEventsCallback {
 }
 
 interface ReplayChangeDirectionCallback {
-  action: 'replayChangeDirection'
+  actionId: 'replayChangeDirection'
   options: Readonly<{
     channel: 'Current' | 'A' | 'B'
   }>
 }
 
 interface ReplayChangeSpeedCallback {
-  action: 'replayChangeSpeed'
+  actionId: 'replayChangeSpeed'
   options: Readonly<{
     channel: 'Current' | 'A' | 'B'
     value: number
@@ -786,7 +786,7 @@ interface ReplayChangeSpeedCallback {
 }
 
 interface ReplayMoveEventCallback {
-  action: 'replayMoveEvent'
+  actionId: 'replayMoveEvent'
   options: Readonly<{
     functionID: 'ReplayMoveLastEvent' | 'ReplayMoveSelectedEvent'
     value: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20
@@ -794,14 +794,14 @@ interface ReplayMoveEventCallback {
 }
 
 interface ReplayMoveEventUpDownCallback {
-  action: 'replayMoveEventUpDown'
+  actionId: 'replayMoveEventUpDown'
   options: Readonly<{
     functionID: 'ReplayMoveSelectedEventUp' | 'ReplayMoveSelectedEventDown'
   }>
 }
 
 interface ReplayFastForwardBackwardCallback {
-  action: 'replayFastForwardBackward'
+  actionId: 'replayFastForwardBackward'
   options: Readonly<{
     functionID: 'ReplayFastForward' | 'ReplayFastBackward'
     channel: 'Current' | 'A' | 'B'
@@ -810,7 +810,7 @@ interface ReplayFastForwardBackwardCallback {
 }
 
 interface ReplayJumpFramesCallback {
-  action: 'replayJumpFrames'
+  actionId: 'replayJumpFrames'
   options: Readonly<{
     channel: 'Current' | 'A' | 'B'
     value: number
@@ -818,40 +818,40 @@ interface ReplayJumpFramesCallback {
 }
 
 interface ReplayRecordingCallback {
-  action: 'replayRecording'
+  actionId: 'replayRecording'
   options: Readonly<{
     functionID: 'ReplayStartRecording' | 'ReplayStopRecording' | 'ReplayStartStopRecording'
   }>
 }
 
 interface ReplayJumpToNowCallback {
-  action: 'replayJumpToNow'
+  actionId: 'replayJumpToNow'
   options: Readonly<{
     channel: 'Current' | 'A' | 'B'
   }>
 }
 
 interface ReplayLiveToggleCallback {
-  action: 'replayLiveToggle'
+  actionId: 'replayLiveToggle'
   options: Record<string, never>
 }
 
 interface ReplayPlayCallback {
-  action: 'replayPlay'
+  actionId: 'replayPlay'
   options: Readonly<{
     channel: 'Current' | 'A' | 'B'
   }>
 }
 
 interface ReplayPauseCallback {
-  action: 'replayPause'
+  actionId: 'replayPause'
   options: Readonly<{
     channel: 'Current' | 'A' | 'B'
   }>
 }
 
 interface ReplayPlayEventCallback {
-  action: 'replayPlayEvent'
+  actionId: 'replayPlayEvent'
   options: Readonly<{
     channel: 'Current' | 'A' | 'B'
     value: number
@@ -859,14 +859,14 @@ interface ReplayPlayEventCallback {
 }
 
 interface ReplayPlaySelectedEventToOutputCallback {
-  action: 'replayPlaySelectedEventToOutput'
+  actionId: 'replayPlaySelectedEventToOutput'
   options: Readonly<{
     channel: 'Current' | 'A' | 'B'
   }>
 }
 
 interface ReplayPlayEventsByIDToOutputCallback {
-  action: 'replayPlayEventsByIDToOutput'
+  actionId: 'replayPlayEventsByIDToOutput'
   options: Readonly<{
     channel: 'Current' | 'A' | 'B'
     value: number
@@ -874,7 +874,7 @@ interface ReplayPlayEventsByIDToOutputCallback {
 }
 
 interface ReplayToggleCameraCallback {
-  action: 'replayToggleCamera'
+  actionId: 'replayToggleCamera'
   options: Readonly<{
     camera: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
   }>
@@ -882,7 +882,7 @@ interface ReplayToggleCameraCallback {
 
 // Browser
 interface BrowserCallback {
-  action: 'browser'
+  actionId: 'browser'
   options: Readonly<{
     input: string
     functionID:
@@ -897,7 +897,7 @@ interface BrowserCallback {
 }
 
 interface BrowserNavigateCallback {
-  action: 'browserNavigate'
+  actionId: 'browserNavigate'
   options: Readonly<{
     input: string
     value: string
@@ -907,21 +907,21 @@ interface BrowserNavigateCallback {
 
 // General
 interface KeyPressCallback {
-  action: 'keyPress'
+  actionId: 'keyPress'
   options: Readonly<{
     value: string
   }>
 }
 
 interface TbarCallback {
-  action: 'setFader'
+  actionId: 'setFader'
   options: Readonly<{
     value: number
   }>
 }
 
 interface DynamicCallback {
-  action: 'dynamic'
+  actionId: 'dynamic'
   options: Readonly<{
     type: 'Input' | 'Value'
     number: '1' | '2' | '3' | '4'
@@ -931,26 +931,26 @@ interface DynamicCallback {
 
 // Scripting
 interface ScriptStartCallback {
-  action: 'scriptStart'
+  actionId: 'scriptStart'
   options: Readonly<{
     value: string
   }>
 }
 
 interface ScriptStopCallback {
-  action: 'scriptStop'
+  actionId: 'scriptStop'
   options: Readonly<{
     value: string
   }>
 }
 
 interface ScriptStopAllCallback {
-  action: 'scriptStopAll'
+  actionId: 'scriptStopAll'
   options: Record<string, never>
 }
 
 interface CommandCallback {
-  action: 'command'
+  actionId: 'command'
   options: Readonly<{
     command: string
     encode: boolean
@@ -959,19 +959,19 @@ interface CommandCallback {
 
 // Util
 interface MixSelectCallback {
-  action: 'mixSelect'
+  actionId: 'mixSelect'
   options: Readonly<{
-    mix: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14
+    mix: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15
   }>
 }
 
 interface ButtonShiftCallback {
-  action: 'buttonShift'
+  actionId: 'buttonShift'
   options: Record<string, never>
 }
 
 interface DataSourceTimer {
-  action: 'dataSourceTimer'
+  actionId: 'dataSourceTimer'
   options: Readonly<{
     id: string
     state: 'start' | 'stop' | 'reset'
@@ -979,7 +979,7 @@ interface DataSourceTimer {
 }
 
 interface DataSourceTimerSet {
-  action: 'dataSourceTimerSet'
+  actionId: 'dataSourceTimerSet'
   options: Readonly<{
     id: string
     time: string
@@ -987,7 +987,7 @@ interface DataSourceTimerSet {
 }
 
 interface DataSourceTimerCreateTime {
-  action: 'dataSourceTimerCreateTime'
+  actionId: 'dataSourceTimerCreateTime'
   options: Readonly<{
     id: string
     time: number
@@ -995,7 +995,7 @@ interface DataSourceTimerCreateTime {
 }
 
 interface DataSourceTimerUpdateTime {
-  action: 'dataSourceTimerCreateTime'
+  actionId: 'dataSourceTimerCreateTime'
   options: Readonly<{
     id: string
     type: 'set' | 'reset'
@@ -1136,17 +1136,16 @@ export type ActionCallbacks =
   | DataSourceTimerUpdateTime
 
 // Force options to have a default to prevent sending undefined values
-type InputFieldWithDefault = Exclude<SomeCompanionInputField, 'default'> & { default: string | number | boolean | null }
+type InputFieldWithDefault = Exclude<SomeCompanionActionInputField, 'default'> & {
+  default: string | number | boolean | null
+}
 
 // Actions specific to vMix
 export interface VMixAction<T> {
-  label: string
+  name: string
   description?: string
   options: InputFieldWithDefault[]
-  callback: (
-    action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>,
-    info: Readonly<CompanionActionEventInfo | null>
-  ) => void
+  callback: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>) => void
   subscribe?: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>) => void
   unsubscribe?: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>) => void
 }
@@ -1154,17 +1153,16 @@ export interface VMixAction<T> {
 export function getActions(instance: VMixInstance): VMixActions {
   /**
    * @param action Action callback object
-   * @param _info Unused
    * @description Sends vMix functions/params from actions that don't require complex logic
    */
-  const sendBasicCommand = (action: Readonly<ActionCallbacks>, _info?: CompanionActionEventInfo | null): void => {
-    let functionName: string = action.action
+  const sendBasicCommand = async (action: Readonly<ActionCallbacks>): Promise<void> => {
+    let functionName: string = action.actionId
 
     if ('functionID' in action.options) {
       functionName = action.options.functionID
     }
 
-    const parseSelectedOptions = (param: ActionOptionEntry): ActionOptionEntry => {
+    const parseSelectedOptions = (param: ActionOptionEntry | string): ActionOptionEntry | string => {
       if (param[0] === 'mix' && param[1] === -1) {
         return ['mix', instance.routingData.mix]
       } else {
@@ -1182,22 +1180,21 @@ export function getActions(instance: VMixInstance): VMixActions {
       }
     }
 
-    // replace instance variables in params with their value
-    const parseInstanceVariable = (param: ActionOptionEntry): ActionOptionEntry => {
-      const instanceVariable = RegExp(/\$\(([^:$)]+):([^)$]+)\)/)
-
-      if (instanceVariable.test(param[1].toString())) {
-        const value = instance.variables?.get(param[1].toString())
-        return value === undefined ? param : [param[0], value]
-      } else {
-        return param
-      }
-    }
-
+    const parsedParams = []
     const params = Object.entries(action.options)
       .filter((param) => param[0] !== 'functionID')
       .map(parseButtonShift)
-      .map(parseInstanceVariable)
+
+    for (const param of params) {
+      if (typeof param === 'string') {
+        const parsed = await instance.parseVariablesInString(param)
+        parsedParams.push(parsed)
+      } else {
+        parsedParams.push(param)
+      }
+    }
+
+    parsedParams
       .map(parseSelectedOptions)
       .map((param) => `${param[0]}=${encodeURIComponent(param[1])}`)
       .join('&')
@@ -1208,26 +1205,26 @@ export function getActions(instance: VMixInstance): VMixActions {
   return {
     // Input
     previewInput: {
-      label: 'Input - Send Input to Preview',
+      name: 'Input - Send Input to Preview',
       options: [options.input, options.mixSelect],
       callback: sendBasicCommand,
     },
 
     previewInputNext: {
-      label: 'Input - Send Next input to Preview',
+      name: 'Input - Send Next input to Preview',
       options: [],
       callback: sendBasicCommand,
     },
 
     previewInputPrevious: {
-      label: 'Input - Send Previous input to Preview',
+      name: 'Input - Send Previous input to Preview',
       options: [],
       callback: sendBasicCommand,
     },
 
     // Transition
     programCut: {
-      label: 'Transition - Send Input to Program',
+      name: 'Transition - Send Input to Program',
       options: [options.input, options.mixSelect],
       callback: (action) => {
         const programCut: any = {
@@ -1245,7 +1242,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     transitionMix: {
-      label: 'Transition - Transition mix',
+      name: 'Transition - Transition mix',
       options: [
         options.mixSelect,
         {
@@ -1268,7 +1265,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     transition: {
-      label: 'Transition - Auto Transition',
+      name: 'Transition - Auto Transition',
       options: [
         {
           type: 'dropdown',
@@ -1291,7 +1288,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     setTransitionEffect: {
-      label: 'Transition - Set Auto Transition Effect',
+      name: 'Transition - Set Auto Transition Effect',
       options: [
         {
           type: 'dropdown',
@@ -1317,7 +1314,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     setTransitionDuration: {
-      label: 'Transition - Set Auto Transition Duration',
+      name: 'Transition - Set Auto Transition Duration',
       options: [
         {
           type: 'dropdown',
@@ -1344,14 +1341,14 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     quickPlay: {
-      label: 'Transition - Quick Play input to Program',
+      name: 'Transition - Quick Play input to Program',
       options: [options.input],
       callback: sendBasicCommand,
     },
 
     // Output
     outputSet: {
-      label: 'Output - Set Output Source',
+      name: 'Output - Set Output Source',
       options: [
         {
           type: 'dropdown',
@@ -1382,8 +1379,8 @@ export function getActions(instance: VMixInstance): VMixActions {
         },
         options.input,
       ],
-      callback: (action) => {
-        const input = instance.parseOption(action.options.input)[instance.buttonShift.state]
+      callback: async (action) => {
+        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
         let command = `FUNCTION ${action.options.functionID} Value=${action.options.value}`
 
         if (action.options.value === 'Input') {
@@ -1395,7 +1392,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     toggleFunctions: {
-      label: 'Output - Toggle Functions',
+      name: 'Output - Toggle Functions',
       options: [
         {
           type: 'dropdown',
@@ -1437,7 +1434,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     // Playlist
     playListFunctions: {
-      label: 'Playlist - Functions',
+      name: 'Playlist - Functions',
       description: "For vMix's Playlist function, not List inputs",
       options: [
         {
@@ -1457,7 +1454,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     selectPlayList: {
-      label: 'Playlist - Open Playlist',
+      name: 'Playlist - Open Playlist',
       description: "For vMix's Playlist function, not List inputs",
       options: [
         {
@@ -1472,7 +1469,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     // Overlay
     overlayFunctions: {
-      label: 'Overlay - Functions',
+      name: 'Overlay - Functions',
       options: [
         {
           type: 'dropdown',
@@ -1514,7 +1511,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     // Position
     setInputPostion: {
-      label: 'Position - Adjust an inputs pan/zoom',
+      name: 'Position - Adjust an inputs pan/zoom',
       options: [
         {
           type: 'dropdown',
@@ -1548,8 +1545,8 @@ export function getActions(instance: VMixInstance): VMixActions {
           max: 2,
         },
       ],
-      callback: (action) => {
-        const input = instance.parseOption(action.options.input)[instance.buttonShift.state]
+      callback: async (action) => {
+        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
         let prefix = ''
 
         if (action.options.adjustment === 'Increase') {
@@ -1569,7 +1566,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     // Layer
     multiViewOverlay: {
-      label: 'Layer - Toggle/On/Off Multiview Layer on Input',
+      name: 'Layer - Toggle/On/Off Multiview Layer on Input',
       options: [
         {
           type: 'dropdown',
@@ -1599,7 +1596,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     setMultiViewOverlay: {
-      label: 'Layer - Set Input as Multiview Layer',
+      name: 'Layer - Set Input as Multiview Layer',
       options: [
         {
           type: 'textinput',
@@ -1622,9 +1619,10 @@ export function getActions(instance: VMixInstance): VMixActions {
           default: '',
         },
       ],
-      callback: (action) => {
-        const input = instance.parseOption(action.options.input)[instance.buttonShift.state]
-        const layer = instance.parseOption(action.options.layerInput)[instance.buttonShift.state]
+      callback: async (action) => {
+        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+        const layer = (await instance.parseOption(action.options.layerInput))[instance.buttonShift.state]
+
         if (instance.tcp)
           instance.tcp.sendCommand(
             `FUNCTION SetMultiViewOverlay Input=${encodeURIComponent(input)}&Value=${
@@ -1635,7 +1633,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     setMultiViewOverlayOnPreview: {
-      label: 'Layer - Set Input as Multiview Overlay Layer on active Preview input',
+      name: 'Layer - Set Input as Multiview Overlay Layer on active Preview input',
       options: [
         {
           type: 'number',
@@ -1653,8 +1651,8 @@ export function getActions(instance: VMixInstance): VMixActions {
         },
         options.mixSelect,
       ],
-      callback: (action) => {
-        const input = instance.parseOption(action.options.layerInput)[instance.buttonShift.state]
+      callback: async (action) => {
+        const input = (await instance.parseOption(action.options.layerInput))[instance.buttonShift.state]
         const mix = action.options.mix === -1 ? instance.routingData.mix : action.options.mix
 
         if (instance.tcp)
@@ -1667,7 +1665,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     setMultiViewOverlayOnProgram: {
-      label: 'Layer - Set Input as Multiview Overlay Layer on active Program input',
+      name: 'Layer - Set Input as Multiview Overlay Layer on active Program input',
       options: [
         {
           type: 'number',
@@ -1685,8 +1683,8 @@ export function getActions(instance: VMixInstance): VMixActions {
         },
         options.mixSelect,
       ],
-      callback: (action) => {
-        const input = instance.parseOption(action.options.layerInput)[instance.buttonShift.state]
+      callback: async (action) => {
+        const input = (await instance.parseOption(action.options.layerInput))[instance.buttonShift.state]
         const mix = action.options.mix === -1 ? instance.routingData.mix : action.options.mix
 
         if (instance.tcp)
@@ -1699,7 +1697,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     setMultiViewOverlayDestinationInput: {
-      label: 'Layer - Set Destination Input for Routable Multiview Layer',
+      name: 'Layer - Set Destination Input for Routable Multiview Layer',
       options: [
         {
           type: 'textinput',
@@ -1708,18 +1706,17 @@ export function getActions(instance: VMixInstance): VMixActions {
           default: '1',
         },
       ],
-      callback: (action) => {
-        const desination = instance.parseOption(action.options.destinationInput)[instance.buttonShift.state]
+      callback: async (action) => {
+        const desination = (await instance.parseOption(action.options.destinationInput))[instance.buttonShift.state]
 
         instance.routingData.layer.destinationInput = desination
-        instance.checkFeedbacks('selectedDestinationInput')
-        instance.checkFeedbacks('routableMultiviewLayer')
+        instance.checkFeedbacks('selectedDestinationInput', 'routableMultiviewLayer')
         instance.variables?.updateVariables()
       },
     },
 
     setMultiViewOverlayDestinationLayer: {
-      label: 'Layer - Set Destination Layer for Routable Multiview Layer',
+      name: 'Layer - Set Destination Layer for Routable Multiview Layer',
       options: [
         {
           type: 'textinput',
@@ -1728,18 +1725,18 @@ export function getActions(instance: VMixInstance): VMixActions {
           default: '',
         },
       ],
-      callback: (action) => {
-        const layerOption = parseFloat(
-          instance.parseOption(action.options.destinationLayer + '')[instance.buttonShift.state]
-        )
+      callback: async (action) => {
+        const parseOption = (await instance.parseOption(action.options.destinationLayer + ''))[
+          instance.buttonShift.state
+        ]
+        const layerOption = parseFloat(parseOption)
         const checkNaN = isNaN(layerOption)
         const checkValid = layerOption % 1 === 0 && layerOption > 0 && layerOption <= 10
 
         if (!checkNaN && checkValid) {
           instance.routingData.layer.destinationLayer = layerOption.toString()
 
-          instance.checkFeedbacks('selectedDestinationLayer')
-          instance.checkFeedbacks('routableMultiviewLayer')
+          instance.checkFeedbacks('selectedDestinationLayer', 'routableMultiviewLayer')
           instance.variables?.updateVariables()
         } else {
           instance.log('warn', `Setting Multview Destination layer must be a whole number, 1 to 10`)
@@ -1748,7 +1745,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     setMultiViewOverlaySourceInput: {
-      label: 'Layer - Set Source Input for Routable Multiview Layer',
+      name: 'Layer - Set Source Input for Routable Multiview Layer',
       options: [
         {
           type: 'textinput',
@@ -1757,8 +1754,8 @@ export function getActions(instance: VMixInstance): VMixActions {
           default: '1',
         },
       ],
-      callback: (action) => {
-        const input = instance.parseOption(action.options.sourceIndex)[instance.buttonShift.state]
+      callback: async (action) => {
+        const input = (await instance.parseOption(action.options.sourceIndex))[instance.buttonShift.state]
 
         if (
           instance.routingData.layer.destinationInput !== null &&
@@ -1776,22 +1773,20 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     clearMultiViewOverlaySelection: {
-      label: 'Layer - Clear Routable Multiview Layer selections',
+      name: 'Layer - Clear Routable Multiview Layer selections',
       options: [],
       callback: () => {
         instance.routingData.layer.destinationInput = null
         instance.routingData.layer.destinationLayer = null
 
-        instance.checkFeedbacks('selectedDestinationInput')
-        instance.checkFeedbacks('selectedDestinationLayer')
-        instance.checkFeedbacks('routableMultiviewLayer')
+        instance.checkFeedbacks('selectedDestinationInput', 'selectedDestinationLayer', 'routableMultiviewLayer')
         instance.variables?.updateVariables()
       },
     },
 
     // Virtual Set
     virtualSet: {
-      label: 'VirtualSet - Zoom To Selected Preset',
+      name: 'VirtualSet - Zoom To Selected Preset',
       options: [
         options.input,
         {
@@ -1802,8 +1797,8 @@ export function getActions(instance: VMixInstance): VMixActions {
           choices: ['1', '2', '3', '4'].map((value) => ({ id: value, label: value })),
         },
       ],
-      callback: (action) => {
-        const input = instance.parseOption(action.options.input)[instance.buttonShift.state]
+      callback: async (action) => {
+        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
         if (instance.tcp)
           instance.tcp.sendCommand(
             `FUNCTION SelectIndex Input=${encodeURIComponent(input)}&Value=${action.options.value}`
@@ -1813,7 +1808,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     // Video Call
     videoCallAudioSource: {
-      label: 'VideoCall - Select Audio Source',
+      name: 'VideoCall - Select Audio Source',
       options: [
         options.input,
         {
@@ -1838,7 +1833,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     videoCallVideoSource: {
-      label: 'VideoCall - Select Video Source',
+      name: 'VideoCall - Select Video Source',
       options: [
         options.input,
         {
@@ -1860,7 +1855,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     // Audio
     audioBus: {
-      label: 'Audio - Route Input to Bus',
+      name: 'Audio - Route Input to Bus',
       options: [
         options.input,
         options.audioBusMaster,
@@ -1880,13 +1875,13 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     busXSendToMaster: {
-      label: 'Audio - Route Bus to Master',
+      name: 'Audio - Route Bus to Master',
       options: [options.audioBus],
       callback: sendBasicCommand,
     },
 
     busXAudio: {
-      label: 'Audio - Bus Mute',
+      name: 'Audio - Bus Mute',
       options: [
         options.audioBusMaster,
         {
@@ -1917,7 +1912,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     audio: {
-      label: 'Audio - Input Mute',
+      name: 'Audio - Input Mute',
       options: [
         options.input,
         {
@@ -1936,7 +1931,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     busXSolo: {
-      label: 'Audio - Bus Solo',
+      name: 'Audio - Bus Solo',
       options: [
         options.audioBus,
         {
@@ -1955,7 +1950,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     solo: {
-      label: 'Audio - Input Solo',
+      name: 'Audio - Input Solo',
       options: [
         options.input,
         {
@@ -1974,7 +1969,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     setVolumeFade: {
-      label: 'Audio - Set Volume Fade',
+      name: 'Audio - Set Volume Fade',
       options: [
         {
           type: 'number',
@@ -1994,8 +1989,9 @@ export function getActions(instance: VMixInstance): VMixActions {
         },
         options.input,
       ],
-      callback: (action) => {
-        const input = instance.parseOption(action.options.input)[instance.buttonShift.state]
+      callback: async (action) => {
+        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+
         if (instance.tcp)
           instance.tcp.sendCommand(
             `FUNCTION SetVolumeFade Value=${action.options.fadeMin},${
@@ -2006,7 +2002,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     audioPlugin: {
-      label: 'Audio - Audio Plugin On/Off/Toggle/Show On Input',
+      name: 'Audio - Audio Plugin On/Off/Toggle/Show On Input',
       options: [
         options.input,
         {
@@ -2034,7 +2030,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     audioChannelMatrixApplyPreset: {
-      label: 'Audio - Channel Matrix Apply Preset',
+      name: 'Audio - Channel Matrix Apply Preset',
       options: [
         options.input,
         {
@@ -2049,7 +2045,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     // Title
     controlCountdown: {
-      label: 'Title - Start / Stop / Pause Countdown',
+      name: 'Title - Start / Stop / Pause Countdown',
       options: [
         {
           type: 'dropdown',
@@ -2070,9 +2066,9 @@ export function getActions(instance: VMixInstance): VMixActions {
           default: '0',
         },
       ],
-      callback: (action) => {
-        const input = instance.parseOption(action.options.input)[instance.buttonShift.state]
-        const index = instance.parseOption(action.options.selectedIndex)[instance.buttonShift.state]
+      callback: async (action) => {
+        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+        const index = (await instance.parseOption(action.options.selectedIndex))[instance.buttonShift.state]
 
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10))
@@ -2087,7 +2083,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     setCountdown: {
-      label: 'Title - Set Countdown Duration',
+      name: 'Title - Set Countdown Duration',
       options: [
         {
           type: 'textinput',
@@ -2104,9 +2100,9 @@ export function getActions(instance: VMixInstance): VMixActions {
           default: '0',
         },
       ],
-      callback: (action) => {
-        const input = instance.parseOption(action.options.input)[instance.buttonShift.state]
-        const index = instance.parseOption(action.options.selectedIndex)[instance.buttonShift.state]
+      callback: async (action) => {
+        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+        const index = (await instance.parseOption(action.options.selectedIndex))[instance.buttonShift.state]
 
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10))
@@ -2121,7 +2117,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     changeCountdown: {
-      label: 'Title - Change Countdown Time',
+      name: 'Title - Change Countdown Time',
       options: [
         {
           type: 'textinput',
@@ -2138,9 +2134,9 @@ export function getActions(instance: VMixInstance): VMixActions {
           default: '0',
         },
       ],
-      callback: (action) => {
-        const input = instance.parseOption(action.options.input)[instance.buttonShift.state]
-        const index = instance.parseOption(action.options.selectedIndex)[instance.buttonShift.state]
+      callback: async (action) => {
+        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+        const index = (await instance.parseOption(action.options.selectedIndex))[instance.buttonShift.state]
 
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10))
@@ -2155,7 +2151,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     adjustCountdown: {
-      label: 'Title - Add / Subtract seconds on Countdown',
+      name: 'Title - Add / Subtract seconds on Countdown',
       options: [
         {
           type: 'textinput',
@@ -2171,10 +2167,10 @@ export function getActions(instance: VMixInstance): VMixActions {
           default: '0',
         },
       ],
-      callback: (action) => {
-        const input = instance.parseOption(action.options.input)[instance.buttonShift.state]
-        const index = instance.parseOption(action.options.selectedIndex)[instance.buttonShift.state]
-        const value = instance.parseOption(action.options.value)[instance.buttonShift.state]
+      callback: async (action) => {
+        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+        const index = (await instance.parseOption(action.options.selectedIndex))[instance.buttonShift.state]
+        const value = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
 
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10))
@@ -2194,7 +2190,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     setText: {
-      label: 'Title - Adjust title text',
+      name: 'Title - Adjust title text',
       options: [
         options.input,
         {
@@ -2217,10 +2213,10 @@ export function getActions(instance: VMixInstance): VMixActions {
           default: '',
         },
       ],
-      callback: (action) => {
-        const input = instance.parseOption(action.options.input)[instance.buttonShift.state]
-        const index = instance.parseOption(action.options.selectedIndex)[instance.buttonShift.state]
-        let text = instance.parseOption(action.options.value)[instance.buttonShift.state]
+      callback: async (action) => {
+        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+        const index = (await instance.parseOption(action.options.selectedIndex))[instance.buttonShift.state]
+        let text = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
 
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10))
@@ -2255,7 +2251,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     setColor: {
-      label: 'Title - Adjust title shape color',
+      name: 'Title - Adjust title shape color',
       description: 'Requires vMix v25. only works on solid colors',
       options: [
         options.input,
@@ -2272,10 +2268,10 @@ export function getActions(instance: VMixInstance): VMixActions {
           default: '',
         },
       ],
-      callback: (action) => {
-        const input = instance.parseOption(action.options.input)[instance.buttonShift.state]
-        const index = instance.parseOption(action.options.selectedIndex)[instance.buttonShift.state]
-        let value = instance.parseOption(action.options.value)[instance.buttonShift.state]
+      callback: async (action) => {
+        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+        const index = (await instance.parseOption(action.options.selectedIndex))[instance.buttonShift.state]
+        let value = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
 
         if (!value.includes('#')) value = '#' + value
 
@@ -2292,7 +2288,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     selectTitlePreset: {
-      label: 'Title - Select Title Preset',
+      name: 'Title - Select Title Preset',
       options: [
         options.input,
         {
@@ -2306,7 +2302,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     titlePreset: {
-      label: 'Title - Next / Prev Title Preset',
+      name: 'Title - Next / Prev Title Preset',
       options: [
         options.input,
         {
@@ -2324,7 +2320,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     titleBeginAnimation: {
-      label: 'Title - Begin Animation Page',
+      name: 'Title - Begin Animation Page',
       options: [
         options.input,
         {
@@ -2356,7 +2352,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     // Data Source
     dataSourceAutoNext: {
-      label: 'DataSource - AutoNext',
+      name: 'DataSource - AutoNext',
       options: [
         {
           type: 'dropdown',
@@ -2380,7 +2376,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     dataSourceNextRow: {
-      label: 'DataSource - Next Row',
+      name: 'DataSource - Next Row',
       options: [
         {
           type: 'textinput',
@@ -2393,7 +2389,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     dataSourcePreviousRow: {
-      label: 'DataSource - Previous Row',
+      name: 'DataSource - Previous Row',
       options: [
         {
           type: 'textinput',
@@ -2406,7 +2402,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     dataSourceSelectRow: {
-      label: 'DataSource - Select Row',
+      name: 'DataSource - Select Row',
       options: [
         {
           type: 'textinput',
@@ -2420,19 +2416,19 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     // Slide / List Set
     nextPicture: {
-      label: 'Lists - Next Picture/Slide/Index',
+      name: 'Lists - Next Picture/Slide/Index',
       options: [options.input],
       callback: sendBasicCommand,
     },
 
     previousPicture: {
-      label: 'Lists - Previous Picture/Slide/Index',
+      name: 'Lists - Previous Picture/Slide/Index',
       options: [options.input],
       callback: sendBasicCommand,
     },
 
     selectIndex: {
-      label: 'Lists - Select Specific Picture/Slide/Index',
+      name: 'Lists - Select Specific Picture/Slide/Index',
       options: [
         options.input,
         {
@@ -2447,7 +2443,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     // Media
     videoActions: {
-      label: 'Media - Playback Actions',
+      name: 'Media - Playback Actions',
       options: [
         options.input,
         {
@@ -2471,8 +2467,8 @@ export function getActions(instance: VMixInstance): VMixActions {
           ],
         },
       ],
-      callback: (action) => {
-        const input = instance.parseOption(action.options.input)[instance.buttonShift.state]
+      callback: async (action) => {
+        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
 
         if (instance.tcp)
           instance.tcp.sendCommand(
@@ -2482,7 +2478,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     videoPlayhead: {
-      label: 'Media - Adjust or Set Playhead',
+      name: 'Media - Adjust or Set Playhead',
       options: [
         options.input,
         {
@@ -2507,8 +2503,8 @@ export function getActions(instance: VMixInstance): VMixActions {
           max: Number.MAX_SAFE_INTEGER,
         },
       ],
-      callback: (action) => {
-        const input = instance.parseOption(action.options.input)[instance.buttonShift.state]
+      callback: async (action) => {
+        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
         let text = action.options.value.toString()
 
         // URL Encode plus and equals symbols to perform addition/subtraction on value instead of setting to a value.
@@ -2526,7 +2522,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     videoMark: {
-      label: 'Media - Mark Functions',
+      name: 'Media - Mark Functions',
       options: [
         options.input,
         {
@@ -2549,8 +2545,8 @@ export function getActions(instance: VMixInstance): VMixActions {
           ],
         },
       ],
-      callback: (action) => {
-        const input = instance.parseOption(action.options.input)[instance.buttonShift.state]
+      callback: async (action) => {
+        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
 
         if (instance.tcp)
           instance.tcp.sendCommand(
@@ -2561,7 +2557,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     // Replay
     replayACamera: {
-      label: 'Replay - A Camera',
+      name: 'Replay - A Camera',
       options: [
         {
           type: 'dropdown',
@@ -2575,7 +2571,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     replayBCamera: {
-      label: 'Replay - B Camera',
+      name: 'Replay - B Camera',
       options: [
         {
           type: 'dropdown',
@@ -2589,7 +2585,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     replayCamera: {
-      label: 'Replay - Selected Channel Camera',
+      name: 'Replay - Selected Channel Camera',
       options: [
         {
           type: 'dropdown',
@@ -2603,7 +2599,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     replaySelectChannel: {
-      label: 'Replay - Select Channel',
+      name: 'Replay - Select Channel',
       options: [
         {
           type: 'dropdown',
@@ -2620,13 +2616,13 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     replaySwapChannels: {
-      label: 'Replay - Swap A and B channels',
+      name: 'Replay - Swap A and B channels',
       options: [],
       callback: sendBasicCommand,
     },
 
     replayMark: {
-      label: 'Replay - Mark Functions',
+      name: 'Replay - Mark Functions',
       options: [
         {
           type: 'dropdown',
@@ -2658,7 +2654,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     replayMoveInOut: {
-      label: 'Replay - Move Selected Event In/Out',
+      name: 'Replay - Move Selected Event In/Out',
       options: [
         {
           type: 'dropdown',
@@ -2683,7 +2679,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     replayUpdateInOut: {
-      label: 'Replay - Move Selected Event In/Out to Now',
+      name: 'Replay - Move Selected Event In/Out to Now',
       options: [
         {
           type: 'dropdown',
@@ -2700,7 +2696,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     replaySelectEvents: {
-      label: 'Replay - Replay Select Events',
+      name: 'Replay - Replay Select Events',
       options: [
         {
           type: 'dropdown',
@@ -2718,13 +2714,13 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     replayChangeDirection: {
-      label: 'Replay - Change Direction',
+      name: 'Replay - Change Direction',
       options: [options.replayChannel],
       callback: sendBasicCommand,
     },
 
     replayChangeSpeed: {
-      label: 'Replay - Change Speed',
+      name: 'Replay - Change Speed',
       options: [
         options.replayChannel,
         {
@@ -2741,7 +2737,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     replayMoveEvent: {
-      label: 'Replay - Move event',
+      name: 'Replay - Move event',
       options: [
         {
           type: 'dropdown',
@@ -2768,7 +2764,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     replayMoveEventUpDown: {
-      label: 'Replay - Move Selected Event Up/Down',
+      name: 'Replay - Move Selected Event Up/Down',
       options: [
         {
           type: 'dropdown',
@@ -2785,7 +2781,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     replayFastForwardBackward: {
-      label: 'Replay - Fast Forward/Backward',
+      name: 'Replay - Fast Forward/Backward',
       options: [
         {
           type: 'dropdown',
@@ -2811,7 +2807,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     replayJumpFrames: {
-      label: 'Replay - Jump Frames',
+      name: 'Replay - Jump Frames',
       options: [
         options.replayChannel,
         {
@@ -2827,7 +2823,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     replayRecording: {
-      label: 'Replay - Recording Start/Stop/Toggle',
+      name: 'Replay - Recording Start/Stop/Toggle',
       options: [
         {
           type: 'dropdown',
@@ -2845,31 +2841,31 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     replayJumpToNow: {
-      label: 'Replay - Jump To Now',
+      name: 'Replay - Jump To Now',
       options: [options.replayChannel],
       callback: sendBasicCommand,
     },
 
     replayLiveToggle: {
-      label: 'Replay - Toggle Live',
+      name: 'Replay - Toggle Live',
       options: [],
       callback: sendBasicCommand,
     },
 
     replayPlay: {
-      label: 'Replay - Play',
+      name: 'Replay - Play',
       options: [options.replayChannel],
       callback: sendBasicCommand,
     },
 
     replayPause: {
-      label: 'Replay - Pause',
+      name: 'Replay - Pause',
       options: [options.replayChannel],
       callback: sendBasicCommand,
     },
 
     replayPlayEvent: {
-      label: 'Replay - Play Event',
+      name: 'Replay - Play Event',
       options: [
         options.replayChannel,
         {
@@ -2885,13 +2881,13 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     replayPlaySelectedEventToOutput: {
-      label: 'Replay - Play Selected Event To Output',
+      name: 'Replay - Play Selected Event To Output',
       options: [options.replayChannel],
       callback: sendBasicCommand,
     },
 
     replayPlayEventsByIDToOutput: {
-      label: 'Replay - Play Events By ID To Output',
+      name: 'Replay - Play Events By ID To Output',
       options: [
         options.replayChannel,
         {
@@ -2907,7 +2903,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     replayToggleCamera: {
-      label: 'Replay - Toggle Selected Event Camera',
+      name: 'Replay - Toggle Selected Event Camera',
       options: [
         {
           type: 'dropdown',
@@ -2924,7 +2920,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     // Browser
     browser: {
-      label: 'Browser - Functions',
+      name: 'Browser - Functions',
       options: [
         options.input,
         {
@@ -2947,7 +2943,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     browserNavigate: {
-      label: 'Browser - Navigate',
+      name: 'Browser - Navigate',
       options: [
         options.input,
         {
@@ -2967,7 +2963,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     // General
     keyPress: {
-      label: 'General - KeyPress',
+      name: 'General - KeyPress',
       options: [
         {
           type: 'textinput',
@@ -2980,7 +2976,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     tbar: {
-      label: 'General - Set t-bar position',
+      name: 'General - Set t-bar position',
       options: [
         {
           type: 'number',
@@ -2995,7 +2991,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     dynamic: {
-      label: 'General - Set Dynamic Inputs and Values',
+      name: 'General - Set Dynamic Inputs and Values',
       options: [
         {
           type: 'dropdown',
@@ -3026,8 +3022,8 @@ export function getActions(instance: VMixInstance): VMixActions {
           default: '',
         },
       ],
-      callback: (action) => {
-        const value = instance.parseOption(action.options.value)[instance.buttonShift.state]
+      callback: async (action) => {
+        const value = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
         if (instance.tcp)
           instance.tcp.sendCommand(`FUNCTION SetDynamic${action.options.type}${action.options.number} Value=${value}`)
       },
@@ -3035,7 +3031,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     // Scripting
     scriptStart: {
-      label: 'Scripting - Script start',
+      name: 'Scripting - Script start',
       options: [
         {
           type: 'textinput',
@@ -3048,7 +3044,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     scriptStop: {
-      label: 'Scripting - Script stop',
+      name: 'Scripting - Script stop',
       options: [
         {
           type: 'textinput',
@@ -3061,13 +3057,13 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     scriptStopAll: {
-      label: 'Scripting - Script stop all',
+      name: 'Scripting - Script stop all',
       options: [],
       callback: sendBasicCommand,
     },
 
     command: {
-      label: 'Scripting - Run custom command',
+      name: 'Scripting - Run custom command',
       options: [
         {
           type: 'textinput',
@@ -3082,8 +3078,8 @@ export function getActions(instance: VMixInstance): VMixActions {
           default: false,
         },
       ],
-      callback: (action) => {
-        const commandString = instance.parseOption(action.options.command)[instance.buttonShift.state]
+      callback: async (action) => {
+        const commandString = (await instance.parseOption(action.options.command))[instance.buttonShift.state]
         const command = commandString.split(' ')[0]
         const params = commandString.split(' ').slice(1, commandString.split(' ').length).join(' ')
         if (instance.tcp)
@@ -3093,7 +3089,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     // Util
     mixSelect: {
-      label: 'Util - Select Mix',
+      name: 'Util - Select Mix',
       description: '',
       options: [
         {
@@ -3128,7 +3124,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     buttonShift: {
-      label: 'Util - Toggle Shift',
+      name: 'Util - Toggle Shift',
       description: '',
       options: [],
       callback: () => {
@@ -3154,7 +3150,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     dataSourceTimer: {
-      label: 'Util - DataSource Timer State',
+      name: 'Util - DataSource Timer State',
       description: '',
       options: [
         {
@@ -3191,7 +3187,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     dataSourceTimerSet: {
-      label: 'Util - DataSource Timer Set Time',
+      name: 'Util - DataSource Timer Set Time',
       description: '',
       options: [
         {
@@ -3216,7 +3212,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     dataSourceTimerCreateTime: {
-      label: 'Util - DataSource Timer Create Laptime',
+      name: 'Util - DataSource Timer Create Laptime',
       description: '',
       options: [
         {
@@ -3243,7 +3239,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     dataSourceTimerUpdateTime: {
-      label: 'Util - DataSource Timer Update Time',
+      name: 'Util - DataSource Timer Update Time',
       description: '',
       options: [
         {

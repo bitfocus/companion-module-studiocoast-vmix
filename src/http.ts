@@ -1,4 +1,4 @@
-import { CompanionInstanceHTTPRequest, CompanionInstanceHTTPResponse } from '../../../instance_skel_types'
+import { CompanionHTTPRequest, CompanionHTTPResponse } from '@companion-module/base'
 import VMixInstance from './index'
 import { VMixData, Input } from './data'
 import { formatTime } from './utils'
@@ -31,7 +31,7 @@ interface Endpoints {
  * @returns HTTP Request
  * @description Creates a basic HTTP request to be used internally to call the HTTP handler functions
  */
-export const defaultHTTPRequest = (): CompanionInstanceHTTPRequest => {
+export const defaultHTTPRequest = (): CompanionHTTPRequest => {
   return { method: 'GET', path: '', headers: {}, baseUrl: '', hostname: '', ip: '', originalUrl: '', query: {} }
 }
 
@@ -64,9 +64,9 @@ const parseInput = (input: Input): DataSourceInput => {
  */
 export const httpHandler = async (
   instance: VMixInstance,
-  request: CompanionInstanceHTTPRequest
-): Promise<CompanionInstanceHTTPResponse> => {
-  const response: CompanionInstanceHTTPResponse = {
+  request: CompanionHTTPRequest
+): Promise<CompanionHTTPResponse> => {
+  const response: CompanionHTTPResponse = {
     status: 404,
     headers: {
       'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ export const httpHandler = async (
   }
 
   // Returns all inputs data, structured for a vMix Data Source
-  const getInputs = () => {
+  const getInputs = async () => {
     if (request.query.key || request.query.id || request.query.number || request.query.title) {
       const selectedInput = instance.data.inputs.find((input) => {
         const keyCheck = input.key === request.query.key || input.key === request.query.id
@@ -122,7 +122,7 @@ export const httpHandler = async (
 
         for (let i = 0; i < 10; i++) {
           const findLayer = selectedInput.overlay?.find((layer) => layer.index === i)
-          const layerInput = findLayer ? instance.data.getInput(findLayer.key) : null
+          const layerInput = findLayer ? await instance.data.getInput(findLayer.key) : null
 
           if (layerInput !== null) {
             const parsedInput = parseInput(layerInput)
@@ -145,8 +145,8 @@ export const httpHandler = async (
           }
         }
 
-        selectedInput.overlay?.forEach((layer) => {
-          const layerInput = instance.data.getInput(layer.key)
+        for (const layer of selectedInput?.overlay || []) {
+          const layerInput = await instance.data.getInput(layer.key)
 
           if (layerInput) {
             const parsedInput = parseInput(layerInput)
@@ -155,7 +155,7 @@ export const httpHandler = async (
               data[0][`layer_${layer.index + 1}_${key}`] = value
             })
           }
-        })
+        }
 
         response.status = 200
         response.body = JSON.stringify(data, null, 2)
@@ -203,6 +203,27 @@ export const httpHandler = async (
     response.body = JSON.stringify(request.query.flat ? flatData : data, null, 2)
   }
 
+  const postActions = () => {
+    try {
+      const body = JSON.parse(request.body || '')
+
+      body.forEach((action: string) => {
+        if (instance.tcp) {
+          instance.log('info', `sending command: FUNCTION ${action}`)
+          instance.tcp.sendCommand(`FUNCTION ${action}`)
+        }
+      })
+
+      response.status = 200
+      response.body = JSON.stringify({ status: 200, message: `sent: ${request.body}` })
+    } catch (err) {
+      response.status = 500
+      response.body = JSON.stringify({ status: 500, message: `err: ${err}` })
+
+      console.warn(err)
+    }
+  }
+
   const endpoints: Endpoints = {
     GET: {
       data: getData,
@@ -210,6 +231,9 @@ export const httpHandler = async (
       inputs: getInputs,
       transitions: getTransitions,
       timers: getTimers,
+    },
+    POST: {
+      actions: postActions,
     },
   }
 

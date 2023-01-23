@@ -1,4 +1,5 @@
-import { CompanionStaticUpgradeScript } from '../../../instance_skel_types'
+import { combineRgb, CompanionStaticUpgradeScript } from '@companion-module/base'
+import { Config } from './config'
 import { getActions } from './actions'
 import { getConfigFields } from './config'
 
@@ -20,22 +21,22 @@ const stringToInt = (option: unknown, defaultValue: number, min: number, max: nu
 }
 
 /* eslint-disable */
-const upgradeV1_2_0: CompanionStaticUpgradeScript = (_context, config, actions, feedbacks) => {
-  let changed = false
+const upgradeV1_2_0: CompanionStaticUpgradeScript<Config> = (_context, props) => {
+  let config: any = props.config
+  let actions: any = props.actions
+  let feedbacks: any = props.feedbacks
 
   if (config.port) {
-    changed = true
     config.tcpPort = config.port
     delete config.port
   }
 
   if (!config.httpPort) {
-    changed = true
     config.httpPort = 8088
   }
 
   // Actions
-  actions = actions.map(action => {
+  actions = actions.map((action: any) => {
     if (action.action === 'prwSel') {
       action.action = 'PreviewInput'
       action.options.input = action.options.prwId
@@ -132,7 +133,7 @@ const upgradeV1_2_0: CompanionStaticUpgradeScript = (_context, config, actions, 
   })
 
   // Feedbacks
-  feedbacks = feedbacks.map(feedback => {
+  feedbacks = feedbacks.map((feedback: any) => {
     if (feedback.type === 'input_preview') {
       feedback.type = 'inputPreview'
       feedback.options.mix = 1
@@ -144,18 +145,26 @@ const upgradeV1_2_0: CompanionStaticUpgradeScript = (_context, config, actions, 
     return feedback
   })
 
-  return changed
+  return {
+    updatedConfig: config,
+    updatedActions: actions,
+    updatedFeedbacks: feedbacks
+  }
 }
 
 /* eslint-disable */
-const upgradeV2_0_0: CompanionStaticUpgradeScript = (context, config, actions, feedbacks) => {
+const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props) => {
+  let config: any = props.config
+  let actions: any = props.actions
+  let feedbacks: any = props.feedbacks
+
   // actions, feedbacks, and config used to ensure default values for options
   const vMixActions: any = getActions({} as any)
   const vMixConfig = getConfigFields()
 
   // Config
-  vMixConfig.forEach(configOption => {
-    if (config[configOption.id] === undefined && configOption.type !== 'text')
+  vMixConfig.forEach((configOption: any) => {
+    if (config[configOption.id] === undefined && configOption.default)
       config[configOption.id] = configOption.default
   })
 
@@ -165,7 +174,7 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript = (context, config, actions, f
   }
 
   // Actions
-  actions.map(action => {
+  actions.map((action: any) => {
     // Renaming legacy action names
     const toLowerCamelCase: string[] = [
       'PreviewInput',
@@ -325,7 +334,7 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript = (context, config, actions, f
 
   // Feedbacks
   feedbacks = feedbacks
-    .map(feedback => {
+    .map((feedback: any) => {
       if (feedback.type === 'inputPreview' || feedback.type === 'inputLive') {
         if (feedback.options.tally === 'corner') feedback.options.tally = 'cornerTL'
         if (feedback.options.tally === 'cornerR') feedback.options.tally = 'cornerTR'
@@ -336,12 +345,12 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript = (context, config, actions, f
         delete feedback.options.value
       } else if (feedback.type === 'inputAudio') {
         feedback.options.bgLive = feedback.options.bg
-        feedback.options.bgMuted = context.rgb(255, 0, 0)
+        feedback.options.bgMuted = combineRgb(255, 0, 0)
 
         delete feedback.options.bg
       } else if (feedback.type === 'inputMute') {
         feedback.type = 'inputAudio'
-        feedback.options.bgLive = context.rgb(0, 255, 0)
+        feedback.options.bgLive = combineRgb(0, 255, 0)
         feedback.options.bgMuted = feedback.options.bg
 
         delete feedback.options.bg
@@ -369,36 +378,47 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript = (context, config, actions, f
 
       return feedback
     })
-    .filter(feedback => {
+    .filter((feedback: any) => {
       // Feedback that should have just been instance variables have been deprecated
       const deprecated: string[] = ['titleLayer', 'inputSelectedIndexName', 'multiviewLayer']
 
       return !deprecated.includes(feedback.type)
     })
 
-  return true
+  return {
+    updatedConfig: config,
+    updatedActions: actions,
+    updatedFeedbacks: feedbacks
+  }
 }
 
 /* eslint-disable */
-const upgradeV2_0_6: CompanionStaticUpgradeScript = (_context, _config, actions, feedbacks) => {
+const upgradeV2_0_6: CompanionStaticUpgradeScript<Config> = (_context, props) => {
+  let config: any = props.config
+  let actions: any = props.actions
+  let feedbacks: any = props.feedbacks
 
-  actions.forEach(action => {
+  actions.forEach((action: any) => {
     if (action.action === 'SetMultiViewOverlayDestinationLayer' || action.action === 'setMultiViewOverlayDestinationLayer') {
       action.action = 'setMultiViewOverlayDestinationLayer'
       action.options.destinationLayer = action.options.destinationLayer + ''
     }
   })
 
-  feedbacks.forEach(feedback => {
+  feedbacks.forEach((feedback: any)=> {
     if (feedback.type === 'selectedDestinationLayer' || feedback.type === 'SelectedDestinationLayer') {
       feedback.type = 'selectedDestinationLayer'
       feedback.options.selectedIndex = feedback.options.selectedIndex + ''
     }
   })
 
-  return true
+  return {
+    updatedConfig: config,
+    updatedActions: actions,
+    updatedFeedbacks: feedbacks
+  }
 }
 
-export const getUpgrades = (): CompanionStaticUpgradeScript[] => {
+export const getUpgrades = (): CompanionStaticUpgradeScript<Config>[] => {
   return [upgradeV1_2_0, upgradeV2_0_0, upgradeV2_0_6]
 }

@@ -1,13 +1,10 @@
-import tcp from '../../../tcp'
+import { InstanceStatus, TCPHelper as tcp } from '@companion-module/base'
 import VMixInstance from './'
 
 interface MessageBuffer {
   dataLength: number
   message: Buffer
 }
-
-// OK, Warning, Error, Unknown
-type TCPStatus = 0 | 1 | 2 | null
 
 interface TCPSockets {
   activator: tcp | null
@@ -77,19 +74,27 @@ export class TCP {
     // The functions socket is primary and controls the module status and startup of activator and xml sockets
     this.sockets.functions = new tcp(this.tcpHost, this.tcpPort)
 
-    this.sockets.functions.on('status_change', (status: TCPStatus, message: string) => {
-      let state: 0 | 1 | 2 | null = this.instance.STATUS_UNKNOWN
-      if (status === 0) state = this.instance.STATUS_OK
-      if (status === 1) state = this.instance.STATUS_WARNING
-      if (status === 2) state = this.instance.STATUS_ERROR
+    this.sockets.functions.on('status_change', (status, message) => {
+      if (message) this.instance.log('debug', message)
 
-      this.instance.status(state, message)
-      this.instance.connected = status === 0
-      this.instance.variables?.updateVariables()
+      if (status === 'ok') {
+        this.instance.connected = true
+        this.instance.updateStatus(InstanceStatus.Ok)
+        this.instance.variables?.updateVariables()
+      } else if (status === 'connecting') {
+        this.instance.connected = false
+        this.instance.updateStatus(InstanceStatus.Connecting)
+      } else if (status === 'disconnected') {
+        this.instance.connected = false
+        this.instance.updateStatus(InstanceStatus.Disconnected)
+      } else if (status === 'unknown_error') {
+        this.instance.connected = false
+        this.instance.updateStatus(InstanceStatus.UnknownError)
+      }
     })
 
     this.sockets.functions.on('error', (err: Error) => {
-      this.instance.status(this.instance.STATUS_ERROR, err.message)
+      this.instance.updateStatus(InstanceStatus.UnknownError)
       this.instance.log(
         this.instance.config.connectionErrorLog ? 'error' : 'debug',
         'Function Socket err: ' + err.message
@@ -97,7 +102,6 @@ export class TCP {
     })
 
     this.sockets.functions.on('connect', () => {
-      this.instance.status(0)
       this.instance.log('debug', 'Connected Function Socket')
 
       if (this.sockets.activator) {
@@ -131,8 +135,9 @@ export class TCP {
 
     this.sockets.activator?.on('connect', () => {
       this.instance.log('debug', 'Connected Activator Socket')
-      this.sockets.activator?.write('SUBSCRIBE ACTS\r\n', (err) => {
-        if (err) this.instance.log('debug', err.message)
+
+      this.sockets.activator?.send('SUBSCRIBE ACTS\r\n').catch((err) => {
+        this.instance.log('debug', err.message)
       })
     })
 
@@ -165,8 +170,8 @@ export class TCP {
       'ACTS BusGSolo',
     ]
 
-    this.sockets.activator?.write(initialRequests.join('\r\n'), (err) => {
-      if (err) this.instance.log('debug', err.message)
+    this.sockets.activator?.send(initialRequests.join('\r\n')).catch((err) => {
+      this.instance.log('debug', err.message)
     })
   }
 
@@ -222,6 +227,7 @@ export class TCP {
 
             if (dataStart !== -1 && dataStop !== -1) {
               const data = this.messageBuffer.message.toString().slice(dataStart, dataStop + 7)
+
               this.instance.log(
                 'debug',
                 `Message prefix issue - Message length: ${this.messageBuffer.message.length}, Buffer length: ${
@@ -248,16 +254,15 @@ export class TCP {
 
     // Check if API Polling is disabled
     if (this.instance.config.apiPollInterval != 0) {
-      this.sockets.xml?.write('XML\r\n', (err) => {
-        if (err) this.instance.log('debug', err.message)
+      this.sockets.xml?.send('XML\r\n').catch((err) => {
+        this.instance.log('debug', err.message)
       })
 
       this.pollAPI = setInterval(
         () => {
-          // @ts-expect-error Types doesn't include 'connected' property
-          if (this.sockets.xml?.connected)
-            this.sockets.xml?.write('XML\r\n', (err) => {
-              if (err) this.instance.log('debug', err.message)
+          if (this.sockets.xml?.isConnected)
+            this.sockets.xml?.send('XML\r\n').catch((err) => {
+              this.instance.log('debug', err.message)
             })
         },
         this.instance.config.apiPollInterval < 100 ? 100 : this.instance.config.apiPollInterval
@@ -270,14 +275,14 @@ export class TCP {
    * @description Check TCP connection status and format command to send to vMix
    */
   public readonly sendCommand = (command: string): void => {
-    // @ts-expect-error Types doesn't include 'connected' property
-    if (this.sockets.functions && this.sockets.functions.connected) {
+    if (this.sockets.functions && this.sockets.functions.isConnected) {
       const message = `${command}\r\n`
 
-      this.sockets.functions.write(message, (err) => {
+      this.instance.log('debug', `Sending command: ${message}`)
+
+      this.sockets.functions.send(message).catch((err) => {
         if (err) this.instance.log('debug', err.message)
       })
-      this.instance.log('debug', `Sending command: ${message}`)
     }
   }
 
