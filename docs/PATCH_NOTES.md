@@ -1,5 +1,9 @@
 # Patch Notes
 
+**V2.1.3**
+- Added HTTP POST endpoint to send actions to a vMix instance
+- Minor fixes for v26 support
+
 **V2.1.2**
 - Added v26 support for 15 Mixes
 - Fixed selected mix on setMultiviewOverlay
