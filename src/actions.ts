@@ -1194,12 +1194,12 @@ export function getActions(instance: VMixInstance): VMixActions {
       }
     }
 
-    parsedParams
+    const encodedParams = parsedParams
       .map(parseSelectedOptions)
       .map((param) => `${param[0]}=${encodeURIComponent(param[1])}`)
       .join('&')
 
-    if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${functionName} ${params}`)
+    if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${functionName} ${encodedParams}`)
   }
 
   return {
