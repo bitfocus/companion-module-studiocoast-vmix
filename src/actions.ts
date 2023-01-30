@@ -1236,7 +1236,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           },
         }
 
-        if (programCut.options.mix !== 0) programCut.options.functionID = 'Cut'
+        if (programCut.options.mix !== 0) programCut.options.functionID = 'ActiveInput'
         sendBasicCommand(programCut)
       },
     },
