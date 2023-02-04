@@ -621,7 +621,7 @@ export class Variables {
 
       if (volume !== undefined) {
         volumedB = volumeTodB(volume).toFixed(1)
-        volumeLinear = volumeToLinear(volume)
+        volumeLinear = Math.round(volumeToLinear(volume))
       } else {
         volume = ''
         volumedB = ''
@@ -911,7 +911,7 @@ export class Variables {
       if (input.volume !== undefined) {
         volume = input.volume.toFixed(2)
         volumedB = volumeTodB(input.volume).toFixed(1)
-        volumeLinear = volumeToLinear(input.volume)
+        volumeLinear = Math.round(volumeToLinear(input.volume))
       } else {
         volume = ''
         volumedB = ''
