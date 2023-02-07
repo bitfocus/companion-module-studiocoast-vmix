@@ -2090,7 +2090,6 @@ export function getActions(instance: VMixInstance): VMixActions {
           label: 'Time (00:00:00)',
           id: 'value',
           default: '00:10:00',
-          regex: '/^[0-9][0-9]:[0-9][0-9]:[0-9][0-9]$/',
         },
         options.input,
         {
@@ -2103,6 +2102,7 @@ export function getActions(instance: VMixInstance): VMixActions {
       callback: async (action) => {
         const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
         const index = (await instance.parseOption(action.options.selectedIndex))[instance.buttonShift.state]
+        const value = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
 
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10))
@@ -2111,7 +2111,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           instance.tcp.sendCommand(
             `FUNCTION SetCountdown Input=${encodeURIComponent(input)}&${
               indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
-            }=${encodeURIComponent(index)}&value=${action.options.value}`
+            }=${encodeURIComponent(index)}&value=${value}`
           )
       },
     },
@@ -2123,8 +2123,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           type: 'textinput',
           label: 'Time (00:00:00)',
           id: 'value',
-          default: '00:10:00',
-          regex: '/^[0-9][0-9]:[0-9][0-9]:[0-9][0-9]$/',
+          default: '00:10:00'
         },
         options.input,
         {
@@ -2137,6 +2136,7 @@ export function getActions(instance: VMixInstance): VMixActions {
       callback: async (action) => {
         const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
         const index = (await instance.parseOption(action.options.selectedIndex))[instance.buttonShift.state]
+        const value = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
 
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10))
@@ -2145,7 +2145,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           instance.tcp.sendCommand(
             `FUNCTION ChangeCountdown Input=${encodeURIComponent(input)}&${
               indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
-            }=${encodeURIComponent(index)}&value=${action.options.value}`
+            }=${encodeURIComponent(index)}&value=${value}`
           )
       },
     },
