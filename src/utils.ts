@@ -114,7 +114,7 @@ export const options: Options = {
     label: 'Bus',
     id: 'value',
     default: 'A',
-    choices: AUDIOBUSSES.map((id) => ({ id, label: id })),
+    choices: [...AUDIOBUSSES, 'Selected'].map((id) => ({ id, label: id })),
   },
 
   audioBusMaster: {
@@ -122,7 +122,7 @@ export const options: Options = {
     label: 'Bus',
     id: 'value',
     default: 'Master',
-    choices: ['Master', ...AUDIOBUSSES].map((id) => ({ id, label: id })),
+    choices: ['Master', ...AUDIOBUSSES, 'Selected'].map((id) => ({ id, label: id })),
   },
 
   foregroundColor: {

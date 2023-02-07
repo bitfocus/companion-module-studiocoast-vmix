@@ -135,6 +135,14 @@ export class Variables {
       { name: 'Bus G MeterFz', variableId: 'bus_g_meterf2' },
       { name: 'Bus G Mute', variableId: 'bus_g_mute' },
       { name: 'Bus G Solo', variableId: 'bus_g_solo' },
+      { name: 'Bus Selected', variableId: 'bus_selected' },
+      { name: 'Bus Selected Volume', variableId: 'bus_selected_volume' },
+      { name: 'Bus Selected dB', variableId: 'bus_selected_volume_db' },
+      { name: 'Bus Selected Volume Linear', variableId: 'bus_selected_volume_linear' },
+      { name: 'Bus Selected MeterF1', variableId: 'bus_selected_meterf1' },
+      { name: 'Bus Selected MeterFz', variableId: 'bus_selected_meterf2' },
+      { name: 'Bus Selected Mute', variableId: 'bus_selected_mute' },
+      { name: 'Bus Selected Solo', variableId: 'bus_selected_solo' },
 
       // Overlay
       { name: 'Overlay 1 Input Short Title', variableId: 'overlay_1_input_name' },
@@ -642,6 +650,18 @@ export class Variables {
         newVariables[`bus_${id.toLowerCase()}_solo`] = audioBus?.solo ? 'true' : 'false'
       }
     })
+
+    const selectedBus = this.instance.data.getAudioBus(this.instance.routingData.bus)
+    if (selectedBus !== null) {
+      newVariables.bus_selected = this.instance.routingData.bus
+      newVariables.bus_selected_volume = selectedBus.volume.toFixed(2)
+      newVariables.bus_selected_volume_db = volumeTodB(selectedBus.volume).toFixed(1)
+      newVariables.bus_selected_volume_linear = Math.round(volumeToLinear(selectedBus.volume))
+      newVariables.bus_selected_meterf1 = selectedBus.meterF1.toFixed(1)
+      newVariables.bus_selected_meterf2 = selectedBus.meterF2.toFixed(1)
+      newVariables.bus_selected_mute = selectedBus.muted ? 'true' : 'false'
+      newVariables.bus_selected_solo = selectedBus.solo ? 'true' : 'false'
+    }
 
     // Overlay
     const getOverlayInput = async (id: number): Promise<Input | null> => {

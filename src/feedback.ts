@@ -1,6 +1,6 @@
 import { Input } from './data'
 import VMixInstance from './index'
-import { options, volumeToLinear } from './utils'
+import { AUDIOBUSSES, options, volumeToLinear } from './utils'
 import {
   combineRgb,
   CompanionAdvancedFeedbackResult,
@@ -53,6 +53,7 @@ export interface VMixFeedbacks {
 
   // Util
   mixSelect: VMixFeedback<MixSelectCallback>
+  busSelect: VMixFeedback<BusSelectCallback>
   buttonShift: VMixFeedback<ButtonShiftCallback>
   buttonText: VMixFeedback<ButtonTextCallback>
 
@@ -110,14 +111,14 @@ interface StatusCallback {
   feedbackId: 'status'
   options: Readonly<{
     status:
-      | 'connection'
-      | 'fadeToBlack'
-      | 'recording'
-      | 'external'
-      | 'streaming'
-      | 'multiCorder'
-      | 'fullscreen'
-      | 'playList'
+    | 'connection'
+    | 'fadeToBlack'
+    | 'recording'
+    | 'external'
+    | 'streaming'
+    | 'multiCorder'
+    | 'fullscreen'
+    | 'playList'
     fg: number
     bg: number
     value: '' | '0' | '1' | '2'
@@ -341,6 +342,15 @@ interface MixSelectCallback {
   feedbackId: 'mixSelect'
   options: Readonly<{
     mix: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14
+    fg: number
+    bg: number
+  }>
+}
+
+interface BusSelectCallback {
+  feedbackId: 'busSelect'
+  options: Readonly<{
+    bus: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
     fg: number
     bg: number
   }>
@@ -1597,6 +1607,30 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
 
         return {}
       },
+    },
+
+    busSelect: {
+      type: 'advanced',
+      name: 'Util - Bus Selected',
+      description: '',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Bus',
+          id: 'bus',
+          default: 'Master',
+          choices: [{ id: 'Master', label: 'Master' }, ...AUDIOBUSSES.map((id) => ({ id, label: id }))]
+        },
+        options.foregroundColor,
+        options.backgroundColorYellow
+      ],
+      callback: (feedback) => {
+        if (instance.routingData.bus === feedback.options.bus) {
+          return { color: feedback.options.fg, bgcolor: feedback.options.bg }
+        }
+
+        return {}
+      }
     },
 
     buttonShift: {

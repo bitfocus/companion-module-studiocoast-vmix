@@ -27,6 +27,7 @@ interface ButtonShift {
 
 interface RoutingData {
   audio: Record<string, unknown>
+  bus: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
   layer: {
     destinationInput: null | string
     destinationLayer: null | string
@@ -68,6 +69,7 @@ class VMixInstance extends InstanceBase<Config> {
   public pollAPI: NodeJS.Timer | null = null
   public routingData: RoutingData = {
     audio: {},
+    bus: 'Master',
     layer: {
       destinationInput: null,
       destinationLayer: null,
