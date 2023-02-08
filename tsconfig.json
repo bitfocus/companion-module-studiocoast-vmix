@@ -26,7 +26,7 @@
     "traceResolution": false,
     "pretty": true,
     "lib": ["es6", "es2019"],
-    "types": ["node"],
+    "types": ["node", "jest"],
     "typeRoots": ["./node_modules/@types", "./types"],
     "esModuleInterop": true
   },
