@@ -8,6 +8,8 @@ interface InstanceVariableValue {
   [key: string]: string | number | undefined
 }
 
+const mixId = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+
 export class Variables {
   private readonly instance: VMixInstance
   private currentDefinitions: Set<CompanionVariableDefinition> = new Set()
@@ -51,30 +53,6 @@ export class Variables {
       { name: 'Recording HH:MM:SS', variableId: 'recording_hms' },
 
       // Mix
-      { name: 'Mix 1 Program', variableId: 'mix_1_program' },
-      { name: 'Mix 1 Program Short Title', variableId: 'mix_1_program_name' },
-      { name: 'Mix 1 Program GUID', variableId: 'mix_1_program_guid' },
-      { name: 'Mix 1 Preview', variableId: 'mix_1_preview' },
-      { name: 'Mix 1 Preview Short Title', variableId: 'mix_1_preview_name' },
-      { name: 'Mix 1 Preview GUID', variableId: 'mix_1_preview_guid' },
-      { name: 'Mix 2 Program', variableId: 'mix_2_program' },
-      { name: 'Mix 2 Program Short Title', variableId: 'mix_2_program_name' },
-      { name: 'Mix 2 Program GUID', variableId: 'mix_2_program_guid' },
-      { name: 'Mix 2 Preview', variableId: 'mix_2_preview' },
-      { name: 'Mix 2 Preview Short Title', variableId: 'mix_2_preview_name' },
-      { name: 'Mix 2 Preview GUID', variableId: 'mix_2_preview_guid' },
-      { name: 'Mix 3 Program', variableId: 'mix_3_program' },
-      { name: 'Mix 3 Program Short Title', variableId: 'mix_3_program_name' },
-      { name: 'Mix 3 Program GUID', variableId: 'mix_3_program_guid' },
-      { name: 'Mix 3 Preview', variableId: 'mix_3_preview' },
-      { name: 'Mix 3 Preview Short Title', variableId: 'mix_3_preview_name' },
-      { name: 'Mix 3 Preview GUID', variableId: 'mix_3_preview_guid' },
-      { name: 'Mix 4 Program', variableId: 'mix_4_program' },
-      { name: 'Mix 4 Program Short Title', variableId: 'mix_4_program_name' },
-      { name: 'Mix 4 Program GUID', variableId: 'mix_4_program_guid' },
-      { name: 'Mix 4 Preview', variableId: 'mix_4_preview' },
-      { name: 'Mix 4 Preview Short Title', variableId: 'mix_4_preview_name' },
-      { name: 'Mix 4 Preview GUID', variableId: 'mix_4_preview_guid' },
       { name: 'Mix Selected', variableId: 'mix_selected' },
 
       // Audio
@@ -176,6 +154,41 @@ export class Variables {
       { name: 'Layer Routing Input', variableId: 'layer_routing_input' },
       { name: 'Layer Routing Layer', variableId: 'layer_routing_layer' },
     ])
+
+    // Mix
+    mixId.forEach(id => {
+      variables.add({ name: `Mix ${id + 1} Program`, variableId: `mix_${id + 1}_program` })
+      variables.add({ name: `Mix ${id + 1} Program Short Title`, variableId: `mix_${id + 1}_program_name` })
+      variables.add({ name: `Mix ${id + 1} Program GUID`, variableId: `mix_${id + 1}_program_guid` })
+      variables.add({ name: `Mix ${id + 1} Preview`, variableId: `mix_${id + 1}_preview` })
+      variables.add({ name: `Mix ${id + 1} Preview Short Title`, variableId: `mix_${id + 1}_preview_name` })
+      variables.add({ name: `Mix ${id + 1} Preview GUID`, variableId: `mix_${id + 1}_preview_guid` })
+
+      for (let i = 1; i < 11; i++) {
+        variables.add({ name: `Mix ${id + 1} Program Layer ${i} Number`, variableId: `mix_${id + 1}_program_layer_${i}_number` })
+        variables.add({ name: `Mix ${id + 1} Program Layer ${i} Name`, variableId: `mix_${id + 1}_program_layer_${i}_name` })
+        variables.add({ name: `Mix ${id + 1} Program Layer ${i} Key`, variableId: `mix_${id + 1}_program_layer_${i}_key` })
+        variables.add({ name: `Mix ${id + 1} Preview Layer ${i} Number`, variableId: `mix_${id + 1}_preview_layer_${i}_number` })
+        variables.add({ name: `Mix ${id + 1} Preview Layer ${i} Name`, variableId: `mix_${id + 1}_preview_layer_${i}_name` })
+        variables.add({ name: `Mix ${id + 1} Preview Layer ${i} Key`, variableId: `mix_${id + 1}_preview_layer_${i}_key` })
+      }
+    })
+
+    variables.add({ name: `Mix Selected Program`, variableId: `mix_selected_program` })
+    variables.add({ name: `Mix Selected Program Short Title`, variableId: `mix_selected_program_name` })
+    variables.add({ name: `Mix Selected Program GUID`, variableId: `mix_selected_program_guid` })
+    variables.add({ name: `Mix Selected Preview`, variableId: `mix_selected_pr` })
+    variables.add({ name: `Mix Selected Preview Short Title`, variableId: `mix_selected_preview_name` })
+    variables.add({ name: `Mix Selected Preview GUID`, variableId: `mix_selected_preview_guid` })
+
+    for (let i = 1; i < 11; i++) {
+      variables.add({ name: `Mix Selected Program Layer ${i} Number`, variableId: `mix_selected_program_layer_${i}_number` })
+      variables.add({ name: `Mix Selected Program Layer ${i} Name`, variableId: `mix_selected_program_layer_${i}_name` })
+      variables.add({ name: `Mix Selected Program Layer ${i} Key`, variableId: `mix_selected_program_layer_${i}_key` })
+      variables.add({ name: `Mix Selected Preview Layer ${i} Number`, variableId: `mix_selected_preview_layer_${i}_number` })
+      variables.add({ name: `Mix Selected Preview Layer ${i} Name`, variableId: `mix_selected_preview_layer_${i}_name` })
+      variables.add({ name: `Mix Selected Preview Layer ${i} Key`, variableId: `mix_selected_preview_layer_${i}_key` })
+    }
 
     // Inputs
     const inputNumberVariables = new Set<CompanionVariableDefinition>()
@@ -560,63 +573,94 @@ export class Variables {
     newVariables['recording_hms'] = formatTime(this.instance.data.recording.duration, 's', 'hh:mm:ss')
 
     // Mix
-    const mixId = [0, 1, 2, 3]
-
     for (const id of mixId) {
       const mixProgramInput = await this.instance.data.getInput(this.instance.data.mix[id].program)
       const mixPreviewInput = await this.instance.data.getInput(this.instance.data.mix[id].preview)
 
-      if (mixProgramInput) {
-        const inputAudio = mixProgramInput.muted === undefined ? false : mixProgramInput.muted
-        newVariables[`mix_${id + 1}_program`] = this.instance.data.mix[id].program
-        newVariables[`mix_${id + 1}_program_name`] = await this.instance.data.getInputTitle(
-          this.instance.data.mix[id].program
-        )
-        newVariables[`mix_${id + 1}_program_guid`] = mixProgramInput ? mixProgramInput?.key : ''
-        newVariables[`mix_${id + 1}_program_audio`] = (!inputAudio).toString()
-        newVariables[`mix_${id + 1}_program_meterf1`] = mixProgramInput.meterF1
-        newVariables[`mix_${id + 1}_program_meterf2`] = mixProgramInput.meterF2
+      const mixVariables = async (mix: string | number): Promise<void> => {
+        if (mixProgramInput) {
+          const inputAudio = mixProgramInput.muted === undefined ? false : mixProgramInput.muted
+          newVariables[`mix_${mix}_program`] = this.instance.data.mix[id].program
+          newVariables[`mix_${mix}_program_name`] = await this.instance.data.getInputTitle(
+            this.instance.data.mix[id].program
+          )
+          newVariables[`mix_${mix}_program_guid`] = mixProgramInput ? mixProgramInput?.key : ''
+          newVariables[`mix_${mix}_program_audio`] = (!inputAudio).toString()
+          newVariables[`mix_${mix}_program_meterf1`] = mixProgramInput.meterF1
+          newVariables[`mix_${mix}_program_meterf2`] = mixProgramInput.meterF2
 
-        const inputDuration = calcDuration(mixProgramInput)
+          const inputDuration = calcDuration(mixProgramInput)
 
-        if (inputDuration !== null) {
-          newVariables[`mix_${id + 1}_program_duration`] = inputDuration.ms
+          if (inputDuration !== null) {
+            newVariables[`mix_${mix}_program_duration`] = inputDuration.ms
+          }
+
+          const inputRemaining = calcRemaining(mixProgramInput)
+
+          if (inputRemaining !== null) {
+            newVariables[`mix_${mix}_program_remaining`] = inputRemaining.ms
+          }
+
+          for (let i = 1; i < 11; i++) {
+            newVariables[`mix_${mix}_program_layer_${i}_number`] = ''
+            newVariables[`mix_${mix}_program_layer_${i}_name`] = ''
+            newVariables[`mix_${mix}_program_layer_${i}_key`] = ''
+          }
+
+          for (const layer of mixProgramInput.overlay || []) {
+            const mixProgramInputLayer = await this.instance.data.getInput(layer.key)
+            newVariables[`mix_${mix}_program_layer_${layer.index + 1}_number`] = mixProgramInputLayer?.number || ''
+            newVariables[`mix_${mix}_program_layer_${layer.index + 1}_name`] = mixProgramInputLayer?.shortTitle || mixProgramInputLayer?.title || ''
+            newVariables[`mix_${mix}_program_layer_${layer.index + 1}_key`] = layer.key
+          }
+
         }
 
-        const inputRemaining = calcRemaining(mixProgramInput)
+        if (mixPreviewInput) {
+          const inputAudio = mixPreviewInput.muted === undefined ? false : mixPreviewInput.muted
+          newVariables[`mix_${mix}_preview`] = this.instance.data.mix[id].preview
+          newVariables[`mix_${mix}_preview_name`] = await this.instance.data.getInputTitle(
+            this.instance.data.mix[id].preview
+          )
+          newVariables[`mix_${mix}_preview_guid`] = mixPreviewInput?.key
+          newVariables[`mix_${mix}_preview_mute`] = inputAudio.toString()
+          newVariables[`mix_${mix}_preview_audio`] = (!inputAudio).toString()
+          newVariables[`mix_${mix}_preview_meterf1`] = mixPreviewInput.meterF1
+          newVariables[`mix_${mix}_preview_meterf2`] = mixPreviewInput.meterF2
 
-        if (inputRemaining !== null) {
-          newVariables[`mix_${id + 1}_program_remaining`] = inputRemaining.ms
+          const inputDuration = calcDuration(mixPreviewInput)
+
+          if (inputDuration !== null) {
+            newVariables[`mix_${mix}_preview_duration`] = inputDuration.ms
+          }
+
+          const inputRemaining = calcRemaining(mixPreviewInput)
+
+          if (inputRemaining !== null) {
+            newVariables[`mix_${mix}_preview_remaining`] = inputRemaining.ms
+          }
+
+          for (let i = 1; i < 11; i++) {
+            newVariables[`mix_${mix}_preview_layer_${i}_number`] = ''
+            newVariables[`mix_${mix}_preview_layer_${i}_name`] = ''
+            newVariables[`mix_${mix}_preview_layer_${i}_key`] = ''
+          }
+
+          for (const layer of mixPreviewInput.overlay || []) {
+            const mixPreviewInputLayer = await this.instance.data.getInput(layer.key)
+            newVariables[`mix_${mix}_preview_layer_${layer.index + 1}_number`] = mixPreviewInputLayer?.number || ''
+            newVariables[`mix_${mix}_preview_layer_${layer.index + 1}_name`] = mixPreviewInputLayer?.shortTitle || mixPreviewInputLayer?.title || ''
+            newVariables[`mix_${mix}_preview_layer_${layer.index + 1}_key`] = layer.key
+          }
         }
       }
 
-      if (mixPreviewInput) {
-        const inputAudio = mixPreviewInput.muted === undefined ? false : mixPreviewInput.muted
-        newVariables[`mix_${id + 1}_preview`] = this.instance.data.mix[id].preview
-        newVariables[`mix_${id + 1}_preview_name`] = await this.instance.data.getInputTitle(
-          this.instance.data.mix[id].preview
-        )
-        newVariables[`mix_${id + 1}_preview_guid`] = mixPreviewInput?.key
-        newVariables[`mix_${id + 1}_preview_mute`] = inputAudio.toString()
-        newVariables[`mix_${id + 1}_preview_audio`] = (!inputAudio).toString()
-        newVariables[`mix_${id + 1}_preview_meterf1`] = mixPreviewInput.meterF1
-        newVariables[`mix_${id + 1}_preview_meterf2`] = mixPreviewInput.meterF2
-
-        const inputDuration = calcDuration(mixPreviewInput)
-
-        if (inputDuration !== null) {
-          newVariables[`mix_${id + 1}_preview_duration`] = inputDuration.ms
-        }
-
-        const inputRemaining = calcRemaining(mixPreviewInput)
-
-        if (inputRemaining !== null) {
-          newVariables[`mix_${id + 1}_preview_remaining`] = inputRemaining.ms
-        }
-      }
+      mixVariables(id + 1)
+      if (this.instance.routingData.mix === id) mixVariables('selected')
     }
 
     newVariables['mix_selected'] = this.instance.routingData.mix + 1
+
 
     // Audio
     AUDIOBUSSESMASTER.forEach((id) => {
