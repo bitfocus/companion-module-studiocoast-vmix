@@ -26,28 +26,19 @@ For some feedback, such as Tally and Layer Routing it's possible to enable 'blin
 This module now supports Companions HTTP API, providing endpoints that can be used by 3rd party applications, and as a Data Source in vMix itself. Information on the API endpoints is available in [docs/HTTP_API.md](./docs/HTTP_API.md)
 
 # Recent Patches
+**V3.0.1**
+- Fixed issue with actions not parsing correctly
+- Added parsing of instance variables for countdown time/duration
+- Added instance variables for mix layers
+- Added Bus Select action, and options/variables for the currently selected bus
+- Changed mix 2 to 16 to use ActiveInput to cut without changing preview
+- Fixed an issue with volume linear rounding
+- Minor performance tweaks and updates
+
 **V3.0.0**
 - Companion v3 compatibility
 - Removed deprecated feedbacks that updated button text
 - Removed instance variables for each time format, instead use Expression Functions in Companion v3
-
-**V2.1.3**
-- Added HTTP POST endpoint to send actions to a vMix instance
-- Minor fixes for v26 support
-
-**V2.1.2**
-- Added v26 support for 15 Mixes
-- Fixed selected mix on setMultiviewOverlay
-- Fixed some missing variables for Mixes
-
-**V2.1.1**
-- Fixed some HTTP request types
-- Fixed some variable names
-
-**V2.1.0**
-- Added support for Companions instance HTTP requests
-- Added instance timers to support greater complexity that vMix native countdowns
-- Adjusted Audio - Input Mute feedback to use buttons foreground color when not muted
 
 
 Older patch notes available in [docs/PATCH_NOTES.md](./docs/PATCH_NOTES.md)
