@@ -1,5 +1,5 @@
 import * as xml2js from 'xml2js'
-import * as _ from 'lodash'
+import { get, isEqual } from 'lodash'
 import VMixInstance from './'
 
 export interface AudioBus {
@@ -426,18 +426,18 @@ export class VMixData {
             inputData.overlay = input.overlay.map((overlay: any) => ({
               index: parseInt(overlay.$.index, 10),
               key: overlay.$.key,
-              panX: parseFloat(_.get(overlay, 'position[0].$.panX', '0')),
-              panY: parseFloat(_.get(overlay, 'position[0].$.panY', '0')),
-              zoomX: parseFloat(_.get(overlay, 'position[0].$.zoomX', '1')),
-              zoomY: parseFloat(_.get(overlay, 'position[0].$.zoomY', '1')),
+              panX: parseFloat(get(overlay, 'position[0].$.panX', '0')),
+              panY: parseFloat(get(overlay, 'position[0].$.panY', '0')),
+              zoomX: parseFloat(get(overlay, 'position[0].$.zoomX', '1')),
+              zoomY: parseFloat(get(overlay, 'position[0].$.zoomY', '1')),
             }))
           }
 
           if (input.$.position) {
-            inputData.panX = parseFloat(_.get(input, 'position[0].$.panX', '0'))
-            inputData.panY = parseFloat(_.get(input, 'position[0].$.panY', '0'))
-            inputData.zoomX = parseFloat(_.get(input, 'position[0].$.zoomX', '1'))
-            inputData.zoomY = parseFloat(_.get(input, 'position[0].$.zoomY', '1'))
+            inputData.panX = parseFloat(get(input, 'position[0].$.panX', '0'))
+            inputData.panY = parseFloat(get(input, 'position[0].$.panY', '0'))
+            inputData.zoomX = parseFloat(get(input, 'position[0].$.zoomX', '1'))
+            inputData.zoomY = parseFloat(get(input, 'position[0].$.zoomY', '1'))
           }
 
           if (input.$.text) {
@@ -470,7 +470,7 @@ export class VMixData {
       }
 
       const getOverlays = (): Overlay[] => {
-        const overlays = _.get(parsedData, 'overlays[0].overlay')
+        const overlays = get(parsedData, 'overlays[0].overlay')
 
         if (!overlays) {
           return []
@@ -484,7 +484,7 @@ export class VMixData {
       }
 
       const getTransitions = (): Transition[] => {
-        const transitions = _.get(parsedData, 'transitions[0].transition')
+        const transitions = get(parsedData, 'transitions[0].transition')
 
         if (!transitions) {
           return []
@@ -571,7 +571,7 @@ export class VMixData {
           timecodeB: '',
         }
 
-        const inputs = _.get(parsedData, 'inputs[0].input')
+        const inputs = get(parsedData, 'inputs[0].input')
 
         if (!inputs) {
           return defaultReplay
@@ -775,24 +775,24 @@ export class VMixData {
     })
 
     // Check mix 1 to 4
-    if (!_.isEqual(newData.mix, this.mix) || inputCheck) {
+    if (!isEqual(newData.mix, this.mix) || inputCheck) {
       changes.add('inputPreview')
       changes.add('inputLive')
       changes.add('overlayStatus')
     }
 
     // Check overlays
-    if (!_.isEqual(newData.overlays, this.overlays) || inputCheck) {
+    if (!isEqual(newData.overlays, this.overlays) || inputCheck) {
       changes.add('overlayStatus')
     }
 
     // Update feedbacks for first load, changes handled by Activators
-    if (!this.loaded && (!_.isEqual(newData.inputs, this.inputs) || inputCheck)) {
+    if (!this.loaded && (!isEqual(newData.inputs, this.inputs) || inputCheck)) {
       changes.add('inputVolumeLevel')
     }
 
     // Update feedback if new data differs from previous data
-    if (!_.isEqual(newData.inputs, this.inputs) || inputCheck) {
+    if (!isEqual(newData.inputs, this.inputs) || inputCheck) {
       changes.add('videoTimer')
       changes.add('titleLayer')
       changes.add('inputMute')
@@ -827,19 +827,19 @@ export class VMixData {
       })
 
     // Check for status changes
-    if (!_.isEqual(newData.status, this.status)) {
+    if (!isEqual(newData.status, this.status)) {
       changes.add('status')
     }
 
     // Check Audio status
-    if (!_.isEqual(newData.audio, this.audio)) {
+    if (!isEqual(newData.audio, this.audio)) {
       changes.add('busMute')
       changes.add('busVolumeLevel')
       changes.add('liveBusVolume')
     }
 
     // Check Replay
-    if (!_.isEqual(newData.replay, this.replay)) {
+    if (!isEqual(newData.replay, this.replay)) {
       changes.add('replayStatus')
       changes.add('replayEvents')
       changes.add('replayCamera')
@@ -848,7 +848,7 @@ export class VMixData {
 
     // Dynamic Input / Value
     const dynamicChange =
-      !_.isEqual(newData.dynamicInput, this.dynamicInput) || !_.isEqual(newData.dynamicValue, this.dynamicValue)
+      !isEqual(newData.dynamicInput, this.dynamicInput) || !isEqual(newData.dynamicValue, this.dynamicValue)
 
     if (this.recording.duration !== newData.recording.duration) {
       changes.add('recording')
