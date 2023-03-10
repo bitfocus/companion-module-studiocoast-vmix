@@ -935,7 +935,7 @@ interface KeyPressCallback {
 }
 
 interface TbarCallback {
-  actionId: 'setFader'
+  actionId: 'tbar'
   options: Readonly<{
     value: number
   }>
@@ -3199,7 +3199,11 @@ export function getActions(instance: VMixInstance): VMixActions {
           default: 0,
         },
       ],
-      callback: sendBasicCommand,
+      callback: (action) => {
+        if (instance.tcp) {
+          instance.tcp.sendCommand(`FUNCTION SetFader Value=${action.options.value}`)
+        }
+      },
     },
 
     dynamic: {
