@@ -3042,7 +3042,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     replayJumpToNow: {
       name: 'Replay - Jump To Now',
-      description: '',
+      description: 'Jump replay to Now',
       options: [options.replayChannel],
       callback: sendBasicCommand,
     },
@@ -3056,21 +3056,21 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     replayPlay: {
       name: 'Replay - Play',
-      description: '',
+      description: 'Play Replay',
       options: [options.replayChannel],
       callback: sendBasicCommand,
     },
 
     replayPause: {
       name: 'Replay - Pause',
-      description: '',
+      description: 'Pause Replay',
       options: [options.replayChannel],
       callback: sendBasicCommand,
     },
 
     replayPlayEvent: {
       name: 'Replay - Play Event',
-      description: '',
+      description: 'Play an Event',
       options: [
         options.replayChannel,
         {
@@ -3087,14 +3087,14 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     replayPlaySelectedEventToOutput: {
       name: 'Replay - Play Selected Event To Output',
-      description: '',
+      description: 'Play Event currently Selected to Output',
       options: [options.replayChannel],
       callback: sendBasicCommand,
     },
 
     replayPlayEventsByIDToOutput: {
       name: 'Replay - Play Events By ID To Output',
-      description: '',
+      description: 'Play events by ID',
       options: [
         options.replayChannel,
         {
@@ -3174,7 +3174,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     // General
     keyPress: {
       name: 'General - KeyPress',
-      description: '',
+      description: 'Send a key press to vMix',
       options: [
         {
           type: 'textinput',
@@ -3188,7 +3188,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     tbar: {
       name: 'General - Set t-bar position',
-      description: '',
+      description: 'Sets the TBar to the specified position',
       options: [
         {
           type: 'number',
@@ -3204,7 +3204,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     dynamic: {
       name: 'General - Set Dynamic Inputs and Values',
-      description: '',
+      description: 'Sets an input or value to the specified Dynamic Input or Dynamic Value',
       options: [
         {
           type: 'dropdown',
@@ -3245,7 +3245,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     // Scripting
     scriptStart: {
       name: 'Scripting - Script start',
-      description: '',
+      description: 'Start a Script within vMix',
       options: [
         {
           type: 'textinput',
@@ -3259,7 +3259,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     scriptStop: {
       name: 'Scripting - Script stop',
-      description: '',
+      description: 'Stop a script within vMix',
       options: [
         {
           type: 'textinput',
@@ -3273,7 +3273,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     scriptStopAll: {
       name: 'Scripting - Script stop all',
-      description: '',
+      description: 'Stop all scripts running in vMix',
       options: [],
       callback: sendBasicCommand,
     },
@@ -3307,7 +3307,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     // Util
     mixSelect: {
       name: 'Util - Select Mix',
-      description: '',
+      description: 'Select a Mix for use with other Companion actions',
       options: [
         {
           type: 'dropdown',
@@ -3344,7 +3344,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     busSelect: {
       name: 'Util - Select Bus',
-      description: '',
+      description: 'Select a Bus for use with other Companion actions',
       options: [
         options.audioBusMaster
       ],
