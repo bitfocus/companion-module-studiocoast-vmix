@@ -1751,9 +1751,12 @@ export function getActions(instance: VMixInstance): VMixActions {
         },
       ],
       callback: async (action) => {
-        const desination = (await instance.parseOption(action.options.destinationInput))[instance.buttonShift.state]
+        let destination = (await instance.parseOption(action.options.destinationInput))[instance.buttonShift.state]
 
-        instance.routingData.layer.destinationInput = desination
+        if (destination === '0') destination = instance.data.mix[0].preview.toString()
+        if (destination === '-1') destination = instance.data.mix[0].program.toString()
+
+        instance.routingData.layer.destinationInput = destination
         instance.checkFeedbacks('selectedDestinationInput', 'routableMultiviewLayer')
         instance.variables?.updateVariables()
       },

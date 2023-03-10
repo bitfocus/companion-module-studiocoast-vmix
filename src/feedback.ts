@@ -1394,7 +1394,10 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
 
         const getInputValue = []
         for (const input of parseInputValue) {
-          const getInput = await instance.data.getInput(input)
+          let target = input
+          if (input === '0') target = instance.data.mix[0].preview.toString()
+          if (input === '-1') target = instance.data.mix[0].program.toString()
+          const getInput = await instance.data.getInput(target)
           getInputValue.push(getInput?.key || null)
         }
 
