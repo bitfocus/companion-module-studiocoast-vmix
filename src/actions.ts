@@ -1236,18 +1236,21 @@ export function getActions(instance: VMixInstance): VMixActions {
     // Input
     previewInput: {
       name: 'Input - Send Input to Preview',
+      description: 'Send to Preview the selected Input',
       options: [options.input, options.mixSelect],
       callback: sendBasicCommand,
     },
 
     previewInputNext: {
       name: 'Input - Send Next input to Preview',
+      description: 'Send to Preview the next Input',
       options: [],
       callback: sendBasicCommand,
     },
 
     previewInputPrevious: {
       name: 'Input - Send Previous input to Preview',
+      description: 'Send to Preview the previous Input',
       options: [],
       callback: sendBasicCommand,
     },
@@ -1255,6 +1258,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     // Transition
     programCut: {
       name: 'Transition - Send Input to Program',
+      description: 'Cuts the input directly to Output without changing Preview',
       options: [options.input, options.mixSelect],
       callback: (action) => {
         const programCut: any = {
@@ -1273,6 +1277,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     transitionMix: {
       name: 'Transition - Transition mix',
+      description: 'Transition Preview to Program using the selected Transition',
       options: [
         options.mixSelect,
         {
@@ -1296,6 +1301,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     transition: {
       name: 'Transition - Auto Transition',
+      description: 'Transition Preview to Program using a pre-defined Transition',
       options: [
         {
           type: 'dropdown',
@@ -1319,6 +1325,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     setTransitionEffect: {
       name: 'Transition - Set Auto Transition Effect',
+      description: 'Set an Auto transition',
       options: [
         {
           type: 'dropdown',
@@ -1345,6 +1352,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     setTransitionDuration: {
       name: 'Transition - Set Auto Transition Duration',
+      description: 'Set an Auto transition duration',
       options: [
         {
           type: 'dropdown',
@@ -1372,6 +1380,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     quickPlay: {
       name: 'Transition - Quick Play input to Program',
+      description: 'Sends selected input to Preview, cut to Program, and then plays input',
       options: [options.input],
       callback: sendBasicCommand,
     },
@@ -1379,6 +1388,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     // Output
     outputSet: {
       name: 'Output - Set Output Source',
+      description: 'Change what is displayed on the specified Output',
       options: [
         {
           type: 'dropdown',
@@ -1423,6 +1433,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     toggleFunctions: {
       name: 'Output - Toggle Functions',
+      description: 'Toggle vMix functions',
       options: [
         {
           type: 'dropdown',
@@ -1465,7 +1476,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     // Playlist
     playListFunctions: {
       name: 'Playlist - Functions',
-      description: "For vMix's Playlist function, not List inputs",
+      description: 'For vMix\'s Playlist function, not List inputs',
       options: [
         {
           type: 'dropdown',
@@ -1485,7 +1496,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     selectPlayList: {
       name: 'Playlist - Open Playlist',
-      description: "For vMix's Playlist function, not List inputs",
+      description: 'For vMix\'s Playlist function, not List inputs',
       options: [
         {
           type: 'textinput',
@@ -1500,6 +1511,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     // Overlay
     overlayFunctions: {
       name: 'Overlay - Functions',
+      description: 'Controls for Overlays',
       options: [
         {
           type: 'dropdown',
@@ -1542,6 +1554,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     // Position
     setInputPostion: {
       name: 'Position - Adjust an inputs pan/zoom',
+      description: 'Change the current Pan or Zoom value of an Input',
       options: [
         {
           type: 'dropdown',
@@ -1596,6 +1609,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     // Layer
     multiViewOverlay: {
       name: 'Layer - Toggle/On/Off Multiview Layer on Input',
+      description: 'Change the state of the specified Layer on an Input',
       options: [
         {
           type: 'dropdown',
@@ -1626,6 +1640,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     setMultiViewOverlay: {
       name: 'Layer - Set Input as Multiview Layer',
+      description: 'Changes the Layer of an Input',
       options: [
         {
           type: 'textinput',
@@ -1662,6 +1677,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     setMultiViewOverlayOnPreview: {
       name: 'Layer - Set Input as Multiview Overlay Layer on active Preview input',
+      description: 'Changes the Layer of the current Preview Input',
       options: [
         {
           type: 'number',
@@ -1693,6 +1709,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     setMultiViewOverlayOnProgram: {
       name: 'Layer - Set Input as Multiview Overlay Layer on active Program input',
+      description: 'Changes the Layer of the current Program Input',
       options: [
         {
           type: 'number',
@@ -1724,6 +1741,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     setMultiViewOverlayDestinationInput: {
       name: 'Layer - Set Destination Input for Routable Multiview Layer',
+      description: 'Sets an input as the destination for Layer Routing',
       options: [
         {
           type: 'textinput',
@@ -1743,6 +1761,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     setMultiViewOverlayDestinationLayer: {
       name: 'Layer - Set Destination Layer for Routable Multiview Layer',
+      description: 'Sets a Layer as the destination for Layer Router',
       options: [
         {
           type: 'textinput',
@@ -1772,6 +1791,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     setMultiViewOverlaySourceInput: {
       name: 'Layer - Set Source Input for Routable Multiview Layer',
+      description: 'Sets the Source Input to be used on the Destination Layer and Input',
       options: [
         {
           type: 'textinput',
@@ -1800,6 +1820,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     clearMultiViewOverlaySelection: {
       name: 'Layer - Clear Routable Multiview Layer selections',
+      description: 'Clears selected Destination Layer and Input',
       options: [],
       callback: () => {
         instance.routingData.layer.destinationInput = null
@@ -1813,6 +1834,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     // Virtual Set
     virtualSet: {
       name: 'VirtualSet - Zoom To Selected Preset',
+      description: 'Zooms a Virtual Set to one of the presets',
       options: [
         options.input,
         {
@@ -1835,6 +1857,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     // Video Call
     videoCallAudioSource: {
       name: 'VideoCall - Select Audio Source',
+      description: 'Routes an Audio Source to the Video Call Input',
       options: [
         options.input,
         {
@@ -1860,6 +1883,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     videoCallVideoSource: {
       name: 'VideoCall - Select Video Source',
+      description: 'Routes a Video Source to the Video Call Input',
       options: [
         options.input,
         {
@@ -1882,6 +1906,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     // Audio
     audioBus: {
       name: 'Audio - Route Input to Bus',
+      description: 'Routes the audio from an Input to the specified Bus',
       options: [
         options.input,
         options.audioBusMaster,
@@ -1907,6 +1932,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     busXSendToMaster: {
       name: 'Audio - Route Bus to Master',
+      description: 'Routes the audio from a Bus to Master',
       options: [options.audioBus],
       callback: (action) => {
         const selected = action.options.value === 'Selected' ? instance.routingData.bus : action.options.value
@@ -1919,6 +1945,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     busXAudio: {
       name: 'Audio - Bus Mute',
+      description: 'Mutes a Bus',
       options: [
         options.audioBusMaster,
         {
@@ -1951,6 +1978,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     audio: {
       name: 'Audio - Input Mute',
+      description: 'Mutes an Inputs audio',
       options: [
         options.input,
         {
@@ -1970,6 +1998,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     busXSolo: {
       name: 'Audio - Bus Solo',
+      description: 'Solos a specified Bus',
       options: [
         options.audioBus,
         {
@@ -1989,6 +2018,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     solo: {
       name: 'Audio - Input Solo',
+      description: 'Solos a specified Input',
       options: [
         options.input,
         {
@@ -2008,6 +2038,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     setInputVolume: {
       name: 'Audio - Set Input Volume',
+      description: 'Sets an Inputs Volume (Note: vMix Volume only supports whole numbers from 0 to 100)',
       options: [
         options.input,
         {
@@ -2057,6 +2088,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     setVolumeFade: {
       name: 'Audio - Fade Input Volume',
+      description: 'Fades an Inputs Volume (Note: vMix Volume only supports whole numbers from 0 to 100)',
       options: [
         options.input,
         {
@@ -2089,6 +2121,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     setBusVolume: {
       name: 'Audio - Set Bus Volume',
+      description: 'Sets Bus Volume (Note: vMix Volume only supports whole numbers from 0 to 100)',
       options: [
         options.audioBusMaster,
         {
@@ -2138,6 +2171,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     audioPlugin: {
       name: 'Audio - Audio Plugin On/Off/Toggle/Show On Input',
+      description: 'Changes the state of an Audio Plugin on an Input',
       options: [
         options.input,
         {
@@ -2166,6 +2200,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     audioChannelMatrixApplyPreset: {
       name: 'Audio - Channel Matrix Apply Preset',
+      description: 'Apply preset to channel matrix',
       options: [
         options.input,
         {
@@ -2181,6 +2216,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     // Title
     controlCountdown: {
       name: 'Title - Start / Stop / Pause Countdown',
+      description: 'Control Countdown running state',
       options: [
         {
           type: 'dropdown',
@@ -2218,6 +2254,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     setCountdown: {
       name: 'Title - Set Countdown Duration',
+      description: 'Sets the Duration of a Countdown',
       options: [
         {
           type: 'textinput',
@@ -2251,6 +2288,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     changeCountdown: {
       name: 'Title - Change Countdown Time',
+      description: 'Sets the current time within a countdowns Duration',
       options: [
         {
           type: 'textinput',
@@ -2284,6 +2322,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     adjustCountdown: {
       name: 'Title - Add / Subtract seconds on Countdown',
+      description: 'Modify the current time on a Countdown',
       options: [
         {
           type: 'textinput',
@@ -2309,7 +2348,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         // Check if value is valid
         if (isNaN(parseFloat(value)) || parseFloat(value) % 1 != 0) {
-          instance.log('warn', "'Seconds' for adjusting a countdown must be a whole number")
+          instance.log('warn', '\'Seconds\' for adjusting a countdown must be a whole number')
         } else {
           if (instance.tcp)
             instance.tcp.sendCommand(
@@ -2322,6 +2361,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     setText: {
       name: 'Title - Adjust title text',
+      description: 'Adjusts text on a title layer (Starting from 0)',
       options: [
         options.input,
         {
@@ -2417,6 +2457,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     selectTitlePreset: {
       name: 'Title - Select Title Preset',
+      description: 'Selects a Title Preset (Start from 0)',
       options: [
         options.input,
         {
@@ -2431,6 +2472,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     titlePreset: {
       name: 'Title - Next / Prev Title Preset',
+      description: 'Selects the next/previous Title Preset',
       options: [
         options.input,
         {
@@ -2449,6 +2491,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     titleBeginAnimation: {
       name: 'Title - Begin Animation Page',
+      description: 'Starts one of the animations states on a Title',
       options: [
         options.input,
         {
@@ -2481,6 +2524,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     // Data Source
     dataSourceAutoNext: {
       name: 'DataSource - AutoNext',
+      description: 'Enables/Disables/Toggles a Data Source automatically selecting the next row',
       options: [
         {
           type: 'dropdown',
@@ -2505,6 +2549,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     dataSourceNextRow: {
       name: 'DataSource - Next Row',
+      description: 'Selects the next row of a Data Source',
       options: [
         {
           type: 'textinput',
@@ -2518,6 +2563,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     dataSourcePreviousRow: {
       name: 'DataSource - Previous Row',
+      description: 'Selects the previous row of a Data Source',
       options: [
         {
           type: 'textinput',
@@ -2531,6 +2577,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     dataSourceSelectRow: {
       name: 'DataSource - Select Row',
+      description: 'Selects a specific row (indexed from 0) of a Data Source',
       options: [
         {
           type: 'textinput',
@@ -2545,18 +2592,21 @@ export function getActions(instance: VMixInstance): VMixActions {
     // Slide / List Set
     nextPicture: {
       name: 'Lists - Next Picture/Slide/Index',
+      description: 'Selects next item in a List type input',
       options: [options.input],
       callback: sendBasicCommand,
     },
 
     previousPicture: {
       name: 'Lists - Previous Picture/Slide/Index',
+      description: 'Selects previous item in a List type input',
       options: [options.input],
       callback: sendBasicCommand,
     },
 
     selectIndex: {
       name: 'Lists - Select Specific Picture/Slide/Index',
+      description: 'Selects specific item in a List type input',
       options: [
         options.input,
         {
@@ -2572,11 +2622,12 @@ export function getActions(instance: VMixInstance): VMixActions {
     // Media
     videoActions: {
       name: 'Media - Playback Actions',
+      description: 'Change Playback state/options of an Input',
       options: [
         options.input,
         {
           type: 'checkbox',
-          label: 'Affect Preview instead of inputs',
+          label: 'Act on Preview instead of inputs',
           id: 'inputType',
           default: false,
         },
@@ -2607,6 +2658,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     videoPlayhead: {
       name: 'Media - Adjust or Set Playhead',
+      description: 'Change the playhead on an Input',
       options: [
         options.input,
         {
@@ -2651,6 +2703,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     videoMark: {
       name: 'Media - Mark Functions',
+      description: 'Mark In and Out points of an input (Not Replay)',
       options: [
         options.input,
         {
@@ -2686,6 +2739,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     // Replay
     replayACamera: {
       name: 'Replay - A Camera',
+      description: 'Select A camera',
       options: [
         {
           type: 'dropdown',
@@ -2700,6 +2754,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     replayBCamera: {
       name: 'Replay - B Camera',
+      description: 'Select B camera',
       options: [
         {
           type: 'dropdown',
@@ -2714,6 +2769,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     replayCamera: {
       name: 'Replay - Selected Channel Camera',
+      description: 'Select camera for current Channel',
       options: [
         {
           type: 'dropdown',
@@ -2728,6 +2784,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     replaySelectChannel: {
       name: 'Replay - Select Channel',
+      description: 'Select Replay camera channel',
       options: [
         {
           type: 'dropdown',
@@ -2745,12 +2802,14 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     replaySwapChannels: {
       name: 'Replay - Swap A and B channels',
+      description: 'Swap cameras on A and B Channels',
       options: [],
       callback: sendBasicCommand,
     },
 
     replayMark: {
       name: 'Replay - Mark Functions',
+      description: 'Mark functions for Replay',
       options: [
         {
           type: 'dropdown',
@@ -2783,6 +2842,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     replayMoveInOut: {
       name: 'Replay - Move Selected Event In/Out',
+      description: 'Move in or out points for the selected Event',
       options: [
         {
           type: 'dropdown',
@@ -2808,6 +2868,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     replayUpdateInOut: {
       name: 'Replay - Move Selected Event In/Out to Now',
+      description: 'Move in or out points for the selected Event to Now',
       options: [
         {
           type: 'dropdown',
@@ -2825,6 +2886,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     replaySelectEvents: {
       name: 'Replay - Replay Select Events',
+      description: 'Select a Replay Events tab',
       options: [
         {
           type: 'dropdown',
@@ -2843,12 +2905,14 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     replayChangeDirection: {
       name: 'Replay - Change Direction',
+      description: 'Change Replay playback Direction',
       options: [options.replayChannel],
       callback: sendBasicCommand,
     },
 
     replayChangeSpeed: {
       name: 'Replay - Change Speed',
+      description: 'Change Replay playback Speed',
       options: [
         options.replayChannel,
         {
@@ -2866,6 +2930,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     replayMoveEvent: {
       name: 'Replay - Move event',
+      description: 'Move an Event to a differnt Events tab',
       options: [
         {
           type: 'dropdown',
@@ -2893,6 +2958,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     replayMoveEventUpDown: {
       name: 'Replay - Move Selected Event Up/Down',
+      description: 'Moves the position of an Event within the current Events Tab',
       options: [
         {
           type: 'dropdown',
@@ -2910,6 +2976,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     replayFastForwardBackward: {
       name: 'Replay - Fast Forward/Backward',
+      description: 'Replay Fast Forward/Backwared (1-30x speed)',
       options: [
         {
           type: 'dropdown',
@@ -2919,7 +2986,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           choices: [
             { id: 'ReplayFastForward', label: 'Forward' },
             { id: 'ReplayFastBackward', label: 'Backward' },
-          ],
+          ]
         },
         options.replayChannel,
         {
@@ -2936,6 +3003,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     replayJumpFrames: {
       name: 'Replay - Jump Frames',
+      description: 'Jump a set amount of frames forward or backward',
       options: [
         options.replayChannel,
         {
@@ -2952,6 +3020,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     replayRecording: {
       name: 'Replay - Recording Start/Stop/Toggle',
+      description: 'Replay Recording control',
       options: [
         {
           type: 'dropdown',
@@ -2970,30 +3039,35 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     replayJumpToNow: {
       name: 'Replay - Jump To Now',
+      description: '',
       options: [options.replayChannel],
       callback: sendBasicCommand,
     },
 
     replayLiveToggle: {
       name: 'Replay - Toggle Live',
+      description: 'Toggle Replay Live',
       options: [],
       callback: sendBasicCommand,
     },
 
     replayPlay: {
       name: 'Replay - Play',
+      description: '',
       options: [options.replayChannel],
       callback: sendBasicCommand,
     },
 
     replayPause: {
       name: 'Replay - Pause',
+      description: '',
       options: [options.replayChannel],
       callback: sendBasicCommand,
     },
 
     replayPlayEvent: {
       name: 'Replay - Play Event',
+      description: '',
       options: [
         options.replayChannel,
         {
@@ -3010,12 +3084,14 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     replayPlaySelectedEventToOutput: {
       name: 'Replay - Play Selected Event To Output',
+      description: '',
       options: [options.replayChannel],
       callback: sendBasicCommand,
     },
 
     replayPlayEventsByIDToOutput: {
       name: 'Replay - Play Events By ID To Output',
+      description: '',
       options: [
         options.replayChannel,
         {
@@ -3032,6 +3108,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     replayToggleCamera: {
       name: 'Replay - Toggle Selected Event Camera',
+      description: 'Toggles a camera view for the selected Event',
       options: [
         {
           type: 'dropdown',
@@ -3049,6 +3126,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     // Browser
     browser: {
       name: 'Browser - Functions',
+      description: 'Browser contol functions',
       options: [
         options.input,
         {
@@ -3072,6 +3150,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     browserNavigate: {
       name: 'Browser - Navigate',
+      description: 'Navigate to specified URL (Any special characters may have to be escaped)',
       options: [
         options.input,
         {
@@ -3092,6 +3171,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     // General
     keyPress: {
       name: 'General - KeyPress',
+      description: '',
       options: [
         {
           type: 'textinput',
@@ -3105,6 +3185,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     tbar: {
       name: 'General - Set t-bar position',
+      description: '',
       options: [
         {
           type: 'number',
@@ -3120,6 +3201,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     dynamic: {
       name: 'General - Set Dynamic Inputs and Values',
+      description: '',
       options: [
         {
           type: 'dropdown',
@@ -3160,6 +3242,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     // Scripting
     scriptStart: {
       name: 'Scripting - Script start',
+      description: '',
       options: [
         {
           type: 'textinput',
@@ -3173,6 +3256,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     scriptStop: {
       name: 'Scripting - Script stop',
+      description: '',
       options: [
         {
           type: 'textinput',
@@ -3186,12 +3270,14 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     scriptStopAll: {
       name: 'Scripting - Script stop all',
+      description: '',
       options: [],
       callback: sendBasicCommand,
     },
 
     command: {
       name: 'Scripting - Run custom command',
+      description: 'Sends a vMix TCP "FUNCTION " message with the specified commands and values appended',
       options: [
         {
           type: 'textinput',
@@ -3268,7 +3354,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     buttonShift: {
       name: 'Util - Toggle Shift',
-      description: '',
+      description: 'Toggles the current Shift state within this Companion vMix instance',
       options: [],
       callback: () => {
         instance.buttonShift.state = instance.buttonShift.state === 0 ? 1 : 0
@@ -3294,7 +3380,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     dataSourceTimer: {
       name: 'Util - DataSource Timer State',
-      description: '',
+      description: 'Controls the Companion vMix timers',
       options: [
         {
           type: 'dropdown',
@@ -3331,7 +3417,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     dataSourceTimerSet: {
       name: 'Util - DataSource Timer Set Time',
-      description: '',
+      description: 'Sets the Companion vMix timers',
       options: [
         {
           type: 'textinput',
@@ -3356,7 +3442,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     dataSourceTimerCreateTime: {
       name: 'Util - DataSource Timer Create Laptime',
-      description: '',
+      description: 'Creates a new Lap within Companion vMix timers',
       options: [
         {
           type: 'textinput',
@@ -3383,7 +3469,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     dataSourceTimerUpdateTime: {
       name: 'Util - DataSource Timer Update Time',
-      description: '',
+      description: 'Updates a Companion vMix timer',
       options: [
         {
           type: 'textinput',

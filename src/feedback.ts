@@ -1446,7 +1446,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
     routableMultiviewLayer: {
       type: 'advanced',
       name: 'Layers - check if input is on destination Layer of destination input',
-      description: '',
+      description: 'Indicates if the input is destination layer and input',
       options: [options.input, options.foregroundColor, options.backgroundColorYellow],
       callback: async (feedback, context) => {
         const parseInputValue = await instance.parseOption(feedback.options.input, context)
@@ -1493,7 +1493,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
     inputOnMultiview: {
       type: 'advanced',
       name: 'Layers - check if X input is on Layer on Y input',
-      description: '',
+      description: 'Indicates if the input is currently on a specified layer of an input',
       options: [
         {
           type: 'textinput',
@@ -1571,7 +1571,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
     mixSelect: {
       type: 'advanced',
       name: 'Util - Mix Selected',
-      description: '',
+      description: 'Currently selected Mix',
       options: [
         {
           type: 'dropdown',
@@ -1612,7 +1612,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
     busSelect: {
       type: 'advanced',
       name: 'Util - Bus Selected',
-      description: '',
+      description: 'Currently selected Bus',
       options: [
         {
           type: 'dropdown',
@@ -1636,7 +1636,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
     buttonShift: {
       type: 'advanced',
       name: 'Util - Button Shift state',
-      description: '',
+      description: 'Indicates Shift state',
       options: [options.foregroundColorBlack, options.backgroundColorYellow],
       callback: (feedback) => {
         if (instance.buttonShift.state !== 0) {
@@ -1650,7 +1650,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
     buttonText: {
       type: 'advanced',
       name: 'Util - Shift text',
-      description: '',
+      description: 'Used to display text on a button that changes based on Shift state',
       options: [
         {
           type: 'textinput',
