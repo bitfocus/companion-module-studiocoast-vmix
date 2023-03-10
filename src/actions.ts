@@ -2991,11 +2991,11 @@ export function getActions(instance: VMixInstance): VMixActions {
         options.replayChannel,
         {
           type: 'number',
-          label: 'Seconds',
+          label: 'Speed',
           id: 'value',
           default: 10,
           min: 0,
-          max: Number.MAX_SAFE_INTEGER,
+          max: 30,
         },
       ],
       callback: sendBasicCommand,
