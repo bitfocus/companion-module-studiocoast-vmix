@@ -111,14 +111,14 @@ interface StatusCallback {
   feedbackId: 'status'
   options: Readonly<{
     status:
-    | 'connection'
-    | 'fadeToBlack'
-    | 'recording'
-    | 'external'
-    | 'streaming'
-    | 'multiCorder'
-    | 'fullscreen'
-    | 'playList'
+      | 'connection'
+      | 'fadeToBlack'
+      | 'recording'
+      | 'external'
+      | 'streaming'
+      | 'multiCorder'
+      | 'fullscreen'
+      | 'playList'
     fg: number
     bg: number
     value: '' | '0' | '1' | '2'
@@ -1622,10 +1622,10 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           label: 'Bus',
           id: 'bus',
           default: 'Master',
-          choices: [{ id: 'Master', label: 'Master' }, ...AUDIOBUSSES.map((id) => ({ id, label: id }))]
+          choices: [{ id: 'Master', label: 'Master' }, ...AUDIOBUSSES.map((id) => ({ id, label: id }))],
         },
         options.foregroundColor,
-        options.backgroundColorYellow
+        options.backgroundColorYellow,
       ],
       callback: (feedback) => {
         if (instance.routingData.bus === feedback.options.bus) {
@@ -1633,7 +1633,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         }
 
         return {}
-      }
+      },
     },
 
     buttonShift: {

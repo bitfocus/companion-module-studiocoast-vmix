@@ -41,7 +41,7 @@ interface RoutingData {
 class VMixInstance extends InstanceBase<Config> {
   constructor(internal: unknown) {
     super(internal)
-		this.instanceOptions.disableVariableValidation = true
+    this.instanceOptions.disableVariableValidation = true
   }
   public activators: Activators | null = null
   public buttonShift: ButtonShift = {

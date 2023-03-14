@@ -186,14 +186,14 @@ interface TransitionCallback {
   actionId: 'transition'
   options: Readonly<{
     functionID:
-    | 'Transition1'
-    | 'Transition2'
-    | 'Transition3'
-    | 'Transition4'
-    | 'Stinger1'
-    | 'Stinger2'
-    | 'Stinger3'
-    | 'Stinger4'
+      | 'Transition1'
+      | 'Transition2'
+      | 'Transition3'
+      | 'Transition4'
+      | 'Stinger1'
+      | 'Stinger2'
+      | 'Stinger3'
+      | 'Stinger4'
   }>
 }
 
@@ -209,10 +209,10 @@ interface SetTransitionDurationCallback {
   actionId: 'setTransitionDuration'
   options: Readonly<{
     functionID:
-    | 'SetTransitionDuration1'
-    | 'SetTransitionDuration2'
-    | 'SetTransitionDuration3'
-    | 'SetTransitionDuration4'
+      | 'SetTransitionDuration1'
+      | 'SetTransitionDuration2'
+      | 'SetTransitionDuration3'
+      | 'SetTransitionDuration4'
     value: number
   }>
 }
@@ -229,12 +229,12 @@ interface OutputSetCallback {
   actionId: 'outputSet'
   options: Readonly<{
     functionID:
-    | 'SetOutput2'
-    | 'SetOutput3'
-    | 'SetOutput4'
-    | 'SetOutputExternal2'
-    | 'SetOutputFullscreen'
-    | 'SetOutputFullscreen2'
+      | 'SetOutput2'
+      | 'SetOutput3'
+      | 'SetOutput4'
+      | 'SetOutputExternal2'
+      | 'SetOutputFullscreen'
+      | 'SetOutputFullscreen2'
     value: 'Output' | 'Preview' | 'MultiView' | 'Replay' | 'Input'
     input: string
   }>
@@ -244,12 +244,12 @@ interface ToggleFunctionsCallback {
   actionId: 'toggleFunctions'
   options: Readonly<{
     functionID:
-    | 'StartStopMultiCorder'
-    | 'StartStopRecording'
-    | 'StartStopStreaming'
-    | 'StartStopExternal'
-    | 'Fullscreen'
-    | 'FadeToBlack'
+      | 'StartStopMultiCorder'
+      | 'StartStopRecording'
+      | 'StartStopStreaming'
+      | 'StartStopExternal'
+      | 'Fullscreen'
+      | 'FadeToBlack'
     value: '' | '0' | '1' | '2'
   }>
 }
@@ -274,31 +274,31 @@ interface OverlayFunctionsCallback {
   actionId: 'overlayFunctions'
   options: Readonly<{
     functionID:
-    | 'OverlayInput1'
-    | 'OverlayInput2'
-    | 'OverlayInput3'
-    | 'OverlayInput4'
-    | 'PreviewOverlayInput1'
-    | 'PreviewOverlayInput2'
-    | 'PreviewOverlayInput3'
-    | 'PreviewOverlayInput4'
-    | 'OverlayInput1In'
-    | 'OverlayInput2In'
-    | 'OverlayInput3In'
-    | 'OverlayInput4In'
-    | 'OverlayInput1Out'
-    | 'OverlayInput2Out'
-    | 'OverlayInput3Out'
-    | 'OverlayInput4Out'
-    | 'OverlayInput1Off'
-    | 'OverlayInput2Off'
-    | 'OverlayInput3Off'
-    | 'OverlayInput4Off'
-    | 'OverlayInputAllOff'
-    | 'OverlayInput1Zoom'
-    | 'OverlayInput2Zoom'
-    | 'OverlayInput3Zoom'
-    | 'OverlayInput4Zoom'
+      | 'OverlayInput1'
+      | 'OverlayInput2'
+      | 'OverlayInput3'
+      | 'OverlayInput4'
+      | 'PreviewOverlayInput1'
+      | 'PreviewOverlayInput2'
+      | 'PreviewOverlayInput3'
+      | 'PreviewOverlayInput4'
+      | 'OverlayInput1In'
+      | 'OverlayInput2In'
+      | 'OverlayInput3In'
+      | 'OverlayInput4In'
+      | 'OverlayInput1Out'
+      | 'OverlayInput2Out'
+      | 'OverlayInput3Out'
+      | 'OverlayInput4Out'
+      | 'OverlayInput1Off'
+      | 'OverlayInput2Off'
+      | 'OverlayInput3Off'
+      | 'OverlayInput4Off'
+      | 'OverlayInputAllOff'
+      | 'OverlayInput1Zoom'
+      | 'OverlayInput2Zoom'
+      | 'OverlayInput3Zoom'
+      | 'OverlayInput4Zoom'
     input: string
   }>
 }
@@ -471,7 +471,7 @@ interface SetVolumeFadeCallback {
 }
 
 interface SetBusVolumeCallback {
-  actionId: 'SetBusVolume',
+  actionId: 'SetBusVolume'
   options: Readonly<{
     value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'Selected'
     adjustment: 'Set' | 'Increase' | 'Decrease'
@@ -573,21 +573,21 @@ interface TitleBeginAnimationCallback {
   options: Readonly<{
     input: string
     value:
-    | 'TransitionIn'
-    | 'TransitionOut'
-    | 'Page1'
-    | 'Page2'
-    | 'Page3'
-    | 'Page4'
-    | 'Page5'
-    | 'Page6'
-    | 'Page7'
-    | 'Page8'
-    | 'Page9'
-    | 'Page10'
-    | 'Continuous'
-    | 'DataChangeIn'
-    | 'DataChangeOut'
+      | 'TransitionIn'
+      | 'TransitionOut'
+      | 'Page1'
+      | 'Page2'
+      | 'Page3'
+      | 'Page4'
+      | 'Page5'
+      | 'Page6'
+      | 'Page7'
+      | 'Page8'
+      | 'Page9'
+      | 'Page10'
+      | 'Continuous'
+      | 'DataChangeIn'
+      | 'DataChangeOut'
   }>
 }
 
@@ -678,14 +678,14 @@ interface ReplayACameraCallback {
   actionId: 'replayACamera'
   options: Readonly<{
     functionID:
-    | 'ReplayACamera1'
-    | 'ReplayACamera2'
-    | 'ReplayACamera3'
-    | 'ReplayACamera4'
-    | 'ReplayACamera5'
-    | 'ReplayACamera6'
-    | 'ReplayACamera7'
-    | 'ReplayACamera8'
+      | 'ReplayACamera1'
+      | 'ReplayACamera2'
+      | 'ReplayACamera3'
+      | 'ReplayACamera4'
+      | 'ReplayACamera5'
+      | 'ReplayACamera6'
+      | 'ReplayACamera7'
+      | 'ReplayACamera8'
   }>
 }
 
@@ -693,14 +693,14 @@ interface ReplayBCameraCallback {
   actionId: 'replayBCamera'
   options: Readonly<{
     functionID:
-    | 'ReplayBCamera1'
-    | 'ReplayBCamera2'
-    | 'ReplayBCamera3'
-    | 'ReplayBCamera4'
-    | 'ReplayBCamera5'
-    | 'ReplayBCamera6'
-    | 'ReplayBCamera7'
-    | 'ReplayBCamera8'
+      | 'ReplayBCamera1'
+      | 'ReplayBCamera2'
+      | 'ReplayBCamera3'
+      | 'ReplayBCamera4'
+      | 'ReplayBCamera5'
+      | 'ReplayBCamera6'
+      | 'ReplayBCamera7'
+      | 'ReplayBCamera8'
   }>
 }
 
@@ -708,14 +708,14 @@ interface ReplayCameraCallback {
   actionId: 'replayCamera'
   options: Readonly<{
     functionID:
-    | 'ReplayCamera1'
-    | 'ReplayCamera2'
-    | 'ReplayCamera3'
-    | 'ReplayCamera4'
-    | 'ReplayCamera5'
-    | 'ReplayCamera6'
-    | 'ReplayCamera7'
-    | 'ReplayCamera8'
+      | 'ReplayCamera1'
+      | 'ReplayCamera2'
+      | 'ReplayCamera3'
+      | 'ReplayCamera4'
+      | 'ReplayCamera5'
+      | 'ReplayCamera6'
+      | 'ReplayCamera7'
+      | 'ReplayCamera8'
   }>
 }
 
@@ -735,15 +735,15 @@ interface ReplayMarkCallback {
   actionId: 'replayMark'
   options: Readonly<{
     functionID:
-    | 'ReplayMarkCancel'
-    | 'ReplayMarkIn'
-    | 'ReplayMarkInLive'
-    | 'ReplayMarkInOut'
-    | 'ReplayMarkInOutLive'
-    | 'ReplayMarkInOutRecorded'
-    | 'ReplayMarkInRecorded'
-    | 'ReplayMarkInRecordedNow'
-    | 'ReplayMarkOut'
+      | 'ReplayMarkCancel'
+      | 'ReplayMarkIn'
+      | 'ReplayMarkInLive'
+      | 'ReplayMarkInOut'
+      | 'ReplayMarkInOutLive'
+      | 'ReplayMarkInOutRecorded'
+      | 'ReplayMarkInRecorded'
+      | 'ReplayMarkInRecordedNow'
+      | 'ReplayMarkOut'
     value: number
   }>
 }
@@ -767,26 +767,26 @@ interface ReplaySelectEventsCallback {
   actionId: 'replaySelectEvents'
   options: Readonly<{
     functionID:
-    | 'ReplaySelectEvents1'
-    | 'ReplaySelectEvents2'
-    | 'ReplaySelectEvents3'
-    | 'ReplaySelectEvents4'
-    | 'ReplaySelectEvents5'
-    | 'ReplaySelectEvents6'
-    | 'ReplaySelectEvents7'
-    | 'ReplaySelectEvents8'
-    | 'ReplaySelectEvents9'
-    | 'ReplaySelectEvents10'
-    | 'ReplaySelectEvents11'
-    | 'ReplaySelectEvents12'
-    | 'ReplaySelectEvents13'
-    | 'ReplaySelectEvents14'
-    | 'ReplaySelectEvents15'
-    | 'ReplaySelectEvents16'
-    | 'ReplaySelectEvents17'
-    | 'ReplaySelectEvents18'
-    | 'ReplaySelectEvents19'
-    | 'ReplaySelectEvents20'
+      | 'ReplaySelectEvents1'
+      | 'ReplaySelectEvents2'
+      | 'ReplaySelectEvents3'
+      | 'ReplaySelectEvents4'
+      | 'ReplaySelectEvents5'
+      | 'ReplaySelectEvents6'
+      | 'ReplaySelectEvents7'
+      | 'ReplaySelectEvents8'
+      | 'ReplaySelectEvents9'
+      | 'ReplaySelectEvents10'
+      | 'ReplaySelectEvents11'
+      | 'ReplaySelectEvents12'
+      | 'ReplaySelectEvents13'
+      | 'ReplaySelectEvents14'
+      | 'ReplaySelectEvents15'
+      | 'ReplaySelectEvents16'
+      | 'ReplaySelectEvents17'
+      | 'ReplaySelectEvents18'
+      | 'ReplaySelectEvents19'
+      | 'ReplaySelectEvents20'
     channel: 'Current' | 'A' | 'B'
   }>
 }
@@ -907,13 +907,13 @@ interface BrowserCallback {
   options: Readonly<{
     input: string
     functionID:
-    | 'BrowserReload'
-    | 'BrowserBack'
-    | 'BrowserForward'
-    | 'BrowserKeyboardDisabled'
-    | 'BrowserKeyboardEnabled'
-    | 'BrowserMouseDisabled'
-    | 'BrowserMouseEnabled'
+      | 'BrowserReload'
+      | 'BrowserBack'
+      | 'BrowserForward'
+      | 'BrowserKeyboardDisabled'
+      | 'BrowserKeyboardEnabled'
+      | 'BrowserMouseDisabled'
+      | 'BrowserMouseEnabled'
   }>
 }
 
@@ -1476,7 +1476,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     // Playlist
     playListFunctions: {
       name: 'Playlist - Functions',
-      description: 'For vMix\'s Playlist function, not List inputs',
+      description: "For vMix's Playlist function, not List inputs",
       options: [
         {
           type: 'dropdown',
@@ -1496,7 +1496,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     selectPlayList: {
       name: 'Playlist - Open Playlist',
-      description: 'For vMix\'s Playlist function, not List inputs',
+      description: "For vMix's Playlist function, not List inputs",
       options: [
         {
           type: 'textinput',
@@ -1600,7 +1600,8 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION ${action.options.functionID} Input=${encodeURIComponent(input)}&value=${prefix}${action.options.value
+            `FUNCTION ${action.options.functionID} Input=${encodeURIComponent(input)}&value=${prefix}${
+              action.options.value
             }`
           )
       },
@@ -1669,7 +1670,8 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION SetMultiViewOverlay Input=${encodeURIComponent(input)}&Value=${action.options.layer
+            `FUNCTION SetMultiViewOverlay Input=${encodeURIComponent(input)}&Value=${
+              action.options.layer
             },${encodeURIComponent(layer)}`
           )
       },
@@ -1701,7 +1703,8 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].preview}&Value=${action.options.layer
+            `FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].preview}&Value=${
+              action.options.layer
             },${encodeURIComponent(input)}`
           )
       },
@@ -1733,7 +1736,8 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].program}&Value=${action.options.layer
+            `FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].program}&Value=${
+              action.options.layer
             },${encodeURIComponent(input)}`
           )
       },
@@ -2059,7 +2063,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           type: 'textinput',
           label: 'Volume',
           id: 'amount',
-          default: '100'
+          default: '100',
         },
       ],
       callback: async (action) => {
@@ -2086,7 +2090,7 @@ export function getActions(instance: VMixInstance): VMixActions {
         if (instance.tcp) {
           instance.tcp.sendCommand(`FUNCTION SetVolume input=${input.key}&Value=${target}`)
         }
-      }
+      },
     },
 
     setVolumeFade: {
@@ -2109,14 +2113,15 @@ export function getActions(instance: VMixInstance): VMixActions {
           default: 2000,
           min: 1,
           max: 60000,
-        }
+        },
       ],
       callback: async (action) => {
         const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION SetVolumeFade Value=${action.options.fadeMin},${action.options.fadeTime
+            `FUNCTION SetVolumeFade Value=${action.options.fadeMin},${
+              action.options.fadeTime
             }&input=${encodeURIComponent(input)}`
           )
       },
@@ -2142,8 +2147,8 @@ export function getActions(instance: VMixInstance): VMixActions {
           type: 'textinput',
           label: 'Value',
           id: 'amount',
-          default: '100'
-        }
+          default: '100',
+        },
       ],
       callback: async (action) => {
         const selected = action.options.value === 'Selected' ? instance.routingData.bus : action.options.value
@@ -2169,7 +2174,7 @@ export function getActions(instance: VMixInstance): VMixActions {
         if (instance.tcp) {
           instance.tcp.sendCommand(`FUNCTION ${command} Value=${target}`)
         }
-      }
+      },
     },
 
     audioPlugin: {
@@ -2249,7 +2254,8 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION ${action.options.functionID} Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+            `FUNCTION ${action.options.functionID} Input=${encodeURIComponent(input)}&${
+              indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
             }=${encodeURIComponent(index)}`
           )
       },
@@ -2283,7 +2289,8 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION SetCountdown Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+            `FUNCTION SetCountdown Input=${encodeURIComponent(input)}&${
+              indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
             }=${encodeURIComponent(index)}&value=${value}`
           )
       },
@@ -2297,7 +2304,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           type: 'textinput',
           label: 'Time (00:00:00)',
           id: 'value',
-          default: '00:10:00'
+          default: '00:10:00',
         },
         options.input,
         {
@@ -2317,7 +2324,8 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION ChangeCountdown Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+            `FUNCTION ChangeCountdown Input=${encodeURIComponent(input)}&${
+              indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
             }=${encodeURIComponent(index)}&value=${value}`
           )
       },
@@ -2351,11 +2359,12 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         // Check if value is valid
         if (isNaN(parseFloat(value)) || parseFloat(value) % 1 != 0) {
-          instance.log('warn', '\'Seconds\' for adjusting a countdown must be a whole number')
+          instance.log('warn', "'Seconds' for adjusting a countdown must be a whole number")
         } else {
           if (instance.tcp)
             instance.tcp.sendCommand(
-              `FUNCTION AdjustCountdown Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+              `FUNCTION AdjustCountdown Input=${encodeURIComponent(input)}&${
+                indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
               }=${encodeURIComponent(index)}&Value=${value}`
             )
         }
@@ -2398,7 +2407,8 @@ export function getActions(instance: VMixInstance): VMixActions {
         if (action.options.adjustment === 'Set') {
           if (instance.tcp)
             instance.tcp.sendCommand(
-              `FUNCTION SetText Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+              `FUNCTION SetText Input=${encodeURIComponent(input)}&${
+                indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
               }=${index}&Value=${text}`
             )
         } else {
@@ -2414,7 +2424,8 @@ export function getActions(instance: VMixInstance): VMixActions {
 
             if (instance.tcp)
               instance.tcp.sendCommand(
-                `FUNCTION SetText Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+                `FUNCTION SetText Input=${encodeURIComponent(input)}&${
+                  indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
                 }=${index}&Value=${text}`
               )
           }
@@ -2452,7 +2463,8 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION SetColor Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+            `FUNCTION SetColor Input=${encodeURIComponent(input)}&${
+              indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
             }=${index}&Value=${encodeURIComponent(value)}`
           )
       },
@@ -2989,7 +3001,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           choices: [
             { id: 'ReplayFastForward', label: 'Forward' },
             { id: 'ReplayFastBackward', label: 'Backward' },
-          ]
+          ],
         },
         options.replayChannel,
         {
@@ -3334,7 +3346,7 @@ export function getActions(instance: VMixInstance): VMixActions {
             { id: 12, label: '13' },
             { id: 13, label: '14' },
             { id: 14, label: '15' },
-            { id: 15, label: '16' }
+            { id: 15, label: '16' },
           ],
         },
       ],
@@ -3349,14 +3361,12 @@ export function getActions(instance: VMixInstance): VMixActions {
     busSelect: {
       name: 'Util - Select Bus',
       description: 'Select a Bus for use with other Companion actions',
-      options: [
-        options.audioBusMaster
-      ],
+      options: [options.audioBusMaster],
       callback: (action) => {
         instance.routingData.bus = action.options.value
         instance.variables?.updateVariables()
         instance.checkFeedbacks('busSelect')
-      }
+      },
     },
 
     buttonShift: {

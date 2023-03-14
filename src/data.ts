@@ -15,8 +15,8 @@ export interface AudioBus {
 export interface AudioLevel {
   key: string
   type: 'input' | 'bus'
-  meterF1: { time: Date, value: number }[]
-  meterF2: { time: Date, value: number }[]
+  meterF1: { time: Date; value: number }[]
+  meterF2: { time: Date; value: number }[]
 }
 
 interface AudioLevelData {
@@ -311,41 +311,53 @@ export class VMixData {
   }
 
   /**
-   * @param level 
+   * @param level
    * @returns AudioLevelData
    * @description parses an AudioLevel into 1 second and 3 second data
    */
   public getAudioLevelData(level: AudioLevel): AudioLevelData {
-    const now = Math.floor((new Date()).getTime() / 1000)
+    const now = Math.floor(new Date().getTime() / 1000)
     let s1 = 1000 / this.instance.config.apiPollInterval
     let s3 = s1 * 3
 
     if (s1 < 1) s1 = 1
     if (s3 < 1) s3 = 1
 
-    let s1ArrF1 = level.meterF1.filter(level => Math.floor(level.time.getTime() / 1000) === now -1).map(level => level.value)
-    let s1ArrF2 = level.meterF2.filter(level => Math.floor(level.time.getTime() / 1000) === now -1).map(level => level.value)
-    let s3ArrF1 = level.meterF1.filter(level => Math.floor(level.time.getTime() / 1000) < now && Math.floor(level.time.getTime() / 1000) > now - 4).map(level => level.value)
-    let s3ArrF2 = level.meterF2.filter(level => Math.floor(level.time.getTime() / 1000) < now && Math.floor(level.time.getTime() / 1000) > now - 4).map(level => level.value)
+    const s1ArrF1 = level.meterF1
+      .filter((level) => Math.floor(level.time.getTime() / 1000) === now - 1)
+      .map((level) => level.value)
+    const s1ArrF2 = level.meterF2
+      .filter((level) => Math.floor(level.time.getTime() / 1000) === now - 1)
+      .map((level) => level.value)
+    const s3ArrF1 = level.meterF1
+      .filter(
+        (level) => Math.floor(level.time.getTime() / 1000) < now && Math.floor(level.time.getTime() / 1000) > now - 4
+      )
+      .map((level) => level.value)
+    const s3ArrF2 = level.meterF2
+      .filter(
+        (level) => Math.floor(level.time.getTime() / 1000) < now && Math.floor(level.time.getTime() / 1000) > now - 4
+      )
+      .map((level) => level.value)
 
     let s1MeterF1Peak = 0
     let s1MeterF2Peak = 0
     let s3MeterF1Peak = 0
     let s3MeterF2Peak = 0
 
-    s1ArrF1.forEach(level => {
+    s1ArrF1.forEach((level) => {
       if (level > s1MeterF1Peak) s1MeterF1Peak = level
     })
 
-    s1ArrF2.forEach(level => {
+    s1ArrF2.forEach((level) => {
       if (level > s1MeterF2Peak) s1MeterF2Peak = level
     })
 
-    s3ArrF1.forEach(level => {
+    s3ArrF1.forEach((level) => {
       if (level > s3MeterF1Peak) s3MeterF1Peak = level
     })
 
-    s3ArrF2.forEach(level => {
+    s3ArrF2.forEach((level) => {
       if (level > s3MeterF2Peak) s3MeterF2Peak = level
     })
 
@@ -357,7 +369,7 @@ export class VMixData {
       s1MeterF1Peak,
       s1MeterF2Peak,
       s3MeterF1Peak,
-      s3MeterF2Peak
+      s3MeterF2Peak,
     }
   }
 
@@ -480,7 +492,7 @@ export class VMixData {
           }
 
           if (inputData.meterF1 && inputData.meterF2) {
-            const audioLevel = this.audioLevels.find(level => level.key === inputData.key)
+            const audioLevel = this.audioLevels.find((level) => level.key === inputData.key)
             const now = new Date()
 
             if (!audioLevel) {
@@ -488,7 +500,7 @@ export class VMixData {
                 key: inputData.key,
                 type: 'input',
                 meterF1: [{ time: now, value: inputData.meterF1 }],
-                meterF2: [{ time: now, value: inputData.meterF2 }]
+                meterF2: [{ time: now, value: inputData.meterF2 }],
               })
             } else {
               audioLevel.meterF1.push({ time: now, value: inputData.meterF1 })
@@ -631,7 +643,7 @@ export class VMixData {
 
           busData.push(bus)
 
-          const audioLevel = this.audioLevels.find(level => level.key === key)
+          const audioLevel = this.audioLevels.find((level) => level.key === key)
           const now = new Date()
 
           if (!audioLevel) {
@@ -639,7 +651,7 @@ export class VMixData {
               key,
               type: 'bus',
               meterF1: [{ time: now, value: bus.meterF1 }],
-              meterF2: [{ time: now, value: bus.meterF2 }]
+              meterF2: [{ time: now, value: bus.meterF2 }],
             })
           } else {
             audioLevel.meterF1.push({ time: now, value: bus.meterF1 })
@@ -853,9 +865,9 @@ export class VMixData {
       })
 
       // Clean up Audio levels for removed inputs
-      this.audioLevels = this.audioLevels.filter(level => {
+      this.audioLevels = this.audioLevels.filter((level) => {
         let inputFound = false
-        newData.inputs.forEach(input => {
+        newData.inputs.forEach((input) => {
           if (input.key === level.key) inputFound = true
         })
 
