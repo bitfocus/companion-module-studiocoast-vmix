@@ -611,6 +611,7 @@ export class VMixData {
         }
 
         if (mixID === 1) {
+          mix.active = true
           mix.preview = parseInt(parsedData.preview[0], 10)
           mix.program = parseInt(parsedData.active[0], 10)
         } else {
