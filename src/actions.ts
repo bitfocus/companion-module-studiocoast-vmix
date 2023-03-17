@@ -11,6 +11,7 @@ export interface VMixActions {
   previewInput: VMixAction<PreviewInputCallback>
   previewInputNext: VMixAction<PreviewInputNextCallback>
   previewInputPrevious: VMixAction<PreviewInputPreviousCallback>
+  resetInput: VMixAction<ResetInputCallback>
 
   // Transition
   programCut: VMixAction<ProgramCutCallback>
@@ -162,6 +163,13 @@ interface PreviewInputNextCallback {
 interface PreviewInputPreviousCallback {
   actionId: 'previewInputPrevious'
   options: Record<string, never>
+}
+
+interface ResetInputCallback {
+  actionId: 'resetInput'
+  options: Readonly<{
+    input: string
+  }>
 }
 
 // Transition
@@ -1037,6 +1045,7 @@ export type ActionCallbacks =
   | PreviewInputCallback
   | PreviewInputNextCallback
   | PreviewInputPreviousCallback
+  | ResetInputCallback
 
   // Transition
   | ProgramCutCallback
@@ -1175,7 +1184,7 @@ export interface VMixAction<T> {
   name: string
   description?: string
   options: InputFieldWithDefault[]
-  callback: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>) => void
+  callback: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>) => void | Promise<void>
   subscribe?: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>) => void
   unsubscribe?: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>) => void
 }
@@ -1252,6 +1261,13 @@ export function getActions(instance: VMixInstance): VMixActions {
       name: 'Input - Send Previous input to Preview',
       description: 'Send to Preview the previous Input',
       options: [],
+      callback: sendBasicCommand,
+    },
+
+    resetInput: {
+      name: 'Input - Reset',
+      description: 'Reset an Input',
+      options: [options.input],
       callback: sendBasicCommand,
     },
 
@@ -1583,17 +1599,20 @@ export function getActions(instance: VMixInstance): VMixActions {
           type: 'textinput',
           label: 'Value (-2 to 2)',
           id: 'value',
-          default: '0'
+          default: '0',
         },
       ],
       callback: async (action) => {
         const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
-        let value = (await instance.parseOption(action.options.value + ''))[instance.buttonShift.state]
+        const value = (await instance.parseOption(action.options.value + ''))[instance.buttonShift.state]
 
-        let valueTest = parseFloat(value)
+        const valueTest = parseFloat(value)
 
         if (isNaN(valueTest)) {
-          instance.log('warn', `"Position - Adjust an inputs pan/zoom" Value field must be a number, or a variable which value is a number`)
+          instance.log(
+            'warn',
+            `"Position - Adjust an inputs pan/zoom" Value field must be a number, or a variable which value is a number`
+          )
           return
         }
 

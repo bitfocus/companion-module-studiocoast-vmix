@@ -57,46 +57,51 @@ export class Variables {
       { name: 'Layer Routing Layer', variableId: 'layer_routing_layer' },
     ])
 
-      // Audio
-      ;[...AUDIOBUSSESMASTER, 'Selected'].forEach((bus) => {
-        variables.add({ name: `Bus ${bus} Volume`, variableId: `bus_${bus.toLowerCase()}_volume` })
-        variables.add({ name: `Bus ${bus} dB`, variableId: `bus_${bus.toLowerCase()}_volume_db` })
-        variables.add({ name: `Bus ${bus} Volume Linear`, variableId: `bus_${bus.toLowerCase()}_volume_linear` })
-        if (bus !== 'Headphones') {
-          variables.add({ name: `Bus ${bus} MeterF1`, variableId: `bus_${bus.toLowerCase()}_meterf1` })
-          variables.add({ name: `Bus ${bus} MeterFz`, variableId: `bus_${bus.toLowerCase()}_meterf2` })
-          variables.add({ name: `Bus ${bus} MeterF1 Avg 1s`, variableId: `bus_${bus.toLowerCase()}_meterf1_avg_1s` })
-          variables.add({ name: `Bus ${bus} MeterF1 Avg 3s`, variableId: `bus_${bus.toLowerCase()}_meterf1_avg_3s` })
-          variables.add({ name: `Bus ${bus} MeterF2 Avg 1s`, variableId: `bus_${bus.toLowerCase()}_meterf1_avg_1s` })
-          variables.add({ name: `Bus ${bus} MeterF2 Avg 3s`, variableId: `bus_${bus.toLowerCase()}_meterf1_avg_3s` })
-          variables.add({ name: `Bus ${bus} MeterF1 Peak 1s`, variableId: `bus_${bus.toLowerCase()}_meterf1_peak_1s` })
-          variables.add({ name: `Bus ${bus} MeterF1 Peak 3s`, variableId: `bus_${bus.toLowerCase()}_meterf1_peak_3s` })
-          variables.add({ name: `Bus ${bus} MeterF2 Peak 1s`, variableId: `bus_${bus.toLowerCase()}_meterf1_peak_1s` })
-          variables.add({ name: `Bus ${bus} MeterF2 Peak 3s`, variableId: `bus_${bus.toLowerCase()}_meterf1_peak_3s` })
-          if (bus !== 'Master') {
-            variables.add({ name: `Bus ${bus} Mute`, variableId: `bus_${bus.toLowerCase()}_mute` })
-            variables.add({ name: `Bus ${bus} Solo`, variableId: `bus_${bus.toLowerCase()}_solo` })
-          }
+    // Audio
+    ;[...AUDIOBUSSESMASTER, 'Selected'].forEach((bus) => {
+      variables.add({ name: `Bus ${bus} Volume`, variableId: `bus_${bus.toLowerCase()}_volume` })
+      variables.add({ name: `Bus ${bus} dB`, variableId: `bus_${bus.toLowerCase()}_volume_db` })
+      variables.add({ name: `Bus ${bus} Volume Linear`, variableId: `bus_${bus.toLowerCase()}_volume_linear` })
+      if (bus !== 'Headphones') {
+        variables.add({ name: `Bus ${bus} MeterF1`, variableId: `bus_${bus.toLowerCase()}_meterf1` })
+        variables.add({ name: `Bus ${bus} MeterFz`, variableId: `bus_${bus.toLowerCase()}_meterf2` })
+        variables.add({ name: `Bus ${bus} MeterF1 Avg 1s`, variableId: `bus_${bus.toLowerCase()}_meterf1_avg_1s` })
+        variables.add({ name: `Bus ${bus} MeterF1 Avg 3s`, variableId: `bus_${bus.toLowerCase()}_meterf1_avg_3s` })
+        variables.add({ name: `Bus ${bus} MeterF2 Avg 1s`, variableId: `bus_${bus.toLowerCase()}_meterf1_avg_1s` })
+        variables.add({ name: `Bus ${bus} MeterF2 Avg 3s`, variableId: `bus_${bus.toLowerCase()}_meterf1_avg_3s` })
+        variables.add({ name: `Bus ${bus} MeterF1 Peak 1s`, variableId: `bus_${bus.toLowerCase()}_meterf1_peak_1s` })
+        variables.add({ name: `Bus ${bus} MeterF1 Peak 3s`, variableId: `bus_${bus.toLowerCase()}_meterf1_peak_3s` })
+        variables.add({ name: `Bus ${bus} MeterF2 Peak 1s`, variableId: `bus_${bus.toLowerCase()}_meterf1_peak_1s` })
+        variables.add({ name: `Bus ${bus} MeterF2 Peak 3s`, variableId: `bus_${bus.toLowerCase()}_meterf1_peak_3s` })
+        if (bus !== 'Master') {
+          variables.add({ name: `Bus ${bus} Mute`, variableId: `bus_${bus.toLowerCase()}_mute` })
+          variables.add({ name: `Bus ${bus} Solo`, variableId: `bus_${bus.toLowerCase()}_solo` })
         }
-      })
+      }
+    })
 
-      // Overlay
-      ;[1, 2, 3, 4].forEach((overlay) => {
-        variables.add({ name: `Overlay ${overlay} Input Short Title`, variableId: `overlay_${overlay}_input_name` })
-        variables.add({ name: `Overlay ${overlay} Input Number`, variableId: `overlay_${overlay}_input` })
-        variables.add({ name: `Overlay ${overlay} Active PGM`, variableId: `overlay_${overlay}_pgm` })
-        variables.add({ name: `Overlay ${overlay} Active PRV`, variableId: `overlay_${overlay}_prv` })
-      })
+    // Overlay
+    ;[1, 2, 3, 4].forEach((overlay) => {
+      variables.add({ name: `Overlay ${overlay} Input Short Title`, variableId: `overlay_${overlay}_input_name` })
+      variables.add({ name: `Overlay ${overlay} Input Number`, variableId: `overlay_${overlay}_input` })
+      variables.add({ name: `Overlay ${overlay} Active PGM`, variableId: `overlay_${overlay}_pgm` })
+      variables.add({ name: `Overlay ${overlay} Active PRV`, variableId: `overlay_${overlay}_prv` })
+    })
 
-      // Mix
-      ;['Preview', 'Program'].forEach((type) => {
-        this.instance.data.mix.filter(mix => mix.active).forEach((mix) => {
+    // Mix
+    ;['Preview', 'Program'].forEach((type) => {
+      this.instance.data.mix
+        .filter((mix) => mix.active)
+        .forEach((mix) => {
           variables.add({ name: `Mix ${mix.number} ${type}`, variableId: `mix_${mix.number}_${type.toLowerCase()}` })
           variables.add({
             name: `Mix ${mix.number} ${type} Short Title`,
             variableId: `mix_${mix.number}_${type.toLowerCase()}_name`,
           })
-          variables.add({ name: `Mix ${mix.number} ${type} GUID`, variableId: `mix_${mix.number}_${type.toLowerCase()}_guid` })
+          variables.add({
+            name: `Mix ${mix.number} ${type} GUID`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_guid`,
+          })
 
           for (let i = 1; i < 11; i++) {
             variables.add({
@@ -114,32 +119,32 @@ export class Variables {
           }
         })
 
-        variables.add({ name: 'Mix Selected', variableId: 'mix_selected' })
-        variables.add({ name: `Mix Selected ${type}`, variableId: `mix_selected_${type.toLowerCase()}` })
-        variables.add({ name: `Mix Selected ${type} Short Title`, variableId: `mix_selected_${type.toLowerCase()}_name` })
-        variables.add({ name: `Mix Selected ${type} GUID`, variableId: `mix_selected_${type.toLowerCase()}_guid` })
+      variables.add({ name: 'Mix Selected', variableId: 'mix_selected' })
+      variables.add({ name: `Mix Selected ${type}`, variableId: `mix_selected_${type.toLowerCase()}` })
+      variables.add({ name: `Mix Selected ${type} Short Title`, variableId: `mix_selected_${type.toLowerCase()}_name` })
+      variables.add({ name: `Mix Selected ${type} GUID`, variableId: `mix_selected_${type.toLowerCase()}_guid` })
 
-        for (let i = 1; i < 11; i++) {
-          variables.add({
-            name: `Mix Selected ${type} Layer ${i} Number`,
-            variableId: `mix_selected_${type.toLowerCase()}_layer_${i}_number`,
-          })
-          variables.add({
-            name: `Mix Selected ${type} Layer ${i} Name`,
-            variableId: `mix_selected_${type.toLowerCase()}_layer_${i}_name`,
-          })
-          variables.add({
-            name: `Mix Selected ${type} Layer ${i} Key`,
-            variableId: `mix_selected_${type.toLowerCase()}_layer_${i}_key`,
-          })
-        }
-      })
+      for (let i = 1; i < 11; i++) {
+        variables.add({
+          name: `Mix Selected ${type} Layer ${i} Number`,
+          variableId: `mix_selected_${type.toLowerCase()}_layer_${i}_number`,
+        })
+        variables.add({
+          name: `Mix Selected ${type} Layer ${i} Name`,
+          variableId: `mix_selected_${type.toLowerCase()}_layer_${i}_name`,
+        })
+        variables.add({
+          name: `Mix Selected ${type} Layer ${i} Key`,
+          variableId: `mix_selected_${type.toLowerCase()}_layer_${i}_key`,
+        })
+      }
+    })
 
-      // Dyanmic Inputs/Values
-      ;[1, 2, 3, 4].forEach((dynamic) => {
-        variables.add({ name: `Dynamic Input ${dynamic}`, variableId: `dynamic_input_${dynamic}` })
-        variables.add({ name: `Dynamic Value ${dynamic}`, variableId: `dynamic_value_${dynamic}` })
-      })
+    // Dyanmic Inputs/Values
+    ;[1, 2, 3, 4].forEach((dynamic) => {
+      variables.add({ name: `Dynamic Input ${dynamic}`, variableId: `dynamic_input_${dynamic}` })
+      variables.add({ name: `Dynamic Value ${dynamic}`, variableId: `dynamic_value_${dynamic}` })
+    })
 
     // Inputs
     const inputNumberVariables = new Set<CompanionVariableDefinition>()
@@ -162,16 +167,18 @@ export class Variables {
         inputSet.add({ name: `Input ${title} GUID`, variableId: `input_${type}_guid` })
         inputSet.add({ name: `Input ${title} Type`, variableId: `input_${type}_type` })
 
-        this.instance.data.mix.filter(mix => mix.active).forEach((mix) => {
-          inputSet.add({
-            name: `Input ${title} Mix ${mix.number} Tally Preview`,
-            variableId: `input_${type}_mix_${mix.number}_tally_preview`,
+        this.instance.data.mix
+          .filter((mix) => mix.active)
+          .forEach((mix) => {
+            inputSet.add({
+              name: `Input ${title} Mix ${mix.number} Tally Preview`,
+              variableId: `input_${type}_mix_${mix.number}_tally_preview`,
+            })
+            inputSet.add({
+              name: `Input ${title} Mix ${mix.number} Tally Program`,
+              variableId: `input_${type}_mix_${mix.number}_tally_program`,
+            })
           })
-          inputSet.add({
-            name: `Input ${title} Mix ${mix.number} Tally Program`,
-            variableId: `input_${type}_mix_${mix.number}_tally_program`,
-          })
-        })
 
         inputSet.add({ name: `Input ${title} Muted`, variableId: `input_${type}_mute` })
         inputSet.add({ name: `Input ${title} Audio`, variableId: `input_${type}_audio` })
@@ -216,14 +223,14 @@ export class Variables {
         }
 
         if (input.list) {
-          input.list.forEach(listItem => {
+          input.list.forEach((listItem) => {
             inputSet.add({
               name: `Input ${title} List ${listItem.index + 1} Name`,
-              variableId: `input_${type}_list_${listItem.index + 1}_name`
+              variableId: `input_${type}_list_${listItem.index + 1}_name`,
             })
             inputSet.add({
               name: `Input ${title} List ${listItem.index + 1} Selected`,
-              variableId: `input_${type}_list_${listItem.index + 1}_selected`
+              variableId: `input_${type}_list_${listItem.index + 1}_selected`,
             })
           })
         }
@@ -592,11 +599,11 @@ export class Variables {
 
     newVariables['layer_routing_layer'] = this.instance.routingData.layer.destinationLayer || ''
 
-      // Dyanmic Inputs/Values
-      ;[0, 1, 2, 3].forEach((dynamic) => {
-        newVariables[`dynamic_input_${dynamic + 1}`] = this.instance.data.dynamicInput[dynamic]?.value || ''
-        newVariables[`dynamic_value_${dynamic + 1}`] = this.instance.data.dynamicValue[dynamic]?.value || ''
-      })
+    // Dyanmic Inputs/Values
+    ;[0, 1, 2, 3].forEach((dynamic) => {
+      newVariables[`dynamic_input_${dynamic + 1}`] = this.instance.data.dynamicInput[dynamic]?.value || ''
+      newVariables[`dynamic_value_${dynamic + 1}`] = this.instance.data.dynamicValue[dynamic]?.value || ''
+    })
 
     // Inputs
     const inputNames: string[] = []
@@ -714,7 +721,7 @@ export class Variables {
         }
 
         if (input.list) {
-          input.list.forEach(listItem => {
+          input.list.forEach((listItem) => {
             newVariables[`input_${type}_list_${listItem.index + 1}_name`] = listItem.filename
             newVariables[`input_${type}_list_${listItem.index + 1}_selected`] = listItem.selected.toString()
 
