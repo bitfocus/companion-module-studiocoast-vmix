@@ -310,7 +310,7 @@ interface SetInputPositionCallback {
     functionID: 'SetPanX' | 'SetPanY' | 'SetZoom'
     input: string
     adjustment: 'Set' | 'Increase' | 'Decrease'
-    value: number
+    value: string
   }>
 }
 
@@ -1580,16 +1580,28 @@ export function getActions(instance: VMixInstance): VMixActions {
           ],
         },
         {
-          type: 'number',
-          label: 'Value',
+          type: 'textinput',
+          label: 'Value (-2 to 2)',
           id: 'value',
-          default: 0,
-          min: -2,
-          max: 2,
+          default: '0'
         },
       ],
       callback: async (action) => {
         const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+        let value = (await instance.parseOption(action.options.value + ''))[instance.buttonShift.state]
+
+        let valueTest = parseFloat(value)
+
+        if (isNaN(valueTest)) {
+          instance.log('warn', `"Position - Adjust an inputs pan/zoom" Value field must be a number, or a variable which value is a number`)
+          return
+        }
+
+        if (valueTest < -2 || valueTest > 2) {
+          instance.log('warn', `"Position - Adjust an inputs pan/zoom" Value field must be in the range -2 to 2`)
+          return
+        }
+
         let prefix = ''
 
         if (action.options.adjustment === 'Increase') {
@@ -1600,9 +1612,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION ${action.options.functionID} Input=${encodeURIComponent(input)}&value=${prefix}${
-              action.options.value
-            }`
+            `FUNCTION ${action.options.functionID} Input=${encodeURIComponent(input)}&value=${prefix}${value}`
           )
       },
     },
