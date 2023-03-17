@@ -1,5 +1,15 @@
 # Patch Notes
 
+**V3.0.2**
+- Added more Action and Feedback descriptions
+- Fixed Replay Fastforward/Backward speed and tbar action
+- Added Preview and Program options for layer routing
+- Cleanup of Instance Variables code
+- Added variables for Input List Items - eg `$(vmix:input_X_list_Y_name)`, where x is an input name/number/key, and Y is the list item index (starting from 1)
+- Added Instance Variable support for adjusting Pan/Zoom value
+- Added Reset Input action
+- Selected Index feedback and variables now support Virtual Sets
+
 **V3.0.1**
 - Fixed issue with actions not parsing correctly
 - Added parsing of instance variables for countdown time/duration

@@ -26,6 +26,16 @@ For some feedback, such as Tally and Layer Routing it's possible to enable 'blin
 This module now supports Companions HTTP API, providing endpoints that can be used by 3rd party applications, and as a Data Source in vMix itself. Information on the API endpoints is available in [docs/HTTP_API.md](./docs/HTTP_API.md)
 
 # Recent Patches
+**V3.0.2**
+- Added more Action and Feedback descriptions
+- Fixed Replay Fastforward/Backward speed and tbar action
+- Added Preview and Program options for layer routing
+- Cleanup of Instance Variables code
+- Added variables for Input List Items - eg `$(vmix:input_X_list_Y_name)`, where x is an input name/number/key, and Y is the list item index (starting from 1)
+- Added Instance Variable support for adjusting Pan/Zoom value
+- Added Reset Input action
+- Selected Index feedback and variables now support Virtual Sets
+
 **V3.0.1**
 - Fixed issue with actions not parsing correctly
 - Added parsing of instance variables for countdown time/duration
