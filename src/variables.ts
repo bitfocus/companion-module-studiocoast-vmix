@@ -211,7 +211,7 @@ export class Variables {
           })
         }
 
-        if (input.type === 'VideoList') {
+        if (input.type === 'VideoList' || input.type === 'VirtualSet') {
           inputSet.add({
             name: `Input ${title} Selected Index`,
             variableId: `input_${type}_selected`,
@@ -730,6 +730,10 @@ export class Variables {
               newVariables[`input_${type}_selected_name`] = listItem.filename
             }
           })
+        }
+
+        if (input.type === 'VirtualSet' && input.selectedIndex !== undefined) {
+          newVariables[`input_${type}_selected`] = input.selectedIndex
         }
 
         if (input.type === 'VideoCall') {

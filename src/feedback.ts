@@ -1341,7 +1341,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
     // Slides / List
     inputSelectedIndex: {
       type: 'advanced',
-      name: 'Slides/List - Change Colors Based On Selected Slide/Index',
+      name: 'Slides/List - Change Colors Based On Selected Slide/Index/Virtual Set',
       description: 'If the specified slide/index is selected, change colors of the bank',
       options: [
         options.input,
@@ -1370,7 +1370,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           } else if (input?.list?.length === 0) {
             return { color: feedback.options.et, bgcolor: feedback.options.eb }
           }
-        } else if (input?.type === 'PowerPoint') {
+        } else if (input?.type === 'PowerPoint' || input?.type === 'VirtualSet') {
           if (input.selectedIndex === feedback.options.selectedIndex) {
             return { color: feedback.options.fg, bgcolor: feedback.options.bg }
           }
