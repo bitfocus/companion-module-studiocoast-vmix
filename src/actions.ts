@@ -1202,6 +1202,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     }
 
     const parseSelectedOptions = (param: ActionOptionEntry | string): ActionOptionEntry | string => {
+      console.log('parseSelected', param)
       if (param[0] === 'mix' && param[1] === -1) {
         return ['mix', instance.routingData.mix]
       } else {
@@ -1225,9 +1226,9 @@ export function getActions(instance: VMixInstance): VMixActions {
       .map(parseButtonShift)
 
     for (const param of params) {
-      if (typeof param === 'string') {
-        const parsed = await instance.parseVariablesInString(param)
-        parsedParams.push(parsed)
+      if (typeof param[1] === 'string') {
+        param[1] = await instance.parseVariablesInString(param[1])
+        parsedParams.push(param)
       } else {
         parsedParams.push(param)
       }
