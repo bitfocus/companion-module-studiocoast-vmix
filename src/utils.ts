@@ -218,7 +218,7 @@ export const options: Options = {
  * @description Returns dB of a given volume (if the volume of a meter, multiply by 100 first)
  */
 export const volumeTodB = (volume: number): number => {
-  return 20 * Math.log10(volume / 100)
+  return 20 * Math.log10(volume)
 }
 
 /**
