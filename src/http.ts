@@ -203,6 +203,13 @@ export const httpHandler = async (
     response.body = JSON.stringify(request.query.flat ? flatData : data, null, 2)
   }
 
+  const getVariables = () => {
+    const data = instance.variables?.currentVariables || {}
+
+    response.status = 200
+    response.body = JSON.stringify(data, null, 2)
+  }
+
   const postActions = () => {
     try {
       const body = JSON.parse(request.body || '')
@@ -229,8 +236,9 @@ export const httpHandler = async (
       data: getData,
       dynamics: getDynamics,
       inputs: getInputs,
-      transitions: getTransitions,
       timers: getTimers,
+      transitions: getTransitions,
+      variables: getVariables
     },
     POST: {
       actions: postActions,

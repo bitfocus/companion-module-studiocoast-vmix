@@ -13,6 +13,7 @@ const mixId = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 export class Variables {
   private readonly instance: VMixInstance
   private currentDefinitions: Set<CompanionVariableDefinition> = new Set()
+  public currentVariables: any = {}
 
   constructor(instance: VMixInstance) {
     this.instance = instance
@@ -29,6 +30,7 @@ export class Variables {
       newVariables[name] = variables[name]?.toString()
     }
 
+    this.currentVariables = newVariables
     this.instance.setVariableValues(newVariables)
     this.instance.checkFeedbacks('buttonText')
   }
