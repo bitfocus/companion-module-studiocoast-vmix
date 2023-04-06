@@ -26,6 +26,11 @@ For some feedback, such as Tally and Layer Routing it's possible to enable 'blin
 This module now supports Companions HTTP API, providing endpoints that can be used by 3rd party applications, and as a Data Source in vMix itself. Information on the API endpoints is available in [docs/HTTP_API.md](./docs/HTTP_API.md)
 
 # Recent Patches
+**V3.1.0**
+- Added a variables HTTP endpoint to retrieve all of the current instance variables
+- Fixed incorrect parsing of variables for basic commands
+- Fixed Meter amplitude to dB math in instance variables
+
 **V3.0.2**
 - Added more Action and Feedback descriptions
 - Fixed Replay Fastforward/Backward speed and tbar action
@@ -44,11 +49,6 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 - Changed mix 2 to 16 to use ActiveInput to cut without changing preview
 - Fixed an issue with volume linear rounding
 - Minor performance tweaks and updates
-
-**V3.0.0**
-- Companion v3 compatibility
-- Removed deprecated feedbacks that updated button text
-- Removed instance variables for each time format, instead use Expression Functions in Companion v3
 
 
 Older patch notes available in [docs/PATCH_NOTES.md](./docs/PATCH_NOTES.md)

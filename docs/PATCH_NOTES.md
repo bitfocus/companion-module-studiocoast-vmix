@@ -1,5 +1,10 @@
 # Patch Notes
 
+**V3.1.0**
+- Added a variables HTTP endpoint to retrieve all of the current instance variables
+- Fixed incorrect parsing of variables for basic commands
+- Fixed Meter amplitude to dB math in instance variables
+
 **V3.0.2**
 - Added more Action and Feedback descriptions
 - Fixed Replay Fastforward/Backward speed and tbar action
