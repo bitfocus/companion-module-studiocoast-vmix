@@ -1,5 +1,8 @@
 # Patch Notes
 
+**V3.1.1**
+- Fixed an issue when specifying a non-existent input for the Overlay State feedback
+
 **V3.1.0**
 - Added a variables HTTP endpoint to retrieve all of the current instance variables
 - Fixed incorrect parsing of variables for basic commands
