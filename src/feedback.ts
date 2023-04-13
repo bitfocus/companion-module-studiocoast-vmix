@@ -622,7 +622,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       callback: async (feedback, context) => {
         let inputOptions: any = await instance.parseOption(feedback.options.input, context)
         inputOptions = await Promise.all(inputOptions.map((value: any) => instance.data.getInput(value)))
-        inputOptions = inputOptions.map((input: Input) => input.number)
+        inputOptions = inputOptions.map((input: Input | null) => (input !== null ? input.number : null))
 
         let preview = false
         let program = false
@@ -631,7 +631,8 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           const overlayNumberCheck =
             overlay.number === parseInt(feedback.options.overlay, 10) || feedback.options.overlay === '0'
           const overlayInputCheck =
-            overlay.input === inputOptions[instance.buttonShift.state] ||
+            (overlay.input === inputOptions[instance.buttonShift.state] &&
+              inputOptions[instance.buttonShift.state] !== null) ||
             (feedback.options.input === '' && overlay.input !== null)
 
           if (overlayNumberCheck && overlayInputCheck) {
