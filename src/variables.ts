@@ -408,14 +408,22 @@ export class Variables {
           const audioLevel = this.instance.data.audioLevels.find((level) => level.key === mixProgramInput.key)
           if (audioLevel) {
             const audioLevelData = this.instance.data.getAudioLevelData(audioLevel)
-            newVariables[`mix_${mix}_program_meterf1_avg_1s`] = volumeTodB((audioLevelData.s1MeterF1Avg) * 100).toFixed(1)
-            newVariables[`mix_${mix}_program_meterf2_avg_1s`] = volumeTodB((audioLevelData.s1MeterF2Avg) * 100).toFixed(1)
-            newVariables[`mix_${mix}_program_meterf1_avg_3s`] = volumeTodB((audioLevelData.s3MeterF1Avg) * 100).toFixed(1)
-            newVariables[`mix_${mix}_program_meterf2_avg_3s`] = volumeTodB((audioLevelData.s3MeterF2Avg) * 100).toFixed(1)
-            newVariables[`mix_${mix}_program_meterf1_peak_1s`] = volumeTodB((audioLevelData.s1MeterF1Peak) * 100).toFixed(1)
-            newVariables[`mix_${mix}_program_meterf2_peak_1s`] = volumeTodB((audioLevelData.s1MeterF2Peak) * 100).toFixed(1)
-            newVariables[`mix_${mix}_program_meterf1_peak_3s`] = volumeTodB((audioLevelData.s3MeterF1Peak) * 100).toFixed(1)
-            newVariables[`mix_${mix}_program_meterf2_peak_3s`] = volumeTodB((audioLevelData.s3MeterF2Peak) * 100).toFixed(1)
+            newVariables[`mix_${mix}_program_meterf1_avg_1s`] = volumeTodB(audioLevelData.s1MeterF1Avg * 100).toFixed(1)
+            newVariables[`mix_${mix}_program_meterf2_avg_1s`] = volumeTodB(audioLevelData.s1MeterF2Avg * 100).toFixed(1)
+            newVariables[`mix_${mix}_program_meterf1_avg_3s`] = volumeTodB(audioLevelData.s3MeterF1Avg * 100).toFixed(1)
+            newVariables[`mix_${mix}_program_meterf2_avg_3s`] = volumeTodB(audioLevelData.s3MeterF2Avg * 100).toFixed(1)
+            newVariables[`mix_${mix}_program_meterf1_peak_1s`] = volumeTodB(audioLevelData.s1MeterF1Peak * 100).toFixed(
+              1
+            )
+            newVariables[`mix_${mix}_program_meterf2_peak_1s`] = volumeTodB(audioLevelData.s1MeterF2Peak * 100).toFixed(
+              1
+            )
+            newVariables[`mix_${mix}_program_meterf1_peak_3s`] = volumeTodB(audioLevelData.s3MeterF1Peak * 100).toFixed(
+              1
+            )
+            newVariables[`mix_${mix}_program_meterf2_peak_3s`] = volumeTodB(audioLevelData.s3MeterF2Peak * 100).toFixed(
+              1
+            )
           }
 
           const inputDuration = calcDuration(mixProgramInput)
@@ -460,14 +468,22 @@ export class Variables {
           const audioLevel = this.instance.data.audioLevels.find((level) => level.key === mixPreviewInput.key)
           if (audioLevel) {
             const audioLevelData = this.instance.data.getAudioLevelData(audioLevel)
-            newVariables[`mix_${mix}_preview_meterf1_avg_1s`] = volumeTodB((audioLevelData.s1MeterF1Avg) * 100).toFixed(1)
-            newVariables[`mix_${mix}_preview_meterf2_avg_1s`] = volumeTodB((audioLevelData.s1MeterF2Avg) * 100).toFixed(1)
-            newVariables[`mix_${mix}_preview_meterf1_avg_3s`] = volumeTodB((audioLevelData.s3MeterF1Avg) * 100).toFixed(1)
-            newVariables[`mix_${mix}_preview_meterf2_avg_3s`] = volumeTodB((audioLevelData.s3MeterF2Avg) * 100).toFixed(1)
-            newVariables[`mix_${mix}_preview_meterf1_peak_1s`] = volumeTodB((audioLevelData.s1MeterF1Peak) * 100).toFixed(1)
-            newVariables[`mix_${mix}_preview_meterf2_peak_1s`] = volumeTodB((audioLevelData.s1MeterF2Peak) * 100).toFixed(1)
-            newVariables[`mix_${mix}_preview_meterf1_peak_3s`] = volumeTodB((audioLevelData.s3MeterF1Peak) * 100).toFixed(1)
-            newVariables[`mix_${mix}_preview_meterf2_peak_3s`] = volumeTodB((audioLevelData.s3MeterF2Peak) * 100).toFixed(1)
+            newVariables[`mix_${mix}_preview_meterf1_avg_1s`] = volumeTodB(audioLevelData.s1MeterF1Avg * 100).toFixed(1)
+            newVariables[`mix_${mix}_preview_meterf2_avg_1s`] = volumeTodB(audioLevelData.s1MeterF2Avg * 100).toFixed(1)
+            newVariables[`mix_${mix}_preview_meterf1_avg_3s`] = volumeTodB(audioLevelData.s3MeterF1Avg * 100).toFixed(1)
+            newVariables[`mix_${mix}_preview_meterf2_avg_3s`] = volumeTodB(audioLevelData.s3MeterF2Avg * 100).toFixed(1)
+            newVariables[`mix_${mix}_preview_meterf1_peak_1s`] = volumeTodB(audioLevelData.s1MeterF1Peak * 100).toFixed(
+              1
+            )
+            newVariables[`mix_${mix}_preview_meterf2_peak_1s`] = volumeTodB(audioLevelData.s1MeterF2Peak * 100).toFixed(
+              1
+            )
+            newVariables[`mix_${mix}_preview_meterf1_peak_3s`] = volumeTodB(audioLevelData.s3MeterF1Peak * 100).toFixed(
+              1
+            )
+            newVariables[`mix_${mix}_preview_meterf2_peak_3s`] = volumeTodB(audioLevelData.s3MeterF2Peak * 100).toFixed(
+              1
+            )
           }
 
           const inputDuration = calcDuration(mixPreviewInput)
@@ -510,8 +526,8 @@ export class Variables {
       let volume: number | string | undefined = audioBus?.[id === 'Headphones' ? 'headphonesVolume' : 'volume']
       let volumedB
       let volumeLinear
-      const meterF1 = audioBus?.meterF1 ? volumeTodB((audioBus.meterF1 * 100)).toFixed(1) : ''
-      const meterF2 = audioBus?.meterF2 ? volumeTodB((audioBus.meterF2 * 100)).toFixed(1) : ''
+      const meterF1 = audioBus?.meterF1 ? volumeTodB(audioBus.meterF1 * 100).toFixed(1) : ''
+      const meterF2 = audioBus?.meterF2 ? volumeTodB(audioBus.meterF2 * 100).toFixed(1) : ''
 
       if (volume !== undefined) {
         volumedB = volumeTodB(volume).toFixed(1)
@@ -536,14 +552,30 @@ export class Variables {
         const audioLevel = this.instance.data.audioLevels.find((level) => level.key === audioLevelID)
         if (audioLevel) {
           const audioLevelData = this.instance.data.getAudioLevelData(audioLevel)
-          newVariables[`bus_${id.toLowerCase()}_meterf1_avg_1s`] = volumeTodB((audioLevelData.s1MeterF1Avg) * 100).toFixed(1)
-          newVariables[`bus_${id.toLowerCase()}_meterf2_avg_1s`] = volumeTodB((audioLevelData.s1MeterF2Avg) * 100).toFixed(1)
-          newVariables[`bus_${id.toLowerCase()}_meterf1_avg_3s`] = volumeTodB((audioLevelData.s3MeterF1Avg) * 100).toFixed(1)
-          newVariables[`bus_${id.toLowerCase()}_meterf2_avg_3s`] = volumeTodB((audioLevelData.s3MeterF2Avg) * 100).toFixed(1)
-          newVariables[`bus_${id.toLowerCase()}_meterf1_peak_1s`] = volumeTodB((audioLevelData.s1MeterF1Peak) * 100).toFixed(1)
-          newVariables[`bus_${id.toLowerCase()}_meterf2_peak_1s`] = volumeTodB((audioLevelData.s1MeterF2Peak) * 100).toFixed(1)
-          newVariables[`bus_${id.toLowerCase()}_meterf1_peak_3s`] = volumeTodB((audioLevelData.s3MeterF1Peak) * 100).toFixed(1)
-          newVariables[`bus_${id.toLowerCase()}_meterf2_peak_3s`] = volumeTodB((audioLevelData.s3MeterF2Peak) * 100).toFixed(1)
+          newVariables[`bus_${id.toLowerCase()}_meterf1_avg_1s`] = volumeTodB(
+            audioLevelData.s1MeterF1Avg * 100
+          ).toFixed(1)
+          newVariables[`bus_${id.toLowerCase()}_meterf2_avg_1s`] = volumeTodB(
+            audioLevelData.s1MeterF2Avg * 100
+          ).toFixed(1)
+          newVariables[`bus_${id.toLowerCase()}_meterf1_avg_3s`] = volumeTodB(
+            audioLevelData.s3MeterF1Avg * 100
+          ).toFixed(1)
+          newVariables[`bus_${id.toLowerCase()}_meterf2_avg_3s`] = volumeTodB(
+            audioLevelData.s3MeterF2Avg * 100
+          ).toFixed(1)
+          newVariables[`bus_${id.toLowerCase()}_meterf1_peak_1s`] = volumeTodB(
+            audioLevelData.s1MeterF1Peak * 100
+          ).toFixed(1)
+          newVariables[`bus_${id.toLowerCase()}_meterf2_peak_1s`] = volumeTodB(
+            audioLevelData.s1MeterF2Peak * 100
+          ).toFixed(1)
+          newVariables[`bus_${id.toLowerCase()}_meterf1_peak_3s`] = volumeTodB(
+            audioLevelData.s3MeterF1Peak * 100
+          ).toFixed(1)
+          newVariables[`bus_${id.toLowerCase()}_meterf2_peak_3s`] = volumeTodB(
+            audioLevelData.s3MeterF2Peak * 100
+          ).toFixed(1)
         }
       }
 
@@ -648,8 +680,8 @@ export class Variables {
         newVariables[`input_${type}_mute`] = inputAudio.toString()
         newVariables[`input_${type}_audio`] = (!inputAudio).toString()
 
-        const meterF1 = input.meterF1 !== undefined ? volumeTodB((input.meterF1) * 100).toFixed(1) : ''
-        const meterF2 = input.meterF2 !== undefined ? volumeTodB((input.meterF2) * 100).toFixed(1) : ''
+        const meterF1 = input.meterF1 !== undefined ? volumeTodB(input.meterF1 * 100).toFixed(1) : ''
+        const meterF2 = input.meterF2 !== undefined ? volumeTodB(input.meterF2 * 100).toFixed(1) : ''
 
         newVariables[`input_${type}_meterf1`] = meterF1
         newVariables[`input_${type}_meterf2`] = meterF2
@@ -658,14 +690,14 @@ export class Variables {
         if (audioLevel) {
           const audioLevelData = this.instance.data.getAudioLevelData(audioLevel)
 
-          newVariables[`input_${type}_meterf1_avg_1s`] = volumeTodB((audioLevelData.s1MeterF1Avg) * 100).toFixed(1)
-          newVariables[`input_${type}_meterf2_avg_1s`] = volumeTodB((audioLevelData.s1MeterF2Avg) * 100).toFixed(1)
-          newVariables[`input_${type}_meterf1_avg_3s`] = volumeTodB((audioLevelData.s3MeterF1Avg) * 100).toFixed(1)
-          newVariables[`input_${type}_meterf2_avg_3s`] = volumeTodB((audioLevelData.s3MeterF2Avg) * 100).toFixed(1)
-          newVariables[`input_${type}_meterf1_peak_1s`] = volumeTodB((audioLevelData.s1MeterF1Peak) * 100).toFixed(1)
-          newVariables[`input_${type}_meterf2_peak_1s`] = volumeTodB((audioLevelData.s1MeterF2Peak) * 100).toFixed(1)
-          newVariables[`input_${type}_meterf1_peak_3s`] = volumeTodB((audioLevelData.s3MeterF1Peak) * 100).toFixed(1)
-          newVariables[`input_${type}_meterf2_peak_3s`] = volumeTodB((audioLevelData.s3MeterF2Peak) * 100).toFixed(1)
+          newVariables[`input_${type}_meterf1_avg_1s`] = volumeTodB(audioLevelData.s1MeterF1Avg * 100).toFixed(1)
+          newVariables[`input_${type}_meterf2_avg_1s`] = volumeTodB(audioLevelData.s1MeterF2Avg * 100).toFixed(1)
+          newVariables[`input_${type}_meterf1_avg_3s`] = volumeTodB(audioLevelData.s3MeterF1Avg * 100).toFixed(1)
+          newVariables[`input_${type}_meterf2_avg_3s`] = volumeTodB(audioLevelData.s3MeterF2Avg * 100).toFixed(1)
+          newVariables[`input_${type}_meterf1_peak_1s`] = volumeTodB(audioLevelData.s1MeterF1Peak * 100).toFixed(1)
+          newVariables[`input_${type}_meterf2_peak_1s`] = volumeTodB(audioLevelData.s1MeterF2Peak * 100).toFixed(1)
+          newVariables[`input_${type}_meterf1_peak_3s`] = volumeTodB(audioLevelData.s3MeterF1Peak * 100).toFixed(1)
+          newVariables[`input_${type}_meterf2_peak_3s`] = volumeTodB(audioLevelData.s3MeterF2Peak * 100).toFixed(1)
         }
 
         if (input.duration > 1) {

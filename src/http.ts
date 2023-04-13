@@ -238,7 +238,7 @@ export const httpHandler = async (
       inputs: getInputs,
       timers: getTimers,
       transitions: getTransitions,
-      variables: getVariables
+      variables: getVariables,
     },
     POST: {
       actions: postActions,
