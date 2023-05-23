@@ -1202,7 +1202,6 @@ export function getActions(instance: VMixInstance): VMixActions {
     }
 
     const parseSelectedOptions = (param: ActionOptionEntry | string): ActionOptionEntry | string => {
-      console.log('parseSelected', param)
       if (param[0] === 'mix' && param[1] === -1) {
         return ['mix', instance.routingData.mix]
       } else {
@@ -3391,11 +3390,17 @@ export function getActions(instance: VMixInstance): VMixActions {
     busSelect: {
       name: 'Util - Select Bus',
       description: 'Select a Bus for use with other Companion actions',
-      options: [options.audioBusMaster],
+      options: [{
+        type: 'dropdown',
+        label: 'Bus',
+        id: 'value',
+        default: 'Master',
+        choices: ['Master', 'A', 'B', 'C', 'D', 'E', 'F', 'G'].map((id) => ({ id, label: id })),
+      }],
       callback: (action) => {
         instance.routingData.bus = action.options.value
         instance.variables?.updateVariables()
-        instance.checkFeedbacks('busSelect')
+        instance.checkFeedbacks('busSelect', 'busVolumeMeter')
       },
     },
 

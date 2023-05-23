@@ -216,6 +216,7 @@ export class Activators {
       if (bus) {
         bus.muted = params[1] === '0'
         this.updateBuffer('busMute')
+        this.updateBuffer('busVolumeMeter')
       }
     } else if (params[0].endsWith('Solo')) {
       const bus = this.instance.data.getAudioBus(id)
@@ -249,6 +250,7 @@ export class Activators {
     input.audioBusses[bus] = params[2] === '1'
 
     this.updateBuffer('inputMute')
+    this.updateBuffer('inputVolumeMeter')
     this.updateBuffer('inputBusRouting')
   }
 
@@ -272,6 +274,7 @@ export class Activators {
     } else if (params[0] === 'InputAudio') {
       input.muted = params[2] !== '1'
       this.updateBuffer('inputMute')
+      this.updateBuffer('inputVolumeMeter')
       this.updateBuffer('inputAudio')
     } else if (params[0] === 'InputSolo') {
       input.solo = params[2] !== '0'

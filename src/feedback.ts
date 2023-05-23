@@ -10,6 +10,7 @@ import {
   CompanionFeedbackContext,
   SomeCompanionFeedbackInputField,
 } from '@companion-module/base'
+import { presets } from 'companion-module-utils'
 
 export interface VMixFeedbacks {
   // Tally
@@ -31,6 +32,8 @@ export interface VMixFeedbacks {
   liveInputVolume: VMixFeedback<LiveInputVolumeCallback>
   busVolumeLevel: VMixFeedback<BusVolumeLevelCallback>
   inputVolumeLevel: VMixFeedback<InputVolumeLevelCallback>
+  busVolumeMeter: VMixFeedback<BusVolumeMeterCallback>
+  inputVolumeMeter: VMixFeedback<InputVolumeMeterCallback>
 
   // Replay
   replayStatus: VMixFeedback<ReplayStatusCallback>
@@ -111,14 +114,14 @@ interface StatusCallback {
   feedbackId: 'status'
   options: Readonly<{
     status:
-      | 'connection'
-      | 'fadeToBlack'
-      | 'recording'
-      | 'external'
-      | 'streaming'
-      | 'multiCorder'
-      | 'fullscreen'
-      | 'playList'
+    | 'connection'
+    | 'fadeToBlack'
+    | 'recording'
+    | 'external'
+    | 'streaming'
+    | 'multiCorder'
+    | 'fullscreen'
+    | 'playList'
     fg: number
     bg: number
     value: '' | '0' | '1' | '2'
@@ -222,6 +225,20 @@ interface InputVolumeLevelCallback {
     value: number
     fg: number
     bg: number
+  }>
+}
+
+interface BusVolumeMeterCallback {
+  feedbackId: 'busVolumeMeter'
+  options: Readonly<{
+    value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'Selected'
+  }>
+}
+
+interface InputVolumeMeterCallback {
+  feedbackId: 'inputVolumeMeter'
+  options: Readonly<{
+    input: string
   }>
 }
 
@@ -392,6 +409,8 @@ export type FeedbackCallbacks =
   | LiveInputVolumeCallback
   | BusVolumeLevelCallback
   | InputVolumeLevelCallback
+  | BusVolumeMeterCallback
+  | InputVolumeMeterCallback
 
   // Replay
   | ReplayStatusCallback
@@ -1149,6 +1168,69 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
 
         return {}
       },
+    },
+
+    busVolumeMeter: {
+      type: 'advanced',
+      name: 'Audio - Bus Volume Meters',
+      description: 'Volumer meters for an Bus',
+      options: [options.audioBusMaster],
+      callback: async (feedback) => {
+        if (!feedback.image) return {}
+        let id = feedback.options.value
+        
+        if (id === 'Selected') {
+          id = instance.routingData.bus
+          console.log('Selected', id)
+          if (!id) return {}
+        }
+        const busID = id === 'Master' ? 'master' : 'bus' + id
+        console.log(busID)
+        const bus = instance.data.getAudioBus(busID)
+
+        if (!bus) return {}
+
+        const meter = presets.meter1({
+          width: feedback.image.width,
+          height: feedback.image.height,
+          meter1: volumeToLinear(bus.meterF1 * 100),
+          meter2: volumeToLinear(bus.meterF2 * 100),
+          muted: bus.muted
+        })
+
+        return {
+          imageBuffer: meter
+        }
+      }
+    },
+
+    inputVolumeMeter: {
+      type: 'advanced',
+      name: 'Audio - Input Volume Meters',
+      description: 'Volumer meters for an input',
+      options: [
+        options.input
+      ],
+      callback: async (feedback) => {
+        if (!feedback.image) return {}
+        const input = await instance.data.getInput(feedback.options.input)
+
+        if (!input || input.meterF1 === undefined || input.meterF2 === undefined) {
+          return {}
+        }
+
+        const meter = presets.meter1({
+          width: feedback.image.width,
+          height: feedback.image.height,
+          meter1: volumeToLinear(input.meterF1 * 100),
+          meter2: volumeToLinear(input.meterF2 * 100),
+          muted: input.muted
+        })
+
+        return {
+          imageBuffer: meter
+        }
+      }
     },
 
     // Replay

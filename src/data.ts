@@ -936,11 +936,17 @@ export class VMixData {
       changes.add('inputSelectedIndex')
       changes.add('inputSelectedIndexName')
       changes.add('routableMultiviewLayer')
+      changes.add('inputVolumeMeter')
 
       // DEPRECATED
       changes.add('titleLayer')
       changes.add('inputSelectedIndexName')
       changes.add('multiviewLayer')
+    }
+
+    // Check audio changes
+    if (!isEqual(newData.audio, this.audio) || inputCheck) {
+      changes.add('busVolumeMeter')
     }
 
     // Check Video Call changes
