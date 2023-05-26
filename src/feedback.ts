@@ -10,7 +10,7 @@ import {
   CompanionFeedbackContext,
   SomeCompanionFeedbackInputField,
 } from '@companion-module/base'
-import { presets } from 'companion-module-utils'
+import { presets, graphics } from 'companion-module-utils'
 
 export interface VMixFeedbacks {
   // Tally
@@ -527,17 +527,35 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         ) {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         } else if (optionsInput[instance.buttonShift.state] === 2) {
-          if (!feedback.image?.width || !feedback.image?.height) return {}
+          if (!feedback.image) return {}
 
-          const indicatorBuffer = instance.indicator.drawIndicator(
-            feedback.image.width,
-            feedback.image.height,
-            feedback.options.bg,
-            feedback.options.tally
-          )
+          let indicator
+
+          if (feedback.options.tally === 'border') {
+            indicator = graphics.border({
+              width: feedback.image.width,
+              height: feedback.image.height,
+              size: 4,
+              color: feedback.options.bg
+            })
+          } else if (feedback.options.tally.includes('corner')) {
+            let location: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' = 'topLeft'
+
+            if (feedback.options.tally === 'cornerTR') location = 'topRight'
+            if (feedback.options.tally === 'cornerBL') location = 'bottomLeft'
+            if (feedback.options.tally === 'cornerBR') location = 'bottomRight'
+
+            indicator = graphics.corner({
+              width: feedback.image.width,
+              height: feedback.image.height,
+              color: feedback.options.bg,
+              size: 24,
+              location
+            })
+          }
 
           return {
-            imageBuffer: indicatorBuffer,
+            imageBuffer: indicator,
           }
         } else {
           return {}
@@ -590,17 +608,35 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         ) {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         } else if (optionsInput[instance.buttonShift.state] === 2) {
-          if (!feedback.image?.width || !feedback.image?.height) return {}
+          if (!feedback.image) return {}
 
-          const indicatorBuffer = instance.indicator.drawIndicator(
-            feedback.image.width,
-            feedback.image.height,
-            feedback.options.bg,
-            feedback.options.tally
-          )
+          let indicator
+
+          if (feedback.options.tally === 'border') {
+            indicator = graphics.border({
+              width: feedback.image.width,
+              height: feedback.image.height,
+              size: 4,
+              color: feedback.options.bg
+            })
+          } else if (feedback.options.tally.includes('corner')) {
+            let location: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' = 'topLeft'
+
+            if (feedback.options.tally === 'cornerTR') location = 'topRight'
+            if (feedback.options.tally === 'cornerBL') location = 'bottomLeft'
+            if (feedback.options.tally === 'cornerBR') location = 'bottomRight'
+
+            indicator = graphics.corner({
+              width: feedback.image.width,
+              height: feedback.image.height,
+              color: feedback.options.bg,
+              size: 24,
+              location
+            })
+          }
 
           return {
-            imageBuffer: indicatorBuffer,
+            imageBuffer: indicator,
           }
         } else {
           return {}
@@ -1181,11 +1217,9 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         
         if (id === 'Selected') {
           id = instance.routingData.bus
-          console.log('Selected', id)
           if (!id) return {}
         }
         const busID = id === 'Master' ? 'master' : 'bus' + id
-        console.log(busID)
         const bus = instance.data.getAudioBus(busID)
 
         if (!bus) return {}

@@ -12,7 +12,6 @@ import { Activators } from './activators'
 import { VMixData } from './data'
 import { getFeedbacks } from './feedback'
 import { httpHandler } from './http'
-import { Indicator } from './indicators'
 import { getPresets } from './presets'
 import { TCP } from './tcp'
 import { Timer } from './timers'
@@ -66,7 +65,6 @@ class VMixInstance extends InstanceBase<Config> {
   }
   public connected = false
   public data = new VMixData(this)
-  public indicator = new Indicator()
   public pollAPI: NodeJS.Timer | null = null
   public routingData: RoutingData = {
     audio: {},
