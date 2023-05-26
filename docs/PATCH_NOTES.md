@@ -1,5 +1,9 @@
 # Patch Notes
 
+**V3.2.0**
+- Added Bus and Input volume meeter feedbacks
+- Replaced local indicators with indicators from companion-module-utils
+
 **V3.1.1**
 - Fixed an issue when specifying a non-existent input for the Overlay State feedback
 

@@ -26,6 +26,10 @@ For some feedback, such as Tally and Layer Routing it's possible to enable 'blin
 This module now supports Companions HTTP API, providing endpoints that can be used by 3rd party applications, and as a Data Source in vMix itself. Information on the API endpoints is available in [docs/HTTP_API.md](./docs/HTTP_API.md)
 
 # Recent Patches
+**V3.2.0**
+- Added Bus and Input volume meeter feedbacks
+- Replaced local indicators with indicators from companion-module-utils
+
 **V3.1.1**
 - Fixed an issue when specifying a non-existent input for the Overlay State feedback
 
@@ -33,16 +37,6 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 - Added a variables HTTP endpoint to retrieve all of the current instance variables
 - Fixed incorrect parsing of variables for basic commands
 - Fixed Meter amplitude to dB math in instance variables
-
-**V3.0.2**
-- Added more Action and Feedback descriptions
-- Fixed Replay Fastforward/Backward speed and tbar action
-- Added Preview and Program options for layer routing
-- Cleanup of Instance Variables code
-- Added variables for Input List Items - eg `$(vmix:input_X_list_Y_name)`, where x is an input name/number/key, and Y is the list item index (starting from 1)
-- Added Instance Variable support for adjusting Pan/Zoom value
-- Added Reset Input action
-- Selected Index feedback and variables now support Virtual Sets
 
 
 Older patch notes available in [docs/PATCH_NOTES.md](./docs/PATCH_NOTES.md)
