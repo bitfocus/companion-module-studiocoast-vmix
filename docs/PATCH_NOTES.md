@@ -1,7 +1,7 @@
 # Patch Notes
 
 **V3.2.0**
-- Added Bus and Input volume meeter feedbacks
+- Added Bus and Input volume meter feedbacks
 - Replaced local indicators with indicators from companion-module-utils
 
 **V3.1.1**

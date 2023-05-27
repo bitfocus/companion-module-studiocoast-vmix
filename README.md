@@ -27,7 +27,7 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 
 # Recent Patches
 **V3.2.0**
-- Added Bus and Input volume meeter feedbacks
+- Added Bus and Input volume meter feedbacks
 - Replaced local indicators with indicators from companion-module-utils
 
 **V3.1.1**
