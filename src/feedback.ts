@@ -114,14 +114,14 @@ interface StatusCallback {
   feedbackId: 'status'
   options: Readonly<{
     status:
-    | 'connection'
-    | 'fadeToBlack'
-    | 'recording'
-    | 'external'
-    | 'streaming'
-    | 'multiCorder'
-    | 'fullscreen'
-    | 'playList'
+      | 'connection'
+      | 'fadeToBlack'
+      | 'recording'
+      | 'external'
+      | 'streaming'
+      | 'multiCorder'
+      | 'fullscreen'
+      | 'playList'
     fg: number
     bg: number
     value: '' | '0' | '1' | '2'
@@ -536,7 +536,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
               width: feedback.image.width,
               height: feedback.image.height,
               size: 4,
-              color: feedback.options.bg
+              color: feedback.options.bg,
             })
           } else if (feedback.options.tally.includes('corner')) {
             let location: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' = 'topLeft'
@@ -550,7 +550,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
               height: feedback.image.height,
               color: feedback.options.bg,
               size: 24,
-              location
+              location,
             })
           }
 
@@ -617,7 +617,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
               width: feedback.image.width,
               height: feedback.image.height,
               size: 4,
-              color: feedback.options.bg
+              color: feedback.options.bg,
             })
           } else if (feedback.options.tally.includes('corner')) {
             let location: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' = 'topLeft'
@@ -631,7 +631,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
               height: feedback.image.height,
               color: feedback.options.bg,
               size: 24,
-              location
+              location,
             })
           }
 
@@ -1214,7 +1214,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       callback: async (feedback) => {
         if (!feedback.image) return {}
         let id = feedback.options.value
-        
+
         if (id === 'Selected') {
           id = instance.routingData.bus
           if (!id) return {}
@@ -1229,22 +1229,20 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           height: feedback.image.height,
           meter1: volumeToLinear(bus.meterF1 * 100),
           meter2: volumeToLinear(bus.meterF2 * 100),
-          muted: bus.muted
+          muted: bus.muted,
         })
 
         return {
-          imageBuffer: meter
+          imageBuffer: meter,
         }
-      }
+      },
     },
 
     inputVolumeMeter: {
       type: 'advanced',
       name: 'Audio - Input Volume Meters',
       description: 'Volumer meters for an input',
-      options: [
-        options.input
-      ],
+      options: [options.input],
       callback: async (feedback) => {
         if (!feedback.image) return {}
         const input = await instance.data.getInput(feedback.options.input)
@@ -1258,13 +1256,13 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           height: feedback.image.height,
           meter1: volumeToLinear(input.meterF1 * 100),
           meter2: volumeToLinear(input.meterF2 * 100),
-          muted: input.muted
+          muted: input.muted,
         })
 
         return {
-          imageBuffer: meter
+          imageBuffer: meter,
         }
-      }
+      },
     },
 
     // Replay

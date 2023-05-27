@@ -3390,13 +3390,15 @@ export function getActions(instance: VMixInstance): VMixActions {
     busSelect: {
       name: 'Util - Select Bus',
       description: 'Select a Bus for use with other Companion actions',
-      options: [{
-        type: 'dropdown',
-        label: 'Bus',
-        id: 'value',
-        default: 'Master',
-        choices: ['Master', 'A', 'B', 'C', 'D', 'E', 'F', 'G'].map((id) => ({ id, label: id })),
-      }],
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Bus',
+          id: 'value',
+          default: 'Master',
+          choices: ['Master', 'A', 'B', 'C', 'D', 'E', 'F', 'G'].map((id) => ({ id, label: id })),
+        },
+      ],
       callback: (action) => {
         instance.routingData.bus = action.options.value
         instance.variables?.updateVariables()
