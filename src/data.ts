@@ -985,8 +985,9 @@ export class VMixData {
     }
 
     // Dynamic Input / Value
-    const dynamicChange =
-      !isEqual(newData.dynamicInput, this.dynamicInput) || !isEqual(newData.dynamicValue, this.dynamicValue)
+    if (!isEqual(newData.dynamicInput, this.dynamicInput) || !isEqual(newData.dynamicValue, this.dynamicValue)) {
+      changes.add('dynamic')
+    }
 
     if (this.recording.duration !== newData.recording.duration) {
       changes.add('recording')
@@ -1011,8 +1012,6 @@ export class VMixData {
     // Trigger updates for changes
     if (changes.size > 0) {
       this.instance.checkFeedbacks(...changes)
-      if (this.instance.variables) this.instance.variables.updateVariables()
-    } else if (dynamicChange) {
       if (this.instance.variables) this.instance.variables.updateVariables()
     }
   }

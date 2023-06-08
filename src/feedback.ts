@@ -54,6 +54,9 @@ export interface VMixFeedbacks {
   routableMultiviewLayer: VMixFeedback<RoutableMultiviewLayerCallback>
   inputOnMultiview: VMixFeedback<InputOnMultiviewCallback>
 
+  // General
+  dynamic: VMixFeedback<DynamicCallback>
+
   // Util
   mixSelect: VMixFeedback<MixSelectCallback>
   busSelect: VMixFeedback<BusSelectCallback>
@@ -354,6 +357,16 @@ interface InputOnMultiviewCallback {
   }>
 }
 
+// General
+interface DynamicCallback {
+  feedbackId: 'dynamic'
+  options: Readonly<{
+    type: 'dynamicInput' | 'dynamicValue'
+    number: number
+    value: string
+  }>
+}
+
 // Util
 interface MixSelectCallback {
   feedbackId: 'mixSelect'
@@ -431,6 +444,9 @@ export type FeedbackCallbacks =
   | SelectedDestinationLayerCallback
   | RoutableMultiviewLayerCallback
 
+  // General
+  | DynamicCallback
+
   // Util
   | MixSelectCallback
   | ButtonShiftCallback
@@ -450,7 +466,7 @@ interface VMixFeedbackBoolean<T> {
   type: 'boolean'
   name: string
   description: string
-  style: Partial<CompanionFeedbackButtonStyleResult>
+  defaultStyle: Partial<CompanionFeedbackButtonStyleResult>
   options: InputFieldWithDefault[]
   callback: (
     feedback: Readonly<Omit<CompanionFeedbackBooleanEvent, 'options' | 'type'> & T>,
@@ -1683,6 +1699,52 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
 
         return {}
       },
+    },
+
+    // General
+    dynamic: {
+      type: 'boolean',
+      name: 'General - Dynamic Input or Value',
+      description: 'Check if a Dynamic Input or Value matches a specified value',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Select Type',
+          id: 'type',
+          default: 'dynamicInput',
+          choices: [
+            { id: 'dynamicInput', label: 'Dynamic Input' },
+            { id: 'dynamicValue', label: 'Dynamic Value' },
+          ],
+        },
+        {
+          type: 'dropdown',
+          label: 'Select Number',
+          id: 'number',
+          default: '1',
+          choices: [
+            { id: 0, label: '1' },
+            { id: 1, label: '2' },
+            { id: 2, label: '3' },
+            { id: 3, label: '4' },
+          ],
+        },
+        {
+          type: 'textinput',
+          label: 'Value',
+          id: 'value',
+          default: '',
+        },
+      ],
+      defaultStyle: {
+        bgcolor: combineRgb(255, 0, 0)
+      },
+      callback: async (feedback, context) => {
+        const targetValue = (await instance.parseOption(feedback.options.value, context))[instance.buttonShift.state]
+        let dynamic: string = instance.data[feedback.options.type][feedback.options.number]?.value
+
+        return targetValue === dynamic
+      }
     },
 
     // Util
