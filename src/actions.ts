@@ -253,10 +253,20 @@ interface ToggleFunctionsCallback {
   options: Readonly<{
     functionID:
       | 'StartStopMultiCorder'
+      | 'StartMultiCorder'
+      | 'StopMultiCorder'
       | 'StartStopRecording'
+      | 'StartRecording'
+      | 'StopRecording'
       | 'StartStopStreaming'
+      | 'StartStreaming'
+      | 'StopStreaming'
       | 'StartStopExternal'
+      | 'StartExternal'
+      | 'StopExternal'
       | 'Fullscreen'
+      | 'FullscreenOff'
+      | 'FullscreenOn'
       | 'FadeToBlack'
     value: '' | '0' | '1' | '2'
   }>
@@ -1448,26 +1458,36 @@ export function getActions(instance: VMixInstance): VMixActions {
     },
 
     toggleFunctions: {
-      name: 'Output - Toggle Functions',
-      description: 'Toggle vMix functions',
+      name: 'Output - Output Functions',
+      description: 'Start / Stop / Toggle vMix Output functions',
       options: [
         {
           type: 'dropdown',
-          label: 'Toggle Function',
+          label: 'Output Function',
           id: 'functionID',
           default: 'StartStopMultiCorder',
           choices: [
             { id: 'StartStopMultiCorder', label: 'Start / Stop MultCorder' },
+            { id: 'StartMultiCorder', label: 'Start MultCorder' },
+            { id: 'StopMultiCorder', label: 'Stop MultCorder' },
             { id: 'StartStopRecording', label: 'Start / Stop Recording' },
+            { id: 'StartRecording', label: 'Start Recording' },
+            { id: 'StopRecording', label: 'Stop Recording' },
             { id: 'StartStopStreaming', label: 'Start / Stop Stream' },
+            { id: 'StartStreaming', label: 'Start Stream' },
+            { id: 'StopStreaming', label: 'Stop Stream' },
             { id: 'StartStopExternal', label: 'Start / Stop External' },
-            { id: 'Fullscreen', label: 'Start / Stop Fullscreen' },
+            { id: 'StartExternal', label: 'Start External' },
+            { id: 'StopExternal', label: 'Stop External' },
+            { id: 'Fullscreen', label: 'Fullscreen On / Off' },
+            { id: 'FullscreenOn', label: 'Fullscreen On' },
+            { id: 'FullscreenOff', label: 'Fullscreen Off' },
             { id: 'FadeToBlack', label: 'Fade To Black' },
           ],
         },
         {
           type: 'dropdown',
-          label: 'Stream Start/Stop value',
+          label: 'Stream Value',
           id: 'value',
           default: '',
           choices: [
@@ -1476,6 +1496,10 @@ export function getActions(instance: VMixInstance): VMixActions {
             { id: '1', label: '2' },
             { id: '2', label: '3' },
           ],
+          isVisible: (options) => {
+            let functionID = options.functionID + ''
+            return functionID.includes('Streaming')
+          },
         },
       ],
       callback: (action) => {
