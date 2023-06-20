@@ -18,6 +18,7 @@ export class TCP {
     dataLength: 0,
     message: Buffer.from(''),
   }
+  private pingInterval: NodeJS.Timer | null = null
   private pollAPI: NodeJS.Timer | null = null
   private pollInterval = 250
   private sizeWarning = false
@@ -44,6 +45,10 @@ export class TCP {
   public readonly destroy = (): void => {
     if (this.pollAPI !== null) {
       clearInterval(this.pollAPI)
+    }
+    
+    if (this.pingInterval !== null) {
+      clearInterval(this.pingInterval)
     }
 
     if (this.sockets.activator) {
@@ -75,7 +80,7 @@ export class TCP {
     this.sockets.functions = new tcp(this.tcpHost, this.tcpPort)
 
     this.sockets.functions.on('status_change', (status, message) => {
-      if (message) this.instance.log('debug', message)
+      this.instance.log('debug', `Function socket - Status: ${status}${message ? ' - Message: ' + message : ''}`)
 
       if (status === 'ok') {
         this.instance.connected = true
@@ -121,8 +126,20 @@ export class TCP {
 
     this.sockets.functions.on('data', (data: Buffer) => {
       const message = data.toString().split(/\r?\n/)
+
+      if (message.includes('PING OK PONG')) {
+        return
+      }
+
       this.instance.log('debug', `Command Response: ${message}`)
     })
+
+    if (this.pingInterval === null) {
+      this.pingInterval = setInterval(() => {
+        this.sockets.activator?.send('PING\r\n')
+        this.sockets.functions?.send('PING\r\n')
+      }, 3000)
+    }
   }
 
   /**
@@ -141,11 +158,15 @@ export class TCP {
       })
     })
 
+    this.sockets.activator?.on('status_change', (status, message) => {
+      this.instance.log('debug', `Activator socket - Status: ${status}${message ? ' - Message: ' + message : ''}`)
+    })
+
     this.sockets.activator?.on('data', (data: Buffer) => {
       const messages = data.toString().split(/\r?\n/)
 
       messages.forEach((message) => {
-        if (message.startsWith('VERSION') || message.startsWith('SUBSCRIBE OK') || message === '') {
+        if (message.startsWith('VERSION') || message.startsWith('SUBSCRIBE OK') || message === 'PING OK PONG' || message === '') {
           return
         } else if (message.startsWith('ACTS OK')) {
           if (this.instance.activators) this.instance.activators.parse(message.substr(8).trim())
@@ -186,6 +207,10 @@ export class TCP {
     this.sockets.xml?.on('connect', () => {
       this.instance.log('debug', 'Connected XML Socket')
       this.initXMLPolling()
+    })
+
+    this.sockets.activator?.on('status_change', (status, message) => {
+      this.instance.log('debug', `XML socket - Status: ${status}${message ? ' - Message: ' + message : ''}`)
     })
 
     this.sockets.xml?.on('data', (data: Buffer) => {
@@ -306,7 +331,7 @@ export class TCP {
       // Protect against edge case of attempting to destroy a socket that's not in a state where it can be destroyed
       const destorySocket = (type: 'activator' | 'functions' | 'xml') => {
         const socket = this.sockets[type] as any
-        if (socket && (socket.connected || socket.socket.connecting || socket.try_timer)) {
+        if (socket && (socket.isConnected, socket.isConnected)) {
           socket.destroy()
         } else {
           if (socket !== null) {
