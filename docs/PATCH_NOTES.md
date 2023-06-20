@@ -1,5 +1,11 @@
 # Patch Notes
 
+**V3.3.0**
+- Added Feedback for Dynamic Input and Dynamic Values
+- Added Start / Stop options for the Output Functions action
+- Fixed an issue with changing the vMix IP or Port not working correctly until restarting instance
+- Added extra TCP debug logging, and PING messages for Activator and Function sockets
+
 **V3.2.0**
 - Added Bus and Input volume meter feedbacks
 - Replaced local indicators with indicators from companion-module-utils

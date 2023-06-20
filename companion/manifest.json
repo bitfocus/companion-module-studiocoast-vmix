@@ -3,7 +3,7 @@
 	"name": "studiocoast-vmix",
 	"shortname": "vmix",
 	"description": "Module to control StudioCoast vMix",
-	"version": "3.2.0",
+	"version": "3.3.0",
 	"license": "MIT",
 	"repository": "git+https://github.com/bitfocus/companion-module-studiocoast-vmix.git",
 	"bugs": "https://github.com/bitfocus/companion-module-studiocoast-vmix/issues",
