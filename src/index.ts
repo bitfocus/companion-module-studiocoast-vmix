@@ -99,6 +99,7 @@ class VMixInstance extends InstanceBase<Config> {
       'info',
       'Companion v3 now support Expression Functions, such as msToTimestamp, to transform instance variables into various formats. Because of this we no long provide instance variables for each combination of hh:mm:ss.ms, and instead just provide ms or seconds and you can format it in whichever way is needed.'
     )
+    this.log('debug', `Process ID: ${process.pid}`)
 
     await this.configUpdated(config)
 

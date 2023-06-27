@@ -136,8 +136,8 @@ export class TCP {
 
     if (this.pingInterval === null) {
       this.pingInterval = setInterval(() => {
-        this.sockets.activator?.send('PING\r\n')
-        this.sockets.functions?.send('PING\r\n')
+        if (this.sockets.activator?.isConnected) this.sockets.activator?.send('PING\r\n')
+        if (this.sockets.functions?.isConnected) this.sockets.functions?.send('PING\r\n')
       }, 3000)
     }
   }
