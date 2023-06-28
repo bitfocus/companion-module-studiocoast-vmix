@@ -187,6 +187,7 @@ interface TransitionMixCallback {
     mix: MixOptionEntry
     functionID: (typeof TRANSITIONS)[number]
     duration: number
+    input?: string
   }>
 }
 
@@ -1321,8 +1322,24 @@ export function getActions(instance: VMixInstance): VMixActions {
           max: 9999,
           default: 1000,
         },
+        {
+          type: 'textinput',
+          label: 'Input - Leave blank to transition Preview',
+          id: 'input',
+          default: '',
+          tooltip: 'Number, Name, or GUID',
+        },
       ],
-      callback: sendBasicCommand,
+      callback: async (action) => {
+        if (action.options.input !== '' && action.options.input !== undefined) {
+          const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+          let useInput: any = { actionId: 'transitionMix', options: { mix: action.options.mix, functionID: action.options.functionID, duration: action.options.duration, input } }
+          sendBasicCommand(useInput)
+        } else {
+          let usePreview: any = { actionId: 'transitionMix', options: { mix: action.options.mix, functionID: action.options.functionID, duration: action.options.duration } }
+          sendBasicCommand(usePreview)
+        }
+      },
     },
 
     transition: {
@@ -3228,10 +3245,11 @@ export function getActions(instance: VMixInstance): VMixActions {
           default: '',
         },
       ],
-      callback: (action) => {
+      callback: async (action) => {
+        const value = await instance.parseVariablesInString(action.options.value)
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION BrowserNavigate Input=${action.options.input}&Value=${action.options.url || action.options.value}`
+            `FUNCTION BrowserNavigate Input=${action.options.input}&Value=${value}`
           )
       },
     },
