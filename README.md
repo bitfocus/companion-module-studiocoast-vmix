@@ -26,6 +26,11 @@ For some feedback, such as Tally and Layer Routing it's possible to enable 'blin
 This module now supports Companions HTTP API, providing endpoints that can be used by 3rd party applications, and as a Data Source in vMix itself. Information on the API endpoints is available in [docs/HTTP_API.md](./docs/HTTP_API.md)
 
 # Recent Patches
+**V3.3.1**
+- Added Process ID logged to Debug at start to aid in debugging/performance tracking
+- Fixed missing instance variables for Dynamic Inputs
+- Fixed TCP pings on connections not yet established
+
 **V3.3.0**
 - Added Feedback for Dynamic Input and Dynamic Values
 - Added Start / Stop options for the Output Functions action
@@ -35,9 +40,6 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 **V3.2.0**
 - Added Bus and Input volume meter feedbacks
 - Replaced local indicators with indicators from companion-module-utils
-
-**V3.1.1**
-- Fixed an issue when specifying a non-existent input for the Overlay State feedback
 
 
 Older patch notes available in [docs/PATCH_NOTES.md](./docs/PATCH_NOTES.md)
