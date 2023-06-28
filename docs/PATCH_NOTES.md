@@ -1,9 +1,11 @@
 # Patch Notes
 
-**V3.3.1**
+**V3.4.0**
 - Added Process ID logged to Debug at start to aid in debugging/performance tracking
 - Fixed missing instance variables for Dynamic Inputs
 - Fixed TCP pings on connections not yet established
+- Fixed Browser Navigate action parsing variables
+- Added Input option for Transition Mix actions, allowing transitioning to a specific input, or Preview if left blank
 
 **V3.3.0**
 - Added Feedback for Dynamic Input and Dynamic Values

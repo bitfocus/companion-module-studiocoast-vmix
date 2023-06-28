@@ -26,10 +26,12 @@ For some feedback, such as Tally and Layer Routing it's possible to enable 'blin
 This module now supports Companions HTTP API, providing endpoints that can be used by 3rd party applications, and as a Data Source in vMix itself. Information on the API endpoints is available in [docs/HTTP_API.md](./docs/HTTP_API.md)
 
 # Recent Patches
-**V3.3.1**
+**V3.4.0**
 - Added Process ID logged to Debug at start to aid in debugging/performance tracking
 - Fixed missing instance variables for Dynamic Inputs
 - Fixed TCP pings on connections not yet established
+- Fixed Browser Navigate action parsing variables
+- Added Input option for Transition Mix actions, allowing transitioning to a specific input, or Preview if left blank
 
 **V3.3.0**
 - Added Feedback for Dynamic Input and Dynamic Values

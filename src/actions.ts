@@ -1333,10 +1333,25 @@ export function getActions(instance: VMixInstance): VMixActions {
       callback: async (action) => {
         if (action.options.input !== '' && action.options.input !== undefined) {
           const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
-          let useInput: any = { actionId: 'transitionMix', options: { mix: action.options.mix, functionID: action.options.functionID, duration: action.options.duration, input } }
+          const useInput: any = {
+            actionId: 'transitionMix',
+            options: {
+              mix: action.options.mix,
+              functionID: action.options.functionID,
+              duration: action.options.duration,
+              input,
+            },
+          }
           sendBasicCommand(useInput)
         } else {
-          let usePreview: any = { actionId: 'transitionMix', options: { mix: action.options.mix, functionID: action.options.functionID, duration: action.options.duration } }
+          const usePreview: any = {
+            actionId: 'transitionMix',
+            options: {
+              mix: action.options.mix,
+              functionID: action.options.functionID,
+              duration: action.options.duration,
+            },
+          }
           sendBasicCommand(usePreview)
         }
       },
@@ -3248,9 +3263,7 @@ export function getActions(instance: VMixInstance): VMixActions {
       callback: async (action) => {
         const value = await instance.parseVariablesInString(action.options.value)
         if (instance.tcp)
-          instance.tcp.sendCommand(
-            `FUNCTION BrowserNavigate Input=${action.options.input}&Value=${value}`
-          )
+          instance.tcp.sendCommand(`FUNCTION BrowserNavigate Input=${action.options.input}&Value=${value}`)
       },
     },
 
