@@ -1737,14 +1737,14 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         },
       ],
       defaultStyle: {
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       callback: async (feedback, context) => {
         const targetValue = (await instance.parseOption(feedback.options.value, context))[instance.buttonShift.state]
-        let dynamic: string = instance.data[feedback.options.type][feedback.options.number]?.value
+        const dynamic: string = instance.data[feedback.options.type][feedback.options.number]?.value
 
         return targetValue === dynamic
-      }
+      },
     },
 
     // Util

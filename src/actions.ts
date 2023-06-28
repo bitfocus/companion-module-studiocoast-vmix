@@ -1497,7 +1497,7 @@ export function getActions(instance: VMixInstance): VMixActions {
             { id: '2', label: '3' },
           ],
           isVisible: (options) => {
-            let functionID = options.functionID + ''
+            const functionID = options.functionID + ''
             return functionID.includes('Streaming')
           },
         },

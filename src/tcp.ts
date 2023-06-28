@@ -46,7 +46,7 @@ export class TCP {
     if (this.pollAPI !== null) {
       clearInterval(this.pollAPI)
     }
-    
+
     if (this.pingInterval !== null) {
       clearInterval(this.pingInterval)
     }
@@ -166,7 +166,12 @@ export class TCP {
       const messages = data.toString().split(/\r?\n/)
 
       messages.forEach((message) => {
-        if (message.startsWith('VERSION') || message.startsWith('SUBSCRIBE OK') || message === 'PING OK PONG' || message === '') {
+        if (
+          message.startsWith('VERSION') ||
+          message.startsWith('SUBSCRIBE OK') ||
+          message === 'PING OK PONG' ||
+          message === ''
+        ) {
           return
         } else if (message.startsWith('ACTS OK')) {
           if (this.instance.activators) this.instance.activators.parse(message.substr(8).trim())
