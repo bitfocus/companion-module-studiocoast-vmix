@@ -38,7 +38,7 @@ export class Variables {
   /**
    * @description Sets variable definitions
    */
-  public readonly updateDefinitions = (): void => {
+  public readonly updateDefinitions = async (): Promise<void> => {
     const variables: Set<CompanionVariableDefinition> = new Set([
       // Status
       { name: 'Connected to vMix', variableId: 'connected_state' },
@@ -143,10 +143,141 @@ export class Variables {
     })
 
     // Dyanmic Inputs/Values
-    ;[1, 2, 3, 4].forEach((dynamic) => {
-      variables.add({ name: `Dynamic Input ${dynamic}`, variableId: `dynamic_input_${dynamic}` })
-      variables.add({ name: `Dynamic Value ${dynamic}`, variableId: `dynamic_value_${dynamic}` })
-    })
+    for (let dynamic = 0; dynamic < 4; dynamic++) {
+      variables.add({ name: `Dynamic Input ${dynamic + 1}`, variableId: `dynamic_input_${dynamic + 1}` })
+      variables.add({ name: `Dynamic Value ${dynamic + 1}`, variableId: `dynamic_value_${dynamic + 1}` })
+
+      const input = await this.instance.data.getInput(this.instance.data.dynamicInput[dynamic]?.value)
+
+      if (input) {
+        variables.add({
+          name: `Dynamic Input ${dynamic + 1} Short Title`,
+          variableId: `dynamic_input_${dynamic + 1}_name`,
+        })
+        variables.add({ name: `Dynamic Input ${dynamic + 1} GUID`, variableId: `dynamic_input_${dynamic + 1}_guid` })
+        variables.add({ name: `Dynamic Input ${dynamic + 1} Type`, variableId: `dynamic_input_${dynamic + 1}_type` })
+
+        this.instance.data.mix
+          .filter((mix) => mix.active)
+          .forEach((mix) => {
+            variables.add({
+              name: `Dynamic Input ${dynamic + 1} Mix ${mix.number} Tally Preview`,
+              variableId: `dynamic_input_${dynamic + 1}_mix_${mix.number}_tally_preview`,
+            })
+            variables.add({
+              name: `Dynamic Input ${dynamic + 1} Mix ${mix.number} Tally Program`,
+              variableId: `dynamic_input_${dynamic + 1}_mix_${mix.number}_tally_program`,
+            })
+          })
+
+        variables.add({ name: `Dynamic Input ${dynamic + 1} Muted`, variableId: `dynamic_input_${dynamic + 1}_mute` })
+        variables.add({ name: `Dynamic Input ${dynamic + 1} Audio`, variableId: `dynamic_input_${dynamic + 1}_audio` })
+
+        if (input.duration > 1) {
+          variables.add({
+            name: `Dynamic Input ${dynamic + 1} Duration`,
+            variableId: `dynamic_input_${dynamic + 1}_duration`,
+          })
+        }
+
+        if (input.position !== undefined) {
+          variables.add({
+            name: `Dynamic Input ${dynamic + 1} Remaining`,
+            variableId: `dynamic_input_${dynamic + 1}_remaining`,
+          })
+        }
+
+        for (let i = 1; i < 11; i++) {
+          variables.add({
+            name: `Dynamic Input ${dynamic + 1} layer ${i} Name`,
+            variableId: `dynamic_input_${dynamic + 1}_layer_${i}_name`,
+          })
+          variables.add({
+            name: `Dynamic Input ${dynamic + 1} layer ${i} Number`,
+            variableId: `dynamic_input_${dynamic + 1}_layer_${i}_number`,
+          })
+        }
+
+        if (input.text) {
+          input.text.forEach((textLayer) => {
+            variables.add({
+              name: `Dynamic Input ${dynamic + 1} layer ${textLayer.index} Title Text`,
+              variableId: `dynamic_input_${dynamic + 1}_layer_${textLayer.index}_titletext`,
+            })
+          })
+        }
+
+        if (input.type === 'VideoList' || input.type === 'VirtualSet') {
+          variables.add({
+            name: `Dynamic Input ${dynamic + 1} Selected Index`,
+            variableId: `dynamic_input_${dynamic + 1}_selected`,
+          })
+          variables.add({
+            name: `Dynamic Input ${dynamic + 1} Selected Index Name`,
+            variableId: `dynamic_input_${dynamic + 1}_selected_name`,
+          })
+        }
+
+        if (input.list) {
+          input.list.forEach((listItem) => {
+            variables.add({
+              name: `Dynamic Input ${dynamic + 1} List ${listItem.index + 1} Name`,
+              variableId: `dynamic_input_${dynamic + 1}_list_${listItem.index + 1}_name`,
+            })
+            variables.add({
+              name: `Dynamic Input ${dynamic + 1} List ${listItem.index + 1} Selected`,
+              variableId: `dynamic_input_${dynamic + 1}_list_${listItem.index + 1}_selected`,
+            })
+          })
+        }
+
+        if (input.type === 'VideoCall') {
+          variables.add({
+            name: `Dynamic Input ${dynamic + 1} Call Password`,
+            variableId: `dynamic_input_${dynamic + 1}_call_password`,
+          })
+          variables.add({
+            name: `Dynamic Input ${dynamic + 1} Call Connected`,
+            variableId: `dynamic_input_${dynamic + 1}_call_connected`,
+          })
+          variables.add({
+            name: `Dynamic Input ${dynamic + 1} Call Video Source`,
+            variableId: `dynamic_input_${dynamic + 1}_call_video_source`,
+          })
+          variables.add({
+            name: `Dynamic Input ${dynamic + 1} Call Audio Source`,
+            variableId: `dynamic_input_${dynamic + 1}_call_audio_source`,
+          })
+        }
+
+        variables.add({
+          name: `Dynamic Input ${dynamic + 1} Volume`,
+          variableId: `dynamic_input_${dynamic + 1}_volume`,
+        })
+        variables.add({
+          name: `Dynamic Input ${dynamic + 1} Volume dB`,
+          variableId: `dynamic_input_${dynamic + 1}_volume_db`,
+        })
+        variables.add({
+          name: `Dynamic Input ${dynamic + 1} Volume Linear`,
+          variableId: `dynamic_input_${dynamic + 1}_volume_linear`,
+        })
+
+        if (input.meterF1 !== undefined) {
+          variables.add({
+            name: `Dynamic Input ${dynamic + 1} MeterF1`,
+            variableId: `dynamic_input_${dynamic + 1}_meterf1`,
+          })
+        }
+
+        if (input.meterF2 !== undefined) {
+          variables.add({
+            name: `Dynamic Input ${dynamic + 1} MeterF2`,
+            variableId: `dynamic_input_${dynamic + 1}_meterf2`,
+          })
+        }
+      }
+    }
 
     // Inputs
     const inputNumberVariables = new Set<CompanionVariableDefinition>()
@@ -634,10 +765,175 @@ export class Variables {
     newVariables['layer_routing_layer'] = this.instance.routingData.layer.destinationLayer || ''
 
     // Dyanmic Inputs/Values
-    ;[0, 1, 2, 3].forEach((dynamic) => {
+    for (let dynamic = 0; dynamic < 4; dynamic++) {
       newVariables[`dynamic_input_${dynamic + 1}`] = this.instance.data.dynamicInput[dynamic]?.value || ''
       newVariables[`dynamic_value_${dynamic + 1}`] = this.instance.data.dynamicValue[dynamic]?.value || ''
-    })
+
+      if (this.instance.data.dynamicInput[dynamic]?.value) {
+        const input = await this.instance.data.getInput(this.instance.data.dynamicInput[dynamic]?.value)
+
+        if (input) {
+          newVariables[`dynamic_input_${dynamic + 1}_name`] = input.shortTitle || input.title
+          newVariables[`dynamic_input_${dynamic + 1}_number`] = input.number
+          newVariables[`dynamic_input_${dynamic + 1}_guid`] = input.key
+          newVariables[`dynamic_input_${dynamic + 1}_type`] = input.type
+
+          this.instance.data.mix.forEach((mix) => {
+            const tallyPreview = this.instance.data.mix[0].previewTally.includes(input.key).toString()
+            const tallyProgram = this.instance.data.mix[0].programTally.includes(input.key).toString()
+
+            newVariables[`dynamic_input_${dynamic + 1}_mix_${mix.number}_tally_preview`] = tallyPreview
+            newVariables[`dynamic_input_${dynamic + 1}_mix_${mix.number}_tally_program`] = tallyProgram
+          })
+
+          const inputAudio = input.muted === undefined ? false : input.muted
+
+          newVariables[`dynamic_input_${dynamic + 1}_mute`] = inputAudio.toString()
+          newVariables[`dynamic_input_${dynamic + 1}_audio`] = (!inputAudio).toString()
+
+          const meterF1 = input.meterF1 !== undefined ? volumeTodB(input.meterF1 * 100).toFixed(1) : ''
+          const meterF2 = input.meterF2 !== undefined ? volumeTodB(input.meterF2 * 100).toFixed(1) : ''
+
+          newVariables[`dynamic_input_${dynamic + 1}_meterf1`] = meterF1
+          newVariables[`dynamic_input_${dynamic + 1}_meterf2`] = meterF2
+
+          const audioLevel = this.instance.data.audioLevels.find((level) => level.key === input.key)
+          if (audioLevel) {
+            const audioLevelData = this.instance.data.getAudioLevelData(audioLevel)
+
+            newVariables[`dynamic_input_${dynamic + 1}_meterf1_avg_1s`] = volumeTodB(
+              audioLevelData.s1MeterF1Avg * 100
+            ).toFixed(1)
+            newVariables[`dynamic_input_${dynamic + 1}_meterf2_avg_1s`] = volumeTodB(
+              audioLevelData.s1MeterF2Avg * 100
+            ).toFixed(1)
+            newVariables[`dynamic_input_${dynamic + 1}_meterf1_avg_3s`] = volumeTodB(
+              audioLevelData.s3MeterF1Avg * 100
+            ).toFixed(1)
+            newVariables[`dynamic_input_${dynamic + 1}_meterf2_avg_3s`] = volumeTodB(
+              audioLevelData.s3MeterF2Avg * 100
+            ).toFixed(1)
+            newVariables[`dynamic_input_${dynamic + 1}_meterf1_peak_1s`] = volumeTodB(
+              audioLevelData.s1MeterF1Peak * 100
+            ).toFixed(1)
+            newVariables[`dynamic_input_${dynamic + 1}_meterf2_peak_1s`] = volumeTodB(
+              audioLevelData.s1MeterF2Peak * 100
+            ).toFixed(1)
+            newVariables[`dynamic_input_${dynamic + 1}_meterf1_peak_3s`] = volumeTodB(
+              audioLevelData.s3MeterF1Peak * 100
+            ).toFixed(1)
+            newVariables[`dynamic_input_${dynamic + 1}_meterf2_peak_3s`] = volumeTodB(
+              audioLevelData.s3MeterF2Peak * 100
+            ).toFixed(1)
+          }
+
+          if (input.duration > 1) {
+            const inPosition = input.markIn ? input.markIn : 0
+            const outPosition = input.markOut ? input.markOut : input.duration
+            const duration = outPosition - inPosition
+            const padding = (time: number): string => (time < 10 ? '0' + time : time + '')
+
+            const mm = (time: number): string => padding(Math.floor(time / 60000))
+            const ss = (time: number): string => padding(Math.floor(time / 1000) % 60)
+            const ms = (time: number): string => Math.floor((time / 100) % 10) + ''
+
+            newVariables[`dynamic_input_${dynamic + 1}_duration`] = `${mm(duration)}:${ss(duration)}.${ms(duration)}`
+          }
+
+          const inputDuration = calcDuration(input)
+
+          if (inputDuration !== null) {
+            newVariables[
+              `dynamic_input_${dynamic + 1}_duration`
+            ] = `${inputDuration.mm}:${inputDuration.ss}.${inputDuration.ms}`
+          }
+
+          const inputRemaining = calcRemaining(input)
+
+          if (inputRemaining !== null) {
+            newVariables[`dynamic_input_${dynamic + 1}_remaining`] = inputRemaining.ms
+            newVariables[`dynamic_input_${dynamic + 1}_remaining_ss`] = inputRemaining.ss
+            newVariables[`dynamic_input_${dynamic + 1}_remaining_ss.ms`] = inputRemaining.ssms
+            newVariables[`dynamic_input_${dynamic + 1}_remaining_mm:ss`] = inputRemaining.mmss
+            newVariables[`dynamic_input_${dynamic + 1}_remaining_mm:ss.ms`] = inputRemaining.mmssms
+          }
+
+          for (let i = 0; i < 10; i++) {
+            newVariables[`dynamic_input_${dynamic + 1}_layer_${i + 1}_name`] = ''
+            newVariables[`dynamic_input_${dynamic + 1}_layer_${i + 1}_number`] = ''
+          }
+
+          for (const layer of input.overlay || []) {
+            const overlayInput = await this.instance.data.getInput(layer.key)
+            let overlayinputName = ''
+
+            if (overlayInput)
+              overlayinputName = overlayInput.shortTitle
+                ? overlayInput.shortTitle.replace(/[^a-z0-9-_. ]+/gi, '')
+                : overlayInput.title.replace(/[^a-z0-9-_. ]+/gi, '')
+
+            newVariables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_name`] = overlayinputName
+            newVariables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_number`] = overlayInput?.number || ''
+            newVariables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_key`] = overlayInput?.key || ''
+          }
+
+          if (input.text) {
+            input.text.forEach((textLayer) => {
+              newVariables[`dynamic_input_${dynamic + 1}_layer_${textLayer.index}_titletext`] = textLayer.value
+            })
+          }
+
+          if (input.list) {
+            input.list.forEach((listItem) => {
+              newVariables[`dynamic_input_${dynamic + 1}_list_${listItem.index + 1}_name`] = listItem.filename
+              newVariables[`dynamic_input_${dynamic + 1}_list_${listItem.index + 1}_selected`] =
+                listItem.selected.toString()
+
+              if (listItem.selected) {
+                newVariables[`dynamic_input_${dynamic + 1}_selected`] = listItem.index + 1
+                newVariables[`dynamic_input_${dynamic + 1}_selected_name`] = listItem.filename
+              }
+            })
+          }
+
+          if (input.type === 'VirtualSet' && input.selectedIndex !== undefined) {
+            newVariables[`dynamic_input_${dynamic + 1}_selected`] = input.selectedIndex
+          }
+
+          if (input.type === 'VideoCall') {
+            let audioSource = input.callAudioSource as string
+            if (audioSource.startsWith('Bus')) {
+              audioSource = audioSource.substr(3)
+            }
+
+            newVariables[`dynamic_input_${dynamic + 1}_call_password`] = input.callPassword
+            newVariables[`dynamic_input_${dynamic + 1}_call_connected`] = input.callConnected
+              ? 'Connected'
+              : 'Disconnected'
+            newVariables[`dynamic_input_${dynamic + 1}_call_video_source`] = input.callVideoSource
+            newVariables[`dynamic_input_${dynamic + 1}_call_audio_source`] = input.callAudioSource
+          }
+
+          let volume
+          let volumedB
+          let volumeLinear
+
+          if (input.volume !== undefined) {
+            volume = input.volume.toFixed(2)
+            volumedB = volumeTodB(input.volume).toFixed(1)
+            volumeLinear = Math.round(volumeToLinear(input.volume))
+          } else {
+            volume = ''
+            volumedB = ''
+            volumeLinear = ''
+          }
+
+          newVariables[`dynamic_input_${dynamic + 1}_volume`] = volume
+          newVariables[`dynamic_input_${dynamic + 1}_volume_db`] = volumedB
+          newVariables[`dynamic_input_${dynamic + 1}_volume_linear`] = volumeLinear
+        }
+      }
+    }
 
     // Inputs
     const inputNames: string[] = []
