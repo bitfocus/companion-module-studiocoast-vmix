@@ -187,16 +187,16 @@ export class TCP {
    */
   public readonly initActivatorData = (): void => {
     const initialRequests = [
-      'ACTS BusASolo',
-      'ACTS BusBSolo',
-      'ACTS BusCSolo',
-      'ACTS BusDSolo',
-      'ACTS BusESolo',
-      'ACTS BusFSolo',
-      'ACTS BusGSolo',
+      'ACTS BusASolo\r\n',
+      'ACTS BusBSolo\r\n',
+      'ACTS BusCSolo\r\n',
+      'ACTS BusDSolo\r\n',
+      'ACTS BusESolo\r\n',
+      'ACTS BusFSolo\r\n',
+      'ACTS BusGSolo\r\n',
     ]
 
-    this.sockets.activator?.send(initialRequests.join('\r\n')).catch((err) => {
+    this.sockets.activator?.send(initialRequests.join('')).catch((err) => {
       this.instance.log('debug', err.message)
     })
   }
