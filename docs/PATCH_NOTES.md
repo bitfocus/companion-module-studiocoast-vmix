@@ -2,7 +2,7 @@
 
 **V3.4.1**
 - Performance improvements for vMix productions with a large number of inputs
-- Fixed an issue with the intial request for Activator data
+- Fixed an issue with the initial request for Activator data
 
 **V3.4.0**
 - Added Process ID logged to Debug at start to aid in debugging/performance tracking
