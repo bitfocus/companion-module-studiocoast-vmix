@@ -25,13 +25,21 @@ export class Variables {
    */
   public readonly set = (variables: InstanceVariableValue): void => {
     const newVariables: { [variableId: string]: string | undefined } = {}
+    const changes: { [variableId: string]: string | undefined } = {}
 
     for (const name in variables) {
+      if (this.currentVariables[name] !== variables[name]) changes[name] = variables[name]?.toString()
       newVariables[name] = variables[name]?.toString()
     }
 
+    for (const name in this.currentVariables) {
+      if (variables[name] === undefined) {
+        changes[name] = undefined
+      }
+    }
+
     this.currentVariables = newVariables
-    this.instance.setVariableValues(newVariables)
+    this.instance.setVariableValues(changes)
     this.instance.checkFeedbacks('buttonText')
   }
 
@@ -950,12 +958,23 @@ export class Variables {
         useNamedInput = true
       }
 
-      const inputTypes = [
-        input.number,
-        input.key,
-        useNamedInput ? input.shortTitle || input.title : false,
-        useNamedInput ? inputName.toLowerCase() : false,
-      ].filter((x) => x !== false)
+      let inputTypes = []
+
+      if (this.instance.config.strictInputVariableTypes) {
+        if (this.instance.config.variablesShowInputs && useNamedInput) {
+          inputTypes.push(input.shortTitle || input.title)
+          inputTypes.push(inputName.toLowerCase())
+        }
+        if (this.instance.config.variablesShowInputNumbers) inputTypes.push(input.key)
+        if (this.instance.config.variablesShowInputGUID) inputTypes.push(input.key)
+      } else {
+        inputTypes = [
+          input.number,
+          input.key,
+          useNamedInput ? input.shortTitle || input.title : false,
+          useNamedInput ? inputName.toLowerCase() : false,
+        ].filter((x) => x !== false)
+      }
 
       for (const type of inputTypes) {
         newVariables[`input_${type}_name`] = input.shortTitle || input.title

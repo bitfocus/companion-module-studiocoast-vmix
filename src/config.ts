@@ -14,6 +14,7 @@ export interface Config {
   variablesShowInputs: boolean
   variablesShowInputNumbers: boolean
   variablesShowInputGUID: boolean
+  strictInputVariableTypes: boolean
 }
 
 export const getConfigFields = (): SomeCompanionConfigField[] => {
@@ -145,7 +146,15 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       id: 'variablesShowInputGUID',
       width: 4,
       label: 'Input Variables by GUID',
-      default: true,
+      default: false,
+    },
+    {
+      type: 'checkbox',
+      id: 'strictInputVariableTypes',
+      width: 12,
+      label:
+        'Limit Input Variable Types - Toggle on to not only hide certain input variaibles from auto-complete but disable their use. Improves performance when enabled',
+      default: false,
     },
   ]
 }

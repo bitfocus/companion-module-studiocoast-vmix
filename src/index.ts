@@ -62,6 +62,7 @@ class VMixInstance extends InstanceBase<Config> {
     variablesShowInputs: true,
     variablesShowInputNumbers: true,
     variablesShowInputGUID: true,
+    strictInputVariableTypes: false,
   }
   public connected = false
   public data = new VMixData(this)
