@@ -26,6 +26,9 @@ For some feedback, such as Tally and Layer Routing it's possible to enable 'blin
 This module now supports Companions HTTP API, providing endpoints that can be used by 3rd party applications, and as a Data Source in vMix itself. Information on the API endpoints is available in [docs/HTTP_API.md](./docs/HTTP_API.md)
 
 # Recent Patches
+**V3.4.2**
+- Added logging and a hold on polling the API if the time to process the data completely is greater than the polling interval
+
 **V3.4.1**
 - Performance improvements for vMix productions with a large number of inputs
 - Fixed an issue with the initial request for Activator data
@@ -36,12 +39,6 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 - Fixed TCP pings on connections not yet established
 - Fixed Browser Navigate action parsing variables
 - Added Input option for Transition Mix actions, allowing transitioning to a specific input, or Preview if left blank
-
-**V3.3.0**
-- Added Feedback for Dynamic Input and Dynamic Values
-- Added Start / Stop options for the Output Functions action
-- Fixed an issue with changing the vMix IP or Port not working correctly until restarting instance
-- Added extra TCP debug logging, and PING messages for Activator and Function sockets
 
 
 Older patch notes available in [docs/PATCH_NOTES.md](./docs/PATCH_NOTES.md)

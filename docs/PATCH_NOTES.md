@@ -1,5 +1,8 @@
 # Patch Notes
 
+**V3.4.2**
+- Added logging and a hold on polling the API if the time to process the data completely is greater than the polling interval
+
 **V3.4.1**
 - Performance improvements for vMix productions with a large number of inputs
 - Fixed an issue with the initial request for Activator data
