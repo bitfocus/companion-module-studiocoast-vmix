@@ -41,6 +41,35 @@ export class Variables {
     this.currentVariables = newVariables
     this.instance.setVariableValues(changes)
     this.instance.checkFeedbacks('buttonText')
+
+    if (this.instance.apiProcessing.hold) {
+      this.instance.apiProcessing.variables = new Date().getTime()
+      const duration = this.instance.apiProcessing.variables - this.instance.apiProcessing.request
+
+      if (duration > this.instance.config.apiPollInterval) {
+        if (duration > this.instance.config.apiPollInterval * 3) {
+          this.instance.log(
+            'warn',
+            `API Processing took ${duration}ms, but the API Polling Interval is set to ${this.instance.config.apiPollInterval}ms`
+          )
+        } else {
+          this.instance.log(
+            'debug',
+            `API Processing took ${duration}ms, but the API Polling Interval is set to ${this.instance.config.apiPollInterval}ms`
+          )
+        }
+      }
+
+      this.instance.apiProcessing = {
+        hold: false,
+        holdCount: 0,
+        request: 0,
+        response: 0,
+        parsed: 0,
+        feedbacks: 0,
+        variables: 0,
+      }
+    }
   }
 
   /**

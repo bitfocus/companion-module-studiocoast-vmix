@@ -1009,10 +1009,22 @@ export class VMixData {
     this.dynamicInput = newData.dynamicInput
     this.dynamicValue = newData.dynamicValue
 
+    this.instance.apiProcessing.feedbacks = new Date().getTime()
+
     // Trigger updates for changes
     if (changes.size > 0) {
       this.instance.checkFeedbacks(...changes)
       if (this.instance.variables) this.instance.variables.updateVariables()
+    } else {
+      this.instance.apiProcessing = {
+        hold: false,
+        holdCount: 0,
+        request: 0,
+        response: 0,
+        parsed: 0,
+        feedbacks: 0,
+        variables: 0,
+      }
     }
   }
 
@@ -1023,6 +1035,7 @@ export class VMixData {
   public update(data: string) {
     this.parse(data)
       .then((newData) => {
+        this.instance.apiProcessing.parsed = new Date().getTime()
         this.setData(newData)
 
         if (!this.loaded && this.instance.tcp) {

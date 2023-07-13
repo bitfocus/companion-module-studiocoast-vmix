@@ -18,6 +18,16 @@ import { Timer } from './timers'
 import { getUpgrades } from './upgrade'
 import { Variables } from './variables'
 
+interface APIProcessing {
+  hold: boolean
+  holdCount: number
+  request: number
+  response: number
+  parsed: number
+  feedbacks: number
+  variables: number
+}
+
 interface ButtonShift {
   state: number
   blink: boolean
@@ -43,6 +53,15 @@ class VMixInstance extends InstanceBase<Config> {
     this.instanceOptions.disableVariableValidation = true
   }
   public activators: Activators | null = null
+  public apiProcessing: APIProcessing = {
+    hold: false,
+    holdCount: 0,
+    request: 0,
+    response: 0,
+    parsed: 0,
+    feedbacks: 0,
+    variables: 0,
+  }
   public buttonShift: ButtonShift = {
     state: 0,
     blink: false,

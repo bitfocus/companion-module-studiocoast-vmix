@@ -245,6 +245,7 @@ export class TCP {
         const message = this.messageBuffer.message.slice(prefixLength).toString().trim()
 
         if (message.startsWith('<vmix>') && message.endsWith('</vmix>')) {
+          this.instance.apiProcessing.response = new Date().getTime()
           this.instance.data.update(message)
         } else {
           // Debugging for issue #159
@@ -264,6 +265,8 @@ export class TCP {
                   this.messageBuffer.dataLength
                 }, Full Message: ${this.messageBuffer.message.toString()}`
               )
+
+              this.instance.apiProcessing.response = new Date().getTime()
               this.instance.data.update(data)
             }
           } else {
@@ -282,21 +285,33 @@ export class TCP {
       clearInterval(this.pollAPI)
     }
 
+    const pollAPI = () => {
+      if (this.sockets.xml?.isConnected) {
+        if (!this.instance.apiProcessing.hold) {
+          this.instance.apiProcessing.hold = true
+          this.instance.apiProcessing.request = new Date().getTime()
+
+          this.sockets.xml?.send('XML\r\n').catch((err) => {
+            this.instance.log('debug', err.message)
+          })
+        } else {
+          this.instance.apiProcessing.holdCount++
+          if (this.instance.apiProcessing.holdCount === 3) {
+            this.instance.log(
+              'warn',
+              `Polling and processing of the API is taking longer than polling interval. If this persists it is recommend to increase the API Polling Interval`
+            )
+          }
+        }
+      }
+    }
+
+    pollAPI()
+
     // Check if API Polling is disabled
     if (this.instance.config.apiPollInterval != 0) {
-      this.sockets.xml?.send('XML\r\n').catch((err) => {
-        this.instance.log('debug', err.message)
-      })
-
-      this.pollAPI = setInterval(
-        () => {
-          if (this.sockets.xml?.isConnected)
-            this.sockets.xml?.send('XML\r\n').catch((err) => {
-              this.instance.log('debug', err.message)
-            })
-        },
-        this.instance.config.apiPollInterval < 100 ? 100 : this.instance.config.apiPollInterval
-      )
+      const pollingInterval = this.instance.config.apiPollInterval < 100 ? 100 : this.instance.config.apiPollInterval
+      this.pollAPI = setInterval(pollAPI, pollingInterval)
     }
   }
 
