@@ -1,4 +1,4 @@
-import { combineRgb, CompanionStaticUpgradeScript } from '@companion-module/base'
+import { combineRgb, CompanionStaticUpgradeScript, CompanionStaticUpgradeResult } from '@companion-module/base'
 import { Config } from './config'
 import { getActions } from './actions'
 import { getConfigFields } from './config'
@@ -21,7 +21,7 @@ const stringToInt = (option: unknown, defaultValue: number, min: number, max: nu
 }
 
 /* eslint-disable */
-const upgradeV1_2_0: CompanionStaticUpgradeScript<Config> = (_context, props) => {
+const upgradeV1_2_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
   let config: any = props.config
   let actions: any = props.actions
   let feedbacks: any = props.feedbacks
@@ -35,99 +35,107 @@ const upgradeV1_2_0: CompanionStaticUpgradeScript<Config> = (_context, props) =>
     config.httpPort = 8088
   }
 
+  const changes: CompanionStaticUpgradeResult<Config>  = {
+    updatedConfig: config,
+    updatedActions: [],
+    updatedFeedbacks: []
+  }
+
   // Actions
   actions = actions.map((action: any) => {
-    if (action.action === 'prwSel') {
-      action.action = 'PreviewInput'
+    if (action.actionId === 'prwSel') {
+      action.actionId = 'PreviewInput'
       action.options.input = action.options.prwId
       action.options.mix = 0
       delete action.options.prwId
-    } else if (action.action === 'prwNext') {
-      action.action = 'PreviewInputNext'
-    } else if (action.action === 'prwPrv') {
-      action.action = 'PreviewInputPrevious'
-    } else if (action.action === 'pgmSel') {
-      action.action = 'programCut'
+    } else if (action.actionId === 'prwNext') {
+      action.actionId = 'PreviewInputNext'
+    } else if (action.actionId === 'prwPrv') {
+      action.actionId = 'PreviewInputPrevious'
+    } else if (action.actionId === 'pgmSel') {
+      action.actionId = 'programCut'
       action.options.input = action.options.pgmId
       action.options.mix = 0
       delete action.options.pgmId
-    } else if (action.action === 'transition') {
+    } else if (action.actionId === 'transition') {
       action.options.functionID = action.options.transId
       delete action.options.transId
-    } else if (action.action === 'quickPlay') {
-      action.action = 'QuickPlay'
+    } else if (action.actionId === 'quickPlay') {
+      action.actionId = 'QuickPlay'
       action.options.input = action.options.pgmId
-    } else if (action.action === 'outputSet') {
+    } else if (action.actionId === 'outputSet') {
       action.options.functionID = action.options.outputId
       action.options.value = action.options.outputType
       action.options.input = action.options.outputInputId
       delete action.options.outputId
       delete action.options.outputType
       delete action.options.outputInputId
-    } else if (action.action === 'toggle_functions') {
-      action.action = 'toggleFunctions'
+    } else if (action.actionId === 'toggle_functions') {
+      action.actionId = 'toggleFunctions'
       action.options.functionID = action.options.toggleID
       delete action.options.toggleID
-    } else if (action.action === 'playList_Functions') {
-      action.action = 'playListFunctions'
+    } else if (action.actionId === 'playList_Functions') {
+      action.actionId = 'playListFunctions'
       action.options.functionID = action.options.plfId
       delete action.options.plfId
-    } else if (action.action === 'open_pl') {
-      action.action = 'SelectPlayList'
+    } else if (action.actionId === 'open_pl') {
+      action.actionId = 'SelectPlayList'
       action.options.playlistName = action.options.plName
       delete action.options.plName
-    } else if (action.action === 'overlayFunctions') {
+    } else if (action.actionId === 'overlayFunctions') {
       action.options.functionID = action.options.overlayFunc
       action.options.input = action.options.inputId
       delete action.options.overlayFunc
       delete action.options.inputId
-    } else if (action.action === 'volumeFade') {
-      action.action = 'SetVolumeFade'
+    } else if (action.actionId === 'volumeFade') {
+      action.actionId = 'SetVolumeFade'
       action.options.fadeMin = action.options.fade_Min
       action.options.fadeTime = action.options.fade_Time
       action.options.input = action.options.fade_Input
       delete action.options.fade_Min
       delete action.options.fade_Time
       delete action.options.fade_Input
-    } else if (action.action === 'startCountdown') {
-      action.action = 'StartCountdown'
+    } else if (action.actionId === 'startCountdown') {
+      action.actionId = 'StartCountdown'
       action.options.input = action.options.countdownStartInput
       delete action.options.countdownStartInput
-    } else if (action.action === 'stopCountdown') {
-      action.action = 'StartCountdown'
+    } else if (action.actionId === 'stopCountdown') {
+      action.actionId = 'StartCountdown'
       action.options.input = action.options.countdownStopInput
       delete action.options.countdownStopInput
-    } else if (action.action === 'setCountdownTime') {
-      action.action = 'SetCountdown'
+    } else if (action.actionId === 'setCountdownTime') {
+      action.actionId = 'SetCountdown'
       action.options.value = action.options.countdownTime
       action.options.input = action.options.countdownSetInput
       delete action.options.countdownTime
       delete action.options.countdownSetInput
-    } else if (action.action === 'nextPicture') {
-      action.action = 'NextPicture'
+    } else if (action.actionId === 'nextPicture') {
+      action.actionId = 'NextPicture'
       action.options.input = action.options.nPictureInput
       delete action.options.nPictureInput
-    } else if (action.action === 'previousPicture') {
-      action.action = 'PreviousPicture'
+    } else if (action.actionId === 'previousPicture') {
+      action.actionId = 'PreviousPicture'
       action.options.input = action.options.pPictureInput
       delete action.options.pPictureInput
-    } else if (action.action === 'keyPress') {
-      action.action = 'KeyPress'
+    } else if (action.actionId === 'keyPress') {
+      action.actionId = 'KeyPress'
       action.options.value = action.options.key
       delete action.options.key
-    } else if (action.action === 'scriptStart') {
-      action.action = 'ScriptStart'
+    } else if (action.actionId === 'scriptStart') {
+      action.actionId = 'ScriptStart'
       action.options.value = action.options.script
       delete action.options.script
-    } else if (action.action === 'scriptStop') {
-      action.action = 'scriptStop'
+    } else if (action.actionId === 'scriptStop') {
+      action.actionId = 'scriptStop'
       action.options.value = action.options.script
       delete action.options.script
-    } else if (action.action === 'scriptStopAll') {
-      action.action = 'ScriptStopAll'
+    } else if (action.actionId === 'scriptStopAll') {
+      action.actionId = 'ScriptStopAll'
     }
 
-    action.label = action.instance + ':' + action.action
+    action.label = action.instance + ':' + action.actionId
+
+    changes.updatedActions.push(action)
 
     return action
   })
@@ -137,23 +145,21 @@ const upgradeV1_2_0: CompanionStaticUpgradeScript<Config> = (_context, props) =>
     if (feedback.type === 'input_preview') {
       feedback.type = 'inputPreview'
       feedback.options.mix = 1
+      changes.updatedFeedbacks.push(feedback)
     } else if (feedback.type === 'input_live') {
       feedback.type = 'inputLive'
       feedback.options.mix = 1
+      changes.updatedFeedbacks.push(feedback)
     }
 
     return feedback
   })
 
-  return {
-    updatedConfig: config,
-    updatedActions: actions,
-    updatedFeedbacks: feedbacks
-  }
+  return changes
 }
 
 /* eslint-disable */
-const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props) => {
+const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config>  => {
   let config: any = props.config
   let actions: any = props.actions
   let feedbacks: any = props.feedbacks
@@ -171,6 +177,12 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props) =>
   if (config.errorInfo !== undefined) {
     config.connectionErrorLog = config.errorInfo
     delete config.errorInfo
+  }
+
+  const changes: CompanionStaticUpgradeResult<Config>  = {
+    updatedConfig: config,
+    updatedActions: [],
+    updatedFeedbacks: []
   }
 
   // Actions
@@ -234,107 +246,116 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props) =>
       'BrowserNavigate'
     ]
 
-    if (toLowerCamelCase.includes(action.action)) {
-      action.action = action.action.charAt(0).toLowerCase() + action.action.substr(1)
+    if (toLowerCamelCase.includes(action.actionId)) {
+      action.actionId = action.actionId.charAt(0).toLowerCase() + action.actionId.substr(1)
     }
 
     // Action Changes
-    if (action.action === 'transitionMix') {
+    let actionChanged = true
+    if (action.actionId === 'transitionMix') {
       action.options.duration = stringToInt(action.options.duration, 1000, 0, 9999)
-    } else if (action.action === 'setTransitionDuration') {
+    } else if (action.actionId === 'setTransitionDuration') {
       action.options.duration = stringToInt(action.options.duration, 1000, 0, 9999)
-    } else if (action.action === 'selectPlayList') {
+    } else if (action.actionId === 'selectPlayList') {
       action.options.value = action.options.playlistName || ''
       delete action.options.playlistName
-    } else if (action.action === 'multiViewOverlay') {
+    } else if (action.actionId === 'multiViewOverlay') {
       action.options.value = action.options.selectedIndex
       delete action.options.selectedIndex
-    } else if (action.action === 'setMultiViewOverlay') {
+    } else if (action.actionId === 'setMultiViewOverlay') {
       action.options.layer = stringToInt(action.options.selectedIndex, 1, 0, 10)
       action.options.layerInput = action.options.LayerInput
       delete action.options.selectedIndex
       delete action.options.LayerInput
-    } else if (action.action === 'setMultiViewOverlayOnPreview') {
+    } else if (action.actionId === 'setMultiViewOverlayOnPreview') {
       action.options.layer = stringToInt(action.options.selectedIndex, 1, 0, 10)
       action.options.layerInput = action.options.LayerInput
       delete action.options.selectedIndex
       delete action.options.LayerInput
-    } else if (action.action === 'setMultiViewOverlayOnProgram') {
+    } else if (action.actionId === 'setMultiViewOverlayOnProgram') {
       action.options.layer = stringToInt(action.options.selectedIndex, 1, 0, 10)
       action.options.layerInput = action.options.LayerInput
       delete action.options.selectedIndex
       delete action.options.LayerInput
-    } else if (action.action === 'setMultiViewOverlayDestinationLayer') {
+    } else if (action.actionId === 'setMultiViewOverlayDestinationLayer') {
       action.options.destinationLayer = action.options.destinationLayer + ''
-    } else if (action.action === 'virtualSet') {
+    } else if (action.actionId === 'virtualSet') {
       action.options.selectedIndex = stringToInt(action.options.selectedIndex, 1, 1, 4) + ''
-    } else if (action.action === 'videoCallVideoSource') {
+    } else if (action.actionId === 'videoCallVideoSource') {
       action.options.value = action.options.functionID
       delete action.options.functionID
-    } else if (action.action === 'setVolumeFade') {
+    } else if (action.actionId === 'setVolumeFade') {
       action.options.fadeMin = stringToInt(action.options.fadeMin, 0, 0, 100)
       action.options.fadeTime = stringToInt(action.options.fadeTime, 2000, 0, 60000)
-    } else if (action.action === 'AudioOnOff') {
-      action.action = 'audio'
-    } else if (action.action === 'audioPlugin') {
+    } else if (action.actionId === 'AudioOnOff') {
+      action.actionId = 'audio'
+    } else if (action.actionId === 'audioPlugin') {
       action.options.value = stringToInt(action.options.value, 1, 1, 1000)
-    } else if (action.action === 'StartCountdown') {
-      action.action = 'controlCountdown'
+    } else if (action.actionId === 'StartCountdown') {
+      action.actionId = 'controlCountdown'
       action.options.functionID = 'StartCountdown'
       action.options.selectedIndex = action.options.selectedIndex + ''
-    } else if (action.action === 'StopCountdown') {
-      action.action = 'controlCountdown'
+    } else if (action.actionId === 'StopCountdown') {
+      action.actionId = 'controlCountdown'
       action.options.functionID = 'StopCountdown'
       action.options.selectedIndex = action.options.selectedIndex + ''
-    } else if (action.action === 'PauseCountdown') {
-      action.action = 'controlCountdown'
+    } else if (action.actionId === 'PauseCountdown') {
+      action.actionId = 'controlCountdown'
       action.options.functionID = 'PauseCountdown'
       action.options.selectedIndex = action.options.selectedIndex + ''
-    } else if (action.action === 'selectTitlePreset') {
+    } else if (action.actionId === 'selectTitlePreset') {
       action.options.value = action.options.selectedIndex + ''
       delete action.options.selectedIndex
-    } else if (action.action === 'videoPlayhead') {
+    } else if (action.actionId === 'videoPlayhead') {
       action.options.value = stringToInt(action.options.value, 0, 0, Infinity)
-    } else if (action.action === 'replayMark') {
+    } else if (action.actionId === 'replayMark') {
       action.options.value = stringToInt(action.options.value, 0, 0, Infinity)
-    } else if (action.action === 'replayMoveInOut') {
+    } else if (action.actionId === 'replayMoveInOut') {
       action.options.value = stringToInt(action.options.value, 30, 0, Infinity)
-    } else if (action.action === 'replayChangeDirection') {
+    } else if (action.actionId === 'replayChangeDirection') {
       action.options.channel = 'Current'
-    } else if (action.action === 'replayChangeSpeed') {
+    } else if (action.actionId === 'replayChangeSpeed') {
       action.options.channel = 'Current'
-    } else if (action.action === 'replayFastForwardBackward') {
+    } else if (action.actionId === 'replayFastForwardBackward') {
       action.options.channel = 'Current'
       action.options.value = stringToInt(action.options.value, 10, 0, Infinity)
-    } else if (action.action === 'replayJumpFrames') {
+    } else if (action.actionId === 'replayJumpFrames') {
       action.options.value = stringToInt(action.options.value, 60, -Infinity, Infinity)
-    } else if (action.action === 'replayJumpToNow') {
+    } else if (action.actionId === 'replayJumpToNow') {
       action.options.channel = 'Current'
-    } else if (action.action === 'replayPlay') {
+    } else if (action.actionId === 'replayPlay') {
       action.options.channel = 'Current'
-    } else if (action.action === 'replayPause') {
+    } else if (action.actionId === 'replayPause') {
       action.options.channel = 'Current'
-    } else if (action.action === 'replayPlayEvent') {
-      action.options.channel = 'Current'
-      action.options.value = stringToInt(action.options.value, 0, 0, 1000)
-    } else if (action.action === 'replayPlaySelectedEventToOutput') {
-      action.options.channel = 'Current'
-    } else if (action.action === 'replayPlayEventsByIDToOutput') {
+    } else if (action.actionId === 'replayPlayEvent') {
       action.options.channel = 'Current'
       action.options.value = stringToInt(action.options.value, 0, 0, 1000)
+    } else if (action.actionId === 'replayPlaySelectedEventToOutput') {
+      action.options.channel = 'Current'
+    } else if (action.actionId === 'replayPlayEventsByIDToOutput') {
+      action.options.channel = 'Current'
+      action.options.value = stringToInt(action.options.value, 0, 0, 1000)
+    } else {
+      actionChanged = false
     }
 
     // Setting defaults
-    if (vMixActions[action.action] && vMixActions[action.action].options.length > 0) {
-      vMixActions[action.action].options.forEach((option: any) => {
-        if (action.options[option.id] === undefined) action.options[option.id] = option.default
+    if (vMixActions[action.actionId] && vMixActions[action.actionId].options.length > 0) {
+      vMixActions[action.actionId].options.forEach((option: any) => {
+        if (action.options[option.id] === undefined) {
+          action.options[option.id] = option.default
+          actionChanged = true
+        }
       })
     }
+
+    if (actionChanged) changes.updatedActions.push(action)
   })
 
   // Feedbacks
   feedbacks = feedbacks
     .map((feedback: any) => {
+      let feedbackChange = true
       if (feedback.type === 'inputPreview' || feedback.type === 'inputLive') {
         if (feedback.options.tally === 'corner') feedback.options.tally = 'cornerTL'
         if (feedback.options.tally === 'cornerR') feedback.options.tally = 'cornerTR'
@@ -374,8 +395,11 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props) =>
         delete feedback.options.input
         delete feedback.options.inputMV
         delete feedback.options.tally
+      } else {
+        feedbackChange = false
       }
 
+      if (feedbackChange) changes.updatedFeedbacks.push(feedback)
       return feedback
     })
     .filter((feedback: any) => {
@@ -385,23 +409,25 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props) =>
       return !deprecated.includes(feedback.type)
     })
 
-  return {
-    updatedConfig: config,
-    updatedActions: actions,
-    updatedFeedbacks: feedbacks
-  }
+  return changes
 }
 
 /* eslint-disable */
-const upgradeV2_0_6: CompanionStaticUpgradeScript<Config> = (_context, props) => {
-  let config: any = props.config
+const upgradeV2_0_6: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config>  => {
   let actions: any = props.actions
   let feedbacks: any = props.feedbacks
 
+  const changes: CompanionStaticUpgradeResult<Config>  = {
+    updatedConfig: null,
+    updatedActions: [],
+    updatedFeedbacks: []
+  }
+
   actions.forEach((action: any) => {
-    if (action.action === 'SetMultiViewOverlayDestinationLayer' || action.action === 'setMultiViewOverlayDestinationLayer') {
-      action.action = 'setMultiViewOverlayDestinationLayer'
+    if (action.actionId === 'SetMultiViewOverlayDestinationLayer' || action.actionId === 'setMultiViewOverlayDestinationLayer') {
+      action.actionId = 'setMultiViewOverlayDestinationLayer'
       action.options.destinationLayer = action.options.destinationLayer + ''
+      changes.updatedActions.push(action)
     }
   })
 
@@ -409,14 +435,11 @@ const upgradeV2_0_6: CompanionStaticUpgradeScript<Config> = (_context, props) =>
     if (feedback.type === 'selectedDestinationLayer' || feedback.type === 'SelectedDestinationLayer') {
       feedback.type = 'selectedDestinationLayer'
       feedback.options.selectedIndex = feedback.options.selectedIndex + ''
+      changes.updatedFeedbacks.push(feedback)
     }
   })
 
-  return {
-    updatedConfig: config,
-    updatedActions: actions,
-    updatedFeedbacks: feedbacks
-  }
+  return changes
 }
 
 export const getUpgrades = (): CompanionStaticUpgradeScript<Config>[] => {

@@ -207,6 +207,11 @@ export class Variables {
             })
           })
 
+        variables.add({
+          name: `Dynamic Input ${dynamic + 1} Playing`,
+          variableId: `dynamic_input_${dynamic + 1}_playing`,
+        })
+        variables.add({ name: `Dynamic Input ${dynamic + 1} Loop`, variableId: `dynamic_input_${dynamic + 1}_loop` })
         variables.add({ name: `Dynamic Input ${dynamic + 1} Muted`, variableId: `dynamic_input_${dynamic + 1}_mute` })
         variables.add({ name: `Dynamic Input ${dynamic + 1} Audio`, variableId: `dynamic_input_${dynamic + 1}_audio` })
 
@@ -350,6 +355,8 @@ export class Variables {
             })
           })
 
+        inputSet.add({ name: `Input ${title} Playing`, variableId: `input_${type}_playing` })
+        inputSet.add({ name: `Input ${title} Loop`, variableId: `input_${type}_loop` })
         inputSet.add({ name: `Input ${title} Muted`, variableId: `input_${type}_mute` })
         inputSet.add({ name: `Input ${title} Audio`, variableId: `input_${type}_audio` })
 
@@ -569,6 +576,8 @@ export class Variables {
             this.instance.data.mix[id - 1].program
           )
           newVariables[`mix_${mix}_program_guid`] = mixProgramInput ? mixProgramInput?.key : ''
+          newVariables[`mix_${mix}_program_playing`] = (mixProgramInput.state === 'Running').toString()
+          newVariables[`mix_${mix}_program_loop`] = mixProgramInput.loop.toString()
           newVariables[`mix_${mix}_program_audio`] = (!inputAudio).toString()
           newVariables[`mix_${mix}_program_meterf1`] = volumeTodB((mixProgramInput.meterF1 || 0) * 100).toFixed(1)
           newVariables[`mix_${mix}_program_meterf2`] = volumeTodB((mixProgramInput.meterF2 || 0) * 100).toFixed(1)
@@ -627,7 +636,9 @@ export class Variables {
           newVariables[`mix_${mix}_preview_name`] = await this.instance.data.getInputTitle(
             this.instance.data.mix[id - 1].preview
           )
-          newVariables[`mix_${mix}_preview_guid`] = mixPreviewInput?.key
+          newVariables[`mix_${mix}_preview_guid`] = mixPreviewInput.key
+          newVariables[`mix_${mix}_preview_playing`] = (mixPreviewInput.state === 'Running').toString()
+          newVariables[`mix_${mix}_preview_loop`] = mixPreviewInput.loop.toString()
           newVariables[`mix_${mix}_preview_mute`] = inputAudio.toString()
           newVariables[`mix_${mix}_preview_audio`] = (!inputAudio).toString()
           newVariables[`mix_${mix}_preview_meterf1`] = volumeTodB((mixPreviewInput.meterF1 || 0) * 100).toFixed(1)
@@ -825,6 +836,8 @@ export class Variables {
 
           const inputAudio = input.muted === undefined ? false : input.muted
 
+          newVariables[`dynamic_input_${dynamic + 1}_playing`] = (input.state === 'Running').toString()
+          newVariables[`dynamic_input_${dynamic + 1}_loop`] = input.loop.toString()
           newVariables[`dynamic_input_${dynamic + 1}_mute`] = inputAudio.toString()
           newVariables[`dynamic_input_${dynamic + 1}_audio`] = (!inputAudio).toString()
 
@@ -1021,6 +1034,8 @@ export class Variables {
 
         const inputAudio = input.muted === undefined ? false : input.muted
 
+        newVariables[`input_${type}_playing`] = (input.state === 'Running').toString()
+        newVariables[`input_${type}_loop`] = input.loop.toString()
         newVariables[`input_${type}_mute`] = inputAudio.toString()
         newVariables[`input_${type}_audio`] = (!inputAudio).toString()
 

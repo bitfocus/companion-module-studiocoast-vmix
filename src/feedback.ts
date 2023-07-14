@@ -56,6 +56,7 @@ export interface VMixFeedbacks {
 
   // General
   dynamic: VMixFeedback<DynamicCallback>
+  inputState: VMixFeedback<InputStateCallback>
 
   // Util
   mixSelect: VMixFeedback<MixSelectCallback>
@@ -367,6 +368,14 @@ interface DynamicCallback {
   }>
 }
 
+interface InputStateCallback {
+  feedbackId: 'inputState'
+  options: Readonly<{
+    type: 'playing' | 'loop'
+    input: string
+  }>
+}
+
 // Util
 interface MixSelectCallback {
   feedbackId: 'mixSelect'
@@ -446,6 +455,7 @@ export type FeedbackCallbacks =
 
   // General
   | DynamicCallback
+  | InputStateCallback
 
   // Util
   | MixSelectCallback
@@ -1744,6 +1754,38 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         const dynamic: string = instance.data[feedback.options.type][feedback.options.number]?.value
 
         return targetValue === dynamic
+      },
+    },
+
+    inputState: {
+      type: 'boolean',
+      name: 'General - Input State',
+      description: 'Indiciates the current Playing or Loop state of an input',
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Type',
+          id: 'type',
+          default: 'playing',
+          choices: [
+            { id: 'playing', label: 'Playing' },
+            { id: 'loop', label: 'Loop' },
+          ],
+        },
+      ],
+      defaultStyle: {
+        bgcolor: combineRgb(255, 0, 0),
+      },
+      callback: async (feedback, context) => {
+        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+        const input = await instance.data.getInput(inputOption)
+
+        if (feedback.options.type === 'playing') {
+          return input?.state === 'Running'
+        } else {
+          return input?.loop || false
+        }
       },
     },
 

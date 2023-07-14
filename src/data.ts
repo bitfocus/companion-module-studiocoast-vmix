@@ -68,7 +68,7 @@ export interface Input {
   state: string
   position: number
   duration: number
-  loop: number
+  loop: boolean
   panX: number
   panY: number
   zoomX: number
@@ -937,6 +937,7 @@ export class VMixData {
       changes.add('inputSelectedIndexName')
       changes.add('routableMultiviewLayer')
       changes.add('inputVolumeMeter')
+      changes.add('inputState')
 
       // DEPRECATED
       changes.add('titleLayer')

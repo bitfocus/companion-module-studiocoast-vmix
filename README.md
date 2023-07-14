@@ -26,6 +26,10 @@ For some feedback, such as Tally and Layer Routing it's possible to enable 'blin
 This module now supports Companions HTTP API, providing endpoints that can be used by 3rd party applications, and as a Data Source in vMix itself. Information on the API endpoints is available in [docs/HTTP_API.md](./docs/HTTP_API.md)
 
 # Recent Patches
+**V3.4.3**
+- Fixed upgrade scripts for Companion v3
+- Added missing Loop and Playing feedback/variables
+
 **V3.4.2**
 - Added logging and a hold on polling the API if the time to process the data completely is greater than the polling interval
 
