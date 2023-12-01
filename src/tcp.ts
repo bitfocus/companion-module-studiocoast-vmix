@@ -96,6 +96,8 @@ export class TCP {
         this.instance.connected = false
         this.instance.updateStatus(InstanceStatus.UnknownError)
       }
+
+      this.instance.variables?.updateVariables()
     })
 
     this.sockets.functions.on('error', (err: Error) => {
