@@ -90,10 +90,37 @@ export class Variables {
       { name: 'Recording Active', variableId: 'recording_active' },
       { name: 'Recording Duration', variableId: 'recording_duration' },
       { name: 'Recording HH:MM:SS', variableId: 'recording_hms' },
+      { name: 'Recording File Name 1', variableId: 'recording_filename1' },
+      { name: 'Recording File Path 1', variableId: 'recording_filepath1' },
+      { name: 'Recording File Name 2', variableId: 'recording_filename2' },
+      { name: 'Recording File Path 2', variableId: 'recording_filepath2' },
+
+      // Audio
+      { name: 'Bus Any Solo', variableId: 'bus_any_solo' },
+
+      // Input
+      { name: 'Input Any Solo', variableId: 'input_any_solo' },
 
       // Layers
       { name: 'Layer Routing Input', variableId: 'layer_routing_input' },
       { name: 'Layer Routing Layer', variableId: 'layer_routing_layer' },
+
+      // Replay
+      { name: 'Replay Recording', variableId: 'replay_recording' },
+      { name: 'Replay Live', variableId: 'replay_live' },
+      { name: 'Replay Forward', variableId: 'replay_forward' },
+      { name: 'Replay Channel Mode', variableId: 'replay_channel_mode' },
+      { name: 'Replay Events', variableId: 'replay_events' },
+      { name: 'Replay Events A', variableId: 'replay_eventsa' },
+      { name: 'Replay Events B', variableId: 'replay_eventsb' },
+      { name: 'Replay Camera A', variableId: 'replay_cameraa' },
+      { name: 'Replay Camera B', variableId: 'replay_camerab' },
+      { name: 'Replay Speed', variableId: 'replay_speed' },
+      { name: 'Replay Speed A', variableId: 'replay_speeda' },
+      { name: 'Replay Speed B', variableId: 'replay_speedb' },
+      { name: 'Replay Timecode', variableId: 'replay_timecode' },
+      { name: 'Replay Timecode A', variableId: 'replay_timecodea' },
+      { name: 'Replay Timecode B', variableId: 'replay_timecodeb' },
     ])
 
     // Audio
@@ -156,6 +183,11 @@ export class Variables {
               variableId: `mix_${mix.number}_${type.toLowerCase()}_layer_${i}_key`,
             })
           }
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Frame Delay`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_framedelay`,
+          })
         })
 
       variables.add({ name: 'Mix Selected', variableId: 'mix_selected' })
@@ -214,6 +246,7 @@ export class Variables {
         variables.add({ name: `Dynamic Input ${dynamic + 1} Loop`, variableId: `dynamic_input_${dynamic + 1}_loop` })
         variables.add({ name: `Dynamic Input ${dynamic + 1} Muted`, variableId: `dynamic_input_${dynamic + 1}_mute` })
         variables.add({ name: `Dynamic Input ${dynamic + 1} Audio`, variableId: `dynamic_input_${dynamic + 1}_audio` })
+        variables.add({ name: `Dynamic Input ${dynamic + 1} Solo`, variableId: `dynamic_input_${dynamic + 1}_solo` })
 
         if (input.duration > 1) {
           variables.add({
@@ -318,6 +351,11 @@ export class Variables {
             variableId: `dynamic_input_${dynamic + 1}_meterf2`,
           })
         }
+
+        variables.add({
+          name: `Dynamic Input ${dynamic + 1} Frame Delay`,
+          variableId: `dynamic_input_${dynamic + 1}_framedelay`,
+        })
       }
     }
 
@@ -359,6 +397,7 @@ export class Variables {
         inputSet.add({ name: `Input ${title} Loop`, variableId: `input_${type}_loop` })
         inputSet.add({ name: `Input ${title} Muted`, variableId: `input_${type}_mute` })
         inputSet.add({ name: `Input ${title} Audio`, variableId: `input_${type}_audio` })
+        inputSet.add({ name: `Input ${title} Solo`, variableId: `input_${type}_solo` })
 
         if (input.duration > 1) {
           inputSet.add({ name: `Input ${title} Duration`, variableId: `input_${type}_duration` })
@@ -377,6 +416,61 @@ export class Variables {
             name: `Input ${title} layer ${i} Number`,
             variableId: `input_${type}_layer_${i}_number`,
           })
+          inputSet.add({
+            name: `Input ${title} layer ${i} Key`,
+            variableId: `input_${type}_layer_${i}_key`,
+          })
+
+          if (this.instance.config.variablesShowInputLayerPosition) {
+            inputSet.add({
+              name: `Input ${title} layer ${i} Pan X (Percent)`,
+              variableId: `input_${type}_layer_${i}_panx`,
+            })
+            inputSet.add({
+              name: `Input ${title} layer ${i} Pan Y (Percent)`,
+              variableId: `input_${type}_layer_${i}_pany`,
+            })
+            inputSet.add({
+              name: `Input ${title} layer ${i} Pan X (Pixels)`,
+              variableId: `input_${type}_layer_${i}_x`,
+            })
+            inputSet.add({
+              name: `Input ${title} layer ${i} Pan Y (Pixels)`,
+              variableId: `input_${type}_layer_${i}_y`,
+            })
+            inputSet.add({
+              name: `Input ${title} layer ${i} Zoom X`,
+              variableId: `input_${type}_layer_${i}_zoomx`,
+            })
+            inputSet.add({
+              name: `Input ${title} layer ${i} Zoom Y`,
+              variableId: `input_${type}_layer_${i}_zoomy`,
+            })
+            inputSet.add({
+              name: `Input ${title} layer ${i} Width`,
+              variableId: `input_${type}_layer_${i}_width`,
+            })
+            inputSet.add({
+              name: `Input ${title} layer ${i} Height`,
+              variableId: `input_${type}_layer_${i}_height`,
+            })
+            inputSet.add({
+              name: `Input ${title} layer ${i} Crop X1`,
+              variableId: `input_${type}_layer_${i}_cropx1`,
+            })
+            inputSet.add({
+              name: `Input ${title} layer ${i} Crop X2`,
+              variableId: `input_${type}_layer_${i}_cropx2`,
+            })
+            inputSet.add({
+              name: `Input ${title} layer ${i} Crop Y1`,
+              variableId: `input_${type}_layer_${i}_cropy1`,
+            })
+            inputSet.add({
+              name: `Input ${title} layer ${i} Crop Y2`,
+              variableId: `input_${type}_layer_${i}_cropy2`,
+            })
+          }
         }
 
         if (input.text) {
@@ -431,6 +525,7 @@ export class Variables {
         inputSet.add({ name: `Input ${title} Volume`, variableId: `input_${type}_volume` })
         inputSet.add({ name: `Input ${title} Volume dB`, variableId: `input_${type}_volume_db` })
         inputSet.add({ name: `Input ${title} Volume Linear`, variableId: `input_${type}_volume_linear` })
+        inputSet.add({ name: `Input ${title} Frame Delay`, variableId: `input_${type}_framedelay` })
 
         if (input.meterF1 !== undefined) {
           inputSet.add({ name: `Input ${title} MeterF1`, variableId: `input_${type}_meterf1` })
@@ -438,6 +533,34 @@ export class Variables {
 
         if (input.meterF2 !== undefined) {
           inputSet.add({ name: `Input ${title} MeterF2`, variableId: `input_${type}_meterf2` })
+        }
+        if (this.instance.config.variablesShowInputPosition) {
+          inputSet.add({ name: `Input ${title} Position Pan X`, variableId: `input_${type}_position_panx` })
+          inputSet.add({ name: `Input ${title} Position Pan Y`, variableId: `input_${type}_position_pany` })
+          inputSet.add({ name: `Input ${title} Position Zoom X`, variableId: `input_${type}_position_zoomx` })
+          inputSet.add({ name: `Input ${title} Position Zoom X`, variableId: `input_${type}_position_zoomy` })
+          inputSet.add({ name: `Input ${title} Position Crop X1`, variableId: `input_${type}_position_cropx1` })
+          inputSet.add({ name: `Input ${title} Position Crop X2`, variableId: `input_${type}_position_cropx2` })
+          inputSet.add({ name: `Input ${title} Position Crop Y1`, variableId: `input_${type}_position_cropy1` })
+          inputSet.add({ name: `Input ${title} Position Crop Y2`, variableId: `input_${type}_position_cropy2` })
+
+          inputSet.add({ name: `Input ${title} Colour Correction Hue`, variableId: `input_${type}_cc_hue` })
+          inputSet.add({
+            name: `Input ${title} Colour Correction Saturation`,
+            variableId: `input_${type}_cc_saturation`,
+          })
+          inputSet.add({ name: `Input ${title} Colour Correction Lift R`, variableId: `input_${type}_cc_liftr` })
+          inputSet.add({ name: `Input ${title} Colour Correction Lift G`, variableId: `input_${type}_cc_liftg` })
+          inputSet.add({ name: `Input ${title} Colour Correction Lift B`, variableId: `input_${type}_cc_liftb` })
+          inputSet.add({ name: `Input ${title} Colour Correction Lift Y`, variableId: `input_${type}_cc_lifty` })
+          inputSet.add({ name: `Input ${title} Colour Correction Gamma R`, variableId: `input_${type}_cc_gammar` })
+          inputSet.add({ name: `Input ${title} Colour Correction Gamma G`, variableId: `input_${type}_cc_gammag` })
+          inputSet.add({ name: `Input ${title} Colour Correction Gamma B`, variableId: `input_${type}_cc_gammab` })
+          inputSet.add({ name: `Input ${title} Colour Correction Gamma Y`, variableId: `input_${type}_cc_gammay` })
+          inputSet.add({ name: `Input ${title} Colour Correction Gain R`, variableId: `input_${type}_cc_gainr` })
+          inputSet.add({ name: `Input ${title} Colour Correction Gain G`, variableId: `input_${type}_cc_gaing` })
+          inputSet.add({ name: `Input ${title} Colour Correction Gain B`, variableId: `input_${type}_cc_gainb` })
+          inputSet.add({ name: `Input ${title} Colour Correction Gain Y`, variableId: `input_${type}_cc_gainy` })
         }
       }
     })
@@ -562,6 +685,19 @@ export class Variables {
     newVariables['recording_active'] = this.instance.data.status.recording.toString()
     newVariables['recording_duration'] = formatTime(this.instance.data.recording.duration, 's', 'auto')
     newVariables['recording_hms'] = formatTime(this.instance.data.recording.duration, 's', 'hh:mm:ss')
+    const recordingFile1 = this.instance.data.recording.filename1.split('\\')
+    const recordingFile2 = this.instance.data.recording.filename2.split('\\')
+    const recordingFilename1 = recordingFile1[recordingFile1.length - 1] || ''
+    const recordingFilepath1 = recordingFile1
+    recordingFilepath1.pop()
+    const recordingFilename2 = recordingFile2[recordingFile2.length - 1] || ''
+    const recordingFilepath2 = recordingFile2
+    recordingFilepath2.pop()
+
+    newVariables['recording_filename1'] = recordingFilename1
+    newVariables['recording_filepath1'] = recordingFilepath1.join('\\') + '\\'
+    newVariables['recording_filename2'] = recordingFilename2
+    newVariables['recording_filepath2'] = recordingFilepath2.join('\\') + '\\'
 
     // Mix
     for (const id of mixId) {
@@ -615,6 +751,31 @@ export class Variables {
             newVariables[`mix_${mix}_program_remaining`] = inputRemaining.ms
           }
 
+          if (!(this.instance.config.strictInputVariableTypes && !this.instance.config.variablesShowInputPosition)) {
+            newVariables[`mix_${mix}_program_position_panx`] = mixProgramInput.inputPosition?.panX ?? ''
+            newVariables[`mix_${mix}_program_position_pany`] = mixProgramInput.inputPosition?.panY ?? ''
+            newVariables[`mix_${mix}_program_position_zoomx`] = mixProgramInput.inputPosition?.zoomX ?? ''
+            newVariables[`mix_${mix}_program_position_zoomy`] = mixProgramInput.inputPosition?.zoomY ?? ''
+            newVariables[`mix_${mix}_program_position_cropx1`] = mixProgramInput.inputPosition?.cropX1 ?? ''
+            newVariables[`mix_${mix}_program_position_cropx2`] = mixProgramInput.inputPosition?.cropX2 ?? ''
+            newVariables[`mix_${mix}_program_position_cropy1`] = mixProgramInput.inputPosition?.cropY1 ?? ''
+            newVariables[`mix_${mix}_program_position_cropy2`] = mixProgramInput.inputPosition?.cropY2 ?? ''
+            newVariables[`mix_${mix}_program_cc_hue`] = mixProgramInput.cc?.hue ?? ''
+            newVariables[`mix_${mix}_program_cc_saturation`] = mixProgramInput.cc?.saturation ?? ''
+            newVariables[`mix_${mix}_program_cc_liftr`] = mixProgramInput.cc?.liftR ?? ''
+            newVariables[`mix_${mix}_program_cc_liftg`] = mixProgramInput.cc?.liftG ?? ''
+            newVariables[`mix_${mix}_program_cc_liftb`] = mixProgramInput.cc?.liftB ?? ''
+            newVariables[`mix_${mix}_program_cc_lifty`] = mixProgramInput.cc?.liftY ?? ''
+            newVariables[`mix_${mix}_program_cc_gammar`] = mixProgramInput.cc?.gammaR ?? ''
+            newVariables[`mix_${mix}_program_cc_gammag`] = mixProgramInput.cc?.gammaG ?? ''
+            newVariables[`mix_${mix}_program_cc_gammab`] = mixProgramInput.cc?.gammaB ?? ''
+            newVariables[`mix_${mix}_program_cc_gammay`] = mixProgramInput.cc?.gammaY ?? ''
+            newVariables[`mix_${mix}_program_cc_gainr`] = mixProgramInput.cc?.gainR ?? ''
+            newVariables[`mix_${mix}_program_cc_gaing`] = mixProgramInput.cc?.gainG ?? ''
+            newVariables[`mix_${mix}_program_cc_gainb`] = mixProgramInput.cc?.gainB ?? ''
+            newVariables[`mix_${mix}_program_cc_gainy`] = mixProgramInput.cc?.gainY ?? ''
+          }
+
           for (let i = 1; i < 11; i++) {
             newVariables[`mix_${mix}_program_layer_${i}_number`] = ''
             newVariables[`mix_${mix}_program_layer_${i}_name`] = ''
@@ -627,7 +788,26 @@ export class Variables {
             newVariables[`mix_${mix}_program_layer_${layer.index + 1}_name`] =
               mixProgramInputLayer?.shortTitle || mixProgramInputLayer?.title || ''
             newVariables[`mix_${mix}_program_layer_${layer.index + 1}_key`] = layer.key
+
+            if (
+              !(this.instance.config.strictInputVariableTypes && !this.instance.config.variablesShowInputLayerPosition)
+            ) {
+              newVariables[`mix_${mix}_program_layer_${layer.index + 1}_panx`] = layer.panX ?? ''
+              newVariables[`mix_${mix}_program_layer_${layer.index + 1}_pany`] = layer.panY ?? ''
+              newVariables[`mix_${mix}_program_layer_${layer.index + 1}_x`] = layer.x ?? ''
+              newVariables[`mix_${mix}_program_layer_${layer.index + 1}_y`] = layer.y ?? ''
+              newVariables[`mix_${mix}_program_layer_${layer.index + 1}_zoomx`] = layer.zoomX ?? ''
+              newVariables[`mix_${mix}_program_layer_${layer.index + 1}_zoomy`] = layer.zoomY ?? ''
+              newVariables[`mix_${mix}_program_layer_${layer.index + 1}_width`] = layer.width ?? ''
+              newVariables[`mix_${mix}_program_layer_${layer.index + 1}_height`] = layer.height ?? ''
+              newVariables[`mix_${mix}_program_layer_${layer.index + 1}_cropx1`] = layer.cropX1 ?? ''
+              newVariables[`mix_${mix}_program_layer_${layer.index + 1}_cropx2`] = layer.cropX2 ?? ''
+              newVariables[`mix_${mix}_program_layer_${layer.index + 1}_cropy1`] = layer.cropY1 ?? ''
+              newVariables[`mix_${mix}_program_layer_${layer.index + 1}_cropy2`] = layer.cropY2 ?? ''
+            }
           }
+
+          newVariables[`mix_${mix}_preview_framedelay`] = mixProgramInput.frameDelay ?? 0
         }
 
         if (mixPreviewInput) {
@@ -677,6 +857,31 @@ export class Variables {
             newVariables[`mix_${mix}_preview_remaining`] = inputRemaining.ms
           }
 
+          if (!(this.instance.config.strictInputVariableTypes && !this.instance.config.variablesShowInputPosition)) {
+            newVariables[`mix_${mix}_preview_position_panx`] = mixPreviewInput.inputPosition?.panX ?? ''
+            newVariables[`mix_${mix}_preview_position_pany`] = mixPreviewInput.inputPosition?.panY ?? ''
+            newVariables[`mix_${mix}_preview_position_zoomx`] = mixPreviewInput.inputPosition?.zoomX ?? ''
+            newVariables[`mix_${mix}_preview_position_zoomy`] = mixPreviewInput.inputPosition?.zoomY ?? ''
+            newVariables[`mix_${mix}_preview_position_cropx1`] = mixPreviewInput.inputPosition?.cropX1 ?? ''
+            newVariables[`mix_${mix}_preview_position_cropx2`] = mixPreviewInput.inputPosition?.cropX2 ?? ''
+            newVariables[`mix_${mix}_preview_position_cropy1`] = mixPreviewInput.inputPosition?.cropY1 ?? ''
+            newVariables[`mix_${mix}_preview_position_cropy2`] = mixPreviewInput.inputPosition?.cropY2 ?? ''
+            newVariables[`mix_${mix}_preview_cc_hue`] = mixPreviewInput.cc?.hue ?? ''
+            newVariables[`mix_${mix}_preview_cc_saturation`] = mixPreviewInput.cc?.saturation ?? ''
+            newVariables[`mix_${mix}_preview_cc_liftr`] = mixPreviewInput.cc?.liftR ?? ''
+            newVariables[`mix_${mix}_preview_cc_liftg`] = mixPreviewInput.cc?.liftG ?? ''
+            newVariables[`mix_${mix}_preview_cc_liftb`] = mixPreviewInput.cc?.liftB ?? ''
+            newVariables[`mix_${mix}_preview_cc_lifty`] = mixPreviewInput.cc?.liftY ?? ''
+            newVariables[`mix_${mix}_preview_cc_gammar`] = mixPreviewInput.cc?.gammaR ?? ''
+            newVariables[`mix_${mix}_preview_cc_gammag`] = mixPreviewInput.cc?.gammaG ?? ''
+            newVariables[`mix_${mix}_preview_cc_gammab`] = mixPreviewInput.cc?.gammaB ?? ''
+            newVariables[`mix_${mix}_preview_cc_gammay`] = mixPreviewInput.cc?.gammaY ?? ''
+            newVariables[`mix_${mix}_preview_cc_gainr`] = mixPreviewInput.cc?.gainR ?? ''
+            newVariables[`mix_${mix}_preview_cc_gaing`] = mixPreviewInput.cc?.gainG ?? ''
+            newVariables[`mix_${mix}_preview_cc_gainb`] = mixPreviewInput.cc?.gainB ?? ''
+            newVariables[`mix_${mix}_preview_cc_gainy`] = mixPreviewInput.cc?.gainY ?? ''
+          }
+
           for (let i = 1; i < 11; i++) {
             newVariables[`mix_${mix}_preview_layer_${i}_number`] = ''
             newVariables[`mix_${mix}_preview_layer_${i}_name`] = ''
@@ -689,7 +894,26 @@ export class Variables {
             newVariables[`mix_${mix}_preview_layer_${layer.index + 1}_name`] =
               mixPreviewInputLayer?.shortTitle || mixPreviewInputLayer?.title || ''
             newVariables[`mix_${mix}_preview_layer_${layer.index + 1}_key`] = layer.key
+
+            if (
+              !(this.instance.config.strictInputVariableTypes && !this.instance.config.variablesShowInputLayerPosition)
+            ) {
+              newVariables[`mix_${mix}_preview_layer_${layer.index + 1}_panx`] = layer.panX ?? ''
+              newVariables[`mix_${mix}_preview_layer_${layer.index + 1}_pany`] = layer.panY ?? ''
+              newVariables[`mix_${mix}_preview_layer_${layer.index + 1}_x`] = layer.x ?? ''
+              newVariables[`mix_${mix}_preview_layer_${layer.index + 1}_y`] = layer.y ?? ''
+              newVariables[`mix_${mix}_preview_layer_${layer.index + 1}_zoomx`] = layer.zoomX ?? ''
+              newVariables[`mix_${mix}_preview_layer_${layer.index + 1}_zoomy`] = layer.zoomY ?? ''
+              newVariables[`mix_${mix}_preview_layer_${layer.index + 1}_width`] = layer.width ?? ''
+              newVariables[`mix_${mix}_preview_layer_${layer.index + 1}_height`] = layer.height ?? ''
+              newVariables[`mix_${mix}_preview_layer_${layer.index + 1}_cropx1`] = layer.cropX1 ?? ''
+              newVariables[`mix_${mix}_preview_layer_${layer.index + 1}_cropx2`] = layer.cropX2 ?? ''
+              newVariables[`mix_${mix}_preview_layer_${layer.index + 1}_cropy1`] = layer.cropY1 ?? ''
+              newVariables[`mix_${mix}_preview_layer_${layer.index + 1}_cropy2`] = layer.cropY2 ?? ''
+            }
           }
+
+          newVariables[`mix_${mix}_preview_framedelay`] = mixPreviewInput.frameDelay ?? 0
         }
       }
 
@@ -776,6 +1000,8 @@ export class Variables {
       newVariables.bus_selected_solo = selectedBus.solo ? 'true' : 'false'
     }
 
+    newVariables.bus_any_solo = this.instance.data.audio.some((bus) => bus.solo).toString()
+
     // Overlay
     const getOverlayInput = async (id: number): Promise<Input | null> => {
       const overlay = this.instance.data.overlays[id - 1]
@@ -840,6 +1066,7 @@ export class Variables {
           newVariables[`dynamic_input_${dynamic + 1}_loop`] = input.loop.toString()
           newVariables[`dynamic_input_${dynamic + 1}_mute`] = inputAudio.toString()
           newVariables[`dynamic_input_${dynamic + 1}_audio`] = (!inputAudio).toString()
+          newVariables[`dynamic_input_${dynamic + 1}_solo`] = input.solo?.toString() || 'false'
 
           const meterF1 = input.meterF1 !== undefined ? volumeTodB(input.meterF1 * 100).toFixed(1) : ''
           const meterF2 = input.meterF2 !== undefined ? volumeTodB(input.meterF2 * 100).toFixed(1) : ''
@@ -908,6 +1135,31 @@ export class Variables {
             newVariables[`dynamic_input_${dynamic + 1}_remaining_mm:ss.ms`] = inputRemaining.mmssms
           }
 
+          if (!(this.instance.config.strictInputVariableTypes && !this.instance.config.variablesShowInputPosition)) {
+            newVariables[`dynamic_input_${dynamic + 1}_position_panx`] = input.inputPosition?.panX ?? ''
+            newVariables[`dynamic_input_${dynamic + 1}_position_pany`] = input.inputPosition?.panY ?? ''
+            newVariables[`dynamic_input_${dynamic + 1}_position_zoomx`] = input.inputPosition?.zoomX ?? ''
+            newVariables[`dynamic_input_${dynamic + 1}_position_zoomy`] = input.inputPosition?.zoomY ?? ''
+            newVariables[`dynamic_input_${dynamic + 1}_position_cropx1`] = input.inputPosition?.cropX1 ?? ''
+            newVariables[`dynamic_input_${dynamic + 1}_position_cropx2`] = input.inputPosition?.cropX2 ?? ''
+            newVariables[`dynamic_input_${dynamic + 1}_position_cropy1`] = input.inputPosition?.cropY1 ?? ''
+            newVariables[`dynamic_input_${dynamic + 1}_position_cropy2`] = input.inputPosition?.cropY2 ?? ''
+            newVariables[`dynamic_input_${dynamic + 1}_cc_hue`] = input.cc?.hue ?? ''
+            newVariables[`dynamic_input_${dynamic + 1}_cc_saturation`] = input.cc?.saturation ?? ''
+            newVariables[`dynamic_input_${dynamic + 1}_cc_liftr`] = input.cc?.liftR ?? ''
+            newVariables[`dynamic_input_${dynamic + 1}_cc_liftg`] = input.cc?.liftG ?? ''
+            newVariables[`dynamic_input_${dynamic + 1}_cc_liftb`] = input.cc?.liftB ?? ''
+            newVariables[`dynamic_input_${dynamic + 1}_cc_lifty`] = input.cc?.liftY ?? ''
+            newVariables[`dynamic_input_${dynamic + 1}_cc_gammar`] = input.cc?.gammaR ?? ''
+            newVariables[`dynamic_input_${dynamic + 1}_cc_gammag`] = input.cc?.gammaG ?? ''
+            newVariables[`dynamic_input_${dynamic + 1}_cc_gammab`] = input.cc?.gammaB ?? ''
+            newVariables[`dynamic_input_${dynamic + 1}_cc_gammay`] = input.cc?.gammaY ?? ''
+            newVariables[`dynamic_input_${dynamic + 1}_cc_gainr`] = input.cc?.gainR ?? ''
+            newVariables[`dynamic_input_${dynamic + 1}_cc_gaing`] = input.cc?.gainG ?? ''
+            newVariables[`dynamic_input_${dynamic + 1}_cc_gainb`] = input.cc?.gainB ?? ''
+            newVariables[`dynamic_input_${dynamic + 1}_cc_gainy`] = input.cc?.gainY ?? ''
+          }
+
           for (let i = 0; i < 10; i++) {
             newVariables[`dynamic_input_${dynamic + 1}_layer_${i + 1}_name`] = ''
             newVariables[`dynamic_input_${dynamic + 1}_layer_${i + 1}_number`] = ''
@@ -925,6 +1177,23 @@ export class Variables {
             newVariables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_name`] = overlayinputName
             newVariables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_number`] = overlayInput?.number || ''
             newVariables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_key`] = overlayInput?.key || ''
+
+            if (
+              !(this.instance.config.strictInputVariableTypes && !this.instance.config.variablesShowInputLayerPosition)
+            ) {
+              newVariables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_panx`] = layer.panX ?? ''
+              newVariables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_pany`] = layer.panY ?? ''
+              newVariables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_x`] = layer.x ?? ''
+              newVariables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_y`] = layer.y ?? ''
+              newVariables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_zoomx`] = layer.zoomX ?? ''
+              newVariables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_zoomy`] = layer.zoomY ?? ''
+              newVariables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_width`] = layer.width ?? ''
+              newVariables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_height`] = layer.height ?? ''
+              newVariables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_cropx1`] = layer.cropX1 ?? ''
+              newVariables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_cropx2`] = layer.cropX2 ?? ''
+              newVariables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_cropy1`] = layer.cropY1 ?? ''
+              newVariables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_cropy2`] = layer.cropY2 ?? ''
+            }
           }
 
           if (input.text) {
@@ -981,6 +1250,7 @@ export class Variables {
           newVariables[`dynamic_input_${dynamic + 1}_volume`] = volume
           newVariables[`dynamic_input_${dynamic + 1}_volume_db`] = volumedB
           newVariables[`dynamic_input_${dynamic + 1}_volume_linear`] = volumeLinear
+          newVariables[`dynamic_input_${dynamic + 1}_framedelay`] = input.frameDelay ?? 0
         }
       }
     }
@@ -1038,6 +1308,7 @@ export class Variables {
         newVariables[`input_${type}_loop`] = input.loop.toString()
         newVariables[`input_${type}_mute`] = inputAudio.toString()
         newVariables[`input_${type}_audio`] = (!inputAudio).toString()
+        newVariables[`input_${type}_solo`] = input.solo?.toString() || 'false'
 
         const meterF1 = input.meterF1 !== undefined ? volumeTodB(input.meterF1 * 100).toFixed(1) : ''
         const meterF2 = input.meterF2 !== undefined ? volumeTodB(input.meterF2 * 100).toFixed(1) : ''
@@ -1088,6 +1359,31 @@ export class Variables {
           newVariables[`input_${type}_remaining_mm:ss.ms`] = inputRemaining.mmssms
         }
 
+        if (!(this.instance.config.strictInputVariableTypes && !this.instance.config.variablesShowInputPosition)) {
+          newVariables[`input_${type}_position_panx`] = input.inputPosition?.panX ?? ''
+          newVariables[`input_${type}_position_pany`] = input.inputPosition?.panY ?? ''
+          newVariables[`input_${type}_position_zoomx`] = input.inputPosition?.zoomX ?? ''
+          newVariables[`input_${type}_position_zoomy`] = input.inputPosition?.zoomY ?? ''
+          newVariables[`input_${type}_position_cropx1`] = input.inputPosition?.cropX1 ?? ''
+          newVariables[`input_${type}_position_cropx2`] = input.inputPosition?.cropX2 ?? ''
+          newVariables[`input_${type}_position_cropy1`] = input.inputPosition?.cropY1 ?? ''
+          newVariables[`input_${type}_position_cropy2`] = input.inputPosition?.cropY2 ?? ''
+          newVariables[`input_${type}_cc_hue`] = input.cc?.hue ?? ''
+          newVariables[`input_${type}_cc_saturation`] = input.cc?.saturation ?? ''
+          newVariables[`input_${type}_cc_liftr`] = input.cc?.liftR ?? ''
+          newVariables[`input_${type}_cc_liftg`] = input.cc?.liftG ?? ''
+          newVariables[`input_${type}_cc_liftb`] = input.cc?.liftB ?? ''
+          newVariables[`input_${type}_cc_lifty`] = input.cc?.liftY ?? ''
+          newVariables[`input_${type}_cc_gammar`] = input.cc?.gammaR ?? ''
+          newVariables[`input_${type}_cc_gammag`] = input.cc?.gammaG ?? ''
+          newVariables[`input_${type}_cc_gammab`] = input.cc?.gammaB ?? ''
+          newVariables[`input_${type}_cc_gammay`] = input.cc?.gammaY ?? ''
+          newVariables[`input_${type}_cc_gainr`] = input.cc?.gainR ?? ''
+          newVariables[`input_${type}_cc_gaing`] = input.cc?.gainG ?? ''
+          newVariables[`input_${type}_cc_gainb`] = input.cc?.gainB ?? ''
+          newVariables[`input_${type}_cc_gainy`] = input.cc?.gainY ?? ''
+        }
+
         for (let i = 0; i < 10; i++) {
           newVariables[`input_${type}_layer_${i + 1}_name`] = ''
           newVariables[`input_${type}_layer_${i + 1}_number`] = ''
@@ -1105,6 +1401,23 @@ export class Variables {
           newVariables[`input_${type}_layer_${layer.index + 1}_name`] = overlayinputName
           newVariables[`input_${type}_layer_${layer.index + 1}_number`] = overlayInput?.number || ''
           newVariables[`input_${type}_layer_${layer.index + 1}_key`] = overlayInput?.key || ''
+
+          if (
+            !(this.instance.config.strictInputVariableTypes && !this.instance.config.variablesShowInputLayerPosition)
+          ) {
+            newVariables[`input_${type}_layer_${layer.index + 1}_panx`] = layer.panX ?? ''
+            newVariables[`input_${type}_layer_${layer.index + 1}_pany`] = layer.panY ?? ''
+            newVariables[`input_${type}_layer_${layer.index + 1}_x`] = layer.x ?? ''
+            newVariables[`input_${type}_layer_${layer.index + 1}_y`] = layer.y ?? ''
+            newVariables[`input_${type}_layer_${layer.index + 1}_zoomx`] = layer.zoomX ?? ''
+            newVariables[`input_${type}_layer_${layer.index + 1}_zoomy`] = layer.zoomY ?? ''
+            newVariables[`input_${type}_layer_${layer.index + 1}_width`] = layer.width ?? ''
+            newVariables[`input_${type}_layer_${layer.index + 1}_height`] = layer.height ?? ''
+            newVariables[`input_${type}_layer_${layer.index + 1}_cropx1`] = layer.cropX1 ?? ''
+            newVariables[`input_${type}_layer_${layer.index + 1}_cropx2`] = layer.cropX2 ?? ''
+            newVariables[`input_${type}_layer_${layer.index + 1}_cropy1`] = layer.cropY1 ?? ''
+            newVariables[`input_${type}_layer_${layer.index + 1}_cropy2`] = layer.cropY2 ?? ''
+          }
         }
 
         if (input.text) {
@@ -1158,8 +1471,28 @@ export class Variables {
         newVariables[`input_${type}_volume`] = volume
         newVariables[`input_${type}_volume_db`] = volumedB
         newVariables[`input_${type}_volume_linear`] = volumeLinear
+        newVariables[`input_${type}_framedelay`] = input.frameDelay ?? 0
       }
     }
+
+    newVariables.input_any_solo = this.instance.data.inputs.some((input) => input.solo).toString()
+
+    // Replay
+    newVariables.replay_recording = this.instance.data.replay.recording.toString()
+    newVariables.replay_live = this.instance.data.replay.live.toString()
+    newVariables.replay_forward = this.instance.data.replay.forward.toString()
+    newVariables.replay_channel_mode = this.instance.data.replay.channelMode
+    newVariables.replay_events = this.instance.data.replay.events
+    newVariables.replay_eventsa = this.instance.data.replay.eventsA
+    newVariables.replay_eventsb = this.instance.data.replay.eventsB
+    newVariables.replay_cameraa = this.instance.data.replay.cameraA
+    newVariables.replay_camerab = this.instance.data.replay.cameraB
+    newVariables.replay_speed = this.instance.data.replay.speed
+    newVariables.replay_speeda = this.instance.data.replay.speedA
+    newVariables.replay_speedb = this.instance.data.replay.speedB
+    newVariables.replay_timecode = this.instance.data.replay.timecode
+    newVariables.replay_timecodea = this.instance.data.replay.timecodeA
+    newVariables.replay_timecodeb = this.instance.data.replay.timecodeB
 
     this.set(newVariables)
 

@@ -1,10 +1,24 @@
 import { CompanionActionEvent, SomeCompanionActionInputField } from '@companion-module/base'
-import { options, TRANSITIONS, volumeToLinear } from './utils'
+import { options, TRANSITIONS, valueMinMax, volumeToLinear } from './utils'
 import { Timer } from './timers'
 import VMixInstance from './index'
 
 type ActionOptionEntry = [string, string | number | boolean]
 type MixOptionEntry = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | -1
+type ColourCorrectionType =
+  | 'hue'
+  | 'saturation'
+  | 'liftG'
+  | 'liftB'
+  | 'liftY'
+  | 'gammaR'
+  | 'gammaG'
+  | 'gammaB'
+  | 'gammaY'
+  | 'gainR'
+  | 'gainG'
+  | 'gainB'
+  | 'gainY'
 
 export interface VMixActions {
   // Input
@@ -12,6 +26,12 @@ export interface VMixActions {
   previewInputNext: VMixAction<PreviewInputNextCallback>
   previewInputPrevious: VMixAction<PreviewInputPreviousCallback>
   resetInput: VMixAction<ResetInputCallback>
+  undo: VMixAction<UndoCallback>
+  inputEffect: VMixAction<InputEffectCallback>
+  inputEffectStrength: VMixAction<InputEffectStrengthCallback>
+  setCC: VMixAction<SetCCCallback>
+  inputPosition: VMixAction<InputPositionCallback>
+  inputFrameDelay: VMixAction<InputFrameDelayCallback>
 
   // Transition
   programCut: VMixAction<ProgramCutCallback>
@@ -44,6 +64,7 @@ export interface VMixActions {
   setMultiViewOverlayDestinationLayer: VMixAction<SetMultiViewOverlayDestinationLayerCallback>
   setMultiViewOverlaySourceInput: VMixAction<SetMultiViewOverlaySourceInputCallback>
   clearMultiViewOverlaySelection: VMixAction<ClearMultiViewOverlaySelectionCallback>
+  setLayerPosition: VMixAction<SetLayerPositionCallback>
 
   // Virtual Set
   virtualSet: VMixAction<VirtualSetCallback>
@@ -64,6 +85,8 @@ export interface VMixActions {
   setBusVolume: VMixAction<SetBusVolumeCallback>
   audioPlugin: VMixAction<AudioPluginCallback>
   audioChannelMatrixApplyPreset: VMixAction<AudioChannelMatrixApplyPresetCallback>
+  setVolumeChannelMixer: VMixAction<SetVolumeChannelMixerCallback>
+  soloAllOff: VMixAction<SoloAllOffCallback>
 
   // Title
   controlCountdown: VMixAction<ControlCountdownCallback>
@@ -104,6 +127,7 @@ export interface VMixActions {
   replaySelectEvents: VMixAction<ReplaySelectEventsCallback>
   replayChangeDirection: VMixAction<ReplayChangeDirectionCallback>
   replayChangeSpeed: VMixAction<ReplayChangeSpeedCallback>
+  replaySetSpeed: VMixAction<ReplaySetSpeedCallback>
   replayMoveEvent: VMixAction<ReplayMoveEventCallback>
   replayMoveEventUpDown: VMixAction<ReplayMoveEventUpDownCallback>
   replayFastForwardBackward: VMixAction<ReplayFastForwardBackwardCallback>
@@ -126,6 +150,11 @@ export interface VMixActions {
   keyPress: VMixAction<KeyPressCallback>
   tbar: VMixAction<TbarCallback>
   dynamic: VMixAction<DynamicCallback>
+
+  // PTZ
+  ptzMove: VMixAction<PTZMoveCallback>
+  ptzFocusZoom: VMixAction<PTZFocusZoomCallback>
+  ptzVirtualInput: VMixAction<PTZVirtualInputCallback>
 
   // Scripting
   scriptStart: VMixAction<ScriptStartCallback>
@@ -169,6 +198,78 @@ interface ResetInputCallback {
   actionId: 'resetInput'
   options: Readonly<{
     input: string
+  }>
+}
+
+interface UndoCallback {
+  actionId: 'undo'
+  options: Record<string, never>
+}
+
+interface InputEffectCallback {
+  actionId: 'inputEffect'
+  options: Readonly<{
+    input: string
+    effect: '1' | '2' | '3' | '4'
+    state: '' | 'On' | 'Off'
+  }>
+}
+
+interface InputEffectStrengthCallback {
+  actionId: 'inputEffectStrength'
+  options: Readonly<{
+    input: string
+    effect: '1' | '2' | '3' | '4'
+    strength: string
+  }>
+}
+
+interface SetCCCallback {
+  actionId: 'setCC'
+  options: Readonly<{
+    input: string
+    setting:
+      | 'SetCCGainR'
+      | 'SetCCGainG'
+      | 'SetCCGainB'
+      | 'SetCCGainRGB'
+      | 'SetCCGainY'
+      | 'SetCCGammaR'
+      | 'SetCCGammaG'
+      | 'SetCCGammaB'
+      | 'SetCCGammaRGB'
+      | 'SetCCGammaY'
+      | 'SetCCHue'
+      | 'SetCCLiftR'
+      | 'SetCCLiftG'
+      | 'SetCCLiftB'
+      | 'SetCCLiftRGB'
+      | 'SetCCLiftY'
+      | 'SetCCSaturation'
+    adjustment: 'Set' | 'Increase' | 'Decrease'
+    gainValue: string
+    otherValue: string
+  }>
+}
+
+interface InputPositionCallback {
+  actionId: 'inputPosition'
+  options: Readonly<{
+    input: string
+    setting: 'SetZoom' | 'SetCrop' | 'SetCropX1' | 'SetCropX2' | 'SetCropY1' | 'SetCropY2' | 'SetPanX' | 'SetPanY'
+    adjustment: 'Set' | 'Increase' | 'Decrease'
+    zoomValue: string
+    cropValue: string
+    cropValue2: string
+    panValue: string
+  }>
+}
+
+interface InputFrameDelayCallback {
+  actionId: 'inputFrameDelay'
+  options: Readonly<{
+    input: string
+    value: string
   }>
 }
 
@@ -396,6 +497,36 @@ interface ClearMultiViewOverlaySelectionCallback {
   options: Record<string, never>
 }
 
+interface SetLayerPositionCallback {
+  actionId: 'setLayerPosition'
+  options: Readonly<{
+    input: string
+    layer: string
+    setting:
+      | 'Crop'
+      | 'CropX1'
+      | 'CropX2'
+      | 'CropY1'
+      | 'CropY2'
+      | 'PanX'
+      | 'PanY'
+      | 'X'
+      | 'Y'
+      | 'Height'
+      | 'Width'
+      | 'Rectangle'
+      | 'Zoom'
+    adjustment: 'Set' | 'Increase' | 'Decrease'
+    crop: string
+    crop2: string
+    pan: string
+    xy: string
+    heightWidth: string
+    rectangle: string
+    zoom: string
+  }>
+}
+
 // Virtual Set
 interface VirtualSetCallback {
   actionId: 'virtualSet'
@@ -515,6 +646,21 @@ interface AudioChannelMatrixApplyPresetCallback {
   }>
 }
 
+interface SetVolumeChannelMixerCallback {
+  actionId: 'setVolumeChannelMixer'
+  options: Readonly<{
+    input: string
+    channel: string
+    adjustment: 'Set' | 'Increase' | 'Decrease'
+    amount: string
+  }>
+}
+
+interface SoloAllOffCallback {
+  actionId: 'soloAllOff'
+  options: Record<string, never>
+}
+
 // Title
 interface ControlCountdownCallback {
   actionId: 'controlCountdown'
@@ -559,6 +705,7 @@ interface SetTextCallback {
     selectedIndex: string
     adjustment: 'Set' | 'Increment' | 'Decrement'
     value: string
+    encode: boolean
   }>
 }
 
@@ -669,7 +816,7 @@ interface VideoActionsCallback {
   options: Readonly<{
     input: string
     inputType: boolean
-    functionID: 'Play' | 'Pause' | 'PlayPause' | 'Restart' | 'LoopOn' | 'LoopOff'
+    functionID: 'Play' | 'Pause' | 'PlayPause' | 'Restart' | 'LoopOn' | 'LoopOff' | 'Loop'
   }>
 }
 
@@ -825,6 +972,15 @@ interface ReplayChangeSpeedCallback {
   }>
 }
 
+interface ReplaySetSpeedCallback {
+  actionId: 'replaySetSpeed'
+  options: Readonly<{
+    channel: 'Current' | 'A' | 'B'
+    value: string
+    max: string
+  }>
+}
+
 interface ReplayMoveEventCallback {
   actionId: 'replayMoveEvent'
   options: Readonly<{
@@ -956,7 +1112,7 @@ interface KeyPressCallback {
 interface TbarCallback {
   actionId: 'tbar'
   options: Readonly<{
-    value: number
+    value: string
   }>
 }
 
@@ -966,6 +1122,44 @@ interface DynamicCallback {
     type: 'Input' | 'Value'
     number: '1' | '2' | '3' | '4'
     value: string
+  }>
+}
+
+// PTZ
+interface PTZMoveCallback {
+  actionId: 'ptzMove'
+  options: Readonly<{
+    input: string
+    functionID:
+      | 'PTZHome'
+      | 'PTZStop'
+      | 'PTZMoveUp'
+      | 'PTZMoveUpLeft'
+      | 'PTZMoveUpRight'
+      | 'PTZMoveLeft'
+      | 'PTZMoveRight'
+      | 'PTZMoveDown'
+      | 'PTZMoveDownLeft'
+      | 'PTZMoveDownRight'
+      | 'PTZMoveToVirtualInputPosition'
+      | 'PTZMoveToVirtualInputPositionByIndex'
+    value?: string
+  }>
+}
+
+interface PTZFocusZoomCallback {
+  actionId: 'ptzFocusZoom'
+  options: Readonly<{
+    input: string
+    value: string
+  }>
+}
+
+interface PTZVirtualInputCallback {
+  actionId: 'ptzVirtualInput'
+  options: Readonly<{
+    input: string
+    functionID: 'PTZCreateVirtualInput' | 'PTZUpdateVirtualInput'
   }>
 }
 
@@ -1057,6 +1251,12 @@ export type ActionCallbacks =
   | PreviewInputNextCallback
   | PreviewInputPreviousCallback
   | ResetInputCallback
+  | UndoCallback
+  | InputEffectCallback
+  | InputEffectStrengthCallback
+  | SetCCCallback
+  | InputPositionCallback
+  | InputFrameDelayCallback
 
   // Transition
   | ProgramCutCallback
@@ -1089,6 +1289,7 @@ export type ActionCallbacks =
   | SetMultiViewOverlayDestinationLayerCallback
   | SetMultiViewOverlaySourceInputCallback
   | ClearMultiViewOverlaySelectionCallback
+  | SetLayerPositionCallback
 
   // Virtual Set
   | VirtualSetCallback
@@ -1108,6 +1309,8 @@ export type ActionCallbacks =
   | SetBusVolumeCallback
   | AudioPluginCallback
   | AudioChannelMatrixApplyPresetCallback
+  | SetVolumeChannelMixerCallback
+  | SoloAllOffCallback
 
   // Title
   | ControlCountdownCallback
@@ -1148,6 +1351,7 @@ export type ActionCallbacks =
   | ReplaySelectEventsCallback
   | ReplayChangeDirectionCallback
   | ReplayChangeSpeedCallback
+  | ReplaySetSpeedCallback
   | ReplayMoveEventCallback
   | ReplayMoveEventUpDownCallback
   | ReplayFastForwardBackwardCallback
@@ -1170,6 +1374,11 @@ export type ActionCallbacks =
   | KeyPressCallback
   | TbarCallback
   | DynamicCallback
+
+  // PTZ
+  | PTZMoveCallback
+  | PTZFocusZoomCallback
+  | PTZVirtualInputCallback
 
   // Scripting
   | ScriptStartCallback
@@ -1280,6 +1489,374 @@ export function getActions(instance: VMixInstance): VMixActions {
       description: 'Reset an Input',
       options: [options.input],
       callback: sendBasicCommand,
+    },
+
+    undo: {
+      name: 'Input - Undo',
+      description: 'Undo closing an input',
+      options: [],
+      callback: sendBasicCommand,
+    },
+
+    inputEffect: {
+      name: 'Input - Effect Toggle/On/Off',
+      description: 'Control effects on input',
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Effect',
+          id: 'effect',
+          default: '1',
+          choices: [
+            { id: '1', label: 'Effect 1' },
+            { id: '2', label: 'Effect 2' },
+            { id: '3', label: 'Effect 3' },
+            { id: '4', label: 'Effect 4' },
+          ],
+        },
+        {
+          type: 'dropdown',
+          label: 'State',
+          id: 'state',
+          default: '',
+          choices: [
+            { id: '', label: 'Toggle' },
+            { id: 'On', label: 'On' },
+            { id: 'Off', label: 'Off' },
+          ],
+        },
+      ],
+      callback: async (action) => {
+        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+        const input = await instance.data.getInput(selected)
+
+        if (!input) return
+
+        const command = `Effect${action.options.effect}${action.options.state}`
+
+        if (instance.tcp) {
+          instance.tcp.sendCommand(`FUNCTION ${command} Input=${input.key}`)
+        }
+      },
+    },
+
+    inputEffectStrength: {
+      name: 'Input - Effect Strength',
+      description: 'Control effect strength on input',
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Effect',
+          id: 'effect',
+          default: '1',
+          choices: [
+            { id: '1', label: 'Effect 1' },
+            { id: '2', label: 'Effect 2' },
+            { id: '3', label: 'Effect 3' },
+            { id: '4', label: 'Effect 4' },
+          ],
+        },
+        {
+          type: 'textinput',
+          label: 'Strength 0 to 1',
+          id: 'strength',
+          default: '1',
+        },
+      ],
+      callback: async (action) => {
+        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+        const input = await instance.data.getInput(selected)
+        const value = (await instance.parseOption(action.options.strength))[instance.buttonShift.state]
+        const parsedValue = parseFloat(value)
+
+        if (!input || isNaN(parsedValue)) return
+
+        const command = `SetEffect${action.options.effect}Strength`
+
+        if (instance.tcp) {
+          instance.tcp.sendCommand(`FUNCTION ${command} Input=${input.key}&Value=${parsedValue}`)
+        }
+      },
+    },
+
+    setCC: {
+      name: 'Input - Colour Correction',
+      description: 'Control CC Gain, Gamma, Hue, Lift, or Saturation',
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Setting',
+          id: 'setting',
+          default: 'SetCCGainR',
+          choices: [
+            { id: 'SetCCGainR', label: 'Gain R' },
+            { id: 'SetCCGainG', label: 'Gain G' },
+            { id: 'SetCCGainB', label: 'Gain B' },
+            { id: 'SetCCGainY', label: 'Gain Y' },
+            { id: 'SetCCGammaR', label: 'Gamma R' },
+            { id: 'SetCCGammaG', label: 'Gamma G' },
+            { id: 'SetCCGammaB', label: 'Gamma B' },
+            { id: 'SetCCGammaY', label: 'Gamma Y' },
+            { id: 'SetCCHue', label: 'Hue' },
+            { id: 'SetCCLiftR', label: 'Lift R' },
+            { id: 'SetCCLiftG', label: 'Lift G' },
+            { id: 'SetCCLiftB', label: 'Lift B' },
+            { id: 'SetCCLiftY', label: 'Lift Y' },
+            { id: 'SetCCSaturation', label: 'Saturation' },
+          ],
+        },
+        options.adjustment,
+        {
+          type: 'textinput',
+          label: 'Gain Value 0 to 2',
+          id: 'gainValue',
+          default: '1',
+          isVisible: (options) => {
+            const setting = options.setting as string
+            return setting.startsWith('SetCCGain')
+          },
+        },
+        {
+          type: 'textinput',
+          label: 'Gain Value -1 to 1',
+          id: 'otherValue',
+          default: '0',
+          isVisible: (options) => {
+            const setting = options.setting as string
+            return !setting.startsWith('SetCCGain')
+          },
+        },
+      ],
+      callback: async (action) => {
+        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+        const input = await instance.data.getInput(selected)
+        const valueOption = action.options.setting.startsWith('SetCCGain')
+          ? action.options.gainValue
+          : action.options.otherValue
+        const value = (await instance.parseOption(valueOption))[instance.buttonShift.state]
+        let parsedValue = parseFloat(value)
+
+        if (!input || isNaN(parsedValue)) return
+
+        if (action.options.adjustment !== 'Set' || !input.cc) {
+          if (instance.data.majorVersion < 27) {
+            instance.log('warn', 'Input CC Increase/Decrease is only available in vMix 27 or later')
+            return
+          }
+
+          let type = action.options.setting.substring(5)
+          type = type.charAt(0).toLowerCase() + type.slice(1)
+
+          const currentValue = input.cc?.[type as ColourCorrectionType]
+
+          if (currentValue !== undefined) {
+            if (action.options.adjustment === 'Increase') {
+              parsedValue = currentValue + parsedValue
+            } else {
+              parsedValue = currentValue - parsedValue
+            }
+          }
+
+          if (action.options.setting.startsWith('SetCCGain')) {
+            parsedValue = valueMinMax(parsedValue, 0, 2)
+          } else {
+            parsedValue = valueMinMax(parsedValue, -1, 1)
+          }
+        }
+
+        if (instance.tcp) {
+          instance.tcp.sendCommand(`FUNCTION ${action.options.setting} Input=${input.key}&Value=${parsedValue}`)
+        }
+      },
+    },
+
+    inputPosition: {
+      name: 'Input - Position',
+      description: 'Control input Zoom, Crop, and Pan',
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Setting',
+          id: 'setting',
+          default: 'SetZoom',
+          choices: [
+            { id: 'SetZoom', label: 'Zoom' },
+            { id: 'SetCrop', label: 'Crop' },
+            { id: 'SetCropX1', label: 'Crop X1' },
+            { id: 'SetCropX2', label: 'Crop X2' },
+            { id: 'SetCropY1', label: 'Crop Y1' },
+            { id: 'SetCropY2', label: 'Crop Y2' },
+            { id: 'SetPanX', label: 'Pan X' },
+            { id: 'SetPanY', label: 'Pan Y' },
+          ],
+        },
+        {
+          type: 'dropdown',
+          label: 'Adjustment',
+          id: 'adjustment',
+          default: 'Set',
+          choices: [
+            { id: 'Set', label: 'Set' },
+            { id: 'Increase', label: 'Increase' },
+            { id: 'Decrease', label: 'Decrease' },
+          ],
+          isVisible: (options) => {
+            const setting = options.setting as string
+            return setting !== 'setCrop'
+          },
+        },
+        {
+          type: 'textinput',
+          label: 'Zoom Value 0 to 5 (1 = 100%, 0.5 = 50%, 2 = 200%)',
+          id: 'zoomValue',
+          default: '1',
+          isVisible: (options) => {
+            const setting = options.setting as string
+            return setting === 'SetZoom'
+          },
+        },
+        {
+          type: 'textinput',
+          label: 'Crop (0 = No Crop, 1 = Full Crop) X1,Y1,X2,Y2',
+          id: 'cropValue',
+          default: '0,0,1,1',
+          isVisible: (options) => {
+            const setting = options.setting as string
+            return setting === 'SetCrop'
+          },
+        },
+        {
+          type: 'textinput',
+          label: 'Crop (0 = No Crop, 1 = Full Crop)',
+          id: 'cropValue2',
+          default: '1',
+          isVisible: (options) => {
+            const setting = options.setting as string
+            return setting.startsWith('SetCropX') || setting.startsWith('SetCropY')
+          },
+        },
+        {
+          type: 'textinput',
+          label: 'Pan (0 = Centered, -2 = 100% to left, 2 = 100% to right)',
+          id: 'panValue',
+          default: '1',
+          isVisible: (options) => {
+            const setting = options.setting as string
+            return setting.startsWith('SetPan')
+          },
+        },
+      ],
+      callback: async (action) => {
+        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+        const input = await instance.data.getInput(selected)
+        let cmd = ''
+
+        if (!input) return
+
+        if (action.options.adjustment !== 'Set' && instance.data.majorVersion < 27) {
+          instance.log('warn', 'Input Position Adjustment Increase/Decrease is only available in vMix 27 or later')
+          return
+        }
+
+        if (action.options.setting === 'SetZoom') {
+          let value: string | number = (await instance.parseOption(action.options.zoomValue))[
+            instance.buttonShift.state
+          ]
+          value = parseFloat(value)
+
+          const currentValue = input.inputPosition?.zoomX ?? 1
+
+          if (action.options.adjustment === 'Increase') {
+            value = currentValue + value
+          } else if (action.options.adjustment === 'Decrease') {
+            value = currentValue - value
+          }
+
+          cmd = `FUNCTION SetZoom Input=${input.key}&Value=${valueMinMax(Math.round(value * 1000) / 1000, 0, 5)}`
+        } else if (action.options.setting === 'SetCrop') {
+          const value: string = (await instance.parseOption(action.options.cropValue))[instance.buttonShift.state]
+
+          cmd = `FUNCTION SetCrop Input=${input.key}&Value=${value}`
+        } else if (action.options.setting.startsWith('SetCrop')) {
+          let value: string | number = (await instance.parseOption(action.options.cropValue2))[
+            instance.buttonShift.state
+          ]
+          value = parseFloat(value)
+          if (isNaN(value)) return
+
+          const cropSetting = `crop${action.options.setting.substring(7)}`
+
+          const currentValue = input.inputPosition?.[cropSetting] ?? 0
+
+          if (action.options.adjustment === 'Increase') {
+            value = currentValue + value
+          } else if (action.options.adjustment === 'Decrease') {
+            value = currentValue - value
+          }
+
+          cmd = `FUNCTION ${action.options.setting} Input=${input.key}&Value=${valueMinMax(
+            Math.round(value * 1000) / 1000,
+            0,
+            1
+          )}`
+        } else {
+          let value: string | number = (await instance.parseOption(action.options.panValue))[instance.buttonShift.state]
+          value = parseFloat(value)
+          if (isNaN(value)) return
+
+          const panSetting = `pan${action.options.setting.substring(6)}`
+          const currentValue = input.inputPosition?.[panSetting] ?? 0
+
+          if (action.options.adjustment === 'Increase') {
+            value = currentValue + value
+          } else if (action.options.adjustment === 'Decrease') {
+            const currentValue = input.inputPosition?.[panSetting] ?? 0
+            value = currentValue - value
+          }
+
+          cmd = `FUNCTION ${action.options.setting} Input=${input.key}&Value=${valueMinMax(
+            Math.round(value * 1000) / 1000,
+            -2,
+            2
+          )}`
+        }
+
+        if (instance.tcp) {
+          instance.tcp.sendCommand(cmd)
+        }
+      },
+    },
+
+    inputFrameDelay: {
+      name: 'Inpt - Frame Delay',
+      description: 'Set the delay in frames on supported inputs (eg, Cameras)',
+      options: [
+        options.input,
+        {
+          type: 'textinput',
+          label: 'Frames',
+          id: 'value',
+          default: '0',
+        },
+      ],
+      callback: async (action) => {
+        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+        const input = await instance.data.getInput(selected)
+        let value: number | string = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
+        value = parseInt(value)
+
+        if (!input || isNaN(value)) {
+          return
+        }
+
+        if (instance.tcp) {
+          instance.tcp.sendCommand(`FUNCTION SetFrameDelay Input=${input.key}&Value=${value}`)
+        }
+      },
     },
 
     // Transition
@@ -1640,17 +2217,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           ],
         },
         options.input,
-        {
-          type: 'dropdown',
-          label: 'Adjustment',
-          id: 'adjustment',
-          default: 'Set',
-          choices: [
-            { id: 'Set', label: 'Set' },
-            { id: 'Increase', label: 'Increase' },
-            { id: 'Decrease', label: 'Decrease' },
-          ],
-        },
+        options.adjustment,
         {
           type: 'textinput',
           label: 'Value (-2 to 2)',
@@ -1923,6 +2490,247 @@ export function getActions(instance: VMixInstance): VMixActions {
       },
     },
 
+    setLayerPosition: {
+      name: 'Layer - Position',
+      description: 'Control Input Layers Position and sizing',
+      options: [
+        options.input,
+        {
+          type: 'textinput',
+          label: 'Layer (1 to 10)',
+          id: 'layer',
+          default: '1',
+        },
+        {
+          type: 'dropdown',
+          label: 'Setting',
+          id: 'setting',
+          default: 'Crop',
+          choices: [
+            { id: 'Crop', label: 'Crop' },
+            { id: 'CropX1', label: 'Crop X1' },
+            { id: 'CropX2', label: 'Crop X2' },
+            { id: 'CropY1', label: 'Crop Y1' },
+            { id: 'CropY2', label: 'Crop Y2' },
+            { id: 'PanX', label: 'Pan X (Percent)' },
+            { id: 'PanY', label: 'Pan Y (Percent)' },
+            { id: 'X', label: 'Pan X (Pixels)' },
+            { id: 'Y', label: 'Pan Y (Pixels)' },
+            { id: 'Height', label: 'Zoom X' },
+            { id: 'Width', label: 'Zoom Y' },
+            { id: 'Zoom', label: 'Zoom' },
+            { id: 'Rectangle', label: 'Rectangle' },
+          ],
+        },
+        options.adjustment,
+        {
+          type: 'textinput',
+          label: 'Crop (0 = No Crop, 1 = Full Crop) X1,Y1,X2,Y2',
+          id: 'crop',
+          default: '0,0,1,1',
+          isVisible: (options) => {
+            return options.setting === 'Crop'
+          },
+        },
+        {
+          type: 'textinput',
+          label: 'Crop (0 = No Crop, 1 = Full Crop)',
+          id: 'crop2',
+          default: '0',
+          isVisible: (options) => {
+            const setting = options.setting as string
+            return setting !== 'Crop' && setting.startsWith('Crop')
+          },
+        },
+        {
+          type: 'textinput',
+          label: 'Pan (0 = Centered, -2 = 100% to left/bottom, 2 = 100% to right/top)',
+          id: 'pan',
+          default: '1',
+          isVisible: (options) => {
+            const setting = options.setting as string
+            return setting === 'PanX' || setting === 'PanY'
+          },
+        },
+        {
+          type: 'textinput',
+          label: 'Pan X / Pan Y position in pixels based on preset resolution',
+          id: 'xy',
+          default: '1',
+          isVisible: (options) => {
+            const setting = options.setting as string
+            return setting === 'X' || setting === 'Y'
+          },
+        },
+        {
+          type: 'textinput',
+          label: 'Zoom X / Zoom Y position in pixels based on preset resolution',
+          id: 'heightWidth',
+          default: '1',
+          isVisible: (options) => {
+            const setting = options.setting as string
+            return setting === 'Height' || setting === 'Width'
+          },
+        },
+        {
+          type: 'textinput',
+          label: 'Position and Size in pixels (X,Y,Width,Height)',
+          id: 'rectangle',
+          default: '1',
+          isVisible: (options) => {
+            const setting = options.setting as string
+            return setting === 'Rectangle'
+          },
+        },
+        {
+          type: 'textinput',
+          label: 'Zoom (1 = 100%, 0.5 = 50%, 2 = 200%) uses Zoom X for adjustment',
+          id: 'zoom',
+          default: '1',
+          isVisible: (options) => {
+            const setting = options.setting as string
+            return setting === 'Zoom'
+          },
+        },
+      ],
+      callback: async (action) => {
+        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+        const input = await instance.data.getInput(selected)
+        const selectedLayer = (await instance.parseOption(action.options.layer))[instance.buttonShift.state]
+        const layer = parseInt(selectedLayer)
+        const inputLayer = input?.overlay?.[layer - 1]
+
+        if (!input || isNaN(layer) || inputLayer === undefined) return
+
+        if (layer < 1 || layer > 10) {
+          instance.log('warn', 'Invalid layer, value must be 1 to 10')
+          return
+        }
+
+        if (action.options.adjustment !== 'Set' && instance.data.majorVersion < 27) {
+          instance.log(
+            'warn',
+            'Input Layer Position Adjustment Increase/Decrease is only available in vMix 27 or later'
+          )
+          return
+        }
+
+        let cmd = `FUNCTION SetLayer${layer}${action.options.setting} Input=${input.key}&Value=`
+
+        if (action.options.setting === 'Crop') {
+          cmd += action.options.crop
+        } else if (action.options.setting.startsWith('Crop')) {
+          let value: string | number = (await instance.parseOption(action.options.crop2))[instance.buttonShift.state]
+          value = parseFloat(value)
+          if (isNaN(value)) return
+
+          let newValue = value
+          const crop = 'c' + action.options.setting.substring(1)
+
+          if (action.options.adjustment === 'Increase') {
+            const currentValue = (inputLayer[crop] !== undefined ? inputLayer[crop] : 0) as number
+            newValue = currentValue + value
+          } else if (action.options.adjustment === 'Decrease') {
+            const currentValue = (inputLayer[crop] !== undefined ? inputLayer[crop] : 0) as number
+            newValue = currentValue - value
+          }
+
+          cmd += valueMinMax(newValue, 0, 1)
+        } else if (action.options.setting.startsWith('Pan')) {
+          let value: string | number = (await instance.parseOption(action.options.pan))[instance.buttonShift.state]
+          value = parseFloat(value)
+          if (isNaN(value)) return
+
+          let newValue = value
+          const pan = 'p' + action.options.setting.substring(1)
+
+          if (action.options.adjustment === 'Increase') {
+            const currentValue = (inputLayer[pan] !== undefined ? inputLayer[pan] : 0) as number
+            newValue = currentValue + value
+          } else if (action.options.adjustment === 'Decrease') {
+            const currentValue = (inputLayer[pan] !== undefined ? inputLayer[pan] : 0) as number
+            newValue = currentValue - value
+          }
+
+          cmd += valueMinMax(newValue, -2, 2)
+        } else if (action.options.setting === 'X' || action.options.setting === 'Y') {
+          let value: string | number = (await instance.parseOption(action.options.xy))[instance.buttonShift.state]
+          value = parseFloat(value)
+          if (isNaN(value)) return
+
+          let newValue = value
+
+          if (action.options.adjustment === 'Increase') {
+            const currentValue = (
+              inputLayer[action.options.setting.toLowerCase()] !== undefined
+                ? inputLayer[action.options.setting.toLowerCase()]
+                : 0
+            ) as number
+            newValue = currentValue + value
+          } else if (action.options.adjustment === 'Decrease') {
+            const currentValue = (
+              inputLayer[action.options.setting.toLowerCase()] !== undefined
+                ? inputLayer[action.options.setting.toLowerCase()]
+                : 0
+            ) as number
+            newValue = currentValue - value
+          }
+
+          cmd += valueMinMax(newValue, -4096, 4096)
+        } else if (action.options.setting === 'Height' || action.options.setting === 'Width') {
+          let value: string | number = (await instance.parseOption(action.options.heightWidth))[
+            instance.buttonShift.state
+          ]
+          value = parseFloat(value)
+          if (isNaN(value)) return
+
+          let newValue = value
+
+          if (action.options.adjustment === 'Increase') {
+            const currentValue = (
+              inputLayer[action.options.setting.toLowerCase()] !== undefined
+                ? inputLayer[action.options.setting.toLowerCase()]
+                : 0
+            ) as number
+            newValue = currentValue + value
+          } else if (action.options.adjustment === 'Decrease') {
+            const currentValue = (
+              inputLayer[action.options.setting.toLowerCase()] !== undefined
+                ? inputLayer[action.options.setting.toLowerCase()]
+                : 0
+            ) as number
+            newValue = currentValue - value
+          }
+
+          cmd += valueMinMax(newValue, -4096, 4096)
+        } else if (action.options.setting === 'Rectangle') {
+          cmd += action.options.rectangle
+        } else if (action.options.setting === 'Zoom') {
+          let value: string | number = (await instance.parseOption(action.options.zoom))[instance.buttonShift.state]
+          value = parseFloat(value)
+          if (isNaN(value)) return
+
+          let newValue = value
+
+          if (action.options.adjustment === 'Increase') {
+            const currentValue = (inputLayer.zoomX !== undefined ? inputLayer.zoomX : 1) as number
+            newValue = currentValue + value
+          } else if (action.options.adjustment === 'Decrease') {
+            const currentValue = (inputLayer.zoomX !== undefined ? inputLayer.zoomX : 1) as number
+            newValue = currentValue - value
+          }
+
+          cmd += valueMinMax(newValue, 0, 2)
+        } else {
+          return
+        }
+
+        if (instance.tcp) {
+          instance.tcp.sendCommand(cmd)
+        }
+      },
+    },
+
     // Virtual Set
     virtualSet: {
       name: 'VirtualSet - Zoom To Selected Preset',
@@ -2133,17 +2941,7 @@ export function getActions(instance: VMixInstance): VMixActions {
       description: 'Sets an Inputs Volume (Note: vMix Volume only supports whole numbers from 0 to 100)',
       options: [
         options.input,
-        {
-          type: 'dropdown',
-          label: 'Adjustment',
-          id: 'adjustment',
-          default: 'Set',
-          choices: [
-            { id: 'Set', label: 'Set' },
-            { id: 'Increase', label: 'Increase' },
-            { id: 'Decrease', label: 'Decrease' },
-          ],
-        },
+        options.adjustment,
         {
           type: 'textinput',
           label: 'Volume',
@@ -2217,17 +3015,7 @@ export function getActions(instance: VMixInstance): VMixActions {
       description: 'Sets Bus Volume (Note: vMix Volume only supports whole numbers from 0 to 100)',
       options: [
         options.audioBusMaster,
-        {
-          type: 'dropdown',
-          label: 'Adjustment',
-          id: 'adjustment',
-          default: 'Set',
-          choices: [
-            { id: 'Set', label: 'Set' },
-            { id: 'Increase', label: 'Increase' },
-            { id: 'Decrease', label: 'Decrease' },
-          ],
-        },
+        options.adjustment,
         {
           type: 'textinput',
           label: 'Value',
@@ -2304,6 +3092,66 @@ export function getActions(instance: VMixInstance): VMixActions {
         },
       ],
       callback: sendBasicCommand,
+    },
+
+    setVolumeChannelMixer: {
+      name: 'Audio - Set Input Channel Volume',
+      description: "Set Volume of an Input's sub channel",
+      options: [
+        options.input,
+        {
+          type: 'textinput',
+          label: 'Channel (1 to 16)',
+          id: 'channel',
+          default: '1',
+        },
+        options.adjustment,
+        {
+          type: 'textinput',
+          label: 'Value',
+          id: 'amount',
+          default: '100',
+        },
+      ],
+      callback: async (action) => {
+        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+        const amount = parseFloat((await instance.parseOption(action.options.amount))[instance.buttonShift.state])
+        const channel = parseInt((await instance.parseOption(action.options.input))[instance.buttonShift.state])
+        const input = await instance.data.getInput(selected)
+
+        if (input === null || input.volume === undefined || isNaN(amount) || isNaN(channel)) return
+
+        let currentValue = instance.data.channelMixer[input.key]?.find(
+          (audioChannel) => audioChannel.channel === channel
+        )?.volume
+        if (currentValue === undefined) currentValue = 1
+        currentValue = Math.round(volumeToLinear(currentValue * 100))
+        let newValue = amount
+
+        if (action.options.adjustment !== 'Set') {
+          if (action.options.adjustment === 'Increase') {
+            newValue = currentValue + amount
+          } else {
+            newValue = currentValue - amount
+          }
+        }
+
+        if (newValue > 100) newValue = 100
+        if (newValue < 0) newValue = 0
+
+        if (instance.tcp) {
+          instance.tcp.sendCommand(`FUNCTION SetVolumeChannelMixer Input=${input.key}&Value=${channel},${newValue}`)
+        }
+      },
+    },
+
+    soloAllOff: {
+      name: 'Audio - Solo All Off',
+      description: 'Disables Solo on all Busses and Inputs',
+      options: [],
+      callback: (action) => {
+        sendBasicCommand(action)
+      },
     },
 
     // Title
@@ -2467,18 +3315,18 @@ export function getActions(instance: VMixInstance): VMixActions {
           id: 'selectedIndex',
           default: '0',
         },
-        {
-          type: 'dropdown',
-          label: 'Adjustment',
-          id: 'adjustment',
-          default: 'Set',
-          choices: ['Set', 'Increment', 'Decrement'].map((item) => ({ id: item, label: item })),
-        },
+        options.adjustment,
         {
           type: 'textinput',
           label: 'Value',
           id: 'value',
           default: '',
+        },
+        {
+          type: 'checkbox',
+          label: 'Encode Value (needed if text contains special characters)',
+          id: 'encode',
+          default: false,
         },
       ],
       callback: async (action) => {
@@ -2490,6 +3338,7 @@ export function getActions(instance: VMixInstance): VMixActions {
         const indexNaNCheck = isNaN(parseInt(index, 10))
 
         if (action.options.adjustment === 'Set') {
+          if (action.options.encode) text = encodeURIComponent(text)
           if (instance.tcp)
             instance.tcp.sendCommand(
               `FUNCTION SetText Input=${encodeURIComponent(input)}&${
@@ -2743,16 +3592,18 @@ export function getActions(instance: VMixInstance): VMixActions {
             { id: 'Restart', label: 'Restart Video' },
             { id: 'LoopOn', label: 'Loop Video On' },
             { id: 'LoopOff', label: 'Loop Video Off' },
+            { id: 'Loop', label: 'Loop Video Toggle' },
           ],
         },
       ],
       callback: async (action) => {
         const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
 
-        if (instance.tcp)
+        if (instance.tcp) {
           instance.tcp.sendCommand(
             `FUNCTION ${action.options.functionID} Input=${action.options.inputType ? '0' : encodeURIComponent(input)}`
           )
+        }
       },
     },
 
@@ -2767,13 +3618,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           id: 'inputType',
           default: false,
         },
-        {
-          type: 'dropdown',
-          label: 'Adjustment',
-          id: 'adjustment',
-          default: 'Set',
-          choices: ['Set', 'Increment', 'Decrement'].map((item) => ({ id: item, label: item })),
-        },
+        options.adjustment,
         {
           type: 'number',
           label: 'value (ms) - vMix will round to the nearest frame',
@@ -3012,7 +3857,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     replayChangeSpeed: {
       name: 'Replay - Change Speed',
-      description: 'Change Replay playback Speed',
+      description: 'Change current Replay playback Speed by value',
       options: [
         options.replayChannel,
         {
@@ -3026,6 +3871,42 @@ export function getActions(instance: VMixInstance): VMixActions {
         },
       ],
       callback: sendBasicCommand,
+    },
+
+    replaySetSpeed: {
+      name: 'Replay - Set Speed',
+      description: 'Set Replay playback Speed to a value',
+      options: [
+        options.replayChannel,
+        {
+          type: 'textinput',
+          label: 'Speed',
+          id: 'value',
+          default: '1',
+        },
+        {
+          type: 'textinput',
+          label: 'Max Speed',
+          id: 'max',
+          default: '1',
+          tooltip: 'If using a tbar, set this to the max value your tbar sends (eg, 255 for xkeys)',
+        },
+      ],
+      callback: async (action) => {
+        let value = parseFloat((await instance.parseOption(action.options.value))[instance.buttonShift.state])
+        const maxValue = parseFloat((await instance.parseOption(action.options.max))[instance.buttonShift.state])
+
+        if (isNaN(value) || isNaN(maxValue) || maxValue < 0) return
+
+        if (value > maxValue) value = maxValue
+        if (value < 0) value = 0
+
+        const position = value / maxValue
+
+        if (instance.tcp) {
+          instance.tcp.sendCommand(`FUNCTION ReplaySetSpeed Channel=${action.options.channel}&Value=${position}`)
+        }
+      },
     },
 
     replayMoveEvent: {
@@ -3287,12 +4168,10 @@ export function getActions(instance: VMixInstance): VMixActions {
       description: 'Sets the TBar to the specified position',
       options: [
         {
-          type: 'number',
+          type: 'textinput',
           label: 'postion 0-255',
           id: 'value',
-          min: 0,
-          max: 255,
-          default: 0,
+          default: '0',
         },
       ],
       callback: (action) => {
@@ -3340,6 +4219,113 @@ export function getActions(instance: VMixInstance): VMixActions {
         if (instance.tcp)
           instance.tcp.sendCommand(`FUNCTION SetDynamic${action.options.type}${action.options.number} Value=${value}`)
       },
+    },
+
+    // PTZ
+    ptzMove: {
+      name: 'PTZ - Move',
+      description: 'Control PTZ Input movement',
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Move',
+          id: 'functionID',
+          default: 'PTZHome',
+          choices: [
+            { id: 'PTZHome', label: 'Home' },
+            { id: 'PTZStop', label: 'Stop' },
+            { id: 'PTZMoveUp', label: 'Up' },
+            { id: 'PTZMoveUpLeft', label: 'Up Left' },
+            { id: 'PTZMoveUpRight', label: 'Up RIght' },
+            { id: 'PTZMoveLeft', label: 'Left' },
+            { id: 'PTZMoveRight', label: 'Right' },
+            { id: 'PTZMoveDown', label: 'Down' },
+            { id: 'PTZMoveDownLeft', label: 'Down Left' },
+            { id: 'PTZMoveDownRight', label: 'Down Right' },
+            {
+              id: 'PTZMoveToVirtualInputPosition',
+              label: 'Move to PTZ Virtual Input without selecting it into Preview',
+            },
+            {
+              id: 'PTZMoveToVirtualInputPositionByIndex',
+              label: 'Move to PTZ Virtual Input associated with this Input',
+            },
+          ],
+        },
+        {
+          type: 'textinput',
+          label: 'Value 0 to 1 (or for move to Virtual Input by Index, 0 to 100)',
+          id: 'Value',
+          default: '0',
+          isVisible: (options) => {
+            return (
+              options.functionID !== 'PTZHome' &&
+              options.functionID !== 'PTZStop' &&
+              options.functionID !== 'PTZMoveToVirtualInputPosition'
+            )
+          },
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    ptzFocusZoom: {
+      name: 'PTZ - Focus & Zoom',
+      description: 'Control PTZ Input Focus and Zoom',
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Move',
+          id: 'functionID',
+          default: 'PTZFocusAuto',
+          choices: [
+            { id: 'PTZFocusAuto', label: 'Focus Auto' },
+            { id: 'PTZFocusFar', label: 'Focus Far' },
+            { id: 'PTZFocusManual', label: 'Focus Manual' },
+            { id: 'PTZFocusNear', label: 'Focus near' },
+            { id: 'PTZFocusStop', label: 'Focus Stop' },
+            { id: 'PTZZoomIn', label: 'Zoom In' },
+            { id: 'PTZZoomOut', label: 'Zoom Out' },
+            { id: 'PTZZoomStop', label: 'Zoom Stop' },
+          ],
+        },
+        {
+          type: 'textinput',
+          label: 'Speed 0 to 1',
+          id: 'Value',
+          default: '1',
+          isVisible: (options) => {
+            return (
+              options.functionID !== 'PTZFocusAuto' &&
+              options.functionID !== 'PTZFocusManual' &&
+              options.functionID !== 'PTZFocusStop' &&
+              options.functionID !== 'PTZZoomStop'
+            )
+          },
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    ptzVirtualInput: {
+      name: 'PTZ - Virtual Input Create/Update',
+      description: 'Creates or Updates a PTZ Virtual Input',
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Create / Update',
+          id: 'functionID',
+          default: 'PTZCreateVirtualInput',
+          choices: [
+            { id: 'PTZCreateVirtualInput', label: 'Create' },
+            { id: 'PTZUpdateVirtualInput', label: 'Update' },
+          ],
+        },
+      ],
+      callback: sendBasicCommand,
     },
 
     // Scripting

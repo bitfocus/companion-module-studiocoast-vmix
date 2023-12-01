@@ -49,6 +49,23 @@ export interface ChannelMixer {
   [key: string]: InputAudioChannels[]
 }
 
+export interface ColourCorrection {
+  hue: number
+  saturation: number
+  liftR: number
+  liftG: number
+  liftB: number
+  liftY: number
+  gammaR: number
+  gammaG: number
+  gammaB: number
+  gammaY: number
+  gainR: number
+  gainG: number
+  gainB: number
+  gainY: number
+}
+
 export interface DynamicInput {
   name: string
   value: string
@@ -69,10 +86,6 @@ export interface Input {
   position: number
   duration: number
   loop: boolean
-  panX: number
-  panY: number
-  zoomX: number
-  zoomY: number
   markIn?: number
   markOut?: number
   muted?: boolean
@@ -91,11 +104,26 @@ export interface Input {
   callVideoSource?: CallVideoSource
   callAudioSource?: CallAudioSource
   channelMixer?: number[]
+  cc?: ColourCorrection
+  inputPosition?: InputPosition
+  frameDelay?: number
 }
 
 export interface InputAudioChannels {
   channel: number
   volume: number
+}
+
+export interface InputPosition {
+  panX: number
+  panY: number
+  zoomX: number
+  zoomY: number
+  cropX1: number
+  cropX2: number
+  cropY1: number
+  cropY2: number
+  [key: string]: number
 }
 
 export interface Layer {
@@ -105,6 +133,15 @@ export interface Layer {
   panY: number
   zoomX: number
   zoomY: number
+  x: number
+  y: number
+  width: number
+  height: number
+  cropX1: number
+  cropX2: number
+  cropY1: number
+  cropY2: number
+  [key: string]: number | string
 }
 
 export interface List {
@@ -131,6 +168,8 @@ export interface Overlay {
 
 export interface Recording {
   duration: number
+  filename1: string
+  filename2: string
 }
 
 export interface Replay {
@@ -176,6 +215,7 @@ export interface Transition {
 
 export interface VMixData {
   version: string
+  majorVersion: number
   edition: string
   preset: string
   inputs: Input[]
@@ -193,6 +233,7 @@ export interface VMixData {
 
 interface APIData {
   version: string
+  majorVersion: number
   edition: string
   preset: string
   inputs: Input[]
@@ -221,6 +262,7 @@ export class VMixData {
   instance: VMixInstance
   loaded: boolean
   version: string
+  majorVersion: number
   edition: string
   preset: string
   inputs: Input[]
@@ -240,6 +282,7 @@ export class VMixData {
     this.instance = instance
     this.loaded = false
     this.version = ''
+    this.majorVersion = 0
     this.edition = ''
     this.preset = ''
     this.inputs = []
@@ -270,6 +313,8 @@ export class VMixData {
     }
     this.recording = {
       duration: 0,
+      filename1: '',
+      filename2: '',
     }
     this.replay = {
       recording: false,
@@ -422,6 +467,8 @@ export class VMixData {
   private parse(data: string): Promise<APIData> {
     return parser.parseStringPromise(data).then((parsedData: any) => {
       parsedData = parsedData.vmix
+      const version = parsedData.version[0] || ''
+      const majorVersion = parseInt(version.split('.')[0])
 
       const getInputs = (): Input[] => {
         if (!parsedData.inputs || parsedData.inputs[0] === '') {
@@ -443,10 +490,7 @@ export class VMixData {
             muted: input.$.muted,
             solo: input.$.solo,
             selectedIndex: parseInt(input.$.selectedIndex, 10),
-            panX: 0,
-            panY: 0,
-            zoomX: 1,
-            zoomY: 1,
+            frameDelay: parseInt(input.$.frameDelay, 10) || 0,
           }
 
           if (input.list) {
@@ -529,18 +573,19 @@ export class VMixData {
             inputData.overlay = input.overlay.map((overlay: any) => ({
               index: parseInt(overlay.$.index, 10),
               key: overlay.$.key,
-              panX: parseFloat(get(overlay, 'position[0].$.panX', '0')),
-              panY: parseFloat(get(overlay, 'position[0].$.panY', '0')),
-              zoomX: parseFloat(get(overlay, 'position[0].$.zoomX', '1')),
-              zoomY: parseFloat(get(overlay, 'position[0].$.zoomY', '1')),
+              panX: parseFloat(get(overlay, 'position[0].$.panX', 0)),
+              panY: parseFloat(get(overlay, 'position[0].$.panY', 0)),
+              zoomX: parseFloat(get(overlay, 'position[0].$.zoomX', 1)),
+              zoomY: parseFloat(get(overlay, 'position[0].$.zoomY', 1)),
+              x: parseFloat(get(overlay, 'position[0].$.x', 0)),
+              y: parseFloat(get(overlay, 'position[0].$.y', 0)),
+              width: parseFloat(get(overlay, 'position[0].$.width', 0)),
+              height: parseFloat(get(overlay, 'position[0].$.height', 0)),
+              cropX1: parseFloat(get(overlay, 'crop[0].$.X1', 0)),
+              cropX2: parseFloat(get(overlay, 'crop[0].$.X2', 1)),
+              cropY1: parseFloat(get(overlay, 'crop[0].$.Y1', 0)),
+              cropY2: parseFloat(get(overlay, 'crop[0].$.Y2', 1)),
             }))
-          }
-
-          if (input.$.position) {
-            inputData.panX = parseFloat(get(input, 'position[0].$.panX', '0'))
-            inputData.panY = parseFloat(get(input, 'position[0].$.panY', '0'))
-            inputData.zoomX = parseFloat(get(input, 'position[0].$.zoomX', '1'))
-            inputData.zoomY = parseFloat(get(input, 'position[0].$.zoomY', '1'))
           }
 
           if (input.$.text) {
@@ -564,6 +609,36 @@ export class VMixData {
             inputData.callConnected = input.$.callConnected
             inputData.callVideoSource = input.$.callVideoSource
             inputData.callAudioSource = input.$.callAudioSource
+          }
+
+          if (!isNaN(majorVersion) && majorVersion >= 27) {
+            inputData.cc = {
+              hue: parseFloat(input.cc?.[0]?.$?.hue ?? 0),
+              saturation: parseFloat(input.cc?.[0]?.$?.saturation ?? 0),
+              liftR: parseFloat(input.cc?.[0]?.$?.liftR ?? 0),
+              liftG: parseFloat(input.cc?.[0]?.$?.liftG ?? 0),
+              liftB: parseFloat(input.cc?.[0]?.$?.liftB ?? 0),
+              liftY: parseFloat(input.cc?.[0]?.$?.liftY ?? 0),
+              gammaR: parseFloat(input.cc?.[0]?.$?.gammaR ?? 0),
+              gammaG: parseFloat(input.cc?.[0]?.$?.gammaG ?? 0),
+              gammaB: parseFloat(input.cc?.[0]?.$?.gammaB ?? 0),
+              gammaY: parseFloat(input.cc?.[0]?.$?.gammaY ?? 0),
+              gainR: parseFloat(input.cc?.[0]?.$?.gainR ?? 1),
+              gainG: parseFloat(input.cc?.[0]?.$?.gainG ?? 1),
+              gainB: parseFloat(input.cc?.[0]?.$?.gainB ?? 1),
+              gainY: parseFloat(input.cc?.[0]?.$?.gainY ?? 1),
+            }
+
+            inputData.inputPosition = {
+              panX: parseFloat(input.position?.[0]?.$?.panX ?? 0),
+              panY: parseFloat(input.position?.[0]?.$?.panY ?? 0),
+              zoomX: parseFloat(input.position?.[0]?.$?.zoomX ?? 1),
+              zoomY: parseFloat(input.position?.[0]?.$?.zoomY ?? 1),
+              cropX1: parseFloat(input.crop?.[0]?.$?.X1 ?? 0),
+              cropX2: parseFloat(input.crop?.[0]?.$?.X2 ?? 1),
+              cropY1: parseFloat(input.crop?.[0]?.$?.Y1 ?? 0),
+              cropY2: parseFloat(input.crop?.[0]?.$?.Y2 ?? 1),
+            }
           }
 
           return inputData
@@ -755,7 +830,8 @@ export class VMixData {
 
       // Data object that will be used to track changes, and then overwrite existing data
       const newData: APIData = {
-        version: parsedData.version[0] || '',
+        version,
+        majorVersion,
         edition: parsedData.edition[0] || '',
         preset: parsedData.preset ? parsedData.preset[0] : '',
         inputs: getInputs(),
@@ -796,6 +872,8 @@ export class VMixData {
         },
         recording: {
           duration: getRecordingDuration(),
+          filename1: parsedData.recording[0]?.$?.filename1 || '',
+          filename2: parsedData.recording[0]?.$?.filename2 || '',
         },
         replay: getReplay(),
         channelMixer: { ...this.instance.data.channelMixer }, // channelMixer Data is from activators, so previous values must persist through API updates
@@ -934,10 +1012,10 @@ export class VMixData {
       changes.add('liveBusVolume')
       changes.add('liveInputVolume')
       changes.add('inputSelectedIndex')
-      changes.add('inputSelectedIndexName')
       changes.add('routableMultiviewLayer')
       changes.add('inputVolumeMeter')
       changes.add('inputState')
+      changes.add('inputLoop')
 
       // DEPRECATED
       changes.add('titleLayer')
@@ -996,6 +1074,7 @@ export class VMixData {
 
     // Overwrite old data with new data
     this.version = newData.version
+    this.majorVersion = newData.majorVersion
     this.edition = newData.edition
     this.preset = newData.preset
     this.inputs = newData.inputs

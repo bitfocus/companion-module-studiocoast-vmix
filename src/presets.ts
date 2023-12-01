@@ -4629,7 +4629,12 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'setText', options: { input: '1', selectedIndex: '0', adjustment: 'Set', value: '0' } }],
+          down: [
+            {
+              actionId: 'setText',
+              options: { input: '1', selectedIndex: '0', adjustment: 'Set', value: '0', encode: false },
+            },
+          ],
           up: [],
         },
       ],
@@ -4648,7 +4653,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       steps: [
         {
           down: [
-            { actionId: 'setText', options: { input: '1', selectedIndex: '0', adjustment: 'Increment', value: '1' } },
+            {
+              actionId: 'setText',
+              options: { input: '1', selectedIndex: '0', adjustment: 'Increment', value: '1', encode: false },
+            },
           ],
           up: [],
         },
@@ -4668,7 +4676,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       steps: [
         {
           down: [
-            { actionId: 'setText', options: { input: '1', selectedIndex: '0', adjustment: 'Decrement', value: '1' } },
+            {
+              actionId: 'setText',
+              options: { input: '1', selectedIndex: '0', adjustment: 'Decrement', value: '1', encode: false },
+            },
           ],
           up: [],
         },

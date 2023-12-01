@@ -343,6 +343,10 @@ export class TCP {
         clearInterval(this.pollAPI)
       }
 
+      if (this.pingInterval !== null) {
+        clearInterval(this.pingInterval)
+      }
+
       this.tcpHost = this.instance.config.host
       this.tcpPort = this.instance.config.tcpPort
 
@@ -351,7 +355,7 @@ export class TCP {
       // Protect against edge case of attempting to destroy a socket that's not in a state where it can be destroyed
       const destorySocket = (type: 'activator' | 'functions' | 'xml') => {
         const socket = this.sockets[type] as any
-        if (socket && (socket.isConnected, socket.isConnected)) {
+        if (socket) {
           socket.destroy()
         } else {
           if (socket !== null) {
@@ -364,7 +368,6 @@ export class TCP {
       if (this.sockets.activator) destorySocket('activator')
       if (this.sockets.functions) destorySocket('functions')
       if (this.sockets.xml) destorySocket('xml')
-
       if (ready) this.init()
     } else if (pollIntervalCheck) {
       this.initXMLPolling()

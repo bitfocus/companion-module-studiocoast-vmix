@@ -35,7 +35,7 @@ const upgradeV1_2_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
     config.httpPort = 8088
   }
 
-  const changes: CompanionStaticUpgradeResult<Config>  = {
+  const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: config,
     updatedActions: [],
     updatedFeedbacks: []
@@ -159,7 +159,7 @@ const upgradeV1_2_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
 }
 
 /* eslint-disable */
-const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config>  => {
+const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
   let config: any = props.config
   let actions: any = props.actions
   let feedbacks: any = props.feedbacks
@@ -179,7 +179,7 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
     delete config.errorInfo
   }
 
-  const changes: CompanionStaticUpgradeResult<Config>  = {
+  const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: config,
     updatedActions: [],
     updatedFeedbacks: []
@@ -413,11 +413,11 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
 }
 
 /* eslint-disable */
-const upgradeV2_0_6: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config>  => {
+const upgradeV2_0_6: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
   let actions: any = props.actions
   let feedbacks: any = props.feedbacks
 
-  const changes: CompanionStaticUpgradeResult<Config>  = {
+  const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: null,
     updatedActions: [],
     updatedFeedbacks: []
@@ -431,7 +431,7 @@ const upgradeV2_0_6: CompanionStaticUpgradeScript<Config> = (_context, props): C
     }
   })
 
-  feedbacks.forEach((feedback: any)=> {
+  feedbacks.forEach((feedback: any) => {
     if (feedback.type === 'selectedDestinationLayer' || feedback.type === 'SelectedDestinationLayer') {
       feedback.type = 'selectedDestinationLayer'
       feedback.options.selectedIndex = feedback.options.selectedIndex + ''
@@ -442,6 +442,29 @@ const upgradeV2_0_6: CompanionStaticUpgradeScript<Config> = (_context, props): C
   return changes
 }
 
+/* eslint-disable */
+const upgradeV3_5_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
+  let actions: any = props.actions
+  let config: any = props.config
+
+  const changes: CompanionStaticUpgradeResult<Config> = {
+    updatedConfig: null,
+    updatedActions: [],
+    updatedFeedbacks: []
+  }
+
+  if (config.tbar !== undefined) delete config.tbar
+
+  actions.forEach((action: any) => {
+    if (action.actionId === 'tbar') {
+      action.value = action.value + ''
+      changes.updatedActions.push(action)
+    }
+  })
+
+  return changes
+}
+
 export const getUpgrades = (): CompanionStaticUpgradeScript<Config>[] => {
-  return [upgradeV1_2_0, upgradeV2_0_0, upgradeV2_0_6]
+  return [upgradeV1_2_0, upgradeV2_0_0, upgradeV2_0_6, upgradeV3_5_0]
 }

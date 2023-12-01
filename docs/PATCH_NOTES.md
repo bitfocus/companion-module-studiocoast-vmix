@@ -1,5 +1,29 @@
 # Patch Notes
 
+**V3.5.0**
+- Added actions:
+  - Undo closing Input
+  - Input Effects, Input Loop toggle, Input Colour Correction, Input Zoom/Crop/Pan, Input Layer Zoom/Crop/Pan, Input Frame Delay
+  - Replay Set Speed (with t-bar support)
+  - Setting Volume Channel mixer
+  - Audio - Solo All Off
+  - PTZ - Movement, Focus, Zoom, and Create/Update Virtual Inputs
+- Added feedbacks:
+  - Media - Input Loop
+- Added variables:
+  - `bus_any_solo`, `input_any_solo`, and `solo` suffix for inputs and dynamic inputs (eg, `$(vmix:input_test_solo)`)
+  - `panx`, `pany`, `zoomx`, `zoomy`, `cropx1`, `cropx2`, `cropy1`, and `cropy2`, suffixes for input position variables (eg, `$(vmix:input_test_position_panx)`)
+  - `hue`, `saturation`, `liftr`, `liftg`, `liftb`, `lifty`, `gammar`, `gammag`, `gammab`, `gammay`, `gainr`, `gaing`, `gainb`, and `gainy`, suffixes for input colour correction variables (eg, `$(vmix:input_test_cc_hue)`)
+  - `panx`, `pany`, `x`, `y`, `zoomx`, `zoomy`, `width`, `height`, `cropx1`, `cropx2`, `cropy1`, and `cropy2`, suffixes for input layer variables (eg, `$(vmix:input_test_layer_1_panx)`)
+  - `recording_filename1`, `recording_filepath1`, `recording_filename2`, `recording_filepath2`
+  - `replay_recording`, `replay_live`, `replay_forward`, `replay_channel_mode`, `replay_events`, `replay_eventsa`, `replay_eventsb`, `replay_cameraa`, `replay_camerab`, `replay_speed`, `replay_speeda`, `replay_speedb`, `replay_timecode`, `replay_timecodea`, `replay_timecodeb`
+- Fixes:
+  - Added an `Encode Value` option for `Title - Adjust title text` action, for when the text contains special characters that would otherwise break the TCP command
+  - Added support for instance variables in the t-bar position action
+  - Fixed a bug where changing config for IP or Port did not correctly kill connection attempts to the previous location
+- Misc:
+  - Added sponsor links on [Github](https://github.com/sponsors/thedist) and [Ko-Fi](https://ko-fi.com/thedist) for those who have asked to tip me for this continued development work.
+
 **V3.4.3**
 - Fixed upgrade scripts for Companion v3
 - Added missing Loop and Playing feedback/variables
