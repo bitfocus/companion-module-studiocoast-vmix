@@ -6,7 +6,6 @@ export interface Config {
   tcpPort: number
   connectionErrorLog: boolean
   apiPollInterval: number
-  tbarEnabled: boolean
   volumeLinear: boolean
   shiftDelimiter: string
   shiftBlinkPrvPrgm: boolean
@@ -14,6 +13,8 @@ export interface Config {
   variablesShowInputs: boolean
   variablesShowInputNumbers: boolean
   variablesShowInputGUID: boolean
+  variablesShowInputPosition: boolean
+  variablesShowInputLayerPosition: boolean
   strictInputVariableTypes: boolean
 }
 
@@ -77,20 +78,6 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
         'See the help section for more details.',
     },
     {
-      type: 'static-text',
-      id: 'tbarInfo',
-      width: 10,
-      label: 'T-bar',
-      value: 'The module will listen to the variable $(internal:tbar) and send changes to vMix',
-    },
-    {
-      type: 'checkbox',
-      id: 'tbarEnabled',
-      width: 2,
-      label: 'Enable',
-      default: false,
-    },
-    {
       type: 'checkbox',
       id: 'volumeLinear',
       label: 'Linear vol scale',
@@ -150,10 +137,24 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
     },
     {
       type: 'checkbox',
+      id: 'variablesShowInputPosition',
+      width: 4,
+      label: 'Input Position/Colour Correction Variables',
+      default: false,
+    },
+    {
+      type: 'checkbox',
+      id: 'variablesShowInputLayerPosition',
+      width: 4,
+      label: 'Input Layer Postion Variables',
+      default: false,
+    },
+    {
+      type: 'checkbox',
       id: 'strictInputVariableTypes',
       width: 12,
       label:
-        'Limit Input Variable Types - Toggle on to not only hide certain input variaibles from auto-complete but disable their use. Improves performance when enabled',
+        'Limit Input Variable Types - Toggle on to not only hide certain input variables from auto-complete but disable their use. May improve performance when enabled',
       default: false,
     },
   ]

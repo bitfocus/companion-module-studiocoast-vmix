@@ -73,7 +73,6 @@ class VMixInstance extends InstanceBase<Config> {
     tcpPort: 8099,
     connectionErrorLog: true,
     apiPollInterval: 250,
-    tbarEnabled: false,
     volumeLinear: false,
     shiftDelimiter: '/',
     shiftBlinkPrvPrgm: true,
@@ -81,6 +80,8 @@ class VMixInstance extends InstanceBase<Config> {
     variablesShowInputs: true,
     variablesShowInputNumbers: true,
     variablesShowInputGUID: true,
+    variablesShowInputPosition: false,
+    variablesShowInputLayerPosition: false,
     strictInputVariableTypes: false,
   }
   public connected = false
@@ -104,21 +105,6 @@ class VMixInstance extends InstanceBase<Config> {
    * @description triggered on instance being enabled
    */
   public async init(config: Config): Promise<void> {
-    // New Module warning
-    this.log(
-      'info',
-      `The vMix module has undergone a significant upgrade, please check all actions/feedbacks and if there are issues trying to delete the action/feedback and create it again`
-    )
-
-    this.log(
-      'info',
-      'Support for the deprecated feedbacks, Title - Layer, Slides/List - Show Selected Slide/Index Name, and Layers / MultiView - Display what input is on X Layer, has now been removed as Companion 3 no longer allows Feedbacks to change button text. Please use Instance Variables instead'
-    )
-
-    this.log(
-      'info',
-      'Companion v3 now support Expression Functions, such as msToTimestamp, to transform instance variables into various formats. Because of this we no long provide instance variables for each combination of hh:mm:ss.ms, and instead just provide ms or seconds and you can format it in whichever way is needed.'
-    )
     this.log('debug', `Process ID: ${process.pid}`)
 
     await this.configUpdated(config)

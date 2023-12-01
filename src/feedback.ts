@@ -35,6 +35,9 @@ export interface VMixFeedbacks {
   busVolumeMeter: VMixFeedback<BusVolumeMeterCallback>
   inputVolumeMeter: VMixFeedback<InputVolumeMeterCallback>
 
+  // Media
+  inputLoop: VMixFeedback<InputLoopCallback>
+
   // Replay
   replayStatus: VMixFeedback<ReplayStatusCallback>
   replayEvents: VMixFeedback<ReplayEventsCallback>
@@ -246,6 +249,16 @@ interface InputVolumeMeterCallback {
   }>
 }
 
+// Media
+interface InputLoopCallback {
+  feedbackId: 'inputLoop'
+  options: Readonly<{
+    input: string
+    fg: number
+    bg: number
+  }>
+}
+
 // Replay
 interface ReplayStatusCallback {
   feedbackId: 'replayStatus'
@@ -433,6 +446,9 @@ export type FeedbackCallbacks =
   | InputVolumeLevelCallback
   | BusVolumeMeterCallback
   | InputVolumeMeterCallback
+
+  // Media
+  | InputLoopCallback
 
   // Replay
   | ReplayStatusCallback
@@ -1288,6 +1304,20 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         return {
           imageBuffer: meter,
         }
+      },
+    },
+
+    // Media
+    inputLoop: {
+      type: 'advanced',
+      name: 'Media - Input Loop',
+      description: 'Input Loop Status',
+      options: [options.input, options.foregroundColor, options.backgroundColorProgram],
+      callback: async (feedback, context) => {
+        const selected = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+        const input = await instance.data.getInput(selected)
+
+        return input?.loop ? { color: feedback.options.fg, bgcolor: feedback.options.bg } : {}
       },
     },
 

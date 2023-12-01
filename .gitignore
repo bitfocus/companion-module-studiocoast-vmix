@@ -5,4 +5,6 @@ package-lock.json
 /pkg
 /pkg.tgz
 DEBUG-INSPECT
+DEBUG-PACKAGED
 sample.xml
+.yarn/*

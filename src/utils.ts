@@ -33,6 +33,7 @@ export interface Options {
   comparison: EnforceDefault<CompanionInputFieldDropdown, string>
   layerTallyIndicator: EnforceDefault<CompanionInputFieldDropdown, string>
   replayChannel: EnforceDefault<CompanionInputFieldDropdown, string>
+  adjustment: EnforceDefault<CompanionInputFieldDropdown, string>
 }
 
 // Static Variables
@@ -210,6 +211,18 @@ export const options: Options = {
       { id: 'B', label: 'B' },
     ],
   },
+
+  adjustment: {
+    type: 'dropdown',
+    label: 'Adjustment',
+    id: 'adjustment',
+    default: 'Set',
+    choices: [
+      { id: 'Set', label: 'Set' },
+      { id: 'Increase', label: 'Increase' },
+      { id: 'Decrease', label: 'Decrease' },
+    ],
+  },
 }
 
 /**
@@ -276,4 +289,18 @@ export const parseTime = (value: string): number | null => {
   const ms = ss * 1000 + mm * 60 * 1000 + hh * 60 * 60 * 1000
 
   return ms
+}
+
+/**
+ * @param value current value
+ * @param min minimum value
+ * @param max maximum value
+ * @returns value adjusted to within min/max range
+ * @description adjusts a value to ensure it is within min and max bounds
+ */
+export const valueMinMax = (value: number, min: number, max: number): number => {
+  let adjustedValue = value
+  if (adjustedValue > max) adjustedValue = max
+  if (adjustedValue < min) adjustedValue = min
+  return adjustedValue
 }
