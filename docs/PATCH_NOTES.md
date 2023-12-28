@@ -1,5 +1,9 @@
 # Patch Notes
 
+**V3.5.2**
+- Added definitions for more mix viarables
+- Added actions for `Audio - Show / Hide Audio Mixer`, `Replay - Play Last Event to Output`, `Replay - Play all Events to Output`, `Replay - Stop Events`, and `Replay - Show / Hide Replay`
+
 **V3.5.0**
 - Added actions:
   - Undo closing Input

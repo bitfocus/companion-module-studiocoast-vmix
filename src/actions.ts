@@ -87,6 +87,7 @@ export interface VMixActions {
   audioChannelMatrixApplyPreset: VMixAction<AudioChannelMatrixApplyPresetCallback>
   setVolumeChannelMixer: VMixAction<SetVolumeChannelMixerCallback>
   soloAllOff: VMixAction<SoloAllOffCallback>
+  audioMixerShowHide: VMixAction<AudioMixerShowHideCallback>
 
   // Title
   controlCountdown: VMixAction<ControlCountdownCallback>
@@ -140,7 +141,11 @@ export interface VMixActions {
   replayPlayEvent: VMixAction<ReplayPlayEventCallback>
   replayPlaySelectedEventToOutput: VMixAction<ReplayPlaySelectedEventToOutputCallback>
   replayPlayEventsByIDToOutput: VMixAction<ReplayPlayEventsByIDToOutputCallback>
+  replayPlayLastEventToOutput: VMixAction<ReplayPlayLastEventToOutputCallback>
+  replayPlayAllEventsToOutput: VMixAction<ReplayPlayAllEventsToOutputCallback>
+  replayStopEvents: VMixAction<ReplayStopEventsCallback>
   replayToggleCamera: VMixAction<ReplayToggleCameraCallback>
+  replayShowHide: VMixAction<ReplayShowHideCallback>
 
   // Browser
   browser: VMixAction<BrowserCallback>
@@ -661,6 +666,11 @@ interface SoloAllOffCallback {
   options: Record<string, never>
 }
 
+interface AudioMixerShowHideCallback {
+  actionId: 'audioMixerShowHide'
+  options: Record<string, never>
+}
+
 // Title
 interface ControlCountdownCallback {
   actionId: 'controlCountdown'
@@ -1069,11 +1079,35 @@ interface ReplayPlayEventsByIDToOutputCallback {
   }>
 }
 
+interface ReplayPlayLastEventToOutputCallback {
+  actionId: 'replayPlayLastEventToOutput'
+  options: Readonly<{
+    channel: 'Current' | 'A' | 'B'
+  }>
+}
+
+interface ReplayPlayAllEventsToOutputCallback {
+  actionId: 'replayPlayAllEventsToOutput'
+  options: Readonly<{
+    channel: 'Current' | 'A' | 'B'
+  }>
+}
+
+interface ReplayStopEventsCallback {
+  actionId: 'replayStopEvents'
+  options: Record<string, never>
+}
+
 interface ReplayToggleCameraCallback {
   actionId: 'replayToggleCamera'
   options: Readonly<{
     camera: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
   }>
+}
+
+interface ReplayShowHideCallback {
+  actionId: 'replayShowHide'
+  options: Record<string, never>
 }
 
 // Browser
@@ -1311,6 +1345,7 @@ export type ActionCallbacks =
   | AudioChannelMatrixApplyPresetCallback
   | SetVolumeChannelMixerCallback
   | SoloAllOffCallback
+  | AudioMixerShowHideCallback
 
   // Title
   | ControlCountdownCallback
@@ -1364,7 +1399,11 @@ export type ActionCallbacks =
   | ReplayPlayEventCallback
   | ReplayPlaySelectedEventToOutputCallback
   | ReplayPlayEventsByIDToOutputCallback
+  | ReplayPlayLastEventToOutputCallback
+  | ReplayPlayAllEventsToOutputCallback
+  | ReplayStopEventsCallback
   | ReplayToggleCameraCallback
+  | ReplayShowHideCallback
 
   // Browser
   | BrowserCallback
@@ -3154,6 +3193,13 @@ export function getActions(instance: VMixInstance): VMixActions {
       },
     },
 
+    audioMixerShowHide: {
+      name: 'Audio - Show / Hide Audio Mixer',
+      description: 'Shows or Hides the Audio Mixer window',
+      options: [],
+      callback: sendBasicCommand,
+    },
+
     // Title
     controlCountdown: {
       name: 'Title - Start / Stop / Pause Countdown',
@@ -4087,6 +4133,27 @@ export function getActions(instance: VMixInstance): VMixActions {
       callback: sendBasicCommand,
     },
 
+    replayPlayLastEventToOutput: {
+      name: 'Replay - Play Last Event to Output',
+      description: 'Play last Event',
+      options: [options.replayChannel],
+      callback: sendBasicCommand,
+    },
+
+    replayPlayAllEventsToOutput: {
+      name: 'Replay - Play all Events to Output',
+      description: 'Play all Events in active list',
+      options: [options.replayChannel],
+      callback: sendBasicCommand,
+    },
+
+    replayStopEvents: {
+      name: 'Replay - Stop Events',
+      description: 'Stop any currently playing events',
+      options: [],
+      callback: sendBasicCommand,
+    },
+
     replayToggleCamera: {
       name: 'Replay - Toggle Selected Event Camera',
       description: 'Toggles a camera view for the selected Event',
@@ -4102,6 +4169,13 @@ export function getActions(instance: VMixInstance): VMixActions {
       callback: (action) => {
         if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ReplayToggleSelectedEventCamera${action.options.camera}`)
       },
+    },
+
+    replayShowHide: {
+      name: 'Replay - Show / Hide Replay',
+      description: 'Shows or Hides the Replay window',
+      options: [],
+      callback: sendBasicCommand,
     },
 
     // Browser
