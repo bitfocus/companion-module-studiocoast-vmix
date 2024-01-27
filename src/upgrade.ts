@@ -453,7 +453,10 @@ const upgradeV3_5_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
     updatedFeedbacks: []
   }
 
-  if (config.tbar !== undefined) delete config.tbar
+  if (config && config.tbar !== undefined) {
+    delete config.tbar
+    changes.updatedConfig = config
+  }
 
   actions.forEach((action: any) => {
     if (action.actionId === 'tbar') {
