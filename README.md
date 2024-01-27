@@ -31,6 +31,9 @@ For some feedback, such as Tally and Layer Routing it's possible to enable 'blin
 This module now supports Companions HTTP API, providing endpoints that can be used by 3rd party applications, and as a Data Source in vMix itself. Information on the API endpoints is available in [docs/HTTP_API.md](./docs/HTTP_API.md)
 
 # Recent Patches
+**V3.5.3**
+- Fix upgrading config `Cannot read properties of null (reading 'tbar')`
+
 **V3.5.2**
 - Added definitions for more mix viarables
 - Added actions for `Audio - Show / Hide Audio Mixer`, `Replay - Play Last Event to Output`, `Replay - Play all Events to Output`, `Replay - Stop Events`, and `Replay - Show / Hide Replay`
