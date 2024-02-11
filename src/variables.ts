@@ -1229,11 +1229,11 @@ export class Variables {
           newVariables[`dynamic_input_${dynamic + 1}_type`] = input.type
 
           this.instance.data.mix.forEach((mix) => {
-            const tallyPreview = this.instance.data.mix[0].previewTally.includes(input.key).toString()
-            const tallyProgram = this.instance.data.mix[0].programTally.includes(input.key).toString()
+            const tallyPreview = this.instance.data.mix[mix.number - 1].previewTally.includes(input.key) || this.instance.data.mix[mix.number - 1].preview === input.number
+            const tallyProgram = this.instance.data.mix[mix.number - 1].programTally.includes(input.key) || this.instance.data.mix[mix.number - 1].program === input.number
 
-            newVariables[`dynamic_input_${dynamic + 1}_mix_${mix.number}_tally_preview`] = tallyPreview
-            newVariables[`dynamic_input_${dynamic + 1}_mix_${mix.number}_tally_program`] = tallyProgram
+            newVariables[`dynamic_input_${dynamic + 1}_mix_${mix.number}_tally_preview`] = tallyPreview.toString()
+            newVariables[`dynamic_input_${dynamic + 1}_mix_${mix.number}_tally_program`] = tallyProgram.toString()
           })
 
           const inputAudio = input.muted === undefined ? false : input.muted
@@ -1469,11 +1469,11 @@ export class Variables {
         newVariables[`input_${type}_type`] = input.type
 
         this.instance.data.mix.forEach((mix) => {
-          const tallyPreview = this.instance.data.mix[0].previewTally.includes(input.key).toString()
-          const tallyProgram = this.instance.data.mix[0].programTally.includes(input.key).toString()
+          const tallyPreview = this.instance.data.mix[mix.number - 1].previewTally.includes(input.key) || this.instance.data.mix[mix.number - 1].preview === input.number
+          const tallyProgram = this.instance.data.mix[mix.number - 1].programTally.includes(input.key) || this.instance.data.mix[mix.number - 1].program === input.number
 
-          newVariables[`input_${type}_mix_${mix.number}_tally_preview`] = tallyPreview
-          newVariables[`input_${type}_mix_${mix.number}_tally_program`] = tallyProgram
+          newVariables[`input_${type}_mix_${mix.number}_tally_preview`] = tallyPreview.toString()
+          newVariables[`input_${type}_mix_${mix.number}_tally_program`] = tallyProgram.toString()
         })
 
         const inputAudio = input.muted === undefined ? false : input.muted

@@ -1,5 +1,8 @@
 # Patch Notes
 
+**V3.5.4**
+- Fix for tally variables on mix 2+
+
 **V3.5.3**
 - Fix upgrading config `Cannot read properties of null (reading 'tbar')`
 
