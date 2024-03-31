@@ -26,6 +26,7 @@ export interface VMixFeedbacks {
   busMute: VMixFeedback<BusMuteCallback>
   busSolo: VMixFeedback<BusSoloCallback>
   inputAudio: VMixFeedback<InputAudioCallback>
+  inputAudioAuto: VMixFeedback<InputAudioAutoCallback>
   inputSolo: VMixFeedback<InputSoloCallback>
   inputBusRouting: VMixFeedback<InputBusRoutingCallback>
   liveBusVolume: VMixFeedback<LiveBusVolumeCallback>
@@ -161,6 +162,15 @@ interface InputAudioCallback {
     fg: number
     bgLive: number
     bgMuted: number
+  }>
+}
+
+interface InputAudioAutoCallback {
+  feedbackId: 'inputAudioAuto'
+  options: Readonly<{
+    input: string
+    fg: number
+    bg: number
   }>
 }
 
@@ -438,6 +448,7 @@ export type FeedbackCallbacks =
   | BusMuteCallback
   | BusSoloCallback
   | InputAudioCallback
+  | InputAudioAutoCallback
   | InputSoloCallback
   | InputBusRoutingCallback
   | LiveBusVolumeCallback
@@ -926,6 +937,23 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           return { color: feedback.options.fg, bgcolor: feedback.options.bgMuted }
         } else {
           return { bgcolor: feedback.options.bgLive }
+        }
+      },
+    },
+
+    inputAudioAuto: {
+      type: 'advanced',
+      name: 'Audio - Input Audio Auto',
+      description: 'Indicate if an input will auto enable/disable audio when transitioned to/from',
+      options: [options.input, options.foregroundColor, options.backgroundColorPreview],
+      callback: async (feedback, context) => {
+        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+        const input = await instance.data.getInput(inputOption)
+
+        if (!input?.audioAuto) {
+          return {}
+        } else {
+          return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         }
       },
     },

@@ -92,6 +92,7 @@ export interface Input {
   solo?: boolean
   volume?: number
   audioBusses?: AudioBusses
+  audioAuto?: boolean
   balance?: number
   meterF1?: number
   meterF2?: number
@@ -487,6 +488,7 @@ export class VMixData {
             duration: input.$.duration,
             loop: input.$.loop,
             volume: parseFloat(input.$.volume || '100'),
+            audioAuto: true,
             muted: input.$.muted,
             solo: input.$.solo,
             selectedIndex: parseInt(input.$.selectedIndex, 10),
@@ -984,6 +986,15 @@ export class VMixData {
       if (oldBus && oldBus.solo) bus.solo = true
     })
 
+    newData.inputs.forEach((newInput) => {
+      const oldInput = this.inputs.find((input) => input.key === newInput.key)
+
+      if (oldInput) {
+        newInput.audioAuto = oldInput.audioAuto
+      } else {
+        this.instance.tcp?.updateActivatorData(`ACTS InputAudioAuto ${newInput.number}`)
+      }
+    })
     // Check mix 1 to 4
     if (!isEqual(newData.mix, this.mix) || inputCheck) {
       changes.add('inputPreview')

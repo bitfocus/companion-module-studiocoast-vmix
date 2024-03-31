@@ -375,4 +375,15 @@ export class TCP {
       this.initXMLPolling()
     }
   }
+
+  public readonly updateActivatorData = (data: string): void => {
+    let message = data
+    if (!data.startsWith('ACTS')) message = 'ACTS ' + message
+    if (!data.endsWith('\r\n')) message += '\r\n'
+
+    this.instance.log('debug', `Sending activator message: ${message}`)
+    this.sockets.activator?.send(message).catch((err) => {
+      this.instance.log('debug', err.message)
+    })
+  }
 }

@@ -78,6 +78,7 @@ export interface VMixActions {
   busXSendToMaster: VMixAction<BusXSendToMasterCallback>
   busXAudio: VMixAction<BusXAudioCallback>
   audio: VMixAction<AudioCallback>
+  audioAuto: VMixAction<AudioAutoCallback>
   busXSolo: VMixAction<BusXSoloCallback>
   solo: VMixAction<SoloCallback>
   setInputVolume: VMixAction<setInputVolumeCallback>
@@ -588,6 +589,14 @@ interface AudioCallback {
   options: Readonly<{
     input: string
     functionID: 'Audio' | 'AudioOn' | 'AudioOff'
+  }>
+}
+
+interface AudioAutoCallback {
+  actionId: 'audioAuto'
+  options: Readonly<{
+    input: string
+    functionID: 'AudioAuto' | 'AudioAutoOn' | 'AudioAutoOff'
   }>
 }
 
@@ -1337,6 +1346,7 @@ export type ActionCallbacks =
   | BusXSendToMasterCallback
   | BusXAudioCallback
   | AudioCallback
+  | AudioAutoCallback
   | BusXSoloCallback
   | SoloCallback
   | SetVolumeFadeCallback
@@ -2929,6 +2939,26 @@ export function getActions(instance: VMixInstance): VMixActions {
             { id: 'Audio', label: 'Toggle input Audio' },
             { id: 'AudioOn', label: 'Set input Audio ON' },
             { id: 'AudioOff', label: 'Set input Audio OFF' },
+          ],
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    audioAuto: {
+      name: 'Audio - Input Audio Auto',
+      description: 'Sets an Inputs auto toggle audio when transitioned in/out',
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Option',
+          id: 'functionID',
+          default: 'AudioAuto',
+          choices: [
+            { id: 'AudioAuto', label: 'Toggle input Audio Auto' },
+            { id: 'AudioAutoOn', label: 'Set input Audio Auto ON' },
+            { id: 'AudioAutoOff', label: 'Set input Audio Auto OFF' },
           ],
         },
       ],

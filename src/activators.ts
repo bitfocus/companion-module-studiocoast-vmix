@@ -52,16 +52,41 @@ const eventHandlers: { [key: string]: ActivatorEventHandlers | null } = {
   InputPlaying: 'handlerInputState',
   InputVolume: 'handlerInputState',
   InputAudio: 'handlerInputState',
+  InputAudioAuto: 'handlerInputState',
   InputSolo: 'handlerInputState',
 
   Input: 'handlerPreviewProgram',
   InputMix2: 'handlerPreviewProgram',
   InputMix3: 'handlerPreviewProgram',
   InputMix4: 'handlerPreviewProgram',
+  InputMix5: 'handlerPreviewProgram',
+  InputMix6: 'handlerPreviewProgram',
+  InputMix7: 'handlerPreviewProgram',
+  InputMix8: 'handlerPreviewProgram',
+  InputMix9: 'handlerPreviewProgram',
+  InputMix10: 'handlerPreviewProgram',
+  InputMix11: 'handlerPreviewProgram',
+  InputMix12: 'handlerPreviewProgram',
+  InputMix13: 'handlerPreviewProgram',
+  InputMix14: 'handlerPreviewProgram',
+  InputMix15: 'handlerPreviewProgram',
+  InputMix16: 'handlerPreviewProgram',
   InputPreview: 'handlerPreviewProgram',
   InputPreviewMix2: 'handlerPreviewProgram',
   InputPreviewMix3: 'handlerPreviewProgram',
   InputPreviewMix4: 'handlerPreviewProgram',
+  InputPreviewMix5: 'handlerPreviewProgram',
+  InputPreviewMix6: 'handlerPreviewProgram',
+  InputPreviewMix7: 'handlerPreviewProgram',
+  InputPreviewMix8: 'handlerPreviewProgram',
+  InputPreviewMix9: 'handlerPreviewProgram',
+  InputPreviewMix10: 'handlerPreviewProgram',
+  InputPreviewMix11: 'handlerPreviewProgram',
+  InputPreviewMix12: 'handlerPreviewProgram',
+  InputPreviewMix13: 'handlerPreviewProgram',
+  InputPreviewMix14: 'handlerPreviewProgram',
+  InputPreviewMix15: 'handlerPreviewProgram',
+  InputPreviewMix16: 'handlerPreviewProgram',
 
   ReplayPlaying: 'handlerReplay',
   ReplayCamera1: 'handlerReplay',
@@ -276,6 +301,9 @@ export class Activators {
       this.updateBuffer('inputMute')
       this.updateBuffer('inputVolumeMeter')
       this.updateBuffer('inputAudio')
+    } else if (params[0] === 'InputAudioAuto') {
+      input.audioAuto = params[2] == '1'
+      this.updateBuffer('inputAudioAuto')
     } else if (params[0] === 'InputSolo') {
       input.solo = params[2] !== '0'
       this.updateBuffer('inputSolo')
@@ -292,9 +320,17 @@ export class Activators {
     const inputNumber = params[1]
     const state = params[2]
 
-    // Check the last character of event name to indicate if message is not for mix 1
+    // Check the last characters of event name to indicate if message is not for mix 1
     // Note - InputMix2 to InputMix4 activator messages are inconsistent, and may not always reflect what's live in vMix
-    const checkMix = parseInt(params[0].charAt(params[0].length - 1), 10)
+    let checkMix = 1
+
+    if (params[0] === 'Input' || params[0] === 'InputPreview') {
+      checkMix = 1
+    } else if (params[0] === 'InputMix') {
+      checkMix = parseInt(params[0].substring(8), 10)
+    } else if (params[0] === 'InputPreviewMix') {
+      checkMix = parseInt(params[0].substring(15), 10)
+    }
 
     if (!isNaN(checkMix)) {
       mix = checkMix - 1
