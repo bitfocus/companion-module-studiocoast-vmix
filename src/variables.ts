@@ -20,7 +20,7 @@ export class Variables {
   }
 
   /**
-   * @param variables Object of variablenames and their values
+   * @param variables Object of variable names and their values
    * @description Updates or removes variable for current instance
    */
   public readonly set = (variables: InstanceVariableValue): void => {
