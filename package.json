@@ -7,7 +7,9 @@
 		"build": "rimraf dist && yarn build:main",
 		"build:main": "tsc -p tsconfig.build.json",
 		"build:watch": "tsc -p tsconfig.build.json --watch",
+		"build:test": "tsc -p tsconfig.build.json --noEmit",
 		"lint": "eslint . --ext .ts --fix",
+		"lint:test": "eslint . --ext .ts",
 		"test": "jest"
 	},
 	"repository": {
