@@ -1,8 +1,8 @@
-import 'ts-jest/utils';
+import 'ts-jest';
 import { Timer } from '../src/timers';
 
 
-describe('Test Timers', () => {
+describe('Timers', () => {
   const timer = new Timer('test')
 
   it(`Timers: Should be initialized with an ID of test, and stopped`, () => {

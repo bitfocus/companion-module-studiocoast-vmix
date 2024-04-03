@@ -20,7 +20,7 @@ export class Variables {
   }
 
   /**
-   * @param variables Object of variablenames and their values
+   * @param variables Object of variable names and their values
    * @description Updates or removes variable for current instance
    */
   public readonly set = (variables: InstanceVariableValue): void => {
@@ -123,263 +123,263 @@ export class Variables {
       { name: 'Replay Timecode B', variableId: 'replay_timecodeb' },
     ])
 
-      // Audio
-      ;[...AUDIOBUSSESMASTER, 'Selected'].forEach((bus) => {
-        variables.add({ name: `Bus ${bus} Volume`, variableId: `bus_${bus.toLowerCase()}_volume` })
-        variables.add({ name: `Bus ${bus} dB`, variableId: `bus_${bus.toLowerCase()}_volume_db` })
-        variables.add({ name: `Bus ${bus} Volume Linear`, variableId: `bus_${bus.toLowerCase()}_volume_linear` })
-        if (bus !== 'Headphones') {
-          variables.add({ name: `Bus ${bus} MeterF1`, variableId: `bus_${bus.toLowerCase()}_meterf1` })
-          variables.add({ name: `Bus ${bus} MeterFz`, variableId: `bus_${bus.toLowerCase()}_meterf2` })
-          variables.add({ name: `Bus ${bus} MeterF1 Avg 1s`, variableId: `bus_${bus.toLowerCase()}_meterf1_avg_1s` })
-          variables.add({ name: `Bus ${bus} MeterF1 Avg 3s`, variableId: `bus_${bus.toLowerCase()}_meterf1_avg_3s` })
-          variables.add({ name: `Bus ${bus} MeterF2 Avg 1s`, variableId: `bus_${bus.toLowerCase()}_meterf1_avg_1s` })
-          variables.add({ name: `Bus ${bus} MeterF2 Avg 3s`, variableId: `bus_${bus.toLowerCase()}_meterf1_avg_3s` })
-          variables.add({ name: `Bus ${bus} MeterF1 Peak 1s`, variableId: `bus_${bus.toLowerCase()}_meterf1_peak_1s` })
-          variables.add({ name: `Bus ${bus} MeterF1 Peak 3s`, variableId: `bus_${bus.toLowerCase()}_meterf1_peak_3s` })
-          variables.add({ name: `Bus ${bus} MeterF2 Peak 1s`, variableId: `bus_${bus.toLowerCase()}_meterf1_peak_1s` })
-          variables.add({ name: `Bus ${bus} MeterF2 Peak 3s`, variableId: `bus_${bus.toLowerCase()}_meterf1_peak_3s` })
-          if (bus !== 'Master') {
-            variables.add({ name: `Bus ${bus} Mute`, variableId: `bus_${bus.toLowerCase()}_mute` })
-            variables.add({ name: `Bus ${bus} Solo`, variableId: `bus_${bus.toLowerCase()}_solo` })
+    // Audio
+    ;[...AUDIOBUSSESMASTER, 'Selected'].forEach((bus) => {
+      variables.add({ name: `Bus ${bus} Volume`, variableId: `bus_${bus.toLowerCase()}_volume` })
+      variables.add({ name: `Bus ${bus} dB`, variableId: `bus_${bus.toLowerCase()}_volume_db` })
+      variables.add({ name: `Bus ${bus} Volume Linear`, variableId: `bus_${bus.toLowerCase()}_volume_linear` })
+      if (bus !== 'Headphones') {
+        variables.add({ name: `Bus ${bus} MeterF1`, variableId: `bus_${bus.toLowerCase()}_meterf1` })
+        variables.add({ name: `Bus ${bus} MeterFz`, variableId: `bus_${bus.toLowerCase()}_meterf2` })
+        variables.add({ name: `Bus ${bus} MeterF1 Avg 1s`, variableId: `bus_${bus.toLowerCase()}_meterf1_avg_1s` })
+        variables.add({ name: `Bus ${bus} MeterF1 Avg 3s`, variableId: `bus_${bus.toLowerCase()}_meterf1_avg_3s` })
+        variables.add({ name: `Bus ${bus} MeterF2 Avg 1s`, variableId: `bus_${bus.toLowerCase()}_meterf1_avg_1s` })
+        variables.add({ name: `Bus ${bus} MeterF2 Avg 3s`, variableId: `bus_${bus.toLowerCase()}_meterf1_avg_3s` })
+        variables.add({ name: `Bus ${bus} MeterF1 Peak 1s`, variableId: `bus_${bus.toLowerCase()}_meterf1_peak_1s` })
+        variables.add({ name: `Bus ${bus} MeterF1 Peak 3s`, variableId: `bus_${bus.toLowerCase()}_meterf1_peak_3s` })
+        variables.add({ name: `Bus ${bus} MeterF2 Peak 1s`, variableId: `bus_${bus.toLowerCase()}_meterf1_peak_1s` })
+        variables.add({ name: `Bus ${bus} MeterF2 Peak 3s`, variableId: `bus_${bus.toLowerCase()}_meterf1_peak_3s` })
+        if (bus !== 'Master') {
+          variables.add({ name: `Bus ${bus} Mute`, variableId: `bus_${bus.toLowerCase()}_mute` })
+          variables.add({ name: `Bus ${bus} Solo`, variableId: `bus_${bus.toLowerCase()}_solo` })
+        }
+      }
+    })
+
+    // Overlay
+    ;[1, 2, 3, 4].forEach((overlay) => {
+      variables.add({ name: `Overlay ${overlay} Input Short Title`, variableId: `overlay_${overlay}_input_name` })
+      variables.add({ name: `Overlay ${overlay} Input Number`, variableId: `overlay_${overlay}_input` })
+      variables.add({ name: `Overlay ${overlay} Active PGM`, variableId: `overlay_${overlay}_pgm` })
+      variables.add({ name: `Overlay ${overlay} Active PRV`, variableId: `overlay_${overlay}_prv` })
+    })
+
+    // Mix
+    ;['Preview', 'Program'].forEach((type) => {
+      this.instance.data.mix
+        .filter((mix) => mix.active)
+        .forEach((mix) => {
+          variables.add({ name: `Mix ${mix.number} ${type}`, variableId: `mix_${mix.number}_${type.toLowerCase()}` })
+          variables.add({
+            name: `Mix ${mix.number} ${type} Short Title`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_name`,
+          })
+          variables.add({
+            name: `Mix ${mix.number} ${type} GUID`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_guid`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Frame Delay`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_framedelay`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Meter F1`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_meterf1`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Meter F2`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_meterf2`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Meter F1 Avg 1s`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_meterf1_avg_1s`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Meter F2 Avg 1s`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_meterf2_avg_1s`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Meter F1 Avg 3s`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_meterf1_avg_3s`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Meter F2 Avg 3s`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_meterf2_avg_3s`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Meter F1 Peak 1s`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_meterf1_peak_1s`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Meter F2 Peak 1s`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_meterf2_peak_1s`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Meter F1 Peak 3s`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_meterf1_peak_3s`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Meter F2 Peak 3s`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_meterf2_peak_3s`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Duration`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_duration`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Remaining`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_remaining`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Position Pan X`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_position_panx`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Position Pan Y`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_position_pany`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Position Zoom X`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_position_zoomx`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Position Zoom X`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_position_zoomx`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Position Crop X1`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_position_cropx1`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Position Crop X2`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_position_cropx2`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Position Crop Y1`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_position_cropy1`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} Position Crop Y2`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_position_cropy2`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} CC Hue`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_hue`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} CC Saturation`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_saturation`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} CC Lift R`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_liftr`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} CC Lift G`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_liftg`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} CC Lift B`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_liftb`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} CC Lift Y`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_lifty`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} CC Gamma R`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_gammar`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} CC Gamma G`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_gammag`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} CC Gamma B`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_gammab`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} CC Gamma Y`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_gammay`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} CC Gain R`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_gainr`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} CC Gain G`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_gaing`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} CC Gain B`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_gainb`,
+          })
+
+          variables.add({
+            name: `Mix ${mix.number} ${type} CC Gain Y`,
+            variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_gainy`,
+          })
+
+          for (let i = 1; i < 11; i++) {
+            variables.add({
+              name: `Mix ${mix.number} ${type} Layer ${i} Number`,
+              variableId: `mix_${mix.number}_${type.toLowerCase()}_layer_${i}_number`,
+            })
+            variables.add({
+              name: `Mix ${mix.number} ${type} Layer ${i} Name`,
+              variableId: `mix_${mix.number}_${type.toLowerCase()}_layer_${i}_name`,
+            })
+            variables.add({
+              name: `Mix ${mix.number} ${type} Layer ${i} Key`,
+              variableId: `mix_${mix.number}_${type.toLowerCase()}_layer_${i}_key`,
+            })
           }
-        }
-      })
+        })
 
-      // Overlay
-      ;[1, 2, 3, 4].forEach((overlay) => {
-        variables.add({ name: `Overlay ${overlay} Input Short Title`, variableId: `overlay_${overlay}_input_name` })
-        variables.add({ name: `Overlay ${overlay} Input Number`, variableId: `overlay_${overlay}_input` })
-        variables.add({ name: `Overlay ${overlay} Active PGM`, variableId: `overlay_${overlay}_pgm` })
-        variables.add({ name: `Overlay ${overlay} Active PRV`, variableId: `overlay_${overlay}_prv` })
-      })
+      variables.add({ name: 'Mix Selected', variableId: 'mix_selected' })
+      variables.add({ name: `Mix Selected ${type}`, variableId: `mix_selected_${type.toLowerCase()}` })
+      variables.add({ name: `Mix Selected ${type} Short Title`, variableId: `mix_selected_${type.toLowerCase()}_name` })
+      variables.add({ name: `Mix Selected ${type} GUID`, variableId: `mix_selected_${type.toLowerCase()}_guid` })
 
-      // Mix
-      ;['Preview', 'Program'].forEach((type) => {
-        this.instance.data.mix
-          .filter((mix) => mix.active)
-          .forEach((mix) => {
-            variables.add({ name: `Mix ${mix.number} ${type}`, variableId: `mix_${mix.number}_${type.toLowerCase()}` })
-            variables.add({
-              name: `Mix ${mix.number} ${type} Short Title`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_name`,
-            })
-            variables.add({
-              name: `Mix ${mix.number} ${type} GUID`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_guid`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} Frame Delay`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_framedelay`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} Meter F1`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_meterf1`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} Meter F2`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_meterf2`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} Meter F1 Avg 1s`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_meterf1_avg_1s`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} Meter F2 Avg 1s`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_meterf2_avg_1s`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} Meter F1 Avg 3s`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_meterf1_avg_3s`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} Meter F2 Avg 3s`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_meterf2_avg_3s`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} Meter F1 Peak 1s`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_meterf1_peak_1s`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} Meter F2 Peak 1s`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_meterf2_peak_1s`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} Meter F1 Peak 3s`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_meterf1_peak_3s`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} Meter F2 Peak 3s`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_meterf2_peak_3s`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} Duration`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_duration`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} Remaining`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_remaining`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} Position Pan X`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_position_panx`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} Position Pan Y`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_position_pany`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} Position Zoom X`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_position_zoomx`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} Position Zoom X`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_position_zoomx`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} Position Crop X1`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_position_cropx1`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} Position Crop X2`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_position_cropx2`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} Position Crop Y1`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_position_cropy1`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} Position Crop Y2`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_position_cropy2`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} CC Hue`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_hue`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} CC Saturation`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_saturation`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} CC Lift R`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_liftr`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} CC Lift G`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_liftg`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} CC Lift B`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_liftb`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} CC Lift Y`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_lifty`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} CC Gamma R`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_gammar`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} CC Gamma G`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_gammag`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} CC Gamma B`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_gammab`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} CC Gamma Y`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_gammay`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} CC Gain R`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_gainr`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} CC Gain G`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_gaing`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} CC Gain B`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_gainb`,
-            })
-
-            variables.add({
-              name: `Mix ${mix.number} ${type} CC Gain Y`,
-              variableId: `mix_${mix.number}_${type.toLowerCase()}_cc_gainy`,
-            })
-
-            for (let i = 1; i < 11; i++) {
-              variables.add({
-                name: `Mix ${mix.number} ${type} Layer ${i} Number`,
-                variableId: `mix_${mix.number}_${type.toLowerCase()}_layer_${i}_number`,
-              })
-              variables.add({
-                name: `Mix ${mix.number} ${type} Layer ${i} Name`,
-                variableId: `mix_${mix.number}_${type.toLowerCase()}_layer_${i}_name`,
-              })
-              variables.add({
-                name: `Mix ${mix.number} ${type} Layer ${i} Key`,
-                variableId: `mix_${mix.number}_${type.toLowerCase()}_layer_${i}_key`,
-              })
-            }
-          })
-
-        variables.add({ name: 'Mix Selected', variableId: 'mix_selected' })
-        variables.add({ name: `Mix Selected ${type}`, variableId: `mix_selected_${type.toLowerCase()}` })
-        variables.add({ name: `Mix Selected ${type} Short Title`, variableId: `mix_selected_${type.toLowerCase()}_name` })
-        variables.add({ name: `Mix Selected ${type} GUID`, variableId: `mix_selected_${type.toLowerCase()}_guid` })
-
-        for (let i = 1; i < 11; i++) {
-          variables.add({
-            name: `Mix Selected ${type} Layer ${i} Number`,
-            variableId: `mix_selected_${type.toLowerCase()}_layer_${i}_number`,
-          })
-          variables.add({
-            name: `Mix Selected ${type} Layer ${i} Name`,
-            variableId: `mix_selected_${type.toLowerCase()}_layer_${i}_name`,
-          })
-          variables.add({
-            name: `Mix Selected ${type} Layer ${i} Key`,
-            variableId: `mix_selected_${type.toLowerCase()}_layer_${i}_key`,
-          })
-        }
-      })
+      for (let i = 1; i < 11; i++) {
+        variables.add({
+          name: `Mix Selected ${type} Layer ${i} Number`,
+          variableId: `mix_selected_${type.toLowerCase()}_layer_${i}_number`,
+        })
+        variables.add({
+          name: `Mix Selected ${type} Layer ${i} Name`,
+          variableId: `mix_selected_${type.toLowerCase()}_layer_${i}_name`,
+        })
+        variables.add({
+          name: `Mix Selected ${type} Layer ${i} Key`,
+          variableId: `mix_selected_${type.toLowerCase()}_layer_${i}_key`,
+        })
+      }
+    })
 
     // Dyanmic Inputs/Values
     for (let dynamic = 0; dynamic < 4; dynamic++) {
@@ -801,7 +801,9 @@ export class Variables {
   public readonly updateVariables = async (): Promise<void> => {
     const newVariables: InstanceVariableValue = {}
 
-    const calcDuration = (input: Input): { ms: string; ss: string; ssms: string; mmss: string; mmssms: string } | null => {
+    const calcDuration = (
+      input: Input
+    ): { ms: string; ss: string; ssms: string; mmss: string; mmssms: string } | null => {
       if (input.duration > 1) {
         const inPosition = input.markIn ? input.markIn : 0
         const outPosition = input.markOut ? input.markOut : input.duration
@@ -1229,8 +1231,12 @@ export class Variables {
           newVariables[`dynamic_input_${dynamic + 1}_type`] = input.type
 
           this.instance.data.mix.forEach((mix) => {
-            const tallyPreview = this.instance.data.mix[mix.number - 1].previewTally.includes(input.key) || this.instance.data.mix[mix.number - 1].preview === input.number
-            const tallyProgram = this.instance.data.mix[mix.number - 1].programTally.includes(input.key) || this.instance.data.mix[mix.number - 1].program === input.number
+            const tallyPreview =
+              this.instance.data.mix[mix.number - 1].previewTally.includes(input.key) ||
+              this.instance.data.mix[mix.number - 1].preview === input.number
+            const tallyProgram =
+              this.instance.data.mix[mix.number - 1].programTally.includes(input.key) ||
+              this.instance.data.mix[mix.number - 1].program === input.number
 
             newVariables[`dynamic_input_${dynamic + 1}_mix_${mix.number}_tally_preview`] = tallyPreview.toString()
             newVariables[`dynamic_input_${dynamic + 1}_mix_${mix.number}_tally_program`] = tallyProgram.toString()
@@ -1469,8 +1475,12 @@ export class Variables {
         newVariables[`input_${type}_type`] = input.type
 
         this.instance.data.mix.forEach((mix) => {
-          const tallyPreview = this.instance.data.mix[mix.number - 1].previewTally.includes(input.key) || this.instance.data.mix[mix.number - 1].preview === input.number
-          const tallyProgram = this.instance.data.mix[mix.number - 1].programTally.includes(input.key) || this.instance.data.mix[mix.number - 1].program === input.number
+          const tallyPreview =
+            this.instance.data.mix[mix.number - 1].previewTally.includes(input.key) ||
+            this.instance.data.mix[mix.number - 1].preview === input.number
+          const tallyProgram =
+            this.instance.data.mix[mix.number - 1].programTally.includes(input.key) ||
+            this.instance.data.mix[mix.number - 1].program === input.number
 
           newVariables[`input_${type}_mix_${mix.number}_tally_preview`] = tallyPreview.toString()
           newVariables[`input_${type}_mix_${mix.number}_tally_program`] = tallyProgram.toString()
