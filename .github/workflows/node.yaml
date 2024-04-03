@@ -33,7 +33,7 @@ jobs:
           CI: true
       - name: Test tsc
         run: |
-          yarn build:test
+          yarn build
         env:
           CI: true
       - name: Test package
