@@ -1123,20 +1123,22 @@ export class VMixData {
    * @param data vMix XML API string
    * @description parses XML to JSON, updates instance data, triggers updates of feedback and instance variables
    */
-  public update(data: string) {
-    this.parse(data)
-      .then((newData) => {
+  public update(data: string): Promise<void> {
+    return this.parse(data)
+      .then(async (newData) => {
         this.instance.apiProcessing.parsed = new Date().getTime()
-        this.setData(newData)
+        await this.setData(newData)
 
         if (!this.loaded && this.instance.tcp) {
           this.loaded = true
           this.instance.tcp.initActivatorData()
         }
+        return
       })
       .catch((err) => {
         this.instance.log('debug', JSON.stringify(err))
         this.instance.checkFeedbacks('status')
+        return
       })
   }
 }

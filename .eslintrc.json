@@ -5,6 +5,7 @@
     "prettier/prettier": "error",
     "no-use-before-define": "off"
   },
+  "ignorePatterns": ["tests/**"],
   "env": { "es2017": true },
   "parserOptions": { "sourceType": "module", "ecmaVersion": 2018 },
   "overrides": [
