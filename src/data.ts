@@ -1128,7 +1128,6 @@ export class VMixData {
       .then(async (newData) => {
         this.instance.apiProcessing.parsed = new Date().getTime()
         await this.setData(newData)
-        console.log('parsed', this.instance.apiProcessing.parsed)
 
         if (!this.loaded && this.instance.tcp) {
           this.loaded = true
