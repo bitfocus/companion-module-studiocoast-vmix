@@ -460,7 +460,27 @@ const upgradeV3_5_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
 
   actions.forEach((action: any) => {
     if (action.actionId === 'tbar') {
-      action.value = action.value + ''
+      action.options.value = action.options.value + ''
+      changes.updatedActions.push(action)
+    }
+  })
+
+  return changes
+}
+
+const adjustmentFix: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
+  let actions: any = props.actions
+
+  const changes: CompanionStaticUpgradeResult<Config> = {
+    updatedConfig: null,
+    updatedActions: [],
+    updatedFeedbacks: []
+  }
+
+  actions.forEach((action: any) => {
+    if (action.actionId === 'videoPlayhead' || action.actionId === 'setText') {
+      if (action.options.adjustment === 'Increment') action.options.adjustment = 'Increase'
+      if (action.options.adjustment === 'Decrement') action.options.adjustment = 'Decrease'
       changes.updatedActions.push(action)
     }
   })
@@ -469,5 +489,5 @@ const upgradeV3_5_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
 }
 
 export const getUpgrades = (): CompanionStaticUpgradeScript<Config>[] => {
-  return [upgradeV1_2_0, upgradeV2_0_0, upgradeV2_0_6, upgradeV3_5_0]
+  return [upgradeV1_2_0, upgradeV2_0_0, upgradeV2_0_6, upgradeV3_5_0, adjustmentFix]
 }

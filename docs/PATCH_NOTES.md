@@ -1,5 +1,8 @@
 # Patch Notes
 
+**V3.5.5**
+- Fix for increasing/decreasing title text and video playhead
+
 **V3.5.4**
 - Fix for tally variables on mix 2+
 
