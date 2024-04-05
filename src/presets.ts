@@ -4655,7 +4655,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           down: [
             {
               actionId: 'setText',
-              options: { input: '1', selectedIndex: '0', adjustment: 'Increment', value: '1', encode: false },
+              options: { input: '1', selectedIndex: '0', adjustment: 'Increase', value: '1', encode: false },
             },
           ],
           up: [],
@@ -4678,7 +4678,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           down: [
             {
               actionId: 'setText',
-              options: { input: '1', selectedIndex: '0', adjustment: 'Decrement', value: '1', encode: false },
+              options: { input: '1', selectedIndex: '0', adjustment: 'Decrease', value: '1', encode: false },
             },
           ],
           up: [],
@@ -5957,7 +5957,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           down: [
             {
               actionId: 'videoPlayhead',
-              options: { input: '', inputType: true, adjustment: 'Increment', value: 10000 },
+              options: { input: '', inputType: true, adjustment: 'Increase', value: 10000 },
             },
           ],
           up: [],
@@ -5980,7 +5980,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           down: [
             {
               actionId: 'videoPlayhead',
-              options: { input: '', inputType: true, adjustment: 'Decrement', value: 10000 },
+              options: { input: '', inputType: true, adjustment: 'Decrease', value: 10000 },
             },
           ],
           up: [],

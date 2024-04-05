@@ -722,7 +722,7 @@ interface SetTextCallback {
   options: Readonly<{
     input: string
     selectedIndex: string
-    adjustment: 'Set' | 'Increment' | 'Decrement'
+    adjustment: 'Set' | 'Increase' | 'Decrease'
     value: string
     encode: boolean
   }>
@@ -844,7 +844,7 @@ interface VideoPlayheadCallback {
   options: Readonly<{
     input: string
     inputType: boolean
-    adjustment: 'Set' | 'Increment' | 'Decrement'
+    adjustment: 'Set' | 'Increase' | 'Decrease'
     value: number
   }>
 }
@@ -3426,9 +3426,9 @@ export function getActions(instance: VMixInstance): VMixActions {
             instance.log('warn', 'Increasing/Decreasing a title requires Value to be a number')
           } else {
             // URL Encode plus and equals symbols to perform addition/subtraction on value instead of setting to a value.
-            if (action.options.adjustment === 'Increment') {
+            if (action.options.adjustment === 'Increase') {
               text = '%2b%3d' + text
-            } else if (action.options.adjustment === 'Decrement') {
+            } else if (action.options.adjustment === 'Decrease') {
               text = '-%3d' + text
             }
 
@@ -3709,9 +3709,9 @@ export function getActions(instance: VMixInstance): VMixActions {
         let text = action.options.value.toString()
 
         // URL Encode plus and equals symbols to perform addition/subtraction on value instead of setting to a value.
-        if (action.options.adjustment === 'Increment') {
+        if (action.options.adjustment === 'Increase') {
           text = '%2b%3d' + text
-        } else if (action.options.adjustment === 'Decrement') {
+        } else if (action.options.adjustment === 'Decrease') {
           text = '-%3d' + text
         }
 
