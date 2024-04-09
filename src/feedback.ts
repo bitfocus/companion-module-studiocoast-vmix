@@ -12,6 +12,9 @@ import {
 } from '@companion-module/base'
 import { presets, graphics } from 'companion-module-utils'
 
+
+type MixOptionEntry = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | -1 | -2
+
 export interface VMixFeedbacks {
   // Tally
   inputPreview: VMixFeedback<InputPreviewCallback>
@@ -77,7 +80,8 @@ interface InputPreviewCallback {
   feedbackId: 'inputPreview'
   options: Readonly<{
     input: string
-    mix: number
+    mix: MixOptionEntry
+    mixVariable: string
     fg: number
     bg: number
     tally: TallySelection
@@ -88,7 +92,8 @@ interface InputLiveCallback {
   feedbackId: 'inputLive'
   options: Readonly<{
     input: string
-    mix: number
+    mix: MixOptionEntry
+    mixVariable: string
     fg: number
     bg: number
     tally: TallySelection
@@ -403,7 +408,8 @@ interface InputStateCallback {
 interface MixSelectCallback {
   feedbackId: 'mixSelect'
   options: Readonly<{
-    mix: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14
+    mix: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | -2
+    mixVariable: string
     fg: number
     bg: number
   }>
@@ -542,14 +548,18 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       options: [
         options.input,
         options.mixSelect,
+        options.mixVariable,
         options.foregroundColor,
         options.backgroundColorPreview,
         options.layerTallyIndicator,
       ],
       callback: async (feedback, context) => {
-        let mix = feedback.options.mix
+        let mixVariable: string | number = (await instance.parseOption(feedback.options.mixVariable, context))[instance.buttonShift.state]
+        mixVariable = parseInt(mixVariable, 10) - 1
 
+        let mix: number = feedback.options.mix
         if (mix === -1) mix = instance.routingData.mix
+        if (mix === -2) mix = mixVariable
 
         // Check if an input is not in preview at all (0), currently in preview (1), or in preview as a layer (2)
         const checkInput = (input: Input | null): 0 | 1 | 2 => {
@@ -623,14 +633,18 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       options: [
         options.input,
         options.mixSelect,
+        options.mixVariable,
         options.foregroundColor,
         options.backgroundColorProgram,
         options.layerTallyIndicator,
       ],
       callback: async (feedback, context) => {
-        let mix = feedback.options.mix
+        let mixVariable: string | number = (await instance.parseOption(feedback.options.mixVariable, context))[instance.buttonShift.state]
+        mixVariable = parseInt(mixVariable, 10) - 1
 
+        let mix: number = feedback.options.mix
         if (mix === -1) mix = instance.routingData.mix
+        if (mix === -2) mix = mixVariable
 
         // Check if an input is not in program at all (0), currently in program (1), or in program as a layer (2)
         const checkInput = (input: Input | null): 0 | 1 | 2 => {
@@ -1251,8 +1265,9 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         options.foregroundColor,
         options.backgroundColorPreview,
       ],
-      callback: async (feedback) => {
-        const input = await instance.data.getInput(feedback.options.input)
+      callback: async (feedback, context) => {
+        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+        const input = await instance.data.getInput(inputOption)
 
         if (input?.volume === undefined) {
           return {}
@@ -1313,9 +1328,10 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       name: 'Audio - Input Volume Meters',
       description: 'Volumer meters for an input',
       options: [options.input],
-      callback: async (feedback) => {
+      callback: async (feedback, context) => {
         if (!feedback.image) return {}
-        const input = await instance.data.getInput(feedback.options.input)
+        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+        const input = await instance.data.getInput(inputOption)
 
         if (!input || input.meterF1 === undefined || input.meterF2 === undefined) {
           return {}
@@ -1342,8 +1358,8 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Input Loop Status',
       options: [options.input, options.foregroundColor, options.backgroundColorProgram],
       callback: async (feedback, context) => {
-        const selected = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
-        const input = await instance.data.getInput(selected)
+        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+        const input = await instance.data.getInput(inputOption)
 
         return input?.loop ? { color: feedback.options.fg, bgcolor: feedback.options.bg } : {}
       },
@@ -1499,8 +1515,9 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         options.foregroundColor,
         options.backgroundColorProgram,
       ],
-      callback: async (feedback) => {
-        const input = await instance.data.getInput(feedback.options.input)
+      callback: async (feedback, context) => {
+        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+        const input = await instance.data.getInput(inputOption)
 
         if (input?.callAudioSource === feedback.options.source) {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
@@ -1526,9 +1543,9 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         options.foregroundColor,
         options.backgroundColorProgram,
       ],
-      callback: async (feedback) => {
-        const input = await instance.data.getInput(feedback.options.input)
-
+      callback: async (feedback, context) => {
+        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+        const input = await instance.data.getInput(inputOption)
         if (input?.callVideoSource === feedback.options.source) {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         }
@@ -1560,8 +1577,9 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           default: combineRgb(255, 255, 0),
         },
       ],
-      callback: async (feedback) => {
-        const input = await instance.data.getInput(feedback.options.input)
+      callback: async (feedback, context) => {
+        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+        const input = await instance.data.getInput(inputOption)
 
         if (input?.type === 'VideoList') {
           if (input.selectedIndex === feedback.options.selectedIndex) {
@@ -1621,6 +1639,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           label: 'Destination Layer of destination Input',
           id: 'selectedIndex',
           default: '',
+          useVariables: true
         },
         options.foregroundColorBlack,
         options.backgroundColorYellow,
@@ -1703,6 +1722,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           id: 'inputX',
           default: '1',
           tooltip: 'Number, Name, or GUID',
+          useVariables: true
         },
         {
           type: 'textinput',
@@ -1710,6 +1730,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           id: 'inputY',
           default: '1',
           tooltip: 'Number, Name, or GUID',
+          useVariables: true
         },
         {
           type: 'number',
@@ -1875,12 +1896,21 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
             { id: 13, label: '14' },
             { id: 14, label: '15' },
             { id: 15, label: '16' },
+            { id: 15, label: '16' },
+            { id: -2, label: 'Variable' }
           ],
         },
+        options.mixVariable,
         options.foregroundColor,
         options.backgroundColorYellow,
       ],
-      callback: (feedback) => {
+      callback: async (feedback, context) => {
+        let mixVariable: string | number = (await instance.parseOption(feedback.options.mixVariable, context))[instance.buttonShift.state]
+        mixVariable = parseInt(mixVariable, 10) - 1
+
+        let mix: number = feedback.options.mix
+        if (mix === -2) mix = mixVariable
+
         if (instance.routingData.mix === feedback.options.mix) {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         }
