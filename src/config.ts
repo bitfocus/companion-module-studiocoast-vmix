@@ -84,7 +84,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       width: 4,
       default: false,
     },
-    { type: 'textinput', id: 'shiftDelimiter', width: 12, label: 'Shift Separator', default: '/' },
+    { type: 'textinput', id: 'shiftDelimiter', width: 12, label: 'Shift Separator', default: '|' },
     {
       type: 'static-text',
       id: 'shiftBlinkInfo',

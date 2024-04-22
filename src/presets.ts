@@ -55,7 +55,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputPreview',
-          options: { mix: 0, input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
+          options: { mix: 0, mixVariable: '', input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
@@ -79,7 +79,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputPreview',
-          options: { mix: 0, input: '2', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
+          options: { mix: 0, mixVariable: '', input: '2', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
@@ -103,7 +103,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputPreview',
-          options: { mix: 0, input: '3', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
+          options: { mix: 0, mixVariable: '', input: '3', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
@@ -127,7 +127,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputPreview',
-          options: { mix: 0, input: '4', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
+          options: { mix: 0, mixVariable: '', input: '4', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
@@ -151,7 +151,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputPreview',
-          options: { mix: 0, input: '5', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
+          options: { mix: 0, mixVariable: '', input: '5', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
@@ -175,7 +175,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputPreview',
-          options: { mix: 0, input: '6', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
+          options: { mix: 0, mixVariable: '', input: '6', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
@@ -199,7 +199,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputPreview',
-          options: { mix: 0, input: '7', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
+          options: { mix: 0, mixVariable: '', input: '7', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
@@ -223,7 +223,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputPreview',
-          options: { mix: 0, input: '8', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
+          options: { mix: 0, mixVariable: '', input: '8', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
@@ -247,7 +247,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputLive',
-          options: { mix: 0, input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
+          options: { mix: 0, mixVariable: '', input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
@@ -271,7 +271,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputLive',
-          options: { mix: 0, input: '2', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
+          options: { mix: 0, mixVariable: '', input: '2', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
@@ -295,7 +295,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputLive',
-          options: { mix: 0, input: '3', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
+          options: { mix: 0, mixVariable: '', input: '3', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
@@ -319,7 +319,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputLive',
-          options: { mix: 0, input: '4', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
+          options: { mix: 0, mixVariable: '', input: '4', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
@@ -343,7 +343,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputLive',
-          options: { mix: 0, input: '5', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
+          options: { mix: 0, mixVariable: '', input: '5', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
@@ -367,7 +367,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputLive',
-          options: { mix: 0, input: '6', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
+          options: { mix: 0, mixVariable: '', input: '6', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
@@ -391,7 +391,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputLive',
-          options: { mix: 0, input: '7', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
+          options: { mix: 0, mixVariable: '', input: '7', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
@@ -415,7 +415,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputLive',
-          options: { mix: 0, input: '8', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
+          options: { mix: 0, mixVariable: '', input: '8', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
@@ -431,7 +431,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { mix: 0, mixVariable: '', functionID: 'Cut', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { mix: 0, mixVariable: '', functionID: 'Cut', duration: '1000' } }],
           up: [],
         },
       ],
@@ -450,7 +450,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { mix: 0, mixVariable: '', functionID: 'Fade', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { mix: 0, mixVariable: '', functionID: 'Fade', duration: '1000' } }],
           up: [],
         },
       ],
@@ -498,7 +498,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputPreview',
-          options: { mix: 1, input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
+          options: { mix: 1, mixVariable: '', input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
@@ -522,7 +522,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputPreview',
-          options: { mix: 2, input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
+          options: { mix: 2, mixVariable: '', input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
@@ -546,7 +546,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputPreview',
-          options: { mix: 3, input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
+          options: { mix: 3, mixVariable: '', input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(0, 255, 0), tally: '' },
         },
       ],
     },
@@ -570,7 +570,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputLive',
-          options: { mix: 1, input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
+          options: { mix: 1, mixVariable: '', input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
@@ -594,7 +594,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputLive',
-          options: { mix: 2, input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
+          options: { mix: 2, mixVariable: '', input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
@@ -618,7 +618,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       feedbacks: [
         {
           feedbackId: 'inputLive',
-          options: { mix: 3, input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
+          options: { mix: 3, mixVariable: '', input: '1', fg: combineRgb(255, 255, 255), bg: combineRgb(255, 0, 0), tally: '' },
         },
       ],
     },
@@ -634,7 +634,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { mix: 1, mixVariable: '', functionID: 'Cut', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { mix: 1, mixVariable: '', functionID: 'Cut', duration: '1000' } }],
           up: [],
         },
       ],
@@ -653,7 +653,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { mix: 2, mixVariable: '', functionID: 'Cut', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { mix: 2, mixVariable: '', functionID: 'Cut', duration: '1000' } }],
           up: [],
         },
       ],
@@ -672,7 +672,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { mix: 3, mixVariable: '', functionID: 'Cut', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { mix: 3, mixVariable: '', functionID: 'Cut', duration: '1000' } }],
           up: [],
         },
       ],
@@ -691,7 +691,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { mix: 1, mixVariable: '', functionID: 'Fade', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { mix: 1, mixVariable: '', functionID: 'Fade', duration: '1000' } }],
           up: [],
         },
       ],
@@ -710,7 +710,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { mix: 2, mixVariable: '', functionID: 'Fade', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { mix: 2, mixVariable: '', functionID: 'Fade', duration: '1000' } }],
           up: [],
         },
       ],
@@ -729,7 +729,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { mix: 3, mixVariable: '', functionID: 'Fade', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { mix: 3, mixVariable: '', functionID: 'Fade', duration: '1000' } }],
           up: [],
         },
       ],
@@ -773,6 +773,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           feedbackId: 'inputPreview',
           options: {
             mix: 0,
+            mixVariable: '',
             input: `1${instance.config.shiftDelimiter}5`,
             fg: combineRgb(255, 255, 255),
             bg: combineRgb(0, 255, 0),
@@ -799,6 +800,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           feedbackId: 'inputPreview',
           options: {
             mix: 0,
+            mixVariable: '',
             input: `2${instance.config.shiftDelimiter}6`,
             fg: combineRgb(255, 255, 255),
             bg: combineRgb(0, 255, 0),
@@ -825,6 +827,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           feedbackId: 'inputPreview',
           options: {
             mix: 0,
+            mixVariable: '',
             input: `3${instance.config.shiftDelimiter}7`,
             fg: combineRgb(255, 255, 255),
             bg: combineRgb(0, 255, 0),
@@ -851,6 +854,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           feedbackId: 'inputPreview',
           options: {
             mix: 0,
+            mixVariable: '',
             input: `4${instance.config.shiftDelimiter}8`,
             fg: combineRgb(255, 255, 255),
             bg: combineRgb(0, 255, 0),
@@ -877,6 +881,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           feedbackId: 'inputLive',
           options: {
             mix: 0,
+            mixVariable: '',
             input: `1${instance.config.shiftDelimiter}5`,
             fg: combineRgb(255, 255, 255),
             bg: combineRgb(255, 0, 0),
@@ -903,6 +908,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           feedbackId: 'inputLive',
           options: {
             mix: 0,
+            mixVariable: '',
             input: `2${instance.config.shiftDelimiter}6`,
             fg: combineRgb(255, 255, 255),
             bg: combineRgb(255, 0, 0),
@@ -929,6 +935,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           feedbackId: 'inputLive',
           options: {
             mix: 0,
+            mixVariable: '',
             input: `3${instance.config.shiftDelimiter}7`,
             fg: combineRgb(255, 255, 255),
             bg: combineRgb(255, 0, 0),
@@ -955,6 +962,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           feedbackId: 'inputLive',
           options: {
             mix: 0,
+            mixVariable: '',
             input: `4${instance.config.shiftDelimiter}8`,
             fg: combineRgb(255, 255, 255),
             bg: combineRgb(255, 0, 0),
@@ -1232,7 +1240,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: 0, fadeTime: 2000 } }],
+          down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: '0', fadeTime: '2000' } }],
           up: [],
         },
       ],
@@ -1251,7 +1259,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: 25, fadeTime: 2000 } }],
+          down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: '25', fadeTime: '2000' } }],
           up: [],
         },
       ],
@@ -1270,7 +1278,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: 50, fadeTime: 2000 } }],
+          down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: '50', fadeTime: '2000' } }],
           up: [],
         },
       ],
@@ -1289,7 +1297,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: 75, fadeTime: 2000 } }],
+          down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: '75', fadeTime: '2000' } }],
           up: [],
         },
       ],
@@ -1308,7 +1316,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: 100, fadeTime: 2000 } }],
+          down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: '100', fadeTime: '2000' } }],
           up: [],
         },
       ],
@@ -4451,7 +4459,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'replayMark', options: { functionID: 'ReplayMarkIn', value: 0 } }],
+          down: [{ actionId: 'replayMark', options: { functionID: 'ReplayMarkIn', value: '0', value2: '10' } }],
           up: [],
         },
       ],
@@ -4469,7 +4477,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'replayMark', options: { functionID: 'ReplayMarkOut', value: 0 } }],
+          down: [{ actionId: 'replayMark', options: { functionID: 'ReplayMarkOut', value: '0', value2: '10' } }],
           up: [],
         },
       ],
@@ -4487,7 +4495,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'replayMark', options: { functionID: 'ReplayMarkInOut', value: 10 } }],
+          down: [{ actionId: 'replayMark', options: { functionID: 'ReplayMarkInOut', value: '10', value2: '10' } }],
           up: [],
         },
       ],
@@ -4505,7 +4513,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'replayMark', options: { functionID: 'ReplayMarkInOut', value: 30 } }],
+          down: [{ actionId: 'replayMark', options: { functionID: 'ReplayMarkInOut', value: '30', value2: '10' } }],
           up: [],
         },
       ],
@@ -5516,7 +5524,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { functionID: 'Cut', mix: 0, mixVariable: '', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Cut', mix: 0, mixVariable: '', duration: '1000' } }],
           up: [],
         },
       ],
@@ -5534,7 +5542,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { functionID: 'Fade', mix: 0, mixVariable: '', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Fade', mix: 0, mixVariable: '', duration: '1000' } }],
           up: [],
         },
       ],
@@ -5552,7 +5560,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { functionID: 'Zoom', mix: 0, mixVariable: '', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Zoom', mix: 0, mixVariable: '', duration: '1000' } }],
           up: [],
         },
       ],
@@ -5570,7 +5578,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { functionID: 'Wipe', mix: 0, mixVariable: '', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Wipe', mix: 0, mixVariable: '', duration: '1000' } }],
           up: [],
         },
       ],
@@ -5588,7 +5596,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { functionID: 'Slide', mix: 0, mixVariable: '', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Slide', mix: 0, mixVariable: '', duration: '1000' } }],
           up: [],
         },
       ],
@@ -5606,7 +5614,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { functionID: 'Fly', mix: 0, mixVariable: '', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Fly', mix: 0, mixVariable: '', duration: '1000' } }],
           up: [],
         },
       ],
@@ -5624,7 +5632,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { functionID: 'CrossZoom', mix: 0, mixVariable: '', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'CrossZoom', mix: 0, mixVariable: '', duration: '1000' } }],
           up: [],
         },
       ],
@@ -5642,7 +5650,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { functionID: 'FlyRotate', mix: 0, mixVariable: '', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'FlyRotate', mix: 0, mixVariable: '', duration: '1000' } }],
           up: [],
         },
       ],
@@ -5660,7 +5668,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { functionID: 'Cube', mix: 0, mixVariable: '', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Cube', mix: 0, mixVariable: '', duration: '1000' } }],
           up: [],
         },
       ],
@@ -5678,7 +5686,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { functionID: 'CubeZoom', mix: 0, mixVariable: '', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'CubeZoom', mix: 0, mixVariable: '', duration: '1000' } }],
           up: [],
         },
       ],
@@ -5696,7 +5704,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { functionID: 'VerticalWipe', mix: 0, mixVariable: '', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'VerticalWipe', mix: 0, mixVariable: '', duration: '1000' } }],
           up: [],
         },
       ],
@@ -5714,7 +5722,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { functionID: 'VerticalSlide', mix: 0, mixVariable: '', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'VerticalSlide', mix: 0, mixVariable: '', duration: '1000' } }],
           up: [],
         },
       ],
@@ -5732,7 +5740,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { functionID: 'Merge', mix: 0, mixVariable: '', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Merge', mix: 0, mixVariable: '', duration: '1000' } }],
           up: [],
         },
       ],
@@ -5750,7 +5758,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { functionID: 'WipeReverse', mix: 0, mixVariable: '', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'WipeReverse', mix: 0, mixVariable: '', duration: '1000' } }],
           up: [],
         },
       ],
@@ -5768,7 +5776,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { functionID: 'SlideReverse', mix: 0, mixVariable: '', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'SlideReverse', mix: 0, mixVariable: '', duration: '1000' } }],
           up: [],
         },
       ],
@@ -5786,7 +5794,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       steps: [
         {
-          down: [{ actionId: 'transitionMix', options: { functionID: 'VerticalWipeReverse', mix: 0, mixVariable: '', duration: 1000 } }],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'VerticalWipeReverse', mix: 0, mixVariable: '', duration: '1000' } }],
           up: [],
         },
       ],
@@ -5805,7 +5813,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       steps: [
         {
           down: [
-            { actionId: 'transitionMix', options: { functionID: 'VerticalSlideReverse', mix: 0, mixVariable: '', duration: 1000 } },
+            { actionId: 'transitionMix', options: { functionID: 'VerticalSlideReverse', mix: 0, mixVariable: '', duration: '1000' } },
           ],
           up: [],
         },

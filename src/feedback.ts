@@ -871,6 +871,9 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
             { id: '1', label: '1' },
             { id: '2', label: '2' },
           ],
+          isVisible: (options) => {
+            return options.status === 'streaming'
+          }
         },
       ],
       callback: (feedback) => {
@@ -1734,7 +1737,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         },
         {
           type: 'number',
-          label: 'Layer ',
+          label: 'Layer',
           id: 'layer',
           default: 0,
           min: 0,
@@ -1823,6 +1826,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           label: 'Value',
           id: 'value',
           default: '',
+          useVariables: true
         },
       ],
       defaultStyle: {
@@ -1967,6 +1971,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           label: 'Text',
           id: 'text',
           default: instance.config.shiftDelimiter,
+          useVariables: true
         },
       ],
       callback: async (feedback, context) => {
