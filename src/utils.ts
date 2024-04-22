@@ -83,7 +83,7 @@ export const options: Options = {
     id: 'input',
     default: '1',
     tooltip: 'Number, Name, or GUID',
-    useVariables: true
+    useVariables: true,
   },
 
   mixSelect: {
@@ -109,7 +109,7 @@ export const options: Options = {
       { id: 14, label: '15' },
       { id: 15, label: '16' },
       { id: -1, label: 'Selected' },
-      { id: -2, label: 'Variable' }
+      { id: -2, label: 'Variable' },
     ],
   },
 
@@ -120,7 +120,7 @@ export const options: Options = {
     default: '1',
     tooltip: '',
     isVisible: (options) => options.mix === -2,
-    useVariables: true
+    useVariables: true,
   },
 
   audioBus: {

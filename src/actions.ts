@@ -1497,7 +1497,7 @@ export function getActions(instance: VMixInstance): VMixActions {
     }
 
     const parseMix = (value: string): number => {
-      let mix = parseInt(value, 10)
+      const mix = parseInt(value, 10)
 
       if (isNaN(mix) || mix < 1) {
         instance.log('warn', 'Mix must be an integer >= 1')
@@ -1522,13 +1522,15 @@ export function getActions(instance: VMixInstance): VMixActions {
       }
     }
 
-    parsedParams = parsedParams.map(param => {
-      if (param[0] === 'mix' && param[1] === -2) {
-        const mixVariable = parsedParams.find(x => x[0] === 'mixVariable')
-        param[1] = mixVariable?.[1] || param[1]
-      }
-      return param
-    }).filter(param => param[0] !== 'mixVariable')
+    parsedParams = parsedParams
+      .map((param) => {
+        if (param[0] === 'mix' && param[1] === -2) {
+          const mixVariable = parsedParams.find((x) => x[0] === 'mixVariable')
+          param[1] = mixVariable?.[1] || param[1]
+        }
+        return param
+      })
+      .filter((param) => param[0] !== 'mixVariable')
 
     const encodedParams = parsedParams
       .map(parseSelectedOptions)
@@ -1640,7 +1642,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           label: 'Strength 0 to 1',
           id: 'strength',
           default: '1',
-          useVariables: true
+          useVariables: true,
         },
       ],
       callback: async (action) => {
@@ -1950,7 +1952,9 @@ export function getActions(instance: VMixInstance): VMixActions {
       description: 'Cuts the input directly to Output without changing Preview',
       options: [options.input, options.mixSelect, options.mixVariable],
       callback: async (action) => {
-        let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable))[instance.buttonShift.state]
+        let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable))[
+          instance.buttonShift.state
+        ]
         mixVariable = parseInt(mixVariable, 10) - 1
 
         let mix: number = action.options.mix
@@ -1962,7 +1966,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           options: {
             functionID: 'CutDirect',
             input: action.options.input,
-            mix
+            mix,
           },
         }
 
@@ -1989,7 +1993,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           label: 'Duration',
           id: 'duration',
           default: '1000',
-          useVariables: true
+          useVariables: true,
         },
         {
           type: 'textinput',
@@ -1997,7 +2001,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           id: 'input',
           default: '',
           tooltip: 'Number, Name, or GUID',
-          useVariables: true
+          useVariables: true,
         },
       ],
       callback: async (action) => {
@@ -2006,11 +2010,13 @@ export function getActions(instance: VMixInstance): VMixActions {
           options: {
             mix: action.options.mix,
             mixVariable: action.options.mixVariable,
-            functionID: action.options.functionID
+            functionID: action.options.functionID,
           },
         }
 
-        let duration: string | number = (await instance.parseOption(action.options.duration))[instance.buttonShift.state]
+        let duration: string | number = (await instance.parseOption(action.options.duration))[
+          instance.buttonShift.state
+        ]
         duration = parseFloat(duration)
 
         if (isNaN(duration)) {
@@ -2026,7 +2032,8 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         command.options.duration = duration
 
-        if (action.options.input !== '' && action.options.input !== undefined) command.options.input = action.options.input
+        if (action.options.input !== '' && action.options.input !== undefined)
+          command.options.input = action.options.input
         sendBasicCommand(command)
       },
     },
@@ -2156,7 +2163,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           default: '1',
           tooltip: 'Number, Name, or GUID',
           useVariables: true,
-          isVisible: (options) => options.value === 'Input'
+          isVisible: (options) => options.value === 'Input',
         },
       ],
       callback: async (action) => {
@@ -2250,7 +2257,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     selectPlayList: {
       name: 'Playlist - Open Playlist',
-      description: 'For vMix\'s Playlist function, not List inputs',
+      description: "For vMix's Playlist function, not List inputs",
       options: [
         {
           type: 'textinput',
@@ -2454,11 +2461,13 @@ export function getActions(instance: VMixInstance): VMixActions {
           useVariables: true,
         },
         options.mixSelect,
-        options.mixVariable
+        options.mixVariable,
       ],
       callback: async (action) => {
         const input = (await instance.parseOption(action.options.layerInput))[instance.buttonShift.state]
-        let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable))[instance.buttonShift.state]
+        let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable))[
+          instance.buttonShift.state
+        ]
         mixVariable = parseInt(mixVariable, 10) - 1
 
         let mix: number = action.options.mix
@@ -2494,17 +2503,19 @@ export function getActions(instance: VMixInstance): VMixActions {
           useVariables: true,
         },
         options.mixSelect,
-        options.mixVariable
+        options.mixVariable,
       ],
       callback: async (action) => {
         const input = (await instance.parseOption(action.options.layerInput))[instance.buttonShift.state]
-        let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable))[instance.buttonShift.state]
+        let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable))[
+          instance.buttonShift.state
+        ]
         mixVariable = parseInt(mixVariable, 10) - 1
 
         let mix: number = action.options.mix
         if (mix === -1) mix = instance.routingData.mix
         if (mix === -2) mix = mixVariable
-        
+
         if (instance.tcp)
           instance.tcp.sendCommand(
             `FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].program}&Value=${
@@ -3097,7 +3108,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           label: 'Volume',
           id: 'amount',
           default: '100',
-          useVariables: true
+          useVariables: true,
         },
       ],
       callback: async (action) => {
@@ -3153,7 +3164,9 @@ export function getActions(instance: VMixInstance): VMixActions {
         const fadeTime = (await instance.parseOption(action.options.fadeTime))[instance.buttonShift.state]
 
         if (instance.tcp)
-          instance.tcp.sendCommand(`FUNCTION SetVolumeFade Value=${fadeMin},${fadeTime}&input=${encodeURIComponent(input)}`)
+          instance.tcp.sendCommand(
+            `FUNCTION SetVolumeFade Value=${fadeMin},${fadeTime}&input=${encodeURIComponent(input)}`
+          )
       },
     },
 
@@ -3245,7 +3258,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     setVolumeChannelMixer: {
       name: 'Audio - Set Input Channel Volume',
-      description: 'Set Volume of an Input\'s sub channel',
+      description: "Set Volume of an Input's sub channel",
       options: [
         options.input,
         {
@@ -3344,7 +3357,8 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION ${action.options.functionID} Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+            `FUNCTION ${action.options.functionID} Input=${encodeURIComponent(input)}&${
+              indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
             }=${encodeURIComponent(index)}`
           )
       },
@@ -3380,7 +3394,8 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION SetCountdown Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+            `FUNCTION SetCountdown Input=${encodeURIComponent(input)}&${
+              indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
             }=${encodeURIComponent(index)}&value=${value}`
           )
       },
@@ -3416,7 +3431,8 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION ChangeCountdown Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+            `FUNCTION ChangeCountdown Input=${encodeURIComponent(input)}&${
+              indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
             }=${encodeURIComponent(index)}&value=${value}`
           )
       },
@@ -3456,7 +3472,8 @@ export function getActions(instance: VMixInstance): VMixActions {
         } else {
           if (instance.tcp)
             instance.tcp.sendCommand(
-              `FUNCTION AdjustCountdown Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+              `FUNCTION AdjustCountdown Input=${encodeURIComponent(input)}&${
+                indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
               }=${encodeURIComponent(index)}&Value=${value}`
             )
         }
@@ -3556,7 +3573,9 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION SetColor Input=${encodeURIComponent(input)}&${indexNaNCheck}=${index}&Value=${encodeURIComponent(value)}`
+            `FUNCTION SetColor Input=${encodeURIComponent(input)}&${indexNaNCheck}=${index}&Value=${encodeURIComponent(
+              value
+            )}`
           )
       },
     },
@@ -3945,8 +3964,10 @@ export function getActions(instance: VMixInstance): VMixActions {
           default: '10',
           useVariables: true,
           isVisible: (options) => {
-            return ['ReplayMarkInOut', 'ReplayMarkInOutLive', 'ReplayMarkInOutRecorded'].includes(options.functionID as string)
-          }
+            return ['ReplayMarkInOut', 'ReplayMarkInOutLive', 'ReplayMarkInOutRecorded'].includes(
+              options.functionID as string
+            )
+          },
         },
         {
           type: 'textinput',
@@ -3957,16 +3978,20 @@ export function getActions(instance: VMixInstance): VMixActions {
           useVariables: true,
           isVisible: (options) => {
             return options.functionID === 'ReplayMarkInOutLiveFuture'
-          }
+          },
         },
       ],
       callback: (action) => {
         const command: any = {
           id: 'replayMark',
-          options: { functionID: action.options.functionID }
+          options: { functionID: action.options.functionID },
         }
 
-        if (['ReplayMarkInOut', 'ReplayMarkInOutLive', 'ReplayMarkInOutRecorded'].includes(action.options.functionID as string)) {
+        if (
+          ['ReplayMarkInOut', 'ReplayMarkInOutLive', 'ReplayMarkInOutRecorded'].includes(
+            action.options.functionID as string
+          )
+        ) {
           command.options.value = action.options.value
         }
 
@@ -3997,7 +4022,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           label: 'Frames',
           id: 'value',
           default: '30',
-          useVariables: true
+          useVariables: true,
         },
       ],
       callback: sendBasicCommand,
@@ -4186,7 +4211,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           label: 'Frames',
           id: 'value',
           default: '60',
-          useVariables: true
+          useVariables: true,
         },
       ],
       callback: sendBasicCommand,
@@ -4373,7 +4398,11 @@ export function getActions(instance: VMixInstance): VMixActions {
         const value = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
 
         if (instance.tcp)
-          instance.tcp.sendCommand(`FUNCTION BrowserNavigate Input=${action.options.input}&Value=${action.options.encode ? encodeURIComponent(value) : value}`)
+          instance.tcp.sendCommand(
+            `FUNCTION BrowserNavigate Input=${action.options.input}&Value=${
+              action.options.encode ? encodeURIComponent(value) : value
+            }`
+          )
       },
     },
 
@@ -4657,22 +4686,41 @@ export function getActions(instance: VMixInstance): VMixActions {
             { id: 13, label: '14' },
             { id: 14, label: '15' },
             { id: 15, label: '16' },
-            { id: -2, label: 'Variable' }
+            { id: -2, label: 'Variable' },
           ],
         },
-        options.mixVariable
+        options.mixVariable,
       ],
       callback: async (action) => {
-        let mix = action.options.mix
+        const mix = action.options.mix
 
         if (mix === -2) {
-          const mixVariable = parseInt((await instance.parseOption(action.options.mixVariable))[instance.buttonShift.state], 10)
+          const mixVariable = parseInt(
+            (await instance.parseOption(action.options.mixVariable))[instance.buttonShift.state],
+            10
+          )
           if (isNaN(mixVariable) || mixVariable < 1 || mixVariable > 16) {
             instance.log('warn', 'Mix must be an integer between 1 and 16 inclusive')
             return
           }
 
-          instance.routingData.mix = mixVariable - 1 as 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15
+          instance.routingData.mix = (mixVariable - 1) as
+            | 0
+            | 1
+            | 2
+            | 3
+            | 4
+            | 5
+            | 6
+            | 7
+            | 8
+            | 9
+            | 10
+            | 11
+            | 12
+            | 13
+            | 14
+            | 15
           instance.variables?.set({ mix_selected: mixVariable })
         } else {
           instance.routingData.mix = mix
@@ -4749,12 +4797,12 @@ export function getActions(instance: VMixInstance): VMixActions {
           label: 'Timer ID',
           id: 'id',
           default: '',
-          useVariables: true
+          useVariables: true,
         },
       ],
       callback: async (action) => {
         if (action.options.id === '') return
-        let id = (await instance.parseOption(action.options.id))[instance.buttonShift.state]
+        const id = (await instance.parseOption(action.options.id))[instance.buttonShift.state]
 
         let timer = instance.timers.find((timer) => timer.id === id)
         if (!timer) {
@@ -4777,7 +4825,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           label: 'Timer ID',
           id: 'id',
           default: '',
-          useVariables: true
+          useVariables: true,
         },
         {
           type: 'textinput',
@@ -4787,7 +4835,7 @@ export function getActions(instance: VMixInstance): VMixActions {
         },
       ],
       callback: async (action) => {
-        let id = (await instance.parseOption(action.options.id))[instance.buttonShift.state]
+        const id = (await instance.parseOption(action.options.id))[instance.buttonShift.state]
         const timer = instance.timers.find((timer) => timer.id === id)
         if (!timer) return
 
@@ -4804,7 +4852,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           label: 'Timer ID',
           id: 'id',
           default: '',
-          useVariables: true
+          useVariables: true,
         },
         {
           type: 'number',
@@ -4816,7 +4864,7 @@ export function getActions(instance: VMixInstance): VMixActions {
         },
       ],
       callback: async (action) => {
-        let id = (await instance.parseOption(action.options.id))[instance.buttonShift.state]
+        const id = (await instance.parseOption(action.options.id))[instance.buttonShift.state]
         const timer = instance.timers.find((timer) => timer.id === id)
         if (!timer) return
 
@@ -4833,7 +4881,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           label: 'Timer ID',
           id: 'id',
           default: '',
-          useVariables: true
+          useVariables: true,
         },
         {
           type: 'dropdown',
@@ -4861,7 +4909,7 @@ export function getActions(instance: VMixInstance): VMixActions {
         },
       ],
       callback: async (action) => {
-        let id = (await instance.parseOption(action.options.id))[instance.buttonShift.state]
+        const id = (await instance.parseOption(action.options.id))[instance.buttonShift.state]
         const timer = instance.timers.find((timer) => timer.id === id)
         if (!timer) return
 

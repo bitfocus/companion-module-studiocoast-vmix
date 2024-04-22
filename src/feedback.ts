@@ -12,7 +12,6 @@ import {
 } from '@companion-module/base'
 import { presets, graphics } from 'companion-module-utils'
 
-
 type MixOptionEntry = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | -1 | -2
 
 export interface VMixFeedbacks {
@@ -554,7 +553,9 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         options.layerTallyIndicator,
       ],
       callback: async (feedback, context) => {
-        let mixVariable: string | number = (await instance.parseOption(feedback.options.mixVariable, context))[instance.buttonShift.state]
+        let mixVariable: string | number = (await instance.parseOption(feedback.options.mixVariable, context))[
+          instance.buttonShift.state
+        ]
         mixVariable = parseInt(mixVariable, 10) - 1
 
         let mix: number = feedback.options.mix
@@ -639,7 +640,9 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         options.layerTallyIndicator,
       ],
       callback: async (feedback, context) => {
-        let mixVariable: string | number = (await instance.parseOption(feedback.options.mixVariable, context))[instance.buttonShift.state]
+        let mixVariable: string | number = (await instance.parseOption(feedback.options.mixVariable, context))[
+          instance.buttonShift.state
+        ]
         mixVariable = parseInt(mixVariable, 10) - 1
 
         let mix: number = feedback.options.mix
@@ -873,7 +876,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           ],
           isVisible: (options) => {
             return options.status === 'streaming'
-          }
+          },
         },
       ],
       callback: (feedback) => {
@@ -1642,7 +1645,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           label: 'Destination Layer of destination Input',
           id: 'selectedIndex',
           default: '',
-          useVariables: true
+          useVariables: true,
         },
         options.foregroundColorBlack,
         options.backgroundColorYellow,
@@ -1725,7 +1728,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           id: 'inputX',
           default: '1',
           tooltip: 'Number, Name, or GUID',
-          useVariables: true
+          useVariables: true,
         },
         {
           type: 'textinput',
@@ -1733,7 +1736,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           id: 'inputY',
           default: '1',
           tooltip: 'Number, Name, or GUID',
-          useVariables: true
+          useVariables: true,
         },
         {
           type: 'number',
@@ -1826,7 +1829,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           label: 'Value',
           id: 'value',
           default: '',
-          useVariables: true
+          useVariables: true,
         },
       ],
       defaultStyle: {
@@ -1901,7 +1904,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
             { id: 14, label: '15' },
             { id: 15, label: '16' },
             { id: 15, label: '16' },
-            { id: -2, label: 'Variable' }
+            { id: -2, label: 'Variable' },
           ],
         },
         options.mixVariable,
@@ -1909,7 +1912,9 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         options.backgroundColorYellow,
       ],
       callback: async (feedback, context) => {
-        let mixVariable: string | number = (await instance.parseOption(feedback.options.mixVariable, context))[instance.buttonShift.state]
+        let mixVariable: string | number = (await instance.parseOption(feedback.options.mixVariable, context))[
+          instance.buttonShift.state
+        ]
         mixVariable = parseInt(mixVariable, 10) - 1
 
         let mix: number = feedback.options.mix
@@ -1971,7 +1976,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           label: 'Text',
           id: 'text',
           default: instance.config.shiftDelimiter,
-          useVariables: true
+          useVariables: true,
         },
       ],
       callback: async (feedback, context) => {
