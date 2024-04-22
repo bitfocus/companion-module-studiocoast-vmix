@@ -142,12 +142,12 @@ const upgradeV1_2_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
 
   // Feedbacks
   feedbacks = feedbacks.map((feedback: any) => {
-    if (feedback.type === 'input_preview') {
-      feedback.type = 'inputPreview'
+    if (feedback.feedbackId === 'input_preview') {
+      feedback.feedbackId = 'inputPreview'
       feedback.options.mix = 1
       changes.updatedFeedbacks.push(feedback)
-    } else if (feedback.type === 'input_live') {
-      feedback.type = 'inputLive'
+    } else if (feedback.feedbackId === 'input_live') {
+      feedback.feedbackId = 'inputLive'
       feedback.options.mix = 1
       changes.updatedFeedbacks.push(feedback)
     }
@@ -356,26 +356,26 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   feedbacks = feedbacks
     .map((feedback: any) => {
       let feedbackChange = true
-      if (feedback.type === 'inputPreview' || feedback.type === 'inputLive') {
+      if (feedback.feedbackId === 'inputPreview' || feedback.feedbackId === 'inputLive') {
         if (feedback.options.tally === 'corner') feedback.options.tally = 'cornerTL'
         if (feedback.options.tally === 'cornerR') feedback.options.tally = 'cornerTR'
-      } else if (feedback.type === 'overlayStatusPGM') {
-        feedback.type = 'overlayStatus'
+      } else if (feedback.feedbackId === 'overlayStatusPGM') {
+        feedback.feedbackId = 'overlayStatus'
         feedback.options.input = ''
 
         delete feedback.options.value
-      } else if (feedback.type === 'inputAudio') {
+      } else if (feedback.feedbackId === 'inputAudio') {
         feedback.options.bgLive = feedback.options.bg
         feedback.options.bgMuted = combineRgb(255, 0, 0)
 
         delete feedback.options.bg
-      } else if (feedback.type === 'inputMute') {
-        feedback.type = 'inputAudio'
+      } else if (feedback.feedbackId === 'inputMute') {
+        feedback.feedbackId = 'inputAudio'
         feedback.options.bgLive = combineRgb(0, 255, 0)
         feedback.options.bgMuted = feedback.options.bg
 
         delete feedback.options.bg
-      } else if (feedback.type === 'liveInputVolume' || feedback.type === 'liveBusVolume') {
+      } else if (feedback.feedbackId === 'liveInputVolume' || feedback.feedbackId === 'liveBusVolume') {
         feedback.options.dBShow = feedback.options.value
         feedback.options.colorTxt = feedback.options.colortxt
         feedback.options.colorBG = feedback.options.colorbg
@@ -385,10 +385,10 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
         delete feedback.options.colortxt
         delete feedback.options.colorbg
         delete feedback.options.colorbase
-      } else if (feedback.type === 'inputVolumeLevel' || feedback.type === 'busVolumeLevel') {
+      } else if (feedback.feedbackId === 'inputVolumeLevel' || feedback.feedbackId === 'busVolumeLevel') {
         feedback.options.value = parseFloat(feedback.options.value as string)
         if (isNaN(feedback.options.value)) feedback.options.value = 100
-      } else if (feedback.type === 'inputOnMultiview') {
+      } else if (feedback.feedbackId === 'inputOnMultiview') {
         feedback.options.inputX = feedback.options.input
         feedback.options.inputY = feedback.options.inputMV
 
@@ -406,7 +406,7 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
       // Feedback that should have just been instance variables have been deprecated
       const deprecated: string[] = ['titleLayer', 'inputSelectedIndexName', 'multiviewLayer']
 
-      return !deprecated.includes(feedback.type)
+      return !deprecated.includes(feedback.feedbackId)
     })
 
   return changes
@@ -432,8 +432,8 @@ const upgradeV2_0_6: CompanionStaticUpgradeScript<Config> = (_context, props): C
   })
 
   feedbacks.forEach((feedback: any) => {
-    if (feedback.type === 'selectedDestinationLayer' || feedback.type === 'SelectedDestinationLayer') {
-      feedback.type = 'selectedDestinationLayer'
+    if (feedback.feedbackId === 'selectedDestinationLayer' || feedback.feedbackId === 'SelectedDestinationLayer') {
+      feedback.feedbackId = 'selectedDestinationLayer'
       feedback.options.selectedIndex = feedback.options.selectedIndex + ''
       changes.updatedFeedbacks.push(feedback)
     }
@@ -488,6 +488,60 @@ const adjustmentFix: CompanionStaticUpgradeScript<Config> = (_context, props): C
   return changes
 }
 
+const upgradeV3_6_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
+  console.log('running upgradeV3_6_0')
+  let actions: any = props.actions
+  let feedbacks: any = props.feedbacks
+
+  const changes: CompanionStaticUpgradeResult<Config> = {
+    updatedConfig: null,
+    updatedActions: [],
+    updatedFeedbacks: []
+  }
+
+  actions.forEach((action: any) => {
+    if (['previewInput', 'programCut', 'setMultiViewOverlayOnPreview', 'setMultiViewOverlayOnProgram', 'mixSelect'].includes(action.actionId)) {
+      action.options.mixVariable = ''
+      changes.updatedActions.push(action)
+    }
+
+    if (action.actionId === 'setVolumeFade') {
+      action.options.fadeMin = action.options.fadeMin + ''
+      action.options.fadeTime = action.options.fadeTime + ''
+      changes.updatedActions.push(action)
+    }
+
+    if (action.actionId === 'transitionMix') {
+      action.options.mixVariable = ''
+      action.options.duration = action.options.duration + ''
+      changes.updatedActions.push(action)
+    }
+
+    if (action.actionId === 'replayMark') {
+      action.options.value = action.options.value + ''
+      action.options.value2 = '10'
+      changes.updatedActions.push(action)
+    }
+
+    if (action.actionId === 'replayMoveInOut') {
+      action.options.value = action.options.value + ''
+    }
+
+    if (action.actionId === 'replayJumpFrames') {
+      action.options.value = action.options.value + ''
+    }
+  })
+
+  feedbacks.forEach((feedback: any) => {
+    if (['inputPreview', 'inputLive', 'mixSelect'].includes(feedback.feedbackId)) {
+      feedback.options.mixVariable = ''
+      changes.updatedFeedbacks.push(feedback)
+    }
+  })
+
+  return changes
+}
+
 export const getUpgrades = (): CompanionStaticUpgradeScript<Config>[] => {
-  return [upgradeV1_2_0, upgradeV2_0_0, upgradeV2_0_6, upgradeV3_5_0, adjustmentFix]
+  return [upgradeV1_2_0, upgradeV2_0_0, upgradeV2_0_6, upgradeV3_5_0, adjustmentFix, upgradeV3_6_0]
 }

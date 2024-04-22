@@ -22,6 +22,7 @@ type EnforceDefault<T, U> = Omit<T, 'default'> & { default: U }
 export interface Options {
   input: EnforceDefault<CompanionInputFieldTextInput, string>
   mixSelect: EnforceDefault<NumericInputFieldDropown, number>
+  mixVariable: EnforceDefault<CompanionInputFieldTextInput, string>
   audioBus: EnforceDefault<CompanionInputFieldDropdown, string>
   audioBusMaster: EnforceDefault<CompanionInputFieldDropdown, string>
   foregroundColor: EnforceDefault<CompanionInputFieldColor, number>
@@ -82,6 +83,7 @@ export const options: Options = {
     id: 'input',
     default: '1',
     tooltip: 'Number, Name, or GUID',
+    useVariables: true,
   },
 
   mixSelect: {
@@ -107,7 +109,18 @@ export const options: Options = {
       { id: 14, label: '15' },
       { id: 15, label: '16' },
       { id: -1, label: 'Selected' },
+      { id: -2, label: 'Variable' },
     ],
+  },
+
+  mixVariable: {
+    type: 'textinput',
+    label: 'Mix Variable',
+    id: 'mixVariable',
+    default: '1',
+    tooltip: '',
+    isVisible: (options) => options.mix === -2,
+    useVariables: true,
   },
 
   audioBus: {
