@@ -1,7 +1,6 @@
 import {
   CompanionInputFieldColor,
   CompanionInputFieldDropdown,
-  CompanionInputFieldNumber,
   CompanionInputFieldTextInput,
 } from '@companion-module/base'
 
@@ -30,7 +29,7 @@ export interface Options {
   backgroundColorPreview: EnforceDefault<CompanionInputFieldColor, number>
   backgroundColorProgram: EnforceDefault<CompanionInputFieldColor, number>
   backgroundColorYellow: EnforceDefault<CompanionInputFieldColor, number>
-  selectedIndex: EnforceDefault<CompanionInputFieldNumber, number>
+  selectedIndex: EnforceDefault<CompanionInputFieldTextInput, string>
   comparison: EnforceDefault<CompanionInputFieldDropdown, string>
   layerTallyIndicator: EnforceDefault<CompanionInputFieldDropdown, string>
   replayChannel: EnforceDefault<CompanionInputFieldDropdown, string>
@@ -175,12 +174,11 @@ export const options: Options = {
   },
 
   selectedIndex: {
-    type: 'number',
+    type: 'textinput',
     label: 'Selected Index',
     id: 'selectedIndex',
-    default: 1,
-    min: 1,
-    max: 9999,
+    default: '1',
+    useVariables: true,
   },
 
   comparison: {
