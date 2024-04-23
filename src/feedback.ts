@@ -127,14 +127,14 @@ interface StatusCallback {
   feedbackId: 'status'
   options: Readonly<{
     status:
-    | 'connection'
-    | 'fadeToBlack'
-    | 'recording'
-    | 'external'
-    | 'streaming'
-    | 'multiCorder'
-    | 'fullscreen'
-    | 'playList'
+      | 'connection'
+      | 'fadeToBlack'
+      | 'recording'
+      | 'external'
+      | 'streaming'
+      | 'multiCorder'
+      | 'fullscreen'
+      | 'playList'
     value: '' | '0' | '1' | '2'
   }>
 }
@@ -812,7 +812,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Current status of vMix, such as recording, external, etc...',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       options: [
         {
@@ -872,7 +872,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicate if a bus is muted',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       options: [options.audioBusMaster],
       callback: (feedback) => {
@@ -889,7 +889,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Requires vMix v25+',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0)
+        bgcolor: combineRgb(255, 255, 0),
       },
       options: [options.audioBus],
       callback: (feedback) => {
@@ -906,11 +906,9 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicate if an input is muted or enabled',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
-      options: [
-        options.input,
-      ],
+      options: [options.input],
       callback: async (feedback, context) => {
         const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
         const input = await instance.data.getInput(inputOption)
@@ -925,7 +923,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicate if an input will auto enable/disable audio when transitioned to/from',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(0, 255, 0)
+        bgcolor: combineRgb(0, 255, 0),
       },
       options: [options.input],
       callback: async (feedback, context) => {
@@ -942,7 +940,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicate if an input is set to Solo',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0)
+        bgcolor: combineRgb(255, 255, 0),
       },
       options: [options.input],
       callback: async (feedback, context) => {
@@ -959,12 +957,9 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicate which busses an input will output to',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0)
+        bgcolor: combineRgb(255, 255, 0),
       },
-      options: [
-        options.input,
-        options.audioBusMaster,
-      ],
+      options: [options.input, options.audioBusMaster],
       callback: async (feedback, context) => {
         const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
         const input = await instance.data.getInput(inputOption)
@@ -1156,7 +1151,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicate if an output bus fader is within a set range',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(0, 255, 0)
+        bgcolor: combineRgb(0, 255, 0),
       },
       options: [
         {
@@ -1174,7 +1169,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           min: 0,
           max: 100,
           default: 100,
-        }
+        },
       ],
       callback: (feedback) => {
         let volume = 0
@@ -1208,7 +1203,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicate if an input fader is in a set value',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(0, 255, 0)
+        bgcolor: combineRgb(0, 255, 0),
       },
       options: [
         options.input,
@@ -1309,7 +1304,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Input Loop Status',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       options: [options.input],
       callback: async (feedback, context) => {
@@ -1327,7 +1322,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates current recording or live status of a replay input',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       options: [
         {
@@ -1352,7 +1347,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates currently selected Events tab',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       options: [
         {
@@ -1378,7 +1373,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         },
       ],
       callback: (feedback) => {
-        let channel = feedback.options.channel
+        const channel = feedback.options.channel
 
         if (channel === 'selected') {
           return instance.data.replay.events === feedback.options.events
@@ -1396,7 +1391,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates current replay camera being live on a channel',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       options: [
         {
@@ -1441,7 +1436,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates currently selected channel',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       options: [
         {
@@ -1468,7 +1463,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates audio source for a video call',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       options: [
         options.input,
@@ -1482,7 +1477,6 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
             label: id,
           })),
         },
-
       ],
       callback: async (feedback, context) => {
         const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
@@ -1498,7 +1492,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates video source for a video call',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       options: [
         options.input,
@@ -1568,7 +1562,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: '',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       options: [options.input, options.selectedIndex],
       callback: async (feedback, context) => {
@@ -1577,7 +1571,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         const index = (await instance.parseOption(feedback.options.selectedIndex, context))[instance.buttonShift.state]
 
         return input?.selectedIndex === parseInt(index, 10)
-      }
+      },
     },
 
     // Layers
@@ -1587,7 +1581,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates if input is currently selected for Layer Routing',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0)
+        bgcolor: combineRgb(255, 255, 0),
       },
       options: [options.input],
       callback: async (feedback, context) => {
@@ -1605,7 +1599,8 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           getInputValue.push(getInput?.key || null)
         }
 
-        const blink = instance.buttonShift.blink && instance.config.shiftBlinkLayerRouting && getInputValue.includes(selectInput)
+        const blink =
+          instance.buttonShift.blink && instance.config.shiftBlinkLayerRouting && getInputValue.includes(selectInput)
 
         return getInputValue[instance.buttonShift.state] === selectInput || blink
       },
@@ -1617,7 +1612,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates if layer is currently selected for Layer Routing',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0)
+        bgcolor: combineRgb(255, 255, 0),
       },
       options: [
         {
@@ -1630,7 +1625,11 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       ],
       callback: async (feedback, context) => {
         const getIndexValue = await instance.parseOption(feedback.options.selectedIndex + '', context)
-        let blink = instance.routingData.layer.destinationLayer !== null && instance.buttonShift.blink && instance.config.shiftBlinkLayerRouting && getIndexValue.includes(instance.routingData.layer.destinationLayer)
+        const blink =
+          instance.routingData.layer.destinationLayer !== null &&
+          instance.buttonShift.blink &&
+          instance.config.shiftBlinkLayerRouting &&
+          getIndexValue.includes(instance.routingData.layer.destinationLayer)
 
         return getIndexValue[instance.buttonShift.state] === instance.routingData.layer.destinationLayer || blink
       },
@@ -1642,7 +1641,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates if the input is destination layer and input',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0)
+        bgcolor: combineRgb(255, 255, 0),
       },
       options: [options.input],
       callback: async (feedback, context) => {
@@ -1691,7 +1690,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates if the input is currently on a specified layer of an input',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0)
+        bgcolor: combineRgb(255, 255, 0),
       },
       options: [
         {
@@ -1756,7 +1755,10 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           }
         })
 
-        return primaryCheck || (secondaryCheck.includes(true) && instance.config.shiftBlinkLayerRouting && instance.buttonShift.blink)
+        return (
+          primaryCheck ||
+          (secondaryCheck.includes(true) && instance.config.shiftBlinkLayerRouting && instance.buttonShift.blink)
+        )
       },
     },
 
@@ -1846,7 +1848,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Currently selected Mix',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0)
+        bgcolor: combineRgb(255, 255, 0),
       },
       options: [
         {
@@ -1882,7 +1884,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           instance.buttonShift.state
         ]
         mixVariable = parseInt(mixVariable, 10) - 1
-        let mix: number = feedback.options.mix === -2 ? mixVariable : feedback.options.mix
+        const mix: number = feedback.options.mix === -2 ? mixVariable : feedback.options.mix
         return instance.routingData.mix === mix
       },
     },
@@ -1893,7 +1895,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Currently selected Bus',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0)
+        bgcolor: combineRgb(255, 255, 0),
       },
       options: [
         {
@@ -1915,7 +1917,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates Shift state',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0)
+        bgcolor: combineRgb(255, 255, 0),
       },
       options: [],
       callback: () => {

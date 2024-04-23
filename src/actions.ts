@@ -4781,7 +4781,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           'selectedDestinationLayer',
           'routableMultiviewLayer',
           'inputOnMultiview',
-          'inputState'
+          'inputState',
         ]
 
         instance.checkFeedbacks(...feedbacks)
