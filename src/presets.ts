@@ -4824,7 +4824,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           feedbackId: 'inputSelectedIndex',
           options: {
             input: '1',
-            selectedIndex: 1,
+            selectedIndex: '1',
             fg: combineRgb(255, 255, 255),
             bg: combineRgb(255, 0, 0),
             et: combineRgb(0, 0, 0),

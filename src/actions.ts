@@ -4763,14 +4763,25 @@ export function getActions(instance: VMixInstance): VMixActions {
           'buttonShift',
           'inputPreview',
           'inputLive',
+          'overlayStatus',
           'videoTimer',
-          'inputMute',
+          'inputAudio',
+          'inputAudioAuto',
+          'inputVolumeMeter',
           'inputSolo',
           'inputBusRouting',
           'liveInputVolume',
+          'inputVolumeLevel',
+          'inputLoop',
+          'videoCallAudioSource',
+          'videoCallVideoSource',
+          'inputSelectedIndex',
+          'inputSelectedIndexBoolean',
           'selectedDestinationInput',
           'selectedDestinationLayer',
           'routableMultiviewLayer',
+          'inputOnMultiview',
+          'inputState'
         ]
 
         instance.checkFeedbacks(...feedbacks)

@@ -525,16 +525,78 @@ const upgradeV3_6_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
 
     if (action.actionId === 'replayMoveInOut') {
       action.options.value = action.options.value + ''
+      changes.updatedActions.push(action)
     }
 
     if (action.actionId === 'replayJumpFrames') {
       action.options.value = action.options.value + ''
+      changes.updatedActions.push(action)
     }
   })
 
   feedbacks.forEach((feedback: any) => {
     if (['inputPreview', 'inputLive', 'mixSelect'].includes(feedback.feedbackId)) {
       feedback.options.mixVariable = ''
+      changes.updatedFeedbacks.push(feedback)
+    }
+
+    if ([
+      'status',
+      'busMute',
+      'busSolo',
+      'inputAudio',
+      'inputAudioAuto',
+      'inputSolo',
+      'inputBusRouting',
+      'busVolumeLevel',
+      'inputVolumeLevel',
+      'inputLoop',
+      'replayStatus',
+      'replayEvents',
+      'replayCamera',
+      'replaySelectedChannel',
+      'videoCallAudioSource',
+      'videoCallVideoSource',
+      'selectedDestinationInput',
+      'selectedDestinationLayer',
+      'routableMultiviewLayer',
+      'inputOnMultiview',
+      'mixSelect',
+      'busSelect',
+      'buttonShift'
+    ].includes(feedback.feedbackId)) {
+      if (!feedback.style) feedback.style = {}
+
+      feedback.style.bgcolor = feedback.options.bg
+      feedback.style.color = feedback.options.fg
+      if (feedback.options.bg) delete feedback.options.bg
+      if (feedback.options.fg) delete feedback.options.fg
+
+      if (feedback.feedbackId === 'replayEvents') {
+        feedback.options.channel = 'A'
+      }
+
+      if (feedback.feedbackId === 'inputOnMultiview') {
+        feedback.options.layer = feedback.options.layer + ''
+      }
+
+      changes.updatedFeedbacks.push(feedback)
+    }
+
+    if (feedback.feedbackId === 'inputAudio') {
+      if (!feedback.style) feedback.style = {}
+
+      feedback.style.bgcolor = feedback.options.bgMuted
+      feedback.style.color = feedback.options.fg
+      if (feedback.options.bgMuted) delete feedback.options.bgMuted
+      if (feedback.options.fg) delete feedback.options.fg
+
+      changes.updatedFeedbacks.push(feedback)
+    }
+
+    if (feedback.feedbackId === 'inputSelectedIndex') {
+      feedback.options.selectedIndex = feedback.options.selectedIndex + ''
+
       changes.updatedFeedbacks.push(feedback)
     }
   })
