@@ -4,7 +4,7 @@ import { Timer } from './timers'
 import VMixInstance from './index'
 
 type ActionOptionEntry = [string, string | number | boolean]
-type MixOptionEntry = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | -1 | -2
+export type MixOptionEntry = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | -1 | -2
 type ColourCorrectionType =
   | 'hue'
   | 'saturation'
@@ -640,7 +640,7 @@ interface SetVolumeFadeCallback {
 }
 
 interface SetBusVolumeCallback {
-  actionId: 'SetBusVolume'
+  actionId: 'setBusVolume'
   options: Readonly<{
     value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'Selected'
     adjustment: 'Set' | 'Increase' | 'Decrease'

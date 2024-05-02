@@ -350,7 +350,6 @@ interface InputOnMultiviewCallback {
     inputX: string
     inputY: string
     layer: string
-    tally: TallySelection
   }>
 }
 

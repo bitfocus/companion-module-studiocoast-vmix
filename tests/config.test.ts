@@ -14,7 +14,7 @@ describe('Config', () => {
 
   config
     .forEach(option => {
-      if (option.type !== 'static-text') {
+      if (option.type !== 'static-text' && option.type !== 'bonjour-device') {
         it(`Config: ${option.id} - Option must have a valid default`, () => {
           expect(option.default).toBeDefined()
           if (option.type === 'number') {
