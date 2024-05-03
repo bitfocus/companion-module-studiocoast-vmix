@@ -27,6 +27,7 @@ export interface VMixFeedbacks {
   // Audio
   busMute: VMixFeedback<BusMuteCallback>
   busSolo: VMixFeedback<BusSoloCallback>
+  busSendToMaster: VMixFeedback<BusSendToMasterCallback>
   inputAudio: VMixFeedback<InputAudioCallback>
   inputAudioAuto: VMixFeedback<InputAudioAutoCallback>
   inputSolo: VMixFeedback<InputSoloCallback>
@@ -149,6 +150,13 @@ interface BusMuteCallback {
 
 interface BusSoloCallback {
   feedbackId: 'busSolo'
+  options: Readonly<{
+    value: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
+  }>
+}
+
+interface BusSendToMasterCallback {
+  feedbackId: 'busSendToMaster'
   options: Readonly<{
     value: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
   }>
@@ -289,7 +297,7 @@ interface VideoCallAudioSourceCallback {
   feedbackId: 'videoCallAudioSource'
   options: Readonly<{
     input: string
-    source: 'Master' | 'Headphones' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
+    source: 'Master' | 'Headphones' | 'BusA' | 'BusB' | 'BusC' | 'BusD' | 'BusE' | 'BusF' | 'BusG'
   }>
 }
 
@@ -350,7 +358,6 @@ interface InputOnMultiviewCallback {
     inputX: string
     inputY: string
     layer: string
-    tally: TallySelection
   }>
 }
 
@@ -390,10 +397,7 @@ interface BusSelectCallback {
 
 interface ButtonShiftCallback {
   feedbackId: 'buttonShift'
-  options: Readonly<{
-    fg: number
-    bg: number
-  }>
+  options: Record<string, never>
 }
 
 interface ButtonTextCallback {
@@ -417,6 +421,7 @@ export type FeedbackCallbacks =
   // Audio
   | BusMuteCallback
   | BusSoloCallback
+  | BusSendToMasterCallback
   | InputAudioCallback
   | InputAudioAutoCallback
   | InputSoloCallback
@@ -897,6 +902,23 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         const bus = instance.data.getAudioBus(busID)
 
         return bus?.solo || false
+      },
+    },
+
+    busSendToMaster: {
+      type: 'boolean',
+      name: 'Audio - Bus Send to Master',
+      description: 'Requires vMix v27+',
+      defaultStyle: {
+        color: combineRgb(0, 0, 0),
+        bgcolor: combineRgb(255, 255, 0),
+      },
+      options: [options.audioBus],
+      callback: (feedback) => {
+        const busID = `bus${feedback.options.value}`
+        const bus = instance.data.getAudioBus(busID)
+
+        return bus?.sendToMaster || false
       },
     },
 

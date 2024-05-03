@@ -489,7 +489,6 @@ const adjustmentFix: CompanionStaticUpgradeScript<Config> = (_context, props): C
 }
 
 const upgradeV3_6_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
-  console.log('running upgradeV3_6_0')
   let actions: any = props.actions
   let feedbacks: any = props.feedbacks
 

@@ -142,6 +142,7 @@ export class Variables {
         if (bus !== 'Master') {
           variables.add({ name: `Bus ${bus} Mute`, variableId: `bus_${bus.toLowerCase()}_mute` })
           variables.add({ name: `Bus ${bus} Solo`, variableId: `bus_${bus.toLowerCase()}_solo` })
+          variables.add({ name: `Bus ${bus} Send to Master`, variableId: `bus_${bus.toLowerCase()}_sendtomaster` })
         }
       }
     })
@@ -1163,6 +1164,7 @@ export class Variables {
       if (id !== 'Master' && id !== 'Headphones') {
         newVariables[`bus_${id.toLowerCase()}_mute`] = audioBus?.muted ? 'true' : 'false'
         newVariables[`bus_${id.toLowerCase()}_solo`] = audioBus?.solo ? 'true' : 'false'
+        newVariables[`bus_${id.toLowerCase()}_sendtomaster`] = audioBus?.sendToMaster ? 'true' : 'false'
       }
     })
 
