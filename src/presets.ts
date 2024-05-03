@@ -4066,9 +4066,19 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
         category: 'Button Shift',
         name: 'Button Shifting',
         type: 'text',
-        text: `Button Shifting is a feature unique in this module that allows actions/feedbacks to support pointing to 2 different things based on if the 'Shift' button is pressed or not.
-        \nThe two options need to be split by the delimter set in the config, for example an Preview Input action set to "1|5" will preview input 1 by default, or 5 when Shift is pressed, essentially doubling the buttons on a page
-        \nSome feedbacks, such as for preview/program can 'blink' through, so a solid green would indicate an input in preview, blinking green means the input on the other Shift being in preview.`,
+        text: `Button Shifting is a feature unique in this module that allows actions/feedbacks to support pointing to 2 different things based on if the 'Shift' button is pressed or not.`,
+      },
+      {
+        category: 'Button Shift',
+        name: '',
+        type: 'text',
+        text: `The two options need to be split by the delimter set in the config, for example an Preview Input action set to "1|5" will preview input 1 by default, or 5 when Shift is pressed, essentially doubling the buttons on a page.`,
+      },
+      {
+        category: 'Button Shift',
+        name: '',
+        type: 'text',
+        text: `Some feedbacks, such as for preview/program can 'blink' through, so a solid green would indicate an input in preview, blinking green means the input on the other Shift being in preview.`,
       },
       {
         category: 'Button Shift',
@@ -4099,6 +4109,12 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       {
         category: 'Button Shift',
+        name: `Preview 1 ${instance.config.shiftDelimiter} 5 to 4 ${instance.config.shiftDelimiter} 8`,
+        type: 'text',
+        text: '',
+      },
+      {
+        category: 'Button Shift',
         name: 'PRV 1 / 5',
         type: 'button',
         style: { text: '', size: '24', color: combineRgb(255, 255, 255), bgcolor: combineRgb(0, 0, 0) },
@@ -4113,7 +4129,6 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             up: [],
           },
         ],
-
         feedbacks: [
           {
             feedbackId: 'inputPreview',
@@ -4145,7 +4160,6 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             up: [],
           },
         ],
-
         feedbacks: [
           {
             feedbackId: 'inputPreview',
@@ -4177,7 +4191,6 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             up: [],
           },
         ],
-
         feedbacks: [
           {
             feedbackId: 'inputPreview',
@@ -4209,7 +4222,6 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             up: [],
           },
         ],
-
         feedbacks: [
           {
             feedbackId: 'inputPreview',
@@ -4225,9 +4237,16 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           { feedbackId: 'buttonText', options: { text: `PRV 4${instance.config.shiftDelimiter}PRV 8` } },
         ],
       },
+
       {
         category: 'Button Shift',
-        name: 'PGM 1 / 5',
+        name: `Program 1 ${instance.config.shiftDelimiter} 5 to 4 ${instance.config.shiftDelimiter} 8`,
+        type: 'text',
+        text: '',
+      },
+      {
+        category: 'Button Shift',
+        name: `PGM 1 / 5`,
         type: 'button',
         style: { text: '', size: '24', color: combineRgb(255, 255, 255), bgcolor: combineRgb(0, 0, 0) },
         steps: [
@@ -4241,7 +4260,6 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             up: [],
           },
         ],
-
         feedbacks: [
           {
             feedbackId: 'inputLive',
@@ -4273,7 +4291,6 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             up: [],
           },
         ],
-
         feedbacks: [
           {
             feedbackId: 'inputLive',
@@ -4305,7 +4322,6 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             up: [],
           },
         ],
-
         feedbacks: [
           {
             feedbackId: 'inputLive',
@@ -4337,7 +4353,6 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             up: [],
           },
         ],
-
         feedbacks: [
           {
             feedbackId: 'inputLive',
