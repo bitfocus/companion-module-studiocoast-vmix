@@ -39,7 +39,6 @@ export type PresetCategory =
   | 'Transitions'
   | 'Video Playback'
   | 'vMix Functions'
-  | ''
 
 type PresetFeedbackCallbacks = FeedbackCallbacks & { style?: any }
 
@@ -1128,7 +1127,16 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               up: [],
             },
           ],
-          feedbacks: [],
+          feedbacks: [
+            {
+              feedbackId: 'busSendToMaster',
+              options: { value: bus },
+              style: {
+                color: combineRgb(0, 0, 0),
+                bgcolor: combineRgb(0, 255, 0),
+              },
+            },
+          ],
         }
       )
     })
@@ -1227,7 +1235,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           feedbacks: [
             {
               feedbackId: 'videoCallAudioSource',
-              options: { input: '', source: bus },
+              options: { input: '', source: `Bus${bus}` as any },
               style: {
                 color: combineRgb(0, 0, 0),
                 bgcolor: combineRgb(255, 0, 0),
@@ -3905,6 +3913,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           {
             feedbackId: 'status',
             options: { status: 'multiCorder', value: '' },
+            style: {
+              color: combineRgb(0, 0, 0),
+              bgcolor: combineRgb(255, 0, 0),
+            },
           },
         ],
       },
@@ -3928,6 +3940,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           {
             feedbackId: 'status',
             options: { status: 'recording', value: '' },
+            style: {
+              color: combineRgb(0, 0, 0),
+              bgcolor: combineRgb(255, 0, 0),
+            },
           },
         ],
       },
@@ -3951,15 +3967,19 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           {
             feedbackId: 'status',
             options: { status: 'streaming', value: '' },
+            style: {
+              color: combineRgb(0, 0, 0),
+              bgcolor: combineRgb(255, 0, 0),
+            },
           },
         ],
       },
       {
         category: 'vMix Functions',
-        name: 'Toggle Ext',
+        name: 'Toggle External',
         type: 'button',
         style: {
-          text: 'Toggle Ext',
+          text: 'Toggle External',
           size: '18',
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
@@ -3974,6 +3994,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           {
             feedbackId: 'status',
             options: { status: 'external', value: '' },
+            style: {
+              color: combineRgb(0, 0, 0),
+              bgcolor: combineRgb(255, 0, 0),
+            },
           },
         ],
       },
@@ -3997,6 +4021,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           {
             feedbackId: 'status',
             options: { status: 'fullscreen', value: '' },
+            style: {
+              color: combineRgb(0, 0, 0),
+              bgcolor: combineRgb(255, 0, 0),
+            },
           },
         ],
       },
@@ -4020,6 +4048,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           {
             feedbackId: 'status',
             options: { status: 'fadeToBlack', value: '' },
+            style: {
+              color: combineRgb(0, 0, 0),
+              bgcolor: combineRgb(255, 0, 0),
+            },
           },
         ],
       },
@@ -4054,7 +4086,16 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             up: [{ actionId: 'buttonShift', options: <any>[] }],
           },
         ],
-        feedbacks: [{ feedbackId: 'buttonShift', options: { fg: combineRgb(0, 0, 0), bg: combineRgb(255, 255, 0) } }],
+        feedbacks: [
+          {
+            feedbackId: 'buttonShift',
+            options: {},
+            style: {
+              color: combineRgb(0, 0, 0),
+              bgcolor: combineRgb(255, 0, 0),
+            },
+          },
+        ],
       },
       {
         category: 'Button Shift',

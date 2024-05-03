@@ -31,6 +31,16 @@ describe('Presets', () => {
       preset.feedbacks.forEach((presetFeedback: any) => {
         const feedback: any = feedbacks[presetFeedback.feedbackId];
 
+        if (feedback.type === 'boolean') {
+          it(`${preset.name} - ${presetFeedback.feedbackId} - Should have feedback style`, () => {
+            expect(presetFeedback.style).toBeDefined()
+          })
+        } else {
+          it(`${preset.name} - ${presetFeedback.feedbackId} - Should not have feedback style`, () => {
+            expect(presetFeedback.style).toBeUndefined()
+          })
+        }
+
         feedback.options
           .filter((option: any) => option.type === 'number' || option.type === 'colorpicker')
           .forEach((option: any) => {
