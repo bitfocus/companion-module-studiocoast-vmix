@@ -31,6 +31,26 @@ For some feedback, such as Tally and Layer Routing it's possible to enable 'blin
 This module now supports Companions HTTP API, providing endpoints that can be used by 3rd party applications, and as a Data Source in vMix itself. Information on the API endpoints is available in [docs/HTTP_API.md](./docs/HTTP_API.md)
 
 # Recent Patches
+**V3.6.0**
+- Significantly more Boolean type feedbacks where applicable (allow individual styling, and use in Triggers)
+- Support for referencing mix by variable in actions/feedbacks
+- Support for more variable parsing in actions/feedbacks, and indicators added for where they're supported
+- Added Actions
+  - `Lists - Auto Play First`
+  - `Lists - Auto Play Next`
+  - `Lists - Shuffle List`
+  - `Zoom - Mute Self`
+  - `Zoom - Select Participant by Name`
+- Added Feedbacks
+  - `Audio - Bus Send to Master`
+- Added Variables
+  - `bus_X_sendtomaster`
+  - `input_X_selected` support for Photos and PowerPoint input types
+- Revamped Presets!
+  - Added boolean feedbacks to more presets, allowing for more custom styling
+  - Added more preset categories, such as `Layer Pan/Zoom` showing examples of controlling a layers position, great for doing merg zoom effects.
+- Added further automated testing 
+
 **V3.5.5**
 - Fix for increasing/decreasing title text and video playhead
 
@@ -39,35 +59,6 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 
 **V3.5.3**
 - Fix upgrading config `Cannot read properties of null (reading 'tbar')`
-
-**V3.5.2**
-- Added definitions for more mix viarables
-- Added actions for `Audio - Show / Hide Audio Mixer`, `Replay - Play Last Event to Output`, `Replay - Play all Events to Output`, `Replay - Stop Events`, and `Replay - Show / Hide Replay`
-- Fix for duration variables
-
-**V3.5.0**
-- Added actions:
-  - Undo closing Input
-  - Input Effects, Input Loop toggle, Input Colour Correction, Input Zoom/Crop/Pan, Input Layer Zoom/Crop/Pan, Input Frame Delay
-  - Replay Set Speed (with t-bar support)
-  - Setting Volume Channel mixer
-  - Audio - Solo All Off
-  - PTZ - Movement, Focus, Zoom, and Create/Update Virtual Inputs
-- Added feedbacks:
-  - Media - Input Loop
-- Added variables:
-  - `bus_any_solo`, `input_any_solo`, and `solo` suffix for inputs and dynamic inputs (eg, `$(vmix:input_test_solo)`)
-  - `panx`, `pany`, `zoomx`, `zoomy`, `cropx1`, `cropx2`, `cropy1`, and `cropy2`, suffixes for input position variables (eg, `$(vmix:input_test_position_panx)`)
-  - `hue`, `saturation`, `liftr`, `liftg`, `liftb`, `lifty`, `gammar`, `gammag`, `gammab`, `gammay`, `gainr`, `gaing`, `gainb`, and `gainy`, suffixes for input colour correction variables (eg, `$(vmix:input_test_cc_hue)`)
-  - `panx`, `pany`, `x`, `y`, `zoomx`, `zoomy`, `width`, `height`, `cropx1`, `cropx2`, `cropy1`, and `cropy2`, suffixes for input layer variables (eg, `$(vmix:input_test_layer_1_panx)`)
-  - `recording_filename1`, `recording_filepath1`, `recording_filename2`, `recording_filepath2`
-  - `replay_recording`, `replay_live`, `replay_forward`, `replay_channel_mode`, `replay_events`, `replay_eventsa`, `replay_eventsb`, `replay_cameraa`, `replay_camerab`, `replay_speed`, `replay_speeda`, `replay_speedb`, `replay_timecode`, `replay_timecodea`, `replay_timecodeb`
-- Fixes:
-  - Added an `Encode Value` option for `Title - Adjust title text` action, for when the text contains special characters that would otherwise break the TCP command
-  - Added support for instance variables in the t-bar position action
-  - Fixed a bug where changing config for IP or Port did not correctly kill connection attempts to the previous location
-- Misc:
-  - Added sponsor links on [Github](https://github.com/sponsors/thedist) and [Ko-Fi](https://ko-fi.com/thedist) for those who have asked to tip me for this continued development work.
 
 
 

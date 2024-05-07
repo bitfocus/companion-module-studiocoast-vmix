@@ -111,8 +111,11 @@ export interface VMixActions {
   nextPicture: VMixAction<NextPictureCallback>
   previousPicture: VMixAction<PreviousPictureCallback>
   selectIndex: VMixAction<SelectIndexCallback>
+  autoPlayFirst: VMixAction<AutoPlayFirstCallback>
+  autoPlayNext: VMixAction<AutoPlayNextCallback>
+  listShuffle: VMixAction<ListShuffleCallback>
 
-  // Video
+  // Media
   videoActions: VMixAction<VideoActionsCallback>
   videoPlayhead: VMixAction<VideoPlayheadCallback>
   videoMark: VMixAction<VideoMarkCallback>
@@ -167,6 +170,10 @@ export interface VMixActions {
   scriptStop: VMixAction<ScriptStopCallback>
   scriptStopAll: VMixAction<ScriptStopAllCallback>
   command: VMixAction<CommandCallback>
+
+  // Zoom
+  zoomMuteSelf: VMixAction<ZoomMuteSelfCallback>
+  zoomSelectParticipantByName: VMixAction<ZoomSelectParticipantByNameCallback>
 
   // Util
   mixSelect: VMixAction<MixSelectCallback>
@@ -834,6 +841,29 @@ interface SelectIndexCallback {
   }>
 }
 
+interface AutoPlayFirstCallback {
+  actionId: 'autoPlayFirst'
+  options: Readonly<{
+    input: string
+    functionID: 'AutoPlayFirst' | 'AutoPlayFirstOn' | 'AutoPlayFirstOff'
+  }>
+}
+
+interface AutoPlayNextCallback {
+  actionId: 'autoPlayNext'
+  options: Readonly<{
+    input: string
+    functionID: 'AutoPlayNext' | 'AutoPlayNextOn' | 'AutoPlayNextOff'
+  }>
+}
+
+interface ListShuffleCallback {
+  actionId: 'listShuffle'
+  options: Readonly<{
+    input: string
+  }>
+}
+
 // Media
 interface VideoActionsCallback {
   actionId: 'videoActions'
@@ -1241,6 +1271,23 @@ interface CommandCallback {
   }>
 }
 
+// Zoom
+interface ZoomMuteSelfCallback {
+  actionId: 'zoomMuteSelf'
+  options: Readonly<{
+    input: string
+    type: 'Mute' | 'Unmute'
+  }>
+}
+
+interface ZoomSelectParticipantByNameCallback {
+  actionId: 'zoomSelectParticipantByName'
+  options: Readonly<{
+    input: string
+    value: string
+  }>
+}
+
 // Util
 interface MixSelectCallback {
   actionId: 'mixSelect'
@@ -1386,6 +1433,9 @@ export type ActionCallbacks =
   | NextPictureCallback
   | PreviousPictureCallback
   | SelectIndexCallback
+  | AutoPlayFirstCallback
+  | AutoPlayNextCallback
+  | ListShuffleCallback
 
   // Media
   | VideoActionsCallback
@@ -1442,6 +1492,10 @@ export type ActionCallbacks =
   | ScriptStopCallback
   | ScriptStopAllCallback
   | CommandCallback
+
+  // Zoom
+  | ZoomMuteSelfCallback
+  | ZoomSelectParticipantByNameCallback
 
   // Util
   | MixSelectCallback
@@ -2861,7 +2915,7 @@ export function getActions(instance: VMixInstance): VMixActions {
             newValue = currentValue - value
           }
 
-          cmd += valueMinMax(newValue, 0, 2)
+          cmd += valueMinMax(newValue, 0, 4)
         } else {
           return
         }
@@ -3747,6 +3801,53 @@ export function getActions(instance: VMixInstance): VMixActions {
           useVariables: true,
         },
       ],
+      callback: sendBasicCommand,
+    },
+
+    autoPlayFirst: {
+      name: 'Lists - Auto Play First',
+      description: 'Toggle/On/Off automatically playing first item in a List with Transition',
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Options',
+          id: 'functionID',
+          default: 'AutoPlayFirst',
+          choices: [
+            { id: 'AutoPlayFirst', label: 'Toggle' },
+            { id: 'AutoPlayFirstOn', label: 'On' },
+            { id: 'AutoPlayFirstOff', label: 'Off' },
+          ],
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    autoPlayNext: {
+      name: 'Lists - Auto Play Next',
+      description: 'Toggle/On/Off automatically playing next item in a List',
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Options',
+          id: 'functionID',
+          default: 'AutoPlayNext',
+          choices: [
+            { id: 'AutoPlayNext', label: 'Toggle' },
+            { id: 'AutoPlayNextOn', label: 'On' },
+            { id: 'AutoPlayNextOff', label: 'Off' },
+          ],
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    listShuffle: {
+      name: 'Lists - Shuffle List',
+      description: '',
+      options: [options.input],
       callback: sendBasicCommand,
     },
 
@@ -4657,6 +4758,42 @@ export function getActions(instance: VMixInstance): VMixActions {
         if (instance.tcp)
           instance.tcp.sendCommand(`FUNCTION ${command} ${action.options.encode ? encodeURIComponent(params) : params}`)
       },
+    },
+
+    // Zoom
+    zoomMuteSelf: {
+      name: 'Zoom - Mute Self',
+      description: '',
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Mute / Unmute',
+          id: 'functionID',
+          default: 'zoomMuteSelf',
+          choices: [
+            { id: 'zoomMuteSelf', label: 'Mute' },
+            { id: 'zoomUnMuteSelf', label: 'Unmute' },
+          ],
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    zoomSelectParticipantByName: {
+      name: 'Zoom - Select Participant by Name',
+      description: '',
+      options: [
+        options.input,
+        {
+          type: 'textinput',
+          label: 'Name',
+          id: 'value',
+          default: '',
+          useVariables: true,
+        },
+      ],
+      callback: sendBasicCommand,
     },
 
     // Util

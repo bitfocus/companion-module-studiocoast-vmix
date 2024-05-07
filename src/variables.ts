@@ -45,8 +45,9 @@ export class Variables {
     if (this.instance.apiProcessing.hold) {
       this.instance.apiProcessing.variables = new Date().getTime()
       const duration = this.instance.apiProcessing.variables - this.instance.apiProcessing.request
+      const freshStart = new Date().getTime() - this.instance.startTime.getTime() < 5000
 
-      if (duration > this.instance.config.apiPollInterval) {
+      if (duration > this.instance.config.apiPollInterval && !freshStart) {
         if (duration > this.instance.config.apiPollInterval * 3) {
           this.instance.log(
             'warn',
@@ -1624,7 +1625,10 @@ export class Variables {
           })
         }
 
-        if (input.type === 'VirtualSet' && input.selectedIndex !== undefined) {
+        if (
+          (input.type === 'VirtualSet' || input.type === 'Photos' || input.type === 'PowerPoint') &&
+          input.selectedIndex !== undefined
+        ) {
           newVariables[`input_${type}_selected`] = input.selectedIndex
         }
 

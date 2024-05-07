@@ -1669,10 +1669,10 @@ commander@^2.20.0:
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
   integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
 
-companion-module-utils@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/companion-module-utils/-/companion-module-utils-0.2.0.tgz#8ee84391a1470b4ff0e75b3fa919c05fd214d086"
-  integrity sha512-MD+7K2HZE1ykDMn+KS5THt4zTmR3QRSb+pxyhJg51LcB0Vsf37PYiKlsDHKaN+8Vlzhgz13s2oS8sSfk8R7oFw==
+companion-module-utils@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/companion-module-utils/-/companion-module-utils-0.4.0.tgz#947c54df33084a958ddf5e38b5ea75836caeb111"
+  integrity sha512-zeQjQQkicXG6uwHJZAq26WFIRj8s/bofyacU0f9BmaXpDolEbTuzNG2wIlYzZdhtrZ4bf0FD+e2V5uuypvzSmw==
   dependencies:
     "@types/pngjs" "^6.0.1"
     pngjs "^7.0.0"
