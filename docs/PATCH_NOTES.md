@@ -17,7 +17,7 @@
   - `input_X_selected` support for Photos and PowerPoint input types
 - Revamped Presets!
   - Added boolean feedbacks to more presets, allowing for more custom styling
-  - Added more preset categories, such as `Layer Pan/Zoom` showing examples of controlling a layers position, great for doing merg zoom effects.
+  - Added more preset categories, such as `Layer Pan/Zoom` showing examples of controlling a layers position, great for doing merge zoom effects.
 - Added further automated testing 
 
 **V3.5.5**
