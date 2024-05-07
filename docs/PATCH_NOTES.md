@@ -1,5 +1,25 @@
 # Patch Notes
 
+**V3.6.0**
+- Significantly more Boolean type feedbacks where applicable (allow individual styling, and use in Triggers)
+- Support for referencing mix by variable in actions/feedbacks
+- Support for more variable parsing in actions/feedbacks, and indicators added for where they're supported
+- Added Actions
+  - `Lists - Auto Play First`
+  - `Lists - Auto Play Next`
+  - `Lists - Shuffle List`
+  - `Zoom - Mute Self`
+  - `Zoom - Select Participant by Name`
+- Added Feedbacks
+  - `Audio - Bus Send to Master`
+- Added Variables
+  - `bus_X_sendtomaster`
+  - `input_X_selected` support for Photos and PowerPoint input types
+- Revamped Presets!
+  - Added boolean feedbacks to more presets, allowing for more custom styling
+  - Added more preset categories, such as `Layer Pan/Zoom` showing examples of controlling a layers position, great for doing merge zoom effects.
+- Added further automated testing 
+
 **V3.5.5**
 - Fix for increasing/decreasing title text and video playhead
 

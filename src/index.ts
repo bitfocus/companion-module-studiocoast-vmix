@@ -96,6 +96,7 @@ class VMixInstance extends InstanceBase<Config> {
     },
     mix: 0,
   }
+  public startTime: Date = new Date()
   public tcp: TCP | null = null
   public timers: Timer[] = []
   public timerInterval: NodeJS.Timer | null = null

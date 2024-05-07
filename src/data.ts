@@ -10,6 +10,7 @@ export interface AudioBus {
   meterF2: number
   headphonesVolume?: number
   solo: boolean
+  sendToMaster: boolean
 }
 
 export interface AudioLevel {
@@ -711,7 +712,10 @@ export class VMixData {
         const busData: AudioBus[] = []
 
         Object.keys(audio).forEach((key) => {
-          const bus = { ...audio[key][0].$, bus: key, solo: false }
+          const bus = { ...audio[key][0].$, bus: key }
+          if (bus.solo === undefined) bus.solo = false
+          if (bus.sendToMaster === undefined) bus.sendToMaster = false
+
           bus.volume = parseFloat(bus.volume)
           bus.meterF1 = parseFloat(bus.meterF1)
           bus.meterF2 = parseFloat(bus.meterF2)
@@ -1062,6 +1066,7 @@ export class VMixData {
     // Check Audio status
     if (!isEqual(newData.audio, this.audio)) {
       changes.add('busMute')
+      changes.add('busSendToMaster')
       changes.add('busVolumeLevel')
       changes.add('liveBusVolume')
     }
