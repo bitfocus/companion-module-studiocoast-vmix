@@ -1,5 +1,8 @@
 # Patch Notes
 
+**V3.6.1**
+- Fixed a bug with Start Streaming and Stop Streaming actions not targeting specific vMix streams
+
 **V3.6.0**
 - Significantly more Boolean type feedbacks where applicable (allow individual styling, and use in Triggers)
 - Support for referencing mix by variable in actions/feedbacks

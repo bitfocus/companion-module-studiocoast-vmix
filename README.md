@@ -31,6 +31,9 @@ For some feedback, such as Tally and Layer Routing it's possible to enable 'blin
 This module now supports Companions HTTP API, providing endpoints that can be used by 3rd party applications, and as a Data Source in vMix itself. Information on the API endpoints is available in [docs/HTTP_API.md](./docs/HTTP_API.md)
 
 # Recent Patches
+**V3.6.1**
+- Fixed a bug with Start Streaming and Stop Streaming actions not targeting specific vMix streams
+
 **V3.6.0**
 - Significantly more Boolean type feedbacks where applicable (allow individual styling, and use in Triggers)
 - Support for referencing mix by variable in actions/feedbacks
