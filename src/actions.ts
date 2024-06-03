@@ -2280,7 +2280,7 @@ export function getActions(instance: VMixInstance): VMixActions {
       callback: (action) => {
         let command = `FUNCTION ${action.options.functionID}`
 
-        if (action.options.functionID === 'StartStopStreaming' && action.options.value != '') {
+        if (action.options.functionID.includes('Streaming') && action.options.value != '') {
           command += ` value=${action.options.value}`
         }
 
