@@ -1212,7 +1212,7 @@ interface PTZMoveCallback {
     input: string
     functionID:
       | 'PTZHome'
-      | 'PTZStop'
+      | 'PTZMoveStop'
       | 'PTZMoveUp'
       | 'PTZMoveUpLeft'
       | 'PTZMoveUpRight'
@@ -4599,7 +4599,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           default: 'PTZHome',
           choices: [
             { id: 'PTZHome', label: 'Home' },
-            { id: 'PTZStop', label: 'Stop' },
+            { id: 'PTZMoveStop', label: 'Stop' },
             { id: 'PTZMoveUp', label: 'Up' },
             { id: 'PTZMoveUpLeft', label: 'Up Left' },
             { id: 'PTZMoveUpRight', label: 'Up RIght' },
@@ -4627,7 +4627,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           isVisible: (options) => {
             return (
               options.functionID !== 'PTZHome' &&
-              options.functionID !== 'PTZStop' &&
+              options.functionID !== 'PTZMoveStop' &&
               options.functionID !== 'PTZMoveToVirtualInputPosition'
             )
           },
