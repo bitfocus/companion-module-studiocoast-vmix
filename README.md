@@ -34,6 +34,9 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 
 
 # Recent Patches
+**V3.6.2**
+- Fixed a bug with PTZ Stop action
+
 **V3.6.1**
 - Fixed a bug with Start Streaming and Stop Streaming actions not targeting specific vMix streams
 

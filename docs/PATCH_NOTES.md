@@ -1,5 +1,8 @@
 # Patch Notes
 
+**V3.6.2**
+- Fixed a bug with PTZ Stop action
+
 **V3.6.1**
 - Fixed a bug with Start Streaming and Stop Streaming actions not targeting specific vMix streams
 
