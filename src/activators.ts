@@ -326,9 +326,9 @@ export class Activators {
 
     if (params[0] === 'Input' || params[0] === 'InputPreview') {
       checkMix = 1
-    } else if (params[0] === 'InputMix') {
+    } else if (params[0].startsWith('InputMix')) {
       checkMix = parseInt(params[0].substring(8), 10)
-    } else if (params[0] === 'InputPreviewMix') {
+    } else if (params[0].startsWith('InputPreviewMix')) {
       checkMix = parseInt(params[0].substring(15), 10)
     }
 

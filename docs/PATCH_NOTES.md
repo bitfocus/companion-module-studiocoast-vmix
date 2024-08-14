@@ -1,5 +1,8 @@
 # Patch Notes
 
+**V3.6.3**
+- Fixed a bug with preview/program activator data for mix 2+
+
 **V3.6.2**
 - Fixed a bug with PTZ Stop action
 
