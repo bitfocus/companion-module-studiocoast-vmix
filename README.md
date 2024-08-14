@@ -34,6 +34,9 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 
 
 # Recent Patches
+**V3.6.3**
+- Fixed a bug with preview/program activator data for mix 2+
+
 **V3.6.2**
 - Fixed a bug with PTZ Stop action
 
