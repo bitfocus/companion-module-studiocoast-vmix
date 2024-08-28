@@ -4469,7 +4469,7 @@ export function getActions(instance: VMixInstance): VMixActions {
             { id: 'BrowserKeyboardDisabled', label: 'Keyboard Disabled' },
             { id: 'BrowserKeyboardEnabled', label: 'Keyboard Enabled' },
             { id: 'BrowserMouseDisabled', label: 'Mouse Disabled' },
-            { id: 'BrowserMouseEnabled', label: 'Mousen Enabled' },
+            { id: 'BrowserMouseEnabled', label: 'Mouse Enabled' },
           ],
         },
       ],
