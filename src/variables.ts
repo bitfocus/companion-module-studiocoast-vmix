@@ -654,7 +654,7 @@ export class Variables {
           })
         }
 
-        if (input.type === 'VideoList' || input.type === 'VirtualSet') {
+        if (input.type === 'VideoList' || input.type === 'VirtualSet' || input.type === 'Photos') {
           inputSet.add({
             name: `Input ${title} Selected Index`,
             variableId: `input_${type}_selected`,
@@ -1623,6 +1623,10 @@ export class Variables {
               newVariables[`input_${type}_selected_name`] = listItem.filename
             }
           })
+        }
+
+        if(input.type === 'Photos'){
+          newVariables[`input_${type}_selected_name`] = input.title.split(input.shortTitle + " - ")[1]
         }
 
         if (
