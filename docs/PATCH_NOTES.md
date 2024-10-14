@@ -1,15 +1,18 @@
 # Patch Notes
 
-**V3.6.3**
+**v3.6.4**
+- Fixed the `Select Index` Preset having the wrong action
+
+**v3.6.3**
 - Fixed a bug with preview/program activator data for mix 2+
 
-**V3.6.2**
+**v3.6.2**
 - Fixed a bug with PTZ Stop action
 
-**V3.6.1**
+**v3.6.1**
 - Fixed a bug with Start Streaming and Stop Streaming actions not targeting specific vMix streams
 
-**V3.6.0**
+**v3.6.0**
 - Significantly more Boolean type feedbacks where applicable (allow individual styling, and use in Triggers)
 - Support for referencing mix by variable in actions/feedbacks
 - Support for more variable parsing in actions/feedbacks, and indicators added for where they're supported
@@ -29,21 +32,21 @@
   - Added more preset categories, such as `Layer Pan/Zoom` showing examples of controlling a layers position, great for doing merge zoom effects.
 - Added further automated testing 
 
-**V3.5.5**
+**v3.5.5**
 - Fix for increasing/decreasing title text and video playhead
 
-**V3.5.4**
+**v3.5.4**
 - Fix for tally variables on mix 2+
 
-**V3.5.3**
+**v3.5.3**
 - Fix upgrading config `Cannot read properties of null (reading 'tbar')`
 
-**V3.5.2**
+**v3.5.2**
 - Added definitions for more mix viarables
 - Added actions for `Audio - Show / Hide Audio Mixer`, `Replay - Play Last Event to Output`, `Replay - Play all Events to Output`, `Replay - Stop Events`, and `Replay - Show / Hide Replay`
 - Fix for duration variables
 
-**V3.5.0**
+**v3.5.0**
 - Added actions:
   - Undo closing Input
   - Input Effects, Input Loop toggle, Input Colour Correction, Input Zoom/Crop/Pan, Input Layer Zoom/Crop/Pan, Input Frame Delay
@@ -67,43 +70,43 @@
 - Misc:
   - Added sponsor links on [Github](https://github.com/sponsors/thedist) and [Ko-Fi](https://ko-fi.com/thedist) for those who have asked to tip me for this continued development work.
 
-**V3.4.3**
+**v3.4.3**
 - Fixed upgrade scripts for Companion v3
 - Added missing Loop and Playing feedback/variables
 
-**V3.4.2**
+**v3.4.2**
 - Added logging and a hold on polling the API if the time to process the data completely is greater than the polling interval
 
-**V3.4.1**
+**v3.4.1**
 - Performance improvements for vMix productions with a large number of inputs
 - Fixed an issue with the initial request for Activator data
 
-**V3.4.0**
+**v3.4.0**
 - Added Process ID logged to Debug at start to aid in debugging/performance tracking
 - Fixed missing instance variables for Dynamic Inputs
 - Fixed TCP pings on connections not yet established
 - Fixed Browser Navigate action parsing variables
 - Added Input option for Transition Mix actions, allowing transitioning to a specific input, or Preview if left blank
 
-**V3.3.0**
+**v3.3.0**
 - Added Feedback for Dynamic Input and Dynamic Values
 - Added Start / Stop options for the Output Functions action
 - Fixed an issue with changing the vMix IP or Port not working correctly until restarting instance
 - Added extra TCP debug logging, and PING messages for Activator and Function sockets
 
-**V3.2.0**
+**v3.2.0**
 - Added Bus and Input volume meter feedbacks
 - Replaced local indicators with indicators from companion-module-utils
 
-**V3.1.1**
+**v3.1.1**
 - Fixed an issue when specifying a non-existent input for the Overlay State feedback
 
-**V3.1.0**
+**v3.1.0**
 - Added a variables HTTP endpoint to retrieve all of the current instance variables
 - Fixed incorrect parsing of variables for basic commands
 - Fixed Meter amplitude to dB math in instance variables
 
-**V3.0.2**
+**v3.0.2**
 - Added more Action and Feedback descriptions
 - Fixed Replay Fastforward/Backward speed and tbar action
 - Added Preview and Program options for layer routing
@@ -113,7 +116,7 @@
 - Added Reset Input action
 - Selected Index feedback and variables now support Virtual Sets
 
-**V3.0.1**
+**v3.0.1**
 - Fixed issue with actions not parsing correctly
 - Added parsing of instance variables for countdown time/duration
 - Added instance variables for mix layers
@@ -122,43 +125,43 @@
 - Fixed an issue with volume linear rounding
 - Minor performance tweaks and updates
 
-**V3.0.0**
+**v3.0.0**
 - Companion v3 compatibility
 - Removed deprecated feedbacks that updated button text
 - Removed instance variables for each time format, instead use Expression Functions in Companion v3
 
 
-**V2.1.3**
+**v2.1.3**
 - Added HTTP POST endpoint to send actions to a vMix instance
 - Minor fixes for v26 support
 
 
-**V2.1.2**
+**v2.1.2**
 - Added v26 support for 15 Mixes
 - Fixed selected mix on setMultiviewOverlay
 - Fixed some missing variables for Mixes
 
 
-**V2.1.1**
+**v2.1.1**
 - Fixed some HTTP request types
 - Fixed some variable names
 
 
-**V2.1.0**
+**v2.1.0**
 - Added support for Companions instance HTTP requests
 - Added instance timers to support greater complexity that vMix native countdowns
 - Adjusted Audio - Input Mute feedback to use buttons foreground color when not muted
 
 
-**V2.0.15**
+**v2.0.15**
 - Fix time parsing for instance variables
 
 
-**V2.0.14**
+**v2.0.14**
 - Fix Connection Status Variable not updating when closing vmix
 
 
-**V2.0.10**
+**v2.0.10**
 - Rewrite in TypeScript
 - Significant overhaul of instance variables
 - standardized actions/feedback/variables structure
@@ -172,27 +175,27 @@
 - Numerous minor fixees
 
 
-**V1.2.24**
+**v1.2.24**
 - Replacement receive buffer extraction to help prevent buffer overflows
 
 
-**V1.2.23**
+**v1.2.23**
 - Hotfix for feedbacks that got broken in the last update
 - Hotfix for Input names not working in feedbacks
 
 
-**V1.2.22**
+**v1.2.22**
 - Added support for variables in all text fields inside Actions
 - Added support for variables in all text fields inside Feedbacks
 
 
-**V1.2.20**
+**v1.2.20**
 - Added Actions and Feedbacks for Routable "multiview overlays" / "Layers" (Check help guide for more info)
 - Updated Help.md file
 - Added Presets for new Actions
 
 
-**V1.2.19**
+**v1.2.19**
 - Rolled back changed to "Custom Command" so it's identical to in v2.1.2, with no encoding.
 - Added a note in the config page about TCP port vs HTTP port in vMix.
 - Added option to disable error logs flodding the Log when vmix is closed.
@@ -203,7 +206,7 @@
 - Renamed Multiview actions to match v24 and v23 namings.
 
 
-**V1.2.18**
+**v1.2.18**
 - Hotfix for "Custom Commands" not working
 
 
@@ -220,20 +223,20 @@
 - Bugfix: Fixed custom command not working with the new URI encoding.
 
 
-**V1.2.16**
+**v1.2.16**
 - Bug fix: T-bar reworked
 
 
-**V1.2.15**
+**v1.2.15**
 - Added SetMultiViewOverlayOnPreview and SetMultiViewOverlayOnProgram
 - Bug Fixed: Missing URI encoding on inputs and variables has now been added
 
 
-**V1.2.14**
+**v1.2.14**
 - Hotfix: Make sure data.status is defined
 
 
-**V1.2.13**
+**v1.2.13**
 - Added ON/OFF/Togle option to solo and bus solo action
 - Hotfix: LiveBusVolume feedback not updating corectly
 
@@ -328,7 +331,7 @@
 - Added feedback and instance variables for bus and input volume
 
 
-**V1.2.0**
+**v1.2.0**
 - Added support for using either input ID or Title and switching at any time
 - Added Tally update on first load
 - Added Tally polling through API
@@ -339,19 +342,19 @@
 - Restructured module code, allowing for easier maintaining of code and future upgrades
 
 
-**V1.1.6**
+**v1.1.6**
 - Added simple and generic presets for all commands
 
 
-**V1.1.5**
+**v1.1.5**
 - Minor change
 
 
-**V1.1.4**
+**v1.1.4**
 - Bug fix with feedback (got introduced in V1.1.3)
 
 
-**V1.1.3**
+**v1.1.3**
 - Added overlay functions
 - Added set output functions
 - Added the option to chose the port used to connect to vmix

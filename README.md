@@ -34,16 +34,19 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 
 
 # Recent Patches
-**V3.6.3**
+**v3.6.4**
+- Fixed the `Select Index` Preset having the wrong action
+
+**v3.6.3**
 - Fixed a bug with preview/program activator data for mix 2+
 
-**V3.6.2**
+**v3.6.2**
 - Fixed a bug with PTZ Stop action
 
-**V3.6.1**
+**v3.6.1**
 - Fixed a bug with Start Streaming and Stop Streaming actions not targeting specific vMix streams
 
-**V3.6.0**
+**v3.6.0**
 - Significantly more Boolean type feedbacks where applicable (allow individual styling, and use in Triggers)
 - Support for referencing mix by variable in actions/feedbacks
 - Support for more variable parsing in actions/feedbacks, and indicators added for where they're supported
@@ -62,15 +65,6 @@ This module now supports Companions HTTP API, providing endpoints that can be us
   - Added boolean feedbacks to more presets, allowing for more custom styling
   - Added more preset categories, such as `Layer Pan/Zoom` showing examples of controlling a layers position, great for doing merge zoom effects.
 - Added further automated testing 
-
-**V3.5.5**
-- Fix for increasing/decreasing title text and video playhead
-
-**V3.5.4**
-- Fix for tally variables on mix 2+
-
-**V3.5.3**
-- Fix upgrading config `Cannot read properties of null (reading 'tbar')`
 
 
 

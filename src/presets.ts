@@ -3706,17 +3706,17 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       },
       {
         category: 'Slides & Lists',
-        name: 'Select Index 1',
+        name: 'Select Index',
         type: 'button',
         style: {
-          text: 'Select Index 1',
+          text: 'Select Index',
           size: '18',
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
-            down: [{ actionId: 'previousPicture', options: { input: '1' } }],
+            down: [{ actionId: 'selectIndex', options: { input: '1', value: '1' } }],
             up: [],
           },
         ],
