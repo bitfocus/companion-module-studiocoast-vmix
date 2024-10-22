@@ -482,8 +482,8 @@ export class VMixData {
             key: input.$.key,
             number: parseInt(input.$.number, 10),
             type: input.$.type,
-            title: input.$.title,
-            shortTitle: input.$.shortTitle || null,
+            title: input.$.title + '',
+            shortTitle: input.$.shortTitle + '' || null,
             state: input.$.state,
             position: input.$.position,
             duration: input.$.duration,
@@ -594,16 +594,16 @@ export class VMixData {
           if (input.$.text) {
             inputData.text = input.$.text.map((text: any) => ({
               index: parseInt(text.$.index, 10),
-              name: text.$.name,
-              value: text._ || '',
+              name: text.$.name + '',
+              value: text._ + '' || '',
             }))
           }
 
           if (input.text && input.text.length > 0) {
             inputData.text = input.text.map((text: any) => ({
               index: parseInt(text.$.index, 10),
-              name: text.$.name,
-              value: text._ || '',
+              name: text.$.name + '',
+              value: text._ + '' || '',
             }))
           }
 

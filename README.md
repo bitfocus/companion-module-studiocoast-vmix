@@ -34,6 +34,9 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 
 
 # Recent Patches
+**v3.6.5**
+- Fixed an issue with `true` or `false` used as input names or title values being parsed as boolean rather than strings
+
 **v3.6.4**
 - Fixed the `Select Index` Preset having the wrong action
 
