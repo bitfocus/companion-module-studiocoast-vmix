@@ -1,5 +1,8 @@
 # Patch Notes
 
+**v3.6.6**
+- Fixed an issue with `Layer - Position` failing on certain layer selection situations and added more logging for invalid input/layer selections
+
 **v3.6.5**
 - Fixed an issue with `true` or `false` used as input names or title values being parsed as boolean rather than strings
 
