@@ -595,7 +595,7 @@ export class VMixData {
             inputData.text = input.$.text.map((text: any) => ({
               index: parseInt(text.$.index, 10),
               name: text.$.name + '',
-              value: text._ + '' || '',
+              value: text._ === undefined ? '' : text._ + '',
             }))
           }
 
@@ -603,7 +603,7 @@ export class VMixData {
             inputData.text = input.text.map((text: any) => ({
               index: parseInt(text.$.index, 10),
               name: text.$.name + '',
-              value: text._ + '' || '',
+              value: text._ === undefined ? '' : text._ + '',
             }))
           }
 

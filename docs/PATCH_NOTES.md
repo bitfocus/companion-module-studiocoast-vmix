@@ -1,5 +1,8 @@
 # Patch Notes
 
+**v3.6.7**
+- Fixed an issue with undefined titles being returned as `'undefined'`, rather than an empty string as intended.
+
 **v3.6.6**
 - Fixed an issue with `Layer - Position` failing on certain layer selection situations and added more logging for invalid input/layer selections
 
