@@ -162,6 +162,16 @@ export interface Mix {
   programTally: string[]
 }
 
+export interface Output {
+  type: 'fullscreen' | 'output'
+  number: number
+  source: string
+  input: number
+  mix: number
+  ndi: boolean
+  srt: boolean
+}
+
 export interface Overlay {
   number: number
   preview: boolean
@@ -215,30 +225,13 @@ export interface Transition {
   duration: number
 }
 
-export interface VMixData {
-  version: string
-  majorVersion: number
-  edition: string
-  preset: string
-  inputs: Input[]
-  overlays: Overlay[]
-  transitions: Transition[]
-  mix: Mix[]
-  audio: AudioBus[]
-  status: Status
-  recording: Recording
-  replay: Replay
-  channelMixer: ChannelMixer
-  dynamicInput: DynamicInput[]
-  dynamicValue: DynamicValue[]
-}
-
 interface APIData {
   version: string
   majorVersion: number
   edition: string
   preset: string
   inputs: Input[]
+  outputs: Output[]
   overlays: Overlay[]
   transitions: Transition[]
   mix: [Mix, Mix, Mix, Mix, Mix, Mix, Mix, Mix, Mix, Mix, Mix, Mix, Mix, Mix, Mix, Mix]
@@ -268,6 +261,7 @@ export class VMixData {
   edition: string
   preset: string
   inputs: Input[]
+  outputs: Output[]
   overlays: Overlay[]
   transitions: Transition[]
   mix: Mix[]
@@ -288,6 +282,7 @@ export class VMixData {
     this.edition = ''
     this.preset = ''
     this.inputs = []
+    this.outputs = []
     this.overlays = []
     this.transitions = []
     this.mix = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map((mixNumber) => {
@@ -650,6 +645,20 @@ export class VMixData {
         return inputs
       }
 
+      const getOutputs = (): Output[] => {
+        const outputs = get(parsedData, 'outputs[0].output')
+
+        return outputs.map((output: any) => ({
+          type: output.$.type,
+          number: parseInt(output.$.number, 10),
+          source: output.$.source,
+          input: parseInt(output.$.inputNumber || 0, 10),
+          mix: parseInt(output.$.mix || 0, 10),
+          ndi: output.$.ndi || false,
+          srt: output.$.srt || false,
+        }))
+      }
+
       const getOverlays = (): Overlay[] => {
         const overlays = get(parsedData, 'overlays[0].overlay')
 
@@ -841,6 +850,7 @@ export class VMixData {
         edition: parsedData.edition[0] || '',
         preset: parsedData.preset ? parsedData.preset[0] : '',
         inputs: getInputs(),
+        outputs: getOutputs(),
         overlays: getOverlays(),
         transitions: getTransitions(),
         mix: [
@@ -999,11 +1009,18 @@ export class VMixData {
         this.instance.tcp?.updateActivatorData(`ACTS InputAudioAuto ${newInput.number}`)
       }
     })
+
     // Check mix 1 to 4
     if (!isEqual(newData.mix, this.mix) || inputCheck) {
       changes.add('inputPreview')
       changes.add('inputLive')
       changes.add('overlayStatus')
+    }
+
+    // Check Outputs
+    if (!isEqual(newData.outputs, this.outputs) || inputCheck) {
+      changes.add('outputStatus')
+      changes.add('outputNDISRT')
     }
 
     // Check overlays
@@ -1094,6 +1111,7 @@ export class VMixData {
     this.edition = newData.edition
     this.preset = newData.preset
     this.inputs = newData.inputs
+    this.outputs = newData.outputs
     this.overlays = newData.overlays
     this.transitions = newData.transitions
     this.mix = newData.mix

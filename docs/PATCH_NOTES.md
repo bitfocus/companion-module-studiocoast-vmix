@@ -1,5 +1,10 @@
 # Patch Notes
 
+**v3.7.0**
+- Update for vMix 28 beta features
+- Added Feedbacks: `vMix - Output Status` and `vMix - Output NDI/SRT Status`
+- Added Variables: `fullscreen_X_source` (X = 1 or 2), `output_X_source`, `output_X_ndi`, `output_X_srt` (X = 1 to 4)
+
 **v3.6.7**
 - Fixed an issue with undefined titles being returned as `'undefined'`, rather than an empty string as intended.
 

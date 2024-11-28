@@ -2793,7 +2793,7 @@ export function getActions(instance: VMixInstance): VMixActions {
         const input = await instance.data.getInput(selected)
         const selectedLayer = (await instance.parseOption(action.options.layer))[instance.buttonShift.state]
         const layer = parseInt(selectedLayer)
-        const inputLayer = input?.overlay?.find(overlay => overlay.index === layer - 1)
+        const inputLayer = input?.overlay?.find((overlay) => overlay.index === layer - 1)
 
         if (!input || isNaN(layer)) {
           instance.log('debug', `Input not found, or layer number invalid`)

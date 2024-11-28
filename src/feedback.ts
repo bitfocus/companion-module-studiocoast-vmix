@@ -23,6 +23,8 @@ export interface VMixFeedbacks {
   // General
   videoTimer: VMixFeedback<VideoTimerCallback>
   status: VMixFeedback<StatusCallback>
+  outputStatus: VMixFeedback<OutputStatusCallback>
+  outputNDISRT: VMixFeedback<OutputNDISRTCallback>
 
   // Audio
   busMute: VMixFeedback<BusMuteCallback>
@@ -137,6 +139,26 @@ interface StatusCallback {
       | 'fullscreen'
       | 'playList'
     value: '' | '0' | '1' | '2'
+  }>
+}
+
+interface OutputStatusCallback {
+  feebbackId: 'outoutStatus'
+  options: Readonly<{
+    output: 'Fullscreen 1' | 'FUllscreen 2' | 'Output 1' | 'Output 2' | 'Output 3' | 'Output 4' | 'Custom'
+    custom: string
+    type: 'Output' | 'Preview' | 'MultiView' | 'MultiView2' | 'Replay' | 'Mix' | 'Input'
+    mix: string
+    input: string
+  }>
+}
+
+interface OutputNDISRTCallback {
+  feebbackId: 'outputNDISRT'
+  options: Readonly<{
+    output: 'Output 1' | 'Output 2' | 'Output 3' | 'Output 4' | 'Custom'
+    custom: string
+    type: 'ndi' | 'srt'
   }>
 }
 
@@ -417,6 +439,8 @@ export type FeedbackCallbacks =
   // General
   | VideoTimerCallback
   | StatusCallback
+  | OutputStatusCallback
+  | OutputNDISRTCallback
 
   // Audio
   | BusMuteCallback
@@ -867,6 +891,164 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           }
         }
         return false
+      },
+    },
+
+    outputStatus: {
+      type: 'boolean',
+      name: 'vMix - Output Status',
+      description: 'Requires vMix 28+',
+      defaultStyle: {
+        color: combineRgb(0, 0, 0),
+        bgcolor: combineRgb(255, 0, 0),
+      },
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Output',
+          id: 'output',
+          default: 'Fullscreen 1',
+          choices: [
+            { id: 'Fullscreen 1', label: 'Fullscreen 1' },
+            { id: 'Fullscreen 2', label: 'Fullscreen 2' },
+            { id: 'Output 1', label: 'Output 1' },
+            { id: 'Output 2', label: 'Output 2' },
+            { id: 'Output 3', label: 'Output 3' },
+            { id: 'Output 4', label: 'Output 4' },
+            { id: 'Custom', label: 'Use Variable' },
+          ],
+        },
+        {
+          type: 'textinput',
+          label: 'Output by Variable',
+          id: 'custom',
+          default: '',
+          useVariables: true,
+          isVisible: (options) => options.output === 'Custom',
+        },
+        {
+          type: 'dropdown',
+          label: 'Type',
+          id: 'type',
+          default: 'Output',
+          choices: [
+            { id: 'Output', label: 'Output' },
+            { id: 'Preview', label: 'Preview' },
+            { id: 'MultiView', label: 'MultiView' },
+            { id: 'MultiView2', label: 'MultiView2' },
+            { id: 'Replay', label: 'Replay' },
+            { id: 'Mix', label: 'Mix' },
+            { id: 'Input', label: 'Input' },
+          ],
+        },
+        {
+          type: 'textinput',
+          label: 'Mix (1 to 16)',
+          id: 'mix',
+          default: '',
+          useVariables: true,
+          isVisible: (options) => options.type === 'Mix',
+        },
+        {
+          type: 'textinput',
+          label: 'Input',
+          id: 'input',
+          default: '',
+          useVariables: true,
+          isVisible: (options) => options.type === 'Input',
+        },
+      ],
+      callback: async (feedback, context) => {
+        const outputSelect: any =
+          feedback.options.output === 'Custom'
+            ? (await instance.parseOption(feedback.options.custom, context))[instance.buttonShift.state]
+            : feedback.options.output
+        if (!['Fullscreen 1', 'Fullscreen 2', 'Output 1', 'Output 2', 'Output 3', 'Output 4'].includes(outputSelect))
+          return false
+
+        const outputType = outputSelect.startsWith('Fullscreen') ? 'fullscreen' : 'output'
+        const outputNumber = parseInt(outputSelect[outputSelect.length - 1])
+
+        if (isNaN(outputNumber)) return false
+
+        const output = instance.data.outputs.find((x) => {
+          return x.type === outputType && x.number === outputNumber
+        })
+
+        if (!output) return false
+
+        if (feedback.options.type === 'Mix' && output.source === 'Mix') {
+          const mix = (await instance.parseOption(feedback.options.mix, context))[instance.buttonShift.state]
+          return output.mix + 1 === parseInt(mix, 10)
+        } else if (feedback.options.type === 'Input' && output.source === 'Input') {
+          const inputSelect = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+          const input = await instance.data.getInput(inputSelect)
+          return input ? input.number === output.input : false
+        } else {
+          return output.source === feedback.options.type
+        }
+      },
+    },
+
+    outputNDISRT: {
+      type: 'boolean',
+      name: 'vMix - Output NDI/SRT Status',
+      description: 'Requires vMix 28+',
+      defaultStyle: {
+        color: combineRgb(0, 0, 0),
+        bgcolor: combineRgb(255, 0, 0),
+      },
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Output',
+          id: 'output',
+          default: 'Output 1',
+          choices: [
+            { id: 'Output 1', label: 'Output 1' },
+            { id: 'Output 2', label: 'Output 2' },
+            { id: 'Output 3', label: 'Output 3' },
+            { id: 'Output 4', label: 'Output 4' },
+            { id: 'Custom', label: 'Use Variable' },
+          ],
+        },
+        {
+          type: 'textinput',
+          label: 'Output by Variable',
+          id: 'custom',
+          default: '',
+          useVariables: true,
+          isVisible: (options) => options.output === 'Custom',
+        },
+        {
+          type: 'dropdown',
+          label: 'Type',
+          id: 'type',
+          default: 'ndi',
+          choices: [
+            { id: 'ndi', label: 'NDI' },
+            { id: 'srt', label: 'SRT' },
+          ],
+        },
+      ],
+      callback: async (feedback, context) => {
+        const outputSelect: any =
+          feedback.options.output === 'Custom'
+            ? (await instance.parseOption(feedback.options.custom, context))[instance.buttonShift.state]
+            : feedback.options.output
+        if (!['Output 1', 'Output 2', 'Output 3', 'Output 4'].includes(outputSelect)) return false
+
+        const outputNumber = parseInt(outputSelect[outputSelect.length - 1])
+
+        if (isNaN(outputNumber)) return false
+
+        const output = instance.data.outputs.find((x) => {
+          return x.type === 'output' && x.number === outputNumber
+        })
+
+        if (!output) return false
+
+        return output[feedback.options.type as 'ndi' | 'srt']
       },
     },
 
