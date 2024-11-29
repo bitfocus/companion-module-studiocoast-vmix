@@ -37,10 +37,12 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 **v3.7.0**
 - Update for vMix 28 beta features
 - Added Feedbacks: `vMix - Output Status` and `vMix - Output NDI/SRT Status`
-- Added Variables: `fullscreen_X_source` (X = 1 or 2), `output_X_source`, `output_X_ndi`, `output_X_srt` (X = 1 to 4)
+- Added Variables: `fullscreen_X_source` (X = 1 or 2), `output_X_source`, `output_X_ndi`, `output_X_srt` (X = 1 to 4), `stream_4_active`, `stream_5_active`
+- Updated `Overlay - Functions` Action to include options to select Mix for the Overlay
+- Updated `Output - MultiCorder / Recording / Streaming` Action, and `vMix - Status` Feedback, to support up to 5 streams
 
 **v3.6.7**
-- Fixed an issue with undefined titles being returned as `'undefined'`, rather than an empty string as intended.
+- Fixed an issue with undefined titles being returned as `'undefined'`, rather than an empty string as intended
 
 **v3.6.6**
 - Fixed an issue with `Layer - Position` failing on certain layer selection situations and added more logging for invalid input/layer selections

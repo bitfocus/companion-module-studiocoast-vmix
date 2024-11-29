@@ -138,7 +138,7 @@ interface StatusCallback {
       | 'multiCorder'
       | 'fullscreen'
       | 'playList'
-    value: '' | '0' | '1' | '2'
+    value: '' | '0' | '1' | '2' | '3' | '4'
   }>
 }
 
@@ -867,9 +867,11 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           default: '',
           choices: [
             { id: '', label: 'All' },
-            { id: '0', label: '0' },
-            { id: '1', label: '1' },
-            { id: '2', label: '2' },
+            { id: '0', label: '1' },
+            { id: '1', label: '2' },
+            { id: '2', label: '3' },
+            { id: '3', label: '4' },
+            { id: '4', label: '5' },
           ],
           isVisible: (options) => {
             return options.status === 'streaming'

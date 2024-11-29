@@ -88,6 +88,8 @@ export class Variables {
       { name: 'Stream 1 Active', variableId: 'stream_1_active' },
       { name: 'Stream 2 Active', variableId: 'stream_2_active' },
       { name: 'Stream 3 Active', variableId: 'stream_3_active' },
+      { name: 'Stream 3 Active', variableId: 'stream_3_active' },
+      { name: 'Stream 3 Active', variableId: 'stream_3_active' },
       { name: 'Recording Active', variableId: 'recording_active' },
       { name: 'Recording Duration', variableId: 'recording_duration' },
       { name: 'Recording HH:MM:SS', variableId: 'recording_hms' },
@@ -878,6 +880,8 @@ export class Variables {
     newVariables['stream_1_active'] = this.instance.data.status.stream[0].toString()
     newVariables['stream_2_active'] = this.instance.data.status.stream[1].toString()
     newVariables['stream_3_active'] = this.instance.data.status.stream[2].toString()
+    newVariables['stream_4_active'] = this.instance.data.status.stream[3].toString()
+    newVariables['stream_5_active'] = this.instance.data.status.stream[4].toString()
     newVariables['recording_active'] = this.instance.data.status.recording.toString()
     newVariables['recording_duration'] = formatTime(this.instance.data.recording.duration, 's', 'auto')
     newVariables['recording_hms'] = formatTime(this.instance.data.recording.duration, 's', 'hh:mm:ss')

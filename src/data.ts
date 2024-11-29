@@ -207,7 +207,7 @@ export interface Status {
   recording: boolean
   external: boolean
   streaming: boolean
-  stream: [boolean, boolean, boolean]
+  stream: [boolean, boolean, boolean, boolean, boolean]
   playList: boolean
   multiCorder: boolean
   fullscreen: boolean
@@ -303,7 +303,7 @@ export class VMixData {
       recording: false,
       external: false,
       streaming: false,
-      stream: [false, false, false],
+      stream: [false, false, false, false, false],
       playList: false,
       multiCorder: false,
       fullscreen: false,
@@ -881,6 +881,8 @@ export class VMixData {
             parsedData.streaming[0].$?.channel1 ? parsedData.streaming[0].$.channel1 : false,
             parsedData.streaming[0].$?.channel2 ? parsedData.streaming[0].$.channel2 : false,
             parsedData.streaming[0].$?.channel3 ? parsedData.streaming[0].$.channel3 : false,
+            parsedData.streaming[0].$?.channel4 ? parsedData.streaming[0].$.channel4 : false,
+            parsedData.streaming[0].$?.channel5 ? parsedData.streaming[0].$.channel5 : false,
           ],
           playList: parsedData.playList[0],
           multiCorder: parsedData.multiCorder[0],
