@@ -622,6 +622,26 @@ const upgradeV3_6_2: CompanionStaticUpgradeScript<Config> = (_context, props): C
   return changes
 }
 
+const upgradeV3_7_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
+  let actions: any = props.actions
+
+  const changes: CompanionStaticUpgradeResult<Config> = {
+    updatedConfig: null,
+    updatedActions: [],
+    updatedFeedbacks: []
+  }
+
+  actions.forEach((action: any) => {
+    if (action.actionId === 'overlayFunctions') {
+      action.options.mix = 1
+      action.options.mixVariable = ''
+      changes.updatedActions.push(action)
+    }
+  })
+
+  return changes
+}
+
 export const getUpgrades = (): CompanionStaticUpgradeScript<Config>[] => {
   return [upgradeV1_2_0, upgradeV2_0_0, upgradeV2_0_6, upgradeV3_5_0, adjustmentFix, upgradeV3_6_0, upgradeV3_6_2]
 }
