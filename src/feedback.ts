@@ -130,14 +130,14 @@ interface StatusCallback {
   feedbackId: 'status'
   options: Readonly<{
     status:
-    | 'connection'
-    | 'fadeToBlack'
-    | 'recording'
-    | 'external'
-    | 'streaming'
-    | 'multiCorder'
-    | 'fullscreen'
-    | 'playList'
+      | 'connection'
+      | 'fadeToBlack'
+      | 'recording'
+      | 'external'
+      | 'streaming'
+      | 'multiCorder'
+      | 'fullscreen'
+      | 'playList'
     value: '' | '0' | '1' | '2' | '3' | '4'
   }>
 }
@@ -1491,7 +1491,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
             { id: 'Both', label: 'Both' },
             { id: '1', label: '1' },
             { id: '2', label: '2' },
-          ]
+          ],
         },
       ],
       callback: async (feedback, context) => {
@@ -1513,7 +1513,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           })
 
           return {
-            imageBuffer: meter
+            imageBuffer: meter,
           }
         } else {
           const meter = presets.meter1({
@@ -1524,7 +1524,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           })
 
           return {
-            imageBuffer: meter
+            imageBuffer: meter,
           }
         }
       },

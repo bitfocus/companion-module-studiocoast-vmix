@@ -249,23 +249,23 @@ interface SetCCCallback {
   options: Readonly<{
     input: string
     setting:
-    | 'SetCCGainR'
-    | 'SetCCGainG'
-    | 'SetCCGainB'
-    | 'SetCCGainRGB'
-    | 'SetCCGainY'
-    | 'SetCCGammaR'
-    | 'SetCCGammaG'
-    | 'SetCCGammaB'
-    | 'SetCCGammaRGB'
-    | 'SetCCGammaY'
-    | 'SetCCHue'
-    | 'SetCCLiftR'
-    | 'SetCCLiftG'
-    | 'SetCCLiftB'
-    | 'SetCCLiftRGB'
-    | 'SetCCLiftY'
-    | 'SetCCSaturation'
+      | 'SetCCGainR'
+      | 'SetCCGainG'
+      | 'SetCCGainB'
+      | 'SetCCGainRGB'
+      | 'SetCCGainY'
+      | 'SetCCGammaR'
+      | 'SetCCGammaG'
+      | 'SetCCGammaB'
+      | 'SetCCGammaRGB'
+      | 'SetCCGammaY'
+      | 'SetCCHue'
+      | 'SetCCLiftR'
+      | 'SetCCLiftG'
+      | 'SetCCLiftB'
+      | 'SetCCLiftRGB'
+      | 'SetCCLiftY'
+      | 'SetCCSaturation'
     adjustment: 'Set' | 'Increase' | 'Decrease'
     gainValue: string
     otherValue: string
@@ -318,14 +318,14 @@ interface TransitionCallback {
   actionId: 'transition'
   options: Readonly<{
     functionID:
-    | 'Transition1'
-    | 'Transition2'
-    | 'Transition3'
-    | 'Transition4'
-    | 'Stinger1'
-    | 'Stinger2'
-    | 'Stinger3'
-    | 'Stinger4'
+      | 'Transition1'
+      | 'Transition2'
+      | 'Transition3'
+      | 'Transition4'
+      | 'Stinger1'
+      | 'Stinger2'
+      | 'Stinger3'
+      | 'Stinger4'
   }>
 }
 
@@ -333,14 +333,14 @@ interface SetTransitionEffectCallback {
   actionId: 'setTransitionEffect'
   options: Readonly<{
     functionID:
-    | 'SetTransitionEffect1'
-    | 'SetTransitionEffect2'
-    | 'SetTransitionEffect3'
-    | 'SetTransitionEffect4'
-    | 'SetStingerGTInput1'
-    | 'SetStingerGTInput2'
-    | 'SetStingerGTInput3'
-    | 'SetStingerGTInput4'
+      | 'SetTransitionEffect1'
+      | 'SetTransitionEffect2'
+      | 'SetTransitionEffect3'
+      | 'SetTransitionEffect4'
+      | 'SetStingerGTInput1'
+      | 'SetStingerGTInput2'
+      | 'SetStingerGTInput3'
+      | 'SetStingerGTInput4'
     value: (typeof TRANSITIONS)[number]
     input: string
   }>
@@ -350,10 +350,10 @@ interface SetTransitionDurationCallback {
   actionId: 'setTransitionDuration'
   options: Readonly<{
     functionID:
-    | 'SetTransitionDuration1'
-    | 'SetTransitionDuration2'
-    | 'SetTransitionDuration3'
-    | 'SetTransitionDuration4'
+      | 'SetTransitionDuration1'
+      | 'SetTransitionDuration2'
+      | 'SetTransitionDuration3'
+      | 'SetTransitionDuration4'
     value: number
   }>
 }
@@ -370,12 +370,12 @@ interface OutputSetCallback {
   actionId: 'outputSet'
   options: Readonly<{
     functionID:
-    | 'SetOutput2'
-    | 'SetOutput3'
-    | 'SetOutput4'
-    | 'SetOutputExternal2'
-    | 'SetOutputFullscreen'
-    | 'SetOutputFullscreen2'
+      | 'SetOutput2'
+      | 'SetOutput3'
+      | 'SetOutput4'
+      | 'SetOutputExternal2'
+      | 'SetOutputFullscreen'
+      | 'SetOutputFullscreen2'
     value: 'Output' | 'Preview' | 'MultiView' | 'Replay' | 'Input'
     input: string
   }>
@@ -385,22 +385,22 @@ interface ToggleFunctionsCallback {
   actionId: 'toggleFunctions'
   options: Readonly<{
     functionID:
-    | 'StartStopMultiCorder'
-    | 'StartMultiCorder'
-    | 'StopMultiCorder'
-    | 'StartStopRecording'
-    | 'StartRecording'
-    | 'StopRecording'
-    | 'StartStopStreaming'
-    | 'StartStreaming'
-    | 'StopStreaming'
-    | 'StartStopExternal'
-    | 'StartExternal'
-    | 'StopExternal'
-    | 'Fullscreen'
-    | 'FullscreenOff'
-    | 'FullscreenOn'
-    | 'FadeToBlack'
+      | 'StartStopMultiCorder'
+      | 'StartMultiCorder'
+      | 'StopMultiCorder'
+      | 'StartStopRecording'
+      | 'StartRecording'
+      | 'StopRecording'
+      | 'StartStopStreaming'
+      | 'StartStreaming'
+      | 'StopStreaming'
+      | 'StartStopExternal'
+      | 'StartExternal'
+      | 'StopExternal'
+      | 'Fullscreen'
+      | 'FullscreenOff'
+      | 'FullscreenOn'
+      | 'FadeToBlack'
     value: '' | '0' | '1' | '2'
   }>
 }
@@ -425,31 +425,31 @@ interface OverlayFunctionsCallback {
   actionId: 'overlayFunctions'
   options: Readonly<{
     functionID:
-    | 'OverlayInput1'
-    | 'OverlayInput2'
-    | 'OverlayInput3'
-    | 'OverlayInput4'
-    | 'PreviewOverlayInput1'
-    | 'PreviewOverlayInput2'
-    | 'PreviewOverlayInput3'
-    | 'PreviewOverlayInput4'
-    | 'OverlayInput1In'
-    | 'OverlayInput2In'
-    | 'OverlayInput3In'
-    | 'OverlayInput4In'
-    | 'OverlayInput1Out'
-    | 'OverlayInput2Out'
-    | 'OverlayInput3Out'
-    | 'OverlayInput4Out'
-    | 'OverlayInput1Off'
-    | 'OverlayInput2Off'
-    | 'OverlayInput3Off'
-    | 'OverlayInput4Off'
-    | 'OverlayInputAllOff'
-    | 'OverlayInput1Zoom'
-    | 'OverlayInput2Zoom'
-    | 'OverlayInput3Zoom'
-    | 'OverlayInput4Zoom'
+      | 'OverlayInput1'
+      | 'OverlayInput2'
+      | 'OverlayInput3'
+      | 'OverlayInput4'
+      | 'PreviewOverlayInput1'
+      | 'PreviewOverlayInput2'
+      | 'PreviewOverlayInput3'
+      | 'PreviewOverlayInput4'
+      | 'OverlayInput1In'
+      | 'OverlayInput2In'
+      | 'OverlayInput3In'
+      | 'OverlayInput4In'
+      | 'OverlayInput1Out'
+      | 'OverlayInput2Out'
+      | 'OverlayInput3Out'
+      | 'OverlayInput4Out'
+      | 'OverlayInput1Off'
+      | 'OverlayInput2Off'
+      | 'OverlayInput3Off'
+      | 'OverlayInput4Off'
+      | 'OverlayInputAllOff'
+      | 'OverlayInput1Zoom'
+      | 'OverlayInput2Zoom'
+      | 'OverlayInput3Zoom'
+      | 'OverlayInput4Zoom'
     input: string
     mix: string
     mixVariable: string
@@ -538,19 +538,19 @@ interface SetLayerPositionCallback {
     input: string
     layer: string
     setting:
-    | 'Crop'
-    | 'CropX1'
-    | 'CropX2'
-    | 'CropY1'
-    | 'CropY2'
-    | 'PanX'
-    | 'PanY'
-    | 'X'
-    | 'Y'
-    | 'Height'
-    | 'Width'
-    | 'Rectangle'
-    | 'Zoom'
+      | 'Crop'
+      | 'CropX1'
+      | 'CropX2'
+      | 'CropY1'
+      | 'CropY2'
+      | 'PanX'
+      | 'PanY'
+      | 'X'
+      | 'Y'
+      | 'Height'
+      | 'Width'
+      | 'Rectangle'
+      | 'Zoom'
     adjustment: 'Set' | 'Increase' | 'Decrease'
     crop: string
     crop2: string
@@ -589,7 +589,7 @@ interface VideoCallVideoSourceCallback {
 }
 
 interface VideoCallConnectCallback {
-  actionId: 'videoCallConnect',
+  actionId: 'videoCallConnect'
   options: Readonly<{
     functionID: 'VideoCallConnect' | 'VideoCallReconnect'
     input: string
@@ -834,21 +834,21 @@ interface TitleBeginAnimationCallback {
   options: Readonly<{
     input: string
     value:
-    | 'TransitionIn'
-    | 'TransitionOut'
-    | 'Page1'
-    | 'Page2'
-    | 'Page3'
-    | 'Page4'
-    | 'Page5'
-    | 'Page6'
-    | 'Page7'
-    | 'Page8'
-    | 'Page9'
-    | 'Page10'
-    | 'Continuous'
-    | 'DataChangeIn'
-    | 'DataChangeOut'
+      | 'TransitionIn'
+      | 'TransitionOut'
+      | 'Page1'
+      | 'Page2'
+      | 'Page3'
+      | 'Page4'
+      | 'Page5'
+      | 'Page6'
+      | 'Page7'
+      | 'Page8'
+      | 'Page9'
+      | 'Page10'
+      | 'Continuous'
+      | 'DataChangeIn'
+      | 'DataChangeOut'
   }>
 }
 
@@ -962,14 +962,14 @@ interface ReplayACameraCallback {
   actionId: 'replayACamera'
   options: Readonly<{
     functionID:
-    | 'ReplayACamera1'
-    | 'ReplayACamera2'
-    | 'ReplayACamera3'
-    | 'ReplayACamera4'
-    | 'ReplayACamera5'
-    | 'ReplayACamera6'
-    | 'ReplayACamera7'
-    | 'ReplayACamera8'
+      | 'ReplayACamera1'
+      | 'ReplayACamera2'
+      | 'ReplayACamera3'
+      | 'ReplayACamera4'
+      | 'ReplayACamera5'
+      | 'ReplayACamera6'
+      | 'ReplayACamera7'
+      | 'ReplayACamera8'
   }>
 }
 
@@ -977,14 +977,14 @@ interface ReplayBCameraCallback {
   actionId: 'replayBCamera'
   options: Readonly<{
     functionID:
-    | 'ReplayBCamera1'
-    | 'ReplayBCamera2'
-    | 'ReplayBCamera3'
-    | 'ReplayBCamera4'
-    | 'ReplayBCamera5'
-    | 'ReplayBCamera6'
-    | 'ReplayBCamera7'
-    | 'ReplayBCamera8'
+      | 'ReplayBCamera1'
+      | 'ReplayBCamera2'
+      | 'ReplayBCamera3'
+      | 'ReplayBCamera4'
+      | 'ReplayBCamera5'
+      | 'ReplayBCamera6'
+      | 'ReplayBCamera7'
+      | 'ReplayBCamera8'
   }>
 }
 
@@ -992,14 +992,14 @@ interface ReplayCameraCallback {
   actionId: 'replayCamera'
   options: Readonly<{
     functionID:
-    | 'ReplayCamera1'
-    | 'ReplayCamera2'
-    | 'ReplayCamera3'
-    | 'ReplayCamera4'
-    | 'ReplayCamera5'
-    | 'ReplayCamera6'
-    | 'ReplayCamera7'
-    | 'ReplayCamera8'
+      | 'ReplayCamera1'
+      | 'ReplayCamera2'
+      | 'ReplayCamera3'
+      | 'ReplayCamera4'
+      | 'ReplayCamera5'
+      | 'ReplayCamera6'
+      | 'ReplayCamera7'
+      | 'ReplayCamera8'
   }>
 }
 
@@ -1019,16 +1019,16 @@ interface ReplayMarkCallback {
   actionId: 'replayMark'
   options: Readonly<{
     functionID:
-    | 'ReplayMarkCancel'
-    | 'ReplayMarkIn'
-    | 'ReplayMarkInLive'
-    | 'ReplayMarkInOut'
-    | 'ReplayMarkInOutLive'
-    | 'ReplayMarkInOutLiveFuture'
-    | 'ReplayMarkInOutRecorded'
-    | 'ReplayMarkInRecorded'
-    | 'ReplayMarkInRecordedNow'
-    | 'ReplayMarkOut'
+      | 'ReplayMarkCancel'
+      | 'ReplayMarkIn'
+      | 'ReplayMarkInLive'
+      | 'ReplayMarkInOut'
+      | 'ReplayMarkInOutLive'
+      | 'ReplayMarkInOutLiveFuture'
+      | 'ReplayMarkInOutRecorded'
+      | 'ReplayMarkInRecorded'
+      | 'ReplayMarkInRecordedNow'
+      | 'ReplayMarkOut'
     value: string
     value2: string
   }>
@@ -1053,26 +1053,26 @@ interface ReplaySelectEventsCallback {
   actionId: 'replaySelectEvents'
   options: Readonly<{
     functionID:
-    | 'ReplaySelectEvents1'
-    | 'ReplaySelectEvents2'
-    | 'ReplaySelectEvents3'
-    | 'ReplaySelectEvents4'
-    | 'ReplaySelectEvents5'
-    | 'ReplaySelectEvents6'
-    | 'ReplaySelectEvents7'
-    | 'ReplaySelectEvents8'
-    | 'ReplaySelectEvents9'
-    | 'ReplaySelectEvents10'
-    | 'ReplaySelectEvents11'
-    | 'ReplaySelectEvents12'
-    | 'ReplaySelectEvents13'
-    | 'ReplaySelectEvents14'
-    | 'ReplaySelectEvents15'
-    | 'ReplaySelectEvents16'
-    | 'ReplaySelectEvents17'
-    | 'ReplaySelectEvents18'
-    | 'ReplaySelectEvents19'
-    | 'ReplaySelectEvents20'
+      | 'ReplaySelectEvents1'
+      | 'ReplaySelectEvents2'
+      | 'ReplaySelectEvents3'
+      | 'ReplaySelectEvents4'
+      | 'ReplaySelectEvents5'
+      | 'ReplaySelectEvents6'
+      | 'ReplaySelectEvents7'
+      | 'ReplaySelectEvents8'
+      | 'ReplaySelectEvents9'
+      | 'ReplaySelectEvents10'
+      | 'ReplaySelectEvents11'
+      | 'ReplaySelectEvents12'
+      | 'ReplaySelectEvents13'
+      | 'ReplaySelectEvents14'
+      | 'ReplaySelectEvents15'
+      | 'ReplaySelectEvents16'
+      | 'ReplaySelectEvents17'
+      | 'ReplaySelectEvents18'
+      | 'ReplaySelectEvents19'
+      | 'ReplaySelectEvents20'
     channel: 'Current' | 'A' | 'B'
   }>
 }
@@ -1226,13 +1226,13 @@ interface BrowserCallback {
   options: Readonly<{
     input: string
     functionID:
-    | 'BrowserReload'
-    | 'BrowserBack'
-    | 'BrowserForward'
-    | 'BrowserKeyboardDisabled'
-    | 'BrowserKeyboardEnabled'
-    | 'BrowserMouseDisabled'
-    | 'BrowserMouseEnabled'
+      | 'BrowserReload'
+      | 'BrowserBack'
+      | 'BrowserForward'
+      | 'BrowserKeyboardDisabled'
+      | 'BrowserKeyboardEnabled'
+      | 'BrowserMouseDisabled'
+      | 'BrowserMouseEnabled'
   }>
 }
 
@@ -1275,18 +1275,18 @@ interface PTZMoveCallback {
   options: Readonly<{
     input: string
     functionID:
-    | 'PTZHome'
-    | 'PTZMoveStop'
-    | 'PTZMoveUp'
-    | 'PTZMoveUpLeft'
-    | 'PTZMoveUpRight'
-    | 'PTZMoveLeft'
-    | 'PTZMoveRight'
-    | 'PTZMoveDown'
-    | 'PTZMoveDownLeft'
-    | 'PTZMoveDownRight'
-    | 'PTZMoveToVirtualInputPosition'
-    | 'PTZMoveToVirtualInputPositionByIndex'
+      | 'PTZHome'
+      | 'PTZMoveStop'
+      | 'PTZMoveUp'
+      | 'PTZMoveUpLeft'
+      | 'PTZMoveUpRight'
+      | 'PTZMoveLeft'
+      | 'PTZMoveRight'
+      | 'PTZMoveDown'
+      | 'PTZMoveDownLeft'
+      | 'PTZMoveDownRight'
+      | 'PTZMoveToVirtualInputPosition'
+      | 'PTZMoveToVirtualInputPositionByIndex'
     value?: string
   }>
 }
@@ -2229,7 +2229,7 @@ export function getActions(instance: VMixInstance): VMixActions {
               options.functionID === 'SetTransitionEffect3' ||
               options.functionID === 'SetTransitionEffect4'
             )
-          }
+          },
         },
         {
           type: 'textinput',
@@ -2244,15 +2244,21 @@ export function getActions(instance: VMixInstance): VMixActions {
               options.functionID === 'SetStingerGTInput3' ||
               options.functionID === 'SetStingerGTInput4'
             )
-          }
+          },
         },
       ],
       callback: async (action) => {
-        if (['SetTransitionEffect1', 'SetTransitionEffect2', 'SetTransitionEffect3', 'SetTransitionEffect4'].includes(action.options.functionID)) {
-          if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Value=${action.options.value}`)
+        if (
+          ['SetTransitionEffect1', 'SetTransitionEffect2', 'SetTransitionEffect3', 'SetTransitionEffect4'].includes(
+            action.options.functionID
+          )
+        ) {
+          if (instance.tcp)
+            instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Value=${action.options.value}`)
         } else {
           const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
-          if (instance.tcp && selected) instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Input=${selected}`)
+          if (instance.tcp && selected)
+            instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Input=${selected}`)
         }
       },
     },
@@ -2518,12 +2524,12 @@ export function getActions(instance: VMixInstance): VMixActions {
               'OverlayInput4In',
             ]
 
-            supportedFunctions.forEach(x => {
+            supportedFunctions.forEach((x) => {
               if (x === feedbackOptions.functionID) mixSupport = true
             })
 
             return mixSupport
-          }
+          },
         },
         {
           type: 'textinput',
@@ -2545,14 +2551,14 @@ export function getActions(instance: VMixInstance): VMixActions {
               'OverlayInput4In',
             ]
 
-            supportedFunctions.forEach(x => {
+            supportedFunctions.forEach((x) => {
               if (x === feedbackOptions.functionID && feedbackOptions.mix === -2) mixSupport = true
             })
 
             return mixSupport
           },
           useVariables: true,
-        }
+        },
       ],
       callback: sendBasicCommand,
     },
@@ -2678,7 +2684,8 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION SetMultiViewOverlay Input=${encodeURIComponent(input)}&Value=${action.options.layer
+            `FUNCTION SetMultiViewOverlay Input=${encodeURIComponent(input)}&Value=${
+              action.options.layer
             },${encodeURIComponent(layer)}`
           )
       },
@@ -2719,7 +2726,8 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].preview}&Value=${action.options.layer
+            `FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].preview}&Value=${
+              action.options.layer
             },${encodeURIComponent(input)}`
           )
       },
@@ -2760,7 +2768,8 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].program}&Value=${action.options.layer
+            `FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].program}&Value=${
+              action.options.layer
             },${encodeURIComponent(input)}`
           )
       },
@@ -3204,7 +3213,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           default: 'VideoCallConnect',
           choices: [
             { id: 'VideoCallConnect', label: 'Connect' },
-            { id: 'VideoCallReconnect', label: 'Reconnect' }
+            { id: 'VideoCallReconnect', label: 'Reconnect' },
           ],
         },
         options.input,
@@ -3214,7 +3223,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           id: 'name',
           default: '',
           useVariables: true,
-          isVisible: (options) => options.functionID === 'VideoCallReconnect'
+          isVisible: (options) => options.functionID === 'VideoCallReconnect',
         },
         {
           type: 'textinput',
@@ -3222,7 +3231,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           id: 'password',
           default: '',
           useVariables: true,
-          isVisible: (options) => options.functionID === 'VideoCallReconnect'
+          isVisible: (options) => options.functionID === 'VideoCallReconnect',
         },
       ],
       callback: async (action) => {
@@ -3233,9 +3242,10 @@ export function getActions(instance: VMixInstance): VMixActions {
         } else {
           const name = (await instance.parseOption(action.options.name))[instance.buttonShift.state]
           const password = (await instance.parseOption(action.options.password))[instance.buttonShift.state]
-          if (instance.tcp) instance.tcp.sendCommand(action.options.functionID + `Input=${selected}&Value=${name},${password}`)
+          if (instance.tcp)
+            instance.tcp.sendCommand(action.options.functionID + `Input=${selected}&Value=${name},${password}`)
         }
-      }
+      },
     },
 
     // Audio
@@ -3462,7 +3472,7 @@ export function getActions(instance: VMixInstance): VMixActions {
         if (instance.tcp) {
           instance.tcp.sendCommand(`FUNCTION ${shortcut} value=${fadeVol},${fadeTime}`)
         }
-      }
+      },
     },
 
     setVolumeFade: {
@@ -3610,9 +3620,19 @@ export function getActions(instance: VMixInstance): VMixActions {
         const channel = parseInt((await instance.parseOption(action.options.channel))[instance.buttonShift.state])
         const input = await instance.data.getInput(selected)
 
-        if (input === null || isNaN(amount) || isNaN(channel) || input.volumeF1 === undefined || input.volumeF2 === undefined) return
+        if (
+          input === null ||
+          isNaN(amount) ||
+          isNaN(channel) ||
+          input.volumeF1 === undefined ||
+          input.volumeF2 === undefined
+        )
+          return
 
-        let currentValue = channel === 1 ? Math.round(volumeToLinear(input.volumeF1 * 100)) : Math.round(volumeToLinear(input.volumeF2 * 100))
+        const currentValue =
+          channel === 1
+            ? Math.round(volumeToLinear(input.volumeF1 * 100))
+            : Math.round(volumeToLinear(input.volumeF2 * 100))
         let newValue = amount
 
         if (action.options.adjustment !== 'Set') {
@@ -3627,9 +3647,11 @@ export function getActions(instance: VMixInstance): VMixActions {
         if (newValue < 0) newValue = 0
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION ${channel === 1 ? 'SetVolumeChannel1' : 'SetVolumeChannel2'} Input=${input.key}&Value=${newValue}`)
+          instance.tcp.sendCommand(
+            `FUNCTION ${channel === 1 ? 'SetVolumeChannel1' : 'SetVolumeChannel2'} Input=${input.key}&Value=${newValue}`
+          )
         }
-      }
+      },
     },
 
     setVolumeChannelMixer: {
@@ -3733,7 +3755,8 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION ${action.options.functionID} Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+            `FUNCTION ${action.options.functionID} Input=${encodeURIComponent(input)}&${
+              indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
             }=${encodeURIComponent(index)}`
           )
       },
@@ -3769,7 +3792,8 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION SetCountdown Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+            `FUNCTION SetCountdown Input=${encodeURIComponent(input)}&${
+              indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
             }=${encodeURIComponent(index)}&value=${value}`
           )
       },
@@ -3805,7 +3829,8 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION ChangeCountdown Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+            `FUNCTION ChangeCountdown Input=${encodeURIComponent(input)}&${
+              indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
             }=${encodeURIComponent(index)}&value=${value}`
           )
       },
@@ -3845,7 +3870,8 @@ export function getActions(instance: VMixInstance): VMixActions {
         } else {
           if (instance.tcp)
             instance.tcp.sendCommand(
-              `FUNCTION AdjustCountdown Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
+              `FUNCTION AdjustCountdown Input=${encodeURIComponent(input)}&${
+                indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
               }=${encodeURIComponent(index)}&Value=${value}`
             )
         }
@@ -3940,11 +3966,13 @@ export function getActions(instance: VMixInstance): VMixActions {
         const value = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
 
         if (isNaN(parseInt(index, 10))) {
-          if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetTextColour Input=${input}&Value=${value}&SelectedName=${index}`)
+          if (instance.tcp)
+            instance.tcp.sendCommand(`FUNCTION SetTextColour Input=${input}&Value=${value}&SelectedName=${index}`)
         } else {
-          if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetTextColour Input=${input}&Value=${value}&SelectedIndex=${index}`)
+          if (instance.tcp)
+            instance.tcp.sendCommand(`FUNCTION SetTextColour Input=${input}&Value=${value}&SelectedIndex=${index}`)
         }
-      }
+      },
     },
 
     setTextVisible: {
@@ -3980,13 +4008,12 @@ export function getActions(instance: VMixInstance): VMixActions {
         if (action.options.adjustment === 'On') type = 'SetTextVisibleOn'
         if (action.options.adjustment === 'Off') type = 'SetTextVisibleOff'
 
-
         if (isNaN(parseInt(index, 10))) {
           if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${type} Input=${input}&SelectedName=${index}`)
         } else {
           if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${type} Input=${input}&SelectedIndex=${index}`)
         }
-      }
+      },
     },
 
     setColor: {
@@ -4894,7 +4921,8 @@ export function getActions(instance: VMixInstance): VMixActions {
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION BrowserNavigate Input=${action.options.input}&Value=${action.options.encode ? encodeURIComponent(value) : value
+            `FUNCTION BrowserNavigate Input=${action.options.input}&Value=${
+              action.options.encode ? encodeURIComponent(value) : value
             }`
           )
       },
@@ -5207,7 +5235,7 @@ export function getActions(instance: VMixInstance): VMixActions {
           id: 'password',
           default: '',
           useVariables: true,
-        }
+        },
       ],
       callback: async (action) => {
         const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
@@ -5217,7 +5245,7 @@ export function getActions(instance: VMixInstance): VMixActions {
         if (selected && meetingID && instance.tcp) {
           instance.tcp.sendCommand(`FUNCTION ZoomJoinMeeting Input=${selected}&Value=${meetingID},${password}`)
         }
-      }
+      },
     },
 
     // Util

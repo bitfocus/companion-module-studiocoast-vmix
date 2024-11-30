@@ -1512,7 +1512,6 @@ export class Variables {
           if (input.type === 'Photos') {
             newVariables[`dynamic_input_${dynamic + 1}_selected`] = input.position
             newVariables[`dynamic_input_${dynamic + 1}_selected_name`] = input.title.split(`${input.shortTitle} - `)[1]
-
           }
 
           if (input.type === 'VideoCall') {
@@ -1555,7 +1554,9 @@ export class Variables {
           if (input.volumeF1 !== undefined) {
             newVariables[`dynamic_input_${dynamic + 1}_volume_f1`] = (input.volumeF1 * 100).toFixed(2)
             newVariables[`dynamic_input_${dynamic + 1}_volume_f1_db`] = volumeTodB(input.volumeF1 * 100).toFixed(1)
-            newVariables[`dynamic_input_${dynamic + 1}_volume_f1_linear`] = Math.round(volumeToLinear(input.volumeF1 * 100))
+            newVariables[`dynamic_input_${dynamic + 1}_volume_f1_linear`] = Math.round(
+              volumeToLinear(input.volumeF1 * 100)
+            )
           }
 
           newVariables[`dynamic_input_${dynamic + 1}_volume_f2`] = ''
@@ -1565,7 +1566,9 @@ export class Variables {
           if (input.volumeF2 !== undefined) {
             newVariables[`dynamic_input_${dynamic + 1}_volume_f2`] = (input.volumeF2 * 100).toFixed(2)
             newVariables[`dynamic_input_${dynamic + 1}_volume_f2_db`] = volumeTodB(input.volumeF2 * 100).toFixed(1)
-            newVariables[`dynamic_input_${dynamic + 1}_volume_f2_linear`] = Math.round(volumeToLinear(input.volumeF2 * 100))
+            newVariables[`dynamic_input_${dynamic + 1}_volume_f2_linear`] = Math.round(
+              volumeToLinear(input.volumeF2 * 100)
+            )
           }
         }
       }
@@ -1762,7 +1765,7 @@ export class Variables {
         if ((input.type === 'VirtualSet' || input.type === 'PowerPoint') && input.selectedIndex !== undefined) {
           newVariables[`input_${type}_selected`] = input.selectedIndex
         }
-        
+
         if (input.type === 'Photos') {
           newVariables[`input_${type}_selected`] = input.position
           newVariables[`input_${type}_selected_name`] = input.title.split(`${input.shortTitle} - `)[1]
@@ -1812,7 +1815,7 @@ export class Variables {
         newVariables[`input_${type}_volume_f2`] = ''
         newVariables[`input_${type}_volume_f2_db`] = ''
         newVariables[`input_${type}_volume_f2_linear`] = ''
-        
+
         if (input.volumeF2 !== undefined) {
           newVariables[`input_${type}_volume_f2`] = (input.volumeF2 * 100).toFixed(2)
           newVariables[`input_${type}_volume_f2_db`] = volumeTodB(input.volumeF2 * 100).toFixed(1)

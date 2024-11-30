@@ -17,6 +17,7 @@ describe('Data', () => {
   })
 
   it(`Should return an Audio Bus`, async () => {
+    await data.update(sampleXML)
     const master = data.getAudioBus('Master')
     const a = data.getAudioBus('A')
     const z = data.getAudioBus('Z')
@@ -27,6 +28,7 @@ describe('Data', () => {
   })
 
   it(`Should return an input`, async () => {
+    await data.update(sampleXML)
     const inputByName = await data.getInput('SampleInput1')
     const inputByNumber = await data.getInput(1)
     const inputByKey = await data.getInput('2ba7427a-71d6-4973-acfc-52935f3e0b0b')
@@ -39,6 +41,7 @@ describe('Data', () => {
   })
 
   it(`Should return an inputs title`, async () => {
+    await data.update(sampleXML)
     const inputByKey = await data.getInputTitle('2ba7427a-71d6-4973-acfc-52935f3e0b0b')
     expect(inputByKey).toBe('SampleInput1')
   })

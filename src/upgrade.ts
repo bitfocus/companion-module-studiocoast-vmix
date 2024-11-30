@@ -656,5 +656,5 @@ const upgradeV3_7_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
 }
 
 export const getUpgrades = (): CompanionStaticUpgradeScript<Config>[] => {
-  return [upgradeV1_2_0, upgradeV2_0_0, upgradeV2_0_6, upgradeV3_5_0, adjustmentFix, upgradeV3_6_0, upgradeV3_6_2]
+  return [upgradeV1_2_0, upgradeV2_0_0, upgradeV2_0_6, upgradeV3_5_0, adjustmentFix, upgradeV3_6_0, upgradeV3_6_2, upgradeV3_7_0]
 }

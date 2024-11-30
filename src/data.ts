@@ -658,6 +658,8 @@ export class VMixData {
       const getOutputs = (): Output[] => {
         const outputs = get(parsedData, 'outputs[0].output')
 
+        if (!outputs) return []
+
         return outputs.map((output: any) => ({
           type: output.$.type,
           number: parseInt(output.$.number, 10),

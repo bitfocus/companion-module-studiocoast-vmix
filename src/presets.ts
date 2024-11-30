@@ -2992,7 +2992,12 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
         },
         steps: [
           {
-            down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInputAllOff', input: '', mix: '1', mixVariable: '' } }],
+            down: [
+              {
+                actionId: 'overlayFunctions',
+                options: { functionID: 'OverlayInputAllOff', input: '', mix: '1', mixVariable: '' },
+              },
+            ],
             up: [],
           },
         ],
@@ -3057,7 +3062,12 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               down: [
                 {
                   actionId: 'overlayFunctions',
-                  options: { functionID: `PreviewOverlayInput${i}` as 'PreviewOverlayInput1', input: '', mix: '1', mixVariable: '' },
+                  options: {
+                    functionID: `PreviewOverlayInput${i}` as 'PreviewOverlayInput1',
+                    input: '',
+                    mix: '1',
+                    mixVariable: '',
+                  },
                 },
               ],
               up: [],
@@ -3091,7 +3101,12 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               down: [
                 {
                   actionId: 'overlayFunctions',
-                  options: { functionID: `OverlayInput${i}In` as 'OverlayInput1In', input: '', mix: '1', mixVariable: ''},
+                  options: {
+                    functionID: `OverlayInput${i}In` as 'OverlayInput1In',
+                    input: '',
+                    mix: '1',
+                    mixVariable: '',
+                  },
                 },
               ],
               up: [],
@@ -3125,7 +3140,12 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               down: [
                 {
                   actionId: 'overlayFunctions',
-                  options: { functionID: `OverlayInput${i}Out` as 'OverlayInput1Out', input: '', mix: '1', mixVariable: '' },
+                  options: {
+                    functionID: `OverlayInput${i}Out` as 'OverlayInput1Out',
+                    input: '',
+                    mix: '1',
+                    mixVariable: '',
+                  },
                 },
               ],
               up: [],
@@ -3159,7 +3179,12 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               down: [
                 {
                   actionId: 'overlayFunctions',
-                  options: { functionID: `OverlayInput${i}Off` as 'OverlayInput1Off', input: '', mix: '1', mixVariable: ''},
+                  options: {
+                    functionID: `OverlayInput${i}Off` as 'OverlayInput1Off',
+                    input: '',
+                    mix: '1',
+                    mixVariable: '',
+                  },
                 },
               ],
               up: [],
@@ -3193,7 +3218,12 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               down: [
                 {
                   actionId: 'overlayFunctions',
-                  options: { functionID: `OverlayInput${i}Zoom` as 'OverlayInput1Zoom', input: '', mix: '1', mixVariable: '' },
+                  options: {
+                    functionID: `OverlayInput${i}Zoom` as 'OverlayInput1Zoom',
+                    input: '',
+                    mix: '1',
+                    mixVariable: '',
+                  },
                 },
               ],
               up: [],
@@ -4218,7 +4248,11 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               down: [
                 {
                   actionId: 'setTransitionEffect',
-                  options: { functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1', value: 'Fade', input: '' },
+                  options: {
+                    functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1',
+                    value: 'Fade',
+                    input: '',
+                  },
                 },
               ],
               up: [],
@@ -4241,7 +4275,11 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               down: [
                 {
                   actionId: 'setTransitionEffect',
-                  options: { functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1', value: 'Zoom', input: '' },
+                  options: {
+                    functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1',
+                    value: 'Zoom',
+                    input: '',
+                  },
                 },
               ],
               up: [],
@@ -4264,7 +4302,11 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               down: [
                 {
                   actionId: 'setTransitionEffect',
-                  options: { functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1', value: 'Merge', input: '' },
+                  options: {
+                    functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1',
+                    value: 'Merge',
+                    input: '',
+                  },
                 },
               ],
               up: [],
