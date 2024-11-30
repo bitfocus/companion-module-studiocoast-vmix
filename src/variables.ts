@@ -472,7 +472,7 @@ export class Variables {
           })
         }
 
-        if (input.type === 'VideoList' || input.type === 'VirtualSet') {
+        if (input.type === 'VideoList' || input.type === 'VirtualSet' || input.type === 'Photos') {
           variables.add({
             name: `Dynamic Input ${dynamic + 1} Selected Index`,
             variableId: `dynamic_input_${dynamic + 1}_selected`,
@@ -702,7 +702,7 @@ export class Variables {
           })
         }
 
-        if (input.type === 'VideoList' || input.type === 'VirtualSet') {
+        if (input.type === 'VideoList' || input.type === 'VirtualSet' || input.type === 'Photos') {
           inputSet.add({
             name: `Input ${title} Selected Index`,
             variableId: `input_${type}_selected`,
@@ -1499,6 +1499,12 @@ export class Variables {
             newVariables[`dynamic_input_${dynamic + 1}_selected`] = input.selectedIndex
           }
 
+          if (input.type === 'Photos') {
+            newVariables[`dynamic_input_${dynamic + 1}_selected`] = input.position
+            newVariables[`dynamic_input_${dynamic + 1}_selected_name`] = input.title.split(`${input.shortTitle} - `)[1]
+
+          }
+
           if (input.type === 'VideoCall') {
             let audioSource = input.callAudioSource as string
             if (audioSource.startsWith('Bus')) {
@@ -1742,11 +1748,13 @@ export class Variables {
           })
         }
 
-        if (
-          (input.type === 'VirtualSet' || input.type === 'Photos' || input.type === 'PowerPoint') &&
-          input.selectedIndex !== undefined
-        ) {
+        if ((input.type === 'VirtualSet' || input.type === 'PowerPoint') && input.selectedIndex !== undefined) {
           newVariables[`input_${type}_selected`] = input.selectedIndex
+        }
+        
+        if (input.type === 'Photos') {
+          newVariables[`input_${type}_selected`] = input.position
+          newVariables[`input_${type}_selected_name`] = input.title.split(`${input.shortTitle} - `)[1]
         }
 
         if (input.type === 'VideoCall') {

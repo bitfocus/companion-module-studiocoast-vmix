@@ -1783,6 +1783,8 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           if (input.selectedIndex === parseInt(index, 10)) {
             return { color: feedback.options.fg, bgcolor: feedback.options.bg }
           }
+        } else if (input?.type === 'Photos') {
+          if (input.position.toString() === index) return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         }
 
         return {}
@@ -1803,7 +1805,9 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         const input = await instance.data.getInput(inputOption)
         const index = (await instance.parseOption(feedback.options.selectedIndex, context))[instance.buttonShift.state]
 
-        return input?.selectedIndex === parseInt(index, 10)
+        if (!input) return false
+        if (input.type === 'Photos') return input.position === parseInt(index, 10)
+        return input.selectedIndex === parseInt(index, 10)
       },
     },
 

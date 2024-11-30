@@ -18,6 +18,7 @@
 - Updated `Output - MultiCorder / Recording / Streaming` Action, and `vMix - Status` Feedback, to support up to 5 streams
 - Updated `Transition - Set Auto Transition Effect` Action to support setting a GT Input to a Stinger transition
 - Updated `Audio - Input Volume Meters` feedback to support displaying individual channels of a separated mono input
+- Updated `input_X_selected`, `input_X_selected_name`, `dynamic_input_X_selected`, `dynamic_input_X_selected_name` Variables, and `Slides/List - Change Colors Based On Selected Slide/Index/Virtual Set`, `Slides/List - Change style based on an inputs Selected Index` Feedbacks to support Photo index types (0 base index)
 
 **v3.6.7**
 - Fixed an issue with undefined titles being returned as `'undefined'`, rather than an empty string as intended

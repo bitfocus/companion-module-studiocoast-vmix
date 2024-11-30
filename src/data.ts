@@ -482,8 +482,8 @@ export class VMixData {
             title: input.$.title + '',
             shortTitle: input.$.shortTitle + '' || null,
             state: input.$.state,
-            position: input.$.position,
-            duration: input.$.duration,
+            position: parseFloat(input.$.position),
+            duration: parseFloat(input.$.duration),
             loop: input.$.loop,
             volume: parseFloat(input.$.volume || '100'),
             audioAuto: true,
@@ -1056,6 +1056,7 @@ export class VMixData {
       changes.add('liveBusVolume')
       changes.add('liveInputVolume')
       changes.add('inputSelectedIndex')
+      changes.add('inputSelectedIndexBoolean')
       changes.add('routableMultiviewLayer')
       changes.add('inputVolumeMeter')
       changes.add('inputState')
