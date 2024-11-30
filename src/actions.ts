@@ -99,6 +99,8 @@ export interface VMixActions {
   changeCountdown: VMixAction<ChangeCountdownCallback>
   adjustCountdown: VMixAction<AdjustCountdownCallback>
   setText: VMixAction<SetTextCallback>
+  setTextColor: VMixAction<SetTextColorCallback>
+  setTextVisible: VMixAction<SetTextVisibileCallback>
   setColor: VMixAction<SetColorCallback>
   selectTitlePreset: VMixAction<SelectTitlePresetCallback>
   titlePreset: VMixAction<TitlePresetCallback>
@@ -781,6 +783,24 @@ interface SetTextCallback {
     adjustment: 'Set' | 'Increase' | 'Decrease'
     value: string
     encode: boolean
+  }>
+}
+
+interface SetTextColorCallback {
+  actionId: 'setTextColor'
+  options: Readonly<{
+    input: string
+    selectedIndex: string
+    value: string
+  }>
+}
+
+interface SetTextVisibileCallback {
+  actionId: 'setTextVisible'
+  options: Readonly<{
+    input: string
+    selectedIndex: string
+    adjustment: 'Toggle' | 'On' | 'Off'
   }>
 }
 
@@ -1475,6 +1495,8 @@ export type ActionCallbacks =
   | ChangeCountdownCallback
   | AdjustCountdownCallback
   | SetTextCallback
+  | SetTextColorCallback
+  | SetTextVisibileCallback
   | SetColorCallback
   | SelectTitlePresetCallback
   | TitlePresetCallback
@@ -3889,6 +3911,82 @@ export function getActions(instance: VMixInstance): VMixActions {
           }
         }
       },
+    },
+
+    setTextColor: {
+      name: 'Title - Adjust title text Color',
+      description: 'Adjusts text on a title layer',
+      options: [
+        options.input,
+        {
+          type: 'textinput',
+          label: 'Layer',
+          tooltip: '(Indexed from 0 or by name)',
+          id: 'selectedIndex',
+          default: '0',
+          useVariables: true,
+        },
+        {
+          type: 'textinput',
+          label: 'Color (#RRGGBB)',
+          id: 'value',
+          default: '',
+          useVariables: true,
+        },
+      ],
+      callback: async (action) => {
+        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+        const index = (await instance.parseOption(action.options.selectedIndex))[instance.buttonShift.state]
+        const value = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
+
+        if (isNaN(parseInt(index, 10))) {
+          if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetTextColour Input=${input}&Value=${value}&SelectedName=${index}`)
+        } else {
+          if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetTextColour Input=${input}&Value=${value}&SelectedIndex=${index}`)
+        }
+      }
+    },
+
+    setTextVisible: {
+      name: 'Title - Adjust title text visibility',
+      description: 'Sets the visibility of title text Toggle, On, or Off',
+      options: [
+        options.input,
+        {
+          type: 'textinput',
+          label: 'Layer',
+          tooltip: '(Indexed from 0 or by name)',
+          id: 'selectedIndex',
+          default: '0',
+          useVariables: true,
+        },
+        {
+          type: 'dropdown',
+          label: 'Adjustment',
+          id: 'adjustment',
+          default: 'Toggle',
+          choices: [
+            { id: 'Toggle', label: 'Toggle' },
+            { id: 'On', label: 'On' },
+            { id: 'Off', label: 'Off' },
+          ],
+        },
+      ],
+      callback: async (action) => {
+        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+        const index = (await instance.parseOption(action.options.selectedIndex))[instance.buttonShift.state]
+        let type = 'SetTextVisible'
+
+        if (action.options.adjustment === 'On') type = 'SetTextVisibleOn'
+        if (action.options.adjustment === 'Off') type = 'SetTextVisibleOff'
+
+
+        if (isNaN(parseInt(index, 10))) {
+          if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${type} Input=${input}&SelectedName=${index}`)
+        } else {
+          if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${type} Input=${input}&SelectedIndex=${index}`)
+        }
+      }
     },
 
     setColor: {

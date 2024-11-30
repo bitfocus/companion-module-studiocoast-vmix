@@ -39,6 +39,8 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 - Added Actions:
   - `Audio - Fade Bus Volume`
   - `Audio - Set Input Channel Volume` (for separate mono inputs)
+  - `Title - Adjust title text Color`
+  - `Title - Adjust title text visibility`
   - `VideoCall - Connect / Reconnect`, `Zoom - Join Meeting`
 - Added Feedbacks:
   - `vMix - Output Status`
