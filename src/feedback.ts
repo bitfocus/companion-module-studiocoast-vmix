@@ -130,14 +130,14 @@ interface StatusCallback {
   feedbackId: 'status'
   options: Readonly<{
     status:
-      | 'connection'
-      | 'fadeToBlack'
-      | 'recording'
-      | 'external'
-      | 'streaming'
-      | 'multiCorder'
-      | 'fullscreen'
-      | 'playList'
+    | 'connection'
+    | 'fadeToBlack'
+    | 'recording'
+    | 'external'
+    | 'streaming'
+    | 'multiCorder'
+    | 'fullscreen'
+    | 'playList'
     value: '' | '0' | '1' | '2' | '3' | '4'
   }>
 }
@@ -272,6 +272,7 @@ interface InputVolumeMeterCallback {
   feedbackId: 'inputVolumeMeter'
   options: Readonly<{
     input: string
+    channel: 'Both' | '1' | '2'
   }>
 }
 
@@ -1479,7 +1480,20 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       type: 'advanced',
       name: 'Audio - Input Volume Meters',
       description: 'Volumer meters for an input',
-      options: [options.input],
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Channel',
+          id: 'channel',
+          default: 'Both',
+          choices: [
+            { id: 'Both', label: 'Both' },
+            { id: '1', label: '1' },
+            { id: '2', label: '2' },
+          ]
+        },
+      ],
       callback: async (feedback, context) => {
         if (!feedback.image) return {}
         const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
@@ -1489,16 +1503,29 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           return {}
         }
 
-        const meter = presets.meter1({
-          width: feedback.image.width,
-          height: feedback.image.height,
-          meter1: volumeToLinear(input.meterF1 * 100),
-          meter2: volumeToLinear(input.meterF2 * 100),
-          muted: input.muted,
-        })
+        if (feedback.options.channel === 'Both') {
+          const meter = presets.meter1({
+            width: feedback.image.width,
+            height: feedback.image.height,
+            meter1: volumeToLinear(input.meterF1 * 100),
+            meter2: volumeToLinear(input.meterF2 * 100),
+            muted: input.muted,
+          })
 
-        return {
-          imageBuffer: meter,
+          return {
+            imageBuffer: meter
+          }
+        } else {
+          const meter = presets.meter1({
+            width: feedback.image.width,
+            height: feedback.image.height,
+            meter1: volumeToLinear(feedback.options.channel === '1' ? input.meterF1 * 100 : input.meterF2 * 100),
+            muted: input.muted,
+          })
+
+          return {
+            imageBuffer: meter
+          }
         }
       },
     },

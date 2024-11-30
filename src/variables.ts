@@ -528,6 +528,36 @@ export class Variables {
           variableId: `dynamic_input_${dynamic + 1}_volume_linear`,
         })
 
+        if (input.volumeF1 !== undefined) {
+          variables.add({
+            name: `Dynamic Input ${dynamic + 1} Volume F1`,
+            variableId: `dynamic_input_${dynamic + 1}_volume_f1`,
+          })
+          variables.add({
+            name: `Dynamic Input ${dynamic + 1} Volume F1 dB`,
+            variableId: `dynamic_input_${dynamic + 1}_volume_f1_db`,
+          })
+          variables.add({
+            name: `Dynamic Input ${dynamic + 1} Volume F1 Linear`,
+            variableId: `dynamic_input_${dynamic + 1}_volume_f1_linear`,
+          })
+        }
+
+        if (input.volumeF2 !== undefined) {
+          variables.add({
+            name: `Dynamic Input ${dynamic + 1} Volume F2`,
+            variableId: `dynamic_input_${dynamic + 1}_volume_f2`,
+          })
+          variables.add({
+            name: `Dynamic Input ${dynamic + 1} Volume F2 dB`,
+            variableId: `dynamic_input_${dynamic + 1}_volume_f2_db`,
+          })
+          variables.add({
+            name: `Dynamic Input ${dynamic + 1} Volume F2 Linear`,
+            variableId: `dynamic_input_${dynamic + 1}_volume_f2_linear`,
+          })
+        }
+
         if (input.meterF1 !== undefined) {
           variables.add({
             name: `Dynamic Input ${dynamic + 1} MeterF1`,
@@ -716,6 +746,18 @@ export class Variables {
         inputSet.add({ name: `Input ${title} Volume dB`, variableId: `input_${type}_volume_db` })
         inputSet.add({ name: `Input ${title} Volume Linear`, variableId: `input_${type}_volume_linear` })
         inputSet.add({ name: `Input ${title} Frame Delay`, variableId: `input_${type}_framedelay` })
+
+        if (input.volumeF1 !== undefined) {
+          inputSet.add({ name: `Input ${title} Volume F1`, variableId: `input_${type}_volume_f1` })
+          inputSet.add({ name: `Input ${title} Volume F1 dB`, variableId: `input_${type}_volume_f1_db` })
+          inputSet.add({ name: `Input ${title} Volume F1 Linear`, variableId: `input_${type}_volume_f1_linear` })
+        }
+
+        if (input.volumeF2 !== undefined) {
+          inputSet.add({ name: `Input ${title} Volume F2`, variableId: `input_${type}_volume_f2` })
+          inputSet.add({ name: `Input ${title} Volume F2 dB`, variableId: `input_${type}_volume_f2_db` })
+          inputSet.add({ name: `Input ${title} Volume F2 Linear`, variableId: `input_${type}_volume_f2_linear` })
+        }
 
         if (input.meterF1 !== undefined) {
           inputSet.add({ name: `Input ${title} MeterF1`, variableId: `input_${type}_meterf1` })
@@ -1489,6 +1531,26 @@ export class Variables {
           newVariables[`dynamic_input_${dynamic + 1}_volume_db`] = volumedB
           newVariables[`dynamic_input_${dynamic + 1}_volume_linear`] = volumeLinear
           newVariables[`dynamic_input_${dynamic + 1}_framedelay`] = input.frameDelay ?? 0
+
+          newVariables[`dynamic_input_${dynamic + 1}_volume_f1`] = ''
+          newVariables[`dynamic_input_${dynamic + 1}_volume_f1_db`] = ''
+          newVariables[`dynamic_input_${dynamic + 1}_volume_f1_linear`] = ''
+
+          if (input.volumeF1 !== undefined) {
+            newVariables[`dynamic_input_${dynamic + 1}_volume_f1`] = (input.volumeF1 * 100).toFixed(2)
+            newVariables[`dynamic_input_${dynamic + 1}_volume_f1_db`] = volumeTodB(input.volumeF1 * 100).toFixed(1)
+            newVariables[`dynamic_input_${dynamic + 1}_volume_f1_linear`] = Math.round(volumeToLinear(input.volumeF1 * 100))
+          }
+
+          newVariables[`dynamic_input_${dynamic + 1}_volume_f2`] = ''
+          newVariables[`dynamic_input_${dynamic + 1}_volume_f2_db`] = ''
+          newVariables[`dynamic_input_${dynamic + 1}_volume_f2_linear`] = ''
+
+          if (input.volumeF2 !== undefined) {
+            newVariables[`dynamic_input_${dynamic + 1}_volume_f2`] = (input.volumeF2 * 100).toFixed(2)
+            newVariables[`dynamic_input_${dynamic + 1}_volume_f2_db`] = volumeTodB(input.volumeF2 * 100).toFixed(1)
+            newVariables[`dynamic_input_${dynamic + 1}_volume_f2_linear`] = Math.round(volumeToLinear(input.volumeF2 * 100))
+          }
         }
       }
     }
@@ -1717,6 +1779,26 @@ export class Variables {
         newVariables[`input_${type}_volume_db`] = volumedB
         newVariables[`input_${type}_volume_linear`] = volumeLinear
         newVariables[`input_${type}_framedelay`] = input.frameDelay ?? 0
+
+        newVariables[`input_${type}_volume_f1`] = ''
+        newVariables[`input_${type}_volume_f1_db`] = ''
+        newVariables[`input_${type}_volume_f1_linear`] = ''
+
+        if (input.volumeF1 !== undefined) {
+          newVariables[`input_${type}_volume_f1`] = (input.volumeF1 * 100).toFixed(2)
+          newVariables[`input_${type}_volume_f1_db`] = volumeTodB(input.volumeF1 * 100).toFixed(1)
+          newVariables[`input_${type}_volume_f1_linear`] = Math.round(volumeToLinear(input.volumeF1 * 100))
+        }
+
+        newVariables[`input_${type}_volume_f2`] = ''
+        newVariables[`input_${type}_volume_f2_db`] = ''
+        newVariables[`input_${type}_volume_f2_linear`] = ''
+        
+        if (input.volumeF2 !== undefined) {
+          newVariables[`input_${type}_volume_f2`] = (input.volumeF2 * 100).toFixed(2)
+          newVariables[`input_${type}_volume_f2_db`] = volumeTodB(input.volumeF2 * 100).toFixed(1)
+          newVariables[`input_${type}_volume_f2_linear`] = Math.round(volumeToLinear(input.volumeF2 * 100))
+        }
       }
     }
 

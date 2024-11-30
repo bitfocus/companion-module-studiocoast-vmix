@@ -624,6 +624,7 @@ const upgradeV3_6_2: CompanionStaticUpgradeScript<Config> = (_context, props): C
 
 const upgradeV3_7_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
   let actions: any = props.actions
+  let feedbacks: any = props.feedbacks
 
   const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: null,
@@ -641,6 +642,13 @@ const upgradeV3_7_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
     if (action.actionId === 'setTransitionEffect') {
       action.options.input = ''
       changes.updatedActions.push(action)
+    }
+  })
+
+  feedbacks.forEach((feedback: any) => {
+    if (feedback.feedbackId === 'inputVolumeMeter') {
+      feedback.options.channel = 'Both'
+      changes.updatedFeedbacks.push(feedback)
     }
   })
 

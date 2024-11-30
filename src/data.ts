@@ -95,6 +95,8 @@ export interface Input {
   audioBusses?: AudioBusses
   audioAuto?: boolean
   balance?: number
+  volumeF1?: number
+  volumeF2?: number
   meterF1?: number
   meterF2?: number
   list?: List[]
@@ -523,6 +525,14 @@ export class VMixData {
 
           if (input.$.markOut !== undefined) {
             inputData.markOut = parseInt(input.$.markOut, 10)
+          }
+
+          if (input.$.volumeF1 !== undefined) {
+            inputData.volumeF1 = parseFloat(input.$.volumeF1)
+          }
+
+          if (input.$.volumeF2 !== undefined) {
+            inputData.volumeF2 = parseFloat(input.$.volumeF2)
           }
 
           if (input.$.meterF1 !== undefined) {

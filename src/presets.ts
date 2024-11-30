@@ -4195,7 +4195,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               down: [
                 {
                   actionId: 'setTransitionEffect',
-                  options: { functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1', value: 'Cut' },
+                  options: { functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1', value: 'Cut', input: '' },
                 },
               ],
               up: [],
@@ -4218,7 +4218,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               down: [
                 {
                   actionId: 'setTransitionEffect',
-                  options: { functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1', value: 'Fade' },
+                  options: { functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1', value: 'Fade', input: '' },
                 },
               ],
               up: [],
@@ -4241,7 +4241,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               down: [
                 {
                   actionId: 'setTransitionEffect',
-                  options: { functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1', value: 'Zoom' },
+                  options: { functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1', value: 'Zoom', input: '' },
                 },
               ],
               up: [],
@@ -4264,7 +4264,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               down: [
                 {
                   actionId: 'setTransitionEffect',
-                  options: { functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1', value: 'Merge' },
+                  options: { functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1', value: 'Merge', input: '' },
                 },
               ],
               up: [],

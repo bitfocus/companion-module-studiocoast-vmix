@@ -88,6 +88,7 @@ export interface VMixActions {
   setBusVolume: VMixAction<SetBusVolumeCallback>
   audioPlugin: VMixAction<AudioPluginCallback>
   audioChannelMatrixApplyPreset: VMixAction<AudioChannelMatrixApplyPresetCallback>
+  setVolumeChannel: VMixAction<SetVolumeChannelCallback>
   setVolumeChannelMixer: VMixAction<SetVolumeChannelMixerCallback>
   soloAllOff: VMixAction<SoloAllOffCallback>
   audioMixerShowHide: VMixAction<AudioMixerShowHideCallback>
@@ -702,6 +703,16 @@ interface AudioChannelMatrixApplyPresetCallback {
   options: Readonly<{
     input: string
     value: string
+  }>
+}
+
+interface SetVolumeChannelCallback {
+  actionId: 'setVolumeChannel'
+  options: Readonly<{
+    input: string
+    channel: string
+    adjustment: 'Set' | 'Increase' | 'Decrease'
+    amount: string
   }>
 }
 
@@ -1453,6 +1464,7 @@ export type ActionCallbacks =
   | SetBusVolumeCallback
   | AudioPluginCallback
   | AudioChannelMatrixApplyPresetCallback
+  | SetVolumeChannelCallback
   | SetVolumeChannelMixerCallback
   | SoloAllOffCallback
   | AudioMixerShowHideCallback
@@ -3549,8 +3561,57 @@ export function getActions(instance: VMixInstance): VMixActions {
       callback: sendBasicCommand,
     },
 
-    setVolumeChannelMixer: {
+    setVolumeChannel: {
       name: 'Audio - Set Input Channel Volume',
+      description: 'Sets the volume of Channel 1 or 2 on a separate mono input',
+      options: [
+        options.input,
+        {
+          type: 'textinput',
+          label: 'Channel (1 or 2)',
+          id: 'channel',
+          default: '1',
+          useVariables: true,
+        },
+        options.adjustment,
+        {
+          type: 'textinput',
+          label: 'Value',
+          id: 'amount',
+          default: '100',
+          useVariables: true,
+        },
+      ],
+      callback: async (action) => {
+        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+        const amount = parseFloat((await instance.parseOption(action.options.amount))[instance.buttonShift.state])
+        const channel = parseInt((await instance.parseOption(action.options.channel))[instance.buttonShift.state])
+        const input = await instance.data.getInput(selected)
+
+        if (input === null || isNaN(amount) || isNaN(channel) || input.volumeF1 === undefined || input.volumeF2 === undefined) return
+
+        let currentValue = channel === 1 ? Math.round(volumeToLinear(input.volumeF1 * 100)) : Math.round(volumeToLinear(input.volumeF2 * 100))
+        let newValue = amount
+
+        if (action.options.adjustment !== 'Set') {
+          if (action.options.adjustment === 'Increase') {
+            newValue = currentValue + amount
+          } else {
+            newValue = currentValue - amount
+          }
+        }
+
+        if (newValue > 100) newValue = 100
+        if (newValue < 0) newValue = 0
+
+        if (instance.tcp) {
+          instance.tcp.sendCommand(`FUNCTION ${channel === 1 ? 'SetVolumeChannel1' : 'SetVolumeChannel2'} Input=${input.key}&Value=${newValue}`)
+        }
+      }
+    },
+
+    setVolumeChannelMixer: {
+      name: 'Audio - Set Input Channel Mixer Volume',
       description: "Set Volume of an Input's sub channel",
       options: [
         options.input,
