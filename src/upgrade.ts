@@ -637,6 +637,11 @@ const upgradeV3_7_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
       action.options.mixVariable = ''
       changes.updatedActions.push(action)
     }
+
+    if (action.actionId === 'setTransitionEffect') {
+      action.options.input = ''
+      changes.updatedActions.push(action)
+    }
   })
 
   return changes

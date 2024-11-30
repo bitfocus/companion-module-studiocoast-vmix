@@ -72,6 +72,7 @@ export interface VMixActions {
   // Video Call
   videoCallAudioSource: VMixAction<VideoCallAudioSourceCallback>
   videoCallVideoSource: VMixAction<VideoCallVideoSourceCallback>
+  videoCallConnect: VMixAction<VideoCallConnectCallback>
 
   // Audio
   audioBus: VMixAction<AudioBusCallback>
@@ -81,7 +82,8 @@ export interface VMixActions {
   audioAuto: VMixAction<AudioAutoCallback>
   busXSolo: VMixAction<BusXSoloCallback>
   solo: VMixAction<SoloCallback>
-  setInputVolume: VMixAction<setInputVolumeCallback>
+  setInputVolume: VMixAction<SetInputVolumeCallback>
+  setBusVolumeFade: VMixAction<SetBusVolumeFadeCallback>
   setVolumeFade: VMixAction<SetVolumeFadeCallback>
   setBusVolume: VMixAction<SetBusVolumeCallback>
   audioPlugin: VMixAction<AudioPluginCallback>
@@ -174,6 +176,7 @@ export interface VMixActions {
   // Zoom
   zoomMuteSelf: VMixAction<ZoomMuteSelfCallback>
   zoomSelectParticipantByName: VMixAction<ZoomSelectParticipantByNameCallback>
+  zoomJoinMeeting: VMixAction<ZoomJoinMeetingCallback>
 
   // Util
   mixSelect: VMixAction<MixSelectCallback>
@@ -326,8 +329,17 @@ interface TransitionCallback {
 interface SetTransitionEffectCallback {
   actionId: 'setTransitionEffect'
   options: Readonly<{
-    functionID: 'SetTransitionEffect1' | 'SetTransitionEffect2' | 'SetTransitionEffect3' | 'SetTransitionEffect4'
+    functionID:
+    | 'SetTransitionEffect1'
+    | 'SetTransitionEffect2'
+    | 'SetTransitionEffect3'
+    | 'SetTransitionEffect4'
+    | 'SetStingerGTInput1'
+    | 'SetStingerGTInput2'
+    | 'SetStingerGTInput3'
+    | 'SetStingerGTInput4'
     value: (typeof TRANSITIONS)[number]
+    input: string
   }>
 }
 
@@ -573,6 +585,16 @@ interface VideoCallVideoSourceCallback {
   }>
 }
 
+interface VideoCallConnectCallback {
+  actionId: 'videoCallConnect',
+  options: Readonly<{
+    functionID: 'VideoCallConnect' | 'VideoCallReconnect'
+    input: string
+    name: string
+    password: string
+  }>
+}
+
 // Audio
 interface AudioBusCallback {
   actionId: 'audioBus'
@@ -630,12 +652,21 @@ interface SoloCallback {
   }>
 }
 
-interface setInputVolumeCallback {
+interface SetInputVolumeCallback {
   actionId: 'setInputVolume'
   options: Readonly<{
     input: string
     adjustment: 'Set' | 'Increase' | 'Decrease'
     amount: string
+  }>
+}
+
+interface SetBusVolumeFadeCallback {
+  actionId: 'setBusVolumeFade'
+  options: Readonly<{
+    value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'Selected'
+    fadeVol: string
+    fadeTime: string
   }>
 }
 
@@ -1290,6 +1321,15 @@ interface ZoomSelectParticipantByNameCallback {
   }>
 }
 
+interface ZoomJoinMeetingCallback {
+  actionId: 'zoomJoinMeeting'
+  options: Readonly<{
+    input: string
+    meetingID: string
+    password: string
+  }>
+}
+
 // Util
 interface MixSelectCallback {
   actionId: 'mixSelect'
@@ -1397,6 +1437,7 @@ export type ActionCallbacks =
   // Video Call
   | VideoCallAudioSourceCallback
   | VideoCallVideoSourceCallback
+  | VideoCallConnectCallback
 
   // Audio
   | AudioBusCallback
@@ -1406,6 +1447,8 @@ export type ActionCallbacks =
   | AudioAutoCallback
   | BusXSoloCallback
   | SoloCallback
+  | SetInputVolumeCallback
+  | SetBusVolumeFadeCallback
   | SetVolumeFadeCallback
   | SetBusVolumeCallback
   | AudioPluginCallback
@@ -1498,6 +1541,7 @@ export type ActionCallbacks =
   // Zoom
   | ZoomMuteSelfCallback
   | ZoomSelectParticipantByNameCallback
+  | ZoomJoinMeetingCallback
 
   // Util
   | MixSelectCallback
@@ -2132,6 +2176,10 @@ export function getActions(instance: VMixInstance): VMixActions {
             { id: 'SetTransitionEffect2', label: 'Transition 2' },
             { id: 'SetTransitionEffect3', label: 'Transition 3' },
             { id: 'SetTransitionEffect4', label: 'Transition 4' },
+            { id: 'SetStingerGTInput1', label: 'Stinger 1 GT Input' },
+            { id: 'SetStingerGTInput2', label: 'Stinger 2 GT Input' },
+            { id: 'SetStingerGTInput3', label: 'Stinger 3 GT Input' },
+            { id: 'SetStingerGTInput4', label: 'Stinger 4 GT Input' },
           ],
         },
         {
@@ -2140,9 +2188,39 @@ export function getActions(instance: VMixInstance): VMixActions {
           id: 'value',
           default: 'Cut',
           choices: TRANSITIONS.map((transition) => ({ id: transition, label: transition })),
+          isVisible: (options) => {
+            return (
+              options.functionID === 'SetTransitionEffect1' ||
+              options.functionID === 'SetTransitionEffect2' ||
+              options.functionID === 'SetTransitionEffect3' ||
+              options.functionID === 'SetTransitionEffect4'
+            )
+          }
+        },
+        {
+          type: 'textinput',
+          label: 'GT Input',
+          id: 'input',
+          default: '',
+          useVariables: true,
+          isVisible: (options) => {
+            return (
+              options.functionID === 'SetStingerGTInput1' ||
+              options.functionID === 'SetStingerGTInput2' ||
+              options.functionID === 'SetStingerGTInput3' ||
+              options.functionID === 'SetStingerGTInput4'
+            )
+          }
         },
       ],
-      callback: sendBasicCommand,
+      callback: async (action) => {
+        if (['SetTransitionEffect1', 'SetTransitionEffect2', 'SetTransitionEffect3', 'SetTransitionEffect4'].includes(action.options.functionID)) {
+          if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Value=${action.options.value}`)
+        } else {
+          const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+          if (instance.tcp && selected) instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Input=${selected}`)
+        }
+      },
     },
 
     setTransitionDuration: {
@@ -3081,6 +3159,51 @@ export function getActions(instance: VMixInstance): VMixActions {
       callback: sendBasicCommand,
     },
 
+    videoCallConnect: {
+      name: 'VideoCall - Connect / Reconnect',
+      description: 'Connection or reconnect to a vMix Call (Requires vMix 28+)',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Select Output',
+          id: 'functionID',
+          default: 'VideoCallConnect',
+          choices: [
+            { id: 'VideoCallConnect', label: 'Connect' },
+            { id: 'VideoCallReconnect', label: 'Reconnect' }
+          ],
+        },
+        options.input,
+        {
+          type: 'textinput',
+          label: 'Name',
+          id: 'name',
+          default: '',
+          useVariables: true,
+          isVisible: (options) => options.functionID === 'VideoCallReconnect'
+        },
+        {
+          type: 'textinput',
+          label: 'Password',
+          id: 'password',
+          default: '',
+          useVariables: true,
+          isVisible: (options) => options.functionID === 'VideoCallReconnect'
+        },
+      ],
+      callback: async (action) => {
+        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+
+        if (action.options.functionID === 'VideoCallConnect') {
+          if (instance.tcp) instance.tcp.sendCommand(action.options.functionID + `Input=${selected}`)
+        } else {
+          const name = (await instance.parseOption(action.options.name))[instance.buttonShift.state]
+          const password = (await instance.parseOption(action.options.password))[instance.buttonShift.state]
+          if (instance.tcp) instance.tcp.sendCommand(action.options.functionID + `Input=${selected}&Value=${name},${password}`)
+        }
+      }
+    },
+
     // Audio
     audioBus: {
       name: 'Audio - Route Input to Bus',
@@ -3273,6 +3396,39 @@ export function getActions(instance: VMixInstance): VMixActions {
           instance.tcp.sendCommand(`FUNCTION SetVolume input=${input.key}&Value=${target}`)
         }
       },
+    },
+
+    setBusVolumeFade: {
+      name: 'Audio - Fade Bus Volume',
+      description: 'Requires vMix 28+',
+      options: [
+        options.audioBusMaster,
+        {
+          type: 'textinput',
+          label: 'Fade to volume (Whole number 0 to 100)',
+          id: 'fadeVol',
+          default: '0',
+          useVariables: true,
+        },
+        {
+          type: 'textinput',
+          label: 'Fade time in ms',
+          id: 'fadeTime',
+          default: '2000',
+          useVariables: true,
+        },
+      ],
+      callback: async (action) => {
+        const selected = action.options.value === 'Selected' ? instance.routingData.bus : action.options.value
+        const fadeVol = (await instance.parseOption(action.options.fadeVol))[instance.buttonShift.state]
+        const fadeTime = (await instance.parseOption(action.options.fadeTime))[instance.buttonShift.state]
+
+        const shortcut = selected === 'Master' ? `SetMasterVolumeFade` : `SetBus${selected}VolumeFade`
+
+        if (instance.tcp) {
+          instance.tcp.sendCommand(`FUNCTION ${shortcut} value=${fadeVol},${fadeTime}`)
+        }
+      }
     },
 
     setVolumeFade: {
@@ -4872,6 +5028,37 @@ export function getActions(instance: VMixInstance): VMixActions {
         },
       ],
       callback: sendBasicCommand,
+    },
+
+    zoomJoinMeeting: {
+      name: 'Zoom - Join Meeting',
+      description: '',
+      options: [
+        options.input,
+        {
+          type: 'textinput',
+          label: 'Meeting ID',
+          id: 'meetingID',
+          default: '',
+          useVariables: true,
+        },
+        {
+          type: 'textinput',
+          label: 'Password',
+          id: 'password',
+          default: '',
+          useVariables: true,
+        }
+      ],
+      callback: async (action) => {
+        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+        const meetingID = (await instance.parseOption(action.options.meetingID))[instance.buttonShift.state]
+        const password = (await instance.parseOption(action.options.password))[instance.buttonShift.state]
+
+        if (selected && meetingID && instance.tcp) {
+          instance.tcp.sendCommand(`FUNCTION ZoomJoinMeeting Input=${selected}&Value=${meetingID},${password}`)
+        }
+      }
     },
 
     // Util

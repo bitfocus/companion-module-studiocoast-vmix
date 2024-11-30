@@ -1,12 +1,13 @@
 # Patch Notes
 
 **v3.7.0**
-**v3.7.0**
 - Update for vMix 28 beta features
+- Added Actions: `Audio - Fade Bus Volume`, `VideoCall - Connect / Reconnect`, `Zoom - Join Meeting`
 - Added Feedbacks: `vMix - Output Status` and `vMix - Output NDI/SRT Status`
 - Added Variables: `fullscreen_X_source` (X = 1 or 2), `output_X_source`, `output_X_ndi`, `output_X_srt` (X = 1 to 4), `stream_4_active`, `stream_5_active`
 - Updated `Overlay - Functions` Action to include options to select Mix for the Overlay
 - Updated `Output - MultiCorder / Recording / Streaming` Action, and `vMix - Status` Feedback, to support up to 5 streams
+- Updated `Transition - Set Auto Transition Effect` to support setting a GT Input to a Stinger transition
 
 **v3.6.7**
 - Fixed an issue with undefined titles being returned as `'undefined'`, rather than an empty string as intended
