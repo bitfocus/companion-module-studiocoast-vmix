@@ -48,6 +48,7 @@ This module now supports Companions HTTP API, providing endpoints that can be us
   - `output_X_source`, `output_X_ndi`, `output_X_srt` (X = 1 to 4)
   - `stream_4_active`, `stream_5_active`
   - `input_X_volume_f1`, `input_X_volume_f1_db`, `input_X_volume_f1_linear`, `input_X_volume_f2`, `input_X_volume_f2_db`, `input_X_volume_f2_linear` (volume_f1 and volume_f2 variables are for inputs with separate mono enabled)
+  - `input_X_layer_NAME_titletext` (Previously the titletext variables only used layer Index, now they can also use Layer Name instead. Note: Some special characters in the name may not be supported)
 - Updated `Overlay - Functions` Action to include options to select Mix for the Overlay
 - Updated `Output - MultiCorder / Recording / Streaming` Action, and `vMix - Status` Feedback, to support up to 5 streams
 - Updated `Transition - Set Auto Transition Effect` Action to support setting a GT Input to a Stinger transition

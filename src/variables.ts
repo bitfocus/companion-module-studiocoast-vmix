@@ -469,6 +469,10 @@ export class Variables {
               name: `Dynamic Input ${dynamic + 1} layer ${textLayer.index} Title Text`,
               variableId: `dynamic_input_${dynamic + 1}_layer_${textLayer.index}_titletext`,
             })
+            variables.add({
+              name: `Dynamic Input ${dynamic + 1} layer ${textLayer.name} Title Text`,
+              variableId: `dynamic_input_${dynamic + 1}_layer_${textLayer.name}_titletext`,
+            })
           })
         }
 
@@ -698,6 +702,11 @@ export class Variables {
             inputSet.add({
               name: `Input ${title} layer ${textLayer.index} Title Text`,
               variableId: `input_${type}_layer_${textLayer.index}_titletext`,
+            })
+
+            inputSet.add({
+              name: `Input ${title} layer ${textLayer.name} Title Text`,
+              variableId: `input_${type}_layer_${textLayer.name}_titletext`,
             })
           })
         }
@@ -1479,6 +1488,7 @@ export class Variables {
           if (input.text) {
             input.text.forEach((textLayer) => {
               newVariables[`dynamic_input_${dynamic + 1}_layer_${textLayer.index}_titletext`] = textLayer.value
+              newVariables[`dynamic_input_${dynamic + 1}_layer_${textLayer.name}_titletext`] = textLayer.value
             })
           }
 
@@ -1733,6 +1743,7 @@ export class Variables {
         if (input.text) {
           input.text.forEach((textLayer) => {
             newVariables[`input_${type}_layer_${textLayer.index}_titletext`] = textLayer.value
+            newVariables[`input_${type}_layer_${textLayer.name}_titletext`] = textLayer.value
           })
         }
 
