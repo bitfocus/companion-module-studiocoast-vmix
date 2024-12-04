@@ -34,6 +34,10 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 
 
 # Recent Patches
+**v3.7.1**
+- Fixed typo in stream 4 and 5 variable definitions
+- Better handling of vMix's undocumented XML processing instructions added to the XML API
+
 **v3.7.0**
 - Update for vMix 28 beta features
 - Added Actions:

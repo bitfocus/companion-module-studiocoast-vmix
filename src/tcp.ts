@@ -250,7 +250,6 @@ export class TCP {
           this.instance.apiProcessing.response = new Date().getTime()
           this.instance.data.update(message)
         } else {
-          // Debugging for issue #159
           if (
             this.messageBuffer.message.toString().includes('<vmix>') &&
             this.messageBuffer.message.toString().includes('</vmix>')
@@ -261,12 +260,15 @@ export class TCP {
             if (dataStart !== -1 && dataStop !== -1) {
               const data = this.messageBuffer.message.toString().slice(dataStart, dataStop + 7)
 
-              this.instance.log(
-                'debug',
-                `Message prefix issue - Message length: ${this.messageBuffer.message.length}, Buffer length: ${
-                  this.messageBuffer.dataLength
-                }, Full Message: ${this.messageBuffer.message.toString()}`
-              )
+              let controlMessage = message.startsWith('<?')
+              if (!controlMessage) {
+                this.instance.log(
+                  'debug',
+                  `Message prefix issue - Message length: ${this.messageBuffer.message.length}, Buffer length: ${
+                    this.messageBuffer.dataLength
+                  }, Full Message: ${this.messageBuffer.message.toString()}`
+                )
+              }
 
               this.instance.apiProcessing.response = new Date().getTime()
               this.instance.data.update(data)
