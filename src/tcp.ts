@@ -16,16 +16,16 @@ export class TCP {
   private readonly instance: VMixInstance
   private messageBuffer: MessageBuffer = {
     dataLength: 0,
-    message: Buffer.from(''),
+    message: Buffer.from('')
   }
-  private pingInterval: NodeJS.Timer | null = null
-  private pollAPI: NodeJS.Timer | null = null
+  private pingInterval: ReturnType<typeof setInterval> | null = null
+  private pollAPI: ReturnType<typeof setInterval> | null = null
   private pollInterval = 250
   private sizeWarning = false
   private sockets: TCPSockets = {
     activator: null,
     functions: null,
-    xml: null,
+    xml: null
   }
   private tcpHost: string
   private tcpPort: number
@@ -195,7 +195,7 @@ export class TCP {
       'ACTS BusDSolo\r\n',
       'ACTS BusESolo\r\n',
       'ACTS BusFSolo\r\n',
-      'ACTS BusGSolo\r\n',
+      'ACTS BusGSolo\r\n'
     ]
 
     this.sockets.activator?.send(initialRequests.join('')).catch((err) => {
@@ -246,7 +246,10 @@ export class TCP {
         const prefixLength = this.messageBuffer.message.length - this.messageBuffer.dataLength
         const message = this.messageBuffer.message.slice(prefixLength).toString().trim()
 
-        if (message.startsWith('<vmix>') && message.endsWith('</vmix>')) {
+        let encodingHeader = false
+        if (message.startsWith('<?xml')) encodingHeader = true
+
+        if ((message.startsWith('<vmix>') || encodingHeader) && message.endsWith('</vmix>')) {
           this.instance.apiProcessing.response = new Date().getTime()
           this.instance.data.update(message)
         } else {
@@ -260,7 +263,7 @@ export class TCP {
             if (dataStart !== -1 && dataStop !== -1) {
               const data = this.messageBuffer.message.toString().slice(dataStart, dataStop + 7)
 
-              let controlMessage = message.startsWith('<?')
+              const controlMessage = message.startsWith('<?')
               if (!controlMessage) {
                 this.instance.log(
                   'debug',

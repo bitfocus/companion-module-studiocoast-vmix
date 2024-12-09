@@ -1,7 +1,7 @@
 import {
   CompanionInputFieldColor,
   CompanionInputFieldDropdown,
-  CompanionInputFieldTextInput,
+  CompanionInputFieldTextInput
 } from '@companion-module/base'
 
 export type TimeFormat = 'hh:mm:ss' | 'hh:mm:ss.ms' | 'mm:ss' | 'mm:ss.ms' | 'mm:ss.sss' | 'auto'
@@ -59,7 +59,7 @@ export const TRANSITIONS = [
   'VerticalWipeReverse',
   'VerticalSlideReverse',
   'BarnDoor',
-  'RollerDoor',
+  'RollerDoor'
 ] as const
 
 /**
@@ -82,7 +82,7 @@ export const options: Options = {
     id: 'input',
     default: '1',
     tooltip: 'Number, Name, or GUID',
-    useVariables: true,
+    useVariables: true
   },
 
   mixSelect: {
@@ -108,8 +108,8 @@ export const options: Options = {
       { id: 14, label: '15' },
       { id: 15, label: '16' },
       { id: -1, label: 'Selected' },
-      { id: -2, label: 'Variable' },
-    ],
+      { id: -2, label: 'Variable' }
+    ]
   },
 
   mixVariable: {
@@ -119,7 +119,7 @@ export const options: Options = {
     default: '1',
     tooltip: '',
     isVisible: (options) => options.mix === -2,
-    useVariables: true,
+    useVariables: true
   },
 
   audioBus: {
@@ -127,7 +127,7 @@ export const options: Options = {
     label: 'Bus',
     id: 'value',
     default: 'A',
-    choices: [...AUDIOBUSSES, 'Selected'].map((id) => ({ id, label: id })),
+    choices: [...AUDIOBUSSES, 'Selected'].map((id) => ({ id, label: id }))
   },
 
   audioBusMaster: {
@@ -135,42 +135,42 @@ export const options: Options = {
     label: 'Bus',
     id: 'value',
     default: 'Master',
-    choices: ['Master', ...AUDIOBUSSES, 'Selected'].map((id) => ({ id, label: id })),
+    choices: ['Master', ...AUDIOBUSSES, 'Selected'].map((id) => ({ id, label: id }))
   },
 
   foregroundColor: {
     type: 'colorpicker',
     label: 'Foreground color',
     id: 'fg',
-    default: rgb(255, 255, 255),
+    default: rgb(255, 255, 255)
   },
 
   foregroundColorBlack: {
     type: 'colorpicker',
     label: 'Foreground color',
     id: 'fg',
-    default: rgb(0, 0, 0),
+    default: rgb(0, 0, 0)
   },
 
   backgroundColorPreview: {
     type: 'colorpicker',
     label: 'Background color',
     id: 'bg',
-    default: rgb(0, 255, 0),
+    default: rgb(0, 255, 0)
   },
 
   backgroundColorProgram: {
     type: 'colorpicker',
     label: 'Background color',
     id: 'bg',
-    default: rgb(255, 0, 0),
+    default: rgb(255, 0, 0)
   },
 
   backgroundColorYellow: {
     type: 'colorpicker',
     label: 'Background color',
     id: 'bg',
-    default: rgb(255, 255, 0),
+    default: rgb(255, 255, 0)
   },
 
   selectedIndex: {
@@ -178,7 +178,7 @@ export const options: Options = {
     label: 'Selected Index',
     id: 'selectedIndex',
     default: '1',
-    useVariables: true,
+    useVariables: true
   },
 
   comparison: {
@@ -191,8 +191,8 @@ export const options: Options = {
       { id: 'lt', label: '<' },
       { id: 'lte', label: '<=' },
       { id: 'gt', label: '>' },
-      { id: 'gte', label: '>=' },
-    ],
+      { id: 'gte', label: '>=' }
+    ]
   },
 
   layerTallyIndicator: {
@@ -207,8 +207,8 @@ export const options: Options = {
       { id: 'cornerTR', label: 'Corner Top Right' },
       { id: 'cornerBL', label: 'Corner Bottom Left' },
       { id: 'cornerBR', label: 'Corner Bottom Right' },
-      { id: 'full', label: 'Full Background' },
-    ],
+      { id: 'full', label: 'Full Background' }
+    ]
   },
 
   replayChannel: {
@@ -219,8 +219,8 @@ export const options: Options = {
     choices: [
       { id: 'Current', label: 'Current' },
       { id: 'A', label: 'A' },
-      { id: 'B', label: 'B' },
-    ],
+      { id: 'B', label: 'B' }
+    ]
   },
 
   adjustment: {
@@ -231,9 +231,9 @@ export const options: Options = {
     choices: [
       { id: 'Set', label: 'Set' },
       { id: 'Increase', label: 'Increase' },
-      { id: 'Decrease', label: 'Decrease' },
-    ],
-  },
+      { id: 'Decrease', label: 'Decrease' }
+    ]
+  }
 }
 
 /**

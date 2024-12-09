@@ -174,7 +174,7 @@ const eventHandlers: { [key: string]: ActivatorEventHandlers | null } = {
 
   // Unused
   InputHeadphones: null,
-  ButtonPress: null,
+  ButtonPress: null
 }
 
 export class Activators {
@@ -342,18 +342,20 @@ export class Activators {
       // Update layer tally
       const tallyType = type === 'preview' ? 'previewTally' : 'programTally'
       this.instance.data.mix[mix][tallyType] = []
-      const checkTally = (input: Input) => {
+      const checkTally = async (input: Input) => {
         if (!this.instance.data.mix[mix][tallyType].includes(input.key)) {
           this.instance.data.mix[mix][tallyType].push(input.key)
 
-          input.overlay?.forEach(async (layer) => {
+          for (const layer of input.overlay || []) {
             const layerInput = await this.instance.data.getInput(layer.key)
 
             if (layerInput) {
               checkTally(layerInput)
             }
-          })
+          }
         }
+
+        return
       }
 
       const input = await this.instance.data.getInput(inputNumber)
@@ -362,15 +364,15 @@ export class Activators {
         checkTally(input)
       }
 
-      this.instance.data.overlays
-        .filter((overlay) => overlay.input !== null)
-        .forEach(async (overlay) => {
-          const overlayInput = await this.instance.data.getInput(overlay.input as number)
+      const overlays = this.instance.data.overlays.filter((overlay) => overlay.input !== null)
 
-          if (overlayInput) {
-            checkTally(overlayInput)
-          }
-        })
+      for (const overlay of overlays) {
+        const overlayInput = await this.instance.data.getInput(overlay.input as number)
+
+        if (overlayInput) {
+          checkTally(overlayInput)
+        }
+      }
 
       if (type === 'preview') {
         this.updateBuffer('inputPreview')
