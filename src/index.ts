@@ -1,6 +1,7 @@
 import {
   InstanceBase,
   runEntrypoint,
+  CompanionActionDefinitions,
   CompanionFeedbackContext,
   CompanionFeedbackDefinitions,
   CompanionHTTPRequest,
@@ -8,12 +9,12 @@ import {
   SomeCompanionConfigField
 } from '@companion-module/base'
 import { Config, getConfigFields } from './config'
-import { getActions } from './actions'
+import { getActions } from './actions/actions'
 import { Activators } from './activators'
 import { VMixData } from './data'
-import { getFeedbacks } from './feedback'
+import { getFeedbacks } from './feedbacks/feedback'
 import { httpHandler } from './http'
-import { getPresets } from './presets'
+import { getPresets } from './presets/presets'
 import { TCP } from './tcp'
 import { Timer } from './timers'
 import { getUpgrades } from './upgrade'
@@ -206,8 +207,8 @@ class VMixInstance extends InstanceBase<Config> {
    */
   private updateInstance(): void {
     // Cast actions and feedbacks from VMix types to Companion types
-    const actions = getActions(this)
-    const feedbacks = getFeedbacks(this) as CompanionFeedbackDefinitions
+    const actions = getActions(this) as CompanionActionDefinitions
+    const feedbacks = getFeedbacks(this) as unknown as CompanionFeedbackDefinitions
 
     this.setActionDefinitions(actions)
     this.setFeedbackDefinitions(feedbacks)

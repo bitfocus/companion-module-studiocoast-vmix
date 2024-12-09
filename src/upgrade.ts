@@ -1,6 +1,6 @@
 import { combineRgb, CompanionStaticUpgradeScript, CompanionStaticUpgradeResult } from '@companion-module/base'
 import { Config } from './config'
-import { getActions } from './actions'
+import { getActions } from './actions/actions'
 import { getConfigFields } from './config'
 
 /**
@@ -655,6 +655,36 @@ const upgradeV3_7_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   return changes
 }
 
+const upgradeV3_8_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
+  const feedbacks: any = props.feedbacks
+
+  const changes: CompanionStaticUpgradeResult<Config> = {
+    updatedConfig: null,
+    updatedActions: [],
+    updatedFeedbacks: []
+  }
+
+  feedbacks.forEach((feedback: any) => {
+    if (feedback.feedbackId === 'inputLoop') {
+      feedback.feedbackId = 'inputState'
+      feedback.options.type = 'loop'
+      changes.updatedFeedbacks.push(feedback)
+    }
+  })
+
+  return changes
+}
+
 export const getUpgrades = (): CompanionStaticUpgradeScript<Config>[] => {
-  return [upgradeV1_2_0, upgradeV2_0_0, upgradeV2_0_6, upgradeV3_5_0, adjustmentFix, upgradeV3_6_0, upgradeV3_6_2, upgradeV3_7_0]
+  return [
+    upgradeV1_2_0,
+    upgradeV2_0_0,
+    upgradeV2_0_6,
+    upgradeV3_5_0,
+    adjustmentFix,
+    upgradeV3_6_0,
+    upgradeV3_6_2,
+    upgradeV3_7_0,
+    upgradeV3_8_0
+  ]
 }
