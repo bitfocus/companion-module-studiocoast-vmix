@@ -1,10 +1,11 @@
 import {
   InstanceBase,
   runEntrypoint,
+  CompanionFeedbackContext,
   CompanionFeedbackDefinitions,
   CompanionHTTPRequest,
   CompanionHTTPResponse,
-  SomeCompanionConfigField,
+  SomeCompanionConfigField
 } from '@companion-module/base'
 import { Config, getConfigFields } from './config'
 import { getActions } from './actions'
@@ -31,7 +32,7 @@ interface APIProcessing {
 interface ButtonShift {
   state: number
   blink: boolean
-  blinkInterval: NodeJS.Timer | null
+  blinkInterval: ReturnType<typeof setInterval> | null
 }
 
 interface RoutingData {
@@ -60,12 +61,12 @@ class VMixInstance extends InstanceBase<Config> {
     response: 0,
     parsed: 0,
     feedbacks: 0,
-    variables: 0,
+    variables: 0
   }
   public buttonShift: ButtonShift = {
     state: 0,
     blink: false,
-    blinkInterval: null,
+    blinkInterval: null
   }
   public config: Config = {
     label: '',
@@ -82,24 +83,24 @@ class VMixInstance extends InstanceBase<Config> {
     variablesShowInputGUID: true,
     variablesShowInputPosition: false,
     variablesShowInputLayerPosition: false,
-    strictInputVariableTypes: false,
+    strictInputVariableTypes: false
   }
   public connected = false
   public data = new VMixData(this)
-  public pollAPI: NodeJS.Timer | null = null
+  public pollAPI: ReturnType<typeof setInterval> | null = null
   public routingData: RoutingData = {
     audio: {},
     bus: 'Master',
     layer: {
       destinationInput: null,
-      destinationLayer: null,
+      destinationLayer: null
     },
-    mix: 0,
+    mix: 0
   }
   public startTime: Date = new Date()
   public tcp: TCP | null = null
   public timers: Timer[] = []
-  public timerInterval: NodeJS.Timer | null = null
+  public timerInterval: ReturnType<typeof setInterval> | null = null
   public variables: Variables | null = null
 
   /**
@@ -182,7 +183,7 @@ class VMixInstance extends InstanceBase<Config> {
    * @returns array of strings indexed by the button modifier delimiter
    * @description first splits the string by the position of the delimiter, then parses any instance variables in each part
    */
-  public readonly parseOption = async (option: string, context?: any): Promise<string[]> => {
+  public readonly parseOption = async (option: string, context?: CompanionFeedbackContext): Promise<string[]> => {
     const split = option.split(this.config.shiftDelimiter)
     const values = []
 
@@ -216,7 +217,7 @@ class VMixInstance extends InstanceBase<Config> {
    * @param request HTTP request from Companion
    * @returns HTTP response
    */
-  public handleHttpRequest(request: CompanionHTTPRequest): Promise<CompanionHTTPResponse> {
+  public async handleHttpRequest(request: CompanionHTTPRequest): Promise<CompanionHTTPResponse> {
     return httpHandler(this, request)
   }
 }

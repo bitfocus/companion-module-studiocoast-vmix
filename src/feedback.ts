@@ -8,7 +8,7 @@ import {
   CompanionFeedbackAdvancedEvent,
   CompanionFeedbackBooleanEvent,
   CompanionFeedbackContext,
-  SomeCompanionFeedbackInputField,
+  SomeCompanionFeedbackInputField
 } from '@companion-module/base'
 import { presets, graphics } from 'companion-module-utils'
 
@@ -546,7 +546,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         options.mixVariable,
         options.foregroundColor,
         options.backgroundColorPreview,
-        options.layerTallyIndicator,
+        options.layerTallyIndicator
       ],
       callback: async (feedback, context) => {
         let mixVariable: string | number = (await instance.parseOption(feedback.options.mixVariable, context))[
@@ -578,7 +578,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         }
 
         let optionsInput: any = await instance.parseOption(feedback.options.input, context)
-        optionsInput = await Promise.all(optionsInput.map((value: any) => instance.data.getInput(value)))
+        optionsInput = await Promise.all(optionsInput.map(async (value: any) => instance.data.getInput(value)))
         optionsInput = optionsInput.map(checkInput)
 
         if (
@@ -596,7 +596,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
               width: feedback.image.width,
               height: feedback.image.height,
               size: 4,
-              color: feedback.options.bg,
+              color: feedback.options.bg
             })
           } else if (feedback.options.tally.includes('corner')) {
             let location: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' = 'topLeft'
@@ -610,17 +610,17 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
               height: feedback.image.height,
               color: feedback.options.bg,
               size: 24,
-              location,
+              location
             })
           }
 
           return {
-            imageBuffer: indicator,
+            imageBuffer: indicator
           }
         } else {
           return {}
         }
-      },
+      }
     },
 
     inputLive: {
@@ -633,7 +633,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         options.mixVariable,
         options.foregroundColor,
         options.backgroundColorProgram,
-        options.layerTallyIndicator,
+        options.layerTallyIndicator
       ],
       callback: async (feedback, context) => {
         let mixVariable: string | number = (await instance.parseOption(feedback.options.mixVariable, context))[
@@ -665,7 +665,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         }
 
         let optionsInput: any = await instance.parseOption(feedback.options.input, context)
-        optionsInput = await Promise.all(optionsInput.map((value: any) => instance.data.getInput(value)))
+        optionsInput = await Promise.all(optionsInput.map(async (value: any) => instance.data.getInput(value)))
         optionsInput = optionsInput.map(checkInput)
 
         if (
@@ -683,7 +683,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
               width: feedback.image.width,
               height: feedback.image.height,
               size: 4,
-              color: feedback.options.bg,
+              color: feedback.options.bg
             })
           } else if (feedback.options.tally.includes('corner')) {
             let location: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' = 'topLeft'
@@ -697,17 +697,17 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
               height: feedback.image.height,
               color: feedback.options.bg,
               size: 24,
-              location,
+              location
             })
           }
 
           return {
-            imageBuffer: indicator,
+            imageBuffer: indicator
           }
         } else {
           return {}
         }
-      },
+      }
     },
 
     overlayStatus: {
@@ -723,26 +723,26 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           default: '1',
           choices: ['Any', '1', '2', '3', '4', 'Stinger 1', 'Stinger 2', 'Stinger 3', 'Stinger 4'].map((id, index) => ({
             id: index.toString(),
-            label: id,
-          })),
+            label: id
+          }))
         },
         options.foregroundColor,
         {
           type: 'colorpicker',
           label: 'Preview Background Color',
           id: 'bgPreview',
-          default: combineRgb(0, 255, 0),
+          default: combineRgb(0, 255, 0)
         },
         {
           type: 'colorpicker',
           label: 'Program Background Color',
           id: 'bgProgram',
-          default: combineRgb(255, 0, 0),
-        },
+          default: combineRgb(255, 0, 0)
+        }
       ],
       callback: async (feedback, context) => {
         let inputOptions: any = await instance.parseOption(feedback.options.input, context)
-        inputOptions = await Promise.all(inputOptions.map((value: any) => instance.data.getInput(value)))
+        inputOptions = await Promise.all(inputOptions.map(async (value: any) => instance.data.getInput(value)))
         inputOptions = inputOptions.map((input: Input | null) => (input !== null ? input.number : null))
 
         let preview = false
@@ -768,12 +768,12 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         if (preview || program) {
           return {
             color: feedback.options.fg,
-            bgcolor: program ? feedback.options.bgProgram : feedback.options.bgPreview,
+            bgcolor: program ? feedback.options.bgProgram : feedback.options.bgPreview
           }
         }
 
         return {}
-      },
+      }
     },
 
     // General
@@ -787,26 +787,26 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           type: 'colorpicker',
           label: 'Text color',
           id: 'color',
-          default: combineRgb(255, 255, 255),
+          default: combineRgb(255, 255, 255)
         },
         {
           type: 'colorpicker',
           label: 'Text color under 30s',
           id: 'color30',
-          default: combineRgb(255, 255, 0),
+          default: combineRgb(255, 255, 0)
         },
         {
           type: 'colorpicker',
           label: 'Text color under 10s',
           id: 'color10',
-          default: combineRgb(255, 0, 0),
+          default: combineRgb(255, 0, 0)
         },
         {
           type: 'checkbox',
           label: 'Disable color change if looping',
           id: 'loop',
-          default: false,
-        },
+          default: false
+        }
       ],
       callback: async (feedback, context) => {
         const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
@@ -833,7 +833,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         }
 
         return { color: color() }
-      },
+      }
     },
 
     status: {
@@ -842,7 +842,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Current status of vMix, such as recording, external, etc...',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
+        bgcolor: combineRgb(255, 0, 0)
       },
       options: [
         {
@@ -858,8 +858,8 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
             'streaming',
             'multiCorder',
             'fullscreen',
-            'playList',
-          ].map((id) => ({ id, label: id })),
+            'playList'
+          ].map((id) => ({ id, label: id }))
         },
         {
           type: 'dropdown',
@@ -872,12 +872,12 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
             { id: '1', label: '2' },
             { id: '2', label: '3' },
             { id: '3', label: '4' },
-            { id: '4', label: '5' },
+            { id: '4', label: '5' }
           ],
           isVisible: (options) => {
             return options.status === 'streaming'
-          },
-        },
+          }
+        }
       ],
       callback: (feedback) => {
         if (feedback.options.status === 'connection') {
@@ -894,7 +894,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           }
         }
         return false
-      },
+      }
     },
 
     outputStatus: {
@@ -903,7 +903,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Requires vMix 28+',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
+        bgcolor: combineRgb(255, 0, 0)
       },
       options: [
         {
@@ -918,8 +918,8 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
             { id: 'Output 2', label: 'Output 2' },
             { id: 'Output 3', label: 'Output 3' },
             { id: 'Output 4', label: 'Output 4' },
-            { id: 'Custom', label: 'Use Variable' },
-          ],
+            { id: 'Custom', label: 'Use Variable' }
+          ]
         },
         {
           type: 'textinput',
@@ -927,7 +927,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           id: 'custom',
           default: '',
           useVariables: true,
-          isVisible: (options) => options.output === 'Custom',
+          isVisible: (options) => options.output === 'Custom'
         },
         {
           type: 'dropdown',
@@ -941,8 +941,8 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
             { id: 'MultiView2', label: 'MultiView2' },
             { id: 'Replay', label: 'Replay' },
             { id: 'Mix', label: 'Mix' },
-            { id: 'Input', label: 'Input' },
-          ],
+            { id: 'Input', label: 'Input' }
+          ]
         },
         {
           type: 'textinput',
@@ -950,7 +950,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           id: 'mix',
           default: '',
           useVariables: true,
-          isVisible: (options) => options.type === 'Mix',
+          isVisible: (options) => options.type === 'Mix'
         },
         {
           type: 'textinput',
@@ -958,8 +958,8 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           id: 'input',
           default: '',
           useVariables: true,
-          isVisible: (options) => options.type === 'Input',
-        },
+          isVisible: (options) => options.type === 'Input'
+        }
       ],
       callback: async (feedback, context) => {
         const outputSelect: any =
@@ -990,7 +990,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         } else {
           return output.source === feedback.options.type
         }
-      },
+      }
     },
 
     outputNDISRT: {
@@ -999,7 +999,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Requires vMix 28+',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
+        bgcolor: combineRgb(255, 0, 0)
       },
       options: [
         {
@@ -1012,8 +1012,8 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
             { id: 'Output 2', label: 'Output 2' },
             { id: 'Output 3', label: 'Output 3' },
             { id: 'Output 4', label: 'Output 4' },
-            { id: 'Custom', label: 'Use Variable' },
-          ],
+            { id: 'Custom', label: 'Use Variable' }
+          ]
         },
         {
           type: 'textinput',
@@ -1021,7 +1021,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           id: 'custom',
           default: '',
           useVariables: true,
-          isVisible: (options) => options.output === 'Custom',
+          isVisible: (options) => options.output === 'Custom'
         },
         {
           type: 'dropdown',
@@ -1030,9 +1030,9 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           default: 'ndi',
           choices: [
             { id: 'ndi', label: 'NDI' },
-            { id: 'srt', label: 'SRT' },
-          ],
-        },
+            { id: 'srt', label: 'SRT' }
+          ]
+        }
       ],
       callback: async (feedback, context) => {
         const outputSelect: any =
@@ -1051,8 +1051,8 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
 
         if (!output) return false
 
-        return output[feedback.options.type as 'ndi' | 'srt']
-      },
+        return output[feedback.options.type]
+      }
     },
 
     // Audio
@@ -1062,7 +1062,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicate if a bus is muted',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
+        bgcolor: combineRgb(255, 0, 0)
       },
       options: [options.audioBusMaster],
       callback: (feedback) => {
@@ -1070,7 +1070,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         const bus = instance.data.getAudioBus(busID)
 
         return bus?.muted || false
-      },
+      }
     },
 
     busSolo: {
@@ -1079,7 +1079,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Requires vMix v25+',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0),
+        bgcolor: combineRgb(255, 255, 0)
       },
       options: [options.audioBus],
       callback: (feedback) => {
@@ -1087,7 +1087,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         const bus = instance.data.getAudioBus(busID)
 
         return bus?.solo || false
-      },
+      }
     },
 
     busSendToMaster: {
@@ -1096,7 +1096,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Requires vMix v27+',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0),
+        bgcolor: combineRgb(255, 255, 0)
       },
       options: [options.audioBus],
       callback: (feedback) => {
@@ -1104,7 +1104,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         const bus = instance.data.getAudioBus(busID)
 
         return bus?.sendToMaster || false
-      },
+      }
     },
 
     inputAudio: {
@@ -1113,7 +1113,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicate if an input is muted or enabled',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
+        bgcolor: combineRgb(255, 0, 0)
       },
       options: [options.input],
       callback: async (feedback, context) => {
@@ -1121,7 +1121,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         const input = await instance.data.getInput(inputOption)
 
         return input?.muted || false
-      },
+      }
     },
 
     inputAudioAuto: {
@@ -1130,7 +1130,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicate if an input will auto enable/disable audio when transitioned to/from',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(0, 255, 0),
+        bgcolor: combineRgb(0, 255, 0)
       },
       options: [options.input],
       callback: async (feedback, context) => {
@@ -1138,7 +1138,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         const input = await instance.data.getInput(inputOption)
 
         return input?.audioAuto || false
-      },
+      }
     },
 
     inputSolo: {
@@ -1147,7 +1147,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicate if an input is set to Solo',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0),
+        bgcolor: combineRgb(255, 255, 0)
       },
       options: [options.input],
       callback: async (feedback, context) => {
@@ -1155,7 +1155,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         const input = await instance.data.getInput(inputOption)
 
         return input?.solo || false
-      },
+      }
     },
 
     inputBusRouting: {
@@ -1164,7 +1164,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicate which busses an input will output to',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0),
+        bgcolor: combineRgb(255, 255, 0)
       },
       options: [options.input, options.audioBusMaster],
       callback: async (feedback, context) => {
@@ -1173,7 +1173,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         const busID = feedback.options.value === 'Master' ? 'M' : feedback.options.value
 
         return input?.audioBusses?.[busID] || false
-      },
+      }
     },
 
     liveBusVolume: {
@@ -1186,50 +1186,50 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           type: 'checkbox',
           label: 'Color Text',
           id: 'colorTxt',
-          default: true,
+          default: true
         },
         {
           type: 'checkbox',
           label: 'Color Background',
           id: 'colorBG',
-          default: false,
+          default: false
         },
         {
           type: 'colorpicker',
           label: 'Base Text Color',
           id: 'colorBase',
-          default: combineRgb(255, 255, 255),
+          default: combineRgb(255, 255, 255)
         },
         {
           type: 'colorpicker',
           label: 'Text color above -1 dB',
           id: 'color',
-          default: combineRgb(255, 0, 0),
+          default: combineRgb(255, 0, 0)
         },
         {
           type: 'colorpicker',
           label: 'Text color below -1 dB',
           id: 'color1',
-          default: combineRgb(255, 255, 0),
+          default: combineRgb(255, 255, 0)
         },
         {
           type: 'colorpicker',
           label: 'Text color below -6 dB',
           id: 'color6',
-          default: combineRgb(0, 255, 0),
+          default: combineRgb(0, 255, 0)
         },
         {
           type: 'colorpicker',
           label: 'Text color below -18 dB',
           id: 'color18',
-          default: combineRgb(0, 192, 0),
+          default: combineRgb(0, 192, 0)
         },
         {
           type: 'colorpicker',
           label: 'Text color below -36 dB',
           id: 'color36',
-          default: combineRgb(0, 128, 0),
-        },
+          default: combineRgb(0, 128, 0)
+        }
       ],
       callback: (feedback) => {
         const busID = feedback.options.value === 'Master' ? 'master' : 'bus' + feedback.options.value
@@ -1261,7 +1261,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         }
 
         return {}
-      },
+      }
     },
 
     liveInputVolume: {
@@ -1274,50 +1274,50 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           type: 'checkbox',
           label: 'Color Text',
           id: 'colorTxt',
-          default: true,
+          default: true
         },
         {
           type: 'checkbox',
           label: 'Color Background',
           id: 'colorBG',
-          default: false,
+          default: false
         },
         {
           type: 'colorpicker',
           label: 'Basse Text Color',
           id: 'colorBase',
-          default: combineRgb(255, 255, 255),
+          default: combineRgb(255, 255, 255)
         },
         {
           type: 'colorpicker',
           label: 'Text color above -1 dB',
           id: 'color',
-          default: combineRgb(255, 0, 0),
+          default: combineRgb(255, 0, 0)
         },
         {
           type: 'colorpicker',
           label: 'Text color below -1 dB',
           id: 'color1',
-          default: combineRgb(255, 255, 0),
+          default: combineRgb(255, 255, 0)
         },
         {
           type: 'colorpicker',
           label: 'Text color below -6 dB',
           id: 'color6',
-          default: combineRgb(0, 255, 0),
+          default: combineRgb(0, 255, 0)
         },
         {
           type: 'colorpicker',
           label: 'Text color below -18 dB',
           id: 'color18',
-          default: combineRgb(0, 192, 0),
+          default: combineRgb(0, 192, 0)
         },
         {
           type: 'colorpicker',
           label: 'Text color below -36 dB',
           id: 'color36',
-          default: combineRgb(0, 128, 0),
-        },
+          default: combineRgb(0, 128, 0)
+        }
       ],
       callback: async (feedback, context) => {
         const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
@@ -1349,7 +1349,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         const colorBg = feedback.options.colorBG ? color() : undefined
 
         return { color: colorFg, bgcolor: colorBg }
-      },
+      }
     },
 
     busVolumeLevel: {
@@ -1358,7 +1358,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicate if an output bus fader is within a set range',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(0, 255, 0),
+        bgcolor: combineRgb(0, 255, 0)
       },
       options: [
         {
@@ -1366,7 +1366,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           label: 'Bus',
           id: 'bus',
           default: 'Master',
-          choices: ['Master', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'Headphones'].map((id) => ({ id, label: id })),
+          choices: ['Master', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'Headphones'].map((id) => ({ id, label: id }))
         },
         options.comparison,
         {
@@ -1375,8 +1375,8 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           id: 'value',
           min: 0,
           max: 100,
-          default: 100,
-        },
+          default: 100
+        }
       ],
       callback: (feedback) => {
         let volume = 0
@@ -1397,11 +1397,11 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           lt: volume < feedback.options.value,
           lte: volume <= feedback.options.value,
           gt: volume > feedback.options.value,
-          gte: volume >= feedback.options.value,
+          gte: volume >= feedback.options.value
         }
 
         return volumeInRange[feedback.options.comparison]
-      },
+      }
     },
 
     inputVolumeLevel: {
@@ -1410,7 +1410,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicate if an input fader is in a set value',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(0, 255, 0),
+        bgcolor: combineRgb(0, 255, 0)
       },
       options: [
         options.input,
@@ -1421,8 +1421,8 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           id: 'value',
           min: 0,
           max: 100,
-          default: 100,
-        },
+          default: 100
+        }
       ],
       callback: async (feedback, context) => {
         const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
@@ -1437,11 +1437,11 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           lt: volume < feedback.options.value,
           lte: volume <= feedback.options.value,
           gt: volume > feedback.options.value,
-          gte: volume >= feedback.options.value,
+          gte: volume >= feedback.options.value
         }
 
         return volumeInRange[feedback.options.comparison] || false
-      },
+      }
     },
 
     busVolumeMeter: {
@@ -1467,13 +1467,13 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           height: feedback.image.height,
           meter1: volumeToLinear(bus.meterF1 * 100),
           meter2: volumeToLinear(bus.meterF2 * 100),
-          muted: bus.muted,
+          muted: bus.muted
         })
 
         return {
-          imageBuffer: meter,
+          imageBuffer: meter
         }
-      },
+      }
     },
 
     inputVolumeMeter: {
@@ -1490,9 +1490,9 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           choices: [
             { id: 'Both', label: 'Both' },
             { id: '1', label: '1' },
-            { id: '2', label: '2' },
-          ],
-        },
+            { id: '2', label: '2' }
+          ]
+        }
       ],
       callback: async (feedback, context) => {
         if (!feedback.image) return {}
@@ -1509,25 +1509,25 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
             height: feedback.image.height,
             meter1: volumeToLinear(input.meterF1 * 100),
             meter2: volumeToLinear(input.meterF2 * 100),
-            muted: input.muted,
+            muted: input.muted
           })
 
           return {
-            imageBuffer: meter,
+            imageBuffer: meter
           }
         } else {
           const meter = presets.meter1({
             width: feedback.image.width,
             height: feedback.image.height,
             meter1: volumeToLinear(feedback.options.channel === '1' ? input.meterF1 * 100 : input.meterF2 * 100),
-            muted: input.muted,
+            muted: input.muted
           })
 
           return {
-            imageBuffer: meter,
+            imageBuffer: meter
           }
         }
-      },
+      }
     },
 
     // Media
@@ -1537,7 +1537,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Input Loop Status',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
+        bgcolor: combineRgb(255, 0, 0)
       },
       options: [options.input],
       callback: async (feedback, context) => {
@@ -1545,7 +1545,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         const input = await instance.data.getInput(inputOption)
 
         return input?.loop || false
-      },
+      }
     },
 
     // Replay
@@ -1555,7 +1555,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates current recording or live status of a replay input',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
+        bgcolor: combineRgb(255, 0, 0)
       },
       options: [
         {
@@ -1565,13 +1565,13 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           default: 'recording',
           choices: [
             { id: 'recording', label: 'Recording' },
-            { id: 'live', label: 'Live' },
-          ],
-        },
+            { id: 'live', label: 'Live' }
+          ]
+        }
       ],
       callback: (feedback) => {
         return instance.data.replay[feedback.options.status]
-      },
+      }
     },
 
     replayEvents: {
@@ -1580,7 +1580,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates currently selected Events tab',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
+        bgcolor: combineRgb(255, 0, 0)
       },
       options: [
         {
@@ -1591,8 +1591,8 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           choices: [
             { id: 'A', label: 'Replay A' },
             { id: 'B', label: 'Replay B' },
-            { id: 'selected', label: 'Replay Selected' },
-          ],
+            { id: 'selected', label: 'Replay Selected' }
+          ]
         },
         {
           type: 'dropdown',
@@ -1601,9 +1601,9 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           default: 1,
           choices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((id) => ({
             id: id,
-            label: id.toString(),
-          })),
-        },
+            label: id.toString()
+          }))
+        }
       ],
       callback: (feedback) => {
         const channel = feedback.options.channel
@@ -1615,7 +1615,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         } else {
           return instance.data.replay.eventsB === feedback.options.events
         }
-      },
+      }
     },
 
     replayCamera: {
@@ -1624,7 +1624,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates current replay camera being live on a channel',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
+        bgcolor: combineRgb(255, 0, 0)
       },
       options: [
         {
@@ -1635,16 +1635,16 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           choices: [
             { id: 'A', label: 'Replay A' },
             { id: 'B', label: 'Replay B' },
-            { id: 'selected', label: 'Replay Selected' },
-          ],
+            { id: 'selected', label: 'Replay Selected' }
+          ]
         },
         {
           type: 'dropdown',
           label: 'Camera',
           id: 'camera',
           default: 1,
-          choices: [1, 2, 3, 4, 5, 6, 7, 8].map((id) => ({ id, label: id.toString() })),
-        },
+          choices: [1, 2, 3, 4, 5, 6, 7, 8].map((id) => ({ id, label: id.toString() }))
+        }
       ],
       callback: (feedback) => {
         let channel = feedback.options.channel
@@ -1660,7 +1660,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         const cameraChannel = ('camera' + channel) as 'cameraA' | 'cameraB'
 
         return instance.data.replay[cameraChannel] == feedback.options.camera
-      },
+      }
     },
 
     replaySelectedChannel: {
@@ -1669,7 +1669,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates currently selected channel',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
+        bgcolor: combineRgb(255, 0, 0)
       },
       options: [
         {
@@ -1680,13 +1680,13 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           choices: [
             { id: 'AB', label: 'A|B' },
             { id: 'A', label: 'A' },
-            { id: 'B', label: 'B' },
-          ],
-        },
+            { id: 'B', label: 'B' }
+          ]
+        }
       ],
       callback: (feedback) => {
         return instance.data.replay.channelMode && instance.data.replay.channelMode === feedback.options.channel
-      },
+      }
     },
 
     // Video Call
@@ -1696,7 +1696,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates audio source for a video call',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
+        bgcolor: combineRgb(255, 0, 0)
       },
       options: [
         options.input,
@@ -1707,16 +1707,16 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           default: 'Master',
           choices: ['Master', 'Headphones', 'A', 'B', 'C', 'D', 'E', 'F', 'G'].map((id, index) => ({
             id: index > 1 ? `Bus${id}` : id,
-            label: id,
-          })),
-        },
+            label: id
+          }))
+        }
       ],
       callback: async (feedback, context) => {
         const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
         const input = await instance.data.getInput(inputOption)
 
         return input?.callAudioSource === feedback.options.source
-      },
+      }
     },
 
     videoCallVideoSource: {
@@ -1725,7 +1725,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates video source for a video call',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
+        bgcolor: combineRgb(255, 0, 0)
       },
       options: [
         options.input,
@@ -1734,15 +1734,15 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           label: 'Source',
           id: 'source',
           default: 'Output1',
-          choices: ['Output1', 'Output2', 'Output3', 'Output4', 'None'].map((id) => ({ id, label: id })),
-        },
+          choices: ['Output1', 'Output2', 'Output3', 'Output4', 'None'].map((id) => ({ id, label: id }))
+        }
       ],
       callback: async (feedback, context) => {
         const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
         const input = await instance.data.getInput(inputOption)
 
         return input?.callVideoSource === feedback.options.source
-      },
+      }
     },
 
     // Slides / List
@@ -1759,14 +1759,14 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           type: 'colorpicker',
           label: 'Empty List Warning Text',
           id: 'et',
-          default: combineRgb(0, 0, 0),
+          default: combineRgb(0, 0, 0)
         },
         {
           type: 'colorpicker',
           label: 'Empty List Warning Background',
           id: 'eb',
-          default: combineRgb(255, 255, 0),
-        },
+          default: combineRgb(255, 255, 0)
+        }
       ],
       callback: async (feedback, context) => {
         const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
@@ -1788,7 +1788,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         }
 
         return {}
-      },
+      }
     },
 
     inputSelectedIndexBoolean: {
@@ -1797,7 +1797,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: '',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
+        bgcolor: combineRgb(255, 0, 0)
       },
       options: [options.input, options.selectedIndex],
       callback: async (feedback, context) => {
@@ -1808,7 +1808,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         if (!input) return false
         if (input.type === 'Photos') return input.position === parseInt(index, 10)
         return input.selectedIndex === parseInt(index, 10)
-      },
+      }
     },
 
     // Layers
@@ -1818,7 +1818,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates if input is currently selected for Layer Routing',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0),
+        bgcolor: combineRgb(255, 255, 0)
       },
       options: [options.input],
       callback: async (feedback, context) => {
@@ -1840,7 +1840,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           instance.buttonShift.blink && instance.config.shiftBlinkLayerRouting && getInputValue.includes(selectInput)
 
         return getInputValue[instance.buttonShift.state] === selectInput || blink
-      },
+      }
     },
 
     selectedDestinationLayer: {
@@ -1849,7 +1849,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates if layer is currently selected for Layer Routing',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0),
+        bgcolor: combineRgb(255, 255, 0)
       },
       options: [
         {
@@ -1857,8 +1857,8 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           label: 'Destination Layer of destination Input',
           id: 'selectedIndex',
           default: '',
-          useVariables: true,
-        },
+          useVariables: true
+        }
       ],
       callback: async (feedback, context) => {
         const getIndexValue = await instance.parseOption(feedback.options.selectedIndex + '', context)
@@ -1869,7 +1869,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           getIndexValue.includes(instance.routingData.layer.destinationLayer)
 
         return getIndexValue[instance.buttonShift.state] === instance.routingData.layer.destinationLayer || blink
-      },
+      }
     },
 
     routableMultiviewLayer: {
@@ -1878,7 +1878,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates if the input is destination layer and input',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0),
+        bgcolor: combineRgb(255, 255, 0)
       },
       options: [options.input],
       callback: async (feedback, context) => {
@@ -1918,7 +1918,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         }
 
         return false
-      },
+      }
     },
 
     inputOnMultiview: {
@@ -1927,7 +1927,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates if the input is currently on a specified layer of an input',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0),
+        bgcolor: combineRgb(255, 255, 0)
       },
       options: [
         {
@@ -1936,7 +1936,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           id: 'inputX',
           default: '1',
           tooltip: 'Number, Name, or GUID',
-          useVariables: true,
+          useVariables: true
         },
         {
           type: 'textinput',
@@ -1944,7 +1944,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           id: 'inputY',
           default: '1',
           tooltip: 'Number, Name, or GUID',
-          useVariables: true,
+          useVariables: true
         },
         {
           type: 'textinput',
@@ -1952,8 +1952,8 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           id: 'layer',
           default: '0',
           tooltip: '1-10, 0 = Any layer',
-          useVariables: true,
-        },
+          useVariables: true
+        }
       ],
       callback: async (feedback, context) => {
         const targetLayer = await instance.parseOption(feedback.options.layer, context)
@@ -1996,7 +1996,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           primaryCheck ||
           (secondaryCheck.includes(true) && instance.config.shiftBlinkLayerRouting && instance.buttonShift.blink)
         )
-      },
+      }
     },
 
     // General
@@ -2012,8 +2012,8 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           default: 'dynamicInput',
           choices: [
             { id: 'dynamicInput', label: 'Dynamic Input' },
-            { id: 'dynamicValue', label: 'Dynamic Value' },
-          ],
+            { id: 'dynamicValue', label: 'Dynamic Value' }
+          ]
         },
         {
           type: 'dropdown',
@@ -2024,26 +2024,26 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
             { id: 0, label: '1' },
             { id: 1, label: '2' },
             { id: 2, label: '3' },
-            { id: 3, label: '4' },
-          ],
+            { id: 3, label: '4' }
+          ]
         },
         {
           type: 'textinput',
           label: 'Value',
           id: 'value',
           default: '',
-          useVariables: true,
-        },
+          useVariables: true
+        }
       ],
       defaultStyle: {
-        bgcolor: combineRgb(255, 0, 0),
+        bgcolor: combineRgb(255, 0, 0)
       },
       callback: async (feedback, context) => {
         const targetValue = (await instance.parseOption(feedback.options.value, context))[instance.buttonShift.state]
         const dynamic: string = instance.data[feedback.options.type][feedback.options.number]?.value
 
         return targetValue === dynamic
-      },
+      }
     },
 
     inputState: {
@@ -2059,12 +2059,12 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           default: 'playing',
           choices: [
             { id: 'playing', label: 'Playing' },
-            { id: 'loop', label: 'Loop' },
-          ],
-        },
+            { id: 'loop', label: 'Loop' }
+          ]
+        }
       ],
       defaultStyle: {
-        bgcolor: combineRgb(255, 0, 0),
+        bgcolor: combineRgb(255, 0, 0)
       },
       callback: async (feedback, context) => {
         const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
@@ -2075,7 +2075,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         } else {
           return input?.loop || false
         }
-      },
+      }
     },
 
     // Util
@@ -2085,7 +2085,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Currently selected Mix',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0),
+        bgcolor: combineRgb(255, 255, 0)
       },
       options: [
         {
@@ -2111,10 +2111,10 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
             { id: 14, label: '15' },
             { id: 15, label: '16' },
             { id: 15, label: '16' },
-            { id: -2, label: 'Variable' },
-          ],
+            { id: -2, label: 'Variable' }
+          ]
         },
-        options.mixVariable,
+        options.mixVariable
       ],
       callback: async (feedback, context) => {
         let mixVariable: string | number = (await instance.parseOption(feedback.options.mixVariable, context))[
@@ -2123,7 +2123,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
         mixVariable = parseInt(mixVariable, 10) - 1
         const mix: number = feedback.options.mix === -2 ? mixVariable : feedback.options.mix
         return instance.routingData.mix === mix
-      },
+      }
     },
 
     busSelect: {
@@ -2132,7 +2132,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Currently selected Bus',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0),
+        bgcolor: combineRgb(255, 255, 0)
       },
       options: [
         {
@@ -2140,12 +2140,12 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           label: 'Bus',
           id: 'bus',
           default: 'Master',
-          choices: [{ id: 'Master', label: 'Master' }, ...AUDIOBUSSES.map((id) => ({ id, label: id }))],
-        },
+          choices: [{ id: 'Master', label: 'Master' }, ...AUDIOBUSSES.map((id) => ({ id, label: id }))]
+        }
       ],
       callback: (feedback) => {
         return instance.routingData.bus === feedback.options.bus
-      },
+      }
     },
 
     buttonShift: {
@@ -2154,12 +2154,12 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
       description: 'Indicates Shift state',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0),
+        bgcolor: combineRgb(255, 255, 0)
       },
       options: [],
       callback: () => {
         return instance.buttonShift.state !== 0
-      },
+      }
     },
 
     buttonText: {
@@ -2172,14 +2172,14 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
           label: 'Text',
           id: 'text',
           default: instance.config.shiftDelimiter,
-          useVariables: true,
-        },
+          useVariables: true
+        }
       ],
       callback: async (feedback, context) => {
         const textSplit = (await instance.parseOption(feedback.options.text, context))[instance.buttonShift.state]
 
         return { text: textSplit || undefined }
-      },
-    },
+      }
+    }
   }
 }

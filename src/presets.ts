@@ -2,7 +2,7 @@ import {
   combineRgb,
   CompanionButtonPresetDefinition,
   CompanionTextPresetDefinition,
-  CompanionPresetDefinitions,
+  CompanionPresetDefinitions
 } from '@companion-module/base'
 import { graphics } from 'companion-module-utils'
 import VMixInstance from './index'
@@ -71,7 +71,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
         category: `Mix ${mix}` as PresetCategory,
         name: 'Send Input to Preview',
         type: 'text',
-        text: 'Inputs 1 to 8',
+        text: 'Inputs 1 to 8'
       })
 
       for (let input = 1; input < 9; input++) {
@@ -83,18 +83,18 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `PRV ${input}`,
             size: '24',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [
                 {
                   actionId: 'previewInput',
-                  options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', input: input.toString() },
-                },
+                  options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', input: input.toString() }
+                }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
           feedbacks: [
             {
@@ -105,10 +105,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                 input: input.toString(),
                 fg: combineRgb(255, 255, 255),
                 bg: combineRgb(0, 255, 0),
-                tally: '',
-              },
-            },
-          ],
+                tally: ''
+              }
+            }
+          ]
         })
       }
 
@@ -116,7 +116,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
         category: `Mix ${mix}` as PresetCategory,
         name: 'Send Input to Program',
         type: 'text',
-        text: 'Inputs 1 to 8',
+        text: 'Inputs 1 to 8'
       })
 
       for (let input = 1; input < 9; input++) {
@@ -128,18 +128,18 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `PGM ${input}`,
             size: '24',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [
                 {
                   actionId: 'programCut',
-                  options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', input: input.toString() },
-                },
+                  options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', input: input.toString() }
+                }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
 
           feedbacks: [
@@ -151,10 +151,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                 input: input.toString(),
                 fg: combineRgb(255, 255, 255),
                 bg: combineRgb(255, 0, 0),
-                tally: '',
-              },
-            },
-          ],
+                tally: ''
+              }
+            }
+          ]
         })
       }
 
@@ -163,7 +163,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           category: `Mix ${mix}` as PresetCategory,
           name: 'Transition Preview to Program',
           type: 'text',
-          text: '',
+          text: ''
         },
         {
           category: `Mix ${mix}` as PresetCategory,
@@ -173,20 +173,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: 'Cut',
             size: '24',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [
                 {
                   actionId: 'transitionMix',
-                  options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', functionID: 'Cut', duration: '1000' },
-                },
+                  options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', functionID: 'Cut', duration: '1000' }
+                }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         },
         {
           category: `Mix ${mix}` as PresetCategory,
@@ -196,20 +196,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: 'Fade',
             size: '24',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [
                 {
                   actionId: 'transitionMix',
-                  options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', functionID: 'Fade', duration: '1000' },
-                },
+                  options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', functionID: 'Fade', duration: '1000' }
+                }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         },
         {
           category: `Mix ${mix}` as PresetCategory,
@@ -219,15 +219,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: 'Fade',
             size: '24',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [{ actionId: 'transition', options: { functionID: 'Transition1' } }],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         }
       )
     }
@@ -243,7 +243,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
         category: `Audio`,
         name: 'Input Audio',
         type: 'text',
-        text: 'Example presets here use input 1, but the action/feedback support referencing an input by Name, Number, or GUID, and also supports parsing Variables',
+        text: 'Example presets here use input 1, but the action/feedback support referencing an input by Name, Number, or GUID, and also supports parsing Variables'
       },
       {
         category: 'Audio',
@@ -253,24 +253,24 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Toggle Audio',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'audio', options: { input: '1', functionID: 'Audio' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
             feedbackId: 'inputAudio',
             options: {
-              input: '1',
+              input: '1'
             },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
+              bgcolor: combineRgb(255, 0, 0)
+            }
           },
           {
             feedbackId: 'liveInputVolume',
@@ -283,10 +283,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               color1: combineRgb(255, 255, 0),
               color6: combineRgb(0, 255, 0),
               color18: combineRgb(0, 192, 0),
-              color36: combineRgb(0, 128, 0),
-            },
-          },
-        ],
+              color36: combineRgb(0, 128, 0)
+            }
+          }
+        ]
       },
       {
         category: 'Audio',
@@ -296,24 +296,24 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Set Audio On',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'audio', options: { input: '1', functionID: 'AudioOn' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
             feedbackId: 'inputAudio',
             options: {
-              input: '1',
+              input: '1'
             },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
+              bgcolor: combineRgb(255, 0, 0)
+            }
           },
           {
             feedbackId: 'liveInputVolume',
@@ -326,10 +326,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               color1: combineRgb(255, 255, 0),
               color6: combineRgb(0, 255, 0),
               color18: combineRgb(0, 192, 0),
-              color36: combineRgb(0, 128, 0),
-            },
-          },
-        ],
+              color36: combineRgb(0, 128, 0)
+            }
+          }
+        ]
       },
       {
         category: 'Audio',
@@ -339,24 +339,24 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Set Audio Off',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'audio', options: { input: '1', functionID: 'AudioOff' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
             feedbackId: 'inputAudio',
             options: {
-              input: '1',
+              input: '1'
             },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
+              bgcolor: combineRgb(255, 0, 0)
+            }
           },
           {
             feedbackId: 'liveInputVolume',
@@ -369,10 +369,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               color1: combineRgb(255, 255, 0),
               color6: combineRgb(0, 255, 0),
               color18: combineRgb(0, 192, 0),
-              color36: combineRgb(0, 128, 0),
-            },
-          },
-        ],
+              color36: combineRgb(0, 128, 0)
+            }
+          }
+        ]
       },
       {
         category: 'Audio',
@@ -382,26 +382,26 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Audio Auto Toggle',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'audioAuto', options: { input: '1', functionID: 'AudioAuto' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
             feedbackId: 'inputAudioAuto',
             options: {
-              input: '1',
+              input: '1'
             },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 0, 0)
+            }
+          }
+        ]
       },
       {
         category: 'Audio',
@@ -411,13 +411,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Input Solo',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'solo', options: { input: '1', functionID: 'Solo' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -425,10 +425,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { input: '1' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 255, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 255, 0)
+            }
+          }
+        ]
       },
       {
         category: 'Audio',
@@ -438,13 +438,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Send Input to Master',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'audioBus', options: { input: '1', value: 'Master', functionID: 'AudioBus' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -452,10 +452,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { input: '1', value: 'Master' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 255, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 255, 0)
+            }
+          }
+        ]
       },
       {
         category: 'Audio',
@@ -465,13 +465,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Send Input to Bus A',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'audioBus', options: { input: '1', value: 'A', functionID: 'AudioBus' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -479,10 +479,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { input: '1', value: 'A' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 255, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 255, 0)
+            }
+          }
+        ]
       },
       {
         category: 'Audio',
@@ -492,13 +492,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Send Input to Bus B',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'audioBus', options: { input: '1', value: 'B', functionID: 'AudioBus' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -506,10 +506,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { input: '1', value: 'Master' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 255, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 255, 0)
+            }
+          }
+        ]
       },
       {
         category: 'Audio',
@@ -519,13 +519,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Send Input to Bus C',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'audioBus', options: { input: '1', value: 'C', functionID: 'AudioBus' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -533,10 +533,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { input: '1', value: 'C' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 255, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 255, 0)
+            }
+          }
+        ]
       },
       {
         category: 'Audio',
@@ -546,13 +546,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Send Input to Bus D',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'audioBus', options: { input: '1', value: 'D', functionID: 'AudioBus' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -560,10 +560,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { input: '1', value: 'D' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 255, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 255, 0)
+            }
+          }
+        ]
       },
       {
         category: 'Audio',
@@ -573,13 +573,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Send Input to Bus E',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'audioBus', options: { input: '1', value: 'E', functionID: 'AudioBus' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -587,10 +587,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { input: '1', value: 'E' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 255, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 255, 0)
+            }
+          }
+        ]
       },
       {
         category: 'Audio',
@@ -600,13 +600,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Send Input to Bus F',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'audioBus', options: { input: '1', value: 'F', functionID: 'AudioBus' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -614,10 +614,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { input: '1', value: 'F' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 255, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 255, 0)
+            }
+          }
+        ]
       },
       {
         category: 'Audio',
@@ -627,13 +627,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Send Input to Bus G',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'audioBus', options: { input: '1', value: 'G', functionID: 'AudioBus' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -641,16 +641,16 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { input: '1', value: 'G' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 255, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 255, 0)
+            }
+          }
+        ]
       },
       {
         category: 'Audio',
         name: 'Input Volume Fade',
         type: 'text',
-        text: 'Fade the Volume on an Input over a default of 2000ms to a target %',
+        text: 'Fade the Volume on an Input over a default of 2000ms to a target %'
       },
       {
         category: 'Audio',
@@ -660,15 +660,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Input 1 Vol 0%',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: '0', fadeTime: '2000' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Audio',
@@ -678,15 +678,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Input 1 Vol 25%',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: '25', fadeTime: '2000' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Audio',
@@ -696,15 +696,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Input 1 Vol 50%',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: '50', fadeTime: '2000' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Audio',
@@ -714,15 +714,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Input 1 Vol 75%',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: '75', fadeTime: '2000' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Audio',
@@ -732,16 +732,16 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Input 1 Vol 100%',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: '100', fadeTime: '2000' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
-      },
+        feedbacks: []
+      }
     ]
 
     audioPresets.push(
@@ -749,7 +749,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
         category: 'Audio',
         name: `Bus Master`,
         type: 'text',
-        text: '',
+        text: ''
       },
       {
         category: 'Audio',
@@ -759,13 +759,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Bus Master Mute`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'busXAudio', options: { value: 'Master', functionID: 'BusXAudio' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -773,8 +773,8 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { value: 'Master' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
+              bgcolor: combineRgb(255, 0, 0)
+            }
           },
           {
             feedbackId: 'liveBusVolume',
@@ -787,10 +787,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               color1: combineRgb(255, 255, 0),
               color6: combineRgb(0, 255, 0),
               color18: combineRgb(0, 192, 0),
-              color36: combineRgb(0, 128, 0),
-            },
-          },
-        ],
+              color36: combineRgb(0, 128, 0)
+            }
+          }
+        ]
       },
       {
         category: 'Audio',
@@ -800,15 +800,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Bus Master 0%`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'setBusVolume', options: { value: 'Master', adjustment: 'Set', amount: '0' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Audio',
@@ -818,15 +818,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Bus Master 25%`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'setBusVolume', options: { value: 'Master', adjustment: 'Set', amount: '25' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Audio',
@@ -836,15 +836,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Bus Master 50%`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'setBusVolume', options: { value: 'Master', adjustment: 'Set', amount: '50' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Audio',
@@ -854,15 +854,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Bus Master 75%`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'setBusVolume', options: { value: 'Master', adjustment: 'Set', amount: '75' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Audio',
@@ -872,15 +872,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Bus Master 100%`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'setBusVolume', options: { value: 'Master', adjustment: 'Set', amount: '100' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Audio',
@@ -890,28 +890,28 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Bus Master\nMeters`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'busXAudio', options: { value: 'Master', functionID: 'BusXAudio' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
             feedbackId: 'busVolumeMeter',
-            options: { value: 'Master' },
+            options: { value: 'Master' }
           },
           {
             feedbackId: 'busMute',
             options: { value: 'Master' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 0, 0)
+            }
+          }
+        ]
       }
     )
 
@@ -921,7 +921,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           category: 'Audio',
           name: `Bus ${bus}`,
           type: 'text',
-          text: '',
+          text: ''
         },
         {
           category: 'Audio',
@@ -931,13 +931,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `Bus ${bus} Mute`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [{ actionId: 'busXAudio', options: { value: bus, functionID: 'BusXAudio' } }],
-              up: [],
-            },
+              up: []
+            }
           ],
           feedbacks: [
             {
@@ -945,8 +945,8 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               options: { value: bus },
               style: {
                 color: combineRgb(0, 0, 0),
-                bgcolor: combineRgb(255, 0, 0),
-              },
+                bgcolor: combineRgb(255, 0, 0)
+              }
             },
             {
               feedbackId: 'liveBusVolume',
@@ -959,10 +959,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                 color1: combineRgb(255, 255, 0),
                 color6: combineRgb(0, 255, 0),
                 color18: combineRgb(0, 192, 0),
-                color36: combineRgb(0, 128, 0),
-              },
-            },
-          ],
+                color36: combineRgb(0, 128, 0)
+              }
+            }
+          ]
         },
         {
           category: 'Audio',
@@ -972,13 +972,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `Bus ${bus} solo`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [{ actionId: 'busXSolo', options: { value: bus, functionID: 'BusXSolo' } }],
-              up: [],
-            },
+              up: []
+            }
           ],
 
           feedbacks: [
@@ -987,10 +987,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               options: { value: bus },
               style: {
                 color: combineRgb(0, 0, 0),
-                bgcolor: combineRgb(255, 255, 0),
-              },
-            },
-          ],
+                bgcolor: combineRgb(255, 255, 0)
+              }
+            }
+          ]
         },
         {
           category: 'Audio',
@@ -1000,15 +1000,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `Bus ${bus} 0%`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [{ actionId: 'setBusVolume', options: { value: bus, adjustment: 'Set', amount: '0' } }],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         },
         {
           category: 'Audio',
@@ -1018,15 +1018,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `Bus ${bus} 25%`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [{ actionId: 'setBusVolume', options: { value: bus, adjustment: 'Set', amount: '25' } }],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         },
         {
           category: 'Audio',
@@ -1036,15 +1036,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `Bus ${bus} 50%`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [{ actionId: 'setBusVolume', options: { value: bus, adjustment: 'Set', amount: '50' } }],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         },
         {
           category: 'Audio',
@@ -1054,15 +1054,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `Bus ${bus} 75%`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [{ actionId: 'setBusVolume', options: { value: bus, adjustment: 'Set', amount: '75' } }],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         },
         {
           category: 'Audio',
@@ -1072,15 +1072,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `Bus ${bus} 100%`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [{ actionId: 'setBusVolume', options: { value: bus, adjustment: 'Set', amount: '100' } }],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         },
         {
           category: 'Audio',
@@ -1090,28 +1090,28 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `Bus ${bus}\nMeters`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [{ actionId: 'busXAudio', options: { value: bus, functionID: 'BusXAudio' } }],
-              up: [],
-            },
+              up: []
+            }
           ],
           feedbacks: [
             {
               feedbackId: 'busVolumeMeter',
-              options: { value: bus },
+              options: { value: bus }
             },
             {
               feedbackId: 'busMute',
               options: { value: bus },
               style: {
                 color: combineRgb(0, 0, 0),
-                bgcolor: combineRgb(255, 0, 0),
-              },
-            },
-          ],
+                bgcolor: combineRgb(255, 0, 0)
+              }
+            }
+          ]
         },
         {
           category: 'Audio',
@@ -1121,13 +1121,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: 'Send Bus to Master',
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [{ actionId: 'busXSendToMaster', options: { value: 'A' } }],
-              up: [],
-            },
+              up: []
+            }
           ],
           feedbacks: [
             {
@@ -1135,10 +1135,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               options: { value: bus },
               style: {
                 color: combineRgb(0, 0, 0),
-                bgcolor: combineRgb(0, 255, 0),
-              },
-            },
-          ],
+                bgcolor: combineRgb(0, 255, 0)
+              }
+            }
+          ]
         }
       )
     })
@@ -1154,13 +1154,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
         category: `vMix Call`,
         name: `vMix Call Presets`,
         type: 'text',
-        text: 'Each preset will require you to enter the calls input in the Action and Feedback',
+        text: 'Each preset will require you to enter the calls input in the Action and Feedback'
       },
       {
         category: `vMix Call`,
         name: `Audio Source`,
         type: 'text',
-        text: '',
+        text: ''
       },
       {
         category: 'vMix Call',
@@ -1170,13 +1170,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Audio\nSource\nMaster`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'videoCallAudioSource', options: { input: '', value: 'Master' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -1184,10 +1184,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { input: '', source: 'Master' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 0, 0)
+            }
+          }
+        ]
       },
       {
         category: 'vMix Call',
@@ -1197,13 +1197,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Audio\nSource\nHeadphones`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'videoCallAudioSource', options: { input: '', value: 'Headphones' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -1211,10 +1211,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { input: '', source: 'Headphones' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 0, 0)
+            }
+          }
+        ]
       },
       ...['A', 'B', 'C', 'D', 'E', 'F', 'G'].map((bus) => {
         return {
@@ -1225,13 +1225,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `Audio\nSource\nBus ${bus}`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [{ actionId: 'videoCallAudioSource', options: { input: '', value: `Bus${bus}` as any } }],
-              up: [],
-            },
+              up: []
+            }
           ],
 
           feedbacks: [
@@ -1240,17 +1240,17 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               options: { input: '', source: `Bus${bus}` as any },
               style: {
                 color: combineRgb(0, 0, 0),
-                bgcolor: combineRgb(255, 0, 0),
-              },
-            },
-          ],
+                bgcolor: combineRgb(255, 0, 0)
+              }
+            }
+          ]
         } as VMixButtonPreset
       }),
       {
         category: `vMix Call`,
         name: `Video Source`,
         type: 'text',
-        text: '',
+        text: ''
       },
       {
         category: 'vMix Call',
@@ -1260,13 +1260,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Video\nSource\nOutput 1`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'videoCallVideoSource', options: { input: '', value: 'Output1' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -1274,10 +1274,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { input: '', source: 'Output1' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 0, 0)
+            }
+          }
+        ]
       },
       {
         category: 'vMix Call',
@@ -1287,13 +1287,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Video\nSource\nOutput 2`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'videoCallVideoSource', options: { input: '', value: 'Output2' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -1301,10 +1301,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { input: '', source: 'Output2' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 0, 0)
+            }
+          }
+        ]
       },
       {
         category: 'vMix Call',
@@ -1314,13 +1314,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Video\nSource\nOutput 3`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'videoCallVideoSource', options: { input: '', value: 'Output3' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -1328,10 +1328,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { input: '', source: 'Output3' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 0, 0)
+            }
+          }
+        ]
       },
       {
         category: 'vMix Call',
@@ -1341,13 +1341,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Video\nSource\nOutput 4`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'videoCallVideoSource', options: { input: '', value: 'Output4' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -1355,10 +1355,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { input: '', source: 'Output4' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 0, 0)
+            }
+          }
+        ]
       },
       {
         category: 'vMix Call',
@@ -1368,13 +1368,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Video\nSource\nNone`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'videoCallVideoSource', options: { input: '', value: 'None' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -1382,10 +1382,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { input: '', source: 'None' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 0, 0)
+            }
+          }
+        ]
       }
     )
 
@@ -1402,15 +1402,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Send Key Press',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'keyPress', options: { value: '' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Scripting & Commands',
@@ -1420,15 +1420,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Script Start',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'scriptStart', options: { value: '' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Scripting & Commands',
@@ -1438,15 +1438,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Script Stop',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'scriptStop', options: { value: '' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Scripting & Commands',
@@ -1456,15 +1456,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Script Stop All',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'scriptStopAll', options: {} }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Scripting & Commands',
@@ -1474,16 +1474,16 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Custom Command',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'command', options: { command: '', encode: false } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
-      },
+        feedbacks: []
+      }
     ]
 
     return generalPresets
@@ -1495,14 +1495,14 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
         category: 'MultiView Layers',
         name: 'MultiView Layer Presets',
         type: 'text',
-        text: "Each preset will require you to enter the Input in the Action and Feedback. Some Presets such as enabling/disabling lack feedback as vMix's API lacks data on if a layer is enabled or not.",
+        text: "Each preset will require you to enter the Input in the Action and Feedback. Some Presets such as enabling/disabling lack feedback as vMix's API lacks data on if a layer is enabled or not."
       },
       {
         category: 'MultiView Layers',
         name: 'Toggle / Enable / Disable Layer 1 to 10 on Input',
         type: 'text',
-        text: '',
-      },
+        text: ''
+      }
     ]
 
     for (let i = 1; i < 11; i++) {
@@ -1515,17 +1515,17 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `Toggle Layer ${i}`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [
-                { actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: i } },
+                { actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: i } }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         },
         {
           category: 'MultiView Layers',
@@ -1535,17 +1535,17 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `Set Layer ${i} On`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [
-                { actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: i } },
+                { actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: i } }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         },
         {
           category: 'MultiView Layers',
@@ -1555,17 +1555,17 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `Set Layer ${i} Off`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [
-                { actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: i } },
+                { actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: i } }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         }
       )
     }
@@ -1574,7 +1574,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       category: 'MultiView Layers',
       name: 'Set which input is assigned to layers 1 to 10 on an Input',
       type: 'text',
-      text: '',
+      text: ''
     })
 
     for (let i = 1; i < 11; i++) {
@@ -1586,13 +1586,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Set Layer ${i} Input`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'setMultiViewOverlay', options: { input: '', layer: i, layerInput: '' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -1600,10 +1600,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { inputX: '', inputY: '', layer: `${i}` },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 0, 0)
+            }
+          }
+        ]
       })
     }
 
@@ -1612,7 +1612,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
         category: 'MultiView Layers',
         name: 'Layer Routing',
         type: 'text',
-        text: 'Set a target Input, a target Layer, and route an input to that layer',
+        text: 'Set a target Input, a target Layer, and route an input to that layer'
       },
       {
         category: 'MultiView Layers',
@@ -1622,13 +1622,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Set Target Input`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'setMultiViewOverlayDestinationInput', options: { destinationInput: '' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -1636,10 +1636,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { input: '' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 255, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 255, 0)
+            }
+          }
+        ]
       },
       {
         category: 'MultiView Layers',
@@ -1649,13 +1649,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Set Input on Layer`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'setMultiViewOverlayDestinationLayer', options: { destinationLayer: '1' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -1663,10 +1663,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { selectedIndex: '1' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 255, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 255, 0)
+            }
+          }
+        ]
       },
       {
         category: 'MultiView Layers',
@@ -1676,13 +1676,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Set Input on Layer`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'setMultiViewOverlaySourceInput', options: { sourceIndex: '1' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -1690,10 +1690,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { input: '1' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 255, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 255, 0)
+            }
+          }
+        ]
       }
     )
 
@@ -1706,19 +1706,19 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
         category: 'Layer Pan/Zoom',
         name: 'Example of Layer Pan / Zoom',
         type: 'text',
-        text: 'vMix 27 added the ability for Pan / Zoom layer actions, this makes it ideal to use an input as a layer on another, zoom/pan to sections, and then merge between the original input and the one with the zoomed layer',
+        text: 'vMix 27 added the ability for Pan / Zoom layer actions, this makes it ideal to use an input as a layer on another, zoom/pan to sections, and then merge between the original input and the one with the zoomed layer'
       },
       {
         category: 'Layer Pan/Zoom',
         name: '',
         type: 'text',
-        text: 'More complex usage can be done by using a Custom Variables, allowing for controlling multiple inputs/layers/zoom levels with a limited number of buttons,',
+        text: 'More complex usage can be done by using a Custom Variables, allowing for controlling multiple inputs/layers/zoom levels with a limited number of buttons,'
       },
       {
         category: 'Layer Pan/Zoom',
         name: 'Zoom',
         type: 'text',
-        text: 'Adjust the zoom of Layer 1 on Input 1',
+        text: 'Adjust the zoom of Layer 1 on Input 1'
       },
       {
         category: 'Layer Pan/Zoom',
@@ -1728,7 +1728,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Zoom +`,
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
@@ -1746,14 +1746,14 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '0.1',
-                },
-              },
+                  zoom: '0.1'
+                }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Layer Pan/Zoom',
@@ -1763,7 +1763,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Zoom -`,
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
@@ -1781,15 +1781,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '0.1',
-                },
-              },
+                  zoom: '0.1'
+                }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
-      },
+        feedbacks: []
+      }
     ]
 
     ;[25, 50, 75, 100, 150, 200, 400].forEach((zoom) => {
@@ -1803,7 +1803,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Zoom ${zoom}%`,
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
@@ -1821,61 +1821,61 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: value.toString(),
-                },
-              },
+                  zoom: value.toString()
+                }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       })
     })
 
     const arrowTopLeft = graphics.toPNG64({
       image: graphics.icon({ width: 50, height: 50, type: 'directionUpLeft' }),
       width: 50,
-      height: 50,
+      height: 50
     })
     const arrowTopCenter = graphics.toPNG64({
       image: graphics.icon({ width: 50, height: 50, type: 'directionUp' }),
       width: 50,
-      height: 50,
+      height: 50
     })
     const arrowTopRight = graphics.toPNG64({
       image: graphics.icon({ width: 50, height: 50, type: 'directionUpRight' }),
       width: 50,
-      height: 50,
+      height: 50
     })
     const arrowMidleLeft = graphics.toPNG64({
       image: graphics.icon({ width: 50, height: 50, type: 'directionLeft' }),
       width: 50,
-      height: 50,
+      height: 50
     })
     const arrowMidleCenter = graphics.toPNG64({
       image: graphics.icon({ width: 50, height: 50, type: 'record' }),
       width: 50,
-      height: 50,
+      height: 50
     })
     const arrowMidleRight = graphics.toPNG64({
       image: graphics.icon({ width: 50, height: 50, type: 'directionRight' }),
       width: 50,
-      height: 50,
+      height: 50
     })
     const arrowBottomLeft = graphics.toPNG64({
       image: graphics.icon({ width: 50, height: 50, type: 'directionDownLeft' }),
       width: 50,
-      height: 50,
+      height: 50
     })
     const arrowBottomCenter = graphics.toPNG64({
       image: graphics.icon({ width: 50, height: 50, type: 'directionDown' }),
       width: 50,
-      height: 50,
+      height: 50
     })
     const arrowBottomRight = graphics.toPNG64({
       image: graphics.icon({ width: 50, height: 50, type: 'directionDownRight' }),
       width: 50,
-      height: 50,
+      height: 50
     })
 
     layerPanZoomPresets.push(
@@ -1883,7 +1883,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
         category: 'Layer Pan/Zoom',
         name: 'Pan Adjust',
         type: 'text',
-        text: 'Progressive panning on each button press',
+        text: 'Progressive panning on each button press'
       },
       {
         category: 'Layer Pan/Zoom',
@@ -1895,7 +1895,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
           png64: arrowTopLeft,
-          pngalignment: 'center:center',
+          pngalignment: 'center:center'
         },
         steps: [
           {
@@ -1913,8 +1913,8 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
+                  zoom: ''
+                }
               },
               {
                 actionId: 'setLayerPosition',
@@ -1929,14 +1929,14 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
-              },
+                  zoom: ''
+                }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Layer Pan/Zoom',
@@ -1948,7 +1948,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
           png64: arrowTopCenter,
-          pngalignment: 'center:center',
+          pngalignment: 'center:center'
         },
         steps: [
           {
@@ -1966,14 +1966,14 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
-              },
+                  zoom: ''
+                }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Layer Pan/Zoom',
@@ -1985,7 +1985,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
           png64: arrowTopRight,
-          pngalignment: 'center:center',
+          pngalignment: 'center:center'
         },
         steps: [
           {
@@ -2003,8 +2003,8 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
+                  zoom: ''
+                }
               },
               {
                 actionId: 'setLayerPosition',
@@ -2019,20 +2019,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
-              },
+                  zoom: ''
+                }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Layer Pan/Zoom',
         name: '',
         type: 'text',
-        text: '',
+        text: ''
       },
       {
         category: 'Layer Pan/Zoom',
@@ -2044,7 +2044,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
           png64: arrowMidleLeft,
-          pngalignment: 'center:center',
+          pngalignment: 'center:center'
         },
         steps: [
           {
@@ -2062,14 +2062,14 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
-              },
+                  zoom: ''
+                }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Layer Pan/Zoom',
@@ -2081,7 +2081,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
           png64: arrowMidleCenter,
-          pngalignment: 'center:center',
+          pngalignment: 'center:center'
         },
         steps: [
           {
@@ -2099,8 +2099,8 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
+                  zoom: ''
+                }
               },
               {
                 actionId: 'setLayerPosition',
@@ -2115,14 +2115,14 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
-              },
+                  zoom: ''
+                }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Layer Pan/Zoom',
@@ -2134,7 +2134,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
           png64: arrowMidleRight,
-          pngalignment: 'center:center',
+          pngalignment: 'center:center'
         },
         steps: [
           {
@@ -2152,20 +2152,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
-              },
+                  zoom: ''
+                }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Layer Pan/Zoom',
         name: '',
         type: 'text',
-        text: '',
+        text: ''
       },
       {
         category: 'Layer Pan/Zoom',
@@ -2177,7 +2177,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
           png64: arrowBottomLeft,
-          pngalignment: 'center:center',
+          pngalignment: 'center:center'
         },
         steps: [
           {
@@ -2195,8 +2195,8 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
+                  zoom: ''
+                }
               },
               {
                 actionId: 'setLayerPosition',
@@ -2211,14 +2211,14 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
-              },
+                  zoom: ''
+                }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Layer Pan/Zoom',
@@ -2230,7 +2230,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
           png64: arrowBottomCenter,
-          pngalignment: 'center:center',
+          pngalignment: 'center:center'
         },
         steps: [
           {
@@ -2248,14 +2248,14 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
-              },
+                  zoom: ''
+                }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Layer Pan/Zoom',
@@ -2267,7 +2267,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
           png64: arrowBottomRight,
-          pngalignment: 'center:center',
+          pngalignment: 'center:center'
         },
         steps: [
           {
@@ -2285,8 +2285,8 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
+                  zoom: ''
+                }
               },
               {
                 actionId: 'setLayerPosition',
@@ -2301,14 +2301,14 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
-              },
+                  zoom: ''
+                }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       }
     )
 
@@ -2323,7 +2323,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       fillColor: combineRgb(255, 255, 255),
       fillOpacity: 255,
       offsetX: 0,
-      offsetY: 0,
+      offsetY: 0
     })
 
     const box = graphics.toPNG64({
@@ -2335,10 +2335,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
         offsetX: 0,
         offsetY: 0,
         customHeight: 20,
-        customWidth: 20,
+        customWidth: 20
       }),
       width: 20,
-      height: 20,
+      height: 20
     })
 
     layerPanZoomPresets.push(
@@ -2346,7 +2346,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
         category: 'Layer Pan/Zoom',
         name: 'Pan Set',
         type: 'text',
-        text: 'Set the Pan to specific positions',
+        text: 'Set the Pan to specific positions'
       },
       {
         category: 'Layer Pan/Zoom',
@@ -2358,7 +2358,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
           png64: box,
-          pngalignment: 'left:top',
+          pngalignment: 'left:top'
         },
         steps: [
           {
@@ -2376,8 +2376,8 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
+                  zoom: ''
+                }
               },
               {
                 actionId: 'setLayerPosition',
@@ -2392,14 +2392,14 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
-              },
+                  zoom: ''
+                }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Layer Pan/Zoom',
@@ -2411,7 +2411,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
           png64: box,
-          pngalignment: 'center:top',
+          pngalignment: 'center:top'
         },
         steps: [
           {
@@ -2429,8 +2429,8 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
+                  zoom: ''
+                }
               },
               {
                 actionId: 'setLayerPosition',
@@ -2445,14 +2445,14 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
-              },
+                  zoom: ''
+                }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Layer Pan/Zoom',
@@ -2464,7 +2464,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
           png64: box,
-          pngalignment: 'right:top',
+          pngalignment: 'right:top'
         },
         steps: [
           {
@@ -2482,8 +2482,8 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
+                  zoom: ''
+                }
               },
               {
                 actionId: 'setLayerPosition',
@@ -2498,20 +2498,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
-              },
+                  zoom: ''
+                }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Layer Pan/Zoom',
         name: '',
         type: 'text',
-        text: '',
+        text: ''
       },
       {
         category: 'Layer Pan/Zoom',
@@ -2523,7 +2523,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
           png64: box,
-          pngalignment: 'left:center',
+          pngalignment: 'left:center'
         },
         steps: [
           {
@@ -2541,8 +2541,8 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
+                  zoom: ''
+                }
               },
               {
                 actionId: 'setLayerPosition',
@@ -2557,14 +2557,14 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
-              },
+                  zoom: ''
+                }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Layer Pan/Zoom',
@@ -2576,7 +2576,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
           png64: box,
-          pngalignment: 'center:center',
+          pngalignment: 'center:center'
         },
         steps: [
           {
@@ -2594,8 +2594,8 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
+                  zoom: ''
+                }
               },
               {
                 actionId: 'setLayerPosition',
@@ -2610,14 +2610,14 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
-              },
+                  zoom: ''
+                }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Layer Pan/Zoom',
@@ -2629,7 +2629,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
           png64: box,
-          pngalignment: 'right:center',
+          pngalignment: 'right:center'
         },
         steps: [
           {
@@ -2647,8 +2647,8 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
+                  zoom: ''
+                }
               },
               {
                 actionId: 'setLayerPosition',
@@ -2663,20 +2663,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
-              },
+                  zoom: ''
+                }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Layer Pan/Zoom',
         name: '',
         type: 'text',
-        text: '',
+        text: ''
       },
       {
         category: 'Layer Pan/Zoom',
@@ -2688,7 +2688,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
           png64: box,
-          pngalignment: 'left:bottom',
+          pngalignment: 'left:bottom'
         },
         steps: [
           {
@@ -2706,8 +2706,8 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
+                  zoom: ''
+                }
               },
               {
                 actionId: 'setLayerPosition',
@@ -2722,14 +2722,14 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
-              },
+                  zoom: ''
+                }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Layer Pan/Zoom',
@@ -2741,7 +2741,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
           png64: box,
-          pngalignment: 'center:bottom',
+          pngalignment: 'center:bottom'
         },
         steps: [
           {
@@ -2759,8 +2759,8 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
+                  zoom: ''
+                }
               },
               {
                 actionId: 'setLayerPosition',
@@ -2775,14 +2775,14 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
-              },
+                  zoom: ''
+                }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Layer Pan/Zoom',
@@ -2794,7 +2794,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
           png64: box,
-          pngalignment: 'right:bottom',
+          pngalignment: 'right:bottom'
         },
         steps: [
           {
@@ -2812,8 +2812,8 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
+                  zoom: ''
+                }
               },
               {
                 actionId: 'setLayerPosition',
@@ -2828,14 +2828,14 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   xy: '',
                   heightWidth: '',
                   rectangle: '',
-                  zoom: '',
-                },
-              },
+                  zoom: ''
+                }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       }
     )
 
@@ -2851,14 +2851,14 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       { label: 'Output 4', functionID: 'SetOutput4' },
       { label: 'External 2', functionID: 'SetOutputExternal2' },
       { label: 'Fullscreen', functionID: 'SetOutputFullscreen' },
-      { label: 'Fullscreen 2', functionID: 'SetOutputFullscreen2' },
+      { label: 'Fullscreen 2', functionID: 'SetOutputFullscreen2' }
     ].forEach((output) => {
       outputPresets.push(
         {
           category: 'Outputs',
           name: output.label,
           type: 'text',
-          text: '',
+          text: ''
         },
         {
           category: 'Outputs',
@@ -2868,20 +2868,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `${output.label}\\nPGM`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [
                 {
                   actionId: 'outputSet',
-                  options: { functionID: output.functionID as any, value: 'Output', input: '' },
-                },
+                  options: { functionID: output.functionID as any, value: 'Output', input: '' }
+                }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         },
         {
           category: 'Outputs',
@@ -2891,20 +2891,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `${output.label}\nPRV`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [
                 {
                   actionId: 'outputSet',
-                  options: { functionID: output.functionID as any, value: 'Preview', input: '' },
-                },
+                  options: { functionID: output.functionID as any, value: 'Preview', input: '' }
+                }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         },
         {
           category: 'Outputs',
@@ -2914,20 +2914,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `${output.label}\nMultiview`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [
                 {
                   actionId: 'outputSet',
-                  options: { functionID: output.functionID as any, value: 'MultiView', input: '' },
-                },
+                  options: { functionID: output.functionID as any, value: 'MultiView', input: '' }
+                }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         },
         {
           category: 'Outputs',
@@ -2937,20 +2937,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `${output.label}\nReplay`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [
                 {
                   actionId: 'outputSet',
-                  options: { functionID: output.functionID as any, value: 'Replay', input: '' },
-                },
+                  options: { functionID: output.functionID as any, value: 'Replay', input: '' }
+                }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         },
         {
           category: 'Outputs',
@@ -2960,17 +2960,17 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `${output.label}\nInput`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [
-                { actionId: 'outputSet', options: { functionID: output.functionID as any, value: 'Input', input: '' } },
+                { actionId: 'outputSet', options: { functionID: output.functionID as any, value: 'Input', input: '' } }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         }
       )
     })
@@ -2988,21 +2988,21 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'OVL All Off',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
               {
                 actionId: 'overlayFunctions',
-                options: { functionID: 'OverlayInputAllOff', input: '', mix: '1', mixVariable: '' },
-              },
+                options: { functionID: 'OverlayInputAllOff', input: '', mix: '1', mixVariable: '' }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
-      },
+        feedbacks: []
+      }
     ]
 
     for (let i = 1; i < 5; i++) {
@@ -3011,7 +3011,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           category: 'Overlays',
           name: `Overlay ${i}`,
           type: 'text',
-          text: '',
+          text: ''
         },
         {
           category: 'Overlays',
@@ -3021,18 +3021,18 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `Overlay ${1} Prgm`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [
                 {
                   actionId: 'overlayFunctions',
-                  options: { functionID: `OverlayInput${i}` as 'OverlayInput1', input: '', mix: '1', mixVariable: '' },
-                },
+                  options: { functionID: `OverlayInput${i}` as 'OverlayInput1', input: '', mix: '1', mixVariable: '' }
+                }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
           feedbacks: [
             {
@@ -3042,10 +3042,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                 overlay: i.toString(),
                 fg: combineRgb(255, 255, 255),
                 bgPreview: combineRgb(0, 255, 0),
-                bgProgram: combineRgb(255, 0, 0),
-              },
-            },
-          ],
+                bgProgram: combineRgb(255, 0, 0)
+              }
+            }
+          ]
         },
         {
           category: 'Overlays',
@@ -3055,7 +3055,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `Overlay ${i} Prv`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
@@ -3066,12 +3066,12 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                     functionID: `PreviewOverlayInput${i}` as 'PreviewOverlayInput1',
                     input: '',
                     mix: '1',
-                    mixVariable: '',
-                  },
-                },
+                    mixVariable: ''
+                  }
+                }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
           feedbacks: [
             {
@@ -3081,10 +3081,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                 overlay: i.toString(),
                 fg: combineRgb(255, 255, 255),
                 bgPreview: combineRgb(0, 255, 0),
-                bgProgram: combineRgb(255, 0, 0),
-              },
-            },
-          ],
+                bgProgram: combineRgb(255, 0, 0)
+              }
+            }
+          ]
         },
         {
           category: 'Overlays',
@@ -3094,7 +3094,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `Overlay ${i} In`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
@@ -3105,12 +3105,12 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                     functionID: `OverlayInput${i}In` as 'OverlayInput1In',
                     input: '',
                     mix: '1',
-                    mixVariable: '',
-                  },
-                },
+                    mixVariable: ''
+                  }
+                }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
           feedbacks: [
             {
@@ -3120,10 +3120,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                 overlay: i.toString(),
                 fg: combineRgb(255, 255, 255),
                 bgPreview: combineRgb(0, 255, 0),
-                bgProgram: combineRgb(255, 0, 0),
-              },
-            },
-          ],
+                bgProgram: combineRgb(255, 0, 0)
+              }
+            }
+          ]
         },
         {
           category: 'Overlays',
@@ -3133,7 +3133,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `Overlay ${i} Out`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
@@ -3144,12 +3144,12 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                     functionID: `OverlayInput${i}Out` as 'OverlayInput1Out',
                     input: '',
                     mix: '1',
-                    mixVariable: '',
-                  },
-                },
+                    mixVariable: ''
+                  }
+                }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
           feedbacks: [
             {
@@ -3159,10 +3159,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                 overlay: i.toString(),
                 fg: combineRgb(255, 255, 255),
                 bgPreview: combineRgb(0, 255, 0),
-                bgProgram: combineRgb(255, 0, 0),
-              },
-            },
-          ],
+                bgProgram: combineRgb(255, 0, 0)
+              }
+            }
+          ]
         },
         {
           category: 'Overlays',
@@ -3172,7 +3172,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `Overlay ${i} Off`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
@@ -3183,12 +3183,12 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                     functionID: `OverlayInput${i}Off` as 'OverlayInput1Off',
                     input: '',
                     mix: '1',
-                    mixVariable: '',
-                  },
-                },
+                    mixVariable: ''
+                  }
+                }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
           feedbacks: [
             {
@@ -3198,10 +3198,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                 overlay: i.toString(),
                 fg: combineRgb(255, 255, 255),
                 bgPreview: combineRgb(0, 255, 0),
-                bgProgram: combineRgb(255, 0, 0),
-              },
-            },
-          ],
+                bgProgram: combineRgb(255, 0, 0)
+              }
+            }
+          ]
         },
         {
           category: 'Overlays',
@@ -3211,7 +3211,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `Overlay ${i} Zoom`,
             size: '14',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
@@ -3222,14 +3222,14 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                     functionID: `OverlayInput${i}Zoom` as 'OverlayInput1Zoom',
                     input: '',
                     mix: '1',
-                    mixVariable: '',
-                  },
-                },
+                    mixVariable: ''
+                  }
+                }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         }
       )
     }
@@ -3247,27 +3247,27 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'PlayList Start',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'playListFunctions', options: { functionID: 'StartPlayList' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
             feedbackId: 'status',
             options: {
               status: 'playList',
-              value: '',
+              value: ''
             },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 0, 0)
+            }
+          }
+        ]
       },
       {
         category: 'PlayList',
@@ -3277,27 +3277,27 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'PlayList Stop',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'playListFunctions', options: { functionID: 'StopPlayList' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
             feedbackId: 'status',
             options: {
               status: 'playList',
-              value: '',
+              value: ''
             },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 0, 0)
+            }
+          }
+        ]
       },
       {
         category: 'PlayList',
@@ -3307,15 +3307,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'PlayList Next',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'playListFunctions', options: { functionID: 'NextPlayListEntry' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'PlayList',
@@ -3325,11 +3325,11 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
         steps: [
           {
             down: [{ actionId: 'playListFunctions', options: { functionID: 'PreviousPlayListEntry' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
-      },
+        feedbacks: []
+      }
     ]
 
     return playListPresets
@@ -3343,7 +3343,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
         category: 'Replay',
         name: `A Camera`,
         type: 'text',
-        text: '',
+        text: ''
       })
 
       for (let i = 1; i < 9; i++) {
@@ -3355,18 +3355,18 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `${channel} Cam ${i}`,
             size: '18',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [
                 {
                   actionId: 'replayACamera',
-                  options: { functionID: `Replay${channel}Camera${i}` as 'ReplayACamera1' },
-                },
+                  options: { functionID: `Replay${channel}Camera${i}` as 'ReplayACamera1' }
+                }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
           feedbacks: [
             {
@@ -3374,10 +3374,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               options: { channel: 'A', camera: 1 },
               style: {
                 color: combineRgb(0, 0, 0),
-                bgcolor: combineRgb(255, 255, 0),
-              },
-            },
-          ],
+                bgcolor: combineRgb(255, 255, 0)
+              }
+            }
+          ]
         })
       }
     })
@@ -3386,7 +3386,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       category: 'Replay',
       name: `Channel Select`,
       type: 'text',
-      text: '',
+      text: ''
     })
 
     const channels: ('AB' | 'A' | 'B')[] = ['AB', 'A', 'B']
@@ -3400,18 +3400,18 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Channel${channel}`,
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
               {
                 actionId: 'replaySelectChannel',
-                options: { functionID: `replaySelectChannel${channel}` as 'replaySelectChannelAB' },
-              },
+                options: { functionID: `replaySelectChannel${channel}` as 'replaySelectChannelAB' }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -3419,10 +3419,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { channel },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 255, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 255, 0)
+            }
+          }
+        ]
       })
     })
 
@@ -3431,7 +3431,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
         category: 'Replay',
         name: `Playback`,
         type: 'text',
-        text: '',
+        text: ''
       },
       {
         category: 'Replay',
@@ -3441,13 +3441,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Rec',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'replayRecording', options: { functionID: `ReplayStartStopRecording` } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -3455,10 +3455,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { status: 'recording' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 0, 0)
+            }
+          }
+        ]
       },
       {
         category: 'Replay',
@@ -3468,13 +3468,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Live',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'replayLiveToggle', options: {} }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -3482,10 +3482,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { status: 'live' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 0, 0)
+            }
+          }
+        ]
       },
       {
         category: 'Replay',
@@ -3495,15 +3495,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Jump to Now',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'replayJumpToNow', options: { channel: 'Current' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Replay',
@@ -3513,15 +3513,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Play Events',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'replayPlay', options: { channel: 'Current' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Replay',
@@ -3531,15 +3531,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Pause Events',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'replayPause', options: { channel: 'Current' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Replay',
@@ -3549,15 +3549,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Play Selected Event',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'replayPlaySelectedEventToOutput', options: { channel: 'Current' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Replay',
@@ -3567,21 +3567,21 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Play Events by ID',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'replayPlayEventsByIDToOutput', options: { channel: 'Current', value: 0 } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Replay',
         name: `Mark Event`,
         type: 'text',
-        text: '',
+        text: ''
       },
       {
         category: 'Replay',
@@ -3591,15 +3591,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Mark In',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'replayMark', options: { functionID: 'ReplayMarkIn', value: '0', value2: '10' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Replay',
@@ -3609,15 +3609,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Mark Out',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'replayMark', options: { functionID: 'ReplayMarkOut', value: '0', value2: '10' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Replay',
@@ -3627,15 +3627,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Mark Last 10s',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'replayMark', options: { functionID: 'ReplayMarkInOut', value: '10', value2: '10' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Replay',
@@ -3645,15 +3645,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Mark Last 30s',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'replayMark', options: { functionID: 'ReplayMarkInOut', value: '30', value2: '10' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Replay',
@@ -3663,15 +3663,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Update In',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'replayUpdateInOut', options: { functionID: 'ReplayUpdateSelectedInPoint' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Replay',
@@ -3681,15 +3681,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Update Out',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'replayUpdateInOut', options: { functionID: 'ReplayUpdateSelectedOutPoint' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       }
     )
 
@@ -3706,15 +3706,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Next Photo',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'nextPicture', options: { input: '1' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Slides & Lists',
@@ -3724,15 +3724,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Prev Photo',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'previousPicture', options: { input: '1' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Slides & Lists',
@@ -3742,28 +3742,28 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Select Index',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'selectIndex', options: { input: '1', value: '1' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
             feedbackId: 'inputSelectedIndexBoolean',
             options: {
               input: '1',
-              selectedIndex: '1',
+              selectedIndex: '1'
             },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 255, 0),
-            },
-          },
-        ],
-      },
+              bgcolor: combineRgb(255, 255, 0)
+            }
+          }
+        ]
+      }
     ]
 
     return slideListPresets
@@ -3779,20 +3779,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Set Title',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
               {
                 actionId: 'setText',
-                options: { input: '1', selectedIndex: '0', adjustment: 'Set', value: '0', encode: false },
-              },
+                options: { input: '1', selectedIndex: '0', adjustment: 'Set', value: '0', encode: false }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Titles & Graphics',
@@ -3802,20 +3802,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Set Title +1',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
               {
                 actionId: 'setText',
-                options: { input: '1', selectedIndex: '0', adjustment: 'Increase', value: '1', encode: false },
-              },
+                options: { input: '1', selectedIndex: '0', adjustment: 'Increase', value: '1', encode: false }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Titles & Graphics',
@@ -3825,20 +3825,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Set Title -1',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
               {
                 actionId: 'setText',
-                options: { input: '1', selectedIndex: '0', adjustment: 'Decrease', value: '1', encode: false },
-              },
+                options: { input: '1', selectedIndex: '0', adjustment: 'Decrease', value: '1', encode: false }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Titles & Graphics',
@@ -3848,15 +3848,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Next Title',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'titlePreset', options: { input: '', functionID: 'NextTitlePreset' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Titles & Graphics',
@@ -3866,22 +3866,22 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Prev Title',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'titlePreset', options: { input: '', functionID: 'PreviousTitlePreset' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Titles & Graphics',
         name: 'Title Presets',
         type: 'text',
-        text: '',
-      },
+        text: ''
+      }
     ]
 
     for (let i = 0; i < 5; i++) {
@@ -3893,15 +3893,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Title Preset ${i}`,
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'selectTitlePreset', options: { input: '', value: i.toString() } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       })
     }
 
@@ -3910,7 +3910,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
         category: 'Titles & Graphics',
         name: 'Title Animations',
         type: 'text',
-        text: '',
+        text: ''
       },
       {
         category: 'Titles & Graphics',
@@ -3920,15 +3920,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Title Transition In',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'TransitionIn' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Titles & Graphics',
@@ -3938,15 +3938,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Title Transition Out',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'TransitionOut' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Titles & Graphics',
@@ -3956,15 +3956,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Title Continuous',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'Continuous' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Titles & Graphics',
@@ -3974,15 +3974,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Title Data Change In',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'DataChangeIn' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Titles & Graphics',
@@ -3992,15 +3992,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Title Data Change Out',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'DataChangeOut' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       }
     )
 
@@ -4013,15 +4013,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Title Page ${i}`,
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: `Page${i}` as 'Page1' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       })
     }
 
@@ -4030,7 +4030,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
         category: 'Titles & Graphics',
         name: 'Countdowns',
         type: 'text',
-        text: '',
+        text: ''
       },
       {
         category: 'Titles & Graphics',
@@ -4040,20 +4040,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Countdown Start',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
               {
                 actionId: 'controlCountdown',
-                options: { functionID: 'StartCountdown', input: '', selectedIndex: '0' },
-              },
+                options: { functionID: 'StartCountdown', input: '', selectedIndex: '0' }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Titles & Graphics',
@@ -4063,17 +4063,17 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Countdown Stop',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
-              { actionId: 'controlCountdown', options: { functionID: 'StopCountdown', input: '', selectedIndex: '0' } },
+              { actionId: 'controlCountdown', options: { functionID: 'StopCountdown', input: '', selectedIndex: '0' } }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Titles & Graphics',
@@ -4083,20 +4083,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Countdown Pause',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
               {
                 actionId: 'controlCountdown',
-                options: { functionID: 'PauseCountdown', input: '', selectedIndex: '0' },
-              },
+                options: { functionID: 'PauseCountdown', input: '', selectedIndex: '0' }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Titles & Graphics',
@@ -4106,15 +4106,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Countdown Change',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'changeCountdown', options: { value: '00:10:00', input: '', selectedIndex: '0' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       }
     )
 
@@ -4123,7 +4123,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
       { label: '10', time: '00:00:10' },
       { label: '30', time: '00:00:30' },
       { label: '60', time: '00:01:00' },
-      { label: '120', time: '00:02:00' },
+      { label: '120', time: '00:02:00' }
     ]
 
     countdowns.forEach((x) => {
@@ -4135,15 +4135,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Countdown ${x.label} sec`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'setCountdown', options: { value: x.time, input: '', selectedIndex: '0' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       })
     })
 
@@ -4156,8 +4156,8 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
         category: 'Transitions',
         name: 'Transitions 1 to 4',
         type: 'text',
-        text: 'Auto transition 1 to 4 with preset transition type and duration',
-      },
+        text: 'Auto transition 1 to 4 with preset transition type and duration'
+      }
     ]
 
     for (let i = 1; i < 5; i++) {
@@ -4169,15 +4169,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Transition ${i}`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'transition', options: { functionID: `Transition${i}` as 'Transition1' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       })
     }
 
@@ -4190,15 +4190,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: `Stinger ${i}`,
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'transition', options: { functionID: `Stinger${i}` as 'Stinger1' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       })
     }
 
@@ -4208,7 +4208,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           category: 'Transitions',
           name: `Set Transition ${i}`,
           type: 'text',
-          text: `Set the transition type and duration of Transition ${i}`,
+          text: `Set the transition type and duration of Transition ${i}`
         },
         {
           category: 'Transitions',
@@ -4218,20 +4218,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `T${i} Set Cut`,
             size: '18',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [
                 {
                   actionId: 'setTransitionEffect',
-                  options: { functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1', value: 'Cut', input: '' },
-                },
+                  options: { functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1', value: 'Cut', input: '' }
+                }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         },
         {
           category: 'Transitions',
@@ -4241,7 +4241,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `T${i} Set Fade`,
             size: '18',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
@@ -4251,14 +4251,14 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   options: {
                     functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1',
                     value: 'Fade',
-                    input: '',
-                  },
-                },
+                    input: ''
+                  }
+                }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         },
         {
           category: 'Transitions',
@@ -4268,7 +4268,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `T${i} Set Zoom`,
             size: '18',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
@@ -4278,14 +4278,14 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   options: {
                     functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1',
                     value: 'Zoom',
-                    input: '',
-                  },
-                },
+                    input: ''
+                  }
+                }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         },
         {
           category: 'Transitions',
@@ -4295,7 +4295,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `T${i} Set Merge`,
             size: '18',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
@@ -4305,14 +4305,14 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
                   options: {
                     functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1',
                     value: 'Merge',
-                    input: '',
-                  },
-                },
+                    input: ''
+                  }
+                }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         },
         {
           category: 'Transitions',
@@ -4322,17 +4322,17 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `T${i} Set 250ms`,
             size: '18',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [
-                { actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 250 } },
+                { actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 250 } }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         },
         {
           category: 'Transitions',
@@ -4342,17 +4342,17 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `T${i} Set 500ms`,
             size: '18',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [
-                { actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 500 } },
+                { actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 500 } }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         },
         {
           category: 'Transitions',
@@ -4362,17 +4362,17 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `T${i} Set 1000ms`,
             size: '18',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [
-                { actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 1000 } },
+                { actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 1000 } }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         },
         {
           category: 'Transitions',
@@ -4382,17 +4382,17 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             text: `T${i} Set 2000ms`,
             size: '18',
             color: combineRgb(255, 255, 255),
-            bgcolor: combineRgb(0, 0, 0),
+            bgcolor: combineRgb(0, 0, 0)
           },
           steps: [
             {
               down: [
-                { actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 2000 } },
+                { actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 2000 } }
               ],
-              up: [],
-            },
+              up: []
+            }
           ],
-          feedbacks: [],
+          feedbacks: []
         }
       )
     }
@@ -4402,7 +4402,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
         category: 'Transitions',
         name: 'Transition Mix',
         type: 'text',
-        text: '',
+        text: ''
       },
       {
         category: 'Transitions',
@@ -4412,17 +4412,17 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Cut',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
-              { actionId: 'transitionMix', options: { functionID: 'Cut', mix: 0, mixVariable: '', duration: '1000' } },
+              { actionId: 'transitionMix', options: { functionID: 'Cut', mix: 0, mixVariable: '', duration: '1000' } }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Transitions',
@@ -4432,17 +4432,17 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Fade',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
-              { actionId: 'transitionMix', options: { functionID: 'Fade', mix: 0, mixVariable: '', duration: '1000' } },
+              { actionId: 'transitionMix', options: { functionID: 'Fade', mix: 0, mixVariable: '', duration: '1000' } }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Transitions',
@@ -4452,17 +4452,17 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Zoom',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
-              { actionId: 'transitionMix', options: { functionID: 'Zoom', mix: 0, mixVariable: '', duration: '1000' } },
+              { actionId: 'transitionMix', options: { functionID: 'Zoom', mix: 0, mixVariable: '', duration: '1000' } }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Transitions',
@@ -4472,17 +4472,17 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Wipe',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
-              { actionId: 'transitionMix', options: { functionID: 'Wipe', mix: 0, mixVariable: '', duration: '1000' } },
+              { actionId: 'transitionMix', options: { functionID: 'Wipe', mix: 0, mixVariable: '', duration: '1000' } }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Transitions',
@@ -4492,20 +4492,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Slide',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
               {
                 actionId: 'transitionMix',
-                options: { functionID: 'Slide', mix: 0, mixVariable: '', duration: '1000' },
-              },
+                options: { functionID: 'Slide', mix: 0, mixVariable: '', duration: '1000' }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Transitions',
@@ -4515,17 +4515,17 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Fly',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
-              { actionId: 'transitionMix', options: { functionID: 'Fly', mix: 0, mixVariable: '', duration: '1000' } },
+              { actionId: 'transitionMix', options: { functionID: 'Fly', mix: 0, mixVariable: '', duration: '1000' } }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Transitions',
@@ -4535,20 +4535,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Cross Zoom',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
               {
                 actionId: 'transitionMix',
-                options: { functionID: 'CrossZoom', mix: 0, mixVariable: '', duration: '1000' },
-              },
+                options: { functionID: 'CrossZoom', mix: 0, mixVariable: '', duration: '1000' }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Transitions',
@@ -4558,20 +4558,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Fly Rotate',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
               {
                 actionId: 'transitionMix',
-                options: { functionID: 'FlyRotate', mix: 0, mixVariable: '', duration: '1000' },
-              },
+                options: { functionID: 'FlyRotate', mix: 0, mixVariable: '', duration: '1000' }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Transitions',
@@ -4581,17 +4581,17 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Cube',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
-              { actionId: 'transitionMix', options: { functionID: 'Cube', mix: 0, mixVariable: '', duration: '1000' } },
+              { actionId: 'transitionMix', options: { functionID: 'Cube', mix: 0, mixVariable: '', duration: '1000' } }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Transitions',
@@ -4601,20 +4601,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Cube Zoom',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
               {
                 actionId: 'transitionMix',
-                options: { functionID: 'CubeZoom', mix: 0, mixVariable: '', duration: '1000' },
-              },
+                options: { functionID: 'CubeZoom', mix: 0, mixVariable: '', duration: '1000' }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Transitions',
@@ -4624,20 +4624,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Vertical Wipe',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
               {
                 actionId: 'transitionMix',
-                options: { functionID: 'VerticalWipe', mix: 0, mixVariable: '', duration: '1000' },
-              },
+                options: { functionID: 'VerticalWipe', mix: 0, mixVariable: '', duration: '1000' }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Transitions',
@@ -4647,20 +4647,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Vertical Slide',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
               {
                 actionId: 'transitionMix',
-                options: { functionID: 'VerticalSlide', mix: 0, mixVariable: '', duration: '1000' },
-              },
+                options: { functionID: 'VerticalSlide', mix: 0, mixVariable: '', duration: '1000' }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Transitions',
@@ -4670,20 +4670,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Merge',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
               {
                 actionId: 'transitionMix',
-                options: { functionID: 'Merge', mix: 0, mixVariable: '', duration: '1000' },
-              },
+                options: { functionID: 'Merge', mix: 0, mixVariable: '', duration: '1000' }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Transitions',
@@ -4693,20 +4693,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Wipe Reverse',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
               {
                 actionId: 'transitionMix',
-                options: { functionID: 'WipeReverse', mix: 0, mixVariable: '', duration: '1000' },
-              },
+                options: { functionID: 'WipeReverse', mix: 0, mixVariable: '', duration: '1000' }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Transitions',
@@ -4716,20 +4716,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Slide Reverse',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
               {
                 actionId: 'transitionMix',
-                options: { functionID: 'SlideReverse', mix: 0, mixVariable: '', duration: '1000' },
-              },
+                options: { functionID: 'SlideReverse', mix: 0, mixVariable: '', duration: '1000' }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Transitions',
@@ -4739,20 +4739,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Vertical Wipe Reverse',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
               {
                 actionId: 'transitionMix',
-                options: { functionID: 'VerticalWipeReverse', mix: 0, mixVariable: '', duration: '1000' },
-              },
+                options: { functionID: 'VerticalWipeReverse', mix: 0, mixVariable: '', duration: '1000' }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Transitions',
@@ -4762,20 +4762,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Vertical Slide Reverse',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
               {
                 actionId: 'transitionMix',
-                options: { functionID: 'VerticalSlideReverse', mix: 0, mixVariable: '', duration: '1000' },
-              },
+                options: { functionID: 'VerticalSlideReverse', mix: 0, mixVariable: '', duration: '1000' }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       }
     )
 
@@ -4792,15 +4792,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'play',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'videoActions', options: { input: '', inputType: true, functionID: 'Play' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Video Playback',
@@ -4810,15 +4810,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Pause',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'videoActions', options: { input: '', inputType: true, functionID: 'Pause' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Video Playback',
@@ -4828,15 +4828,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Play Pause',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'videoActions', options: { input: '', inputType: true, functionID: 'PlayPause' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Video Playback',
@@ -4846,15 +4846,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Restart',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'videoActions', options: { input: '', inputType: true, functionID: 'Restart' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Video Playback',
@@ -4864,15 +4864,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Loop ON',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'videoActions', options: { input: '', inputType: true, functionID: 'LoopOn' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Video Playback',
@@ -4882,15 +4882,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Loop OFF',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'videoActions', options: { input: '', inputType: true, functionID: 'LoopOff' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Video Playback',
@@ -4900,17 +4900,17 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Playhead 10 sec',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
-              { actionId: 'videoPlayhead', options: { input: '', inputType: true, adjustment: 'Set', value: 10000 } },
+              { actionId: 'videoPlayhead', options: { input: '', inputType: true, adjustment: 'Set', value: 10000 } }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Video Playback',
@@ -4920,20 +4920,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Playhead +10 sec',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
               {
                 actionId: 'videoPlayhead',
-                options: { input: '', inputType: true, adjustment: 'Increase', value: 10000 },
-              },
+                options: { input: '', inputType: true, adjustment: 'Increase', value: 10000 }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Video Playback',
@@ -4943,20 +4943,20 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Playhead -10 sec',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [
               {
                 actionId: 'videoPlayhead',
-                options: { input: '', inputType: true, adjustment: 'Decrease', value: 10000 },
-              },
+                options: { input: '', inputType: true, adjustment: 'Decrease', value: 10000 }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Video Playback',
@@ -4966,15 +4966,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Mark In',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'videoMark', options: { input: '', inputType: true, functionID: 'MarkIn' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Video Playback',
@@ -4984,15 +4984,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Mark Out',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'videoMark', options: { input: '', inputType: true, functionID: 'MarkOut' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Video Playback',
@@ -5002,15 +5002,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Clear In/Out',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'videoMark', options: { input: '', inputType: true, functionID: 'MarkReset' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Video Playback',
@@ -5020,15 +5020,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Clear In',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'videoMark', options: { input: '', inputType: true, functionID: 'MarkResetIn' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Video Playback',
@@ -5038,15 +5038,15 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Clear Out',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'videoMark', options: { input: '', inputType: true, functionID: 'MarkResetOut' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
-        feedbacks: [],
+        feedbacks: []
       },
       {
         category: 'Video Playback',
@@ -5056,7 +5056,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Video Timecode',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [],
         feedbacks: [
@@ -5067,11 +5067,11 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               color: combineRgb(255, 255, 255),
               color30: combineRgb(255, 255, 0),
               color10: combineRgb(255, 0, 0),
-              loop: false,
-            },
-          },
-        ],
-      },
+              loop: false
+            }
+          }
+        ]
+      }
     ]
 
     return videoPlaybackPresets
@@ -5087,13 +5087,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Toggle Multicorder',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'toggleFunctions', options: { functionID: 'StartStopMultiCorder', value: '' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -5101,10 +5101,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { status: 'multiCorder', value: '' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 0, 0)
+            }
+          }
+        ]
       },
       {
         category: 'vMix Functions',
@@ -5114,13 +5114,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Toggle Recording',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'toggleFunctions', options: { functionID: 'StartStopRecording', value: '' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -5128,10 +5128,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { status: 'recording', value: '' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 0, 0)
+            }
+          }
+        ]
       },
       {
         category: 'vMix Functions',
@@ -5141,13 +5141,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Toggle Stream',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'toggleFunctions', options: { functionID: 'StartStopStreaming', value: '' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -5155,10 +5155,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { status: 'streaming', value: '' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 0, 0)
+            }
+          }
+        ]
       },
       {
         category: 'vMix Functions',
@@ -5168,13 +5168,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Toggle External',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'toggleFunctions', options: { functionID: 'StartStopExternal', value: '' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -5182,10 +5182,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { status: 'external', value: '' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 0, 0)
+            }
+          }
+        ]
       },
       {
         category: 'vMix Functions',
@@ -5195,13 +5195,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Toggle Fullscreen',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'toggleFunctions', options: { functionID: 'Fullscreen', value: '' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -5209,10 +5209,10 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { status: 'fullscreen', value: '' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 0, 0)
+            }
+          }
+        ]
       },
       {
         category: 'vMix Functions',
@@ -5222,13 +5222,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Toggle FTB',
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'toggleFunctions', options: { functionID: 'FadeToBlack', value: '' } }],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -5236,11 +5236,11 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: { status: 'fadeToBlack', value: '' },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
-      },
+              bgcolor: combineRgb(255, 0, 0)
+            }
+          }
+        ]
+      }
     ]
 
     return vMixfunctionPresets
@@ -5252,19 +5252,19 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
         category: 'Button Shift',
         name: 'Button Shifting',
         type: 'text',
-        text: `Button Shifting is a feature unique in this module that allows actions/feedbacks to support pointing to 2 different things based on if the 'Shift' button is pressed or not.`,
+        text: `Button Shifting is a feature unique in this module that allows actions/feedbacks to support pointing to 2 different things based on if the 'Shift' button is pressed or not.`
       },
       {
         category: 'Button Shift',
         name: '',
         type: 'text',
-        text: `The two options need to be split by the delimter set in the config, for example an Preview Input action set to "1|5" will preview input 1 by default, or 5 when Shift is pressed, essentially doubling the buttons on a page.`,
+        text: `The two options need to be split by the delimter set in the config, for example an Preview Input action set to "1|5" will preview input 1 by default, or 5 when Shift is pressed, essentially doubling the buttons on a page.`
       },
       {
         category: 'Button Shift',
         name: '',
         type: 'text',
-        text: `Some feedbacks, such as for preview/program can 'blink' through, so a solid green would indicate an input in preview, blinking green means the input on the other Shift being in preview.`,
+        text: `Some feedbacks, such as for preview/program can 'blink' through, so a solid green would indicate an input in preview, blinking green means the input on the other Shift being in preview.`
       },
       {
         category: 'Button Shift',
@@ -5274,13 +5274,13 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
           text: 'Shift',
           size: '24',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          bgcolor: combineRgb(0, 0, 0)
         },
         steps: [
           {
             down: [{ actionId: 'buttonShift', options: <any>[] }],
-            up: [{ actionId: 'buttonShift', options: <any>[] }],
-          },
+            up: [{ actionId: 'buttonShift', options: <any>[] }]
+          }
         ],
         feedbacks: [
           {
@@ -5288,16 +5288,16 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             options: {},
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
+              bgcolor: combineRgb(255, 0, 0)
+            }
+          }
+        ]
       },
       {
         category: 'Button Shift',
         name: `Preview 1 ${instance.config.shiftDelimiter} 5 to 4 ${instance.config.shiftDelimiter} 8`,
         type: 'text',
-        text: '',
+        text: ''
       },
       {
         category: 'Button Shift',
@@ -5309,11 +5309,11 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             down: [
               {
                 actionId: 'previewInput',
-                options: { mix: 0, mixVariable: '', input: `1${instance.config.shiftDelimiter}5` },
-              },
+                options: { mix: 0, mixVariable: '', input: `1${instance.config.shiftDelimiter}5` }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -5324,11 +5324,11 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               input: `1${instance.config.shiftDelimiter}5`,
               fg: combineRgb(255, 255, 255),
               bg: combineRgb(0, 255, 0),
-              tally: '',
-            },
+              tally: ''
+            }
           },
-          { feedbackId: 'buttonText', options: { text: `PRV 1${instance.config.shiftDelimiter}PRV 5` } },
-        ],
+          { feedbackId: 'buttonText', options: { text: `PRV 1${instance.config.shiftDelimiter}PRV 5` } }
+        ]
       },
       {
         category: 'Button Shift',
@@ -5340,11 +5340,11 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             down: [
               {
                 actionId: 'previewInput',
-                options: { mix: 0, mixVariable: '', input: `2${instance.config.shiftDelimiter}6` },
-              },
+                options: { mix: 0, mixVariable: '', input: `2${instance.config.shiftDelimiter}6` }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -5355,11 +5355,11 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               input: `2${instance.config.shiftDelimiter}6`,
               fg: combineRgb(255, 255, 255),
               bg: combineRgb(0, 255, 0),
-              tally: '',
-            },
+              tally: ''
+            }
           },
-          { feedbackId: 'buttonText', options: { text: `PRV 2${instance.config.shiftDelimiter}PRV 6` } },
-        ],
+          { feedbackId: 'buttonText', options: { text: `PRV 2${instance.config.shiftDelimiter}PRV 6` } }
+        ]
       },
       {
         category: 'Button Shift',
@@ -5371,11 +5371,11 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             down: [
               {
                 actionId: 'previewInput',
-                options: { mix: 0, mixVariable: '', input: `3${instance.config.shiftDelimiter}7` },
-              },
+                options: { mix: 0, mixVariable: '', input: `3${instance.config.shiftDelimiter}7` }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -5386,11 +5386,11 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               input: `3${instance.config.shiftDelimiter}7`,
               fg: combineRgb(255, 255, 255),
               bg: combineRgb(0, 255, 0),
-              tally: '',
-            },
+              tally: ''
+            }
           },
-          { feedbackId: 'buttonText', options: { text: `PRV 3${instance.config.shiftDelimiter}PRV 7` } },
-        ],
+          { feedbackId: 'buttonText', options: { text: `PRV 3${instance.config.shiftDelimiter}PRV 7` } }
+        ]
       },
       {
         category: 'Button Shift',
@@ -5402,11 +5402,11 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             down: [
               {
                 actionId: 'previewInput',
-                options: { mix: 0, mixVariable: '', input: `4${instance.config.shiftDelimiter}8` },
-              },
+                options: { mix: 0, mixVariable: '', input: `4${instance.config.shiftDelimiter}8` }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -5417,18 +5417,18 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               input: `4${instance.config.shiftDelimiter}8`,
               fg: combineRgb(255, 255, 255),
               bg: combineRgb(0, 255, 0),
-              tally: '',
-            },
+              tally: ''
+            }
           },
-          { feedbackId: 'buttonText', options: { text: `PRV 4${instance.config.shiftDelimiter}PRV 8` } },
-        ],
+          { feedbackId: 'buttonText', options: { text: `PRV 4${instance.config.shiftDelimiter}PRV 8` } }
+        ]
       },
 
       {
         category: 'Button Shift',
         name: `Program 1 ${instance.config.shiftDelimiter} 5 to 4 ${instance.config.shiftDelimiter} 8`,
         type: 'text',
-        text: '',
+        text: ''
       },
       {
         category: 'Button Shift',
@@ -5440,11 +5440,11 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             down: [
               {
                 actionId: 'programCut',
-                options: { mix: 0, mixVariable: '', input: `1${instance.config.shiftDelimiter}5` },
-              },
+                options: { mix: 0, mixVariable: '', input: `1${instance.config.shiftDelimiter}5` }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -5455,11 +5455,11 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               input: `1${instance.config.shiftDelimiter}5`,
               fg: combineRgb(255, 255, 255),
               bg: combineRgb(255, 0, 0),
-              tally: '',
-            },
+              tally: ''
+            }
           },
-          { feedbackId: 'buttonText', options: { text: `PRV 1${instance.config.shiftDelimiter}PRV 5` } },
-        ],
+          { feedbackId: 'buttonText', options: { text: `PRV 1${instance.config.shiftDelimiter}PRV 5` } }
+        ]
       },
       {
         category: 'Button Shift',
@@ -5471,11 +5471,11 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             down: [
               {
                 actionId: 'programCut',
-                options: { mix: 0, mixVariable: '', input: `2${instance.config.shiftDelimiter}6` },
-              },
+                options: { mix: 0, mixVariable: '', input: `2${instance.config.shiftDelimiter}6` }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -5486,11 +5486,11 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               input: `2${instance.config.shiftDelimiter}6`,
               fg: combineRgb(255, 255, 255),
               bg: combineRgb(255, 0, 0),
-              tally: '',
-            },
+              tally: ''
+            }
           },
-          { feedbackId: 'buttonText', options: { text: `PRV 2${instance.config.shiftDelimiter}PRV 6` } },
-        ],
+          { feedbackId: 'buttonText', options: { text: `PRV 2${instance.config.shiftDelimiter}PRV 6` } }
+        ]
       },
       {
         category: 'Button Shift',
@@ -5502,11 +5502,11 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             down: [
               {
                 actionId: 'programCut',
-                options: { mix: 0, mixVariable: '', input: `3${instance.config.shiftDelimiter}7` },
-              },
+                options: { mix: 0, mixVariable: '', input: `3${instance.config.shiftDelimiter}7` }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -5517,11 +5517,11 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               input: `3${instance.config.shiftDelimiter}7`,
               fg: combineRgb(255, 255, 255),
               bg: combineRgb(255, 0, 0),
-              tally: '',
-            },
+              tally: ''
+            }
           },
-          { feedbackId: 'buttonText', options: { text: `PRV 3${instance.config.shiftDelimiter}PRV 7` } },
-        ],
+          { feedbackId: 'buttonText', options: { text: `PRV 3${instance.config.shiftDelimiter}PRV 7` } }
+        ]
       },
       {
         category: 'Button Shift',
@@ -5533,11 +5533,11 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
             down: [
               {
                 actionId: 'programCut',
-                options: { mix: 0, mixVariable: '', input: `4${instance.config.shiftDelimiter}8` },
-              },
+                options: { mix: 0, mixVariable: '', input: `4${instance.config.shiftDelimiter}8` }
+              }
             ],
-            up: [],
-          },
+            up: []
+          }
         ],
         feedbacks: [
           {
@@ -5548,12 +5548,12 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
               input: `4${instance.config.shiftDelimiter}8`,
               fg: combineRgb(255, 255, 255),
               bg: combineRgb(255, 0, 0),
-              tally: '',
-            },
+              tally: ''
+            }
           },
-          { feedbackId: 'buttonText', options: { text: `PRV 4${instance.config.shiftDelimiter}PRV 8` } },
-        ],
-      },
+          { feedbackId: 'buttonText', options: { text: `PRV 4${instance.config.shiftDelimiter}PRV 8` } }
+        ]
+      }
     ]
 
     return buttonShiftPresets
@@ -5575,7 +5575,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
     ...getTransitionPresets(),
     ...getVideoPlaybackPresets(),
     ...getVMixFunctionsPresets(),
-    ...getButtonShiftPresets(),
+    ...getButtonShiftPresets()
 
     // Button Shift
   ]

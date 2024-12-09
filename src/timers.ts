@@ -37,7 +37,7 @@ export class Timer {
     defaultValue = '',
     format = 'mm:ss.ms',
     lap_progress = 'current',
-    times = 0,
+    times = 0
   }: TimerGetOptions): TimerResponse => {
     let lapTotal = 0
     let lastLap = 0
@@ -63,7 +63,7 @@ export class Timer {
       state: this.state,
       value: getValue(),
       current_lap: getValue(),
-      default: defaultValue,
+      default: defaultValue
     }
 
     for (let i = 0; i < times || i < this.time.length + 1; i++) {
