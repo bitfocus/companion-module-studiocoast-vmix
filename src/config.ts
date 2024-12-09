@@ -112,7 +112,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       width: 12,
       label: 'Instance Variables',
       value:
-        'Toggle which variables are shown in the Instance Variables List (all will still be usable, even if not displayed in the list)'
+        'Toggle which variables are shown in the Variables List (all will still be usable, even if not displayed in the list). Disabling variables being shown can improve the performance of the Companion Web UI.'
     },
     {
       type: 'checkbox',
@@ -154,7 +154,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       id: 'strictInputVariableTypes',
       width: 12,
       label:
-        'Limit Input Variable Types - Toggle on to not only hide certain input variables from auto-complete but disable their use. May improve performance when enabled',
+        'Limit Input Variable Types - Toggle on to not only hide certain input variables from the Web UI but also disable their use. May improve performance when enabled.',
       default: false
     }
   ]

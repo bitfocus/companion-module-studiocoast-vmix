@@ -1,15 +1,19 @@
 import 'ts-jest'
 import { mockInstance } from './mock'
-import { getFeedbacks } from '../src/feedback'
+import { VMixFeedbackKeys, VMixFeedback, getFeedbacks } from '../src/feedbacks/feedback'
 
 
 describe('Feedback', () => {
   const feedbacks = getFeedbacks(mockInstance as any)
 
   Object.keys(feedbacks)
-    .filter(id => feedbacks[id].options.length > 0)
+    .filter(id => {
+      const feedback = feedbacks[id as VMixFeedbackKeys] as VMixFeedback<any>
+      return feedback.options.length > 0
+    })
     .forEach(id => {
-      feedbacks[id].options
+      const feedback = feedbacks[id as VMixFeedbackKeys] as VMixFeedback<any>
+      feedback.options
         .filter((option: any) => option.type === 'number' || option.type === 'colorpicker')
         .forEach((option: any) => {
           const colorMin = 0
