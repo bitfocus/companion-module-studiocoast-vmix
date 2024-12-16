@@ -3,6 +3,7 @@ import {
   CompanionInputFieldDropdown,
   CompanionInputFieldTextInput
 } from '@companion-module/base'
+import { Input } from './data'
 
 export type TimeFormat = 'hh:mm:ss' | 'hh:mm:ss.ms' | 'mm:ss' | 'mm:ss.ms' | 'mm:ss.sss' | 'auto'
 
@@ -64,6 +65,56 @@ export const TRANSITIONS = [
   'BarnDoor',
   'RollerDoor'
 ] as const
+
+
+export const calcDuration = (
+  input: Input
+): { ms: string; ss: string; ssms: string; mmss: string; mmssms: string } | null => {
+  if (input.duration > 1) {
+    const inPosition = input.markIn ? input.markIn : 0
+    const outPosition = input.markOut ? input.markOut : input.duration
+    const duration = outPosition - inPosition
+    const padding = (time: number): string => (time < 10 ? '0' + time : time + '')
+
+    const mm = (time: number): string => padding(Math.floor(time / 60000))
+    const ss = (time: number): string => padding(Math.floor(time / 1000) % 60)
+    const ms = (time: number): string => Math.floor((time / 100) % 10) + ''
+
+    return {
+      ms: duration.toString(),
+      ss: `${padding(Math.floor(duration / 1000))}`,
+      ssms: `${padding(Math.floor(duration / 1000))}.${ms(duration)}`,
+      mmss: `${mm(duration)}:${ss(duration)}`,
+      mmssms: `${mm(duration)}:${ss(duration)}.${ms(duration)}`
+    }
+  }
+
+  return null
+}
+
+export const calcRemaining = (
+  input: Input
+): { ms: string; ss: string; ssms: string; mmss: string; mmssms: string } | null => {
+  if (input.position !== undefined) {
+    const inPosition = input.position
+    const outPosition = input.markOut ? input.markOut : input.duration
+    const duration = outPosition - inPosition
+    const padding = (time: number): string => (time < 10 ? '0' + time : time + '')
+
+    const mm = (time: number): string => padding(Math.floor(time / 60000))
+    const ss = (time: number): string => padding(Math.floor(time / 1000) % 60)
+    const ms = (time: number): string => Math.floor((time / 100) % 10) + ''
+
+    return {
+      ms: duration.toString(),
+      ss: `${padding(Math.floor(duration / 1000))}`,
+      ssms: `${padding(Math.floor(duration / 1000))}.${ms(duration)}`,
+      mmss: `${mm(duration)}:${ss(duration)}`,
+      mmssms: `${mm(duration)}:${ss(duration)}.${ms(duration)}`
+    }
+  }
+  return null
+}
 
 /**
  * @param red 0-255
