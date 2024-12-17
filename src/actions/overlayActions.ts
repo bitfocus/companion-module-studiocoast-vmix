@@ -42,10 +42,7 @@ export interface OverlayActions {
 
 export type OverlayCallbacks = OverlayFunctionsCallback
 
-export const vMixOverlayActions = (
-  _instance: VMixInstance,
-  sendBasicCommand: (action: Readonly<OverlayCallbacks>) => Promise<void>
-): OverlayActions => {
+export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: (action: Readonly<OverlayCallbacks>) => Promise<void>): OverlayActions => {
   return {
     overlayFunctions: {
       name: 'Overlay - Functions',

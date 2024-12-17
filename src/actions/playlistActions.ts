@@ -21,10 +21,7 @@ export interface PlayListActions {
 
 export type PlayListCallbacks = PlayListFunctionsCallback | SelectPlayListCallback
 
-export const vMixPlayListActions = (
-  _instance: VMixInstance,
-  sendBasicCommand: (action: Readonly<PlayListCallbacks>) => Promise<void>
-): PlayListActions => {
+export const vMixPlayListActions = (_instance: VMixInstance, sendBasicCommand: (action: Readonly<PlayListCallbacks>) => Promise<void>): PlayListActions => {
   return {
     playListFunctions: {
       name: 'Playlist - Functions',

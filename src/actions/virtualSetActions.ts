@@ -11,14 +11,13 @@ type VirtualSetCallback = ActionCallback<'virtualSet', VirtualSetOptions>
 
 export interface VirtualSetActions {
   virtualSet: VMixAction<VirtualSetCallback>
+
+  [key: string]: VMixAction<any>
 }
 
 export type VirtualSetCallbacks = VirtualSetCallback
 
-export const vMixVirtualSetActions = (
-  instance: VMixInstance,
-  _sendBasicCommand: (action: Readonly<VirtualSetCallbacks>) => Promise<void>
-): VirtualSetActions => {
+export const vMixVirtualSetActions = (instance: VMixInstance, _sendBasicCommand: (action: Readonly<VirtualSetCallbacks>) => Promise<void>): VirtualSetActions => {
   return {
     virtualSet: {
       name: 'VirtualSet - Zoom To Selected Preset',
@@ -35,10 +34,7 @@ export const vMixVirtualSetActions = (
       ],
       callback: async (action) => {
         const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
-        if (instance.tcp)
-          instance.tcp.sendCommand(
-            `FUNCTION SelectIndex Input=${encodeURIComponent(input)}&Value=${action.options.value}`
-          )
+        if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SelectIndex Input=${encodeURIComponent(input)}&Value=${action.options.value}`)
       }
     }
   }

@@ -28,18 +28,13 @@ export interface DataSourceActions {
   dataSourceNextRow: VMixAction<DataSourceNextRowCallback>
   dataSourcePreviousRow: VMixAction<DataSourcePreviousRowCallback>
   dataSourceSelectRow: VMixAction<DataSourceSelectRowCallback>
+
+  [key: string]: VMixAction<any>
 }
 
-export type DataSourceCallbacks =
-  | DataSourceAutoNextCallback
-  | DataSourceNextRowCallback
-  | DataSourcePreviousRowCallback
-  | DataSourceSelectRowCallback
+export type DataSourceCallbacks = DataSourceAutoNextCallback | DataSourceNextRowCallback | DataSourcePreviousRowCallback | DataSourceSelectRowCallback
 
-export const vMixDataSourceActions = (
-  _instance: VMixInstance,
-  sendBasicCommand: (action: Readonly<DataSourceCallbacks>) => Promise<void>
-): DataSourceActions => {
+export const vMixDataSourceActions = (_instance: VMixInstance, sendBasicCommand: (action: Readonly<DataSourceCallbacks>) => Promise<void>): DataSourceActions => {
   return {
     dataSourceAutoNext: {
       name: 'DataSource - AutoNext',

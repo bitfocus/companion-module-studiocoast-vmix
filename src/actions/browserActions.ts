@@ -4,14 +4,7 @@ import VMixInstance from '../index'
 
 type BrowserOptions = {
   input: string
-  functionID:
-    | 'BrowserReload'
-    | 'BrowserBack'
-    | 'BrowserForward'
-    | 'BrowserKeyboardDisabled'
-    | 'BrowserKeyboardEnabled'
-    | 'BrowserMouseDisabled'
-    | 'BrowserMouseEnabled'
+  functionID: 'BrowserReload' | 'BrowserBack' | 'BrowserForward' | 'BrowserKeyboardDisabled' | 'BrowserKeyboardEnabled' | 'BrowserMouseDisabled' | 'BrowserMouseEnabled'
 }
 
 type BrowserNavigateOptions = {
@@ -26,14 +19,13 @@ type BrowserNavigateCallback = ActionCallback<'browserNavigate', BrowserNavigate
 export interface BrowserActions {
   browser: VMixAction<BrowserCallback>
   browserNavigate: VMixAction<BrowserNavigateCallback>
+
+  [key: string]: VMixAction<any>
 }
 
 export type BrowserCallbacks = BrowserCallback | BrowserNavigateCallback
 
-export const vMixBrowserActions = (
-  instance: VMixInstance,
-  sendBasicCommand: (action: Readonly<BrowserCallbacks>) => Promise<void>
-): BrowserActions => {
+export const vMixBrowserActions = (instance: VMixInstance, sendBasicCommand: (action: Readonly<BrowserCallbacks>) => Promise<void>): BrowserActions => {
   return {
     browser: {
       name: 'Browser - Functions',
@@ -81,12 +73,7 @@ export const vMixBrowserActions = (
       callback: async (action) => {
         const value = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
 
-        if (instance.tcp)
-          instance.tcp.sendCommand(
-            `FUNCTION BrowserNavigate Input=${action.options.input}&Value=${
-              action.options.encode ? encodeURIComponent(value) : value
-            }`
-          )
+        if (instance.tcp) instance.tcp.sendCommand(`FUNCTION BrowserNavigate Input=${action.options.input}&Value=${action.options.encode ? encodeURIComponent(value) : value}`)
       }
     }
   }

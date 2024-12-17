@@ -2,20 +2,7 @@ import { VMixAction, ActionCallback } from './actions'
 import { EmptyOptions, MixOptionEntry, options, valueMinMax } from '../utils'
 import VMixInstance from '../index'
 
-type ColourCorrectionType =
-  | 'hue'
-  | 'saturation'
-  | 'liftG'
-  | 'liftB'
-  | 'liftY'
-  | 'gammaR'
-  | 'gammaG'
-  | 'gammaB'
-  | 'gammaY'
-  | 'gainR'
-  | 'gainG'
-  | 'gainB'
-  | 'gainY'
+type ColourCorrectionType = 'hue' | 'saturation' | 'liftG' | 'liftB' | 'liftY' | 'gammaR' | 'gammaG' | 'gammaB' | 'gammaY' | 'gainR' | 'gainG' | 'gainB' | 'gainY'
 
 interface PreviewInputOptions {
   input: string
@@ -101,6 +88,8 @@ export interface InputActions {
   setCC: VMixAction<SetCCCallback>
   inputPosition: VMixAction<InputPositionCallback>
   inputFrameDelay: VMixAction<InputFrameDelayCallback>
+
+  [key: string]: VMixAction<any>
 }
 
 export type InputCallbacks =
@@ -115,10 +104,7 @@ export type InputCallbacks =
   | InputPositionCallback
   | InputFrameDelayCallback
 
-export const vMixInputActions = (
-  instance: VMixInstance,
-  sendBasicCommand: (action: Readonly<InputCallbacks>) => Promise<void>
-): InputActions => {
+export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (action: Readonly<InputCallbacks>) => Promise<void>): InputActions => {
   return {
     previewInput: {
       name: 'Input - Send Input to Preview',
@@ -293,9 +279,7 @@ export const vMixInputActions = (
       callback: async (action) => {
         const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
         const input = await instance.data.getInput(selected)
-        const valueOption = action.options.setting.startsWith('SetCCGain')
-          ? action.options.gainValue
-          : action.options.otherValue
+        const valueOption = action.options.setting.startsWith('SetCCGain') ? action.options.gainValue : action.options.otherValue
         const value = (await instance.parseOption(valueOption))[instance.buttonShift.state]
         let parsedValue = parseFloat(value)
 
@@ -427,9 +411,7 @@ export const vMixInputActions = (
         }
 
         if (action.options.setting === 'SetZoom') {
-          let value: string | number = (await instance.parseOption(action.options.zoomValue))[
-            instance.buttonShift.state
-          ]
+          let value: string | number = (await instance.parseOption(action.options.zoomValue))[instance.buttonShift.state]
           value = parseFloat(value)
 
           const currentValue = input.inputPosition?.zoomX ?? 1
@@ -446,9 +428,7 @@ export const vMixInputActions = (
 
           cmd = `FUNCTION SetCrop Input=${input.key}&Value=${value}`
         } else if (action.options.setting.startsWith('SetCrop')) {
-          let value: string | number = (await instance.parseOption(action.options.cropValue2))[
-            instance.buttonShift.state
-          ]
+          let value: string | number = (await instance.parseOption(action.options.cropValue2))[instance.buttonShift.state]
           value = parseFloat(value)
           if (isNaN(value)) return
 
@@ -462,11 +442,7 @@ export const vMixInputActions = (
             value = currentValue - value
           }
 
-          cmd = `FUNCTION ${action.options.setting} Input=${input.key}&Value=${valueMinMax(
-            Math.round(value * 1000) / 1000,
-            0,
-            1
-          )}`
+          cmd = `FUNCTION ${action.options.setting} Input=${input.key}&Value=${valueMinMax(Math.round(value * 1000) / 1000, 0, 1)}`
         } else {
           let value: string | number = (await instance.parseOption(action.options.panValue))[instance.buttonShift.state]
           value = parseFloat(value)
@@ -482,11 +458,7 @@ export const vMixInputActions = (
             value = currentValue - value
           }
 
-          cmd = `FUNCTION ${action.options.setting} Input=${input.key}&Value=${valueMinMax(
-            Math.round(value * 1000) / 1000,
-            -2,
-            2
-          )}`
+          cmd = `FUNCTION ${action.options.setting} Input=${input.key}&Value=${valueMinMax(Math.round(value * 1000) / 1000, -2, 2)}`
         }
 
         if (instance.tcp) {

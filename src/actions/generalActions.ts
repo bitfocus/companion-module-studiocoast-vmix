@@ -29,10 +29,7 @@ export interface GeneralActions {
 
 export type GeneralCallbacks = KeyPressCallback | TbarCallback | DynamicCallback
 
-export const vMixGeneralActions = (
-  instance: VMixInstance,
-  sendBasicCommand: (action: Readonly<GeneralCallbacks>) => Promise<void>
-): GeneralActions => {
+export const vMixGeneralActions = (instance: VMixInstance, sendBasicCommand: (action: Readonly<GeneralCallbacks>) => Promise<void>): GeneralActions => {
   return {
     keyPress: {
       name: 'General - KeyPress',
@@ -107,8 +104,7 @@ export const vMixGeneralActions = (
       callback: async (action) => {
         const value = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
 
-        if (instance.tcp)
-          instance.tcp.sendCommand(`FUNCTION SetDynamic${action.options.type}${action.options.number} Value=${value}`)
+        if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetDynamic${action.options.type}${action.options.number} Value=${value}`)
       }
     }
   }

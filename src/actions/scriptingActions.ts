@@ -33,10 +33,7 @@ export interface ScriptingActions {
 
 export type ScriptingCallbacks = CommandCallback | ScriptStartCallback | ScriptStopCallback | ScriptStopAllCallback
 
-export const vMixScriptingActions = (
-  instance: VMixInstance,
-  sendBasicCommand: (action: Readonly<ScriptingCallbacks>) => Promise<void>
-): ScriptingActions => {
+export const vMixScriptingActions = (instance: VMixInstance, sendBasicCommand: (action: Readonly<ScriptingCallbacks>) => Promise<void>): ScriptingActions => {
   return {
     command: {
       name: 'Scripting - Run custom command',
@@ -60,8 +57,7 @@ export const vMixScriptingActions = (
         const commandString = (await instance.parseOption(action.options.command))[instance.buttonShift.state]
         const command = commandString.split(' ')[0]
         const params = commandString.split(' ').slice(1, commandString.split(' ').length).join(' ')
-        if (instance.tcp)
-          instance.tcp.sendCommand(`FUNCTION ${command} ${action.options.encode ? encodeURIComponent(params) : params}`)
+        if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${command} ${action.options.encode ? encodeURIComponent(params) : params}`)
       }
     },
 

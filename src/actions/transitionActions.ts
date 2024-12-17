@@ -17,15 +17,7 @@ type TransitionMixOptions = {
 }
 
 type TransitionOptions = {
-  functionID:
-    | 'Transition1'
-    | 'Transition2'
-    | 'Transition3'
-    | 'Transition4'
-    | 'Stinger1'
-    | 'Stinger2'
-    | 'Stinger3'
-    | 'Stinger4'
+  functionID: 'Transition1' | 'Transition2' | 'Transition3' | 'Transition4' | 'Stinger1' | 'Stinger2' | 'Stinger3' | 'Stinger4'
 }
 
 type SetTransitionEffectOptions = {
@@ -60,27 +52,16 @@ export interface TransitionActions {
   [key: string]: VMixAction<any>
 }
 
-export type TransitionCallbacks =
-  | ProgramCutCallback
-  | TransitionMixCallback
-  | TransitionCallback
-  | SetTransitionEffectCallback
-  | SetTransitionDurationCallback
-  | QuickPlayCallback
+export type TransitionCallbacks = ProgramCutCallback | TransitionMixCallback | TransitionCallback | SetTransitionEffectCallback | SetTransitionDurationCallback | QuickPlayCallback
 
-export const vMixTransitionActions = (
-  instance: VMixInstance,
-  sendBasicCommand: (action: Readonly<TransitionCallbacks>) => Promise<void>
-): TransitionActions => {
+export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: (action: Readonly<TransitionCallbacks>) => Promise<void>): TransitionActions => {
   return {
     programCut: {
       name: 'Transition - Send Input to Program',
       description: 'Cuts the input directly to Output without changing Preview',
       options: [options.input, options.mixSelect, options.mixVariable],
       callback: async (action) => {
-        let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable))[
-          instance.buttonShift.state
-        ]
+        let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable))[instance.buttonShift.state]
         mixVariable = parseInt(mixVariable, 10) - 1
 
         let mix: number = action.options.mix
@@ -140,9 +121,7 @@ export const vMixTransitionActions = (
           }
         }
 
-        let duration: string | number = (await instance.parseOption(action.options.duration))[
-          instance.buttonShift.state
-        ]
+        let duration: string | number = (await instance.parseOption(action.options.duration))[instance.buttonShift.state]
         duration = parseFloat(duration)
 
         if (isNaN(duration)) {
@@ -158,8 +137,7 @@ export const vMixTransitionActions = (
 
         command.options.duration = duration
 
-        if (action.options.input !== '' && action.options.input !== undefined)
-          command.options.input = action.options.input
+        if (action.options.input !== '' && action.options.input !== undefined) command.options.input = action.options.input
         sendBasicCommand(command)
       }
     },

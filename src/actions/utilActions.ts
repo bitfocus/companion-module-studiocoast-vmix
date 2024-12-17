@@ -65,10 +65,7 @@ export type UtilCallbacks =
   | DataSourceTimerCreateTimeCallback
   | DataSourceTimerUpdateTimeCallback
 
-export const vMixUtilActions = (
-  instance: VMixInstance,
-  _sendBasicCommand: (action: Readonly<UtilCallbacks>) => Promise<void>
-): UtilActions => {
+export const vMixUtilActions = (instance: VMixInstance, _sendBasicCommand: (action: Readonly<UtilCallbacks>) => Promise<void>): UtilActions => {
   return {
     mixSelect: {
       name: 'Util - Select Mix',
@@ -105,32 +102,13 @@ export const vMixUtilActions = (
         const mix = action.options.mix
 
         if (mix === -2) {
-          const mixVariable = parseInt(
-            (await instance.parseOption(action.options.mixVariable))[instance.buttonShift.state],
-            10
-          )
+          const mixVariable = parseInt((await instance.parseOption(action.options.mixVariable))[instance.buttonShift.state], 10)
           if (isNaN(mixVariable) || mixVariable < 1 || mixVariable > 16) {
             instance.log('warn', 'Mix must be an integer between 1 and 16 inclusive')
             return
           }
 
-          instance.routingData.mix = (mixVariable - 1) as
-            | 0
-            | 1
-            | 2
-            | 3
-            | 4
-            | 5
-            | 6
-            | 7
-            | 8
-            | 9
-            | 10
-            | 11
-            | 12
-            | 13
-            | 14
-            | 15
+          instance.routingData.mix = (mixVariable - 1) as 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15
           instance.variables?.set({ mix_selected: mixVariable })
         } else {
           instance.routingData.mix = mix

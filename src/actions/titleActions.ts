@@ -25,12 +25,25 @@ type AdjustCountdownOptions = {
   input: string
   selectedIndex: string
 }
+
 type SetTextOptions = {
   input: string
   selectedIndex: string
   adjustment: 'Set' | 'Increase' | 'Decrease'
   value: string
   encode: boolean
+}
+
+type SetTextColorOptions = {
+  input: string
+  selectedIndex: string
+  value: string
+}
+
+type SetTextVisibleOptions = {
+  input: string
+  selectedIndex: string
+  adjustment: 'Toggle' | 'On' | 'Off'
 }
 
 type SetColorOptions = {
@@ -74,6 +87,8 @@ type SetCountdownCallback = ActionCallback<'setCountdown', SetCountdownOptions>
 type ChangeCountdownCallback = ActionCallback<'changeCountdown', ChangeCountdownOptions>
 type AdjustCountdownCallback = ActionCallback<'adjustCountdown', AdjustCountdownOptions>
 type SetTextCallback = ActionCallback<'setText', SetTextOptions>
+type SetTextColorCallback = ActionCallback<'setTextColor', SetTextColorOptions>
+type SetTextVisibleCallback = ActionCallback<'setTextVisible', SetTextVisibleOptions>
 type SetColorCallback = ActionCallback<'setColor', SetColorOptions>
 type SelectTitlePresetCallback = ActionCallback<'selectTitlePreset', SelectTitlePresetOptions>
 type TitlePresetCallback = ActionCallback<'titlePreset', TitlePresetOptions>
@@ -85,6 +100,8 @@ export interface TitleActions {
   changeCountdown: VMixAction<ChangeCountdownCallback>
   adjustCountdown: VMixAction<AdjustCountdownCallback>
   setText: VMixAction<SetTextCallback>
+  setTextColor: VMixAction<SetTextColorCallback>
+  setTextVisible: VMixAction<SetTextVisibleCallback>
   setColor: VMixAction<SetColorCallback>
   selectTitlePreset: VMixAction<SelectTitlePresetCallback>
   titlePreset: VMixAction<TitlePresetCallback>
@@ -99,15 +116,14 @@ export type TitleCallbacks =
   | ChangeCountdownCallback
   | AdjustCountdownCallback
   | SetTextCallback
+  | SetTextColorCallback
+  | SetTextVisibleCallback
   | SetColorCallback
   | SelectTitlePresetCallback
   | TitlePresetCallback
   | TitleBeginAnimationCallback
 
-export const vMixTitleActions = (
-  instance: VMixInstance,
-  sendBasicCommand: (action: Readonly<TitleCallbacks>) => Promise<void>
-): TitleActions => {
+export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: (action: Readonly<TitleCallbacks>) => Promise<void>): TitleActions => {
   return {
     controlCountdown: {
       name: 'Title - Start / Stop / Pause Countdown',
@@ -142,9 +158,7 @@ export const vMixTitleActions = (
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION ${action.options.functionID} Input=${encodeURIComponent(input)}&${
-              indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
-            }=${encodeURIComponent(index)}`
+            `FUNCTION ${action.options.functionID} Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'}=${encodeURIComponent(index)}`
           )
       }
     },
@@ -179,9 +193,7 @@ export const vMixTitleActions = (
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION SetCountdown Input=${encodeURIComponent(input)}&${
-              indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
-            }=${encodeURIComponent(index)}&value=${value}`
+            `FUNCTION SetCountdown Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'}=${encodeURIComponent(index)}&value=${value}`
           )
       }
     },
@@ -216,9 +228,7 @@ export const vMixTitleActions = (
 
         if (instance.tcp)
           instance.tcp.sendCommand(
-            `FUNCTION ChangeCountdown Input=${encodeURIComponent(input)}&${
-              indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
-            }=${encodeURIComponent(index)}&value=${value}`
+            `FUNCTION ChangeCountdown Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'}=${encodeURIComponent(index)}&value=${value}`
           )
       }
     },
@@ -257,9 +267,7 @@ export const vMixTitleActions = (
         } else {
           if (instance.tcp)
             instance.tcp.sendCommand(
-              `FUNCTION AdjustCountdown Input=${encodeURIComponent(input)}&${
-                indexNaNCheck ? 'SelectedName' : 'SelectedIndex'
-              }=${encodeURIComponent(index)}&Value=${value}`
+              `FUNCTION AdjustCountdown Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'}=${encodeURIComponent(index)}&Value=${value}`
             )
         }
       }
@@ -302,10 +310,7 @@ export const vMixTitleActions = (
 
         if (action.options.adjustment === 'Set') {
           if (action.options.encode) text = encodeURIComponent(text)
-          if (instance.tcp)
-            instance.tcp.sendCommand(
-              `FUNCTION SetText Input=${encodeURIComponent(input)}&${indexNaNCheck}=${index}&Value=${text}`
-            )
+          if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetText Input=${encodeURIComponent(input)}&${indexNaNCheck}=${index}&Value=${text}`)
         } else {
           if (isNaN(parseFloat(text))) {
             instance.log('warn', 'Increasing/Decreasing a title requires Value to be a number')
@@ -317,11 +322,83 @@ export const vMixTitleActions = (
               text = '-%3d' + text
             }
 
-            if (instance.tcp)
-              instance.tcp.sendCommand(
-                `FUNCTION SetText Input=${encodeURIComponent(input)}&${indexNaNCheck}=${index}&Value=${text}`
-              )
+            if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetText Input=${encodeURIComponent(input)}&${indexNaNCheck}=${index}&Value=${text}`)
           }
+        }
+      }
+    },
+
+    setTextColor: {
+      name: 'Title - Adjust title text Color',
+      description: 'Adjusts text on a title layer',
+      options: [
+        options.input,
+        {
+          type: 'textinput',
+          label: 'Layer',
+          tooltip: '(Indexed from 0 or by name)',
+          id: 'selectedIndex',
+          default: '0',
+          useVariables: true
+        },
+        {
+          type: 'textinput',
+          label: 'Color (#RRGGBB)',
+          id: 'value',
+          default: '',
+          useVariables: true
+        }
+      ],
+      callback: async (action) => {
+        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+        const index = (await instance.parseOption(action.options.selectedIndex))[instance.buttonShift.state]
+        const value = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
+
+        if (isNaN(parseInt(index, 10))) {
+          if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetTextColour Input=${input}&Value=${value}&SelectedName=${index}`)
+        } else {
+          if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetTextColour Input=${input}&Value=${value}&SelectedIndex=${index}`)
+        }
+      }
+    },
+
+    setTextVisible: {
+      name: 'Title - Adjust title text visibility',
+      description: 'Sets the visibility of title text Toggle, On, or Off',
+      options: [
+        options.input,
+        {
+          type: 'textinput',
+          label: 'Layer',
+          tooltip: '(Indexed from 0 or by name)',
+          id: 'selectedIndex',
+          default: '0',
+          useVariables: true
+        },
+        {
+          type: 'dropdown',
+          label: 'Adjustment',
+          id: 'adjustment',
+          default: 'Toggle',
+          choices: [
+            { id: 'Toggle', label: 'Toggle' },
+            { id: 'On', label: 'On' },
+            { id: 'Off', label: 'Off' }
+          ]
+        }
+      ],
+      callback: async (action) => {
+        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+        const index = (await instance.parseOption(action.options.selectedIndex))[instance.buttonShift.state]
+        let type = 'SetTextVisible'
+
+        if (action.options.adjustment === 'On') type = 'SetTextVisibleOn'
+        if (action.options.adjustment === 'Off') type = 'SetTextVisibleOff'
+
+        if (isNaN(parseInt(index, 10))) {
+          if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${type} Input=${input}&SelectedName=${index}`)
+        } else {
+          if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${type} Input=${input}&SelectedIndex=${index}`)
         }
       }
     },
@@ -356,12 +433,7 @@ export const vMixTitleActions = (
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10)) ? 'SelectedName' : 'SelectedIndex'
 
-        if (instance.tcp)
-          instance.tcp.sendCommand(
-            `FUNCTION SetColor Input=${encodeURIComponent(input)}&${indexNaNCheck}=${index}&Value=${encodeURIComponent(
-              value
-            )}`
-          )
+        if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetColor Input=${encodeURIComponent(input)}&${indexNaNCheck}=${index}&Value=${encodeURIComponent(value)}`)
       }
     },
 

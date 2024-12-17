@@ -2,13 +2,7 @@ import { VMixAction, ActionCallback } from './actions'
 import VMixInstance from '../index'
 
 type OutputSetOptions = {
-  functionID:
-    | 'SetOutput2'
-    | 'SetOutput3'
-    | 'SetOutput4'
-    | 'SetOutputExternal2'
-    | 'SetOutputFullscreen'
-    | 'SetOutputFullscreen2'
+  functionID: 'SetOutput2' | 'SetOutput3' | 'SetOutput4' | 'SetOutputExternal2' | 'SetOutputFullscreen' | 'SetOutputFullscreen2'
   value: 'Output' | 'Preview' | 'MultiView' | 'Replay' | 'Input'
   input: string
 }
@@ -46,10 +40,7 @@ export interface OutputActions {
 
 export type OutputCallbacks = OutputSetCallback | ToggleFunctionsCallback
 
-export const vMixOutputActions = (
-  instance: VMixInstance,
-  _sendBasicCommand: (action: Readonly<OutputCallbacks>) => Promise<void>
-): OutputActions => {
+export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: (action: Readonly<OutputCallbacks>) => Promise<void>): OutputActions => {
   return {
     outputSet: {
       name: 'Output - Set Output Source',
