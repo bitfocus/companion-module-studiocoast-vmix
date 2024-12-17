@@ -123,9 +123,7 @@ export const getOutputPresets = (): VMixPresetArray => {
         },
         steps: [
           {
-            down: [
-              { actionId: 'outputSet', options: { functionID: output.functionID as any, value: 'Input', input: '' } }
-            ],
+            down: [{ actionId: 'outputSet', options: { functionID: output.functionID as any, value: 'Input', input: '' } }],
             up: []
           }
         ],

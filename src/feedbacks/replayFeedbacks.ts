@@ -32,11 +32,7 @@ export interface ReplayFeedbacks {
   replaySelectedChannel: VMixFeedback<ReplaySelectedChannelCallback>
 }
 
-export type ReplayCallbacks =
-  | ReplayStatusCallback
-  | ReplayEventsCallback
-  | ReplayCameraCallback
-  | ReplaySelectedChannelCallback
+export type ReplayCallbacks = ReplayStatusCallback | ReplayEventsCallback | ReplayCameraCallback | ReplaySelectedChannelCallback
 
 export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => {
   return {
@@ -142,10 +138,7 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
 
         if (channel === 'selected') {
           // Backways compatibility - Default to channel A if prior to v24
-          channel =
-            !instance.data.replay.channelMode || instance.data.replay.channelMode === 'AB'
-              ? 'A'
-              : instance.data.replay.channelMode
+          channel = !instance.data.replay.channelMode || instance.data.replay.channelMode === 'AB' ? 'A' : instance.data.replay.channelMode
         }
 
         const cameraChannel = ('camera' + channel) as 'cameraA' | 'cameraB'

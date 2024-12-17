@@ -55,7 +55,8 @@ export const mixDefinitions = (instance: VMixInstance): CompanionVariableDefinit
         { name: `Mix ${id} ${type} CC Gain R`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_gainr` },
         { name: `Mix ${id} ${type} CC Gain G`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_gaing` },
         { name: `Mix ${id} ${type} CC Gain B`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_gainb` },
-        { name: `Mix ${id} ${type} CC Gain Y`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_gainy` })
+        { name: `Mix ${id} ${type} CC Gain Y`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_gainy` }
+      )
 
       for (let i = 1; i < 11; i++) {
         definitions.push(

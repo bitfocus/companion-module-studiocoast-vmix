@@ -451,9 +451,7 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
 
         if (feedback.options.bus === 'Headphones') {
           const bus = instance.data.audio.find((output) => output.bus === 'master')
-          volume = instance.config.volumeLinear
-            ? volumeToLinear(bus?.headphonesVolume || 0)
-            : bus?.headphonesVolume || 0
+          volume = instance.config.volumeLinear ? volumeToLinear(bus?.headphonesVolume || 0) : bus?.headphonesVolume || 0
         } else {
           const busID = feedback.options.bus === 'Master' ? 'master' : 'bus' + feedback.options.bus
           const bus = instance.data.getAudioBus(busID)

@@ -14,7 +14,6 @@ export interface InstanceVariableValue {
   [key: string]: string | number | undefined
 }
 
-
 export class Variables {
   private readonly instance: VMixInstance
   public currentDefinitions: Set<CompanionVariableDefinition> = new Set()
@@ -54,15 +53,9 @@ export class Variables {
 
       if (duration > this.instance.config.apiPollInterval && !freshStart) {
         if (duration > this.instance.config.apiPollInterval * 3) {
-          this.instance.log(
-            'warn',
-            `API Processing took ${duration}ms, but the API Polling Interval is set to ${this.instance.config.apiPollInterval}ms`
-          )
+          this.instance.log('warn', `API Processing took ${duration}ms, but the API Polling Interval is set to ${this.instance.config.apiPollInterval}ms`)
         } else {
-          this.instance.log(
-            'debug',
-            `API Processing took ${duration}ms, but the API Polling Interval is set to ${this.instance.config.apiPollInterval}ms`
-          )
+          this.instance.log('debug', `API Processing took ${duration}ms, but the API Polling Interval is set to ${this.instance.config.apiPollInterval}ms`)
         }
       }
 
@@ -84,14 +77,14 @@ export class Variables {
   public readonly updateDefinitions = async (): Promise<void> => {
     const variables: Set<CompanionVariableDefinition> = new Set([
       ...audioDefinitions(this.instance),
-      ...await dynamicDefinitions(this.instance),
+      ...(await dynamicDefinitions(this.instance)),
       ...generalDefinitions(this.instance),
       ...inputDefinitions(this.instance),
       ...layerDefinitions(this.instance),
       ...mixDefinitions(this.instance),
       ...outputDefinitions(this.instance),
       ...overlayDefinitions(this.instance),
-      ...replayDefinitions(this.instance),
+      ...replayDefinitions(this.instance)
     ])
 
     this.currentDefinitions = variables
@@ -140,10 +133,10 @@ export class Variables {
       mixValues(this.instance),
       outputValues(this.instance),
       overlayValues(this.instance),
-      replayValues(this.instance),
+      replayValues(this.instance)
     ])
 
-    variablesPromise.forEach(variables => {
+    variablesPromise.forEach((variables) => {
       newVariables = { ...newVariables, ...variables }
     })
 

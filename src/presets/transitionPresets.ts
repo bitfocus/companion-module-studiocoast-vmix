@@ -165,9 +165,7 @@ export const getTransitionPresets = (): VMixPresetArray => {
         },
         steps: [
           {
-            down: [
-              { actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 250 } }
-            ],
+            down: [{ actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 250 } }],
             up: []
           }
         ],
@@ -185,9 +183,7 @@ export const getTransitionPresets = (): VMixPresetArray => {
         },
         steps: [
           {
-            down: [
-              { actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 500 } }
-            ],
+            down: [{ actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 500 } }],
             up: []
           }
         ],
@@ -205,9 +201,7 @@ export const getTransitionPresets = (): VMixPresetArray => {
         },
         steps: [
           {
-            down: [
-              { actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 1000 } }
-            ],
+            down: [{ actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 1000 } }],
             up: []
           }
         ],
@@ -225,9 +219,7 @@ export const getTransitionPresets = (): VMixPresetArray => {
         },
         steps: [
           {
-            down: [
-              { actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 2000 } }
-            ],
+            down: [{ actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 2000 } }],
             up: []
           }
         ],
@@ -255,9 +247,7 @@ export const getTransitionPresets = (): VMixPresetArray => {
       },
       steps: [
         {
-          down: [
-            { actionId: 'transitionMix', options: { functionID: 'Cut', mix: 0, mixVariable: '', duration: '1000' } }
-          ],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Cut', mix: 0, mixVariable: '', duration: '1000' } }],
           up: []
         }
       ],
@@ -275,9 +265,7 @@ export const getTransitionPresets = (): VMixPresetArray => {
       },
       steps: [
         {
-          down: [
-            { actionId: 'transitionMix', options: { functionID: 'Fade', mix: 0, mixVariable: '', duration: '1000' } }
-          ],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Fade', mix: 0, mixVariable: '', duration: '1000' } }],
           up: []
         }
       ],
@@ -295,9 +283,7 @@ export const getTransitionPresets = (): VMixPresetArray => {
       },
       steps: [
         {
-          down: [
-            { actionId: 'transitionMix', options: { functionID: 'Zoom', mix: 0, mixVariable: '', duration: '1000' } }
-          ],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Zoom', mix: 0, mixVariable: '', duration: '1000' } }],
           up: []
         }
       ],
@@ -315,9 +301,7 @@ export const getTransitionPresets = (): VMixPresetArray => {
       },
       steps: [
         {
-          down: [
-            { actionId: 'transitionMix', options: { functionID: 'Wipe', mix: 0, mixVariable: '', duration: '1000' } }
-          ],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Wipe', mix: 0, mixVariable: '', duration: '1000' } }],
           up: []
         }
       ],
@@ -358,9 +342,7 @@ export const getTransitionPresets = (): VMixPresetArray => {
       },
       steps: [
         {
-          down: [
-            { actionId: 'transitionMix', options: { functionID: 'Fly', mix: 0, mixVariable: '', duration: '1000' } }
-          ],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Fly', mix: 0, mixVariable: '', duration: '1000' } }],
           up: []
         }
       ],
@@ -424,9 +406,7 @@ export const getTransitionPresets = (): VMixPresetArray => {
       },
       steps: [
         {
-          down: [
-            { actionId: 'transitionMix', options: { functionID: 'Cube', mix: 0, mixVariable: '', duration: '1000' } }
-          ],
+          down: [{ actionId: 'transitionMix', options: { functionID: 'Cube', mix: 0, mixVariable: '', duration: '1000' } }],
           up: []
         }
       ],

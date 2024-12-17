@@ -5,10 +5,7 @@ import { InstanceVariableValue } from '../variables'
 export const layerDefinitions = (_instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []
 
-  definitions.push(
-    { name: 'Layer Routing Input', variableId: 'layer_routing_input' },
-    { name: 'Layer Routing Layer', variableId: 'layer_routing_layer' }
-  )
+  definitions.push({ name: 'Layer Routing Input', variableId: 'layer_routing_input' }, { name: 'Layer Routing Layer', variableId: 'layer_routing_layer' })
 
   return definitions
 }

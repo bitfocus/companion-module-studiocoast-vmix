@@ -153,8 +153,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       type: 'checkbox',
       id: 'strictInputVariableTypes',
       width: 12,
-      label:
-        'Limit Input Variable Types - Toggle on to not only hide certain input variables from the Web UI but also disable their use. May improve performance when enabled.',
+      label: 'Limit Input Variable Types - Toggle on to not only hide certain input variables from the Web UI but also disable their use. May improve performance when enabled.',
       default: false
     }
   ]

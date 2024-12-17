@@ -66,10 +66,7 @@ const parseInput = (input: Input): DataSourceInput => {
  * @returns HTTP response
  * @description Checks incoming HTTP requests to the instance for an appropriate handler or returns a 404
  */
-export const httpHandler = async (
-  instance: VMixInstance,
-  request: CompanionHTTPRequest
-): Promise<CompanionHTTPResponse> => {
+export const httpHandler = async (instance: VMixInstance, request: CompanionHTTPRequest): Promise<CompanionHTTPResponse> => {
   const response: CompanionHTTPResponse = {
     status: 404,
     headers: {
@@ -110,8 +107,7 @@ export const httpHandler = async (
       const selectedInput = instance.data.inputs.find((input) => {
         const keyCheck = input.key === request.query.key || input.key === request.query.id
         const numberCheck = input.number.toString() === request.query.number
-        const titleCheck =
-          input.shortTitle === request.query.title || input.title === request.query.SelectTitlePresetCallback
+        const titleCheck = input.shortTitle === request.query.title || input.title === request.query.SelectTitlePresetCallback
 
         return keyCheck || numberCheck || titleCheck
       })

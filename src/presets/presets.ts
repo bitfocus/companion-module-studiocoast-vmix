@@ -1,8 +1,4 @@
-import {
-  CompanionButtonPresetDefinition,
-  CompanionTextPresetDefinition,
-  CompanionPresetDefinitions
-} from '@companion-module/base'
+import { CompanionButtonPresetDefinition, CompanionTextPresetDefinition, CompanionPresetDefinitions } from '@companion-module/base'
 import VMixInstance from '../index'
 import { ActionCallbacks } from '../actions/actions'
 import { FeedbackCallbacks } from '../feedbacks/feedback'

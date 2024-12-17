@@ -72,9 +72,7 @@ export const vMixUtilFeedbacks = (instance: VMixInstance): UtilFeedbacks => {
         options.mixVariable
       ],
       callback: async (feedback, context) => {
-        let mixVariable: string | number = (await instance.parseOption(feedback.options.mixVariable, context))[
-          instance.buttonShift.state
-        ]
+        let mixVariable: string | number = (await instance.parseOption(feedback.options.mixVariable, context))[instance.buttonShift.state]
         mixVariable = parseInt(mixVariable, 10) - 1
         const mix: number = feedback.options.mix === -2 ? mixVariable : feedback.options.mix
         return instance.routingData.mix === mix
