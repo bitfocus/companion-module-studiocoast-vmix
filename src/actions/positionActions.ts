@@ -19,10 +19,7 @@ export interface PositionActions {
 
 export type PositionCallbacks = SetInputPositionCallback
 
-export const vMixPositionActions = (
-  instance: VMixInstance,
-  _sendBasicCommand: (action: Readonly<PositionCallbacks>) => Promise<void>
-): PositionActions => {
+export const vMixPositionActions = (instance: VMixInstance, _sendBasicCommand: (action: Readonly<PositionCallbacks>) => Promise<void>): PositionActions => {
   return {
     setInputPostion: {
       name: 'Position - Adjust an inputs pan/zoom',
@@ -56,10 +53,7 @@ export const vMixPositionActions = (
         const valueTest = parseFloat(value)
 
         if (isNaN(valueTest)) {
-          instance.log(
-            'warn',
-            `Position - Adjust an inputs pan/zoom" Value field must be a number, or a variable which value is a number`
-          )
+          instance.log('warn', `Position - Adjust an inputs pan/zoom" Value field must be a number, or a variable which value is a number`)
           return
         }
 
@@ -76,10 +70,7 @@ export const vMixPositionActions = (
           prefix = '-%3D'
         }
 
-        if (instance.tcp)
-          instance.tcp.sendCommand(
-            `FUNCTION ${action.options.functionID} Input=${encodeURIComponent(input)}&value=${prefix}${value}`
-          )
+        if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Input=${encodeURIComponent(input)}&value=${prefix}${value}`)
       }
     }
   }

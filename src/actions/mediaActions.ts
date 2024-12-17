@@ -35,10 +35,7 @@ export interface MediaActions {
 
 export type MediaCallbacks = VideoActionsCallback | VideoPlayheadCallback | VideoMarkCallback
 
-export const vMixMediaActions = (
-  instance: VMixInstance,
-  _sendBasicCommand: (action: Readonly<MediaCallbacks>) => Promise<void>
-): MediaActions => {
+export const vMixMediaActions = (instance: VMixInstance, _sendBasicCommand: (action: Readonly<MediaCallbacks>) => Promise<void>): MediaActions => {
   return {
     videoActions: {
       name: 'Media - Playback Actions',
@@ -71,9 +68,7 @@ export const vMixMediaActions = (
         const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(
-            `FUNCTION ${action.options.functionID} Input=${action.options.inputType ? '0' : encodeURIComponent(input)}`
-          )
+          instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Input=${action.options.inputType ? '0' : encodeURIComponent(input)}`)
         }
       }
     },
@@ -110,10 +105,7 @@ export const vMixMediaActions = (
           text = '-%3d' + text
         }
 
-        if (instance.tcp)
-          instance.tcp.sendCommand(
-            `FUNCTION SetPosition Input=${action.options.inputType ? '0' : encodeURIComponent(input)}&Value=${text}`
-          )
+        if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetPosition Input=${action.options.inputType ? '0' : encodeURIComponent(input)}&Value=${text}`)
       }
     },
 
@@ -145,10 +137,7 @@ export const vMixMediaActions = (
       callback: async (action) => {
         const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
 
-        if (instance.tcp)
-          instance.tcp.sendCommand(
-            `FUNCTION ${action.options.functionID} Input=${action.options.inputType ? '0' : encodeURIComponent(input)}`
-          )
+        if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Input=${action.options.inputType ? '0' : encodeURIComponent(input)}`)
       }
     }
   }

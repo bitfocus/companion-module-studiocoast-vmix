@@ -656,6 +656,7 @@ const upgradeV3_7_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
 }
 
 const upgradeV3_8_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
+  const actions: any = props.actions
   const feedbacks: any = props.feedbacks
 
   const changes: CompanionStaticUpgradeResult<Config> = {
@@ -663,6 +664,28 @@ const upgradeV3_8_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
     updatedActions: [],
     updatedFeedbacks: []
   }
+
+  actions.forEach((action: any) => {
+    if (action.actionId === 'setInputPostion') {
+      action.actionId = 'inputPosition'
+      action.setting = action.functionID
+      action.zoomValue = '1'
+      action.cropValue = '0,0,1,1'
+      action.cropValue2 = '1'
+      action.panValue = '1'
+
+      if (action.setting === 'SetZoom') {
+        action.zoomValue = action.value
+      } else {
+        action.panValue = action.value
+      }
+
+      delete action.functionID
+      delete action.value
+
+      changes.updatedActions.push(action)
+    }
+  })
 
   feedbacks.forEach((feedback: any) => {
     if (feedback.feedbackId === 'inputLoop') {

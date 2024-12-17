@@ -45,20 +45,7 @@ type ClearMultiViewOverlaySelectionOptions = EmptyOptions
 type SetLayerPositionOptions = {
   input: string
   layer: string
-  setting:
-    | 'Crop'
-    | 'CropX1'
-    | 'CropX2'
-    | 'CropY1'
-    | 'CropY2'
-    | 'PanX'
-    | 'PanY'
-    | 'X'
-    | 'Y'
-    | 'Height'
-    | 'Width'
-    | 'Rectangle'
-    | 'Zoom'
+  setting: 'Crop' | 'CropX1' | 'CropX2' | 'CropY1' | 'CropY2' | 'PanX' | 'PanY' | 'X' | 'Y' | 'Height' | 'Width' | 'Rectangle' | 'Zoom'
   adjustment: 'Set' | 'Increase' | 'Decrease'
   crop: string
   crop2: string
@@ -71,30 +58,12 @@ type SetLayerPositionOptions = {
 
 type MultiViewOverlayCallback = ActionCallback<'multiViewOverlay', MultiViewOverlayOptions>
 type SetMultiViewOverlayCallback = ActionCallback<'setMultiViewOverlay', SetMultiViewOverlayOptions>
-type SetMultiViewOverlayOnPreviewCallback = ActionCallback<
-  'setMultiViewOverlayOnPreview',
-  SetMultiViewOverlayOnPreviewOptions
->
-type SetMultiViewOverlayOnProgramCallback = ActionCallback<
-  'setMultiViewOverlayOnProgram',
-  SetMultiViewOverlayOnProgramOptions
->
-type SetMultiViewOverlayDestinationInputCallback = ActionCallback<
-  'setMultiViewOverlayDestinationInput',
-  SetMultiViewOverlayDestinationInputOptions
->
-type SetMultiViewOverlayDestinationLayerCallback = ActionCallback<
-  'setMultiViewOverlayDestinationLayer',
-  SetMultiViewOverlayDestinationLayerOptions
->
-type SetMultiViewOverlaySourceInputCallback = ActionCallback<
-  'setMultiViewOverlaySourceInput',
-  SetMultiViewOverlaySourceInputOptions
->
-type ClearMultiViewOverlaySelectionCallback = ActionCallback<
-  'clearMultiViewOverlaySelection',
-  ClearMultiViewOverlaySelectionOptions
->
+type SetMultiViewOverlayOnPreviewCallback = ActionCallback<'setMultiViewOverlayOnPreview', SetMultiViewOverlayOnPreviewOptions>
+type SetMultiViewOverlayOnProgramCallback = ActionCallback<'setMultiViewOverlayOnProgram', SetMultiViewOverlayOnProgramOptions>
+type SetMultiViewOverlayDestinationInputCallback = ActionCallback<'setMultiViewOverlayDestinationInput', SetMultiViewOverlayDestinationInputOptions>
+type SetMultiViewOverlayDestinationLayerCallback = ActionCallback<'setMultiViewOverlayDestinationLayer', SetMultiViewOverlayDestinationLayerOptions>
+type SetMultiViewOverlaySourceInputCallback = ActionCallback<'setMultiViewOverlaySourceInput', SetMultiViewOverlaySourceInputOptions>
+type ClearMultiViewOverlaySelectionCallback = ActionCallback<'clearMultiViewOverlaySelection', ClearMultiViewOverlaySelectionOptions>
 type SetLayerPositionCallback = ActionCallback<'setLayerPosition', SetLayerPositionOptions>
 
 export interface LayerActions {
@@ -122,10 +91,7 @@ export type LayerCallbacks =
   | ClearMultiViewOverlaySelectionCallback
   | SetLayerPositionCallback
 
-export const vMixLayerActions = (
-  instance: VMixInstance,
-  sendBasicCommand: (action: Readonly<LayerCallbacks>) => Promise<void>
-): LayerActions => {
+export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: (action: Readonly<LayerCallbacks>) => Promise<void>): LayerActions => {
   return {
     multiViewOverlay: {
       name: 'Layer - Toggle/On/Off Multiview Layer on Input',
@@ -185,12 +151,7 @@ export const vMixLayerActions = (
         const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
         const layer = (await instance.parseOption(action.options.layerInput))[instance.buttonShift.state]
 
-        if (instance.tcp)
-          instance.tcp.sendCommand(
-            `FUNCTION SetMultiViewOverlay Input=${encodeURIComponent(input)}&Value=${
-              action.options.layer
-            },${encodeURIComponent(layer)}`
-          )
+        if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${encodeURIComponent(input)}&Value=${action.options.layer},${encodeURIComponent(layer)}`)
       }
     },
 
@@ -218,9 +179,7 @@ export const vMixLayerActions = (
       ],
       callback: async (action) => {
         const input = (await instance.parseOption(action.options.layerInput))[instance.buttonShift.state]
-        let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable))[
-          instance.buttonShift.state
-        ]
+        let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable))[instance.buttonShift.state]
         mixVariable = parseInt(mixVariable, 10) - 1
 
         let mix: number = action.options.mix
@@ -228,11 +187,7 @@ export const vMixLayerActions = (
         if (mix === -2) mix = mixVariable
 
         if (instance.tcp)
-          instance.tcp.sendCommand(
-            `FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].preview}&Value=${
-              action.options.layer
-            },${encodeURIComponent(input)}`
-          )
+          instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].preview}&Value=${action.options.layer},${encodeURIComponent(input)}`)
       }
     },
 
@@ -260,9 +215,7 @@ export const vMixLayerActions = (
       ],
       callback: async (action) => {
         const input = (await instance.parseOption(action.options.layerInput))[instance.buttonShift.state]
-        let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable))[
-          instance.buttonShift.state
-        ]
+        let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable))[instance.buttonShift.state]
         mixVariable = parseInt(mixVariable, 10) - 1
 
         let mix: number = action.options.mix
@@ -270,11 +223,7 @@ export const vMixLayerActions = (
         if (mix === -2) mix = mixVariable
 
         if (instance.tcp)
-          instance.tcp.sendCommand(
-            `FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].program}&Value=${
-              action.options.layer
-            },${encodeURIComponent(input)}`
-          )
+          instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].program}&Value=${action.options.layer},${encodeURIComponent(input)}`)
       }
     },
 
@@ -315,9 +264,7 @@ export const vMixLayerActions = (
         }
       ],
       callback: async (action) => {
-        const parseOption = (await instance.parseOption(action.options.destinationLayer + ''))[
-          instance.buttonShift.state
-        ]
+        const parseOption = (await instance.parseOption(action.options.destinationLayer + ''))[instance.buttonShift.state]
         const layerOption = parseFloat(parseOption)
         const checkNaN = isNaN(layerOption)
         const checkValid = layerOption % 1 === 0 && layerOption > 0 && layerOption <= 10
@@ -348,10 +295,7 @@ export const vMixLayerActions = (
       callback: async (action) => {
         const input = (await instance.parseOption(action.options.sourceIndex))[instance.buttonShift.state]
 
-        if (
-          instance.routingData.layer.destinationInput !== null &&
-          instance.routingData.layer.destinationLayer !== null
-        ) {
+        if (instance.routingData.layer.destinationInput !== null && instance.routingData.layer.destinationLayer !== null) {
           const inputValue = input === '0' || input === '' ? '' : input
           if (instance.tcp)
             instance.tcp.sendCommand(
@@ -510,10 +454,7 @@ export const vMixLayerActions = (
         }
 
         if (action.options.adjustment !== 'Set' && instance.data.majorVersion < 27) {
-          instance.log(
-            'warn',
-            'Input Layer Position Adjustment Increase/Decrease is only available in vMix 27 or later'
-          )
+          instance.log('warn', 'Input Layer Position Adjustment Increase/Decrease is only available in vMix 27 or later')
           return
         }
 
@@ -563,44 +504,26 @@ export const vMixLayerActions = (
           let newValue = value
 
           if (action.options.adjustment === 'Increase') {
-            const currentValue = (
-              inputLayer[action.options.setting.toLowerCase()] !== undefined
-                ? inputLayer[action.options.setting.toLowerCase()]
-                : 0
-            ) as number
+            const currentValue = (inputLayer[action.options.setting.toLowerCase()] !== undefined ? inputLayer[action.options.setting.toLowerCase()] : 0) as number
             newValue = currentValue + value
           } else if (action.options.adjustment === 'Decrease') {
-            const currentValue = (
-              inputLayer[action.options.setting.toLowerCase()] !== undefined
-                ? inputLayer[action.options.setting.toLowerCase()]
-                : 0
-            ) as number
+            const currentValue = (inputLayer[action.options.setting.toLowerCase()] !== undefined ? inputLayer[action.options.setting.toLowerCase()] : 0) as number
             newValue = currentValue - value
           }
 
           cmd += valueMinMax(newValue, -4096, 4096)
         } else if (action.options.setting === 'Height' || action.options.setting === 'Width') {
-          let value: string | number = (await instance.parseOption(action.options.heightWidth))[
-            instance.buttonShift.state
-          ]
+          let value: string | number = (await instance.parseOption(action.options.heightWidth))[instance.buttonShift.state]
           value = parseFloat(value)
           if (isNaN(value)) return
 
           let newValue = value
 
           if (action.options.adjustment === 'Increase') {
-            const currentValue = (
-              inputLayer[action.options.setting.toLowerCase()] !== undefined
-                ? inputLayer[action.options.setting.toLowerCase()]
-                : 0
-            ) as number
+            const currentValue = (inputLayer[action.options.setting.toLowerCase()] !== undefined ? inputLayer[action.options.setting.toLowerCase()] : 0) as number
             newValue = currentValue + value
           } else if (action.options.adjustment === 'Decrease') {
-            const currentValue = (
-              inputLayer[action.options.setting.toLowerCase()] !== undefined
-                ? inputLayer[action.options.setting.toLowerCase()]
-                : 0
-            ) as number
+            const currentValue = (inputLayer[action.options.setting.toLowerCase()] !== undefined ? inputLayer[action.options.setting.toLowerCase()] : 0) as number
             newValue = currentValue - value
           }
 

@@ -44,10 +44,7 @@ export interface PTZActions {
 
 export type PTZCallbacks = PTZMoveCallback | PTZFocusZoomCallback | PTZVirtualInputCallback
 
-export const vMixPTZActions = (
-  _instance: VMixInstance,
-  sendBasicCommand: (action: Readonly<PTZCallbacks>) => Promise<void>
-): PTZActions => {
+export const vMixPTZActions = (_instance: VMixInstance, sendBasicCommand: (action: Readonly<PTZCallbacks>) => Promise<void>): PTZActions => {
   return {
     ptzMove: {
       name: 'PTZ - Move',
@@ -87,11 +84,7 @@ export const vMixPTZActions = (
           default: '0',
           useVariables: true,
           isVisible: (options) => {
-            return (
-              options.functionID !== 'PTZHome' &&
-              options.functionID !== 'PTZMoveStop' &&
-              options.functionID !== 'PTZMoveToVirtualInputPosition'
-            )
+            return options.functionID !== 'PTZHome' && options.functionID !== 'PTZMoveStop' && options.functionID !== 'PTZMoveToVirtualInputPosition'
           }
         }
       ],
@@ -126,12 +119,7 @@ export const vMixPTZActions = (
           default: '1',
           useVariables: true,
           isVisible: (options) => {
-            return (
-              options.functionID !== 'PTZFocusAuto' &&
-              options.functionID !== 'PTZFocusManual' &&
-              options.functionID !== 'PTZFocusStop' &&
-              options.functionID !== 'PTZZoomStop'
-            )
+            return options.functionID !== 'PTZFocusAuto' && options.functionID !== 'PTZFocusManual' && options.functionID !== 'PTZFocusStop' && options.functionID !== 'PTZZoomStop'
           }
         }
       ],

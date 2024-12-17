@@ -5,39 +5,15 @@ import VMixInstance from '../index'
 type ReplayChannel = 'Current' | 'A' | 'B'
 
 type ReplayACameraOptions = {
-  functionID:
-    | 'ReplayACamera1'
-    | 'ReplayACamera2'
-    | 'ReplayACamera3'
-    | 'ReplayACamera4'
-    | 'ReplayACamera5'
-    | 'ReplayACamera6'
-    | 'ReplayACamera7'
-    | 'ReplayACamera8'
+  functionID: 'ReplayACamera1' | 'ReplayACamera2' | 'ReplayACamera3' | 'ReplayACamera4' | 'ReplayACamera5' | 'ReplayACamera6' | 'ReplayACamera7' | 'ReplayACamera8'
 }
 
 type ReplayBCameraOptions = {
-  functionID:
-    | 'ReplayBCamera1'
-    | 'ReplayBCamera2'
-    | 'ReplayBCamera3'
-    | 'ReplayBCamera4'
-    | 'ReplayBCamera5'
-    | 'ReplayBCamera6'
-    | 'ReplayBCamera7'
-    | 'ReplayBCamera8'
+  functionID: 'ReplayBCamera1' | 'ReplayBCamera2' | 'ReplayBCamera3' | 'ReplayBCamera4' | 'ReplayBCamera5' | 'ReplayBCamera6' | 'ReplayBCamera7' | 'ReplayBCamera8'
 }
 
 type ReplayCameraOptions = {
-  functionID:
-    | 'ReplayCamera1'
-    | 'ReplayCamera2'
-    | 'ReplayCamera3'
-    | 'ReplayCamera4'
-    | 'ReplayCamera5'
-    | 'ReplayCamera6'
-    | 'ReplayCamera7'
-    | 'ReplayCamera8'
+  functionID: 'ReplayCamera1' | 'ReplayCamera2' | 'ReplayCamera3' | 'ReplayCamera4' | 'ReplayCamera5' | 'ReplayCamera6' | 'ReplayCamera7' | 'ReplayCamera8'
 }
 
 type ReplaySelectChannelOptions = {
@@ -201,22 +177,10 @@ type ReplayLiveToggleCallback = ActionCallback<'replayLiveToggle', ReplayLiveTog
 type ReplayPlayCallback = ActionCallback<'replayPlay', ReplayPlayOptions>
 type ReplayPauseCallback = ActionCallback<'replayPause', ReplayPauseOptions>
 type ReplayPlayEventCallback = ActionCallback<'replayPlayEvent', ReplayPlayEventOptions>
-type ReplayPlaySelectedEventToOutputCallback = ActionCallback<
-  'replayPlaySelectedEventToOutput',
-  ReplayPlaySelectedEventToOutputOptions
->
-type ReplayPlayEventsByIDToOutputCallback = ActionCallback<
-  'replayPlayEventsByIDToOutput',
-  ReplayPlayEventsByIDToOutputOptions
->
-type ReplayPlayLastEventToOutputCallback = ActionCallback<
-  'replayPlayLastEventToOutput',
-  ReplayPlayLastEventToOutputOptions
->
-type ReplayPlayAllEventsToOutputCallback = ActionCallback<
-  'replayPlayAllEventsToOutput',
-  ReplayPlayAllEventsToOutputOptions
->
+type ReplayPlaySelectedEventToOutputCallback = ActionCallback<'replayPlaySelectedEventToOutput', ReplayPlaySelectedEventToOutputOptions>
+type ReplayPlayEventsByIDToOutputCallback = ActionCallback<'replayPlayEventsByIDToOutput', ReplayPlayEventsByIDToOutputOptions>
+type ReplayPlayLastEventToOutputCallback = ActionCallback<'replayPlayLastEventToOutput', ReplayPlayLastEventToOutputOptions>
+type ReplayPlayAllEventsToOutputCallback = ActionCallback<'replayPlayAllEventsToOutput', ReplayPlayAllEventsToOutputOptions>
 type ReplayStopEventsCallback = ActionCallback<'replayStopEvents', ReplayStopEventsOptions>
 type ReplayToggleCameraCallback = ActionCallback<'replayToggleCamera', ReplayToggleCameraOptions>
 type ReplayShowHideCallback = ActionCallback<'replayShowHide', ReplayShowHideOptions>
@@ -286,10 +250,7 @@ export type ReplayCallbacks =
   | ReplayToggleCameraCallback
   | ReplayShowHideCallback
 
-export const vMixReplayActions = (
-  instance: VMixInstance,
-  sendBasicCommand: (action: Readonly<ReplayCallbacks>) => Promise<void>
-): ReplayActions => {
+export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: (action: Readonly<ReplayCallbacks>) => Promise<void>): ReplayActions => {
   return {
     replayACamera: {
       name: 'Replay - A Camera',
@@ -391,9 +352,7 @@ export const vMixReplayActions = (
           default: '10',
           useVariables: true,
           isVisible: (options) => {
-            return ['ReplayMarkInOut', 'ReplayMarkInOutLive', 'ReplayMarkInOutRecorded'].includes(
-              options.functionID as string
-            )
+            return ['ReplayMarkInOut', 'ReplayMarkInOutLive', 'ReplayMarkInOutRecorded'].includes(options.functionID as string)
           }
         },
         {
@@ -414,11 +373,7 @@ export const vMixReplayActions = (
           options: { functionID: action.options.functionID }
         }
 
-        if (
-          ['ReplayMarkInOut', 'ReplayMarkInOutLive', 'ReplayMarkInOutRecorded'].includes(
-            action.options.functionID as string
-          )
-        ) {
+        if (['ReplayMarkInOut', 'ReplayMarkInOutLive', 'ReplayMarkInOutRecorded'].includes(action.options.functionID as string)) {
           command.options.value = action.options.value
         }
 
