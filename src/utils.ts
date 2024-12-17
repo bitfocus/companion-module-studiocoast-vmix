@@ -1,8 +1,4 @@
-import {
-  CompanionInputFieldColor,
-  CompanionInputFieldDropdown,
-  CompanionInputFieldTextInput
-} from '@companion-module/base'
+import { CompanionInputFieldColor, CompanionInputFieldDropdown, CompanionInputFieldTextInput } from '@companion-module/base'
 import { Input } from './data'
 
 export type TimeFormat = 'hh:mm:ss' | 'hh:mm:ss.ms' | 'mm:ss' | 'mm:ss.ms' | 'mm:ss.sss' | 'auto'
@@ -66,10 +62,7 @@ export const TRANSITIONS = [
   'RollerDoor'
 ] as const
 
-
-export const calcDuration = (
-  input: Input
-): { ms: string; ss: string; ssms: string; mmss: string; mmssms: string } | null => {
+export const calcDuration = (input: Input): { ms: string; ss: string; ssms: string; mmss: string; mmssms: string } | null => {
   if (input.duration > 1) {
     const inPosition = input.markIn ? input.markIn : 0
     const outPosition = input.markOut ? input.markOut : input.duration
@@ -92,9 +85,7 @@ export const calcDuration = (
   return null
 }
 
-export const calcRemaining = (
-  input: Input
-): { ms: string; ss: string; ssms: string; mmss: string; mmssms: string } | null => {
+export const calcRemaining = (input: Input): { ms: string; ss: string; ssms: string; mmss: string; mmssms: string } | null => {
   if (input.position !== undefined) {
     const inPosition = input.position
     const outPosition = input.markOut ? input.markOut : input.duration
@@ -332,9 +323,7 @@ export const formatTime = (time: number, interval: 'ms' | 's', format: TimeForma
   if (format === 'auto') {
     return `${hh !== '00' ? hh + ':' : ''}${mm !== '00' || hh !== '00' ? mm + ':' : ''}${ss}`
   } else {
-    return `${format.includes('hh') ? `${hh}:` : ''}${mm}:${ss}${format.includes('ms') ? `.${ms}` : ''}${
-      format.includes('sss') ? `.${sss}` : ''
-    }`
+    return `${format.includes('hh') ? `${hh}:` : ''}${mm}:${ss}${format.includes('ms') ? `.${ms}` : ''}${format.includes('sss') ? `.${sss}` : ''}`
   }
 }
 

@@ -204,12 +204,7 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
       if (instance.config.variablesShowInputNumbers) inputTypes.push(input.key)
       if (instance.config.variablesShowInputGUID) inputTypes.push(input.key)
     } else {
-      inputTypes = [
-        input.number,
-        input.key,
-        useNamedInput ? input.shortTitle || input.title : false,
-        useNamedInput ? inputName.toLowerCase() : false
-      ].filter((x) => x !== false)
+      inputTypes = [input.number, input.key, useNamedInput ? input.shortTitle || input.title : false, useNamedInput ? inputName.toLowerCase() : false].filter((x) => x !== false)
     }
 
     for (const type of inputTypes) {
@@ -218,13 +213,15 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
       variables[`input_${type}_guid`] = input.key
       variables[`input_${type}_type`] = input.type
 
-      instance.data.mix.filter((mix) => mix.active).forEach((mix) => {
-        const tallyPreview = instance.data.mix[mix.number - 1].previewTally.includes(input.key) || instance.data.mix[mix.number - 1].preview === input.number
-        const tallyProgram = instance.data.mix[mix.number - 1].programTally.includes(input.key) || instance.data.mix[mix.number - 1].program === input.number
+      instance.data.mix
+        .filter((mix) => mix.active)
+        .forEach((mix) => {
+          const tallyPreview = instance.data.mix[mix.number - 1].previewTally.includes(input.key) || instance.data.mix[mix.number - 1].preview === input.number
+          const tallyProgram = instance.data.mix[mix.number - 1].programTally.includes(input.key) || instance.data.mix[mix.number - 1].program === input.number
 
-        variables[`input_${type}_mix_${mix.number}_tally_preview`] = tallyPreview.toString()
-        variables[`input_${type}_mix_${mix.number}_tally_program`] = tallyProgram.toString()
-      })
+          variables[`input_${type}_mix_${mix.number}_tally_preview`] = tallyPreview.toString()
+          variables[`input_${type}_mix_${mix.number}_tally_program`] = tallyProgram.toString()
+        })
 
       const inputAudio = input.muted === undefined ? false : input.muted
 
@@ -317,18 +314,13 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
         const overlayInput = await instance.data.getInput(layer.key)
         let overlayinputName = ''
 
-        if (overlayInput)
-          overlayinputName = overlayInput.shortTitle
-            ? overlayInput.shortTitle.replace(/[^a-z0-9-_. ]+/gi, '')
-            : overlayInput.title.replace(/[^a-z0-9-_. ]+/gi, '')
+        if (overlayInput) overlayinputName = overlayInput.shortTitle ? overlayInput.shortTitle.replace(/[^a-z0-9-_. ]+/gi, '') : overlayInput.title.replace(/[^a-z0-9-_. ]+/gi, '')
 
         variables[`input_${type}_layer_${layer.index + 1}_name`] = overlayinputName
         variables[`input_${type}_layer_${layer.index + 1}_number`] = overlayInput?.number || ''
         variables[`input_${type}_layer_${layer.index + 1}_key`] = overlayInput?.key || ''
 
-        if (
-          !(instance.config.strictInputVariableTypes && !instance.config.variablesShowInputLayerPosition)
-        ) {
+        if (!(instance.config.strictInputVariableTypes && !instance.config.variablesShowInputLayerPosition)) {
           variables[`input_${type}_layer_${layer.index + 1}_panx`] = layer.panX ?? ''
           variables[`input_${type}_layer_${layer.index + 1}_pany`] = layer.panY ?? ''
           variables[`input_${type}_layer_${layer.index + 1}_x`] = layer.x ?? ''

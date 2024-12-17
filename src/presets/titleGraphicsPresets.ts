@@ -299,9 +299,7 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
       },
       steps: [
         {
-          down: [
-            { actionId: 'controlCountdown', options: { functionID: 'StopCountdown', input: '', selectedIndex: '0' } }
-          ],
+          down: [{ actionId: 'controlCountdown', options: { functionID: 'StopCountdown', input: '', selectedIndex: '0' } }],
           up: []
         }
       ],

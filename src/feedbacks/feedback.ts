@@ -58,10 +58,7 @@ interface VMixFeedbackBoolean<T> {
   description: string
   defaultStyle: Partial<CompanionFeedbackButtonStyleResult>
   options: InputFieldWithDefault[]
-  callback: (
-    feedback: Readonly<Omit<CompanionFeedbackBooleanEvent, 'options' | 'type'> & T>,
-    context: CompanionFeedbackContext
-  ) => boolean | Promise<boolean>
+  callback: (feedback: Readonly<Omit<CompanionFeedbackBooleanEvent, 'options' | 'type'> & T>, context: CompanionFeedbackContext) => boolean | Promise<boolean>
   subscribe?: (feedback: Readonly<Omit<CompanionFeedbackBooleanEvent, 'options' | 'type'> & T>) => boolean
   unsubscribe?: (feedback: Readonly<Omit<CompanionFeedbackBooleanEvent, 'options' | 'type'> & T>) => boolean
 }
@@ -75,12 +72,8 @@ interface VMixFeedbackAdvanced<T> {
     feedback: Readonly<Omit<CompanionFeedbackAdvancedEvent, 'options' | 'type'> & T>,
     context: CompanionFeedbackContext
   ) => CompanionAdvancedFeedbackResult | Promise<CompanionAdvancedFeedbackResult>
-  subscribe?: (
-    feedback: Readonly<Omit<CompanionFeedbackAdvancedEvent, 'options' | 'type'> & T>
-  ) => CompanionAdvancedFeedbackResult
-  unsubscribe?: (
-    feedback: Readonly<Omit<CompanionFeedbackAdvancedEvent, 'options' | 'type'> & T>
-  ) => CompanionAdvancedFeedbackResult
+  subscribe?: (feedback: Readonly<Omit<CompanionFeedbackAdvancedEvent, 'options' | 'type'> & T>) => CompanionAdvancedFeedbackResult
+  unsubscribe?: (feedback: Readonly<Omit<CompanionFeedbackAdvancedEvent, 'options' | 'type'> & T>) => CompanionAdvancedFeedbackResult
 }
 
 export type VMixFeedback<T> = VMixFeedbackBoolean<T> | VMixFeedbackAdvanced<T>

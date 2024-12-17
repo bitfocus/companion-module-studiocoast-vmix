@@ -51,18 +51,9 @@ export const vMixTallyFeedbacks = (instance: VMixInstance): TallyFeedbacks => {
       type: 'advanced',
       name: 'Tally - Preview state',
       description: 'Indicates if an input is in Preview (or is a layer of an input that is if layer tally is selected)',
-      options: [
-        options.input,
-        options.mixSelect,
-        options.mixVariable,
-        options.foregroundColor,
-        options.backgroundColorPreview,
-        options.layerTallyIndicator
-      ],
+      options: [options.input, options.mixSelect, options.mixVariable, options.foregroundColor, options.backgroundColorPreview, options.layerTallyIndicator],
       callback: async (feedback, context) => {
-        let mixVariable: string | number = (await instance.parseOption(feedback.options.mixVariable, context))[
-          instance.buttonShift.state
-        ]
+        let mixVariable: string | number = (await instance.parseOption(feedback.options.mixVariable, context))[instance.buttonShift.state]
         mixVariable = parseInt(mixVariable, 10) - 1
 
         let mix: number = feedback.options.mix
@@ -71,11 +62,7 @@ export const vMixTallyFeedbacks = (instance: VMixInstance): TallyFeedbacks => {
 
         // Check if an input is not in preview at all (0), currently in preview (1), or in preview as a layer (2)
         const checkInput = (input: Input | null): 0 | 1 | 2 => {
-          if (
-            input === null ||
-            instance.data.mix[mix].preview === 0 ||
-            !instance.data.inputs[instance.data.mix[mix].preview - 1]
-          ) {
+          if (input === null || instance.data.mix[mix].preview === 0 || !instance.data.inputs[instance.data.mix[mix].preview - 1]) {
             return 0
           }
 
@@ -92,10 +79,7 @@ export const vMixTallyFeedbacks = (instance: VMixInstance): TallyFeedbacks => {
         optionsInput = await Promise.all(optionsInput.map(async (value: any) => instance.data.getInput(value)))
         optionsInput = optionsInput.map(checkInput)
 
-        if (
-          optionsInput[instance.buttonShift.state] === 1 ||
-          (optionsInput.includes(1) && instance.config.shiftBlinkPrvPrgm && instance.buttonShift.blink)
-        ) {
+        if (optionsInput[instance.buttonShift.state] === 1 || (optionsInput.includes(1) && instance.config.shiftBlinkPrvPrgm && instance.buttonShift.blink)) {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         } else if (optionsInput[instance.buttonShift.state] === 2) {
           if (!feedback.image) return {}
@@ -138,18 +122,9 @@ export const vMixTallyFeedbacks = (instance: VMixInstance): TallyFeedbacks => {
       type: 'advanced',
       name: 'Tally - Program state',
       description: 'Indicates if an input is in Program (or is a layer of an input that is if layer tally is selected)',
-      options: [
-        options.input,
-        options.mixSelect,
-        options.mixVariable,
-        options.foregroundColor,
-        options.backgroundColorProgram,
-        options.layerTallyIndicator
-      ],
+      options: [options.input, options.mixSelect, options.mixVariable, options.foregroundColor, options.backgroundColorProgram, options.layerTallyIndicator],
       callback: async (feedback, context) => {
-        let mixVariable: string | number = (await instance.parseOption(feedback.options.mixVariable, context))[
-          instance.buttonShift.state
-        ]
+        let mixVariable: string | number = (await instance.parseOption(feedback.options.mixVariable, context))[instance.buttonShift.state]
         mixVariable = parseInt(mixVariable, 10) - 1
 
         let mix: number = feedback.options.mix
@@ -158,11 +133,7 @@ export const vMixTallyFeedbacks = (instance: VMixInstance): TallyFeedbacks => {
 
         // Check if an input is not in program at all (0), currently in program (1), or in program as a layer (2)
         const checkInput = (input: Input | null): 0 | 1 | 2 => {
-          if (
-            input === null ||
-            instance.data.mix[mix].program === 0 ||
-            !instance.data.inputs[instance.data.mix[mix].program - 1]
-          ) {
+          if (input === null || instance.data.mix[mix].program === 0 || !instance.data.inputs[instance.data.mix[mix].program - 1]) {
             return 0
           }
 
@@ -179,10 +150,7 @@ export const vMixTallyFeedbacks = (instance: VMixInstance): TallyFeedbacks => {
         optionsInput = await Promise.all(optionsInput.map(async (value: any) => instance.data.getInput(value)))
         optionsInput = optionsInput.map(checkInput)
 
-        if (
-          optionsInput[instance.buttonShift.state] === 1 ||
-          (optionsInput.includes(1) && instance.config.shiftBlinkPrvPrgm && instance.buttonShift.blink)
-        ) {
+        if (optionsInput[instance.buttonShift.state] === 1 || (optionsInput.includes(1) && instance.config.shiftBlinkPrvPrgm && instance.buttonShift.blink)) {
           return { color: feedback.options.fg, bgcolor: feedback.options.bg }
         } else if (optionsInput[instance.buttonShift.state] === 2) {
           if (!feedback.image) return {}
@@ -260,11 +228,9 @@ export const vMixTallyFeedbacks = (instance: VMixInstance): TallyFeedbacks => {
         let program = false
 
         instance.data.overlays.forEach((overlay) => {
-          const overlayNumberCheck =
-            overlay.number === parseInt(feedback.options.overlay, 10) || feedback.options.overlay === '0'
+          const overlayNumberCheck = overlay.number === parseInt(feedback.options.overlay, 10) || feedback.options.overlay === '0'
           const overlayInputCheck =
-            (overlay.input === inputOptions[instance.buttonShift.state] &&
-              inputOptions[instance.buttonShift.state] !== null) ||
+            (overlay.input === inputOptions[instance.buttonShift.state] && inputOptions[instance.buttonShift.state] !== null) ||
             (feedback.options.input === '' && overlay.input !== null)
 
           if (overlayNumberCheck && overlayInputCheck) {

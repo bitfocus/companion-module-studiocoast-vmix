@@ -69,10 +69,7 @@ export class TCP {
    */
   public readonly init = (): void => {
     if (this.tcpHost === undefined || this.tcpPort === undefined) {
-      this.instance.log(
-        'warn',
-        `Unable to connect to vMix, please confugre a host and port in the instance configuration`
-      )
+      this.instance.log('warn', `Unable to connect to vMix, please confugre a host and port in the instance configuration`)
       return
     }
 
@@ -102,10 +99,7 @@ export class TCP {
 
     this.sockets.functions.on('error', (err: Error) => {
       this.instance.updateStatus(InstanceStatus.UnknownError)
-      this.instance.log(
-        this.instance.config.connectionErrorLog ? 'error' : 'debug',
-        'Function Socket err: ' + err.message
-      )
+      this.instance.log(this.instance.config.connectionErrorLog ? 'error' : 'debug', 'Function Socket err: ' + err.message)
     })
 
     this.sockets.functions.on('connect', () => {
@@ -168,12 +162,7 @@ export class TCP {
       const messages = data.toString().split(/\r?\n/)
 
       messages.forEach((message) => {
-        if (
-          message.startsWith('VERSION') ||
-          message.startsWith('SUBSCRIBE OK') ||
-          message === 'PING OK PONG' ||
-          message === ''
-        ) {
+        if (message.startsWith('VERSION') || message.startsWith('SUBSCRIBE OK') || message === 'PING OK PONG' || message === '') {
           return
         } else if (message.startsWith('ACTS OK')) {
           if (this.instance.activators) this.instance.activators.parse(message.substr(8).trim())
@@ -188,15 +177,7 @@ export class TCP {
    * @description Request initial Activator data
    */
   public readonly initActivatorData = (): void => {
-    const initialRequests = [
-      'ACTS BusASolo\r\n',
-      'ACTS BusBSolo\r\n',
-      'ACTS BusCSolo\r\n',
-      'ACTS BusDSolo\r\n',
-      'ACTS BusESolo\r\n',
-      'ACTS BusFSolo\r\n',
-      'ACTS BusGSolo\r\n'
-    ]
+    const initialRequests = ['ACTS BusASolo\r\n', 'ACTS BusBSolo\r\n', 'ACTS BusCSolo\r\n', 'ACTS BusDSolo\r\n', 'ACTS BusESolo\r\n', 'ACTS BusFSolo\r\n', 'ACTS BusGSolo\r\n']
 
     this.sockets.activator?.send(initialRequests.join('')).catch((err) => {
       this.instance.log('debug', err.message)
@@ -253,10 +234,7 @@ export class TCP {
           this.instance.apiProcessing.response = new Date().getTime()
           this.instance.data.update(message)
         } else {
-          if (
-            this.messageBuffer.message.toString().includes('<vmix>') &&
-            this.messageBuffer.message.toString().includes('</vmix>')
-          ) {
+          if (this.messageBuffer.message.toString().includes('<vmix>') && this.messageBuffer.message.toString().includes('</vmix>')) {
             const dataStart = this.messageBuffer.message.toString().indexOf('<vmix>')
             const dataStop = this.messageBuffer.message.toString().indexOf('</vmix>')
 

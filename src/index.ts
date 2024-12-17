@@ -127,12 +127,7 @@ class VMixInstance extends InstanceBase<Config> {
         this.checkFeedbacks('inputPreview', 'inputLive')
       }
       if (this.config.shiftBlinkLayerRouting) {
-        this.checkFeedbacks(
-          'selectedDestinationInput',
-          'selectedDestinationLayer',
-          'routableMultiviewLayer',
-          'inputOnMultiview'
-        )
+        this.checkFeedbacks('selectedDestinationInput', 'selectedDestinationLayer', 'routableMultiviewLayer', 'inputOnMultiview')
       }
     }, 333)
 

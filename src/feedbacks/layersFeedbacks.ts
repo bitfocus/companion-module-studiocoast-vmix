@@ -34,11 +34,7 @@ export interface LayersFeedbacks {
   inputOnMultiview: VMixFeedback<InputOnMultiviewCallback>
 }
 
-export type LayersCallbacks =
-  | SelectedDestinationInputCallback
-  | SelectedDestinationLayerCallback
-  | RoutableMultiviewLayerCallback
-  | InputOnMultiviewCallback
+export type LayersCallbacks = SelectedDestinationInputCallback | SelectedDestinationLayerCallback | RoutableMultiviewLayerCallback | InputOnMultiviewCallback
 
 export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => {
   return {
@@ -66,8 +62,7 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
           getInputValue.push(getInput?.key || null)
         }
 
-        const blink =
-          instance.buttonShift.blink && instance.config.shiftBlinkLayerRouting && getInputValue.includes(selectInput)
+        const blink = instance.buttonShift.blink && instance.config.shiftBlinkLayerRouting && getInputValue.includes(selectInput)
 
         return getInputValue[instance.buttonShift.state] === selectInput || blink
       }
@@ -120,11 +115,7 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
           getInputValue.push(value)
         }
 
-        if (
-          getInputValue[instance.buttonShift.state] === null ||
-          instance.routingData.layer.destinationInput === null ||
-          instance.routingData.layer.destinationLayer === null
-        ) {
+        if (getInputValue[instance.buttonShift.state] === null || instance.routingData.layer.destinationInput === null || instance.routingData.layer.destinationLayer === null) {
           return false
         }
 
@@ -135,12 +126,7 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
           const selectedLayer = selectedInput.overlay.find((overlay) => overlay.index === index)
 
           let blink = false
-          if (
-            selectedLayer?.key &&
-            instance.buttonShift.blink &&
-            instance.config.shiftBlinkLayerRouting &&
-            getInputValue.includes(selectedLayer.key)
-          ) {
+          if (selectedLayer?.key && instance.buttonShift.blink && instance.config.shiftBlinkLayerRouting && getInputValue.includes(selectedLayer.key)) {
             blink = true
           }
 
@@ -222,10 +208,7 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
           }
         })
 
-        return (
-          primaryCheck ||
-          (secondaryCheck.includes(true) && instance.config.shiftBlinkLayerRouting && instance.buttonShift.blink)
-        )
+        return primaryCheck || (secondaryCheck.includes(true) && instance.config.shiftBlinkLayerRouting && instance.buttonShift.blink)
       }
     }
   }

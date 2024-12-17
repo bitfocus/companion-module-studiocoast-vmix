@@ -49,9 +49,7 @@ export const getMultiviewLayersPresets = (): VMixPresetArray => {
         },
         steps: [
           {
-            down: [
-              { actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: i } }
-            ],
+            down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: i } }],
             up: []
           }
         ],
@@ -69,9 +67,7 @@ export const getMultiviewLayersPresets = (): VMixPresetArray => {
         },
         steps: [
           {
-            down: [
-              { actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: i } }
-            ],
+            down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: i } }],
             up: []
           }
         ],

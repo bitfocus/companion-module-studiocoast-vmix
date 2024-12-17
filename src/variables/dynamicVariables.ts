@@ -241,17 +241,13 @@ export const dynamicValues = async (instance: VMixInstance): Promise<InstanceVar
           let overlayinputName = ''
 
           if (overlayInput)
-            overlayinputName = overlayInput.shortTitle
-              ? overlayInput.shortTitle.replace(/[^a-z0-9-_. ]+/gi, '')
-              : overlayInput.title.replace(/[^a-z0-9-_. ]+/gi, '')
+            overlayinputName = overlayInput.shortTitle ? overlayInput.shortTitle.replace(/[^a-z0-9-_. ]+/gi, '') : overlayInput.title.replace(/[^a-z0-9-_. ]+/gi, '')
 
           variables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_name`] = overlayinputName
           variables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_number`] = overlayInput?.number || ''
           variables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_key`] = overlayInput?.key || ''
 
-          if (
-            !(instance.config.strictInputVariableTypes && !instance.config.variablesShowInputLayerPosition)
-          ) {
+          if (!(instance.config.strictInputVariableTypes && !instance.config.variablesShowInputLayerPosition)) {
             variables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_panx`] = layer.panX ?? ''
             variables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_pany`] = layer.panY ?? ''
             variables[`dynamic_input_${dynamic + 1}_layer_${layer.index + 1}_x`] = layer.x ?? ''
@@ -277,8 +273,7 @@ export const dynamicValues = async (instance: VMixInstance): Promise<InstanceVar
         if (input.list) {
           input.list.forEach((listItem) => {
             variables[`dynamic_input_${dynamic + 1}_list_${listItem.index + 1}_name`] = listItem.filename
-            variables[`dynamic_input_${dynamic + 1}_list_${listItem.index + 1}_selected`] =
-              listItem.selected.toString()
+            variables[`dynamic_input_${dynamic + 1}_list_${listItem.index + 1}_selected`] = listItem.selected.toString()
 
             if (listItem.selected) {
               variables[`dynamic_input_${dynamic + 1}_selected`] = listItem.index + 1
@@ -303,9 +298,7 @@ export const dynamicValues = async (instance: VMixInstance): Promise<InstanceVar
           }
 
           variables[`dynamic_input_${dynamic + 1}_call_password`] = input.callPassword
-          variables[`dynamic_input_${dynamic + 1}_call_connected`] = input.callConnected
-            ? 'Connected'
-            : 'Disconnected'
+          variables[`dynamic_input_${dynamic + 1}_call_connected`] = input.callConnected ? 'Connected' : 'Disconnected'
           variables[`dynamic_input_${dynamic + 1}_call_video_source`] = input.callVideoSource
           variables[`dynamic_input_${dynamic + 1}_call_audio_source`] = input.callAudioSource
         }
@@ -336,9 +329,7 @@ export const dynamicValues = async (instance: VMixInstance): Promise<InstanceVar
         if (input.volumeF1 !== undefined) {
           variables[`dynamic_input_${dynamic + 1}_volume_f1`] = (input.volumeF1 * 100).toFixed(2)
           variables[`dynamic_input_${dynamic + 1}_volume_f1_db`] = volumeTodB(input.volumeF1 * 100).toFixed(1)
-          variables[`dynamic_input_${dynamic + 1}_volume_f1_linear`] = Math.round(
-            volumeToLinear(input.volumeF1 * 100)
-          )
+          variables[`dynamic_input_${dynamic + 1}_volume_f1_linear`] = Math.round(volumeToLinear(input.volumeF1 * 100))
         }
 
         variables[`dynamic_input_${dynamic + 1}_volume_f2`] = ''
@@ -348,9 +339,7 @@ export const dynamicValues = async (instance: VMixInstance): Promise<InstanceVar
         if (input.volumeF2 !== undefined) {
           variables[`dynamic_input_${dynamic + 1}_volume_f2`] = (input.volumeF2 * 100).toFixed(2)
           variables[`dynamic_input_${dynamic + 1}_volume_f2_db`] = volumeTodB(input.volumeF2 * 100).toFixed(1)
-          variables[`dynamic_input_${dynamic + 1}_volume_f2_linear`] = Math.round(
-            volumeToLinear(input.volumeF2 * 100)
-          )
+          variables[`dynamic_input_${dynamic + 1}_volume_f2_linear`] = Math.round(volumeToLinear(input.volumeF2 * 100))
         }
       }
     }
@@ -358,13 +347,3 @@ export const dynamicValues = async (instance: VMixInstance): Promise<InstanceVar
 
   return variables
 }
-
-
-
-
-
-
-
-
-
-

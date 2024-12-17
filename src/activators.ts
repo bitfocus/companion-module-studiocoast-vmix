@@ -463,9 +463,7 @@ export class Activators {
     const value = parseFloat(params[2])
 
     if (input) {
-      const inputChannel = this.instance.data.channelMixer[input.key]?.find(
-        (audioChannel) => audioChannel.channel === channel
-      )
+      const inputChannel = this.instance.data.channelMixer[input.key]?.find((audioChannel) => audioChannel.channel === channel)
       if (inputChannel) inputChannel.volume = value
     }
   }

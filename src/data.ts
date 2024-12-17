@@ -367,22 +367,10 @@ export class VMixData {
     if (s1 < 1) s1 = 1
     if (s3 < 1) s3 = 1
 
-    const s1ArrF1 = level.meterF1
-      .filter((level) => Math.floor(level.time.getTime() / 1000) === now - 1)
-      .map((level) => level.value)
-    const s1ArrF2 = level.meterF2
-      .filter((level) => Math.floor(level.time.getTime() / 1000) === now - 1)
-      .map((level) => level.value)
-    const s3ArrF1 = level.meterF1
-      .filter(
-        (level) => Math.floor(level.time.getTime() / 1000) < now && Math.floor(level.time.getTime() / 1000) > now - 4
-      )
-      .map((level) => level.value)
-    const s3ArrF2 = level.meterF2
-      .filter(
-        (level) => Math.floor(level.time.getTime() / 1000) < now && Math.floor(level.time.getTime() / 1000) > now - 4
-      )
-      .map((level) => level.value)
+    const s1ArrF1 = level.meterF1.filter((level) => Math.floor(level.time.getTime() / 1000) === now - 1).map((level) => level.value)
+    const s1ArrF2 = level.meterF2.filter((level) => Math.floor(level.time.getTime() / 1000) === now - 1).map((level) => level.value)
+    const s3ArrF1 = level.meterF1.filter((level) => Math.floor(level.time.getTime() / 1000) < now && Math.floor(level.time.getTime() / 1000) > now - 4).map((level) => level.value)
+    const s3ArrF2 = level.meterF2.filter((level) => Math.floor(level.time.getTime() / 1000) < now && Math.floor(level.time.getTime() / 1000) > now - 4).map((level) => level.value)
 
     let s1MeterF1Peak = 0
     let s1MeterF2Peak = 0
@@ -441,9 +429,7 @@ export class VMixData {
     if (typeof parsedVariable === 'number' || int.test(parsedVariable)) {
       input = this.inputs.find((item) => item.number == parsedVariable)
     } else {
-      input = this.inputs.find(
-        (item) => item.shortTitle === parsedVariable || item.title === parsedVariable || item.key === parsedVariable
-      )
+      input = this.inputs.find((item) => item.shortTitle === parsedVariable || item.title === parsedVariable || item.key === parsedVariable)
     }
 
     return input || null
@@ -995,8 +981,7 @@ export class VMixData {
     const changes: Set<string> = new Set()
 
     // Check inputs for additions/deletions or change in index order
-    const inputCheck =
-      newData.inputs.map((input) => input.key).join('') !== this.inputs.map((input) => input.key).join('')
+    const inputCheck = newData.inputs.map((input) => input.key).join('') !== this.inputs.map((input) => input.key).join('')
 
     // Copy any existing Channel Mixer data from activator updates
     const updateChannelMixer = async (input: Input) => {

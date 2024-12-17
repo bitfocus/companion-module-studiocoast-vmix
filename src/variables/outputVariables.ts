@@ -46,7 +46,7 @@ export const outputValues = async (instance: VMixInstance): Promise<InstanceVari
   instance.data.outputs.forEach((output) => {
     const variableID = `${output.type}_${output.number}`
     let source = ''
-    
+
     if (output.source === 'Input') {
       source = `Input${output.input}`
     } else if (output.source === 'Mix') {

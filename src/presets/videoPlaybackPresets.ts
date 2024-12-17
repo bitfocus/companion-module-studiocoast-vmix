@@ -123,9 +123,7 @@ export const getVideoPlaybackPresets = (): VMixPresetArray => {
       },
       steps: [
         {
-          down: [
-            { actionId: 'videoPlayhead', options: { input: '', inputType: true, adjustment: 'Set', value: 10000 } }
-          ],
+          down: [{ actionId: 'videoPlayhead', options: { input: '', inputType: true, adjustment: 'Set', value: 10000 } }],
           up: []
         }
       ],

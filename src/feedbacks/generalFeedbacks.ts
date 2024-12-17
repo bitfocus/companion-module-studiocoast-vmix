@@ -9,15 +9,7 @@ type DynamicOptions = {
 }
 
 type StatusOptions = {
-  status:
-    | 'connection'
-    | 'fadeToBlack'
-    | 'recording'
-    | 'external'
-    | 'streaming'
-    | 'multiCorder'
-    | 'fullscreen'
-    | 'playList'
+  status: 'connection' | 'fadeToBlack' | 'recording' | 'external' | 'streaming' | 'multiCorder' | 'fullscreen' | 'playList'
   value: '' | '0' | '1' | '2'
 }
 
@@ -93,16 +85,7 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
           label: 'Status Type',
           id: 'status',
           default: 'connection',
-          choices: [
-            'connection',
-            'fadeToBlack',
-            'recording',
-            'external',
-            'streaming',
-            'multiCorder',
-            'fullscreen',
-            'playList'
-          ].map((id) => ({ id, label: id }))
+          choices: ['connection', 'fadeToBlack', 'recording', 'external', 'streaming', 'multiCorder', 'fullscreen', 'playList'].map((id) => ({ id, label: id }))
         },
         {
           type: 'dropdown',
