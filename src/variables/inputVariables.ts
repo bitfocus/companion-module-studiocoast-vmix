@@ -10,6 +10,8 @@ export const inputDefinitions = (instance: VMixInstance): CompanionVariableDefin
   const inputNameVariables = new Set<CompanionVariableDefinition>()
   const inputKeyVariables = new Set<CompanionVariableDefinition>()
 
+  definitions.push({ name: 'Input Any Solo', variableId: 'input_any_solo' })
+
   instance.data.inputs.forEach((input) => {
     let inputName = input.shortTitle ? input.shortTitle : input.title
     inputName = inputName.replace(/[^a-z0-9-_.]+/gi, '').toLowerCase()
@@ -152,24 +154,6 @@ export const inputDefinitions = (instance: VMixInstance): CompanionVariableDefin
     }
   })
 
-  instance.timers.forEach((timer) => {
-    const formats = ['hh:mm:ss', 'mm:ss', 'mm:ss.ms', 'mm:ss.sss']
-    const dataArr = [
-      timer.get({ defaultValue: '00:00:00', format: 'hh:mm:ss' }),
-      timer.get({ defaultValue: '00:00', format: 'mm:ss' }),
-      timer.get({ defaultValue: '00:00.0', format: 'mm:ss.ms' }),
-      timer.get({ defaultValue: '00:00.000', format: 'mm:ss.sss' })
-    ]
-
-    dataArr.forEach((data, index) => {
-      const prefix = `timer_${timer.id}_${formats[index]}_`
-
-      for (const key in data) {
-        definitions.push({ name: `Timer ${timer.id} ${formats[index]} ${key}`, variableId: prefix + key })
-      }
-    })
-  })
-
   // Filter variables displayed based on Config settings
   let filteredVariables = [...definitions]
   if (instance.config.variablesShowInputs) filteredVariables = [...filteredVariables, ...inputNameVariables]
@@ -183,6 +167,8 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
   const variables: InstanceVariableValue = {}
 
   const inputNames: string[] = []
+  
+  variables.input_any_solo = instance.data.inputs.some((input) => input.solo).toString()
 
   for (const input of instance.data.inputs) {
     const inputName = input.shortTitle ? input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '') : input.title.replace(/[^a-z0-9-_.]+/gi, '')
