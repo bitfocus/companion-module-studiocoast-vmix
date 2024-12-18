@@ -10,8 +10,7 @@ export const audioDefinitions = (_instance: VMixInstance): CompanionVariableDefi
 
   definitions.push(
     { name: 'Selected Bus', variableId: 'bus_selected' },
-    { name: 'Bus Any Solo', variableId: 'bus_any_solo' },
-    { name: 'Input Any Solo', variableId: 'input_any_solo' }
+    { name: 'Bus Any Solo', variableId: 'bus_any_solo' }
   )
 
   busses.forEach((bus) => {
@@ -107,7 +106,6 @@ export const audioValues = async (instance: VMixInstance): Promise<InstanceVaria
 
   variables.bus_selected = instance.routingData.bus
   variables.bus_any_solo = instance.data.audio.some((bus) => bus.solo).toString()
-  variables.input_any_solo = instance.data.inputs.some((input) => input.solo).toString()
 
   return variables
 }
