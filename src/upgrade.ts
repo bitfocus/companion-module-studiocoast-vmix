@@ -668,20 +668,20 @@ const upgradeV3_8_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   actions.forEach((action: any) => {
     if (action.actionId === 'setInputPostion') {
       action.actionId = 'inputPosition'
-      action.setting = action.functionID
-      action.zoomValue = '1'
-      action.cropValue = '0,0,1,1'
-      action.cropValue2 = '1'
-      action.panValue = '1'
+      action.options.setting = action.options.functionID
+      action.options.zoomValue = '1'
+      action.options.cropValue = '0,0,1,1'
+      action.options.cropValue2 = '1'
+      action.options.panValue = '1'
 
-      if (action.setting === 'SetZoom') {
-        action.zoomValue = action.value
+      if (action.options.setting === 'SetZoom') {
+        action.options.zoomValue = action.options.value
       } else {
-        action.panValue = action.value
+        action.options.panValue = action.options.value
       }
 
-      delete action.functionID
-      delete action.value
+      delete action.options.functionID
+      delete action.options.value
 
       changes.updatedActions.push(action)
     }

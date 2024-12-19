@@ -36,7 +36,7 @@ export const vMixZoomActions = (instance: VMixInstance, sendBasicCommand: (actio
   return {
     zoomMuteSelf: {
       name: 'Zoom - Mute Self',
-      description: '',
+      description: 'Mute or Unmute the audio being sent to the Zoom Meeting input',
       options: [
         options.input,
         {
@@ -55,7 +55,7 @@ export const vMixZoomActions = (instance: VMixInstance, sendBasicCommand: (actio
 
     zoomSelectParticipantByName: {
       name: 'Zoom - Select Participant by Name',
-      description: '',
+      description: 'Selects a user in a Zoom Meeting',
       options: [
         options.input,
         {
@@ -71,7 +71,7 @@ export const vMixZoomActions = (instance: VMixInstance, sendBasicCommand: (actio
 
     zoomJoinMeeting: {
       name: 'Zoom - Join Meeting',
-      description: '',
+      description: 'Joins a Meeting ID with specified Password',
       options: [
         options.input,
         {
