@@ -47,24 +47,6 @@ Only 1, or none, of:
 
 <br>
 
-## Get Timers
-Returns an array of current timers
-<br>GET /instance/LABEL/timers
-
-### Required Query Parameters
-None
-
-### Optional Query Parameters
-|    Param    |  Default  | Description |
-| ----------- | --------- | ----------- |
-| default | "" | Value to be returned for times/laps in-progess |
-| format | mm:ss.ms | Time format, hh:mm:ss, hh:mm:ss.ms, mm:ss, mm:ss.ms, mm:ss.sss, or auto |
-| lap_progress | current | Show current lap time for "current" lap, "all" laps, or "none" |
-| times | 1 | Minimum number of times/laps to return |
-
-
-<br>
-
 ## Get Transitions
 Returns the Transitions and the durations of preset transitions
 <br>GET /instance/LABEL/transitions

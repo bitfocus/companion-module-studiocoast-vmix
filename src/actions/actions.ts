@@ -10,7 +10,6 @@ import { MediaActions, MediaCallbacks, vMixMediaActions } from './mediaActions'
 import { OutputActions, OutputCallbacks, vMixOutputActions } from './outputActions'
 import { OverlayActions, OverlayCallbacks, vMixOverlayActions } from './overlayActions'
 import { PlayListActions, PlayListCallbacks, vMixPlayListActions } from './playlistActions'
-import { PositionActions, PositionCallbacks, vMixPositionActions } from './positionActions'
 import { PTZActions, PTZCallbacks, vMixPTZActions } from './ptzActions'
 import { ReplayActions, ReplayCallbacks, vMixReplayActions } from './replayActions'
 import { ScriptingActions, ScriptingCallbacks, vMixScriptingActions } from './scriptingActions'
@@ -38,7 +37,6 @@ export type VMixActions =
   | OutputActions
   | OverlayActions
   | PlayListActions
-  | PositionActions
   | PTZActions
   | ReplayActions
   | ScriptingActions
@@ -61,7 +59,6 @@ export type ActionCallbacks =
   | OutputCallbacks
   | OverlayCallbacks
   | PlayListCallbacks
-  | PositionCallbacks
   | PTZCallbacks
   | ReplayCallbacks
   | ScriptingCallbacks
@@ -178,7 +175,6 @@ export function getActions(instance: VMixInstance): VMixActions {
     ...vMixOutputActions(instance, sendBasicCommand),
     ...vMixOverlayActions(instance, sendBasicCommand),
     ...vMixPlayListActions(instance, sendBasicCommand),
-    ...vMixPositionActions(instance, sendBasicCommand),
     ...vMixPTZActions(instance, sendBasicCommand),
     ...vMixReplayActions(instance, sendBasicCommand),
     ...vMixScriptingActions(instance, sendBasicCommand),

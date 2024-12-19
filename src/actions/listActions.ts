@@ -123,7 +123,7 @@ export const vMixListActions = (_instance: VMixInstance, sendBasicCommand: (acti
 
     listShuffle: {
       name: 'Lists - Shuffle List',
-      description: '',
+      description: 'Shuffles the items in a List',
       options: [options.input],
       callback: sendBasicCommand
     }
