@@ -30,9 +30,6 @@
 	"engines": {
 		"node": "^22.8"
 	},
-	"resolutions": {
-    "string-width": "4.2.3"
- },
 	"dependencies": {
 		"@companion-module/base": "~1.11.1",
 		"companion-module-utils": "^0.4.0",

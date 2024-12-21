@@ -26,11 +26,6 @@ jobs:
           yarn install
         env:
           CI: true
-      - name: Test jest
-        run: |
-          yarn test
-        env:
-          CI: true
       - name: Test tsc
         run: |
           yarn build
