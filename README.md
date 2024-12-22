@@ -36,7 +36,8 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 # Recent Patches
 **v3.8.0**
 - Updated module to Node.JS 22.8.0 and rebuilt dependencies
-- Refactored module source
+- Refactored module structure
+- Removed duplicate Position action
 
 **v3.7.1**
 - Fixed typo in stream 4 and 5 variable definitions
