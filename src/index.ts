@@ -1,18 +1,20 @@
 import {
   InstanceBase,
   runEntrypoint,
+  CompanionActionDefinitions,
+  CompanionFeedbackContext,
   CompanionFeedbackDefinitions,
   CompanionHTTPRequest,
   CompanionHTTPResponse,
-  SomeCompanionConfigField,
+  SomeCompanionConfigField
 } from '@companion-module/base'
 import { Config, getConfigFields } from './config'
-import { getActions } from './actions'
+import { getActions } from './actions/actions'
 import { Activators } from './activators'
 import { VMixData } from './data'
-import { getFeedbacks } from './feedback'
+import { getFeedbacks } from './feedbacks/feedback'
 import { httpHandler } from './http'
-import { getPresets } from './presets'
+import { getPresets } from './presets/presets'
 import { TCP } from './tcp'
 import { Timer } from './timers'
 import { getUpgrades } from './upgrade'
@@ -31,7 +33,7 @@ interface APIProcessing {
 interface ButtonShift {
   state: number
   blink: boolean
-  blinkInterval: NodeJS.Timer | null
+  blinkInterval: ReturnType<typeof setInterval> | null
 }
 
 interface RoutingData {
@@ -60,12 +62,12 @@ class VMixInstance extends InstanceBase<Config> {
     response: 0,
     parsed: 0,
     feedbacks: 0,
-    variables: 0,
+    variables: 0
   }
   public buttonShift: ButtonShift = {
     state: 0,
     blink: false,
-    blinkInterval: null,
+    blinkInterval: null
   }
   public config: Config = {
     label: '',
@@ -82,24 +84,24 @@ class VMixInstance extends InstanceBase<Config> {
     variablesShowInputGUID: true,
     variablesShowInputPosition: false,
     variablesShowInputLayerPosition: false,
-    strictInputVariableTypes: false,
+    strictInputVariableTypes: false
   }
   public connected = false
   public data = new VMixData(this)
-  public pollAPI: NodeJS.Timer | null = null
+  public pollAPI: ReturnType<typeof setInterval> | null = null
   public routingData: RoutingData = {
     audio: {},
     bus: 'Master',
     layer: {
       destinationInput: null,
-      destinationLayer: null,
+      destinationLayer: null
     },
-    mix: 0,
+    mix: 0
   }
   public startTime: Date = new Date()
   public tcp: TCP | null = null
   public timers: Timer[] = []
-  public timerInterval: NodeJS.Timer | null = null
+  public timerInterval: ReturnType<typeof setInterval> | null = null
   public variables: Variables | null = null
 
   /**
@@ -125,12 +127,7 @@ class VMixInstance extends InstanceBase<Config> {
         this.checkFeedbacks('inputPreview', 'inputLive')
       }
       if (this.config.shiftBlinkLayerRouting) {
-        this.checkFeedbacks(
-          'selectedDestinationInput',
-          'selectedDestinationLayer',
-          'routableMultiviewLayer',
-          'inputOnMultiview'
-        )
+        this.checkFeedbacks('selectedDestinationInput', 'selectedDestinationLayer', 'routableMultiviewLayer', 'inputOnMultiview')
       }
     }, 333)
 
@@ -182,7 +179,7 @@ class VMixInstance extends InstanceBase<Config> {
    * @returns array of strings indexed by the button modifier delimiter
    * @description first splits the string by the position of the delimiter, then parses any instance variables in each part
    */
-  public readonly parseOption = async (option: string, context?: any): Promise<string[]> => {
+  public readonly parseOption = async (option: string, context?: CompanionFeedbackContext): Promise<string[]> => {
     const split = option.split(this.config.shiftDelimiter)
     const values = []
 
@@ -205,8 +202,8 @@ class VMixInstance extends InstanceBase<Config> {
    */
   private updateInstance(): void {
     // Cast actions and feedbacks from VMix types to Companion types
-    const actions = getActions(this)
-    const feedbacks = getFeedbacks(this) as CompanionFeedbackDefinitions
+    const actions = getActions(this) as CompanionActionDefinitions
+    const feedbacks = getFeedbacks(this) as unknown as CompanionFeedbackDefinitions
 
     this.setActionDefinitions(actions)
     this.setFeedbackDefinitions(feedbacks)
@@ -216,7 +213,7 @@ class VMixInstance extends InstanceBase<Config> {
    * @param request HTTP request from Companion
    * @returns HTTP response
    */
-  public handleHttpRequest(request: CompanionHTTPRequest): Promise<CompanionHTTPResponse> {
+  public async handleHttpRequest(request: CompanionHTTPRequest): Promise<CompanionHTTPResponse> {
     return httpHandler(this, request)
   }
 }

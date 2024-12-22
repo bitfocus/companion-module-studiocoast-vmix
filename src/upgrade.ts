@@ -1,6 +1,6 @@
 import { combineRgb, CompanionStaticUpgradeScript, CompanionStaticUpgradeResult } from '@companion-module/base'
 import { Config } from './config'
-import { getActions } from './actions'
+import { getActions } from './actions/actions'
 import { getConfigFields } from './config'
 
 /**
@@ -655,6 +655,59 @@ const upgradeV3_7_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   return changes
 }
 
+const upgradeV3_8_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
+  const actions: any = props.actions
+  const feedbacks: any = props.feedbacks
+
+  const changes: CompanionStaticUpgradeResult<Config> = {
+    updatedConfig: null,
+    updatedActions: [],
+    updatedFeedbacks: []
+  }
+
+  actions.forEach((action: any) => {
+    if (action.actionId === 'setInputPostion') {
+      action.actionId = 'inputPosition'
+      action.options.setting = action.options.functionID
+      action.options.zoomValue = '1'
+      action.options.cropValue = '0,0,1,1'
+      action.options.cropValue2 = '1'
+      action.options.panValue = '1'
+
+      if (action.options.setting === 'SetZoom') {
+        action.options.zoomValue = action.options.value
+      } else {
+        action.options.panValue = action.options.value
+      }
+
+      delete action.options.functionID
+      delete action.options.value
+
+      changes.updatedActions.push(action)
+    }
+  })
+
+  feedbacks.forEach((feedback: any) => {
+    if (feedback.feedbackId === 'inputLoop') {
+      feedback.feedbackId = 'inputState'
+      feedback.options.type = 'loop'
+      changes.updatedFeedbacks.push(feedback)
+    }
+  })
+
+  return changes
+}
+
 export const getUpgrades = (): CompanionStaticUpgradeScript<Config>[] => {
-  return [upgradeV1_2_0, upgradeV2_0_0, upgradeV2_0_6, upgradeV3_5_0, adjustmentFix, upgradeV3_6_0, upgradeV3_6_2, upgradeV3_7_0]
+  return [
+    upgradeV1_2_0,
+    upgradeV2_0_0,
+    upgradeV2_0_6,
+    upgradeV3_5_0,
+    adjustmentFix,
+    upgradeV3_6_0,
+    upgradeV3_6_2,
+    upgradeV3_7_0,
+    upgradeV3_8_0
+  ]
 }

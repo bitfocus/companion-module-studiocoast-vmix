@@ -33,12 +33,7 @@ export class Timer {
   private time: (number | undefined)[] = []
 
   // Parse the current timer state into a format suitable for a vMix Data Source
-  public readonly get = ({
-    defaultValue = '',
-    format = 'mm:ss.ms',
-    lap_progress = 'current',
-    times = 0,
-  }: TimerGetOptions): TimerResponse => {
+  public readonly get = ({ defaultValue = '', format = 'mm:ss.ms', lap_progress = 'current', times = 0 }: TimerGetOptions): TimerResponse => {
     let lapTotal = 0
     let lastLap = 0
     const getValue = (): string => {
@@ -63,16 +58,13 @@ export class Timer {
       state: this.state,
       value: getValue(),
       current_lap: getValue(),
-      default: defaultValue,
+      default: defaultValue
     }
 
     for (let i = 0; i < times || i < this.time.length + 1; i++) {
-      response[`time_${i + 1}`] =
-        this.time[i] === undefined ? defaultValue : formatTime((this.time[i] as number) - this.start, 'ms', format)
+      response[`time_${i + 1}`] = this.time[i] === undefined ? defaultValue : formatTime((this.time[i] as number) - this.start, 'ms', format)
       response[`time_${i + 1}_lap`] =
-        lap_progress === 'all' || (lap_progress === 'current' && (this.time[i - 1] !== undefined || i === 0))
-          ? getLapTime(this.time[i])
-          : defaultValue
+        lap_progress === 'all' || (lap_progress === 'current' && (this.time[i - 1] !== undefined || i === 0)) ? getLapTime(this.time[i]) : defaultValue
       if (this.time[i] !== undefined) {
         lapTotal = (this.time[i] as number) - this.start
         lastLap = this.time[i] as number

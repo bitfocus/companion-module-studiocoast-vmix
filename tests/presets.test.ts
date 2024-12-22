@@ -1,8 +1,8 @@
 import 'ts-jest'
 import { mockInstance } from './mock'
-import { getActions } from '../src/actions'
-import { getFeedbacks } from '../src/feedback'
-import { VMixPreset, getPresets } from '../src/presets'
+import { VMixAction, VMixActionKeys, getActions } from '../src/actions/actions'
+import { VMixFeedback, VMixFeedbackKeys, getFeedbacks } from '../src/feedbacks/feedback'
+import { VMixPreset, getPresets } from '../src/presets/presets'
 
 
 describe('Presets', () => {
@@ -14,7 +14,7 @@ describe('Presets', () => {
     if (preset.type === 'button') {
       preset.steps.forEach(step => {
         step.down.forEach((presetAction: any) => {
-          const action: any = actions[presetAction.actionId]
+          const action: VMixAction<any> = actions[presetAction.actionId as VMixActionKeys]
 
           action.options
             .filter((option: any) => option.type === 'number')
@@ -29,7 +29,7 @@ describe('Presets', () => {
       })
 
       preset.feedbacks.forEach((presetFeedback: any) => {
-        const feedback: any = feedbacks[presetFeedback.feedbackId];
+        const feedback = feedbacks[presetFeedback.feedbackId as VMixFeedbackKeys] as VMixFeedback<any>
 
         if (feedback.type === 'boolean') {
           it(`${preset.name} - ${presetFeedback.feedbackId} - Should have feedback style`, () => {

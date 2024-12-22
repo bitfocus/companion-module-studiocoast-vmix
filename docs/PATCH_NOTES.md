@@ -1,5 +1,10 @@
 # Patch Notes
 
+**v3.8.0**
+- Updated module to Node.JS 22.8.0 and rebuilt dependencies
+- Refactored module structure
+- Removed duplicate Position action
+
 **v3.7.1**
 - Fixed typo in stream 4 and 5 variable definitions
 - Better handling of vMix's undocumented XML processing instructions added to the XML API

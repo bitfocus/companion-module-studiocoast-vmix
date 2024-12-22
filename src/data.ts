@@ -250,7 +250,7 @@ const parserOptions = {
   tagNameProcessors: [],
   attrNameProcessors: [],
   valueProcessors: [xml2js.processors.parseBooleans],
-  attrValueProcessors: [xml2js.processors.parseBooleans],
+  attrValueProcessors: [xml2js.processors.parseBooleans]
 }
 
 const parser = new xml2js.Parser(parserOptions)
@@ -294,7 +294,7 @@ export class VMixData {
         preview: 0,
         program: 0,
         previewTally: [],
-        programTally: [],
+        programTally: []
       }
     })
 
@@ -308,12 +308,12 @@ export class VMixData {
       stream: [false, false, false, false, false],
       playList: false,
       multiCorder: false,
-      fullscreen: false,
+      fullscreen: false
     }
     this.recording = {
       duration: 0,
       filename1: '',
-      filename2: '',
+      filename2: ''
     }
     this.replay = {
       recording: false,
@@ -330,7 +330,7 @@ export class VMixData {
       speedB: 1,
       timecode: '',
       timecodeA: '',
-      timecodeB: '',
+      timecodeB: ''
     }
     this.channelMixer = {}
     this.dynamicInput = []
@@ -367,22 +367,10 @@ export class VMixData {
     if (s1 < 1) s1 = 1
     if (s3 < 1) s3 = 1
 
-    const s1ArrF1 = level.meterF1
-      .filter((level) => Math.floor(level.time.getTime() / 1000) === now - 1)
-      .map((level) => level.value)
-    const s1ArrF2 = level.meterF2
-      .filter((level) => Math.floor(level.time.getTime() / 1000) === now - 1)
-      .map((level) => level.value)
-    const s3ArrF1 = level.meterF1
-      .filter(
-        (level) => Math.floor(level.time.getTime() / 1000) < now && Math.floor(level.time.getTime() / 1000) > now - 4
-      )
-      .map((level) => level.value)
-    const s3ArrF2 = level.meterF2
-      .filter(
-        (level) => Math.floor(level.time.getTime() / 1000) < now && Math.floor(level.time.getTime() / 1000) > now - 4
-      )
-      .map((level) => level.value)
+    const s1ArrF1 = level.meterF1.filter((level) => Math.floor(level.time.getTime() / 1000) === now - 1).map((level) => level.value)
+    const s1ArrF2 = level.meterF2.filter((level) => Math.floor(level.time.getTime() / 1000) === now - 1).map((level) => level.value)
+    const s3ArrF1 = level.meterF1.filter((level) => Math.floor(level.time.getTime() / 1000) < now && Math.floor(level.time.getTime() / 1000) > now - 4).map((level) => level.value)
+    const s3ArrF2 = level.meterF2.filter((level) => Math.floor(level.time.getTime() / 1000) < now && Math.floor(level.time.getTime() / 1000) > now - 4).map((level) => level.value)
 
     let s1MeterF1Peak = 0
     let s1MeterF2Peak = 0
@@ -413,7 +401,7 @@ export class VMixData {
       s1MeterF1Peak,
       s1MeterF2Peak,
       s3MeterF1Peak,
-      s3MeterF2Peak,
+      s3MeterF2Peak
     }
   }
 
@@ -441,9 +429,7 @@ export class VMixData {
     if (typeof parsedVariable === 'number' || int.test(parsedVariable)) {
       input = this.inputs.find((item) => item.number == parsedVariable)
     } else {
-      input = this.inputs.find(
-        (item) => item.shortTitle === parsedVariable || item.title === parsedVariable || item.key === parsedVariable
-      )
+      input = this.inputs.find((item) => item.shortTitle === parsedVariable || item.title === parsedVariable || item.key === parsedVariable)
     }
 
     return input || null
@@ -463,7 +449,7 @@ export class VMixData {
    * @param data XML API data from vMix
    * @returns Promise resolving to the new data
    */
-  private parse(data: string): Promise<APIData> {
+  private async parse(data: string): Promise<APIData> {
     return parser.parseStringPromise(data).then((parsedData: any) => {
       parsedData = parsedData.vmix
       const version = parsedData.version[0] || ''
@@ -490,7 +476,7 @@ export class VMixData {
             muted: input.$.muted,
             solo: input.$.solo,
             selectedIndex: parseInt(input.$.selectedIndex, 10),
-            frameDelay: parseInt(input.$.frameDelay, 10) || 0,
+            frameDelay: parseInt(input.$.frameDelay, 10) || 0
           }
 
           if (input.list) {
@@ -500,7 +486,7 @@ export class VMixData {
                   index,
                   location: '',
                   filename: '',
-                  selected: false,
+                  selected: false
                 }
 
                 if (typeof listItem !== 'string') {
@@ -552,7 +538,7 @@ export class VMixData {
                 key: inputData.key,
                 type: 'input',
                 meterF1: [{ time: now, value: inputData.meterF1 }],
-                meterF2: [{ time: now, value: inputData.meterF2 }],
+                meterF2: [{ time: now, value: inputData.meterF2 }]
               })
             } else {
               audioLevel.meterF1.push({ time: now, value: inputData.meterF1 })
@@ -573,7 +559,7 @@ export class VMixData {
               D: input.$.audiobusses.includes('D'),
               E: input.$.audiobusses.includes('E'),
               F: input.$.audiobusses.includes('F'),
-              G: input.$.audiobusses.includes('G'),
+              G: input.$.audiobusses.includes('G')
             }
           }
 
@@ -592,7 +578,7 @@ export class VMixData {
               cropX1: parseFloat(get(overlay, 'crop[0].$.X1', 0)),
               cropX2: parseFloat(get(overlay, 'crop[0].$.X2', 1)),
               cropY1: parseFloat(get(overlay, 'crop[0].$.Y1', 0)),
-              cropY2: parseFloat(get(overlay, 'crop[0].$.Y2', 1)),
+              cropY2: parseFloat(get(overlay, 'crop[0].$.Y2', 1))
             }))
           }
 
@@ -600,7 +586,7 @@ export class VMixData {
             inputData.text = input.$.text.map((text: any) => ({
               index: parseInt(text.$.index, 10),
               name: text.$.name + '',
-              value: text._ === undefined ? '' : text._ + '',
+              value: text._ === undefined ? '' : text._ + ''
             }))
           }
 
@@ -608,7 +594,7 @@ export class VMixData {
             inputData.text = input.text.map((text: any) => ({
               index: parseInt(text.$.index, 10),
               name: text.$.name + '',
-              value: text._ === undefined ? '' : text._ + '',
+              value: text._ === undefined ? '' : text._ + ''
             }))
           }
 
@@ -634,7 +620,7 @@ export class VMixData {
               gainR: parseFloat(input.cc?.[0]?.$?.gainR ?? 1),
               gainG: parseFloat(input.cc?.[0]?.$?.gainG ?? 1),
               gainB: parseFloat(input.cc?.[0]?.$?.gainB ?? 1),
-              gainY: parseFloat(input.cc?.[0]?.$?.gainY ?? 1),
+              gainY: parseFloat(input.cc?.[0]?.$?.gainY ?? 1)
             }
 
             inputData.inputPosition = {
@@ -645,7 +631,7 @@ export class VMixData {
               cropX1: parseFloat(input.crop?.[0]?.$?.X1 ?? 0),
               cropX2: parseFloat(input.crop?.[0]?.$?.X2 ?? 1),
               cropY1: parseFloat(input.crop?.[0]?.$?.Y1 ?? 0),
-              cropY2: parseFloat(input.crop?.[0]?.$?.Y2 ?? 1),
+              cropY2: parseFloat(input.crop?.[0]?.$?.Y2 ?? 1)
             }
           }
 
@@ -667,7 +653,7 @@ export class VMixData {
           input: parseInt(output.$.inputNumber || 0, 10),
           mix: parseInt(output.$.mix || 0, 10),
           ndi: output.$.ndi || false,
-          srt: output.$.srt || false,
+          srt: output.$.srt || false
         }))
       }
 
@@ -681,7 +667,7 @@ export class VMixData {
         return overlays.map((overlay: any) => ({
           number: parseInt(overlay.$.number, 10),
           preview: overlay.$.preview || false,
-          input: overlay._ !== undefined ? parseInt(overlay._, 10) : null,
+          input: overlay._ !== undefined ? parseInt(overlay._, 10) : null
         }))
       }
 
@@ -695,7 +681,7 @@ export class VMixData {
         return transitions.map((transition: any) => ({
           number: parseInt(transition.$.number, 10),
           effect: transition.$.effect,
-          duration: parseInt(transition.$.duration, 10),
+          duration: parseInt(transition.$.duration, 10)
         }))
       }
 
@@ -706,7 +692,7 @@ export class VMixData {
           preview: 0,
           program: 0,
           previewTally: [],
-          programTally: [],
+          programTally: []
         }
 
         if (mixID === 1) {
@@ -754,7 +740,7 @@ export class VMixData {
               key,
               type: 'bus',
               meterF1: [{ time: now, value: bus.meterF1 }],
-              meterF2: [{ time: now, value: bus.meterF2 }],
+              meterF2: [{ time: now, value: bus.meterF2 }]
             })
           } else {
             audioLevel.meterF1.push({ time: now, value: bus.meterF1 })
@@ -792,7 +778,7 @@ export class VMixData {
           speedB: 1,
           timecode: '',
           timecodeA: '',
-          timecodeB: '',
+          timecodeB: ''
         }
 
         const inputs = get(parsedData, 'inputs[0].input')
@@ -826,7 +812,7 @@ export class VMixData {
             speedB: replay.$.speedB ? parseFloat(replay.$.speedB) : 0,
             timecode: replay.timecode[0],
             timecodeA: replay.timecodeA ? replay.timecodeA[0] : '',
-            timecodeB: replay.timecodeB ? replay.timecodeB[0] : '',
+            timecodeB: replay.timecodeB ? replay.timecodeB[0] : ''
           }
 
           // Prevent XML data from mirroring camera A to camera B. Activator data will be the more accurate source
@@ -881,7 +867,7 @@ export class VMixData {
           getMix(13),
           getMix(14),
           getMix(15),
-          getMix(16),
+          getMix(16)
         ],
         audio: getAudio(),
         status: {
@@ -894,21 +880,21 @@ export class VMixData {
             parsedData.streaming[0].$?.channel2 ? parsedData.streaming[0].$.channel2 : false,
             parsedData.streaming[0].$?.channel3 ? parsedData.streaming[0].$.channel3 : false,
             parsedData.streaming[0].$?.channel4 ? parsedData.streaming[0].$.channel4 : false,
-            parsedData.streaming[0].$?.channel5 ? parsedData.streaming[0].$.channel5 : false,
+            parsedData.streaming[0].$?.channel5 ? parsedData.streaming[0].$.channel5 : false
           ],
           playList: parsedData.playList[0],
           multiCorder: parsedData.multiCorder[0],
-          fullscreen: parsedData.fullscreen[0],
+          fullscreen: parsedData.fullscreen[0]
         },
         recording: {
           duration: getRecordingDuration(),
           filename1: parsedData.recording[0]?.$?.filename1 || '',
-          filename2: parsedData.recording[0]?.$?.filename2 || '',
+          filename2: parsedData.recording[0]?.$?.filename2 || ''
         },
         replay: getReplay(),
         channelMixer: { ...this.instance.data.channelMixer }, // channelMixer Data is from activators, so previous values must persist through API updates
         dynamicInput: getDynamics('input'),
-        dynamicValue: getDynamics('value'),
+        dynamicValue: getDynamics('value')
       }
 
       // Update layer tally
@@ -995,8 +981,7 @@ export class VMixData {
     const changes: Set<string> = new Set()
 
     // Check inputs for additions/deletions or change in index order
-    const inputCheck =
-      newData.inputs.map((input) => input.key).join('') !== this.inputs.map((input) => input.key).join('')
+    const inputCheck = newData.inputs.map((input) => input.key).join('') !== this.inputs.map((input) => input.key).join('')
 
     // Copy any existing Channel Mixer data from activator updates
     const updateChannelMixer = async (input: Input) => {
@@ -1005,7 +990,7 @@ export class VMixData {
       if (oldInput && oldInput.channelMixer) input.channelMixer = oldInput.channelMixer
     }
 
-    await Promise.all(newData.inputs.map((input) => updateChannelMixer(input)))
+    await Promise.all(newData.inputs.map(async (input) => updateChannelMixer(input)))
 
     // Add activator data
     newData.audio.forEach((bus) => {
@@ -1152,7 +1137,7 @@ export class VMixData {
         response: 0,
         parsed: 0,
         feedbacks: 0,
-        variables: 0,
+        variables: 0
       }
     }
   }
@@ -1161,7 +1146,7 @@ export class VMixData {
    * @param data vMix XML API string
    * @description parses XML to JSON, updates instance data, triggers updates of feedback and instance variables
    */
-  public update(data: string): Promise<void> {
+  public async update(data: string): Promise<void> {
     return this.parse(data)
       .then(async (newData) => {
         this.instance.apiProcessing.parsed = new Date().getTime()

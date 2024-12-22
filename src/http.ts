@@ -19,11 +19,15 @@ interface DataSourceInput {
 
 interface Endpoints {
   GET: {
-    [endpoint: string]: () => void
+    [endpoint: string]: () => void | Promise<void>
+  }
+
+  POST: {
+    [endpoint: string]: () => void | Promise<void>
   }
 
   [method: string]: {
-    [endpoint: string]: () => void
+    [endpoint: string]: () => void | Promise<void>
   }
 }
 
@@ -52,7 +56,7 @@ const parseInput = (input: Input): DataSourceInput => {
     position: input.duration > 0 ? formatTime(input.position, 'ms', 'hh:mm:ss.ms') : '00:00:00.0',
     remaining: input.duration > 0 ? formatTime(input.duration - input.position, 'ms', 'hh:mm:ss.ms') : '00:00:00.0',
     muted: input.muted ? 'Muted' : '',
-    loop: input.loop ? 'Loop' : '',
+    loop: input.loop ? 'Loop' : ''
   }
 }
 
@@ -62,16 +66,13 @@ const parseInput = (input: Input): DataSourceInput => {
  * @returns HTTP response
  * @description Checks incoming HTTP requests to the instance for an appropriate handler or returns a 404
  */
-export const httpHandler = async (
-  instance: VMixInstance,
-  request: CompanionHTTPRequest
-): Promise<CompanionHTTPResponse> => {
+export const httpHandler = async (instance: VMixInstance, request: CompanionHTTPRequest): Promise<CompanionHTTPResponse> => {
   const response: CompanionHTTPResponse = {
     status: 404,
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ status: 404, message: 'Not Found' }),
+    body: JSON.stringify({ status: 404, message: 'Not Found' })
   }
 
   //  Returns data as structured by this module
@@ -93,7 +94,7 @@ export const httpHandler = async (
       value1: instance.data.dynamicValue[0].value,
       value2: instance.data.dynamicValue[1].value,
       value3: instance.data.dynamicValue[2].value,
-      value4: instance.data.dynamicValue[3].value,
+      value4: instance.data.dynamicValue[3].value
     }
 
     response.status = 200
@@ -106,8 +107,7 @@ export const httpHandler = async (
       const selectedInput = instance.data.inputs.find((input) => {
         const keyCheck = input.key === request.query.key || input.key === request.query.id
         const numberCheck = input.number.toString() === request.query.number
-        const titleCheck =
-          input.shortTitle === request.query.title || input.title === request.query.SelectTitlePresetCallback
+        const titleCheck = input.shortTitle === request.query.title || input.title === request.query.SelectTitlePresetCallback
 
         return keyCheck || numberCheck || titleCheck
       })
@@ -210,6 +210,13 @@ export const httpHandler = async (
     response.body = JSON.stringify(data, null, 2)
   }
 
+  const getVariableDefinitions = () => {
+    const data = instance.variables?.currentDefinitions || []
+
+    response.status = 200
+    response.body = JSON.stringify([...data], null, 2)
+  }
+
   const postActions = () => {
     try {
       const body = JSON.parse(request.body || '')
@@ -239,10 +246,11 @@ export const httpHandler = async (
       timers: getTimers,
       transitions: getTransitions,
       variables: getVariables,
+      variabledef: getVariableDefinitions
     },
     POST: {
-      actions: postActions,
-    },
+      actions: postActions
+    }
   }
 
   const endpoint = request.path.replace('/', '').toLowerCase()

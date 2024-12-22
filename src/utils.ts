@@ -1,8 +1,5 @@
-import {
-  CompanionInputFieldColor,
-  CompanionInputFieldDropdown,
-  CompanionInputFieldTextInput,
-} from '@companion-module/base'
+import { CompanionInputFieldColor, CompanionInputFieldDropdown, CompanionInputFieldTextInput } from '@companion-module/base'
+import { Input } from './data'
 
 export type TimeFormat = 'hh:mm:ss' | 'hh:mm:ss.ms' | 'mm:ss' | 'mm:ss.ms' | 'mm:ss.sss' | 'auto'
 
@@ -36,6 +33,9 @@ export interface Options {
   adjustment: EnforceDefault<CompanionInputFieldDropdown, string>
 }
 
+export type MixOptionEntry = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | -1 | -2
+export type EmptyOptions = Record<string, never>
+
 // Static Variables
 export const AUDIOBUSSES = ['A', 'B', 'C', 'D', 'E', 'F', 'G'] as const
 export const AUDIOBUSSESMASTER = ['Master', 'Headphones', 'A', 'B', 'C', 'D', 'E', 'F', 'G'] as const
@@ -59,8 +59,53 @@ export const TRANSITIONS = [
   'VerticalWipeReverse',
   'VerticalSlideReverse',
   'BarnDoor',
-  'RollerDoor',
+  'RollerDoor'
 ] as const
+
+export const calcDuration = (input: Input): { ms: string; ss: string; ssms: string; mmss: string; mmssms: string } | null => {
+  if (input.duration > 1) {
+    const inPosition = input.markIn ? input.markIn : 0
+    const outPosition = input.markOut ? input.markOut : input.duration
+    const duration = outPosition - inPosition
+    const padding = (time: number): string => (time < 10 ? '0' + time : time + '')
+
+    const mm = (time: number): string => padding(Math.floor(time / 60000))
+    const ss = (time: number): string => padding(Math.floor(time / 1000) % 60)
+    const ms = (time: number): string => Math.floor((time / 100) % 10) + ''
+
+    return {
+      ms: duration.toString(),
+      ss: `${padding(Math.floor(duration / 1000))}`,
+      ssms: `${padding(Math.floor(duration / 1000))}.${ms(duration)}`,
+      mmss: `${mm(duration)}:${ss(duration)}`,
+      mmssms: `${mm(duration)}:${ss(duration)}.${ms(duration)}`
+    }
+  }
+
+  return null
+}
+
+export const calcRemaining = (input: Input): { ms: string; ss: string; ssms: string; mmss: string; mmssms: string } | null => {
+  if (input.position !== undefined) {
+    const inPosition = input.position
+    const outPosition = input.markOut ? input.markOut : input.duration
+    const duration = outPosition - inPosition
+    const padding = (time: number): string => (time < 10 ? '0' + time : time + '')
+
+    const mm = (time: number): string => padding(Math.floor(time / 60000))
+    const ss = (time: number): string => padding(Math.floor(time / 1000) % 60)
+    const ms = (time: number): string => Math.floor((time / 100) % 10) + ''
+
+    return {
+      ms: duration.toString(),
+      ss: `${padding(Math.floor(duration / 1000))}`,
+      ssms: `${padding(Math.floor(duration / 1000))}.${ms(duration)}`,
+      mmss: `${mm(duration)}:${ss(duration)}`,
+      mmssms: `${mm(duration)}:${ss(duration)}.${ms(duration)}`
+    }
+  }
+  return null
+}
 
 /**
  * @param red 0-255
@@ -82,7 +127,7 @@ export const options: Options = {
     id: 'input',
     default: '1',
     tooltip: 'Number, Name, or GUID',
-    useVariables: true,
+    useVariables: true
   },
 
   mixSelect: {
@@ -108,8 +153,8 @@ export const options: Options = {
       { id: 14, label: '15' },
       { id: 15, label: '16' },
       { id: -1, label: 'Selected' },
-      { id: -2, label: 'Variable' },
-    ],
+      { id: -2, label: 'Variable' }
+    ]
   },
 
   mixVariable: {
@@ -119,7 +164,7 @@ export const options: Options = {
     default: '1',
     tooltip: '',
     isVisible: (options) => options.mix === -2,
-    useVariables: true,
+    useVariables: true
   },
 
   audioBus: {
@@ -127,7 +172,7 @@ export const options: Options = {
     label: 'Bus',
     id: 'value',
     default: 'A',
-    choices: [...AUDIOBUSSES, 'Selected'].map((id) => ({ id, label: id })),
+    choices: [...AUDIOBUSSES, 'Selected'].map((id) => ({ id, label: id }))
   },
 
   audioBusMaster: {
@@ -135,42 +180,42 @@ export const options: Options = {
     label: 'Bus',
     id: 'value',
     default: 'Master',
-    choices: ['Master', ...AUDIOBUSSES, 'Selected'].map((id) => ({ id, label: id })),
+    choices: ['Master', ...AUDIOBUSSES, 'Selected'].map((id) => ({ id, label: id }))
   },
 
   foregroundColor: {
     type: 'colorpicker',
     label: 'Foreground color',
     id: 'fg',
-    default: rgb(255, 255, 255),
+    default: rgb(255, 255, 255)
   },
 
   foregroundColorBlack: {
     type: 'colorpicker',
     label: 'Foreground color',
     id: 'fg',
-    default: rgb(0, 0, 0),
+    default: rgb(0, 0, 0)
   },
 
   backgroundColorPreview: {
     type: 'colorpicker',
     label: 'Background color',
     id: 'bg',
-    default: rgb(0, 255, 0),
+    default: rgb(0, 255, 0)
   },
 
   backgroundColorProgram: {
     type: 'colorpicker',
     label: 'Background color',
     id: 'bg',
-    default: rgb(255, 0, 0),
+    default: rgb(255, 0, 0)
   },
 
   backgroundColorYellow: {
     type: 'colorpicker',
     label: 'Background color',
     id: 'bg',
-    default: rgb(255, 255, 0),
+    default: rgb(255, 255, 0)
   },
 
   selectedIndex: {
@@ -178,7 +223,7 @@ export const options: Options = {
     label: 'Selected Index',
     id: 'selectedIndex',
     default: '1',
-    useVariables: true,
+    useVariables: true
   },
 
   comparison: {
@@ -191,8 +236,8 @@ export const options: Options = {
       { id: 'lt', label: '<' },
       { id: 'lte', label: '<=' },
       { id: 'gt', label: '>' },
-      { id: 'gte', label: '>=' },
-    ],
+      { id: 'gte', label: '>=' }
+    ]
   },
 
   layerTallyIndicator: {
@@ -207,8 +252,8 @@ export const options: Options = {
       { id: 'cornerTR', label: 'Corner Top Right' },
       { id: 'cornerBL', label: 'Corner Bottom Left' },
       { id: 'cornerBR', label: 'Corner Bottom Right' },
-      { id: 'full', label: 'Full Background' },
-    ],
+      { id: 'full', label: 'Full Background' }
+    ]
   },
 
   replayChannel: {
@@ -219,8 +264,8 @@ export const options: Options = {
     choices: [
       { id: 'Current', label: 'Current' },
       { id: 'A', label: 'A' },
-      { id: 'B', label: 'B' },
-    ],
+      { id: 'B', label: 'B' }
+    ]
   },
 
   adjustment: {
@@ -231,9 +276,9 @@ export const options: Options = {
     choices: [
       { id: 'Set', label: 'Set' },
       { id: 'Increase', label: 'Increase' },
-      { id: 'Decrease', label: 'Decrease' },
-    ],
-  },
+      { id: 'Decrease', label: 'Decrease' }
+    ]
+  }
 }
 
 /**
@@ -278,9 +323,7 @@ export const formatTime = (time: number, interval: 'ms' | 's', format: TimeForma
   if (format === 'auto') {
     return `${hh !== '00' ? hh + ':' : ''}${mm !== '00' || hh !== '00' ? mm + ':' : ''}${ss}`
   } else {
-    return `${format.includes('hh') ? `${hh}:` : ''}${mm}:${ss}${format.includes('ms') ? `.${ms}` : ''}${
-      format.includes('sss') ? `.${sss}` : ''
-    }`
+    return `${format.includes('hh') ? `${hh}:` : ''}${mm}:${ss}${format.includes('ms') ? `.${ms}` : ''}${format.includes('sss') ? `.${sss}` : ''}`
   }
 }
 
