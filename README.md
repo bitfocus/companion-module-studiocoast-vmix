@@ -34,6 +34,9 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 
 
 # Recent Patches
+**v3.9.0**
+- Added Mix support for `Transition - Auto/Stinger Transition` action when using a Stinger transition
+
 **v3.8.0**
 - Updated module to Node.JS 22.8.0 and rebuilt dependencies
 - Refactored module structure

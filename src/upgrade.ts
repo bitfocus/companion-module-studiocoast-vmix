@@ -20,7 +20,6 @@ const stringToInt = (option: unknown, defaultValue: number, min: number, max: nu
   return newValue
 }
 
-/* eslint-disable */
 const upgradeV1_2_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
   let config: any = props.config
   let actions: any = props.actions
@@ -158,7 +157,6 @@ const upgradeV1_2_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   return changes
 }
 
-/* eslint-disable */
 const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
   let config: any = props.config
   let actions: any = props.actions
@@ -412,7 +410,6 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   return changes
 }
 
-/* eslint-disable */
 const upgradeV2_0_6: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
   let actions: any = props.actions
   let feedbacks: any = props.feedbacks
@@ -442,7 +439,6 @@ const upgradeV2_0_6: CompanionStaticUpgradeScript<Config> = (_context, props): C
   return changes
 }
 
-/* eslint-disable */
 const upgradeV3_5_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
   let actions: any = props.actions
   let config: any = props.config
@@ -698,6 +694,26 @@ const upgradeV3_8_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   return changes
 }
 
+const upgradeV3_9_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
+  const actions: any = props.actions
+  const changes: CompanionStaticUpgradeResult<Config> = {
+    updatedConfig: null,
+    updatedActions: [],
+    updatedFeedbacks: []
+  }
+
+  actions.forEach((action: any) => {
+    if (action.actionId === 'transition') {
+      action.options.mix = 0
+			action.options.mixVariable = ''
+
+      changes.updatedActions.push(action)
+    }
+  })
+
+  return changes
+}
+
 export const getUpgrades = (): CompanionStaticUpgradeScript<Config>[] => {
   return [
     upgradeV1_2_0,
@@ -708,6 +724,7 @@ export const getUpgrades = (): CompanionStaticUpgradeScript<Config>[] => {
     upgradeV3_6_0,
     upgradeV3_6_2,
     upgradeV3_7_0,
-    upgradeV3_8_0
+    upgradeV3_8_0,
+		upgradeV3_9_0
   ]
 }

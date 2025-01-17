@@ -24,7 +24,7 @@ export const getTransitionPresets = (): VMixPresetArray => {
       },
       steps: [
         {
-          down: [{ actionId: 'transition', options: { functionID: `Transition${i}` as 'Transition1' } }],
+          down: [{ actionId: 'transition', options: { functionID: `Transition${i}` as 'Transition1', mix: 0, mixVariable: '' } }],
           up: []
         }
       ],
@@ -45,7 +45,7 @@ export const getTransitionPresets = (): VMixPresetArray => {
       },
       steps: [
         {
-          down: [{ actionId: 'transition', options: { functionID: `Stinger${i}` as 'Stinger1' } }],
+          down: [{ actionId: 'transition', options: { functionID: `Stinger${i}` as 'Stinger1', mix: 0, mixVariable: ''  } }],
           up: []
         }
       ],

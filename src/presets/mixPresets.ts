@@ -162,7 +162,7 @@ export const getMixPresets = (): VMixPresetArray => {
         },
         steps: [
           {
-            down: [{ actionId: 'transition', options: { functionID: 'Transition1' } }],
+            down: [{ actionId: 'transition', options: { functionID: 'Transition1', mix: 0, mixVariable: '' } }],
             up: []
           }
         ],
