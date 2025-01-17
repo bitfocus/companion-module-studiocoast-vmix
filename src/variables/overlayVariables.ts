@@ -1,7 +1,7 @@
 import { CompanionVariableDefinition } from '@companion-module/base'
 import VMixInstance from '..'
 import { Input } from '../data'
-import { InstanceVariableValue } from '../variables'
+import { InstanceVariableValue } from './variables'
 
 export const overlayDefinitions = (_instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []

@@ -1,14 +1,15 @@
-import VMixInstance from './'
+import VMixInstance from '..'
 import { CompanionVariableDefinition } from '@companion-module/base'
-import { audioDefinitions, audioValues } from './variables/audioVariables'
-import { dynamicDefinitions, dynamicValues } from './variables/dynamicVariables'
-import { generalDefinitions, generalValues } from './variables/generalVariables'
-import { inputDefinitions, inputValues } from './variables/inputVariables'
-import { layerDefinitions, layerValues } from './variables/layerVariables'
-import { mixDefinitions, mixValues } from './variables/mixVariables'
-import { outputDefinitions, outputValues } from './variables/outputVariables'
-import { overlayDefinitions, overlayValues } from './variables/overlayVariables'
-import { replayDefinitions, replayValues } from './variables/replayVariables'
+import { audioDefinitions, audioValues } from './audioVariables'
+import { dynamicDefinitions, dynamicValues } from './dynamicVariables'
+import { generalDefinitions, generalValues } from './generalVariables'
+import { inputDefinitions, inputValues } from './inputVariables'
+import { layerDefinitions, layerValues } from './layerVariables'
+import { mixDefinitions, mixValues } from './mixVariables'
+import { outputDefinitions, outputValues } from './outputVariables'
+import { overlayDefinitions, overlayValues } from './overlayVariables'
+import { replayDefinitions, replayValues } from './replayVariables'
+import { transitionDefinitions, transitionValues } from './transitionVariables'
 
 export interface InstanceVariableValue {
   [key: string]: string | number | undefined
@@ -84,7 +85,8 @@ export class Variables {
       ...mixDefinitions(this.instance),
       ...outputDefinitions(this.instance),
       ...overlayDefinitions(this.instance),
-      ...replayDefinitions(this.instance)
+      ...replayDefinitions(this.instance),
+			...transitionDefinitions(this.instance)
     ])
 
     this.currentDefinitions = variables
@@ -133,10 +135,11 @@ export class Variables {
       mixValues(this.instance),
       outputValues(this.instance),
       overlayValues(this.instance),
-      replayValues(this.instance)
+      replayValues(this.instance),
+			transitionValues(this.instance)
     ])
 
-    variablesPromise.forEach((variables) => {
+    variablesPromise.forEach((variables: InstanceVariableValue) => {
       newVariables = { ...newVariables, ...variables }
     })
 

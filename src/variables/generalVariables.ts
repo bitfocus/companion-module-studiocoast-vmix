@@ -1,7 +1,7 @@
 import { CompanionVariableDefinition } from '@companion-module/base'
 import VMixInstance from '..'
 import { formatTime } from '../utils'
-import { InstanceVariableValue } from '../variables'
+import { InstanceVariableValue } from './variables'
 
 export const generalDefinitions = (instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []

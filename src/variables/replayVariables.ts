@@ -1,6 +1,6 @@
 import { CompanionVariableDefinition } from '@companion-module/base'
 import VMixInstance from '../'
-import { InstanceVariableValue } from '../variables'
+import { InstanceVariableValue } from './variables'
 
 export const replayDefinitions = (_instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []
