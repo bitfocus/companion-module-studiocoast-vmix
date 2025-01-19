@@ -18,6 +18,8 @@ type TransitionMixOptions = {
 
 type TransitionOptions = {
   functionID: 'Transition1' | 'Transition2' | 'Transition3' | 'Transition4' | 'Stinger1' | 'Stinger2' | 'Stinger3' | 'Stinger4'
+  mix: MixOptionEntry
+  mixVariable: string
 }
 
 type SetTransitionEffectOptions = {
@@ -143,7 +145,7 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
     },
 
     transition: {
-      name: 'Transition - Auto Transition',
+      name: 'Transition - Auto/Stinger Transition',
       description: 'Transition Preview to Program using a pre-defined Transition',
       options: [
         {
@@ -161,9 +163,54 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
             { id: 'Stinger3', label: 'Stinger 3' },
             { id: 'Stinger4', label: 'Stinger 4' }
           ]
-        }
+        },
+        {
+          type: 'dropdown',
+          label: 'Mix',
+          id: 'mix',
+          default: 0,
+          choices: [
+            { id: 0, label: '1' },
+            { id: 1, label: '2' },
+            { id: 2, label: '3' },
+            { id: 3, label: '4' },
+            { id: 4, label: '5' },
+            { id: 5, label: '6' },
+            { id: 6, label: '7' },
+            { id: 7, label: '8' },
+            { id: 8, label: '9' },
+            { id: 9, label: '10' },
+            { id: 10, label: '11' },
+            { id: 11, label: '12' },
+            { id: 12, label: '13' },
+            { id: 13, label: '14' },
+            { id: 14, label: '15' },
+            { id: 15, label: '16' },
+            { id: -1, label: 'Selected' },
+            { id: -2, label: 'Variable' }
+          ],
+          isVisible: (options) => {
+            const opt = options as TransitionOptions
+            return opt.functionID.startsWith('Stinger')
+          }
+        },
+        options.mixVariable
       ],
-      callback: sendBasicCommand
+      callback: (action) => {
+        const command: any = {
+          actionId: 'transition',
+          options: {
+            functionID: action.options.functionID
+          }
+        }
+
+        if (action.options.functionID.startsWith('Stinger')) {
+          command.options.mix = action.options.mix
+          command.options.mixVariable = action.options.mixVariable
+        }
+
+        sendBasicCommand(command)
+      }
     },
 
     setTransitionEffect: {

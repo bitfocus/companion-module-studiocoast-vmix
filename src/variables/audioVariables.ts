@@ -2,16 +2,13 @@ import { CompanionVariableDefinition } from '@companion-module/base'
 import VMixInstance from '../'
 import { AudioBus } from '../data'
 import { AUDIOBUSSESMASTER, volumeTodB, volumeToLinear } from '../utils'
-import { InstanceVariableValue } from '../variables'
+import { InstanceVariableValue } from './variables'
 
 export const audioDefinitions = (_instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []
   const busses = [...AUDIOBUSSESMASTER, 'Selected']
 
-  definitions.push(
-    { name: 'Selected Bus', variableId: 'bus_selected' },
-    { name: 'Bus Any Solo', variableId: 'bus_any_solo' }
-  )
+  definitions.push({ name: 'Selected Bus', variableId: 'bus_selected' }, { name: 'Bus Any Solo', variableId: 'bus_any_solo' })
 
   busses.forEach((bus) => {
     definitions.push(

@@ -1,5 +1,10 @@
 # Patch Notes
 
+**v3.9.0**
+- Added Mix support for `Transition - Auto/Stinger Transition` action when using a Stinger transition
+- Added `Transition - Transition Effect / Duration` Feedback to check what effect (and optionally duration) is set to Transitions 1 to 4
+- Added `transition_X_effect` and `transition_X_duration` variables (X = 1 to 4)
+
 **v3.8.0**
 - Updated module to Node.JS 22.8.0 and rebuilt dependencies
 - Refactored module structure

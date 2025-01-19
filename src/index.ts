@@ -18,7 +18,7 @@ import { getPresets } from './presets/presets'
 import { TCP } from './tcp'
 import { Timer } from './timers'
 import { getUpgrades } from './upgrade'
-import { Variables } from './variables'
+import { Variables } from './variables/variables'
 
 interface APIProcessing {
   hold: boolean

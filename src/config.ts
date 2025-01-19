@@ -146,7 +146,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       type: 'checkbox',
       id: 'variablesShowInputLayerPosition',
       width: 4,
-      label: 'Input Layer Postion Variables',
+      label: 'Input Layer Position Variables',
       default: false
     },
     {

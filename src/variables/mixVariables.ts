@@ -2,7 +2,7 @@ import { CompanionVariableDefinition } from '@companion-module/base'
 import VMixInstance from '../'
 import { Mix } from '../data'
 import { calcDuration, calcRemaining, volumeTodB } from '../utils'
-import { InstanceVariableValue } from '../variables'
+import { InstanceVariableValue } from './variables'
 
 export const mixDefinitions = (instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []

@@ -14,6 +14,7 @@ import { ListFeedbacks, ListCallbacks, vMixListFeedbacks } from './listFeedbacks
 import { MediaFeedbacks, MediaCallbacks, vMixMediaFeedbacks } from './mediaFeedbacks'
 import { ReplayFeedbacks, ReplayCallbacks, vMixReplayFeedbacks } from './replayFeedbacks'
 import { TallyFeedbacks, TallyCallbacks, vMixTallyFeedbacks } from './tallyFeedbacks'
+import { TransitionFeedbacks, TransitionCallbacks, vMixTransitionFeedbacks } from './transitionFeedbacks'
 import { UtilFeedbacks, UtilCallbacks, vMixUtilFeedbacks } from './utilFeedbacks'
 import { VideoCallFeedbacks, VideoCallCallbacks, vMixVideoCallFeedbacks } from './videoCallFeedbacks'
 
@@ -27,6 +28,7 @@ export type VMixFeedbacks =
   | MediaFeedbacks
   | ReplayFeedbacks
   | TallyFeedbacks
+  | TransitionFeedbacks
   | UtilFeedbacks
   | VideoCallFeedbacks
 
@@ -38,6 +40,7 @@ export type FeedbackCallbacks =
   | MediaCallbacks
   | ReplayCallbacks
   | TallyCallbacks
+  | TransitionCallbacks
   | UtilCallbacks
   | VideoCallCallbacks
 
@@ -87,6 +90,7 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
     ...vMixMediaFeedbacks(instance),
     ...vMixReplayFeedbacks(instance),
     ...vMixTallyFeedbacks(instance),
+    ...vMixTransitionFeedbacks(instance),
     ...vMixUtilFeedbacks(instance),
     ...vMixVideoCallFeedbacks(instance)
   }

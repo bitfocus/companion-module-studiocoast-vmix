@@ -1,7 +1,7 @@
 import { CompanionVariableDefinition } from '@companion-module/base'
 import VMixInstance from '..'
 import { calcDuration, calcRemaining, volumeTodB, volumeToLinear } from '../utils'
-import { InstanceVariableValue } from '../variables'
+import { InstanceVariableValue } from './variables'
 
 export const inputDefinitions = (instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []
@@ -167,7 +167,7 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
   const variables: InstanceVariableValue = {}
 
   const inputNames: string[] = []
-  
+
   variables.input_any_solo = instance.data.inputs.some((input) => input.solo).toString()
 
   for (const input of instance.data.inputs) {
