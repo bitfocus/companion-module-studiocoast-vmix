@@ -197,7 +197,7 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
         options.mixVariable
       ],
       callback: (action) => {
-        let command: any = {
+        const command: any = {
           actionId: 'transition',
           options: {
             functionID: action.options.functionID

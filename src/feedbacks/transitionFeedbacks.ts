@@ -56,12 +56,10 @@ export const vMixTransitionFeedbacks = (instance: VMixInstance): TransitionFeedb
         const duration = (await instance.parseOption(feedback.options.duration, context))[instance.buttonShift.state]
         const transition = instance.data.transitions.find((transition) => transition.number.toString() === number)
 
-				console.log(number,effect,duration,transition)
-
         if (!transition) return false
-				if (transition.effect !== effect) return false
-				if (duration !== '') return transition.duration.toString() === duration
-				return true
+        if (transition.effect !== effect) return false
+        if (duration !== '') return transition.duration.toString() === duration
+        return true
       }
     }
   }

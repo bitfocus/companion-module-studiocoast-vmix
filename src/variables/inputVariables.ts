@@ -167,7 +167,7 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
   const variables: InstanceVariableValue = {}
 
   const inputNames: string[] = []
-  
+
   variables.input_any_solo = instance.data.inputs.some((input) => input.solo).toString()
 
   for (const input of instance.data.inputs) {

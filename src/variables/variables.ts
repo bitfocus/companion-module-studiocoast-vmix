@@ -86,7 +86,7 @@ export class Variables {
       ...outputDefinitions(this.instance),
       ...overlayDefinitions(this.instance),
       ...replayDefinitions(this.instance),
-			...transitionDefinitions(this.instance)
+      ...transitionDefinitions(this.instance)
     ])
 
     this.currentDefinitions = variables
@@ -136,7 +136,7 @@ export class Variables {
       outputValues(this.instance),
       overlayValues(this.instance),
       replayValues(this.instance),
-			transitionValues(this.instance)
+      transitionValues(this.instance)
     ])
 
     variablesPromise.forEach((variables: InstanceVariableValue) => {

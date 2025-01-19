@@ -543,7 +543,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: (acti
 
     setVolumeChannelMixer: {
       name: 'Audio - Set Input Channel Volume',
-      description: 'Set Volume of an Input\'s sub channel',
+      description: "Set Volume of an Input's sub channel",
       options: [
         options.input,
         {

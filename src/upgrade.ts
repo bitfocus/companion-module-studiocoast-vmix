@@ -21,9 +21,9 @@ const stringToInt = (option: unknown, defaultValue: number, min: number, max: nu
 }
 
 const upgradeV1_2_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
-  let config: any = props.config
-  let actions: any = props.actions
-  let feedbacks: any = props.feedbacks
+  const config: any = props.config
+  const actions: any = props.actions
+  const feedbacks: any = props.feedbacks
 
   if (config.port) {
     config.tcpPort = config.port
@@ -41,7 +41,7 @@ const upgradeV1_2_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   }
 
   // Actions
-  actions = actions.map((action: any) => {
+  actions.forEach((action: any) => {
     if (action.actionId === 'prwSel') {
       action.actionId = 'PreviewInput'
       action.options.input = action.options.prwId
@@ -140,7 +140,7 @@ const upgradeV1_2_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   })
 
   // Feedbacks
-  feedbacks = feedbacks.map((feedback: any) => {
+  feedbacks.forEach((feedback: any) => {
     if (feedback.feedbackId === 'input_preview') {
       feedback.feedbackId = 'inputPreview'
       feedback.options.mix = 1
@@ -158,9 +158,9 @@ const upgradeV1_2_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
 }
 
 const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
-  let config: any = props.config
-  let actions: any = props.actions
-  let feedbacks: any = props.feedbacks
+  const config: any = props.config
+  const actions: any = props.actions
+  const feedbacks: any = props.feedbacks
 
   // actions, feedbacks, and config used to ensure default values for options
   const vMixActions: any = getActions({} as any)
@@ -168,8 +168,7 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
 
   // Config
   vMixConfig.forEach((configOption: any) => {
-    if (config[configOption.id] === undefined && configOption.default)
-      config[configOption.id] = configOption.default
+    if (config[configOption.id] === undefined && configOption.default) config[configOption.id] = configOption.default
   })
 
   if (config.errorInfo !== undefined) {
@@ -184,7 +183,7 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   }
 
   // Actions
-  actions.map((action: any) => {
+  actions.forEach((action: any) => {
     // Renaming legacy action names
     const toLowerCamelCase: string[] = [
       'PreviewInput',
@@ -351,68 +350,61 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   })
 
   // Feedbacks
-  feedbacks = feedbacks
-    .map((feedback: any) => {
-      let feedbackChange = true
-      if (feedback.feedbackId === 'inputPreview' || feedback.feedbackId === 'inputLive') {
-        if (feedback.options.tally === 'corner') feedback.options.tally = 'cornerTL'
-        if (feedback.options.tally === 'cornerR') feedback.options.tally = 'cornerTR'
-      } else if (feedback.feedbackId === 'overlayStatusPGM') {
-        feedback.feedbackId = 'overlayStatus'
-        feedback.options.input = ''
+  feedbacks.forEach((feedback: any) => {
+    let feedbackChange = true
+    if (feedback.feedbackId === 'inputPreview' || feedback.feedbackId === 'inputLive') {
+      if (feedback.options.tally === 'corner') feedback.options.tally = 'cornerTL'
+      if (feedback.options.tally === 'cornerR') feedback.options.tally = 'cornerTR'
+    } else if (feedback.feedbackId === 'overlayStatusPGM') {
+      feedback.feedbackId = 'overlayStatus'
+      feedback.options.input = ''
 
-        delete feedback.options.value
-      } else if (feedback.feedbackId === 'inputAudio') {
-        feedback.options.bgLive = feedback.options.bg
-        feedback.options.bgMuted = combineRgb(255, 0, 0)
+      delete feedback.options.value
+    } else if (feedback.feedbackId === 'inputAudio') {
+      feedback.options.bgLive = feedback.options.bg
+      feedback.options.bgMuted = combineRgb(255, 0, 0)
 
-        delete feedback.options.bg
-      } else if (feedback.feedbackId === 'inputMute') {
-        feedback.feedbackId = 'inputAudio'
-        feedback.options.bgLive = combineRgb(0, 255, 0)
-        feedback.options.bgMuted = feedback.options.bg
+      delete feedback.options.bg
+    } else if (feedback.feedbackId === 'inputMute') {
+      feedback.feedbackId = 'inputAudio'
+      feedback.options.bgLive = combineRgb(0, 255, 0)
+      feedback.options.bgMuted = feedback.options.bg
 
-        delete feedback.options.bg
-      } else if (feedback.feedbackId === 'liveInputVolume' || feedback.feedbackId === 'liveBusVolume') {
-        feedback.options.dBShow = feedback.options.value
-        feedback.options.colorTxt = feedback.options.colortxt
-        feedback.options.colorBG = feedback.options.colorbg
-        feedback.options.colorBase = feedback.options.colorbase
+      delete feedback.options.bg
+    } else if (feedback.feedbackId === 'liveInputVolume' || feedback.feedbackId === 'liveBusVolume') {
+      feedback.options.dBShow = feedback.options.value
+      feedback.options.colorTxt = feedback.options.colortxt
+      feedback.options.colorBG = feedback.options.colorbg
+      feedback.options.colorBase = feedback.options.colorbase
 
-        delete feedback.options.value
-        delete feedback.options.colortxt
-        delete feedback.options.colorbg
-        delete feedback.options.colorbase
-      } else if (feedback.feedbackId === 'inputVolumeLevel' || feedback.feedbackId === 'busVolumeLevel') {
-        feedback.options.value = parseFloat(feedback.options.value as string)
-        if (isNaN(feedback.options.value)) feedback.options.value = 100
-      } else if (feedback.feedbackId === 'inputOnMultiview') {
-        feedback.options.inputX = feedback.options.input
-        feedback.options.inputY = feedback.options.inputMV
+      delete feedback.options.value
+      delete feedback.options.colortxt
+      delete feedback.options.colorbg
+      delete feedback.options.colorbase
+    } else if (feedback.feedbackId === 'inputVolumeLevel' || feedback.feedbackId === 'busVolumeLevel') {
+      feedback.options.value = parseFloat(feedback.options.value as string)
+      if (isNaN(feedback.options.value)) feedback.options.value = 100
+    } else if (feedback.feedbackId === 'inputOnMultiview') {
+      feedback.options.inputX = feedback.options.input
+      feedback.options.inputY = feedback.options.inputMV
 
-        delete feedback.options.input
-        delete feedback.options.inputMV
-        delete feedback.options.tally
-      } else {
-        feedbackChange = false
-      }
+      delete feedback.options.input
+      delete feedback.options.inputMV
+      delete feedback.options.tally
+    } else {
+      feedbackChange = false
+    }
 
-      if (feedbackChange) changes.updatedFeedbacks.push(feedback)
-      return feedback
-    })
-    .filter((feedback: any) => {
-      // Feedback that should have just been instance variables have been deprecated
-      const deprecated: string[] = ['titleLayer', 'inputSelectedIndexName', 'multiviewLayer']
-
-      return !deprecated.includes(feedback.feedbackId)
-    })
+    if (feedbackChange) changes.updatedFeedbacks.push(feedback)
+    return feedback
+  })
 
   return changes
 }
 
 const upgradeV2_0_6: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
-  let actions: any = props.actions
-  let feedbacks: any = props.feedbacks
+  const actions: any = props.actions
+  const feedbacks: any = props.feedbacks
 
   const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: null,
@@ -440,8 +432,8 @@ const upgradeV2_0_6: CompanionStaticUpgradeScript<Config> = (_context, props): C
 }
 
 const upgradeV3_5_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
-  let actions: any = props.actions
-  let config: any = props.config
+  const actions: any = props.actions
+  const config: any = props.config
 
   const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: null,
@@ -465,7 +457,7 @@ const upgradeV3_5_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
 }
 
 const adjustmentFix: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
-  let actions: any = props.actions
+  const actions: any = props.actions
 
   const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: null,
@@ -485,8 +477,8 @@ const adjustmentFix: CompanionStaticUpgradeScript<Config> = (_context, props): C
 }
 
 const upgradeV3_6_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
-  let actions: any = props.actions
-  let feedbacks: any = props.feedbacks
+  const actions: any = props.actions
+  const feedbacks: any = props.feedbacks
 
   const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: null,
@@ -535,31 +527,33 @@ const upgradeV3_6_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
       changes.updatedFeedbacks.push(feedback)
     }
 
-    if ([
-      'status',
-      'busMute',
-      'busSolo',
-      'inputAudio',
-      'inputAudioAuto',
-      'inputSolo',
-      'inputBusRouting',
-      'busVolumeLevel',
-      'inputVolumeLevel',
-      'inputLoop',
-      'replayStatus',
-      'replayEvents',
-      'replayCamera',
-      'replaySelectedChannel',
-      'videoCallAudioSource',
-      'videoCallVideoSource',
-      'selectedDestinationInput',
-      'selectedDestinationLayer',
-      'routableMultiviewLayer',
-      'inputOnMultiview',
-      'mixSelect',
-      'busSelect',
-      'buttonShift'
-    ].includes(feedback.feedbackId)) {
+    if (
+      [
+        'status',
+        'busMute',
+        'busSolo',
+        'inputAudio',
+        'inputAudioAuto',
+        'inputSolo',
+        'inputBusRouting',
+        'busVolumeLevel',
+        'inputVolumeLevel',
+        'inputLoop',
+        'replayStatus',
+        'replayEvents',
+        'replayCamera',
+        'replaySelectedChannel',
+        'videoCallAudioSource',
+        'videoCallVideoSource',
+        'selectedDestinationInput',
+        'selectedDestinationLayer',
+        'routableMultiviewLayer',
+        'inputOnMultiview',
+        'mixSelect',
+        'busSelect',
+        'buttonShift'
+      ].includes(feedback.feedbackId)
+    ) {
       if (!feedback.style) feedback.style = {}
 
       feedback.style.bgcolor = feedback.options.bg
@@ -600,7 +594,7 @@ const upgradeV3_6_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
 }
 
 const upgradeV3_6_2: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
-  let actions: any = props.actions
+  const actions: any = props.actions
 
   const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: null,
@@ -619,8 +613,8 @@ const upgradeV3_6_2: CompanionStaticUpgradeScript<Config> = (_context, props): C
 }
 
 const upgradeV3_7_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
-  let actions: any = props.actions
-  let feedbacks: any = props.feedbacks
+  const actions: any = props.actions
+  const feedbacks: any = props.feedbacks
 
   const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: null,
@@ -705,7 +699,7 @@ const upgradeV3_9_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   actions.forEach((action: any) => {
     if (action.actionId === 'transition') {
       action.options.mix = 0
-			action.options.mixVariable = ''
+      action.options.mixVariable = ''
 
       changes.updatedActions.push(action)
     }
@@ -715,16 +709,5 @@ const upgradeV3_9_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
 }
 
 export const getUpgrades = (): CompanionStaticUpgradeScript<Config>[] => {
-  return [
-    upgradeV1_2_0,
-    upgradeV2_0_0,
-    upgradeV2_0_6,
-    upgradeV3_5_0,
-    adjustmentFix,
-    upgradeV3_6_0,
-    upgradeV3_6_2,
-    upgradeV3_7_0,
-    upgradeV3_8_0,
-		upgradeV3_9_0
-  ]
+  return [upgradeV1_2_0, upgradeV2_0_0, upgradeV2_0_6, upgradeV3_5_0, adjustmentFix, upgradeV3_6_0, upgradeV3_6_2, upgradeV3_7_0, upgradeV3_8_0, upgradeV3_9_0]
 }

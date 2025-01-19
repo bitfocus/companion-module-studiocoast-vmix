@@ -8,10 +8,7 @@ export const audioDefinitions = (_instance: VMixInstance): CompanionVariableDefi
   const definitions: CompanionVariableDefinition[] = []
   const busses = [...AUDIOBUSSESMASTER, 'Selected']
 
-  definitions.push(
-    { name: 'Selected Bus', variableId: 'bus_selected' },
-    { name: 'Bus Any Solo', variableId: 'bus_any_solo' }
-  )
+  definitions.push({ name: 'Selected Bus', variableId: 'bus_selected' }, { name: 'Bus Any Solo', variableId: 'bus_any_solo' })
 
   busses.forEach((bus) => {
     definitions.push(
