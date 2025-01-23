@@ -34,6 +34,9 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 
 
 # Recent Patches
+**v3.9.1**
+- Fixed missing `General - Output Status` and  `General - Output NDI/SRT Status` feedbacks
+
 **v3.9.0**
 - Added Mix support for `Transition - Auto/Stinger Transition` action when using a Stinger transition
 - Added `Transition - Transition Effect / Duration` Feedback to check what effect (and optionally duration) is set to Transitions 1 to 4
@@ -57,8 +60,8 @@ This module now supports Companions HTTP API, providing endpoints that can be us
   - `Title - Adjust title text visibility`
   - `VideoCall - Connect / Reconnect`, `Zoom - Join Meeting`
 - Added Feedbacks:
-  - `vMix - Output Status`
-  - `vMix - Output NDI/SRT Status`
+  - `General - Output Status`
+  - `General - Output NDI/SRT Status`
 - Added Variables:
   - `fullscreen_X_source` (X = 1 or 2)
   - `output_X_source`, `output_X_ndi`, `output_X_srt` (X = 1 to 4)
