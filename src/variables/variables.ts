@@ -139,9 +139,7 @@ export class Variables {
       transitionValues(this.instance)
     ])
 
-    variablesPromise.forEach((variables: InstanceVariableValue) => {
-      newVariables = { ...newVariables, ...variables }
-    })
+    newVariables = Object.assign({}, ...variablesPromise)
 
     this.set(newVariables)
     this.updateDefinitions()
