@@ -34,7 +34,7 @@ export const getOutputPresets = (): VMixPresetArray => {
             down: [
               {
                 actionId: 'outputSet',
-                options: { functionID: output.functionID as any, value: 'Output', input: '' }
+                options: { functionID: output.functionID as any, value: 'Output', input: '', mix: 0, mixVariable: '' }
               }
             ],
             up: []
@@ -57,7 +57,7 @@ export const getOutputPresets = (): VMixPresetArray => {
             down: [
               {
                 actionId: 'outputSet',
-                options: { functionID: output.functionID as any, value: 'Preview', input: '' }
+                options: { functionID: output.functionID as any, value: 'Preview', input: '', mix: 0, mixVariable: '' }
               }
             ],
             up: []
@@ -80,7 +80,7 @@ export const getOutputPresets = (): VMixPresetArray => {
             down: [
               {
                 actionId: 'outputSet',
-                options: { functionID: output.functionID as any, value: 'MultiView', input: '' }
+                options: { functionID: output.functionID as any, value: 'MultiView', input: '', mix: 0, mixVariable: '' }
               }
             ],
             up: []
@@ -103,7 +103,7 @@ export const getOutputPresets = (): VMixPresetArray => {
             down: [
               {
                 actionId: 'outputSet',
-                options: { functionID: output.functionID as any, value: 'Replay', input: '' }
+                options: { functionID: output.functionID as any, value: 'Replay', input: '', mix: 0, mixVariable: '' }
               }
             ],
             up: []
@@ -123,7 +123,7 @@ export const getOutputPresets = (): VMixPresetArray => {
         },
         steps: [
           {
-            down: [{ actionId: 'outputSet', options: { functionID: output.functionID as any, value: 'Input', input: '' } }],
+            down: [{ actionId: 'outputSet', options: { functionID: output.functionID as any, value: 'Input', input: '', mix: 0, mixVariable: '' } }],
             up: []
           }
         ],

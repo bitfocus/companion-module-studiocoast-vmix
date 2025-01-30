@@ -1,10 +1,13 @@
 import { VMixAction, ActionCallback } from './actions'
 import VMixInstance from '../index'
+import { MixOptionEntry, options } from '../utils'
 
 type OutputSetOptions = {
   functionID: 'SetOutput2' | 'SetOutput3' | 'SetOutput4' | 'SetOutputExternal2' | 'SetOutputFullscreen' | 'SetOutputFullscreen2'
-  value: 'Output' | 'Preview' | 'MultiView' | 'Replay' | 'Input'
+  value: 'Output' | 'Preview' | 'MultiView' | 'MultiView2' | 'Replay' | 'Mix' | 'Input'
   input: string
+  mix: MixOptionEntry
+  mixVariable: string
 }
 
 type ToggleFunctionsOptions = {
@@ -69,26 +72,42 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: (ac
             { id: 'Output', label: 'Output (Program)' },
             { id: 'Preview', label: 'Preview' },
             { id: 'MultiView', label: 'Multiview' },
+            { id: 'MultiView2', label: 'Multiview2' },
             { id: 'Replay', label: 'Replay' },
+            { id: 'Mix', label: 'Mix' },
             { id: 'Input', label: 'Input' }
           ]
         },
         {
-          type: 'textinput',
-          label: 'Input',
-          id: 'input',
-          default: '1',
-          tooltip: 'Number, Name, or GUID',
-          useVariables: true,
+          ...options.mixSelect,
+          isVisible: (options) => options.value === 'Mix'
+        },
+        options.mixVariable,
+        {
+          ...options.input,
           isVisible: (options) => options.value === 'Input'
         }
       ],
       callback: async (action) => {
-        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
-        let command = `FUNCTION ${action.options.functionID} Value=${action.options.value}`
+        let command = `FUNCTION ${action.options.functionID}`
 
-        if (action.options.value === 'Input') {
-          command += `&Input=${encodeURIComponent(input)}`
+        if (action.options.value === 'Mix') {
+          let mix: any = action.options.mix
+          if (mix === -2) {
+            mix = parseInt((await instance.parseOption(action.options.mixVariable))[instance.buttonShift.state], 10)
+
+            if (isNaN(mix)) return
+
+            mix = mix - 1
+          }
+          if (mix === -1) mix = instance.routingData.mix
+
+          command += ` Value=Mix&Mix=${mix}`
+        } else if (action.options.value === 'Input') {
+          const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+          command += ` Value=${action.options.value}&Input=${encodeURIComponent(input)}`
+        } else {
+          command += ` Value=${action.options.value}`
         }
 
         if (instance.tcp) instance.tcp.sendCommand(command)

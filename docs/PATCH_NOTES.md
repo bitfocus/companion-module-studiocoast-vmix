@@ -3,6 +3,9 @@
 **v3.9.1**
 - Fixed missing `General - Output Status` and  `General - Output NDI/SRT Status` feedbacks
 
+**v3.9.2**
+- Fixed missing MultiView2 and Mix options from `Output - Set Output Source` action
+
 **v3.9.0**
 - Added Mix support for `Transition - Auto/Stinger Transition` action when using a Stinger transition
 - Added `Transition - Transition Effect / Duration` Feedback to check what effect (and optionally duration) is set to Transitions 1 to 4
