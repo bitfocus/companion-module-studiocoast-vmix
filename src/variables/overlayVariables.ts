@@ -1,7 +1,6 @@
-import { CompanionVariableDefinition } from '@companion-module/base'
+import { CompanionVariableDefinition, CompanionVariableValue } from '@companion-module/base'
 import VMixInstance from '..'
 import { Input } from '../data'
-import { InstanceVariableValue } from './variables'
 
 export const overlayDefinitions = (_instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []
@@ -19,8 +18,8 @@ export const overlayDefinitions = (_instance: VMixInstance): CompanionVariableDe
   return definitions
 }
 
-export const overlayValues = async (instance: VMixInstance): Promise<InstanceVariableValue> => {
-  const variables: InstanceVariableValue = {}
+export const overlayValues = async (instance: VMixInstance): Promise<Map<string, CompanionVariableValue>> => {
+  const variables = new Map()
 
   const getOverlayInput = async (id: number): Promise<Input | null> => {
     const overlay = instance.data.overlays[id - 1]
@@ -32,15 +31,15 @@ export const overlayValues = async (instance: VMixInstance): Promise<InstanceVar
   for (const id of overlays) {
     if (instance.data.overlays[id] && instance.data.overlays[id].input !== null) {
       const overlay = await getOverlayInput(id + 1)
-      variables[`overlay_${id + 1}_input_name`] = overlay?.shortTitle || overlay?.title || ''
-      variables[`overlay_${id + 1}_input`] = overlay?.number || ''
-      variables[`overlay_${id + 1}_pgm`] = (!instance.data.overlays[id].preview).toString()
-      variables[`overlay_${id + 1}_prv`] = instance.data.overlays[id].preview.toString()
+      variables.set(`overlay_${id + 1}_input_name`, overlay?.shortTitle || overlay?.title || '')
+      variables.set(`overlay_${id + 1}_input`, overlay?.number || '')
+      variables.set(`overlay_${id + 1}_pgm`, (!instance.data.overlays[id].preview).toString())
+      variables.set(`overlay_${id + 1}_prv`, instance.data.overlays[id].preview.toString())
     } else {
-      variables[`overlay_${id + 1}_input_name`] = ''
-      variables[`overlay_${id + 1}_input`] = ''
-      variables[`overlay_${id + 1}_pgm`] = 'false'
-      variables[`overlay_${id + 1}_prv`] = 'false'
+      variables.set(`overlay_${id + 1}_input_name`, '')
+      variables.set(`overlay_${id + 1}_input`, '')
+      variables.set(`overlay_${id + 1}_pgm`, 'false')
+      variables.set(`overlay_${id + 1}_prv`, 'false')
     }
   }
 

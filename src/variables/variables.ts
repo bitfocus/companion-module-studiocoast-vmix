@@ -1,5 +1,5 @@
 import VMixInstance from '..'
-import { CompanionVariableDefinition } from '@companion-module/base'
+import { CompanionVariableDefinition, CompanionVariableValue } from '@companion-module/base'
 import { audioDefinitions, audioValues } from './audioVariables'
 import { dynamicDefinitions, dynamicValues } from './dynamicVariables'
 import { generalDefinitions, generalValues } from './generalVariables'
@@ -11,14 +11,10 @@ import { overlayDefinitions, overlayValues } from './overlayVariables'
 import { replayDefinitions, replayValues } from './replayVariables'
 import { transitionDefinitions, transitionValues } from './transitionVariables'
 
-export interface InstanceVariableValue {
-  [key: string]: string | number | undefined
-}
-
 export class Variables {
   private readonly instance: VMixInstance
   public currentDefinitions: Set<CompanionVariableDefinition> = new Set()
-  public currentVariables: InstanceVariableValue = {}
+  public currentVariables: Map<string, CompanionVariableValue | undefined> = new Map()
 
   constructor(instance: VMixInstance) {
     this.instance = instance
@@ -28,23 +24,21 @@ export class Variables {
    * @param variables Object of variable names and their values
    * @description Updates or removes variable for current instance
    */
-  public readonly set = (variables: InstanceVariableValue): void => {
-    const newVariables: { [variableId: string]: string | undefined } = {}
-    const changes: { [variableId: string]: string | undefined } = {}
+  public readonly set = (variables: Map<string, CompanionVariableValue>, subset: boolean = false): void => {
+    const changes = new Map()
 
-    for (const name in variables) {
-      if (this.currentVariables[name] !== variables[name]) changes[name] = variables[name]?.toString()
-      newVariables[name] = variables[name]?.toString()
+    variables.forEach((value: any, key: string) => {
+      if (this.currentVariables.get(key) !== value) changes.set(key, value)
+    })
+
+    if (!subset) {
+      this.currentVariables.forEach((_value: any, key: string) => {
+        if (!variables.has(key)) changes.set(key, undefined)
+      })
     }
 
-    for (const name in this.currentVariables) {
-      if (variables[name] === undefined) {
-        changes[name] = undefined
-      }
-    }
-
-    this.currentVariables = newVariables
-    this.instance.setVariableValues(changes)
+    this.currentVariables = variables
+    this.instance.setVariableValues(Object.fromEntries(changes))
     this.instance.checkFeedbacks('buttonText')
 
     if (this.instance.apiProcessing.hold) {
@@ -97,7 +91,7 @@ export class Variables {
    * @description Update variables for Timers
    */
   public readonly updateTimerVariables = (): void => {
-    const newVariables: InstanceVariableValue = {}
+    const newVariables: Map<string, CompanionVariableValue> = new Map()
 
     this.instance.timers.forEach((timer) => {
       const formats = ['hh:mm:ss', 'mm:ss', 'mm:ss.ms', 'mm:ss.sss']
@@ -112,7 +106,7 @@ export class Variables {
         const prefix = `timer_${timer.id}_${formats[index]}_`
 
         for (const key in data) {
-          newVariables[prefix + key] = data[key]
+          newVariables.set(prefix + key, data[key])
         }
       })
     })
@@ -124,9 +118,18 @@ export class Variables {
    * @description Update variables
    */
   public readonly updateVariables = async (): Promise<void> => {
-    let newVariables: InstanceVariableValue = {}
-
-    const variablesPromise = await Promise.all([
+    const [
+      audioVariables,
+      dynamicVariables,
+      generalVariables,
+      inputVariables,
+      layerVariables,
+      mixVariables,
+      outputVariables,
+      overlayVariables,
+      replayVariables,
+      transitionVariables
+    ] = await Promise.all([
       audioValues(this.instance),
       dynamicValues(this.instance),
       generalValues(this.instance),
@@ -139,9 +142,18 @@ export class Variables {
       transitionValues(this.instance)
     ])
 
-    variablesPromise.forEach((variables: InstanceVariableValue) => {
-      newVariables = { ...newVariables, ...variables }
-    })
+    const newVariables: Map<string, CompanionVariableValue> = new Map([
+      ...audioVariables,
+      ...dynamicVariables,
+      ...generalVariables,
+      ...inputVariables,
+      ...layerVariables,
+      ...mixVariables,
+      ...outputVariables,
+      ...overlayVariables,
+      ...replayVariables,
+      ...transitionVariables
+    ])
 
     this.set(newVariables)
     this.updateDefinitions()

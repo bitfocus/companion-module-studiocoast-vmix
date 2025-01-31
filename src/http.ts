@@ -204,10 +204,10 @@ export const httpHandler = async (instance: VMixInstance, request: CompanionHTTP
   }
 
   const getVariables = () => {
-    const data = instance.variables?.currentVariables || {}
+    const data = instance.variables?.currentVariables || new Map()
 
     response.status = 200
-    response.body = JSON.stringify(data, null, 2)
+    response.body = JSON.stringify(Object.fromEntries(data), null, 2)
   }
 
   const getVariableDefinitions = () => {

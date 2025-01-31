@@ -1,6 +1,5 @@
-import { CompanionVariableDefinition } from '@companion-module/base'
+import { CompanionVariableDefinition, CompanionVariableValue } from '@companion-module/base'
 import VMixInstance from '..'
-import { InstanceVariableValue } from './variables'
 
 export const transitionDefinitions = (instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []
@@ -15,14 +14,14 @@ export const transitionDefinitions = (instance: VMixInstance): CompanionVariable
   return definitions
 }
 
-export const transitionValues = async (instance: VMixInstance): Promise<InstanceVariableValue> => {
-  const variables: InstanceVariableValue = {}
+export const transitionValues = async (instance: VMixInstance): Promise<Map<string, CompanionVariableValue>> => {
+  const variables = new Map()
 
-  variables['connected_state'] = instance.connected.toString()
+  variables.set('connected_state', instance.connected.toString())
 
   instance.data.transitions.forEach((transition) => {
-    variables[`transition_${transition.number}_effect`] = transition.effect
-    variables[`transition_${transition.number}_duration`] = transition.duration.toString()
+    variables.set(`transition_${transition.number}_effect`, transition.effect)
+    variables.set(`transition_${transition.number}_duration`, transition.duration.toString())
   })
 
   return variables

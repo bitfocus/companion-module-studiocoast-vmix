@@ -1,7 +1,6 @@
-import { CompanionVariableDefinition } from '@companion-module/base'
+import { CompanionVariableDefinition, CompanionVariableValue } from '@companion-module/base'
 import VMixInstance from '..'
 import { calcDuration, calcRemaining, volumeTodB, volumeToLinear } from '../utils'
-import { InstanceVariableValue } from './variables'
 
 export const inputDefinitions = (instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []
@@ -163,12 +162,12 @@ export const inputDefinitions = (instance: VMixInstance): CompanionVariableDefin
   return filteredVariables
 }
 
-export const inputValues = async (instance: VMixInstance): Promise<InstanceVariableValue> => {
-  const variables: InstanceVariableValue = {}
+export const inputValues = async (instance: VMixInstance): Promise<Map<string, CompanionVariableValue>> => {
+  const variables = new Map()
 
   const inputNames: string[] = []
 
-  variables.input_any_solo = instance.data.inputs.some((input) => input.solo).toString()
+  variables.set('input_any_solo', instance.data.inputs.some((input) => input.solo).toString())
 
   for (const input of instance.data.inputs) {
     const inputName = input.shortTitle ? input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '') : input.title.replace(/[^a-z0-9-_.]+/gi, '')
@@ -194,10 +193,10 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
     }
 
     for (const type of inputTypes) {
-      variables[`input_${type}_name`] = input.shortTitle || input.title
-      variables[`input_${type}_number`] = input.number
-      variables[`input_${type}_guid`] = input.key
-      variables[`input_${type}_type`] = input.type
+      variables.set(`input_${type}_name`, input.shortTitle || input.title)
+      variables.set(`input_${type}_number`, input.number)
+      variables.set(`input_${type}_guid`, input.key)
+      variables.set(`input_${type}_type`, input.type)
 
       instance.data.mix
         .filter((mix) => mix.active)
@@ -205,36 +204,36 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
           const tallyPreview = instance.data.mix[mix.number - 1].previewTally.includes(input.key) || instance.data.mix[mix.number - 1].preview === input.number
           const tallyProgram = instance.data.mix[mix.number - 1].programTally.includes(input.key) || instance.data.mix[mix.number - 1].program === input.number
 
-          variables[`input_${type}_mix_${mix.number}_tally_preview`] = tallyPreview.toString()
-          variables[`input_${type}_mix_${mix.number}_tally_program`] = tallyProgram.toString()
+          variables.set(`input_${type}_mix_${mix.number}_tally_preview`, tallyPreview.toString())
+          variables.set(`input_${type}_mix_${mix.number}_tally_program`, tallyProgram.toString())
         })
 
       const inputAudio = input.muted === undefined ? false : input.muted
 
-      variables[`input_${type}_playing`] = (input.state === 'Running').toString()
-      variables[`input_${type}_loop`] = input.loop.toString()
-      variables[`input_${type}_mute`] = inputAudio.toString()
-      variables[`input_${type}_audio`] = (!inputAudio).toString()
-      variables[`input_${type}_solo`] = input.solo?.toString() || 'false'
+      variables.set(`input_${type}_playing`, (input.state === 'Running').toString())
+      variables.set(`input_${type}_loop`, input.loop.toString())
+      variables.set(`input_${type}_mute`, inputAudio.toString())
+      variables.set(`input_${type}_audio`, (!inputAudio).toString())
+      variables.set(`input_${type}_solo`, input.solo?.toString() || 'false')
 
       const meterF1 = input.meterF1 !== undefined ? volumeTodB(input.meterF1 * 100).toFixed(1) : ''
       const meterF2 = input.meterF2 !== undefined ? volumeTodB(input.meterF2 * 100).toFixed(1) : ''
 
-      variables[`input_${type}_meterf1`] = meterF1
-      variables[`input_${type}_meterf2`] = meterF2
+      variables.set(`input_${type}_meterf1`, meterF1)
+      variables.set(`input_${type}_meterf2`, meterF2)
 
       const audioLevel = instance.data.audioLevels.find((level) => level.key === input.key)
       if (audioLevel) {
         const audioLevelData = instance.data.getAudioLevelData(audioLevel)
 
-        variables[`input_${type}_meterf1_avg_1s`] = volumeTodB(audioLevelData.s1MeterF1Avg * 100).toFixed(1)
-        variables[`input_${type}_meterf2_avg_1s`] = volumeTodB(audioLevelData.s1MeterF2Avg * 100).toFixed(1)
-        variables[`input_${type}_meterf1_avg_3s`] = volumeTodB(audioLevelData.s3MeterF1Avg * 100).toFixed(1)
-        variables[`input_${type}_meterf2_avg_3s`] = volumeTodB(audioLevelData.s3MeterF2Avg * 100).toFixed(1)
-        variables[`input_${type}_meterf1_peak_1s`] = volumeTodB(audioLevelData.s1MeterF1Peak * 100).toFixed(1)
-        variables[`input_${type}_meterf2_peak_1s`] = volumeTodB(audioLevelData.s1MeterF2Peak * 100).toFixed(1)
-        variables[`input_${type}_meterf1_peak_3s`] = volumeTodB(audioLevelData.s3MeterF1Peak * 100).toFixed(1)
-        variables[`input_${type}_meterf2_peak_3s`] = volumeTodB(audioLevelData.s3MeterF2Peak * 100).toFixed(1)
+        variables.set(`input_${type}_meterf1_avg_1s`, volumeTodB(audioLevelData.s1MeterF1Avg * 100).toFixed(1))
+        variables.set(`input_${type}_meterf2_avg_1s`, volumeTodB(audioLevelData.s1MeterF2Avg * 100).toFixed(1))
+        variables.set(`input_${type}_meterf1_avg_3s`, volumeTodB(audioLevelData.s3MeterF1Avg * 100).toFixed(1))
+        variables.set(`input_${type}_meterf2_avg_3s`, volumeTodB(audioLevelData.s3MeterF2Avg * 100).toFixed(1))
+        variables.set(`input_${type}_meterf1_peak_1s`, volumeTodB(audioLevelData.s1MeterF1Peak * 100).toFixed(1))
+        variables.set(`input_${type}_meterf2_peak_1s`, volumeTodB(audioLevelData.s1MeterF2Peak * 100).toFixed(1))
+        variables.set(`input_${type}_meterf1_peak_3s`, volumeTodB(audioLevelData.s3MeterF1Peak * 100).toFixed(1))
+        variables.set(`input_${type}_meterf2_peak_3s`, volumeTodB(audioLevelData.s3MeterF2Peak * 100).toFixed(1))
       }
 
       if (input.duration > 1) {
@@ -247,53 +246,53 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
         const ss = (time: number): string => padding(Math.floor(time / 1000) % 60)
         const ms = (time: number): string => Math.floor((time / 100) % 10) + ''
 
-        variables[`input_${type}_duration`] = `${mm(duration)}:${ss(duration)}.${ms(duration)}`
+        variables.set(`input_${type}_duration`, `${mm(duration)}:${ss(duration)}.${ms(duration)}`)
       }
 
       const inputDuration = calcDuration(input)
 
       if (inputDuration !== null) {
-        variables[`input_${type}_duration`] = `${inputDuration.mmssms}`
+        variables.set(`input_${type}_duration`, `${inputDuration.mmssms}`)
       }
 
       const inputRemaining = calcRemaining(input)
 
       if (inputRemaining !== null) {
-        variables[`input_${type}_remaining`] = inputRemaining.ms
-        variables[`input_${type}_remaining_ss`] = inputRemaining.ss
-        variables[`input_${type}_remaining_ss.ms`] = inputRemaining.ssms
-        variables[`input_${type}_remaining_mm:ss`] = inputRemaining.mmss
-        variables[`input_${type}_remaining_mm:ss.ms`] = inputRemaining.mmssms
+        variables.set(`input_${type}_remaining`, inputRemaining.ms)
+        variables.set(`input_${type}_remaining_ss`, inputRemaining.ss)
+        variables.set(`input_${type}_remaining_ss.ms`, inputRemaining.ssms)
+        variables.set(`input_${type}_remaining_mm:ss`, inputRemaining.mmss)
+        variables.set(`input_${type}_remaining_mm:ss.ms`, inputRemaining.mmssms)
       }
 
       if (!(instance.config.strictInputVariableTypes && !instance.config.variablesShowInputPosition)) {
-        variables[`input_${type}_position_panx`] = input.inputPosition?.panX ?? ''
-        variables[`input_${type}_position_pany`] = input.inputPosition?.panY ?? ''
-        variables[`input_${type}_position_zoomx`] = input.inputPosition?.zoomX ?? ''
-        variables[`input_${type}_position_zoomy`] = input.inputPosition?.zoomY ?? ''
-        variables[`input_${type}_position_cropx1`] = input.inputPosition?.cropX1 ?? ''
-        variables[`input_${type}_position_cropx2`] = input.inputPosition?.cropX2 ?? ''
-        variables[`input_${type}_position_cropy1`] = input.inputPosition?.cropY1 ?? ''
-        variables[`input_${type}_position_cropy2`] = input.inputPosition?.cropY2 ?? ''
-        variables[`input_${type}_cc_hue`] = input.cc?.hue ?? ''
-        variables[`input_${type}_cc_saturation`] = input.cc?.saturation ?? ''
-        variables[`input_${type}_cc_liftr`] = input.cc?.liftR ?? ''
-        variables[`input_${type}_cc_liftg`] = input.cc?.liftG ?? ''
-        variables[`input_${type}_cc_liftb`] = input.cc?.liftB ?? ''
-        variables[`input_${type}_cc_lifty`] = input.cc?.liftY ?? ''
-        variables[`input_${type}_cc_gammar`] = input.cc?.gammaR ?? ''
-        variables[`input_${type}_cc_gammag`] = input.cc?.gammaG ?? ''
-        variables[`input_${type}_cc_gammab`] = input.cc?.gammaB ?? ''
-        variables[`input_${type}_cc_gammay`] = input.cc?.gammaY ?? ''
-        variables[`input_${type}_cc_gainr`] = input.cc?.gainR ?? ''
-        variables[`input_${type}_cc_gaing`] = input.cc?.gainG ?? ''
-        variables[`input_${type}_cc_gainb`] = input.cc?.gainB ?? ''
-        variables[`input_${type}_cc_gainy`] = input.cc?.gainY ?? ''
+        variables.set(`input_${type}_position_panx`, input.inputPosition?.panX ?? '')
+        variables.set(`input_${type}_position_pany`, input.inputPosition?.panY ?? '')
+        variables.set(`input_${type}_position_zoomx`, input.inputPosition?.zoomX ?? '')
+        variables.set(`input_${type}_position_zoomy`, input.inputPosition?.zoomY ?? '')
+        variables.set(`input_${type}_position_cropx1`, input.inputPosition?.cropX1 ?? '')
+        variables.set(`input_${type}_position_cropx2`, input.inputPosition?.cropX2 ?? '')
+        variables.set(`input_${type}_position_cropy1`, input.inputPosition?.cropY1 ?? '')
+        variables.set(`input_${type}_position_cropy2`, input.inputPosition?.cropY2 ?? '')
+        variables.set(`input_${type}_cc_hue`, input.cc?.hue ?? '')
+        variables.set(`input_${type}_cc_saturation`, input.cc?.saturation ?? '')
+        variables.set(`input_${type}_cc_liftr`, input.cc?.liftR ?? '')
+        variables.set(`input_${type}_cc_liftg`, input.cc?.liftG ?? '')
+        variables.set(`input_${type}_cc_liftb`, input.cc?.liftB ?? '')
+        variables.set(`input_${type}_cc_lifty`, input.cc?.liftY ?? '')
+        variables.set(`input_${type}_cc_gammar`, input.cc?.gammaR ?? '')
+        variables.set(`input_${type}_cc_gammag`, input.cc?.gammaG ?? '')
+        variables.set(`input_${type}_cc_gammab`, input.cc?.gammaB ?? '')
+        variables.set(`input_${type}_cc_gammay`, input.cc?.gammaY ?? '')
+        variables.set(`input_${type}_cc_gainr`, input.cc?.gainR ?? '')
+        variables.set(`input_${type}_cc_gaing`, input.cc?.gainG ?? '')
+        variables.set(`input_${type}_cc_gainb`, input.cc?.gainB ?? '')
+        variables.set(`input_${type}_cc_gainy`, input.cc?.gainY ?? '')
       }
 
       for (let i = 0; i < 10; i++) {
-        variables[`input_${type}_layer_${i + 1}_name`] = ''
-        variables[`input_${type}_layer_${i + 1}_number`] = ''
+        variables.set(`input_${type}_layer_${i + 1}_name`, '')
+        variables.set(`input_${type}_layer_${i + 1}_number`, '')
       }
 
       for (const layer of input.overlay || []) {
@@ -302,52 +301,52 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
 
         if (overlayInput) overlayinputName = overlayInput.shortTitle ? overlayInput.shortTitle.replace(/[^a-z0-9-_. ]+/gi, '') : overlayInput.title.replace(/[^a-z0-9-_. ]+/gi, '')
 
-        variables[`input_${type}_layer_${layer.index + 1}_name`] = overlayinputName
-        variables[`input_${type}_layer_${layer.index + 1}_number`] = overlayInput?.number || ''
-        variables[`input_${type}_layer_${layer.index + 1}_key`] = overlayInput?.key || ''
+        variables.set(`input_${type}_layer_${layer.index + 1}_name`, overlayinputName)
+        variables.set(`input_${type}_layer_${layer.index + 1}_number`, overlayInput?.number || '')
+        variables.set(`input_${type}_layer_${layer.index + 1}_key`, overlayInput?.key || '')
 
         if (!(instance.config.strictInputVariableTypes && !instance.config.variablesShowInputLayerPosition)) {
-          variables[`input_${type}_layer_${layer.index + 1}_panx`] = layer.panX ?? ''
-          variables[`input_${type}_layer_${layer.index + 1}_pany`] = layer.panY ?? ''
-          variables[`input_${type}_layer_${layer.index + 1}_x`] = layer.x ?? ''
-          variables[`input_${type}_layer_${layer.index + 1}_y`] = layer.y ?? ''
-          variables[`input_${type}_layer_${layer.index + 1}_zoomx`] = layer.zoomX ?? ''
-          variables[`input_${type}_layer_${layer.index + 1}_zoomy`] = layer.zoomY ?? ''
-          variables[`input_${type}_layer_${layer.index + 1}_width`] = layer.width ?? ''
-          variables[`input_${type}_layer_${layer.index + 1}_height`] = layer.height ?? ''
-          variables[`input_${type}_layer_${layer.index + 1}_cropx1`] = layer.cropX1 ?? ''
-          variables[`input_${type}_layer_${layer.index + 1}_cropx2`] = layer.cropX2 ?? ''
-          variables[`input_${type}_layer_${layer.index + 1}_cropy1`] = layer.cropY1 ?? ''
-          variables[`input_${type}_layer_${layer.index + 1}_cropy2`] = layer.cropY2 ?? ''
+          variables.set(`input_${type}_layer_${layer.index + 1}_panx`, layer.panX ?? '')
+          variables.set(`input_${type}_layer_${layer.index + 1}_pany`, layer.panY ?? '')
+          variables.set(`input_${type}_layer_${layer.index + 1}_x`, layer.x ?? '')
+          variables.set(`input_${type}_layer_${layer.index + 1}_y`, layer.y ?? '')
+          variables.set(`input_${type}_layer_${layer.index + 1}_zoomx`, layer.zoomX ?? '')
+          variables.set(`input_${type}_layer_${layer.index + 1}_zoomy`, layer.zoomY ?? '')
+          variables.set(`input_${type}_layer_${layer.index + 1}_width`, layer.width ?? '')
+          variables.set(`input_${type}_layer_${layer.index + 1}_height`, layer.height ?? '')
+          variables.set(`input_${type}_layer_${layer.index + 1}_cropx1`, layer.cropX1 ?? '')
+          variables.set(`input_${type}_layer_${layer.index + 1}_cropx2`, layer.cropX2 ?? '')
+          variables.set(`input_${type}_layer_${layer.index + 1}_cropy1`, layer.cropY1 ?? '')
+          variables.set(`input_${type}_layer_${layer.index + 1}_cropy2`, layer.cropY2 ?? '')
         }
       }
 
       if (input.text) {
         input.text.forEach((textLayer) => {
-          variables[`input_${type}_layer_${textLayer.index}_titletext`] = textLayer.value
-          variables[`input_${type}_layer_${textLayer.name.replace(/[^a-z0-9-_.]+/gi, '')}_titletext`] = textLayer.value
+          variables.set(`input_${type}_layer_${textLayer.index}_titletext`, textLayer.value)
+          variables.set(`input_${type}_layer_${textLayer.name.replace(/[^a-z0-9-_.]+/gi, '')}_titletext`, textLayer.value)
         })
       }
 
       if (input.list) {
         input.list.forEach((listItem) => {
-          variables[`input_${type}_list_${listItem.index + 1}_name`] = listItem.filename
-          variables[`input_${type}_list_${listItem.index + 1}_selected`] = listItem.selected.toString()
+          variables.set(`input_${type}_list_${listItem.index + 1}_name`, listItem.filename)
+          variables.set(`input_${type}_list_${listItem.index + 1}_selected`, listItem.selected.toString())
 
           if (listItem.selected) {
-            variables[`input_${type}_selected`] = listItem.index + 1
-            variables[`input_${type}_selected_name`] = listItem.filename
+            variables.set(`input_${type}_selected`, listItem.index + 1)
+            variables.set(`input_${type}_selected_name`, listItem.filename)
           }
         })
       }
 
       if ((input.type === 'VirtualSet' || input.type === 'PowerPoint') && input.selectedIndex !== undefined) {
-        variables[`input_${type}_selected`] = input.selectedIndex
+        variables.set(`input_${type}_selected`, input.selectedIndex)
       }
 
       if (input.type === 'Photos') {
-        variables[`input_${type}_selected`] = input.position
-        variables[`input_${type}_selected_name`] = input.title.split(`${input.shortTitle} - `)[1]
+        variables.set(`input_${type}_selected`, input.position)
+        variables.set(`input_${type}_selected_name`, input.title.split(`${input.shortTitle} - `)[1])
       }
 
       if (input.type === 'VideoCall') {
@@ -356,10 +355,10 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
           audioSource = audioSource.substr(3)
         }
 
-        variables[`input_${type}_call_password`] = input.callPassword
-        variables[`input_${type}_call_connected`] = input.callConnected ? 'Connected' : 'Disconnected'
-        variables[`input_${type}_call_video_source`] = input.callVideoSource
-        variables[`input_${type}_call_audio_source`] = input.callAudioSource
+        variables.set(`input_${type}_call_password`, input.callPassword)
+        variables.set(`input_${type}_call_connected`, input.callConnected ? 'Connected' : 'Disconnected')
+        variables.set(`input_${type}_call_video_source`, input.callVideoSource)
+        variables.set(`input_${type}_call_audio_source`, input.callAudioSource)
       }
 
       let volume
@@ -376,29 +375,29 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
         volumeLinear = ''
       }
 
-      variables[`input_${type}_volume`] = volume
-      variables[`input_${type}_volume_db`] = volumedB
-      variables[`input_${type}_volume_linear`] = volumeLinear
-      variables[`input_${type}_framedelay`] = input.frameDelay ?? 0
+      variables.set(`input_${type}_volume`, volume)
+      variables.set(`input_${type}_volume_db`, volumedB)
+      variables.set(`input_${type}_volume_linear`, volumeLinear)
+      variables.set(`input_${type}_framedelay`, input.frameDelay ?? 0)
 
-      variables[`input_${type}_volume_f1`] = ''
-      variables[`input_${type}_volume_f1_db`] = ''
-      variables[`input_${type}_volume_f1_linear`] = ''
+      variables.set(`input_${type}_volume_f1`, '')
+      variables.set(`input_${type}_volume_f1_db`, '')
+      variables.set(`input_${type}_volume_f1_linear`, '')
 
       if (input.volumeF1 !== undefined) {
-        variables[`input_${type}_volume_f1`] = (input.volumeF1 * 100).toFixed(2)
-        variables[`input_${type}_volume_f1_db`] = volumeTodB(input.volumeF1 * 100).toFixed(1)
-        variables[`input_${type}_volume_f1_linear`] = Math.round(volumeToLinear(input.volumeF1 * 100))
+        variables.set(`input_${type}_volume_f1`, (input.volumeF1 * 100).toFixed(2))
+        variables.set(`input_${type}_volume_f1_db`, volumeTodB(input.volumeF1 * 100).toFixed(1))
+        variables.set(`input_${type}_volume_f1_linear`, Math.round(volumeToLinear(input.volumeF1 * 100)))
       }
 
-      variables[`input_${type}_volume_f2`] = ''
-      variables[`input_${type}_volume_f2_db`] = ''
-      variables[`input_${type}_volume_f2_linear`] = ''
+      variables.set(`input_${type}_volume_f2`, '')
+      variables.set(`input_${type}_volume_f2_db`, '')
+      variables.set(`input_${type}_volume_f2_linear`, '')
 
       if (input.volumeF2 !== undefined) {
-        variables[`input_${type}_volume_f2`] = (input.volumeF2 * 100).toFixed(2)
-        variables[`input_${type}_volume_f2_db`] = volumeTodB(input.volumeF2 * 100).toFixed(1)
-        variables[`input_${type}_volume_f2_linear`] = Math.round(volumeToLinear(input.volumeF2 * 100))
+        variables.set(`input_${type}_volume_f2`, (input.volumeF2 * 100).toFixed(2))
+        variables.set(`input_${type}_volume_f2_db`, volumeTodB(input.volumeF2 * 100).toFixed(1))
+        variables.set(`input_${type}_volume_f2_linear`, Math.round(volumeToLinear(input.volumeF2 * 100)))
       }
     }
   }

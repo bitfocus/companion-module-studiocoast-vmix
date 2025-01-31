@@ -1,6 +1,5 @@
-import { CompanionVariableDefinition } from '@companion-module/base'
+import { CompanionVariableDefinition, CompanionVariableValue } from '@companion-module/base'
 import VMixInstance from '../'
-import { InstanceVariableValue } from './variables'
 
 export const outputDefinitions = (_instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []
@@ -25,23 +24,23 @@ export const outputDefinitions = (_instance: VMixInstance): CompanionVariableDef
   return definitions
 }
 
-export const outputValues = async (instance: VMixInstance): Promise<InstanceVariableValue> => {
-  const variables: InstanceVariableValue = {}
+export const outputValues = async (instance: VMixInstance): Promise<Map<string, CompanionVariableValue>> => {
+  const variables = new Map()
 
-  variables['fullscreen_1_source'] = ''
-  variables['fullscreen_2_source'] = ''
-  variables['output_1_source'] = ''
-  variables['output_1_ndi'] = ''
-  variables['output_1_srt'] = ''
-  variables['output_2_source'] = ''
-  variables['output_2_ndi'] = ''
-  variables['output_2_srt'] = ''
-  variables['output_3_source'] = ''
-  variables['output_3_ndi'] = ''
-  variables['output_3_srt'] = ''
-  variables['output_4_source'] = ''
-  variables['output_4_ndi'] = ''
-  variables['output_4_srt'] = ''
+  variables.set('fullscreen_1_source', '')
+  variables.set('fullscreen_2_source', '')
+  variables.set('output_1_source', '')
+  variables.set('output_1_ndi', '')
+  variables.set('output_1_srt', '')
+  variables.set('output_2_source', '')
+  variables.set('output_2_ndi', '')
+  variables.set('output_2_srt', '')
+  variables.set('output_3_source', '')
+  variables.set('output_3_ndi', '')
+  variables.set('output_3_srt', '')
+  variables.set('output_4_source', '')
+  variables.set('output_4_ndi', '')
+  variables.set('output_4_srt', '')
 
   instance.data.outputs.forEach((output) => {
     const variableID = `${output.type}_${output.number}`
@@ -55,11 +54,11 @@ export const outputValues = async (instance: VMixInstance): Promise<InstanceVari
       source = output.source
     }
 
-    variables[`${variableID}_source`] = source
+    variables.set(`${variableID}_source`, source)
 
     if (output.type === 'output') {
-      variables[`${variableID}_ndi`] = output.ndi.toString()
-      variables[`${variableID}_srt`] = output.srt.toString()
+      variables.set(`${variableID}_ndi`, output.ndi.toString())
+      variables.set(`${variableID}_srt`, output.srt.toString())
     }
   })
 

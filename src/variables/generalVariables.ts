@@ -1,7 +1,6 @@
-import { CompanionVariableDefinition } from '@companion-module/base'
+import { CompanionVariableDefinition, CompanionVariableValue } from '@companion-module/base'
 import VMixInstance from '..'
 import { formatTime } from '../utils'
-import { InstanceVariableValue } from './variables'
 
 export const generalDefinitions = (instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []
@@ -49,23 +48,23 @@ export const generalDefinitions = (instance: VMixInstance): CompanionVariableDef
   return definitions
 }
 
-export const generalValues = async (instance: VMixInstance): Promise<InstanceVariableValue> => {
-  const variables: InstanceVariableValue = {}
+export const generalValues = async (instance: VMixInstance): Promise<Map<string, CompanionVariableValue>> => {
+  const variables = new Map()
 
-  variables['connected_state'] = instance.connected.toString()
-  variables['ftb_active'] = instance.data.status.fadeToBlack.toString()
-  variables['playlist_active'] = instance.data.status.playList.toString()
-  variables['fullscreen_active'] = instance.data.status.fullscreen.toString()
-  variables['external_active'] = instance.data.status.external.toString()
-  variables['multicorder_active'] = instance.data.status.multiCorder.toString()
-  variables['stream_1_active'] = instance.data.status.stream[0].toString()
-  variables['stream_2_active'] = instance.data.status.stream[1].toString()
-  variables['stream_3_active'] = instance.data.status.stream[2].toString()
-  variables['stream_4_active'] = instance.data.status.stream[3].toString()
-  variables['stream_5_active'] = instance.data.status.stream[4].toString()
-  variables['recording_active'] = instance.data.status.recording.toString()
-  variables['recording_duration'] = formatTime(instance.data.recording.duration, 's', 'auto')
-  variables['recording_hms'] = formatTime(instance.data.recording.duration, 's', 'hh:mm:ss')
+  variables.set('connected_state', instance.connected.toString())
+  variables.set('ftb_active', instance.data.status.fadeToBlack.toString())
+  variables.set('playlist_active', instance.data.status.playList.toString())
+  variables.set('fullscreen_active', instance.data.status.fullscreen.toString())
+  variables.set('external_active', instance.data.status.external.toString())
+  variables.set('multicorder_active', instance.data.status.multiCorder.toString())
+  variables.set('stream_1_active', instance.data.status.stream[0].toString())
+  variables.set('stream_2_active', instance.data.status.stream[1].toString())
+  variables.set('stream_3_active', instance.data.status.stream[2].toString())
+  variables.set('stream_4_active', instance.data.status.stream[3].toString())
+  variables.set('stream_5_active', instance.data.status.stream[4].toString())
+  variables.set('recording_active', instance.data.status.recording.toString())
+  variables.set('recording_duration', formatTime(instance.data.recording.duration, 's', 'auto'))
+  variables.set('recording_hms', formatTime(instance.data.recording.duration, 's', 'hh:mm:ss'))
 
   const recordingFile1 = instance.data.recording.filename1.split('\\')
   const recordingFile2 = instance.data.recording.filename2.split('\\')
@@ -76,10 +75,10 @@ export const generalValues = async (instance: VMixInstance): Promise<InstanceVar
   const recordingFilepath2 = recordingFile2
   recordingFilepath2.pop()
 
-  variables['recording_filename1'] = recordingFilename1
-  variables['recording_filepath1'] = recordingFilepath1.join('\\') + '\\'
-  variables['recording_filename2'] = recordingFilename2
-  variables['recording_filepath2'] = recordingFilepath2.join('\\') + '\\'
+  variables.set('recording_filename1', recordingFilename1)
+  variables.set('recording_filepath1', recordingFilepath1.join('\\') + '\\')
+  variables.set('recording_filename2', recordingFilename2)
+  variables.set('recording_filepath2', recordingFilepath2.join('\\') + '\\')
 
   return variables
 }

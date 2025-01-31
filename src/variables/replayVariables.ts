@@ -1,6 +1,5 @@
-import { CompanionVariableDefinition } from '@companion-module/base'
+import { CompanionVariableDefinition, CompanionVariableValue } from '@companion-module/base'
 import VMixInstance from '../'
-import { InstanceVariableValue } from './variables'
 
 export const replayDefinitions = (_instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []
@@ -26,24 +25,24 @@ export const replayDefinitions = (_instance: VMixInstance): CompanionVariableDef
   return definitions
 }
 
-export const replayValues = async (instance: VMixInstance): Promise<InstanceVariableValue> => {
-  const variables: InstanceVariableValue = {}
+export const replayValues = async (instance: VMixInstance): Promise<Map<string, CompanionVariableValue>> => {
+  const variables = new Map()
 
-  variables.replay_recording = instance.data.replay.recording.toString()
-  variables.replay_live = instance.data.replay.live.toString()
-  variables.replay_forward = instance.data.replay.forward.toString()
-  variables.replay_channel_mode = instance.data.replay.channelMode
-  variables.replay_events = instance.data.replay.events
-  variables.replay_eventsa = instance.data.replay.eventsA
-  variables.replay_eventsb = instance.data.replay.eventsB
-  variables.replay_cameraa = instance.data.replay.cameraA
-  variables.replay_camerab = instance.data.replay.cameraB
-  variables.replay_speed = instance.data.replay.speed
-  variables.replay_speeda = instance.data.replay.speedA
-  variables.replay_speedb = instance.data.replay.speedB
-  variables.replay_timecode = instance.data.replay.timecode
-  variables.replay_timecodea = instance.data.replay.timecodeA
-  variables.replay_timecodeb = instance.data.replay.timecodeB
+  variables.set('replay_recording', instance.data.replay.recording.toString())
+  variables.set('replay_live', instance.data.replay.live.toString())
+  variables.set('replay_forward', instance.data.replay.forward.toString())
+  variables.set('replay_channel_mode', instance.data.replay.channelMode)
+  variables.set('replay_events', instance.data.replay.events)
+  variables.set('replay_eventsa', instance.data.replay.eventsA)
+  variables.set('replay_eventsb', instance.data.replay.eventsB)
+  variables.set('replay_cameraa', instance.data.replay.cameraA)
+  variables.set('replay_camerab', instance.data.replay.cameraB)
+  variables.set('replay_speed', instance.data.replay.speed)
+  variables.set('replay_speeda', instance.data.replay.speedA)
+  variables.set('replay_speedb', instance.data.replay.speedB)
+  variables.set('replay_timecode', instance.data.replay.timecode)
+  variables.set('replay_timecodea', instance.data.replay.timecodeA)
+  variables.set('replay_timecodeb', instance.data.replay.timecodeB)
 
   return variables
 }

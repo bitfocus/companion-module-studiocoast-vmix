@@ -1,8 +1,7 @@
-import { CompanionVariableDefinition } from '@companion-module/base'
+import { CompanionVariableDefinition, CompanionVariableValue } from '@companion-module/base'
 import VMixInstance from '../'
 import { AudioBus } from '../data'
 import { AUDIOBUSSESMASTER, volumeTodB, volumeToLinear } from '../utils'
-import { InstanceVariableValue } from './variables'
 
 export const audioDefinitions = (_instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []
@@ -41,8 +40,8 @@ export const audioDefinitions = (_instance: VMixInstance): CompanionVariableDefi
   return definitions
 }
 
-export const audioValues = async (instance: VMixInstance): Promise<InstanceVariableValue> => {
-  const variables: InstanceVariableValue = {}
+export const audioValues = async (instance: VMixInstance): Promise<Map<string, CompanionVariableValue>> => {
+  const variables = new Map()
   const busses = [...AUDIOBUSSESMASTER, 'Selected']
 
   busses.forEach((id) => {
@@ -69,13 +68,13 @@ export const audioValues = async (instance: VMixInstance): Promise<InstanceVaria
       volumeLinear = ''
     }
 
-    variables[`bus_${id.toLowerCase()}_volume`] = parseFloat(volume + '').toFixed(2)
-    variables[`bus_${id.toLowerCase()}_volume_db`] = volumedB
-    variables[`bus_${id.toLowerCase()}_volume_linear`] = volumeLinear
+    variables.set(`bus_${id.toLowerCase()}_volume`, parseFloat(volume + '').toFixed(2))
+    variables.set(`bus_${id.toLowerCase()}_volume_db`, volumedB)
+    variables.set(`bus_${id.toLowerCase()}_volume_linear`, volumeLinear)
 
     if (id !== 'Headphones') {
-      variables[`bus_${id.toLowerCase()}_meterf1`] = meterF1
-      variables[`bus_${id.toLowerCase()}_meterf2`] = meterF2
+      variables.set(`bus_${id.toLowerCase()}_meterf1`, meterF1)
+      variables.set(`bus_${id.toLowerCase()}_meterf2`, meterF2)
     }
 
     if (id !== 'Headphones') {
@@ -83,26 +82,26 @@ export const audioValues = async (instance: VMixInstance): Promise<InstanceVaria
       const audioLevel = instance.data.audioLevels.find((level) => level.key === audioLevelID)
       if (audioLevel) {
         const audioLevelData = instance.data.getAudioLevelData(audioLevel)
-        variables[`bus_${id.toLowerCase()}_meterf1_avg_1s`] = volumeTodB(audioLevelData.s1MeterF1Avg * 100).toFixed(1)
-        variables[`bus_${id.toLowerCase()}_meterf2_avg_1s`] = volumeTodB(audioLevelData.s1MeterF2Avg * 100).toFixed(1)
-        variables[`bus_${id.toLowerCase()}_meterf1_avg_3s`] = volumeTodB(audioLevelData.s3MeterF1Avg * 100).toFixed(1)
-        variables[`bus_${id.toLowerCase()}_meterf2_avg_3s`] = volumeTodB(audioLevelData.s3MeterF2Avg * 100).toFixed(1)
-        variables[`bus_${id.toLowerCase()}_meterf1_peak_1s`] = volumeTodB(audioLevelData.s1MeterF1Peak * 100).toFixed(1)
-        variables[`bus_${id.toLowerCase()}_meterf2_peak_1s`] = volumeTodB(audioLevelData.s1MeterF2Peak * 100).toFixed(1)
-        variables[`bus_${id.toLowerCase()}_meterf1_peak_3s`] = volumeTodB(audioLevelData.s3MeterF1Peak * 100).toFixed(1)
-        variables[`bus_${id.toLowerCase()}_meterf2_peak_3s`] = volumeTodB(audioLevelData.s3MeterF2Peak * 100).toFixed(1)
+        variables.set(`bus_${id.toLowerCase()}_meterf1_avg_1s`, volumeTodB(audioLevelData.s1MeterF1Avg * 100).toFixed(1))
+        variables.set(`bus_${id.toLowerCase()}_meterf2_avg_1s`, volumeTodB(audioLevelData.s1MeterF2Avg * 100).toFixed(1))
+        variables.set(`bus_${id.toLowerCase()}_meterf1_avg_3s`, volumeTodB(audioLevelData.s3MeterF1Avg * 100).toFixed(1))
+        variables.set(`bus_${id.toLowerCase()}_meterf2_avg_3s`, volumeTodB(audioLevelData.s3MeterF2Avg * 100).toFixed(1))
+        variables.set(`bus_${id.toLowerCase()}_meterf1_peak_1s`, volumeTodB(audioLevelData.s1MeterF1Peak * 100).toFixed(1))
+        variables.set(`bus_${id.toLowerCase()}_meterf2_peak_1s`, volumeTodB(audioLevelData.s1MeterF2Peak * 100).toFixed(1))
+        variables.set(`bus_${id.toLowerCase()}_meterf1_peak_3s`, volumeTodB(audioLevelData.s3MeterF1Peak * 100).toFixed(1))
+        variables.set(`bus_${id.toLowerCase()}_meterf2_peak_3s`, volumeTodB(audioLevelData.s3MeterF2Peak * 100).toFixed(1))
       }
     }
 
     if (id !== 'Master' && id !== 'Headphones') {
-      variables[`bus_${id.toLowerCase()}_mute`] = audioBus?.muted ? 'true' : 'false'
-      variables[`bus_${id.toLowerCase()}_solo`] = audioBus?.solo ? 'true' : 'false'
-      variables[`bus_${id.toLowerCase()}_sendtomaster`] = audioBus?.sendToMaster ? 'true' : 'false'
+      variables.set(`bus_${id.toLowerCase()}_mute`, audioBus?.muted ? 'true' : 'false')
+      variables.set(`bus_${id.toLowerCase()}_solo`, audioBus?.solo ? 'true' : 'false')
+      variables.set(`bus_${id.toLowerCase()}_sendtomaster`, audioBus?.sendToMaster ? 'true' : 'false')
     }
   })
 
-  variables.bus_selected = instance.routingData.bus
-  variables.bus_any_solo = instance.data.audio.some((bus) => bus.solo).toString()
+  variables.set('bus_selected', instance.routingData.bus)
+  variables.set('bus_any_solo', instance.data.audio.some((bus) => bus.solo).toString())
 
   return variables
 }

@@ -109,10 +109,14 @@ export const vMixUtilActions = (instance: VMixInstance, _sendBasicCommand: (acti
           }
 
           instance.routingData.mix = (mixVariable - 1) as 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15
-          instance.variables?.set({ mix_selected: mixVariable })
+					let selectedMix = new Map()
+					selectedMix.set('mix_selected', mixVariable)
+          instance.variables?.set(selectedMix, true)
         } else {
           instance.routingData.mix = mix
-          instance.variables?.set({ mix_selected: action.options.mix + 1 })
+					let selectedMix = new Map()
+					selectedMix.set('mix_selected', action.options.mix + 1)
+          instance.variables?.set(selectedMix, true)
         }
 
         instance.variables?.updateVariables()
