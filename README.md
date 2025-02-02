@@ -34,6 +34,9 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 
 
 # Recent Patches
+**v3.9.3**
+- Fixed issue with mix preview/program variables
+
 **v3.9.2**
 - Fixed missing MultiView2 and Mix options from `Output - Set Output Source` action
 

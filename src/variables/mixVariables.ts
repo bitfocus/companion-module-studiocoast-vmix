@@ -88,8 +88,7 @@ export const mixValues = async (instance: VMixInstance): Promise<InstanceVariabl
       if (!input) return
 
       const inputAudio = input.muted === undefined ? false : input.muted
-
-      variables[`mix_${id}_${type}`] = mix.program
+      variables[`mix_${id}_${type}`] = mix[type as 'preview' | 'program']
       variables[`mix_${id}_${type}_name`] = await instance.data.getInputTitle(mix.program)
       variables[`mix_${id}_${type}_guid`] = input.key
       variables[`mix_${id}_${type}_playing`] = (input.state === 'Running').toString()
@@ -183,7 +182,7 @@ export const mixValues = async (instance: VMixInstance): Promise<InstanceVariabl
   }
 
   for (const mix of mixes) {
-    setVariables(mix)
+    await setVariables(mix)
     if (mix.number === instance.routingData.mix + 1) setVariables(mix, true)
   }
 
