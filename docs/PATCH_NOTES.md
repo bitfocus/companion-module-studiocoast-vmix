@@ -1,5 +1,8 @@
 # Patch Notes
 
+**v3.9.4**
+- Fixed issue with selected mix variable
+
 **v3.9.3**
 - Fixed issue with mix preview/program variables
 
