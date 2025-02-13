@@ -30,6 +30,8 @@ type OverlayFunctionsOptions = {
     | 'OverlayInput3Zoom'
     | 'OverlayInput4Zoom'
   input: string
+	mix: string
+	mixVariable: string
 }
 
 type OverlayFunctionsCallback = ActionCallback<'overlayFunctions', OverlayFunctionsOptions>
@@ -81,7 +83,81 @@ export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: (a
             { id: 'OverlayInput4Zoom', label: 'Zoom PIP Overlay 4 to/from fulscreen' }
           ]
         },
-        options.input
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Mix',
+          id: 'mix',
+          default: 0,
+          choices: [
+            { id: 0, label: '1' },
+            { id: 1, label: '2' },
+            { id: 2, label: '3' },
+            { id: 3, label: '4' },
+            { id: 4, label: '5' },
+            { id: 5, label: '6' },
+            { id: 6, label: '7' },
+            { id: 7, label: '8' },
+            { id: 8, label: '9' },
+            { id: 9, label: '10' },
+            { id: 10, label: '11' },
+            { id: 11, label: '12' },
+            { id: 12, label: '13' },
+            { id: 13, label: '14' },
+            { id: 14, label: '15' },
+            { id: 15, label: '16' },
+            { id: -1, label: 'Selected' },
+            { id: -2, label: 'Variable' },
+          ],
+          isVisible: (feedbackOptions) => {
+            let mixSupport = false
+
+            const supportedFunctions = [
+              'OverlayInput1',
+              'OverlayInput2',
+              'OverlayInput3',
+              'OverlayInput4',
+              'OverlayInput1In',
+              'OverlayInput2In',
+              'OverlayInput3In',
+              'OverlayInput4In',
+            ]
+
+            supportedFunctions.forEach((x) => {
+              if (x === feedbackOptions.functionID) mixSupport = true
+            })
+
+            return mixSupport
+          },
+        },
+        {
+          type: 'textinput',
+          label: 'Mix Variable',
+          id: 'mixVariable',
+          default: '1',
+          tooltip: '',
+          isVisible: (feedbackOptions) => {
+            let mixSupport = false
+
+            const supportedFunctions = [
+              'OverlayInput1',
+              'OverlayInput2',
+              'OverlayInput3',
+              'OverlayInput4',
+              'OverlayInput1In',
+              'OverlayInput2In',
+              'OverlayInput3In',
+              'OverlayInput4In',
+            ]
+
+            supportedFunctions.forEach((x) => {
+              if (x === feedbackOptions.functionID && feedbackOptions.mix === -2) mixSupport = true
+            })
+
+            return mixSupport
+          },
+          useVariables: true,
+        },
       ],
       callback: sendBasicCommand
     }
