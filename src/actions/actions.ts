@@ -149,7 +149,7 @@ export function getActions(instance: VMixInstance): VMixActions {
       .map((param) => {
         if (param[0] === 'mix' && param[1] === -2) {
           const mixVariable = parsedParams.find((x) => x[0] === 'mixVariable')
-          param[1] = mixVariable?.[1] || param[1]
+          param[1] = mixVariable?.[1] ?? param[1]
         }
         return param
       })
