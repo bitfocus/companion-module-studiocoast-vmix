@@ -1,19 +1,19 @@
 import { VMixAction, ActionCallback } from './actions'
-import { EmptyOptions, options, volumeToLinear } from '../utils'
+import { AudioBusOption, AudioBusMasterOption, EmptyOptions, options, volumeToLinear } from '../utils'
 import VMixInstance from '../index'
 
 type AudioBusOptions = {
   input: string
-  value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'Selected'
+  value: AudioBusMasterOption
   functionID: 'AudioBus' | 'AudioBusOn' | 'AudioBusOff'
 }
 
 type BusXSendToMasterOptions = {
-  value: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'Selected'
+  value: AudioBusOption
 }
 
 type BusXAudioOptions = {
-  value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'Selected'
+  value: AudioBusMasterOption
   functionID: 'BusXAudio' | 'BusXAudioOn' | 'BusXAudioOff'
 }
 
@@ -28,7 +28,7 @@ type AudioAutoOptions = {
 }
 
 type BusXSoloOptions = {
-  value: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
+  value: AudioBusOption
   functionID: 'BusXSolo' | 'BusXSoloOn' | 'BusXSoloOff'
 }
 
@@ -44,7 +44,7 @@ type SetInputVolumeOptions = {
 }
 
 type SetBusVolumeFadeOptions = {
-  value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'Selected'
+  value: AudioBusMasterOption
   fadeVol: string
   fadeTime: string
 }
@@ -56,7 +56,7 @@ type SetVolumeFadeOptions = {
 }
 
 type SetBusVolumeOptions = {
-  value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'Selected'
+  value: AudioBusMasterOption
   adjustment: 'Set' | 'Increase' | 'Decrease'
   amount: string
 }
@@ -280,7 +280,13 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: (acti
           ]
         }
       ],
-      callback: sendBasicCommand
+      callback: (action) => {
+        const selected = action.options.value === 'Selected' ? instance.routingData.bus : action.options.value
+        if (selected === 'Master') return
+        const commandOptions = { ...action.options, value: selected }
+
+        sendBasicCommand({ ...action, options: commandOptions })
+      }
     },
 
     solo: {

@@ -15,7 +15,7 @@ export const getOverlayPresets = (): VMixPresetArray => {
       },
       steps: [
         {
-          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInputAllOff', input: '' } }],
+          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInputAllOff', input: '', mix: '1', mixVariable: '' } }],
           up: []
         }
       ],
@@ -46,7 +46,7 @@ export const getOverlayPresets = (): VMixPresetArray => {
             down: [
               {
                 actionId: 'overlayFunctions',
-                options: { functionID: `OverlayInput${i}` as 'OverlayInput1', input: '' }
+                options: { functionID: `OverlayInput${i}` as 'OverlayInput1', input: '', mix: '1', mixVariable: '' }
               }
             ],
             up: []
@@ -80,7 +80,7 @@ export const getOverlayPresets = (): VMixPresetArray => {
             down: [
               {
                 actionId: 'overlayFunctions',
-                options: { functionID: `PreviewOverlayInput${i}` as 'PreviewOverlayInput1', input: '' }
+                options: { functionID: `PreviewOverlayInput${i}` as 'PreviewOverlayInput1', input: '', mix: '1', mixVariable: '' }
               }
             ],
             up: []
@@ -114,7 +114,7 @@ export const getOverlayPresets = (): VMixPresetArray => {
             down: [
               {
                 actionId: 'overlayFunctions',
-                options: { functionID: `OverlayInput${i}In` as 'OverlayInput1In', input: '' }
+                options: { functionID: `OverlayInput${i}In` as 'OverlayInput1In', input: '', mix: '1', mixVariable: '' }
               }
             ],
             up: []
@@ -148,7 +148,7 @@ export const getOverlayPresets = (): VMixPresetArray => {
             down: [
               {
                 actionId: 'overlayFunctions',
-                options: { functionID: `OverlayInput${i}Out` as 'OverlayInput1Out', input: '' }
+                options: { functionID: `OverlayInput${i}Out` as 'OverlayInput1Out', input: '', mix: '1', mixVariable: '' }
               }
             ],
             up: []
@@ -182,7 +182,7 @@ export const getOverlayPresets = (): VMixPresetArray => {
             down: [
               {
                 actionId: 'overlayFunctions',
-                options: { functionID: `OverlayInput${i}Off` as 'OverlayInput1Off', input: '' }
+                options: { functionID: `OverlayInput${i}Off` as 'OverlayInput1Off', input: '', mix: '1', mixVariable: '' }
               }
             ],
             up: []
@@ -216,7 +216,7 @@ export const getOverlayPresets = (): VMixPresetArray => {
             down: [
               {
                 actionId: 'overlayFunctions',
-                options: { functionID: `OverlayInput${i}Zoom` as 'OverlayInput1Zoom', input: '' }
+                options: { functionID: `OverlayInput${i}Zoom` as 'OverlayInput1Zoom', input: '', mix: '1', mixVariable: '' }
               }
             ],
             up: []

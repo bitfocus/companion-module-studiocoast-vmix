@@ -1,19 +1,19 @@
 import { combineRgb } from '@companion-module/base'
 import { presets } from 'companion-module-utils'
 import { VMixFeedback, FeedbackCallback } from './feedback'
-import { options, volumeToLinear } from '../utils'
+import { AudioBusOption, AudioBusMasterOption, options, volumeToLinear } from '../utils'
 import VMixInstance from '../index'
 
 type BusMuteOptions = {
-  value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
+  value: AudioBusMasterOption
 }
 
 type BusSoloOptions = {
-  value: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
+  value: AudioBusOption
 }
 
 type BusSendToMasterOptions = {
-  value: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
+  value: AudioBusOption
 }
 
 type InputAudioOptions = {
@@ -30,11 +30,11 @@ type InputSoloOptions = {
 
 type InputBusRoutingOptions = {
   input: string
-  value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
+  value: AudioBusMasterOption
 }
 
 type LiveBusVolumeOptions = {
-  value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
+  value: AudioBusMasterOption
   colorTxt: boolean
   colorBG: boolean
   colorBase: number
@@ -70,7 +70,7 @@ type InputVolumeLevelOptions = {
 }
 
 type BusVolumeMeterOptions = {
-  value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'Selected'
+  value: AudioBusMasterOption
 }
 
 type InputVolumeMeterOptions = {
@@ -134,7 +134,13 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
       },
       options: [options.audioBusMaster],
       callback: (feedback) => {
-        const busID = feedback.options.value === 'Master' ? 'master' : `bus${feedback.options.value}`
+        let busID
+        if (feedback.options.value === 'Selected') {
+          busID = instance.routingData.bus === 'Master' ? 'master' : 'bus' + instance.routingData.bus
+        } else {
+          busID = feedback.options.value === 'Master' ? 'master' : 'bus' + feedback.options.value
+        }
+
         const bus = instance.data.getAudioBus(busID)
 
         return bus?.muted || false
@@ -151,7 +157,13 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
       },
       options: [options.audioBus],
       callback: (feedback) => {
-        const busID = `bus${feedback.options.value}`
+        let busID
+        if (feedback.options.value === 'Selected') {
+          busID = instance.routingData.bus === 'Master' ? 'master' : 'bus' + instance.routingData.bus
+        } else {
+          busID = 'bus' + feedback.options.value
+        }
+
         const bus = instance.data.getAudioBus(busID)
 
         return bus?.solo || false
@@ -168,7 +180,13 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
       },
       options: [options.audioBus],
       callback: (feedback) => {
-        const busID = `bus${feedback.options.value}`
+        let busID
+        if (feedback.options.value === 'Selected') {
+          busID = instance.routingData.bus === 'Master' ? 'master' : 'bus' + instance.routingData.bus
+        } else {
+          busID = 'bus' + feedback.options.value
+        }
+
         const bus = instance.data.getAudioBus(busID)
 
         return bus?.sendToMaster || false
@@ -238,8 +256,13 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
       callback: async (feedback, context) => {
         const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
         const input = await instance.data.getInput(inputOption)
-        const busID = feedback.options.value === 'Master' ? 'M' : feedback.options.value
 
+        if (feedback.options.value === 'Selected') {
+          const bus = instance.routingData.bus === 'Master' ? 'M' : instance.routingData.bus
+          return input?.audioBusses?.[bus] || false
+        }
+
+        const busID = feedback.options.value === 'Master' ? 'M' : feedback.options.value
         return input?.audioBusses?.[busID] || false
       }
     },
@@ -300,7 +323,13 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
         }
       ],
       callback: (feedback) => {
-        const busID = feedback.options.value === 'Master' ? 'master' : 'bus' + feedback.options.value
+        let busID
+        if (feedback.options.value === 'Selected') {
+          busID = instance.routingData.bus === 'Master' ? 'master' : 'bus' + instance.routingData.bus
+        } else {
+          busID = feedback.options.value === 'Master' ? 'master' : 'bus' + feedback.options.value
+        }
+
         const bus = instance.data.getAudioBus(busID)
 
         if (bus) {

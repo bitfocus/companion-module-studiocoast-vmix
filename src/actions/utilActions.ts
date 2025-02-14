@@ -135,7 +135,7 @@ export const vMixUtilActions = (instance: VMixInstance, _sendBasicCommand: (acti
       callback: (action) => {
         instance.routingData.bus = action.options.value
         instance.variables?.updateVariables()
-        instance.checkFeedbacks('busSelect', 'busVolumeMeter')
+        instance.checkFeedbacks('busSelect', 'busMute', 'busSolo', 'busSendToMaster', 'busVolumeMeter', 'inputBusRouting', 'liveBusVolume')
       }
     },
 
