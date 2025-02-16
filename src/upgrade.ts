@@ -624,7 +624,7 @@ const upgradeV3_7_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
 
   actions.forEach((action: any) => {
     if (action.actionId === 'overlayFunctions') {
-      action.options.mix = 1
+      action.options.mix = 0
       action.options.mixVariable = ''
       changes.updatedActions.push(action)
     }
@@ -708,6 +708,25 @@ const upgradeV3_9_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   return changes
 }
 
+const upgradeV3_9_6: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
+  const actions: any = props.actions
+  const changes: CompanionStaticUpgradeResult<Config> = {
+    updatedConfig: null,
+    updatedActions: [],
+    updatedFeedbacks: []
+  }
+
+  actions.forEach((action: any) => {
+    if (action.actionId === 'overlayFunctions' && (action.options.mix === 1 || action.options.mix === undefined)) {
+      action.options.mix = 0
+      if (action.options.mixVariable === undefined) action.options.mixVariable = ''
+      changes.updatedActions.push(action)
+    }
+  })
+
+  return changes
+}
+
 export const getUpgrades = (): CompanionStaticUpgradeScript<Config>[] => {
-  return [upgradeV1_2_0, upgradeV2_0_0, upgradeV2_0_6, upgradeV3_5_0, adjustmentFix, upgradeV3_6_0, upgradeV3_6_2, upgradeV3_7_0, upgradeV3_8_0, upgradeV3_9_0]
+  return [upgradeV1_2_0, upgradeV2_0_0, upgradeV2_0_6, upgradeV3_5_0, adjustmentFix, upgradeV3_6_0, upgradeV3_6_2, upgradeV3_7_0, upgradeV3_8_0, upgradeV3_9_0, upgradeV3_9_6]
 }

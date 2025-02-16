@@ -123,7 +123,6 @@ export function getActions(instance: VMixInstance): VMixActions {
       const mix = parseInt(value, 10)
 
       if (isNaN(mix) || mix < 1) {
-        instance.log('warn', 'Mix must be an integer >= 1')
         return 0
       } else {
         return mix - 1

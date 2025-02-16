@@ -34,6 +34,9 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 
 
 # Recent Patches
+**v3.9.6**
+- Fixed an issue with the upgrade script migrating existing `Overlay - Functions` actions to support the new parameters in vMix 28
+
 **v3.9.5**
 - Fixed issue with mix preview/program variables not migrating to latest version
 - Fixed issue relating to some audio Actions and Feedbacks set to the `selected` bus
