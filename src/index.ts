@@ -8,7 +8,7 @@ import {
   CompanionHTTPResponse,
   SomeCompanionConfigField
 } from '@companion-module/base'
-import { Config, getConfigFields } from './config'
+import { Config, getConfigFields, defaultConfig } from './config'
 import { getActions } from './actions/actions'
 import { Activators } from './activators'
 import { VMixData } from './data'
@@ -69,23 +69,7 @@ class VMixInstance extends InstanceBase<Config> {
     blink: false,
     blinkInterval: null
   }
-  public config: Config = {
-    label: '',
-    host: '',
-    tcpPort: 8099,
-    connectionErrorLog: true,
-    apiPollInterval: 250,
-    volumeLinear: false,
-    shiftDelimiter: '/',
-    shiftBlinkPrvPrgm: true,
-    shiftBlinkLayerRouting: true,
-    variablesShowInputs: true,
-    variablesShowInputNumbers: true,
-    variablesShowInputGUID: true,
-    variablesShowInputPosition: false,
-    variablesShowInputLayerPosition: false,
-    strictInputVariableTypes: false
-  }
+  public config: Config = defaultConfig()
   public connected = false
   public data = new VMixData(this)
   public pollAPI: ReturnType<typeof setInterval> | null = null
@@ -169,6 +153,10 @@ class VMixInstance extends InstanceBase<Config> {
       clearInterval(this.buttonShift.blinkInterval)
     }
     if (this.timerInterval) clearInterval(this.timerInterval)
+
+    if (this.variables?.definitionsUpdateDebounce) {
+      clearTimeout(this.variables.definitionsUpdateDebounce)
+    }
 
     this.log('debug', `Instance destroyed: ${this.id}`)
   }

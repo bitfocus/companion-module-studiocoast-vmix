@@ -17,8 +17,10 @@ export interface InstanceVariableValue {
 
 export class Variables {
   private readonly instance: VMixInstance
-  public currentDefinitions: Set<CompanionVariableDefinition> = new Set()
+  public currentDefinitions: CompanionVariableDefinition[] = []
   public currentVariables: InstanceVariableValue = {}
+  public definitionsUpdateDebounce: ReturnType<typeof setTimeout> | null = null
+  public definitionsUpdateNeeded = false
 
   constructor(instance: VMixInstance) {
     this.instance = instance
@@ -29,12 +31,12 @@ export class Variables {
    * @description Updates or removes variable for current instance
    */
   public readonly set = (variables: InstanceVariableValue): void => {
-    const newVariables: { [variableId: string]: string | undefined } = {}
-    const changes: { [variableId: string]: string | undefined } = {}
+    const newVariables: { [variableId: string]: string | number | undefined } = {}
+    const changes: { [variableId: string]: string | number | undefined } = {}
 
     for (const name in variables) {
-      if (this.currentVariables[name] !== variables[name]) changes[name] = variables[name]?.toString()
-      newVariables[name] = variables[name]?.toString()
+      if (this.currentVariables[name] !== variables[name]) changes[name] = variables[name]
+      newVariables[name] = variables[name]
     }
 
     for (const name in this.currentVariables) {
@@ -76,21 +78,34 @@ export class Variables {
    * @description Sets variable definitions
    */
   public readonly updateDefinitions = async (): Promise<void> => {
-    const variables: Set<CompanionVariableDefinition> = new Set([
+    if (this.definitionsUpdateDebounce !== null) {
+      this.definitionsUpdateNeeded = true
+      return
+    }
+
+    this.definitionsUpdateDebounce = setTimeout(() => {
+      this.definitionsUpdateDebounce = null
+      if (this.definitionsUpdateNeeded) {
+        this.definitionsUpdateNeeded = false
+        this.updateDefinitions()
+      }
+    }, this.instance.config.debugVariableDefinitionDelay)
+
+    const variableDefinitions: CompanionVariableDefinition[] = [
       ...audioDefinitions(this.instance),
       ...(await dynamicDefinitions(this.instance)),
       ...generalDefinitions(this.instance),
       ...inputDefinitions(this.instance),
       ...layerDefinitions(this.instance),
-      ...mixDefinitions(this.instance),
+      ...(await mixDefinitions(this.instance)),
       ...outputDefinitions(this.instance),
       ...overlayDefinitions(this.instance),
       ...replayDefinitions(this.instance),
       ...transitionDefinitions(this.instance)
-    ])
+    ]
 
-    this.currentDefinitions = variables
-    this.instance.setVariableDefinitions([...variables])
+    this.currentDefinitions = variableDefinitions
+    this.instance.setVariableDefinitions(variableDefinitions)
   }
 
   /**

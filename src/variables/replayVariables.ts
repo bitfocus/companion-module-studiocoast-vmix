@@ -1,9 +1,29 @@
 import { CompanionVariableDefinition } from '@companion-module/base'
 import VMixInstance from '../'
-import { InstanceVariableValue } from './variables'
 
-export const replayDefinitions = (_instance: VMixInstance): CompanionVariableDefinition[] => {
+type VariablesReplayIDs =
+  | 'replay_recording'
+  | 'replay_live'
+  | 'replay_forward'
+  | 'replay_channel_mode'
+  | 'replay_events'
+  | 'replay_eventsa'
+  | 'replay_eventsb'
+  | 'replay_cameraa'
+  | 'replay_camerab'
+  | 'replay_speed'
+  | 'replay_speeda'
+  | 'replay_speedb'
+  | 'replay_timecode'
+  | 'replay_timecodea'
+  | 'replay_timecodeb'
+
+type VariablesReplayValues = Partial<Record<VariablesReplayIDs, string | number | undefined>>
+
+export const replayDefinitions = (instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []
+
+  if (!instance.config.variablesShowReplay) return definitions
 
   definitions.push(
     { name: 'Replay Recording', variableId: 'replay_recording' },
@@ -26,8 +46,10 @@ export const replayDefinitions = (_instance: VMixInstance): CompanionVariableDef
   return definitions
 }
 
-export const replayValues = async (instance: VMixInstance): Promise<InstanceVariableValue> => {
-  const variables: InstanceVariableValue = {}
+export const replayValues = async (instance: VMixInstance): Promise<VariablesReplayValues> => {
+  const variables: VariablesReplayValues = {}
+
+  if (!instance.config.variablesShowReplay) return variables
 
   variables.replay_recording = instance.data.replay.recording.toString()
   variables.replay_live = instance.data.replay.live.toString()

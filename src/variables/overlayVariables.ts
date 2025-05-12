@@ -1,11 +1,15 @@
 import { CompanionVariableDefinition } from '@companion-module/base'
 import VMixInstance from '..'
 import { Input } from '../data'
-import { InstanceVariableValue } from './variables'
 
-export const overlayDefinitions = (_instance: VMixInstance): CompanionVariableDefinition[] => {
+type VariablesOverlayIDs = `overlay_${number}_input_name` | `overlay_${number}_input` | `overlay_${number}_pgm` | `overlay_${number}_prv`
+type VariablesOverlayValues = Record<VariablesOverlayIDs, string | number | undefined>
+
+export const overlayDefinitions = (instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []
   const overlays = [1, 2, 3, 4]
+
+  if (!instance.config.variablesShowOverlays) return definitions
 
   overlays.forEach((overlay) => {
     definitions.push(
@@ -19,8 +23,10 @@ export const overlayDefinitions = (_instance: VMixInstance): CompanionVariableDe
   return definitions
 }
 
-export const overlayValues = async (instance: VMixInstance): Promise<InstanceVariableValue> => {
-  const variables: InstanceVariableValue = {}
+export const overlayValues = async (instance: VMixInstance): Promise<VariablesOverlayValues> => {
+  const variables: VariablesOverlayValues = {}
+
+  if (!instance.config.variablesShowOverlays) return variables
 
   const getOverlayInput = async (id: number): Promise<Input | null> => {
     const overlay = instance.data.overlays[id - 1]

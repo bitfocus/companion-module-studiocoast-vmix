@@ -727,6 +727,41 @@ const upgradeV3_9_6: CompanionStaticUpgradeScript<Config> = (_context, props): C
   return changes
 }
 
+const upgradeV4_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
+  const config: any = props.config
+  const changes: CompanionStaticUpgradeResult<Config> = {
+    updatedConfig: null,
+    updatedActions: [],
+    updatedFeedbacks: []
+  }
+	
+	if (config?.strictInputVariableTypes !== undefined) {
+		delete config.strictInputVariableTypes
+	}
+
+	config.variablesShowInputCC = false
+	config.variablesShowInputLayers = false
+	config.variablesShowInputList = false
+	config.variablesShowInputTitleIndex = false
+	config.variablesShowInputTitleName = false
+	config.variablesShowInputVolume = false
+	config.variablesShowAudio = false
+	config.variablesShowDynamicInputs = false
+	config.variablesShowDynamicValues = false
+	config.variablesShowMix = false
+	config.variablesShowOutputs = false
+	config.variablesShowOverlays = false
+	config.variablesShowReplay = false
+	config.variablesShowTransitions = false
+	config.debugSettings = false
+	config.debugVariableDefinitionDelay = 2000
+	config.debugVersionUpdateNotifications = true
+
+	changes.updatedConfig = config
+
+  return changes
+}
+
 export const getUpgrades = (): CompanionStaticUpgradeScript<Config>[] => {
   return [upgradeV1_2_0, upgradeV2_0_0, upgradeV2_0_6, upgradeV3_5_0, adjustmentFix, upgradeV3_6_0, upgradeV3_6_2, upgradeV3_7_0, upgradeV3_8_0, upgradeV3_9_0, upgradeV3_9_6]
 }

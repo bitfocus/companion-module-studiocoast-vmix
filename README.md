@@ -34,6 +34,13 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 
 
 # Recent Patches
+**v4.0.0**
+- Variables:
+  - Changes to Variable generation based on config options allowing granular control over what variables are generated, resulting in significant performance benefits by only generating the variables a user plans to use
+  -  Added `preset` variable for the currently loaded preset
+  - `input_X_remaining_mm:ss` renamed to `input_X_remaining_mm.ss`
+  - `input_X_remaining_mm:ss.ms` renamed to `input_X_remaining_mm.ss.ms`
+
 **v3.9.6**
 - Fixed an issue with the upgrade script migrating existing `Overlay - Functions` actions to support the new parameters in vMix 28
 

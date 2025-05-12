@@ -1,9 +1,13 @@
 import { CompanionVariableDefinition } from '@companion-module/base'
 import VMixInstance from '..'
-import { InstanceVariableValue } from './variables'
+
+type VariablesTransitionIDs = `transition_${number}_effect` | `transition_${number}_duration`
+type VariablesTransitionValues = Record<VariablesTransitionIDs, string | number | undefined>
 
 export const transitionDefinitions = (instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []
+
+  if (!instance.config.variablesShowTransitions) return definitions
 
   instance.data.transitions.forEach((transition) => {
     definitions.push(
@@ -15,10 +19,10 @@ export const transitionDefinitions = (instance: VMixInstance): CompanionVariable
   return definitions
 }
 
-export const transitionValues = async (instance: VMixInstance): Promise<InstanceVariableValue> => {
-  const variables: InstanceVariableValue = {}
+export const transitionValues = async (instance: VMixInstance): Promise<VariablesTransitionValues> => {
+  const variables: VariablesTransitionValues = {}
 
-  variables['connected_state'] = instance.connected.toString()
+  if (!instance.config.variablesShowTransitions) return variables
 
   instance.data.transitions.forEach((transition) => {
     variables[`transition_${transition.number}_effect`] = transition.effect

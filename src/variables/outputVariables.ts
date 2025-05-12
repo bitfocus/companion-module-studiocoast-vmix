@@ -1,9 +1,13 @@
 import { CompanionVariableDefinition } from '@companion-module/base'
 import VMixInstance from '../'
-import { InstanceVariableValue } from './variables'
 
-export const outputDefinitions = (_instance: VMixInstance): CompanionVariableDefinition[] => {
+type VariablesOutputIDs = `fullscreen_${number}_source` | `output_${number}_source` | `output_${number}_ndi` | `output_${number}_srt`
+type VariablesOutputValues = Record<VariablesOutputIDs, string | number | undefined>
+
+export const outputDefinitions = (instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []
+
+  if (!instance.config.variablesShowOutputs) return definitions
 
   definitions.push(
     { name: 'Fullscreen 1 Source', variableId: 'fullscreen_1_source' },
@@ -25,8 +29,10 @@ export const outputDefinitions = (_instance: VMixInstance): CompanionVariableDef
   return definitions
 }
 
-export const outputValues = async (instance: VMixInstance): Promise<InstanceVariableValue> => {
-  const variables: InstanceVariableValue = {}
+export const outputValues = async (instance: VMixInstance): Promise<VariablesOutputValues> => {
+  const variables: VariablesOutputValues = {}
+
+  if (!instance.config.variablesShowOutputs) return variables
 
   variables['fullscreen_1_source'] = ''
   variables['fullscreen_2_source'] = ''
@@ -44,7 +50,6 @@ export const outputValues = async (instance: VMixInstance): Promise<InstanceVari
   variables['output_4_srt'] = ''
 
   instance.data.outputs.forEach((output) => {
-    const variableID = `${output.type}_${output.number}`
     let source = ''
 
     if (output.source === 'Input') {
@@ -55,11 +60,11 @@ export const outputValues = async (instance: VMixInstance): Promise<InstanceVari
       source = output.source
     }
 
-    variables[`${variableID}_source`] = source
+    variables[`${output.type}_${output.number}_source`] = source
 
     if (output.type === 'output') {
-      variables[`${variableID}_ndi`] = output.ndi.toString()
-      variables[`${variableID}_srt`] = output.srt.toString()
+      variables[`output_${output.number}_ndi`] = output.ndi.toString()
+      variables[`output_${output.number}_srt`] = output.srt.toString()
     }
   })
 
