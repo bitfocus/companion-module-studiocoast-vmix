@@ -78,11 +78,13 @@ export const audioValues = async (instance: VMixInstance): Promise<VariablesBusV
     busses.forEach((id) => {
       let audioBus: AudioBus | null = null
 
+
       if (id === 'Selected') {
         audioBus = instance.data.getAudioBus(instance.routingData.bus)
       } else {
         audioBus = instance.data.getAudioBus(id === 'Headphones' ? 'Master' : id)
       }
+			
 
       let volume: number | string | undefined = audioBus?.[id === 'Headphones' ? 'headphonesVolume' : 'volume']
       let volumedB
@@ -100,7 +102,8 @@ export const audioValues = async (instance: VMixInstance): Promise<VariablesBusV
       }
 
       const parsedVolume = parseFloat(volume + '')
-      variables[`bus_${id.toLowerCase()}_volume`] = isNaN(parsedVolume) ? '' : parsedVolume.toString(2)
+			console.log(audioBus?.bus, audioBus?.volume, parsedVolume, parsedVolume.toFixed(2), isNaN(parsedVolume) ? '' : parsedVolume.toFixed(2))
+      variables[`bus_${id.toLowerCase()}_volume`] = isNaN(parsedVolume) ? '' : parsedVolume.toFixed(2)
       variables[`bus_${id.toLowerCase()}_volume_db`] = volumedB
       variables[`bus_${id.toLowerCase()}_volume_linear`] = volumeLinear
 
