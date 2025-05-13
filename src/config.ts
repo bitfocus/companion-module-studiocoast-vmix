@@ -1,4 +1,4 @@
-import { SomeCompanionConfigField } from '@companion-module/base'
+import type { SomeCompanionConfigField } from '@companion-module/base'
 
 export interface Config {
   label: string

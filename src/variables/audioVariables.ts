@@ -1,8 +1,25 @@
-import { CompanionVariableDefinition } from '@companion-module/base'
-import VMixInstance from '../'
-import { AudioBus } from '../data'
+import type { CompanionVariableDefinition } from '@companion-module/base'
+import type VMixInstance from '../'
+import type { AudioBus } from '../data'
 import { AUDIOBUSSESMASTER, volumeTodB, volumeToLinear } from '../utils'
-import { InstanceVariableValue } from './variables'
+
+type VariablesBusIDs =
+  | `bus_selected`
+  | `bus_any_solo`
+  | `bus_${string}_volume`
+  | `bus_${string}_volume_db`
+  | `bus_${string}_volume_linear`
+  | `bus_${string}_meterf${number}`
+  | `bus_${string}_meterf${number}_avg_1s`
+  | `bus_${string}_meterf${number}_avg_3s`
+  | `bus_${string}_meterf${number}_peak_1s`
+  | `bus_${string}_meterf${number}_peak_3s`
+  | `bus_${string}_mute`
+  | `bus_${string}_solo`
+  | `bus_${string}_sendtomaster`
+
+
+type VariablesBusValues = Record<VariablesBusIDs, string | number | undefined>
 
 export const audioDefinitions = (instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []
@@ -47,8 +64,11 @@ export const audioDefinitions = (instance: VMixInstance): CompanionVariableDefin
   return definitions
 }
 
-export const audioValues = async (instance: VMixInstance): Promise<InstanceVariableValue> => {
-  const variables: InstanceVariableValue = {}
+export const audioValues = async (instance: VMixInstance): Promise<VariablesBusValues> => {
+  const variables: VariablesBusValues = {
+		bus_selected: '',
+		bus_any_solo: ''
+	}
   const busses = [...AUDIOBUSSESMASTER, 'Selected']
 
   variables.bus_selected = instance.routingData.bus

@@ -1,6 +1,6 @@
-import { VMixAction, ActionCallback } from './actions'
-import { AudioBusOption, AudioBusMasterOption, EmptyOptions, options, volumeToLinear } from '../utils'
-import VMixInstance from '../index'
+import type { VMixAction, ActionCallback } from './actions'
+import { type AudioBusOption, type AudioBusMasterOption, type EmptyOptions, options, volumeToLinear } from '../utils'
+import type VMixInstance from '../index'
 
 type AudioBusOptions = {
   input: string

@@ -1,5 +1,5 @@
-import { CompanionVariableDefinition } from '@companion-module/base'
-import VMixInstance from '../'
+import type { CompanionVariableDefinition } from '@companion-module/base'
+import type VMixInstance from '../'
 
 type VariablesOutputIDs = `fullscreen_${number}_source` | `output_${number}_source` | `output_${number}_ndi` | `output_${number}_srt`
 type VariablesOutputValues = Record<VariablesOutputIDs, string | number | undefined>

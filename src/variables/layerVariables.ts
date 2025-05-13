@@ -1,6 +1,6 @@
-import { CompanionVariableDefinition } from '@companion-module/base'
-import VMixInstance from '../'
-import { InstanceVariableValue } from './variables'
+import type { CompanionVariableDefinition } from '@companion-module/base'
+import type VMixInstance from '../'
+import type { InstanceVariableValue } from './variables'
 
 type VariablesLayerIDs = 'layer_routing_input' | 'layer_routing_layer'
 type VariablesLayerValues = Record<VariablesLayerIDs, string | number | undefined>

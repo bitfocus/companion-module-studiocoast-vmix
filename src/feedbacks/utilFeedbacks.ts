@@ -1,7 +1,7 @@
 import { combineRgb } from '@companion-module/base'
-import { VMixFeedback, FeedbackCallback } from './feedback'
-import { AUDIOBUSSES, EmptyOptions, options } from '../utils'
-import VMixInstance from '../index'
+import type { VMixFeedback, FeedbackCallback } from './feedback'
+import { AUDIOBUSSES, type EmptyOptions, options } from '../utils'
+import type VMixInstance from '../index'
 
 type MixSelectOptions = {
   mix: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | -2

@@ -15,7 +15,8 @@ const customConfig = [
       'n/no-missing-import': 'off',
       // 'm/no-unpublished-import': 'off',
       '@typescript-eslint/no-unused-expressions': 'off',
-      '@typescript-eslint/no-floating-promises': 'off'
+      '@typescript-eslint/no-floating-promises': 'off',
+      '@typescript-eslint/consistent-type-imports': 'error'
     }
   }
 ]

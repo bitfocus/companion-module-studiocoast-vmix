@@ -1,6 +1,6 @@
-import { VMixAction, ActionCallback } from './actions'
-import { EmptyOptions, MixOptionEntry, options, valueMinMax } from '../utils'
-import VMixInstance from '../index'
+import type { VMixAction, ActionCallback } from './actions'
+import { type EmptyOptions, type MixOptionEntry, options, valueMinMax } from '../utils'
+import type VMixInstance from '../index'
 
 type ColourCorrectionType = 'hue' | 'saturation' | 'liftG' | 'liftB' | 'liftY' | 'gammaR' | 'gammaG' | 'gammaB' | 'gammaY' | 'gainR' | 'gainG' | 'gainB' | 'gainY'
 

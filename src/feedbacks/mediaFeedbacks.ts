@@ -1,7 +1,7 @@
 import { combineRgb } from '@companion-module/base'
-import { VMixFeedback, FeedbackCallback } from './feedback'
+import type { VMixFeedback, FeedbackCallback } from './feedback'
 import { options } from '../utils'
-import VMixInstance from '../index'
+import type VMixInstance from '../index'
 
 type InputStateOptions = {
   type: 'playing' | 'loop'

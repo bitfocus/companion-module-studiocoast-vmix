@@ -1,6 +1,6 @@
-import { CompanionVariableDefinition } from '@companion-module/base'
-import VMixInstance from '../'
-import { Mix } from '../data'
+import type { CompanionVariableDefinition } from '@companion-module/base'
+import type VMixInstance from '../'
+import type { Mix } from '../data'
 import { calcDuration, calcRemaining, volumeTodB } from '../utils'
 
 type MixID = number | 'selected'

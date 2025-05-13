@@ -1,5 +1,5 @@
-import { CompanionVariableDefinition } from '@companion-module/base'
-import VMixInstance from '..'
+import type { CompanionVariableDefinition } from '@companion-module/base'
+import type VMixInstance from '..'
 
 type VariablesTransitionIDs = `transition_${number}_effect` | `transition_${number}_duration`
 type VariablesTransitionValues = Record<VariablesTransitionIDs, string | number | undefined>

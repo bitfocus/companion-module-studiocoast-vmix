@@ -1,6 +1,6 @@
 import { combineRgb } from '@companion-module/base'
 import { graphics } from 'companion-module-utils'
-import { VMixPresetArray } from './presets'
+import type { VMixPresetArray } from './presets'
 
 export const getLayerPanZoomPresets = (): VMixPresetArray => {
   const layerPanZoomPresets: VMixPresetArray = [

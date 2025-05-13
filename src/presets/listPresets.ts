@@ -1,5 +1,5 @@
 import { combineRgb } from '@companion-module/base'
-import { VMixPresetArray } from './presets'
+import type { VMixPresetArray } from './presets'
 
 export const getListPresets = (): VMixPresetArray => {
   const slideListPresets: VMixPresetArray = [

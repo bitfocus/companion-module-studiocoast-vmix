@@ -1,7 +1,30 @@
-import { CompanionVariableDefinition } from '@companion-module/base'
-import VMixInstance from '..'
+import type { CompanionVariableDefinition } from '@companion-module/base'
+import type VMixInstance from '..'
 import { formatTime } from '../utils'
-import { InstanceVariableValue } from './variables'
+import type { InstanceVariableValue } from './variables'
+
+type VariablesGeneralIDs =
+  | `connected_state`
+  | `ftb_active`
+  | 'playlist_active'
+  | 'fullscreen_active'
+  | 'external_active'
+  | 'multicorder_active'
+  | 'stream_1_active'
+  | 'stream_2_active'
+  | 'stream_3_active'
+  | 'stream_4_active'
+  | 'stream_5_active'
+  | 'recording_active'
+  | 'recording_duration'
+  | 'recording_hms'
+  | 'recording_filename1'
+  | 'recording_filepath1'
+  | 'recording_filename2'
+  | 'recording_filepath2'
+  | 'preset'
+
+type VariablesGeneralValues = Record<VariablesGeneralIDs, string | number | undefined>
 
 export const generalDefinitions = (_instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []
@@ -32,24 +55,7 @@ export const generalDefinitions = (_instance: VMixInstance): CompanionVariableDe
 }
 
 export const generalValues = async (instance: VMixInstance): Promise<InstanceVariableValue> => {
-  const variables: InstanceVariableValue = {}
-
-  variables.connected_state = instance.connected.toString()
-  variables.ftb_active = instance.data.status.fadeToBlack.toString()
-  variables.playlist_active = instance.data.status.playList.toString()
-  variables.fullscreen_active = instance.data.status.fullscreen.toString()
-  variables.external_active = instance.data.status.external.toString()
-  variables.multicorder_active = instance.data.status.multiCorder.toString()
-  variables.stream_1_active = instance.data.status.stream[0].toString()
-  variables.stream_2_active = instance.data.status.stream[1].toString()
-  variables.stream_3_active = instance.data.status.stream[2].toString()
-  variables.stream_4_active = instance.data.status.stream[3].toString()
-  variables.stream_5_active = instance.data.status.stream[4].toString()
-  variables.recording_active = instance.data.status.recording.toString()
-  variables.recording_duration = formatTime(instance.data.recording.duration, 's', 'auto')
-  variables.recording_hms = formatTime(instance.data.recording.duration, 's', 'hh:mm:ss')
-
-  const recordingFile1 = instance.data.recording.filename1.split('\\')
+	const recordingFile1 = instance.data.recording.filename1.split('\\')
   const recordingFile2 = instance.data.recording.filename2.split('\\')
   const recordingFilename1 = recordingFile1[recordingFile1.length - 1] || ''
   const recordingFilepath1 = recordingFile1
@@ -58,12 +64,27 @@ export const generalValues = async (instance: VMixInstance): Promise<InstanceVar
   const recordingFilepath2 = recordingFile2
   recordingFilepath2.pop()
 
-  variables.recording_filename1 = recordingFilename1
-  variables.recording_filepath1 = recordingFilepath1.join('\\') + '\\'
-  variables.recording_filename2 = recordingFilename2
-  variables.recording_filepath2 = recordingFilepath2.join('\\') + '\\'
-
-  variables.preset = instance.data.preset
+  const variables: VariablesGeneralValues = {
+    connected_state: instance.connected.toString(),
+    ftb_active: instance.data.status.fadeToBlack.toString(),
+    playlist_active: instance.data.status.playList.toString(),
+    fullscreen_active: instance.data.status.fullscreen.toString(),
+    external_active: instance.data.status.external.toString(),
+    multicorder_active: instance.data.status.multiCorder.toString(),
+    stream_1_active: instance.data.status.stream[0].toString(),
+    stream_2_active: instance.data.status.stream[1].toString(),
+    stream_3_active: instance.data.status.stream[2].toString(),
+    stream_4_active: instance.data.status.stream[3].toString(),
+    stream_5_active: instance.data.status.stream[4].toString(),
+    recording_active: instance.data.status.recording.toString(),
+    recording_duration: formatTime(instance.data.recording.duration, 's', 'auto'),
+    recording_hms: formatTime(instance.data.recording.duration, 's', 'hh:mm:ss'),
+    recording_filename1: recordingFilename1,
+    recording_filepath1: recordingFilepath1.join('\\') + '\\',
+    recording_filename2: recordingFilename2,
+    recording_filepath2: recordingFilepath2.join('\\') + '\\',
+    preset: instance.data.preset
+  }
 
   return variables
 }

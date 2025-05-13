@@ -1,5 +1,5 @@
 import { combineRgb } from '@companion-module/base'
-import { VMixButtonPreset, VMixPresetArray } from './presets'
+import type { VMixButtonPreset, VMixPresetArray } from './presets'
 
 export const getCallPresets = (): VMixPresetArray => {
   const callPresets: VMixPresetArray = []

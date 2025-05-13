@@ -1,8 +1,8 @@
 import { combineRgb } from '@companion-module/base'
-import { Input } from '../data'
-import { VMixFeedback, FeedbackCallback } from './feedback'
+import type { Input } from '../data'
+import type { VMixFeedback, FeedbackCallback } from './feedback'
 import { options } from '../utils'
-import VMixInstance from '../index'
+import type VMixInstance from '../index'
 
 type SelectedDestinationInputOptions = {
   input: string

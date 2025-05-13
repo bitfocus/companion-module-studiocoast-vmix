@@ -1,6 +1,6 @@
 import { combineRgb } from '@companion-module/base'
-import { PresetCategory, VMixPresetArray } from './presets'
-import { MixOptionEntry } from '../utils'
+import type { PresetCategory, VMixPresetArray } from './presets'
+import type { MixOptionEntry } from '../utils'
 
 export const getMixPresets = (): VMixPresetArray => {
   const mixPresets: VMixPresetArray = []

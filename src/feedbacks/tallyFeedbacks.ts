@@ -1,9 +1,9 @@
 import { combineRgb } from '@companion-module/base'
 import { graphics } from 'companion-module-utils'
-import { Input } from '../data'
-import { VMixFeedback, FeedbackCallback } from './feedback'
-import { MixOptionEntry, options } from '../utils'
-import VMixInstance from '../index'
+import type { Input } from '../data'
+import type { VMixFeedback, FeedbackCallback } from './feedback'
+import { type MixOptionEntry, options } from '../utils'
+import type VMixInstance from '../index'
 
 export type TallySelection = '' | 'border' | 'cornerTL' | 'cornerTR' | 'cornerBL' | 'cornerBR' | 'full'
 

@@ -1,6 +1,6 @@
 import { combineRgb } from '@companion-module/base'
-import VMixInstance from '..'
-import { VMixPresetArray } from './presets'
+import type VMixInstance from '..'
+import type { VMixPresetArray } from './presets'
 
 export const getButtonShiftPresets = (instance: VMixInstance): VMixPresetArray => {
   const buttonShiftPresets: VMixPresetArray = [

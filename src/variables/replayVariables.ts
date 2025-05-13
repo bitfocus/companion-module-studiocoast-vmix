@@ -1,5 +1,5 @@
-import { CompanionVariableDefinition } from '@companion-module/base'
-import VMixInstance from '../'
+import type { CompanionVariableDefinition } from '@companion-module/base'
+import type VMixInstance from '../'
 
 type VariablesReplayIDs =
   | 'replay_recording'

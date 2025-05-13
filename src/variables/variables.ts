@@ -1,5 +1,5 @@
-import VMixInstance from '..'
-import { CompanionVariableDefinition } from '@companion-module/base'
+import type VMixInstance from '..'
+import type { CompanionVariableDefinition } from '@companion-module/base'
 import { audioDefinitions, audioValues } from './audioVariables'
 import { dynamicDefinitions, dynamicValues } from './dynamicVariables'
 import { generalDefinitions, generalValues } from './generalVariables'

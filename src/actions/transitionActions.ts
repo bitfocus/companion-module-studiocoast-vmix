@@ -1,6 +1,6 @@
-import { VMixAction, ActionCallback } from './actions'
-import { MixOptionEntry, options, TRANSITIONS } from '../utils'
-import VMixInstance from '../index'
+import type { VMixAction, ActionCallback } from './actions'
+import { type MixOptionEntry, options, TRANSITIONS } from '../utils'
+import type VMixInstance from '../index'
 
 type ProgramCutOptions = {
   input: string

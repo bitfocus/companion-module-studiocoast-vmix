@@ -1,5 +1,5 @@
-import VMixInstance from './'
-import { CallAudioSource, CallVideoSource, Input } from './data'
+import type VMixInstance from './'
+import type { CallAudioSource, CallVideoSource, Input } from './data'
 
 type ActivatorEventHandlers =
   | 'handlerBusAudio'

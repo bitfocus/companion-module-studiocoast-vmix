@@ -1,6 +1,6 @@
-import { CompanionHTTPRequest, CompanionHTTPResponse } from '@companion-module/base'
-import VMixInstance from './index'
-import { VMixData, Input } from './data'
+import type { CompanionHTTPRequest, CompanionHTTPResponse } from '@companion-module/base'
+import type VMixInstance from './index'
+import type { VMixData, Input } from './data'
 import { formatTime } from './utils'
 
 interface DataSourceInput {

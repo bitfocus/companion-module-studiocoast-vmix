@@ -1,5 +1,5 @@
 import { InstanceStatus, TCPHelper as tcp } from '@companion-module/base'
-import VMixInstance from './'
+import type VMixInstance from './'
 
 interface MessageBuffer {
   dataLength: number

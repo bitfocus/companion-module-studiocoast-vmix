@@ -1,7 +1,7 @@
-import { CompanionVariableDefinition } from '@companion-module/base'
-import VMixInstance from '..'
+import type { CompanionVariableDefinition } from '@companion-module/base'
+import type VMixInstance from '..'
 import { calcDuration, calcRemaining, volumeTodB, volumeToLinear } from '../utils'
-import { InstanceVariableValue } from './variables'
+import type { InstanceVariableValue } from './variables'
 
 type VariablesInputIDs =
   | 'input_any_solo'

@@ -1,14 +1,14 @@
 import {
   InstanceBase,
   runEntrypoint,
-  CompanionActionDefinitions,
-  CompanionFeedbackContext,
-  CompanionFeedbackDefinitions,
-  CompanionHTTPRequest,
-  CompanionHTTPResponse,
-  SomeCompanionConfigField
+  type CompanionActionDefinitions,
+  type CompanionFeedbackContext,
+  type CompanionFeedbackDefinitions,
+  type CompanionHTTPRequest,
+  type CompanionHTTPResponse,
+  type SomeCompanionConfigField
 } from '@companion-module/base'
-import { Config, getConfigFields, defaultConfig } from './config'
+import { type Config, getConfigFields, defaultConfig } from './config'
 import { getActions } from './actions/actions'
 import { Activators } from './activators'
 import { VMixData } from './data'

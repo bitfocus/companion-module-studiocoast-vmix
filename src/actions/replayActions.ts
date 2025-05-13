@@ -1,6 +1,6 @@
-import { VMixAction, ActionCallback } from './actions'
-import { EmptyOptions, options } from '../utils'
-import VMixInstance from '../index'
+import type { VMixAction, ActionCallback } from './actions'
+import { type EmptyOptions, options } from '../utils'
+import type VMixInstance from '../index'
 
 type ReplayChannel = 'Current' | 'A' | 'B'
 

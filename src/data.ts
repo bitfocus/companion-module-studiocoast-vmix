@@ -1,6 +1,6 @@
 import * as xml2js from 'xml2js'
 import { get, isEqual } from 'lodash'
-import VMixInstance from './'
+import type VMixInstance from './'
 
 export interface AudioBus {
   bus: 'master' | 'busA' | 'busB' | 'busC' | 'busD' | 'busE' | 'busF' | 'busG'

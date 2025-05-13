@@ -1,6 +1,6 @@
-import { VMixAction, ActionCallback } from './actions'
-import { EmptyOptions, MixOptionEntry, options, valueMinMax } from '../utils'
-import VMixInstance from '../index'
+import type { VMixAction, ActionCallback } from './actions'
+import { type EmptyOptions, type MixOptionEntry, options, valueMinMax } from '../utils'
+import type VMixInstance from '../index'
 
 type MultiViewOverlayOptions = {
   functionID: 'MultiViewOverlay' | 'MultiViewOverlayOff' | 'MultiViewOverlayOn'

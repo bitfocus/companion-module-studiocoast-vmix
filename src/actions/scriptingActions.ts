@@ -1,6 +1,6 @@
-import { VMixAction, ActionCallback } from './actions'
-import { EmptyOptions } from '../utils'
-import VMixInstance from '../index'
+import type { VMixAction, ActionCallback } from './actions'
+import type { EmptyOptions } from '../utils'
+import type VMixInstance from '../index'
 
 type CommandOptions = {
   command: string

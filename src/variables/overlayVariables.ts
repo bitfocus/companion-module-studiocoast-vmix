@@ -1,6 +1,6 @@
-import { CompanionVariableDefinition } from '@companion-module/base'
-import VMixInstance from '..'
-import { Input } from '../data'
+import type { CompanionVariableDefinition } from '@companion-module/base'
+import type VMixInstance from '..'
+import type { Input } from '../data'
 
 type VariablesOverlayIDs = `overlay_${number}_input_name` | `overlay_${number}_input` | `overlay_${number}_pgm` | `overlay_${number}_prv`
 type VariablesOverlayValues = Record<VariablesOverlayIDs, string | number | undefined>

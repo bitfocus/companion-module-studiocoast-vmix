@@ -1,6 +1,6 @@
-import { VMixAction, ActionCallback } from './actions'
-import VMixInstance from '../index'
-import { MixOptionEntry, options } from '../utils'
+import type { VMixAction, ActionCallback } from './actions'
+import type VMixInstance from '../index'
+import { type MixOptionEntry, options } from '../utils'
 
 type OutputSetOptions = {
   functionID: 'SetOutput2' | 'SetOutput3' | 'SetOutput4' | 'SetOutputExternal2' | 'SetOutputFullscreen' | 'SetOutputFullscreen2'

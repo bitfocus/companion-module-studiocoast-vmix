@@ -1,5 +1,5 @@
-import { VMixAction, ActionCallback } from './actions'
-import VMixInstance from '../index'
+import type { VMixAction, ActionCallback } from './actions'
+import type VMixInstance from '../index'
 
 type PlayListFunctionsOptions = {
   functionID: 'StartPlayList' | 'StopPlayList' | 'NextPlayListEntry' | 'PreviousPlayListEntry'

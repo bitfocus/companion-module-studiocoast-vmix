@@ -1,8 +1,8 @@
 import { combineRgb } from '@companion-module/base'
 import { presets } from 'companion-module-utils'
-import { VMixFeedback, FeedbackCallback } from './feedback'
-import { AudioBusOption, AudioBusMasterOption, options, volumeToLinear } from '../utils'
-import VMixInstance from '../index'
+import type { VMixFeedback, FeedbackCallback } from './feedback'
+import { type AudioBusOption, type AudioBusMasterOption, options, volumeToLinear } from '../utils'
+import type VMixInstance from '../index'
 
 type BusMuteOptions = {
   value: AudioBusMasterOption

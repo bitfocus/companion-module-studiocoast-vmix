@@ -1,6 +1,6 @@
 import { combineRgb } from '@companion-module/base'
-import { VMixFeedback, FeedbackCallback } from './feedback'
-import VMixInstance from '../index'
+import type { VMixFeedback, FeedbackCallback } from './feedback'
+import type VMixInstance from '../index'
 
 type DynamicOptions = {
   type: 'dynamicInput' | 'dynamicValue'
