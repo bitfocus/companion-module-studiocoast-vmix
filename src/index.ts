@@ -16,7 +16,6 @@ import { getFeedbacks } from './feedbacks/feedback'
 import { httpHandler } from './http'
 import { getPresets } from './presets/presets'
 import { TCP } from './tcp'
-import { Timer } from './timers'
 import { getUpgrades } from './upgrade'
 import { Variables } from './variables/variables'
 
@@ -84,8 +83,6 @@ class VMixInstance extends InstanceBase<Config> {
   }
   public startTime: Date = new Date()
   public tcp: TCP | null = null
-  public timers: Timer[] = []
-  public timerInterval: ReturnType<typeof setInterval> | null = null
   public variables: Variables | null = null
 
   /**
@@ -116,10 +113,6 @@ class VMixInstance extends InstanceBase<Config> {
     }, 333)
 
     this.checkFeedbacks('mixSelect', 'buttonText')
-
-    this.timerInterval = setInterval(() => {
-      if (this.variables !== null && this.timers.length > 0) this.variables.updateTimerVariables()
-    }, 100)
   }
 
   /**
@@ -152,7 +145,6 @@ class VMixInstance extends InstanceBase<Config> {
     if (this.buttonShift.blinkInterval !== null) {
       clearInterval(this.buttonShift.blinkInterval)
     }
-    if (this.timerInterval) clearInterval(this.timerInterval)
 
     if (this.variables?.definitionsUpdateDebounce) {
       clearTimeout(this.variables.definitionsUpdateDebounce)

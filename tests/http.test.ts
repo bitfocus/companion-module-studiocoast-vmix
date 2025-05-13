@@ -278,22 +278,6 @@ describe('HTTP Handler', () => {
     ], null, 2))
   })
 
-  it('Should return current timers', async () => {
-    const request = {
-      headers: {},
-      baseUrl: '',
-      hostname: '',
-      ip: '',
-      method: 'GET',
-      originalUrl: '',
-      path: 'timers',
-      query: {}
-    }
-
-    const response = await httpHandler(mockInstance as any, request)
-    expect(response.status).toEqual(200)
-    expect(response.body).toEqual(JSON.stringify([], null, 2))
-  })
 
   it('Should return current transitions', async () => {
     const request = {

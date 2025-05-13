@@ -1,5 +1,4 @@
 import { VMixAction, ActionCallback } from './actions'
-import { Timer } from '../timers'
 import { EmptyOptions, options } from '../utils'
 import VMixInstance from '../index'
 
@@ -14,44 +13,14 @@ type BusSelectOptions = {
 
 type ButtonShiftOptions = EmptyOptions
 
-type DataSourceTimerOptions = {
-  id: string
-  state: 'start' | 'stop' | 'reset'
-}
-
-type DataSourceTimerSetOptions = {
-  id: string
-  time: string
-}
-
-type DataSourceTimerCreateTimeOptions = {
-  id: string
-  time: number
-}
-
-type DataSourceTimerUpdateTimeOptions = {
-  id: string
-  type: 'set' | 'reset'
-  time: number
-  value: string
-}
-
 type MixSelectCallback = ActionCallback<'mixSelect', MixSelectOptions>
 type BusSelectCallback = ActionCallback<'busSelect', BusSelectOptions>
 type ButtonShiftCallback = ActionCallback<'buttonShift', ButtonShiftOptions>
-type DataSourceTimerCallback = ActionCallback<'dataSourceTimer', DataSourceTimerOptions>
-type DataSourceTimerSetCallback = ActionCallback<'dataSourceTimerSet', DataSourceTimerSetOptions>
-type DataSourceTimerCreateTimeCallback = ActionCallback<'dataSourceTimerCreateTime', DataSourceTimerCreateTimeOptions>
-type DataSourceTimerUpdateTimeCallback = ActionCallback<'dataSourceTimerUpdateTime', DataSourceTimerUpdateTimeOptions>
 
 export interface UtilActions {
   mixSelect: VMixAction<MixSelectCallback>
   busSelect: VMixAction<BusSelectCallback>
   buttonShift: VMixAction<ButtonShiftCallback>
-  dataSourceTimer: VMixAction<DataSourceTimerCallback>
-  dataSourceTimerSet: VMixAction<DataSourceTimerSetCallback>
-  dataSourceTimerCreateTime: VMixAction<DataSourceTimerCreateTimeCallback>
-  dataSourceTimerUpdateTime: VMixAction<DataSourceTimerUpdateTimeCallback>
 
   [key: string]: VMixAction<any>
 }
@@ -60,10 +29,6 @@ export type UtilCallbacks =
   | MixSelectCallback
   | BusSelectCallback
   | ButtonShiftCallback
-  | DataSourceTimerCallback
-  | DataSourceTimerSetCallback
-  | DataSourceTimerCreateTimeCallback
-  | DataSourceTimerUpdateTimeCallback
 
 export const vMixUtilActions = (instance: VMixInstance, _sendBasicCommand: (action: Readonly<UtilCallbacks>) => Promise<void>): UtilActions => {
   return {
@@ -175,145 +140,5 @@ export const vMixUtilActions = (instance: VMixInstance, _sendBasicCommand: (acti
         instance.checkFeedbacks(...feedbacks)
       }
     },
-
-    dataSourceTimer: {
-      name: 'Util - DataSource Timer State',
-      description: 'Controls the Companion vMix timers',
-      options: [
-        {
-          type: 'dropdown',
-          label: 'State',
-          id: 'state',
-          default: 'start',
-          choices: [
-            { id: 'start', label: 'Start' },
-            { id: 'stop', label: 'Stop' },
-            { id: 'reset', label: 'Reset' }
-          ]
-        },
-        {
-          type: 'textinput',
-          label: 'Timer ID',
-          id: 'id',
-          default: '',
-          useVariables: true
-        }
-      ],
-      callback: async (action) => {
-        if (action.options.id === '') return
-        const id = (await instance.parseOption(action.options.id))[instance.buttonShift.state]
-
-        let timer = instance.timers.find((timer) => timer.id === id)
-        if (!timer) {
-          timer = new Timer(id)
-          timer.setState(action.options.state)
-
-          instance.timers.push(timer)
-        } else {
-          timer.setState(action.options.state)
-        }
-      }
-    },
-
-    dataSourceTimerSet: {
-      name: 'Util - DataSource Timer Set Time',
-      description: 'Sets the Companion vMix timers',
-      options: [
-        {
-          type: 'textinput',
-          label: 'Timer ID',
-          id: 'id',
-          default: '',
-          useVariables: true
-        },
-        {
-          type: 'textinput',
-          label: 'Time',
-          id: 'time',
-          default: '00:00:00.000'
-        }
-      ],
-      callback: async (action) => {
-        const id = (await instance.parseOption(action.options.id))[instance.buttonShift.state]
-        const timer = instance.timers.find((timer) => timer.id === id)
-        if (!timer) return
-
-        timer.setStart(action.options.time)
-      }
-    },
-
-    dataSourceTimerCreateTime: {
-      name: 'Util - DataSource Timer Create Laptime',
-      description: 'Creates a new Lap within Companion vMix timers',
-      options: [
-        {
-          type: 'textinput',
-          label: 'Timer ID',
-          id: 'id',
-          default: '',
-          useVariables: true
-        },
-        {
-          type: 'number',
-          label: 'Lap ID (0 for next lap)',
-          id: 'time',
-          default: 0,
-          min: 0,
-          max: 1000
-        }
-      ],
-      callback: async (action) => {
-        const id = (await instance.parseOption(action.options.id))[instance.buttonShift.state]
-        const timer = instance.timers.find((timer) => timer.id === id)
-        if (!timer) return
-
-        timer.setTime(action.options.time, new Date().getTime())
-      }
-    },
-
-    dataSourceTimerUpdateTime: {
-      name: 'Util - DataSource Timer Update Time',
-      description: 'Updates a Companion vMix timer',
-      options: [
-        {
-          type: 'textinput',
-          label: 'Timer ID',
-          id: 'id',
-          default: '',
-          useVariables: true
-        },
-        {
-          type: 'dropdown',
-          label: 'State',
-          id: 'type',
-          default: 'set',
-          choices: [
-            { id: 'set', label: 'Set' },
-            { id: 'reset', label: 'Reset' }
-          ]
-        },
-        {
-          type: 'number',
-          label: 'Lap ID',
-          id: 'time',
-          default: 1,
-          min: 1,
-          max: 1000
-        },
-        {
-          type: 'textinput',
-          label: 'Time',
-          id: 'value',
-          default: '00:00:00.000'
-        }
-      ],
-      callback: async (action) => {
-        const id = (await instance.parseOption(action.options.id))[instance.buttonShift.state]
-        const timer = instance.timers.find((timer) => timer.id === id)
-        if (!timer) return
-
-        timer.setTime(action.options.time, action.options.type === 'set' ? action.options.value : undefined)
-      }
-    }
   }
 }

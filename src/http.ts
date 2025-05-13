@@ -175,19 +175,6 @@ export const httpHandler = async (instance: VMixInstance, request: CompanionHTTP
     }
   }
 
-  // Returns data for existing instance timers
-  const getTimers = () => {
-    const timers: any = []
-    request.query.defaultValue = request.query.default
-
-    instance.timers.forEach((timer) => {
-      timers.push(timer.get(request.query))
-    })
-
-    response.status = 200
-    response.body = JSON.stringify(timers, null, 2)
-  }
-
   // Returns preset transition types and durations
   const getTransitions = () => {
     const data = instance.data.transitions
@@ -243,7 +230,6 @@ export const httpHandler = async (instance: VMixInstance, request: CompanionHTTP
       data: getData,
       dynamics: getDynamics,
       inputs: getInputs,
-      timers: getTimers,
       transitions: getTransitions,
       variables: getVariables,
       variabledef: getVariableDefinitions

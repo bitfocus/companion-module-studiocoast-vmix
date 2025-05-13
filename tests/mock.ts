@@ -174,7 +174,6 @@ export const mockInstance: any = {
     sendCommand: jest.fn(),
     updateActivatorData: jest.fn()
   },
-  timers: [],
   variables: {
     currentVariables: {
       connected_state: 'true',

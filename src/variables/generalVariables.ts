@@ -3,7 +3,7 @@ import VMixInstance from '..'
 import { formatTime } from '../utils'
 import { InstanceVariableValue } from './variables'
 
-export const generalDefinitions = (instance: VMixInstance): CompanionVariableDefinition[] => {
+export const generalDefinitions = (_instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []
 
   definitions.push(
@@ -27,25 +27,6 @@ export const generalDefinitions = (instance: VMixInstance): CompanionVariableDef
     { name: 'Recording File Path 2', variableId: 'recording_filepath2' },
     { name: 'Preset', variableId: 'preset' }
   )
-
-  // Deprecated
-  instance.timers.forEach((timer) => {
-    const formats = ['hh:mm:ss', 'mm:ss', 'mm:ss.ms', 'mm:ss.sss']
-    const dataArr = [
-      timer.get({ defaultValue: '00:00:00', format: 'hh:mm:ss' }),
-      timer.get({ defaultValue: '00:00', format: 'mm:ss' }),
-      timer.get({ defaultValue: '00:00.0', format: 'mm:ss.ms' }),
-      timer.get({ defaultValue: '00:00.000', format: 'mm:ss.sss' })
-    ]
-
-    dataArr.forEach((data, index) => {
-      const prefix = `timer_${timer.id}_${formats[index]}_`
-
-      for (const key in data) {
-        definitions.push({ name: `Timer ${timer.id} ${formats[index]} ${key}`, variableId: prefix + key })
-      }
-    })
-  })
 
   return definitions
 }
@@ -82,7 +63,7 @@ export const generalValues = async (instance: VMixInstance): Promise<InstanceVar
   variables.recording_filename2 = recordingFilename2
   variables.recording_filepath2 = recordingFilepath2.join('\\') + '\\'
 
-	variables.preset = instance.data.preset
+  variables.preset = instance.data.preset
 
   return variables
 }
