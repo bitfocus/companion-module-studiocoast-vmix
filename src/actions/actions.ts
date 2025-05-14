@@ -1,4 +1,4 @@
-import type { CompanionActionEvent, SomeCompanionActionInputField, CompanionFeedbackContext, CompanionActionContext } from '@companion-module/base'
+import type { CompanionActionEvent, SomeCompanionActionInputField, CompanionActionContext } from '@companion-module/base'
 import { type AudioActions, type AudioCallbacks, vMixAudioActions } from './audioActions'
 import { type BrowserActions, type BrowserCallbacks, vMixBrowserActions } from './browserActions'
 import { type DataSourceActions, type DataSourceCallbacks, vMixDataSourceActions } from './dataSourceActions'
@@ -84,7 +84,7 @@ export interface VMixAction<T> {
   name: string
   description?: string
   options: InputFieldWithDefault[]
-  callback: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>, context: CompanionFeedbackContext) => void | Promise<void>
+  callback: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>, context: CompanionActionContext) => void | Promise<void>
   subscribe?: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>) => void
   unsubscribe?: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>) => void
 }
