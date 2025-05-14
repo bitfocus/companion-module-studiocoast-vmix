@@ -15,16 +15,11 @@ type VariablesMixIDs =
   | `mix_${MixID}_${MixType}_audio`
   | `mix_${MixID}_${MixType}_mute`
   | `mix_${MixID}_${MixType}_framedelay`
-  | `mix_${MixID}_${MixType}_meterf1`
-  | `mix_${MixID}_${MixType}_meterf2`
-  | `mix_${MixID}_${MixType}_meterf1_avg_1s`
-  | `mix_${MixID}_${MixType}_meterf2_avg_1s`
-  | `mix_${MixID}_${MixType}_meterf1_avg_3s`
-  | `mix_${MixID}_${MixType}_meterf2_avg_3s`
-  | `mix_${MixID}_${MixType}_meterf1_peak_1s`
-  | `mix_${MixID}_${MixType}_meterf2_peak_1s`
-  | `mix_${MixID}_${MixType}_meterf1_peak_3s`
-  | `mix_${MixID}_${MixType}_meterf2_peak_3s`
+  | `mix_${MixID}_${MixType}_meter${'f1' | 'f2'}`
+  | `mix_${MixID}_${MixType}_meter${'f1' | 'f2'}_avg_1s`
+  | `mix_${MixID}_${MixType}_meter${'f1' | 'f2'}_avg_3s`
+  | `mix_${MixID}_${MixType}_meter${'f1' | 'f2'}_peak_1s`
+  | `mix_${MixID}_${MixType}_meter${'f1' | 'f2'}_peak_3s`
   | `mix_${MixID}_${MixType}_duration`
   | `mix_${MixID}_${MixType}_remaining`
   | `mix_${MixID}_${MixType}_position_panx`

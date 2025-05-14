@@ -51,21 +51,14 @@ type VariablesInputIDs =
   | `input_${string}_volume_db`
   | `input_${string}_volume_linear`
   | `input_${string}_framedelay`
-  | `input_${string}_volume_f1`
-  | `input_${string}_volume_f1_db`
-  | `input_${string}_volume_f1_linear`
-  | `input_${string}_volume_f2`
-  | `input_${string}_volume_f2_db`
-  | `input_${string}_volume_f2_linear`
-  | `input_${string}_meterf1`
-  | `input_${string}_meterf2`
-  | `input_${string}_meterf1_avg_1s`
-  | `input_${string}_meterf2_avg_1s`
-  | `input_${string}_meterf1_avg_3s`
-  | `input_${string}_meterf2_avg_3s`
-  | `input_${string}_meterf1_peak_1s`
-  | `input_${string}_meterf2_peak_1s`
-  | `input_${string}_meterf1_peak_3s`
+  | `input_${string}_volume_${'f1' | 'f2'}`
+  | `input_${string}_volume_${'f1' | 'f2'}_db`
+  | `input_${string}_volume_${'f1' | 'f2'}_linear`
+  | `input_${string}_meter${'f1' | 'f2'}`
+  | `input_${string}_meter${'f1' | 'f2'}_avg_1s`
+  | `input_${string}_meter${'f1' | 'f2'}_avg_3s`
+  | `input_${string}_meter${'f1' | 'f2'}_peak_1s`
+  | `input_${string}_meter${'f1' | 'f2'}_peak_3s`
   | `input_${string}_meterf2_peak_3s`
   | `input_${string}_position_panx`
   | `input_${string}_position_pany`

@@ -64,22 +64,14 @@ type VariablesDynamicIDs =
   | `dynamic_input_${number}_volume`
   | `dynamic_input_${number}_volume_db`
   | `dynamic_input_${number}_volume_linear`
-  | `dynamic_input_${number}_volume_f1`
-  | `dynamic_input_${number}_volume_f1_db`
-  | `dynamic_input_${number}_volume_f1_linear`
-  | `dynamic_input_${number}_volume_f2`
-  | `dynamic_input_${number}_volume_f2_db`
-  | `dynamic_input_${number}_volume_f2_linear`
-  | `dynamic_input_${number}_meterf1`
-  | `dynamic_input_${number}_meterf2`
-  | `dynamic_input_${number}_meterf1_avg_1s`
-  | `dynamic_input_${number}_meterf2_avg_1s`
-  | `dynamic_input_${number}_meterf1_avg_3s`
-  | `dynamic_input_${number}_meterf2_avg_3s`
-  | `dynamic_input_${number}_meterf1_peak_1s`
-  | `dynamic_input_${number}_meterf2_peak_1s`
-  | `dynamic_input_${number}_meterf1_peak_3s`
-  | `dynamic_input_${number}_meterf2_peak_3s`
+  | `dynamic_input_${number}_volume_${'f1' | 'f2'}`
+  | `dynamic_input_${number}_volume_${'f1' | 'f2'}_db`
+  | `dynamic_input_${number}_volume_${'f1' | 'f2'}_linear`
+  | `dynamic_input_${number}_meter${'f1' | 'f2'}`
+  | `dynamic_input_${number}_meter${'f1' | 'f2'}_avg_1s`
+  | `dynamic_input_${number}_meter${'f1' | 'f2'}_avg_3s`
+  | `dynamic_input_${number}_meter${'f1' | 'f2'}_peak_1s`
+  | `dynamic_input_${number}_meter${'f1' | 'f2'}_peak_3s`
   | `dynamic_input_${number}_framedelay`
   | `dynamic_input_${number}_list_${number}_name`
   | `dynamic_input_${number}_list_${number}_selected`
