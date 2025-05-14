@@ -253,10 +253,12 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
           id: 'value',
           default: '',
           choices: [
-            { id: '', label: 'All' },
-            { id: '0', label: '0' },
-            { id: '1', label: '1' },
-            { id: '2', label: '2' }
+            { id: '', label: 'Any' },
+            { id: '0', label: '1' },
+            { id: '1', label: '2' },
+            { id: '2', label: '3' },
+            { id: '3', label: '4' },
+            { id: '4', label: '5' },
           ],
           isVisible: (options) => {
             return options.status === 'streaming'

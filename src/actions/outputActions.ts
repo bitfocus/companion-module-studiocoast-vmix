@@ -151,7 +151,9 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: (ac
             { id: '', label: 'All' },
             { id: '0', label: '1' },
             { id: '1', label: '2' },
-            { id: '2', label: '3' }
+            { id: '2', label: '3' },
+            { id: '3', label: '4' },
+            { id: '4', label: '5' },
           ],
           isVisible: (options) => {
             const functionID = options.functionID + ''

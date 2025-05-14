@@ -40,6 +40,7 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 - Added `preset` variable for the currently loaded preset
 - `input_X_remaining_mm:ss` renamed to `input_X_remaining_mm.ss`
 - `input_X_remaining_mm:ss.ms` renamed to `input_X_remaining_mm.ss.ms`
+- Fixed missing Stream 4 and 5 options in actions/feedbacks
 
 **v3.9.6**
 - Fixed an issue with the upgrade script migrating existing `Overlay - Functions` actions to support the new parameters in vMix 28
