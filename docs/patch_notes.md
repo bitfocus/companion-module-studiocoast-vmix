@@ -2,7 +2,7 @@
 
 **v4.0.0**
 - Changes to Variable generation based on config options allowing granular control over what variables are generated, resulting in significant performance benefits by only generating the variables a user plans to use
-- Added Variable list doc [docs/variables.md](./docs/variables.md)
+- Added Variable list doc [docs/variables.md](./variables.md)
 - Added `preset` variable for the currently loaded preset
 - Added `input_X_full_title`, `mix_X_preview_full_title`, `mix_X_program_full_title`, `dynamic_input_X_full_title` variables, which for inputs such as Lists contain the short title and the name of the current item
 - Added `input_X_selectedindex` variable for Photo, VideoList, and VirtualSet, input types
