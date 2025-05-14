@@ -2,10 +2,10 @@
 
 `BusID` = `master`, `headphones`, `a`, `b`, `c`, `d`, `e`, `f`, `g` | `AudioChannel` = `f1` or `f2`
 
-| Variable                               |
-| -------------------------------------- |
-| bus_selected                           |
-| bus_any_solo                           |
+| Variable                                   |
+| ------------------------------------------ |
+| bus_selected                               |
+| bus_any_solo                               |
 | bus\_`BusID`\_volume                       |
 | bus\_`BusID`\_volume_db                    |
 | bus\_`BusID`\_volume_linear                |
@@ -27,6 +27,7 @@
 | dynamic_value\_`X`                                 |
 | dynamic_input\_`X`                                 |
 | dynamic_input\_`X`\_name                           |
+| dynamic_input\_`X`\_full_title                     |
 | dynamic_input\_`X`\_number                         |
 | dynamic_input\_`X`\_guid                           |
 | dynamic_input\_`X`\_type                           |
@@ -134,6 +135,7 @@
 | ------------------------------------------------ |
 | input_any_solo                                   |
 | input\_`InputID`\_name                           |
+| input\_`InputID`\_full_title                     |
 | input\_`InputID`\_guid                           |
 | input\_`InputID`\_type                           |
 | input\_`InputID`\_number                         |
@@ -225,6 +227,7 @@
 | ------------------------------------------- |
 | mix\_`X`\_`Y`                               |
 | mix\_`X`\_`Y`\_name                         |
+| mix\_`X`\_`Y`\_full_title                   |
 | mix\_`X`\_`Y`\_guid                         |
 | mix\_`X`\_`Y`\_playing                      |
 | mix\_`X`\_`Y`\_loop                         |

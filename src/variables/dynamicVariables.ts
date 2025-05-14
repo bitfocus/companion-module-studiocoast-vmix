@@ -7,6 +7,7 @@ type VariablesDynamicIDs =
   | `dynamic_input_${number}`
   | `dynamic_value_${number}`
   | `dynamic_input_${number}_name`
+  | `dynamic_input_${number}_full_title`
   | `dynamic_input_${number}_number`
   | `dynamic_input_${number}_guid`
   | `dynamic_input_${number}_type`
@@ -97,6 +98,7 @@ export const dynamicDefinitions = async (instance: VMixInstance): Promise<Compan
     if (input && instance.config.variablesShowDynamicInputs) {
       definitions.push(
         { name: `Dynamic Input ${dynamic + 1} Short Title`, variableId: `dynamic_input_${dynamic + 1}_name` },
+        { name: `Dynamic Input ${dynamic + 1} Full Title`, variableId: `dynamic_input_${dynamic + 1}_full_title` },
         { name: `Dynamic Input ${dynamic + 1} Number`, variableId: `dynamic_input_${dynamic + 1}_number` },
         { name: `Dynamic Input ${dynamic + 1} GUID`, variableId: `dynamic_input_${dynamic + 1}_guid` },
         { name: `Dynamic Input ${dynamic + 1} Type`, variableId: `dynamic_input_${dynamic + 1}_type` }
@@ -229,6 +231,7 @@ export const dynamicValues = async (instance: VMixInstance): Promise<InstanceVar
 
       if (input) {
         variables[`dynamic_input_${dynamic + 1}_name`] = input.shortTitle || input.title
+        variables[`dynamic_input_${dynamic + 1}_full_title`] = input.title
         variables[`dynamic_input_${dynamic + 1}_number`] = input.number
         variables[`dynamic_input_${dynamic + 1}_guid`] = input.key
         variables[`dynamic_input_${dynamic + 1}_type`] = input.type

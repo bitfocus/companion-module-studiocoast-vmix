@@ -9,6 +9,7 @@ type MixType = 'preview' | 'program'
 type VariablesMixIDs =
   | `mix_${MixID}_${MixType}`
   | `mix_${MixID}_${MixType}_name`
+  | `mix_${MixID}_${MixType}_full_title`
   | `mix_${MixID}_${MixType}_guid`
   | `mix_${MixID}_${MixType}_playing`
   | `mix_${MixID}_${MixType}_loop`
@@ -83,6 +84,7 @@ export const mixDefinitions = async (instance: VMixInstance): Promise<CompanionV
       definitions.push(
         { name: `Mix ${id} ${type}`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}` },
         { name: `Mix ${id} ${type} Short Title`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_name` },
+        { name: `Mix ${id} ${type} Full Title`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_full_title` },
         { name: `Mix ${id} ${type} GUID`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_guid` },
         { name: `Mix ${id} ${type} Playing`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_playing` },
         { name: `Mix ${id} ${type} Loop`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_loop` },
@@ -198,6 +200,7 @@ export const mixValues = async (instance: VMixInstance): Promise<VariablesMixVal
       const inputAudio = input.muted === undefined ? false : input.muted
       variables[`mix_${id}_${type}`] = mix[type as 'preview' | 'program']
       variables[`mix_${id}_${type}_name`] = await instance.data.getInputTitle(mix[type as 'preview' | 'program'])
+      variables[`mix_${id}_${type}_full_title`] = input.title
       variables[`mix_${id}_${type}_guid`] = input.key
       variables[`mix_${id}_${type}_playing`] = (input.state === 'Running').toString()
       variables[`mix_${id}_${type}_loop`] = input.loop.toString()

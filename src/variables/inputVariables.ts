@@ -6,6 +6,7 @@ import type { InstanceVariableValue } from './variables'
 type VariablesInputIDs =
   | 'input_any_solo'
   | `input_${string}_name`
+  | `input_${string}_full_title`
   | `input_${string}_guid`
   | `input_${string}_type`
   | `input_${string}_number`
@@ -111,9 +112,11 @@ export const inputDefinitions = (instance: VMixInstance): CompanionVariableDefin
       if (index === 2) inputSet = inputKeyVariables
 
       inputSet.add({ name: `Input ${title} Short Title`, variableId: `input_${type}_name` })
+      inputSet.add({ name: `Input ${title} Full Title`, variableId: `input_${type}_full_Title` })
       inputSet.add({ name: `Input ${title} GUID`, variableId: `input_${type}_guid` })
       inputSet.add({ name: `Input ${title} Type`, variableId: `input_${type}_type` })
       inputSet.add({ name: `Input ${title} Number`, variableId: `input_${type}_number` })
+      inputSet.add({ name: `Input ${title} Full Title`, variableId: `input_${type}_number` })
 
       instance.data.mix
         .filter((mix) => mix.active)
@@ -301,6 +304,7 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
 
     for (const type of inputTypes) {
       variables[`input_${type}_name`] = input.shortTitle || input.title
+      variables[`input_${type}_full_title`] = input.title
       variables[`input_${type}_number`] = input.number
       variables[`input_${type}_guid`] = input.key
       variables[`input_${type}_type`] = input.type
