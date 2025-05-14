@@ -173,7 +173,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
         const selected = action.options.value === 'Selected' ? instance.routingData.bus : action.options.value
         const commandOptions = { ...action.options, value: selected }
 
-        sendBasicCommand({ ...action, options: commandOptions })
+        return sendBasicCommand({ ...action, options: commandOptions })
       }
     },
 
@@ -186,7 +186,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
         if (selected === 'Master') return
         const commandOptions = { ...action.options, value: selected }
 
-        sendBasicCommand({ ...action, options: commandOptions })
+        return sendBasicCommand({ ...action, options: commandOptions })
       }
     },
 
@@ -219,7 +219,8 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
           command += `${action.options.functionID} Value=${selected}`
         }
 
-        if (instance.tcp) instance.tcp.sendCommand(command)
+        if (instance.tcp) return instance.tcp.sendCommand(command)
+        return
       }
     },
 
@@ -285,7 +286,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
         if (selected === 'Master') return
         const commandOptions = { ...action.options, value: selected }
 
-        sendBasicCommand({ ...action, options: commandOptions })
+        return sendBasicCommand({ ...action, options: commandOptions })
       }
     },
 
@@ -345,7 +346,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
         if (isNaN(target)) return
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION SetVolume input=${input.key}&Value=${target}`)
+          return instance.tcp.sendCommand(`FUNCTION SetVolume input=${input.key}&Value=${target}`)
         }
       }
     },
@@ -378,7 +379,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
         const shortcut = selected === 'Master' ? `SetMasterVolumeFade` : `SetBus${selected}VolumeFade`
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION ${shortcut} value=${fadeVol},${fadeTime}`)
+          return instance.tcp.sendCommand(`FUNCTION ${shortcut} value=${fadeVol},${fadeTime}`)
         }
       }
     },
@@ -408,7 +409,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
         const fadeMin = (await instance.parseOption(action.options.fadeMin, context))[instance.buttonShift.state]
         const fadeTime = (await instance.parseOption(action.options.fadeTime, context))[instance.buttonShift.state]
 
-        if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetVolumeFade Value=${fadeMin},${fadeTime}&input=${encodeURIComponent(input)}`)
+        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetVolumeFade Value=${fadeMin},${fadeTime}&input=${encodeURIComponent(input)}`)
       }
     },
 
@@ -448,7 +449,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
         if (isNaN(target)) return
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION ${command} Value=${target}`)
+          return instance.tcp.sendCommand(`FUNCTION ${command} Value=${target}`)
         }
       }
     },
@@ -542,7 +543,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
         if (newValue < 0) newValue = 0
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION ${channel === 1 ? 'SetVolumeChannel1' : 'SetVolumeChannel2'} Input=${input.key}&Value=${newValue}`)
+          return instance.tcp.sendCommand(`FUNCTION ${channel === 1 ? 'SetVolumeChannel1' : 'SetVolumeChannel2'} Input=${input.key}&Value=${newValue}`)
         }
       }
     },
@@ -593,7 +594,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
         if (newValue < 0) newValue = 0
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION SetVolumeChannelMixer Input=${input.key}&Value=${channel},${newValue}`)
+          return instance.tcp.sendCommand(`FUNCTION SetVolumeChannelMixer Input=${input.key}&Value=${channel},${newValue}`)
         }
       }
     },

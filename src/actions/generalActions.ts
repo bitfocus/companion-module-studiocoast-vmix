@@ -62,7 +62,7 @@ export const vMixGeneralActions = (instance: VMixInstance, sendBasicCommand: Sen
         const value = (await instance.parseOption(action.options.value, context))[instance.buttonShift.state]
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION SetFader Value=${value}`)
+          return instance.tcp.sendCommand(`FUNCTION SetFader Value=${value}`)
         }
       }
     },
@@ -104,7 +104,7 @@ export const vMixGeneralActions = (instance: VMixInstance, sendBasicCommand: Sen
       callback: async (action, context) => {
         const value = (await instance.parseOption(action.options.value, context))[instance.buttonShift.state]
 
-        if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetDynamic${action.options.type}${action.options.number} Value=${value}`)
+        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetDynamic${action.options.type}${action.options.number} Value=${value}`)
       }
     }
   }

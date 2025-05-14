@@ -91,7 +91,7 @@ export type LayerCallbacks =
   | ClearMultiViewOverlaySelectionCallback
   | SetLayerPositionCallback
 
-export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand:SendBasicCommand): LayerActions => {
+export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): LayerActions => {
   return {
     multiViewOverlay: {
       name: 'Layer - Toggle/On/Off Multiview Layer on Input',
@@ -151,7 +151,8 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand:SendBa
         const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
         const layer = (await instance.parseOption(action.options.layerInput, context))[instance.buttonShift.state]
 
-        if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${encodeURIComponent(input)}&Value=${action.options.layer},${encodeURIComponent(layer)}`)
+        if (instance.tcp)
+          return instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${encodeURIComponent(input)}&Value=${action.options.layer},${encodeURIComponent(layer)}`)
       }
     },
 
@@ -187,7 +188,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand:SendBa
         if (mix === -2) mix = mixVariable
 
         if (instance.tcp)
-          instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].preview}&Value=${action.options.layer},${encodeURIComponent(input)}`)
+          return instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].preview}&Value=${action.options.layer},${encodeURIComponent(input)}`)
       }
     },
 
@@ -223,7 +224,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand:SendBa
         if (mix === -2) mix = mixVariable
 
         if (instance.tcp)
-          instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].program}&Value=${action.options.layer},${encodeURIComponent(input)}`)
+          return instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].program}&Value=${action.options.layer},${encodeURIComponent(input)}`)
       }
     },
 
@@ -298,7 +299,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand:SendBa
         if (instance.routingData.layer.destinationInput !== null && instance.routingData.layer.destinationLayer !== null) {
           const inputValue = input === '0' || input === '' ? '' : input
           if (instance.tcp)
-            instance.tcp.sendCommand(
+            return instance.tcp.sendCommand(
               `FUNCTION SetMultiViewOverlay Input=${encodeURIComponent(
                 instance.routingData.layer.destinationInput
               )}&Value=${instance.routingData.layer.destinationLayer},${encodeURIComponent(inputValue)}`
@@ -551,7 +552,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand:SendBa
         }
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(cmd)
+          return instance.tcp.sendCommand(cmd)
         }
       }
     }

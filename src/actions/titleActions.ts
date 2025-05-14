@@ -157,7 +157,7 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
         const indexNaNCheck = isNaN(parseInt(index, 10))
 
         if (instance.tcp)
-          instance.tcp.sendCommand(
+          return instance.tcp.sendCommand(
             `FUNCTION ${action.options.functionID} Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'}=${encodeURIComponent(index)}`
           )
       }
@@ -192,7 +192,7 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
         const indexNaNCheck = isNaN(parseInt(index, 10))
 
         if (instance.tcp)
-          instance.tcp.sendCommand(
+          return instance.tcp.sendCommand(
             `FUNCTION SetCountdown Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'}=${encodeURIComponent(index)}&value=${value}`
           )
       }
@@ -227,7 +227,7 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
         const indexNaNCheck = isNaN(parseInt(index, 10))
 
         if (instance.tcp)
-          instance.tcp.sendCommand(
+          return instance.tcp.sendCommand(
             `FUNCTION ChangeCountdown Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'}=${encodeURIComponent(index)}&value=${value}`
           )
       }
@@ -266,7 +266,7 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
           instance.log('warn', "'Seconds' for adjusting a countdown must be a whole number")
         } else {
           if (instance.tcp)
-            instance.tcp.sendCommand(
+            return instance.tcp.sendCommand(
               `FUNCTION AdjustCountdown Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'}=${encodeURIComponent(index)}&Value=${value}`
             )
         }
@@ -310,7 +310,7 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
 
         if (action.options.adjustment === 'Set') {
           if (action.options.encode) text = encodeURIComponent(text)
-          if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetText Input=${encodeURIComponent(input)}&${indexNaNCheck}=${index}&Value=${text}`)
+          if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetText Input=${encodeURIComponent(input)}&${indexNaNCheck}=${index}&Value=${text}`)
         } else {
           if (isNaN(parseFloat(text))) {
             instance.log('warn', 'Increasing/Decreasing a title requires Value to be a number')
@@ -322,7 +322,7 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
               text = '-%3d' + text
             }
 
-            if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetText Input=${encodeURIComponent(input)}&${indexNaNCheck}=${index}&Value=${text}`)
+            if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetText Input=${encodeURIComponent(input)}&${indexNaNCheck}=${index}&Value=${text}`)
           }
         }
       }
@@ -355,9 +355,9 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
         const value = (await instance.parseOption(action.options.value, context))[instance.buttonShift.state]
 
         if (isNaN(parseInt(index, 10))) {
-          if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetTextColour Input=${input}&Value=${value}&SelectedName=${index}`)
+          if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetTextColour Input=${input}&Value=${value}&SelectedName=${index}`)
         } else {
-          if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetTextColour Input=${input}&Value=${value}&SelectedIndex=${index}`)
+          if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetTextColour Input=${input}&Value=${value}&SelectedIndex=${index}`)
         }
       }
     },
@@ -396,9 +396,9 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
         if (action.options.adjustment === 'Off') type = 'SetTextVisibleOff'
 
         if (isNaN(parseInt(index, 10))) {
-          if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${type} Input=${input}&SelectedName=${index}`)
+          if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${type} Input=${input}&SelectedName=${index}`)
         } else {
-          if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${type} Input=${input}&SelectedIndex=${index}`)
+          if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${type} Input=${input}&SelectedIndex=${index}`)
         }
       }
     },
@@ -433,7 +433,7 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10)) ? 'SelectedName' : 'SelectedIndex'
 
-        if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetColor Input=${encodeURIComponent(input)}&${indexNaNCheck}=${index}&Value=${encodeURIComponent(value)}`)
+        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetColor Input=${encodeURIComponent(input)}&${indexNaNCheck}=${index}&Value=${encodeURIComponent(value)}`)
       }
     },
 

@@ -57,7 +57,7 @@ export const vMixScriptingActions = (instance: VMixInstance, sendBasicCommand: S
         const commandString = (await instance.parseOption(action.options.command, context))[instance.buttonShift.state]
         const command = commandString.split(' ')[0]
         const params = commandString.split(' ').slice(1, commandString.split(' ').length).join(' ')
-        if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${command} ${action.options.encode ? encodeURIComponent(params) : params}`)
+        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${command} ${action.options.encode ? encodeURIComponent(params) : params}`)
       }
     },
 

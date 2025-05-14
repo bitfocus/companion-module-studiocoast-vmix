@@ -34,7 +34,7 @@ export const vMixVirtualSetActions = (instance: VMixInstance, _sendBasicCommand:
       ],
       callback: async (action, context) => {
         const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
-        if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SelectIndex Input=${encodeURIComponent(input)}&Value=${action.options.value}`)
+        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SelectIndex Input=${encodeURIComponent(input)}&Value=${action.options.value}`)
       }
     }
   }

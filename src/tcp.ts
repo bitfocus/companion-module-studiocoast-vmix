@@ -304,16 +304,21 @@ export class TCP {
    * @param command function and any params
    * @description Check TCP connection status and format command to send to vMix
    */
-  public readonly sendCommand = (command: string): void => {
-    if (this.sockets.functions && this.sockets.functions.isConnected) {
-      const message = `${command}\r\n`
+  public readonly sendCommand = async (command: string): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      if (this.sockets.functions && this.sockets.functions.isConnected) {
+        const message = `${command}\r\n`
 
-      this.instance.log('debug', `Sending command: ${message}`)
+        this.instance.log('debug', `Sending command: ${message}`)
 
-      this.sockets.functions.send(message).catch((err) => {
-        if (err) this.instance.log('debug', err.message)
-      })
-    }
+        this.sockets.functions
+          .send(message)
+          .then(() => resolve())
+          .catch((err) => reject(err))
+      } else {
+        resolve()
+      }
+    })
   }
 
   /**

@@ -68,7 +68,7 @@ export const vMixMediaActions = (instance: VMixInstance, _sendBasicCommand: Send
         const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Input=${action.options.inputType ? '0' : encodeURIComponent(input)}`)
+          return instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Input=${action.options.inputType ? '0' : encodeURIComponent(input)}`)
         }
       }
     },
@@ -105,7 +105,7 @@ export const vMixMediaActions = (instance: VMixInstance, _sendBasicCommand: Send
           text = '-%3d' + text
         }
 
-        if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetPosition Input=${action.options.inputType ? '0' : encodeURIComponent(input)}&Value=${text}`)
+        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetPosition Input=${action.options.inputType ? '0' : encodeURIComponent(input)}&Value=${text}`)
       }
     },
 
@@ -137,7 +137,7 @@ export const vMixMediaActions = (instance: VMixInstance, _sendBasicCommand: Send
       callback: async (action, context) => {
         const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
 
-        if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Input=${action.options.inputType ? '0' : encodeURIComponent(input)}`)
+        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Input=${action.options.inputType ? '0' : encodeURIComponent(input)}`)
       }
     }
   }

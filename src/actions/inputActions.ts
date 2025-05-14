@@ -179,7 +179,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
         const command = `Effect${action.options.effect}${action.options.state}`
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION ${command} Input=${input.key}`)
+          return instance.tcp.sendCommand(`FUNCTION ${command} Input=${input.key}`)
         }
       }
     },
@@ -220,7 +220,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
         const command = `SetEffect${action.options.effect}Strength`
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION ${command} Input=${input.key}&Value=${parsedValue}`)
+          return instance.tcp.sendCommand(`FUNCTION ${command} Input=${input.key}&Value=${parsedValue}`)
         }
       }
     },
@@ -312,7 +312,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
         }
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION ${action.options.setting} Input=${input.key}&Value=${parsedValue}`)
+          return instance.tcp.sendCommand(`FUNCTION ${action.options.setting} Input=${input.key}&Value=${parsedValue}`)
         }
       }
     },
@@ -462,7 +462,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
         }
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(cmd)
+          return instance.tcp.sendCommand(cmd)
         }
       }
     },
@@ -491,7 +491,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
         }
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION SetFrameDelay Input=${input.key}&Value=${value}`)
+          return instance.tcp.sendCommand(`FUNCTION SetFrameDelay Input=${input.key}&Value=${value}`)
         }
       }
     }

@@ -119,11 +119,11 @@ export const vMixVideoCallActions = (instance: VMixInstance, sendBasicCommand: S
         const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
 
         if (action.options.functionID === 'VideoCallConnect') {
-          if (instance.tcp) instance.tcp.sendCommand(action.options.functionID + `Input=${selected}`)
+          if (instance.tcp) return instance.tcp.sendCommand(action.options.functionID + `Input=${selected}`)
         } else {
           const name = (await instance.parseOption(action.options.name, context))[instance.buttonShift.state]
           const password = (await instance.parseOption(action.options.password, context))[instance.buttonShift.state]
-          if (instance.tcp) instance.tcp.sendCommand(action.options.functionID + `Input=${selected}&Value=${name},${password}`)
+          if (instance.tcp) return instance.tcp.sendCommand(action.options.functionID + `Input=${selected}&Value=${name},${password}`)
         }
       }
     }

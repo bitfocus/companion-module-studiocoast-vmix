@@ -381,7 +381,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           command.options.value = action.options.value2
         }
 
-        sendBasicCommand(command)
+        return sendBasicCommand(command)
       }
     },
 
@@ -505,7 +505,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
         const position = value / maxValue
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION ReplaySetSpeed Channel=${action.options.channel}&Value=${position}`)
+          return instance.tcp.sendCommand(`FUNCTION ReplaySetSpeed Channel=${action.options.channel}&Value=${position}`)
         }
       }
     },
@@ -721,7 +721,8 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
         }
       ],
       callback: (action) => {
-        if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ReplayToggleSelectedEventCamera${action.options.camera}`)
+        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ReplayToggleSelectedEventCamera${action.options.camera}`)
+        return
       }
     },
 

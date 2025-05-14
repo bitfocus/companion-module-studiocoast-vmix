@@ -110,7 +110,7 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: Sen
           command += ` Value=${action.options.value}`
         }
 
-        if (instance.tcp) instance.tcp.sendCommand(command)
+        if (instance.tcp) return instance.tcp.sendCommand(command)
       }
     },
 
@@ -153,7 +153,7 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: Sen
             { id: '1', label: '2' },
             { id: '2', label: '3' },
             { id: '3', label: '4' },
-            { id: '4', label: '5' },
+            { id: '4', label: '5' }
           ],
           isVisible: (options) => {
             const functionID = options.functionID + ''
@@ -168,7 +168,8 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: Sen
           command += ` value=${action.options.value}`
         }
 
-        if (instance.tcp) instance.tcp.sendCommand(command)
+        if (instance.tcp) return instance.tcp.sendCommand(command)
+        return
       }
     }
   }

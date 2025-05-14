@@ -80,7 +80,7 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
         }
 
         if (programCut.options.mix !== 0) programCut.options.functionID = 'ActiveInput'
-        sendBasicCommand(programCut)
+        return sendBasicCommand(programCut)
       }
     },
 
@@ -140,7 +140,7 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
         command.options.duration = duration
 
         if (action.options.input !== '' && action.options.input !== undefined) command.options.input = action.options.input
-        sendBasicCommand(command)
+        return sendBasicCommand(command)
       }
     },
 
@@ -209,7 +209,7 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
           command.options.mixVariable = action.options.mixVariable
         }
 
-        sendBasicCommand(command)
+        return sendBasicCommand(command)
       }
     },
 

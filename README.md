@@ -42,6 +42,7 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 - `input_X_remaining_mm:ss.ms` renamed to `input_X_remaining_mm.ss.ms`
 - Fixed missing Stream 4 and 5 options in actions/feedbacks
 - Added Local Variable support (such as $(this:page), $(this:row), etc...) to Actions that support parsing variables
+- Better support for Sequential Action Group (keep in mind vMix only acknowledges receieving a command, not that the command execution is complete, so some use of Wait actions may still be required in an Action Group sequence)
 
 **v3.9.6**
 - Fixed an issue with the upgrade script migrating existing `Overlay - Functions` actions to support the new parameters in vMix 28

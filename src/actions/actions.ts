@@ -166,7 +166,8 @@ export function getActions(instance: VMixInstance): VMixActions {
       .map((param) => `${param[0]}=${encodeURIComponent(param[1])}`)
       .join('&')
 
-    if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${functionName} ${encodedParams}`)
+    if (!instance.tcp) return
+    return instance.tcp.sendCommand(`FUNCTION ${functionName} ${encodedParams}`)
   }
 
   return {

@@ -95,7 +95,7 @@ export const vMixZoomActions = (instance: VMixInstance, sendBasicCommand: SendBa
         const password = (await instance.parseOption(action.options.password, context))[instance.buttonShift.state]
 
         if (selected && meetingID && instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION ZoomJoinMeeting Input=${selected}&Value=${meetingID},${password}`)
+          return instance.tcp.sendCommand(`FUNCTION ZoomJoinMeeting Input=${selected}&Value=${meetingID},${password}`)
         }
       }
     }
