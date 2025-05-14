@@ -91,6 +91,15 @@ class VMixInstance extends InstanceBase<Config> {
   public async init(config: Config): Promise<void> {
     this.log('debug', `Process ID: ${process.pid}`)
 
+    if (config.debugVersionUpdateNotifications) {
+			this.log('info', 'v4.0.0 of this mode has now been released! Patch notes can be found at https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/patch_notes.md')
+      this.log(
+        'warn',
+        'The vMix Companion module v4 has undergone significant changes to its configuration to allow more granular control over what variables are generated as this has a significant performance impact during large productions'
+      )
+      this.log('warn', 'Please check the vMix module configuration within Companion and ensure only the variables you wish to use are enabled')
+    }
+
     await this.configUpdated(config)
 
     this.variables = new Variables(this)
