@@ -123,11 +123,11 @@ export const inputDefinitions = (instance: VMixInstance): CompanionVariableDefin
         .forEach((mix) => {
           inputSet.add({
             name: `Input ${title} Mix ${mix.number} Tally Preview`,
-            variableId: `input_${type}_mix_${mix.number}_tally_preview`
+            variableId: `input_${type}_mix_${mix.number}_tally_preview`,
           })
           inputSet.add({
             name: `Input ${title} Mix ${mix.number} Tally Program`,
-            variableId: `input_${type}_mix_${mix.number}_tally_program`
+            variableId: `input_${type}_mix_${mix.number}_tally_program`,
           })
         })
 
@@ -181,7 +181,7 @@ export const inputDefinitions = (instance: VMixInstance): CompanionVariableDefin
           if (instance.config.variablesShowInputTitleName) {
             inputSet.add({
               name: `Input ${title} layer ${textLayer.name} Title Text`,
-              variableId: `input_${type}_layer_${textLayer.name.replace(/[^a-z0-9-_.]+/gi, '')}_titletext`
+              variableId: `input_${type}_layer_${textLayer.name.replace(/[^a-z0-9-_.]+/gi, '')}_titletext`,
             })
           }
         })
@@ -297,7 +297,7 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
   for (const input of instance.data.inputs) {
     const inputName = input.shortTitle ? input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '') : input.title.replace(/[^a-z0-9-_.]+/gi, '')
 
-    let inputTypes: (string | number)[] = []
+    const inputTypes: (string | number)[] = []
     if (instance.config.variablesShowInputNumbers) inputTypes.push(input.number)
     if (instance.config.variablesShowInputs) inputTypes.push(inputName.replace(/[^a-z0-9-_.]+/gi, '').toLowerCase())
     if (instance.config.variablesShowInputGUID) inputTypes.push(input.key)

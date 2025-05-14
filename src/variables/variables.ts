@@ -69,7 +69,7 @@ export class Variables {
         response: 0,
         parsed: 0,
         feedbacks: 0,
-        variables: 0
+        variables: 0,
       }
     }
   }
@@ -101,7 +101,7 @@ export class Variables {
       ...outputDefinitions(this.instance),
       ...overlayDefinitions(this.instance),
       ...replayDefinitions(this.instance),
-      ...transitionDefinitions(this.instance)
+      ...transitionDefinitions(this.instance),
     ]
 
     this.currentDefinitions = variableDefinitions
@@ -124,7 +124,7 @@ export class Variables {
       outputValues(this.instance),
       overlayValues(this.instance),
       replayValues(this.instance),
-      transitionValues(this.instance)
+      transitionValues(this.instance),
     ])
 
     variablesPromise.forEach((variables: InstanceVariableValue) => {

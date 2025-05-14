@@ -44,7 +44,7 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
       description: 'Indicates if input is currently selected for Layer Routing',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0)
+        bgcolor: combineRgb(255, 255, 0),
       },
       options: [options.input],
       callback: async (feedback, context) => {
@@ -65,7 +65,7 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
         const blink = instance.buttonShift.blink && instance.config.shiftBlinkLayerRouting && getInputValue.includes(selectInput)
 
         return getInputValue[instance.buttonShift.state] === selectInput || blink
-      }
+      },
     },
 
     selectedDestinationLayer: {
@@ -74,7 +74,7 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
       description: 'Indicates if layer is currently selected for Layer Routing',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0)
+        bgcolor: combineRgb(255, 255, 0),
       },
       options: [
         {
@@ -82,8 +82,8 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
           label: 'Destination Layer of destination Input',
           id: 'selectedIndex',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       callback: async (feedback, context) => {
         const getIndexValue = await instance.parseOption(feedback.options.selectedIndex + '', context)
@@ -94,7 +94,7 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
           getIndexValue.includes(instance.routingData.layer.destinationLayer)
 
         return getIndexValue[instance.buttonShift.state] === instance.routingData.layer.destinationLayer || blink
-      }
+      },
     },
 
     routableMultiviewLayer: {
@@ -103,7 +103,7 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
       description: 'Indicates if the input is destination layer and input',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0)
+        bgcolor: combineRgb(255, 255, 0),
       },
       options: [options.input],
       callback: async (feedback, context) => {
@@ -134,7 +134,7 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
         }
 
         return false
-      }
+      },
     },
 
     inputOnMultiview: {
@@ -143,7 +143,7 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
       description: 'Indicates if the input is currently on a specified layer of an input',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0)
+        bgcolor: combineRgb(255, 255, 0),
       },
       options: [
         {
@@ -152,7 +152,7 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
           id: 'inputX',
           default: '1',
           tooltip: 'Number, Name, or GUID',
-          useVariables: true
+          useVariables: true,
         },
         {
           type: 'textinput',
@@ -160,7 +160,7 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
           id: 'inputY',
           default: '1',
           tooltip: 'Number, Name, or GUID',
-          useVariables: true
+          useVariables: true,
         },
         {
           type: 'textinput',
@@ -168,8 +168,8 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
           id: 'layer',
           default: '0',
           tooltip: '1-10, 0 = Any layer',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       callback: async (feedback, context) => {
         const targetLayer = await instance.parseOption(feedback.options.layer, context)
@@ -209,7 +209,7 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
         })
 
         return primaryCheck || (secondaryCheck.includes(true) && instance.config.shiftBlinkLayerRouting && instance.buttonShift.blink)
-      }
-    }
+      },
+    },
   }
 }

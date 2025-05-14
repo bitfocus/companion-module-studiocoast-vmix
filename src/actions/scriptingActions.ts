@@ -44,21 +44,21 @@ export const vMixScriptingActions = (instance: VMixInstance, sendBasicCommand: S
           label: 'Command',
           id: 'command',
           default: '',
-          useVariables: true
+          useVariables: true,
         },
         {
           type: 'checkbox',
           label: 'URI encode function',
           id: 'encode',
-          default: false
-        }
+          default: false,
+        },
       ],
       callback: async (action, context) => {
         const commandString = (await instance.parseOption(action.options.command, context))[instance.buttonShift.state]
         const command = commandString.split(' ')[0]
         const params = commandString.split(' ').slice(1, commandString.split(' ').length).join(' ')
         if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${command} ${action.options.encode ? encodeURIComponent(params) : params}`)
-      }
+      },
     },
 
     scriptStart: {
@@ -70,10 +70,10 @@ export const vMixScriptingActions = (instance: VMixInstance, sendBasicCommand: S
           label: 'Script name',
           id: 'value',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     scriptStop: {
@@ -85,17 +85,17 @@ export const vMixScriptingActions = (instance: VMixInstance, sendBasicCommand: S
           label: 'Script name',
           id: 'value',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     scriptStopAll: {
       name: 'Scripting - Script stop all',
       description: 'Stop all scripts running in vMix',
       options: [],
-      callback: sendBasicCommand
-    }
+      callback: sendBasicCommand,
+    },
   }
 }

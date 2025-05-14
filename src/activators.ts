@@ -174,7 +174,7 @@ const eventHandlers: { [key: string]: ActivatorEventHandlers | null } = {
 
   // Unused
   InputHeadphones: null,
-  ButtonPress: null
+  ButtonPress: null,
 }
 
 export class Activators {

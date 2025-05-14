@@ -11,16 +11,16 @@ export const getOverlayPresets = (): VMixPresetArray => {
         text: 'OVL All Off',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInputAllOff', input: '', mix: '1', mixVariable: '' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
-    }
+      feedbacks: [],
+    },
   ]
 
   for (let i = 1; i < 5; i++) {
@@ -29,7 +29,7 @@ export const getOverlayPresets = (): VMixPresetArray => {
         category: 'Overlays',
         name: `Overlay ${i}`,
         type: 'text',
-        text: ''
+        text: '',
       },
       {
         category: 'Overlays',
@@ -39,18 +39,18 @@ export const getOverlayPresets = (): VMixPresetArray => {
           text: `Overlay ${1} Prgm`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [
               {
                 actionId: 'overlayFunctions',
-                options: { functionID: `OverlayInput${i}` as 'OverlayInput1', input: '', mix: '1', mixVariable: '' }
-              }
+                options: { functionID: `OverlayInput${i}` as 'OverlayInput1', input: '', mix: '1', mixVariable: '' },
+              },
             ],
-            up: []
-          }
+            up: [],
+          },
         ],
         feedbacks: [
           {
@@ -60,10 +60,10 @@ export const getOverlayPresets = (): VMixPresetArray => {
               overlay: i.toString(),
               fg: combineRgb(255, 255, 255),
               bgPreview: combineRgb(0, 255, 0),
-              bgProgram: combineRgb(255, 0, 0)
-            }
-          }
-        ]
+              bgProgram: combineRgb(255, 0, 0),
+            },
+          },
+        ],
       },
       {
         category: 'Overlays',
@@ -73,18 +73,18 @@ export const getOverlayPresets = (): VMixPresetArray => {
           text: `Overlay ${i} Prv`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [
               {
                 actionId: 'overlayFunctions',
-                options: { functionID: `PreviewOverlayInput${i}` as 'PreviewOverlayInput1', input: '', mix: '1', mixVariable: '' }
-              }
+                options: { functionID: `PreviewOverlayInput${i}` as 'PreviewOverlayInput1', input: '', mix: '1', mixVariable: '' },
+              },
             ],
-            up: []
-          }
+            up: [],
+          },
         ],
         feedbacks: [
           {
@@ -94,10 +94,10 @@ export const getOverlayPresets = (): VMixPresetArray => {
               overlay: i.toString(),
               fg: combineRgb(255, 255, 255),
               bgPreview: combineRgb(0, 255, 0),
-              bgProgram: combineRgb(255, 0, 0)
-            }
-          }
-        ]
+              bgProgram: combineRgb(255, 0, 0),
+            },
+          },
+        ],
       },
       {
         category: 'Overlays',
@@ -107,18 +107,18 @@ export const getOverlayPresets = (): VMixPresetArray => {
           text: `Overlay ${i} In`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [
               {
                 actionId: 'overlayFunctions',
-                options: { functionID: `OverlayInput${i}In` as 'OverlayInput1In', input: '', mix: '1', mixVariable: '' }
-              }
+                options: { functionID: `OverlayInput${i}In` as 'OverlayInput1In', input: '', mix: '1', mixVariable: '' },
+              },
             ],
-            up: []
-          }
+            up: [],
+          },
         ],
         feedbacks: [
           {
@@ -128,10 +128,10 @@ export const getOverlayPresets = (): VMixPresetArray => {
               overlay: i.toString(),
               fg: combineRgb(255, 255, 255),
               bgPreview: combineRgb(0, 255, 0),
-              bgProgram: combineRgb(255, 0, 0)
-            }
-          }
-        ]
+              bgProgram: combineRgb(255, 0, 0),
+            },
+          },
+        ],
       },
       {
         category: 'Overlays',
@@ -141,18 +141,18 @@ export const getOverlayPresets = (): VMixPresetArray => {
           text: `Overlay ${i} Out`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [
               {
                 actionId: 'overlayFunctions',
-                options: { functionID: `OverlayInput${i}Out` as 'OverlayInput1Out', input: '', mix: '1', mixVariable: '' }
-              }
+                options: { functionID: `OverlayInput${i}Out` as 'OverlayInput1Out', input: '', mix: '1', mixVariable: '' },
+              },
             ],
-            up: []
-          }
+            up: [],
+          },
         ],
         feedbacks: [
           {
@@ -162,10 +162,10 @@ export const getOverlayPresets = (): VMixPresetArray => {
               overlay: i.toString(),
               fg: combineRgb(255, 255, 255),
               bgPreview: combineRgb(0, 255, 0),
-              bgProgram: combineRgb(255, 0, 0)
-            }
-          }
-        ]
+              bgProgram: combineRgb(255, 0, 0),
+            },
+          },
+        ],
       },
       {
         category: 'Overlays',
@@ -175,18 +175,18 @@ export const getOverlayPresets = (): VMixPresetArray => {
           text: `Overlay ${i} Off`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [
               {
                 actionId: 'overlayFunctions',
-                options: { functionID: `OverlayInput${i}Off` as 'OverlayInput1Off', input: '', mix: '1', mixVariable: '' }
-              }
+                options: { functionID: `OverlayInput${i}Off` as 'OverlayInput1Off', input: '', mix: '1', mixVariable: '' },
+              },
             ],
-            up: []
-          }
+            up: [],
+          },
         ],
         feedbacks: [
           {
@@ -196,10 +196,10 @@ export const getOverlayPresets = (): VMixPresetArray => {
               overlay: i.toString(),
               fg: combineRgb(255, 255, 255),
               bgPreview: combineRgb(0, 255, 0),
-              bgProgram: combineRgb(255, 0, 0)
-            }
-          }
-        ]
+              bgProgram: combineRgb(255, 0, 0),
+            },
+          },
+        ],
       },
       {
         category: 'Overlays',
@@ -209,21 +209,21 @@ export const getOverlayPresets = (): VMixPresetArray => {
           text: `Overlay ${i} Zoom`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [
               {
                 actionId: 'overlayFunctions',
-                options: { functionID: `OverlayInput${i}Zoom` as 'OverlayInput1Zoom', input: '', mix: '1', mixVariable: '' }
-              }
+                options: { functionID: `OverlayInput${i}Zoom` as 'OverlayInput1Zoom', input: '', mix: '1', mixVariable: '' },
+              },
             ],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
-      }
+        feedbacks: [],
+      },
     )
   }
 

@@ -101,7 +101,7 @@ export const dynamicDefinitions = async (instance: VMixInstance): Promise<Compan
         { name: `Dynamic Input ${dynamic + 1} Full Title`, variableId: `dynamic_input_${dynamic + 1}_full_title` },
         { name: `Dynamic Input ${dynamic + 1} Number`, variableId: `dynamic_input_${dynamic + 1}_number` },
         { name: `Dynamic Input ${dynamic + 1} GUID`, variableId: `dynamic_input_${dynamic + 1}_guid` },
-        { name: `Dynamic Input ${dynamic + 1} Type`, variableId: `dynamic_input_${dynamic + 1}_type` }
+        { name: `Dynamic Input ${dynamic + 1} Type`, variableId: `dynamic_input_${dynamic + 1}_type` },
       )
 
       instance.data.mix
@@ -109,7 +109,7 @@ export const dynamicDefinitions = async (instance: VMixInstance): Promise<Compan
         .forEach((mix) => {
           definitions.push(
             { name: `Dynamic Input ${dynamic + 1} Mix ${mix.number} Tally Preview`, variableId: `dynamic_input_${dynamic + 1}_mix_${mix.number}_tally_preview` },
-            { name: `Dynamic Input ${dynamic + 1} Mix ${mix.number} Tally Program`, variableId: `dynamic_input_${dynamic + 1}_mix_${mix.number}_tally_program` }
+            { name: `Dynamic Input ${dynamic + 1} Mix ${mix.number} Tally Program`, variableId: `dynamic_input_${dynamic + 1}_mix_${mix.number}_tally_program` },
           )
         })
 
@@ -118,7 +118,7 @@ export const dynamicDefinitions = async (instance: VMixInstance): Promise<Compan
         { name: `Dynamic Input ${dynamic + 1} Loop`, variableId: `dynamic_input_${dynamic + 1}_loop` },
         { name: `Dynamic Input ${dynamic + 1} Muted`, variableId: `dynamic_input_${dynamic + 1}_mute` },
         { name: `Dynamic Input ${dynamic + 1} Audio`, variableId: `dynamic_input_${dynamic + 1}_audio` },
-        { name: `Dynamic Input ${dynamic + 1} Solo`, variableId: `dynamic_input_${dynamic + 1}_solo` }
+        { name: `Dynamic Input ${dynamic + 1} Solo`, variableId: `dynamic_input_${dynamic + 1}_solo` },
       )
 
       if (input.duration > 1) {
@@ -132,7 +132,7 @@ export const dynamicDefinitions = async (instance: VMixInstance): Promise<Compan
       for (let i = 1; i < 11; i++) {
         definitions.push(
           { name: `Dynamic Input ${dynamic + 1} layer ${i} Name`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_name` },
-          { name: `Dynamic Input ${dynamic + 1} layer ${i} Number`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_number` }
+          { name: `Dynamic Input ${dynamic + 1} layer ${i} Number`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_number` },
         )
       }
 
@@ -141,14 +141,14 @@ export const dynamicDefinitions = async (instance: VMixInstance): Promise<Compan
           if (instance.config.variablesShowInputTitleIndex) {
             definitions.push({
               name: `Dynamic Input ${dynamic + 1} layer ${textLayer.index} Title Text`,
-              variableId: `dynamic_input_${dynamic + 1}_layer_${textLayer.index}_titletext`
+              variableId: `dynamic_input_${dynamic + 1}_layer_${textLayer.index}_titletext`,
             })
           }
 
           if (instance.config.variablesShowInputTitleName) {
             definitions.push({
               name: `Dynamic Input ${dynamic + 1} layer ${textLayer.name} Title Text`,
-              variableId: `dynamic_input_${dynamic + 1}_layer_${textLayer.name}_titletext`
+              variableId: `dynamic_input_${dynamic + 1}_layer_${textLayer.name}_titletext`,
             })
           }
         })
@@ -157,7 +157,7 @@ export const dynamicDefinitions = async (instance: VMixInstance): Promise<Compan
       if (input.type === 'VideoList' || input.type === 'VirtualSet' || input.type === 'Photos') {
         definitions.push(
           { name: `Dynamic Input ${dynamic + 1} Selected Index`, variableId: `dynamic_input_${dynamic + 1}_selected` },
-          { name: `Dynamic Input ${dynamic + 1} Selected Index Name`, variableId: `dynamic_input_${dynamic + 1}_selected_name` }
+          { name: `Dynamic Input ${dynamic + 1} Selected Index Name`, variableId: `dynamic_input_${dynamic + 1}_selected_name` },
         )
       }
 
@@ -165,7 +165,7 @@ export const dynamicDefinitions = async (instance: VMixInstance): Promise<Compan
         input.list.forEach((listItem) => {
           definitions.push(
             { name: `Dynamic Input ${dynamic + 1} List ${listItem.index + 1} Name`, variableId: `dynamic_input_${dynamic + 1}_list_${listItem.index + 1}_name` },
-            { name: `Dynamic Input ${dynamic + 1} List ${listItem.index + 1} Selected`, variableId: `dynamic_input_${dynamic + 1}_list_${listItem.index + 1}_selected` }
+            { name: `Dynamic Input ${dynamic + 1} List ${listItem.index + 1} Selected`, variableId: `dynamic_input_${dynamic + 1}_list_${listItem.index + 1}_selected` },
           )
         })
       }
@@ -175,7 +175,7 @@ export const dynamicDefinitions = async (instance: VMixInstance): Promise<Compan
           { name: `Dynamic Input ${dynamic + 1} Call Password`, variableId: `dynamic_input_${dynamic + 1}_call_password` },
           { name: `Dynamic Input ${dynamic + 1} Call Connected`, variableId: `dynamic_input_${dynamic + 1}_call_connected` },
           { name: `Dynamic Input ${dynamic + 1} Call Video Source`, variableId: `dynamic_input_${dynamic + 1}_call_video_source` },
-          { name: `Dynamic Input ${dynamic + 1} Call Audio Source`, variableId: `dynamic_input_${dynamic + 1}_call_audio_source` }
+          { name: `Dynamic Input ${dynamic + 1} Call Audio Source`, variableId: `dynamic_input_${dynamic + 1}_call_audio_source` },
         )
       }
 
@@ -183,14 +183,14 @@ export const dynamicDefinitions = async (instance: VMixInstance): Promise<Compan
         definitions.push(
           { name: `Dynamic Input ${dynamic + 1} Volume`, variableId: `dynamic_input_${dynamic + 1}_volume` },
           { name: `Dynamic Input ${dynamic + 1} Volume dB`, variableId: `dynamic_input_${dynamic + 1}_volume_db` },
-          { name: `Dynamic Input ${dynamic + 1} Volume Linear`, variableId: `dynamic_input_${dynamic + 1}_volume_linear` }
+          { name: `Dynamic Input ${dynamic + 1} Volume Linear`, variableId: `dynamic_input_${dynamic + 1}_volume_linear` },
         )
 
         if (input.volumeF1 !== undefined) {
           definitions.push(
             { name: `Dynamic Input ${dynamic + 1} Volume F1`, variableId: `dynamic_input_${dynamic + 1}_volume_f1` },
             { name: `Dynamic Input ${dynamic + 1} Volume F1 dB`, variableId: `dynamic_input_${dynamic + 1}_volume_f1_db` },
-            { name: `Dynamic Input ${dynamic + 1} Volume F1 Linear`, variableId: `dynamic_input_${dynamic + 1}_volume_f1_linear` }
+            { name: `Dynamic Input ${dynamic + 1} Volume F1 Linear`, variableId: `dynamic_input_${dynamic + 1}_volume_f1_linear` },
           )
         }
 
@@ -198,7 +198,7 @@ export const dynamicDefinitions = async (instance: VMixInstance): Promise<Compan
           definitions.push(
             { name: `Dynamic Input ${dynamic + 1} Volume F2`, variableId: `dynamic_input_${dynamic + 1}_volume_f2` },
             { name: `Dynamic Input ${dynamic + 1} Volume F2 dB`, variableId: `dynamic_input_${dynamic + 1}_volume_f2_db` },
-            { name: `Dynamic Input ${dynamic + 1} Volume F2 Linear`, variableId: `dynamic_input_${dynamic + 1}_volume_f2_linear` }
+            { name: `Dynamic Input ${dynamic + 1} Volume F2 Linear`, variableId: `dynamic_input_${dynamic + 1}_volume_f2_linear` },
           )
         }
 

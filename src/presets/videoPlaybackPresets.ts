@@ -11,15 +11,15 @@ export const getVideoPlaybackPresets = (): VMixPresetArray => {
         text: 'play',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'videoActions', options: { input: '', inputType: true, functionID: 'Play' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Video Playback',
@@ -29,15 +29,15 @@ export const getVideoPlaybackPresets = (): VMixPresetArray => {
         text: 'Pause',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'videoActions', options: { input: '', inputType: true, functionID: 'Pause' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Video Playback',
@@ -47,15 +47,15 @@ export const getVideoPlaybackPresets = (): VMixPresetArray => {
         text: 'Play Pause',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'videoActions', options: { input: '', inputType: true, functionID: 'PlayPause' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Video Playback',
@@ -65,15 +65,15 @@ export const getVideoPlaybackPresets = (): VMixPresetArray => {
         text: 'Restart',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'videoActions', options: { input: '', inputType: true, functionID: 'Restart' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Video Playback',
@@ -83,15 +83,15 @@ export const getVideoPlaybackPresets = (): VMixPresetArray => {
         text: 'Loop ON',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'videoActions', options: { input: '', inputType: true, functionID: 'LoopOn' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Video Playback',
@@ -101,15 +101,15 @@ export const getVideoPlaybackPresets = (): VMixPresetArray => {
         text: 'Loop OFF',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'videoActions', options: { input: '', inputType: true, functionID: 'LoopOff' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Video Playback',
@@ -119,15 +119,15 @@ export const getVideoPlaybackPresets = (): VMixPresetArray => {
         text: 'Playhead 10 sec',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'videoPlayhead', options: { input: '', inputType: true, adjustment: 'Set', value: 10000 } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Video Playback',
@@ -137,20 +137,20 @@ export const getVideoPlaybackPresets = (): VMixPresetArray => {
         text: 'Playhead +10 sec',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [
             {
               actionId: 'videoPlayhead',
-              options: { input: '', inputType: true, adjustment: 'Increase', value: 10000 }
-            }
+              options: { input: '', inputType: true, adjustment: 'Increase', value: 10000 },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Video Playback',
@@ -160,20 +160,20 @@ export const getVideoPlaybackPresets = (): VMixPresetArray => {
         text: 'Playhead -10 sec',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [
             {
               actionId: 'videoPlayhead',
-              options: { input: '', inputType: true, adjustment: 'Decrease', value: 10000 }
-            }
+              options: { input: '', inputType: true, adjustment: 'Decrease', value: 10000 },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Video Playback',
@@ -183,15 +183,15 @@ export const getVideoPlaybackPresets = (): VMixPresetArray => {
         text: 'Mark In',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'videoMark', options: { input: '', inputType: true, functionID: 'MarkIn' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Video Playback',
@@ -201,15 +201,15 @@ export const getVideoPlaybackPresets = (): VMixPresetArray => {
         text: 'Mark Out',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'videoMark', options: { input: '', inputType: true, functionID: 'MarkOut' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Video Playback',
@@ -219,15 +219,15 @@ export const getVideoPlaybackPresets = (): VMixPresetArray => {
         text: 'Clear In/Out',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'videoMark', options: { input: '', inputType: true, functionID: 'MarkReset' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Video Playback',
@@ -237,15 +237,15 @@ export const getVideoPlaybackPresets = (): VMixPresetArray => {
         text: 'Clear In',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'videoMark', options: { input: '', inputType: true, functionID: 'MarkResetIn' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Video Playback',
@@ -255,15 +255,15 @@ export const getVideoPlaybackPresets = (): VMixPresetArray => {
         text: 'Clear Out',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'videoMark', options: { input: '', inputType: true, functionID: 'MarkResetOut' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Video Playback',
@@ -273,7 +273,7 @@ export const getVideoPlaybackPresets = (): VMixPresetArray => {
         text: 'Video Timecode',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [],
       feedbacks: [
@@ -284,11 +284,11 @@ export const getVideoPlaybackPresets = (): VMixPresetArray => {
             color: combineRgb(255, 255, 255),
             color30: combineRgb(255, 255, 0),
             color10: combineRgb(255, 0, 0),
-            loop: false
-          }
-        }
-      ]
-    }
+            loop: false,
+          },
+        },
+      ],
+    },
   ]
 
   return videoPlaybackPresets

@@ -44,11 +44,11 @@ export const vMixBrowserActions = (instance: VMixInstance, sendBasicCommand: Sen
             { id: 'BrowserKeyboardDisabled', label: 'Keyboard Disabled' },
             { id: 'BrowserKeyboardEnabled', label: 'Keyboard Enabled' },
             { id: 'BrowserMouseDisabled', label: 'Mouse Disabled' },
-            { id: 'BrowserMouseEnabled', label: 'Mouse Enabled' }
-          ]
-        }
+            { id: 'BrowserMouseEnabled', label: 'Mouse Enabled' },
+          ],
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     browserNavigate: {
@@ -61,20 +61,21 @@ export const vMixBrowserActions = (instance: VMixInstance, sendBasicCommand: Sen
           label: 'URL',
           id: 'value',
           default: '',
-          useVariables: true
+          useVariables: true,
         },
         {
           type: 'checkbox',
           label: 'URI encode function',
           id: 'encode',
-          default: false
-        }
+          default: false,
+        },
       ],
       callback: async (action, context) => {
         const value = (await instance.parseOption(action.options.value, context))[instance.buttonShift.state]
 
-        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION BrowserNavigate Input=${action.options.input}&Value=${action.options.encode ? encodeURIComponent(value) : value}`)
-      }
-    }
+        if (instance.tcp)
+          return instance.tcp.sendCommand(`FUNCTION BrowserNavigate Input=${action.options.input}&Value=${action.options.encode ? encodeURIComponent(value) : value}`)
+      },
+    },
   }
 }

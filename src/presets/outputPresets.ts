@@ -10,14 +10,14 @@ export const getOutputPresets = (): VMixPresetArray => {
     { label: 'Output 4', functionID: 'SetOutput4' },
     { label: 'External 2', functionID: 'SetOutputExternal2' },
     { label: 'Fullscreen', functionID: 'SetOutputFullscreen' },
-    { label: 'Fullscreen 2', functionID: 'SetOutputFullscreen2' }
+    { label: 'Fullscreen 2', functionID: 'SetOutputFullscreen2' },
   ].forEach((output) => {
     outputPresets.push(
       {
         category: 'Outputs',
         name: output.label,
         type: 'text',
-        text: ''
+        text: '',
       },
       {
         category: 'Outputs',
@@ -27,20 +27,20 @@ export const getOutputPresets = (): VMixPresetArray => {
           text: `${output.label}\\nPGM`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [
               {
                 actionId: 'outputSet',
-                options: { functionID: output.functionID as any, value: 'Output', input: '', mix: 0, mixVariable: '' }
-              }
+                options: { functionID: output.functionID as any, value: 'Output', input: '', mix: 0, mixVariable: '' },
+              },
             ],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
+        feedbacks: [],
       },
       {
         category: 'Outputs',
@@ -50,20 +50,20 @@ export const getOutputPresets = (): VMixPresetArray => {
           text: `${output.label}\nPRV`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [
               {
                 actionId: 'outputSet',
-                options: { functionID: output.functionID as any, value: 'Preview', input: '', mix: 0, mixVariable: '' }
-              }
+                options: { functionID: output.functionID as any, value: 'Preview', input: '', mix: 0, mixVariable: '' },
+              },
             ],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
+        feedbacks: [],
       },
       {
         category: 'Outputs',
@@ -73,20 +73,20 @@ export const getOutputPresets = (): VMixPresetArray => {
           text: `${output.label}\nMultiview`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [
               {
                 actionId: 'outputSet',
-                options: { functionID: output.functionID as any, value: 'MultiView', input: '', mix: 0, mixVariable: '' }
-              }
+                options: { functionID: output.functionID as any, value: 'MultiView', input: '', mix: 0, mixVariable: '' },
+              },
             ],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
+        feedbacks: [],
       },
       {
         category: 'Outputs',
@@ -96,20 +96,20 @@ export const getOutputPresets = (): VMixPresetArray => {
           text: `${output.label}\nReplay`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [
               {
                 actionId: 'outputSet',
-                options: { functionID: output.functionID as any, value: 'Replay', input: '', mix: 0, mixVariable: '' }
-              }
+                options: { functionID: output.functionID as any, value: 'Replay', input: '', mix: 0, mixVariable: '' },
+              },
             ],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
+        feedbacks: [],
       },
       {
         category: 'Outputs',
@@ -119,16 +119,16 @@ export const getOutputPresets = (): VMixPresetArray => {
           text: `${output.label}\nInput`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [{ actionId: 'outputSet', options: { functionID: output.functionID as any, value: 'Input', input: '', mix: 0, mixVariable: '' } }],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
-      }
+        feedbacks: [],
+      },
     )
   })
 

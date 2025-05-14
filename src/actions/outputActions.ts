@@ -60,8 +60,8 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: Sen
             { id: 'SetOutput4', label: 'Output 4' },
             { id: 'SetOutputExternal2', label: 'Output External 2' },
             { id: 'SetOutputFullscreen', label: 'Output Fullscreen 1' },
-            { id: 'SetOutputFullscreen2', label: 'Output Fullscreen 2' }
-          ]
+            { id: 'SetOutputFullscreen2', label: 'Output Fullscreen 2' },
+          ],
         },
         {
           type: 'dropdown',
@@ -75,18 +75,18 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: Sen
             { id: 'MultiView2', label: 'Multiview2' },
             { id: 'Replay', label: 'Replay' },
             { id: 'Mix', label: 'Mix' },
-            { id: 'Input', label: 'Input' }
-          ]
+            { id: 'Input', label: 'Input' },
+          ],
         },
         {
           ...options.mixSelect,
-          isVisible: (options) => options.value === 'Mix'
+          isVisible: (options) => options.value === 'Mix',
         },
         options.mixVariable,
         {
           ...options.input,
-          isVisible: (options) => options.value === 'Input'
-        }
+          isVisible: (options) => options.value === 'Input',
+        },
       ],
       callback: async (action, context) => {
         let command = `FUNCTION ${action.options.functionID}`
@@ -111,7 +111,7 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: Sen
         }
 
         if (instance.tcp) return instance.tcp.sendCommand(command)
-      }
+      },
     },
 
     toggleFunctions: {
@@ -139,8 +139,8 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: Sen
             { id: 'Fullscreen', label: 'Fullscreen On / Off' },
             { id: 'FullscreenOn', label: 'Fullscreen On' },
             { id: 'FullscreenOff', label: 'Fullscreen Off' },
-            { id: 'FadeToBlack', label: 'Fade To Black' }
-          ]
+            { id: 'FadeToBlack', label: 'Fade To Black' },
+          ],
         },
         {
           type: 'dropdown',
@@ -153,15 +153,15 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: Sen
             { id: '1', label: '2' },
             { id: '2', label: '3' },
             { id: '3', label: '4' },
-            { id: '4', label: '5' }
+            { id: '4', label: '5' },
           ],
           isVisible: (options) => {
             const functionID = options.functionID + ''
             return functionID.includes('Streaming')
-          }
-        }
+          },
+        },
       ],
-      callback: (action) => {
+      callback: async (action) => {
         let command = `FUNCTION ${action.options.functionID}`
 
         if (action.options.functionID.includes('Streaming') && action.options.value != '') {
@@ -170,7 +170,7 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: Sen
 
         if (instance.tcp) return instance.tcp.sendCommand(command)
         return
-      }
-    }
+      },
+    },
   }
 }

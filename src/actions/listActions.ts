@@ -55,14 +55,14 @@ export const vMixListActions = (_instance: VMixInstance, sendBasicCommand: SendB
       name: 'Lists - Next Picture/Slide/Index',
       description: 'Selects next item in a List type input',
       options: [options.input],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     previousPicture: {
       name: 'Lists - Previous Picture/Slide/Index',
       description: 'Selects previous item in a List type input',
       options: [options.input],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     selectIndex: {
@@ -75,10 +75,10 @@ export const vMixListActions = (_instance: VMixInstance, sendBasicCommand: SendB
           label: 'Select Index',
           id: 'value',
           default: '1',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     autoPlayFirst: {
@@ -94,11 +94,11 @@ export const vMixListActions = (_instance: VMixInstance, sendBasicCommand: SendB
           choices: [
             { id: 'AutoPlayFirst', label: 'Toggle' },
             { id: 'AutoPlayFirstOn', label: 'On' },
-            { id: 'AutoPlayFirstOff', label: 'Off' }
-          ]
-        }
+            { id: 'AutoPlayFirstOff', label: 'Off' },
+          ],
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     autoPlayNext: {
@@ -114,18 +114,18 @@ export const vMixListActions = (_instance: VMixInstance, sendBasicCommand: SendB
           choices: [
             { id: 'AutoPlayNext', label: 'Toggle' },
             { id: 'AutoPlayNextOn', label: 'On' },
-            { id: 'AutoPlayNextOff', label: 'Off' }
-          ]
-        }
+            { id: 'AutoPlayNextOff', label: 'Off' },
+          ],
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     listShuffle: {
       name: 'Lists - Shuffle List',
       description: 'Shuffles the items in a List',
       options: [options.input],
-      callback: sendBasicCommand
-    }
+      callback: sendBasicCommand,
+    },
   }
 }

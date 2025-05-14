@@ -40,10 +40,10 @@ export const vMixGeneralActions = (instance: VMixInstance, sendBasicCommand: Sen
           label: 'Key',
           id: 'value',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     tbar: {
@@ -55,8 +55,8 @@ export const vMixGeneralActions = (instance: VMixInstance, sendBasicCommand: Sen
           label: 'postion 0-255',
           id: 'value',
           default: '0',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       callback: async (action, context) => {
         const value = (await instance.parseOption(action.options.value, context))[instance.buttonShift.state]
@@ -64,7 +64,7 @@ export const vMixGeneralActions = (instance: VMixInstance, sendBasicCommand: Sen
         if (instance.tcp) {
           return instance.tcp.sendCommand(`FUNCTION SetFader Value=${value}`)
         }
-      }
+      },
     },
 
     dynamic: {
@@ -78,8 +78,8 @@ export const vMixGeneralActions = (instance: VMixInstance, sendBasicCommand: Sen
           default: 'Input',
           choices: [
             { id: 'Input', label: 'Dynamic Input' },
-            { id: 'Value', label: 'Dynamic Value' }
-          ]
+            { id: 'Value', label: 'Dynamic Value' },
+          ],
         },
         {
           type: 'dropdown',
@@ -90,22 +90,22 @@ export const vMixGeneralActions = (instance: VMixInstance, sendBasicCommand: Sen
             { id: '1', label: '1' },
             { id: '2', label: '2' },
             { id: '3', label: '3' },
-            { id: '4', label: '4' }
-          ]
+            { id: '4', label: '4' },
+          ],
         },
         {
           type: 'textinput',
           label: 'Value',
           id: 'value',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       callback: async (action, context) => {
         const value = (await instance.parseOption(action.options.value, context))[instance.buttonShift.state]
 
         if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetDynamic${action.options.type}${action.options.number} Value=${value}`)
-      }
-    }
+      },
+    },
   }
 }

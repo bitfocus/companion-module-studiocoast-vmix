@@ -105,8 +105,8 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           choices: [
             { id: 'MultiViewOverlay', label: 'Toggle Overlay Layer on Input' },
             { id: 'MultiViewOverlayOff', label: 'Set Overlay Layer Off' },
-            { id: 'MultiViewOverlayOn', label: 'Set Overlay Layer On' }
-          ]
+            { id: 'MultiViewOverlayOn', label: 'Set Overlay Layer On' },
+          ],
         },
         options.input,
         {
@@ -114,10 +114,10 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Layer',
           id: 'value',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     setMultiViewOverlay: {
@@ -129,7 +129,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'MultiView Input',
           id: 'input',
           default: '',
-          useVariables: true
+          useVariables: true,
         },
         {
           type: 'number',
@@ -137,15 +137,15 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           id: 'layer',
           default: 1,
           min: 1,
-          max: 10
+          max: 10,
         },
         {
           type: 'textinput',
           label: 'Input to use on Layer',
           id: 'layerInput',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       callback: async (action, context) => {
         const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
@@ -153,7 +153,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
 
         if (instance.tcp)
           return instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${encodeURIComponent(input)}&Value=${action.options.layer},${encodeURIComponent(layer)}`)
-      }
+      },
     },
 
     setMultiViewOverlayOnPreview: {
@@ -166,17 +166,17 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           id: 'layer',
           default: 1,
           min: 1,
-          max: 10
+          max: 10,
         },
         {
           type: 'textinput',
           label: 'Input to use on Layer',
           id: 'layerInput',
           default: '',
-          useVariables: true
+          useVariables: true,
         },
         options.mixSelect,
-        options.mixVariable
+        options.mixVariable,
       ],
       callback: async (action, context) => {
         const input = (await instance.parseOption(action.options.layerInput, context))[instance.buttonShift.state]
@@ -189,7 +189,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
 
         if (instance.tcp)
           return instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].preview}&Value=${action.options.layer},${encodeURIComponent(input)}`)
-      }
+      },
     },
 
     setMultiViewOverlayOnProgram: {
@@ -202,17 +202,17 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           id: 'layer',
           default: 1,
           min: 1,
-          max: 10
+          max: 10,
         },
         {
           type: 'textinput',
           label: 'Input to use on Layer',
           id: 'layerInput',
           default: '1',
-          useVariables: true
+          useVariables: true,
         },
         options.mixSelect,
-        options.mixVariable
+        options.mixVariable,
       ],
       callback: async (action, context) => {
         const input = (await instance.parseOption(action.options.layerInput, context))[instance.buttonShift.state]
@@ -225,7 +225,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
 
         if (instance.tcp)
           return instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].program}&Value=${action.options.layer},${encodeURIComponent(input)}`)
-      }
+      },
     },
 
     setMultiViewOverlayDestinationInput: {
@@ -237,8 +237,8 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Destination Input',
           id: 'destinationInput',
           default: '1',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       callback: async (action, context) => {
         let destination = (await instance.parseOption(action.options.destinationInput, context))[instance.buttonShift.state]
@@ -249,7 +249,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
         instance.routingData.layer.destinationInput = destination
         instance.checkFeedbacks('selectedDestinationInput', 'routableMultiviewLayer')
         instance.variables?.updateVariables()
-      }
+      },
     },
 
     setMultiViewOverlayDestinationLayer: {
@@ -261,8 +261,8 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Destination Layer (1-10) of destination Input',
           id: 'destinationLayer',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       callback: async (action, context) => {
         const parseOption = (await instance.parseOption(action.options.destinationLayer + '', context))[instance.buttonShift.state]
@@ -278,7 +278,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
         } else {
           instance.log('warn', `Setting Multview Destination layer must be a whole number, 1 to 10`)
         }
-      }
+      },
     },
 
     setMultiViewOverlaySourceInput: {
@@ -290,8 +290,8 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Input to be routed to destination (0 to clear layer)',
           id: 'sourceIndex',
           default: '1',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       callback: async (action, context) => {
         const input = (await instance.parseOption(action.options.sourceIndex, context))[instance.buttonShift.state]
@@ -301,11 +301,11 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           if (instance.tcp)
             return instance.tcp.sendCommand(
               `FUNCTION SetMultiViewOverlay Input=${encodeURIComponent(
-                instance.routingData.layer.destinationInput
-              )}&Value=${instance.routingData.layer.destinationLayer},${encodeURIComponent(inputValue)}`
+                instance.routingData.layer.destinationInput,
+              )}&Value=${instance.routingData.layer.destinationLayer},${encodeURIComponent(inputValue)}`,
             )
         }
-      }
+      },
     },
 
     clearMultiViewOverlaySelection: {
@@ -318,7 +318,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
 
         instance.checkFeedbacks('selectedDestinationInput', 'selectedDestinationLayer', 'routableMultiviewLayer')
         instance.variables?.updateVariables()
-      }
+      },
     },
 
     setLayerPosition: {
@@ -331,7 +331,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Layer (1 to 10)',
           id: 'layer',
           default: '1',
-          useVariables: true
+          useVariables: true,
         },
         {
           type: 'dropdown',
@@ -351,8 +351,8 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
             { id: 'Height', label: 'Zoom X' },
             { id: 'Width', label: 'Zoom Y' },
             { id: 'Zoom', label: 'Zoom' },
-            { id: 'Rectangle', label: 'Rectangle' }
-          ]
+            { id: 'Rectangle', label: 'Rectangle' },
+          ],
         },
         options.adjustment,
         {
@@ -363,7 +363,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           useVariables: true,
           isVisible: (options) => {
             return options.setting === 'Crop'
-          }
+          },
         },
         {
           type: 'textinput',
@@ -374,7 +374,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           isVisible: (options) => {
             const setting = options.setting as string
             return setting !== 'Crop' && setting.startsWith('Crop')
-          }
+          },
         },
         {
           type: 'textinput',
@@ -385,7 +385,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           isVisible: (options) => {
             const setting = options.setting as string
             return setting === 'PanX' || setting === 'PanY'
-          }
+          },
         },
         {
           type: 'textinput',
@@ -396,7 +396,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           isVisible: (options) => {
             const setting = options.setting as string
             return setting === 'X' || setting === 'Y'
-          }
+          },
         },
         {
           type: 'textinput',
@@ -407,7 +407,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           isVisible: (options) => {
             const setting = options.setting as string
             return setting === 'Height' || setting === 'Width'
-          }
+          },
         },
         {
           type: 'textinput',
@@ -418,7 +418,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           isVisible: (options) => {
             const setting = options.setting as string
             return setting === 'Rectangle'
-          }
+          },
         },
         {
           type: 'textinput',
@@ -429,8 +429,8 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           isVisible: (options) => {
             const setting = options.setting as string
             return setting === 'Zoom'
-          }
-        }
+          },
+        },
       ],
       callback: async (action, context) => {
         const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
@@ -554,7 +554,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
         if (instance.tcp) {
           return instance.tcp.sendCommand(cmd)
         }
-      }
-    }
+      },
+    },
   }
 }

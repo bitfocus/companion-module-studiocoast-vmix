@@ -11,20 +11,20 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
         text: 'Set Title',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [
             {
               actionId: 'setText',
-              options: { input: '1', selectedIndex: '0', adjustment: 'Set', value: '0', encode: false }
-            }
+              options: { input: '1', selectedIndex: '0', adjustment: 'Set', value: '0', encode: false },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
@@ -34,20 +34,20 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
         text: 'Set Title +1',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [
             {
               actionId: 'setText',
-              options: { input: '1', selectedIndex: '0', adjustment: 'Increase', value: '1', encode: false }
-            }
+              options: { input: '1', selectedIndex: '0', adjustment: 'Increase', value: '1', encode: false },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
@@ -57,20 +57,20 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
         text: 'Set Title -1',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [
             {
               actionId: 'setText',
-              options: { input: '1', selectedIndex: '0', adjustment: 'Decrease', value: '1', encode: false }
-            }
+              options: { input: '1', selectedIndex: '0', adjustment: 'Decrease', value: '1', encode: false },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
@@ -80,15 +80,15 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
         text: 'Next Title',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'titlePreset', options: { input: '', functionID: 'NextTitlePreset' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
@@ -98,22 +98,22 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
         text: 'Prev Title',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'titlePreset', options: { input: '', functionID: 'PreviousTitlePreset' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
       name: 'Title Presets',
       type: 'text',
-      text: ''
-    }
+      text: '',
+    },
   ]
 
   for (let i = 0; i < 5; i++) {
@@ -125,15 +125,15 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
         text: `Title Preset ${i}`,
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'selectTitlePreset', options: { input: '', value: i.toString() } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     })
   }
 
@@ -142,7 +142,7 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
       category: 'Titles & Graphics',
       name: 'Title Animations',
       type: 'text',
-      text: ''
+      text: '',
     },
     {
       category: 'Titles & Graphics',
@@ -152,15 +152,15 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
         text: 'Title Transition In',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'TransitionIn' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
@@ -170,15 +170,15 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
         text: 'Title Transition Out',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'TransitionOut' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
@@ -188,15 +188,15 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
         text: 'Title Continuous',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'Continuous' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
@@ -206,15 +206,15 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
         text: 'Title Data Change In',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'DataChangeIn' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
@@ -224,16 +224,16 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
         text: 'Title Data Change Out',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'DataChangeOut' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
-    }
+      feedbacks: [],
+    },
   )
 
   for (let i = 1; i < 11; i++) {
@@ -245,15 +245,15 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
         text: `Title Page ${i}`,
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: `Page${i}` as 'Page1' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     })
   }
 
@@ -262,7 +262,7 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
       category: 'Titles & Graphics',
       name: 'Countdowns',
       type: 'text',
-      text: ''
+      text: '',
     },
     {
       category: 'Titles & Graphics',
@@ -272,20 +272,20 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
         text: 'Countdown Start',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [
             {
               actionId: 'controlCountdown',
-              options: { functionID: 'StartCountdown', input: '', selectedIndex: '0' }
-            }
+              options: { functionID: 'StartCountdown', input: '', selectedIndex: '0' },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
@@ -295,15 +295,15 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
         text: 'Countdown Stop',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'controlCountdown', options: { functionID: 'StopCountdown', input: '', selectedIndex: '0' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
@@ -313,20 +313,20 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
         text: 'Countdown Pause',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [
             {
               actionId: 'controlCountdown',
-              options: { functionID: 'PauseCountdown', input: '', selectedIndex: '0' }
-            }
+              options: { functionID: 'PauseCountdown', input: '', selectedIndex: '0' },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Titles & Graphics',
@@ -336,16 +336,16 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
         text: 'Countdown Change',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'changeCountdown', options: { value: '00:10:00', input: '', selectedIndex: '0' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
-    }
+      feedbacks: [],
+    },
   )
 
   const countdowns = [
@@ -353,7 +353,7 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
     { label: '10', time: '00:00:10' },
     { label: '30', time: '00:00:30' },
     { label: '60', time: '00:01:00' },
-    { label: '120', time: '00:02:00' }
+    { label: '120', time: '00:02:00' },
   ]
 
   countdowns.forEach((x) => {
@@ -365,15 +365,15 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
         text: `Countdown ${x.label} sec`,
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'setCountdown', options: { value: x.time, input: '', selectedIndex: '0' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     })
   })
 

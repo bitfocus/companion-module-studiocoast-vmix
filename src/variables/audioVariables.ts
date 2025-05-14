@@ -18,7 +18,6 @@ type VariablesBusIDs =
   | `bus_${string}_solo`
   | `bus_${string}_sendtomaster`
 
-
 type VariablesBusValues = Record<VariablesBusIDs, string | number | undefined>
 
 export const audioDefinitions = (instance: VMixInstance): CompanionVariableDefinition[] => {
@@ -32,7 +31,7 @@ export const audioDefinitions = (instance: VMixInstance): CompanionVariableDefin
       definitions.push(
         { name: `Bus ${bus} Volume`, variableId: `bus_${bus.toLowerCase()}_volume` },
         { name: `Bus ${bus} dB`, variableId: `bus_${bus.toLowerCase()}_volume_db` },
-        { name: `Bus ${bus} Volume Linear`, variableId: `bus_${bus.toLowerCase()}_volume_linear` }
+        { name: `Bus ${bus} Volume Linear`, variableId: `bus_${bus.toLowerCase()}_volume_linear` },
       )
 
       if (bus !== 'Headphones') {
@@ -45,7 +44,7 @@ export const audioDefinitions = (instance: VMixInstance): CompanionVariableDefin
               { name: `Bus ${bus} MeterF${i} Avg 1s`, variableId: `bus_${bus.toLowerCase()}_meterf${i}_avg_1s` },
               { name: `Bus ${bus} MeterF${i} Avg 3s`, variableId: `bus_${bus.toLowerCase()}_meterf${i}_avg_3s` },
               { name: `Bus ${bus} MeterF${i} Peak 1s`, variableId: `bus_${bus.toLowerCase()}_meterf${i}_peak_1s` },
-              { name: `Bus ${bus} MeterF${i} Peak 3s`, variableId: `bus_${bus.toLowerCase()}_meterf${i}_peak_3s` }
+              { name: `Bus ${bus} MeterF${i} Peak 3s`, variableId: `bus_${bus.toLowerCase()}_meterf${i}_peak_3s` },
             )
           }
         }
@@ -54,7 +53,7 @@ export const audioDefinitions = (instance: VMixInstance): CompanionVariableDefin
           definitions.push(
             { name: `Bus ${bus} Mute`, variableId: `bus_${bus.toLowerCase()}_mute` },
             { name: `Bus ${bus} Solo`, variableId: `bus_${bus.toLowerCase()}_solo` },
-            { name: `Bus ${bus} Send to Master`, variableId: `bus_${bus.toLowerCase()}_sendtomaster` }
+            { name: `Bus ${bus} Send to Master`, variableId: `bus_${bus.toLowerCase()}_sendtomaster` },
           )
         }
       }
@@ -66,9 +65,9 @@ export const audioDefinitions = (instance: VMixInstance): CompanionVariableDefin
 
 export const audioValues = async (instance: VMixInstance): Promise<VariablesBusValues> => {
   const variables: VariablesBusValues = {
-		bus_selected: '',
-		bus_any_solo: ''
-	}
+    bus_selected: '',
+    bus_any_solo: '',
+  }
   const busses = [...AUDIOBUSSESMASTER, 'Selected']
 
   variables.bus_selected = instance.routingData.bus
@@ -78,13 +77,11 @@ export const audioValues = async (instance: VMixInstance): Promise<VariablesBusV
     busses.forEach((id) => {
       let audioBus: AudioBus | null = null
 
-
       if (id === 'Selected') {
         audioBus = instance.data.getAudioBus(instance.routingData.bus)
       } else {
         audioBus = instance.data.getAudioBus(id === 'Headphones' ? 'Master' : id)
       }
-			
 
       let volume: number | string | undefined = audioBus?.[id === 'Headphones' ? 'headphonesVolume' : 'volume']
       let volumedB

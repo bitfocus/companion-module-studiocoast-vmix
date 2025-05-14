@@ -23,7 +23,7 @@ export const outputDefinitions = (instance: VMixInstance): CompanionVariableDefi
     { name: 'Output 3 SRT', variableId: 'output_3_srt' },
     { name: 'Output 4 Source', variableId: 'output_4_source' },
     { name: 'Output 4 NDI', variableId: 'output_4_ndi' },
-    { name: 'Output 4 SRT', variableId: 'output_4_srt' }
+    { name: 'Output 4 SRT', variableId: 'output_4_srt' },
   )
 
   return definitions

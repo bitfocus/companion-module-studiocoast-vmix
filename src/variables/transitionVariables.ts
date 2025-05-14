@@ -12,7 +12,7 @@ export const transitionDefinitions = (instance: VMixInstance): CompanionVariable
   instance.data.transitions.forEach((transition) => {
     definitions.push(
       { name: `Transition ${transition.number} Effect`, variableId: `transition_${transition.number}_effect` },
-      { name: `Transition ${transition.number} Duration`, variableId: `transition_${transition.number}_duration` }
+      { name: `Transition ${transition.number} Duration`, variableId: `transition_${transition.number}_duration` },
     )
   })
 

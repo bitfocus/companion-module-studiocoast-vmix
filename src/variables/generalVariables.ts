@@ -48,14 +48,14 @@ export const generalDefinitions = (_instance: VMixInstance): CompanionVariableDe
     { name: 'Recording File Path 1', variableId: 'recording_filepath1' },
     { name: 'Recording File Name 2', variableId: 'recording_filename2' },
     { name: 'Recording File Path 2', variableId: 'recording_filepath2' },
-    { name: 'Preset', variableId: 'preset' }
+    { name: 'Preset', variableId: 'preset' },
   )
 
   return definitions
 }
 
 export const generalValues = async (instance: VMixInstance): Promise<InstanceVariableValue> => {
-	const recordingFile1 = instance.data.recording.filename1.split('\\')
+  const recordingFile1 = instance.data.recording.filename1.split('\\')
   const recordingFile2 = instance.data.recording.filename2.split('\\')
   const recordingFilename1 = recordingFile1[recordingFile1.length - 1] || ''
   const recordingFilepath1 = recordingFile1
@@ -83,7 +83,7 @@ export const generalValues = async (instance: VMixInstance): Promise<InstanceVar
     recording_filepath1: recordingFilepath1.join('\\') + '\\',
     recording_filename2: recordingFilename2,
     recording_filepath2: recordingFilepath2.join('\\') + '\\',
-    preset: instance.data.preset
+    preset: instance.data.preset,
   }
 
   return variables

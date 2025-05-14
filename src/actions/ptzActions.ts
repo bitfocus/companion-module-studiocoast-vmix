@@ -69,13 +69,13 @@ export const vMixPTZActions = (_instance: VMixInstance, sendBasicCommand: SendBa
             { id: 'PTZMoveDownRight', label: 'Down Right' },
             {
               id: 'PTZMoveToVirtualInputPosition',
-              label: 'Move to PTZ Virtual Input without selecting it into Preview'
+              label: 'Move to PTZ Virtual Input without selecting it into Preview',
             },
             {
               id: 'PTZMoveToVirtualInputPositionByIndex',
-              label: 'Move to PTZ Virtual Input associated with this Input'
-            }
-          ]
+              label: 'Move to PTZ Virtual Input associated with this Input',
+            },
+          ],
         },
         {
           type: 'textinput',
@@ -85,10 +85,10 @@ export const vMixPTZActions = (_instance: VMixInstance, sendBasicCommand: SendBa
           useVariables: true,
           isVisible: (options) => {
             return options.functionID !== 'PTZHome' && options.functionID !== 'PTZMoveStop' && options.functionID !== 'PTZMoveToVirtualInputPosition'
-          }
-        }
+          },
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     ptzFocusZoom: {
@@ -109,8 +109,8 @@ export const vMixPTZActions = (_instance: VMixInstance, sendBasicCommand: SendBa
             { id: 'PTZFocusStop', label: 'Focus Stop' },
             { id: 'PTZZoomIn', label: 'Zoom In' },
             { id: 'PTZZoomOut', label: 'Zoom Out' },
-            { id: 'PTZZoomStop', label: 'Zoom Stop' }
-          ]
+            { id: 'PTZZoomStop', label: 'Zoom Stop' },
+          ],
         },
         {
           type: 'textinput',
@@ -120,10 +120,10 @@ export const vMixPTZActions = (_instance: VMixInstance, sendBasicCommand: SendBa
           useVariables: true,
           isVisible: (options) => {
             return options.functionID !== 'PTZFocusAuto' && options.functionID !== 'PTZFocusManual' && options.functionID !== 'PTZFocusStop' && options.functionID !== 'PTZZoomStop'
-          }
-        }
+          },
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     ptzVirtualInput: {
@@ -138,11 +138,11 @@ export const vMixPTZActions = (_instance: VMixInstance, sendBasicCommand: SendBa
           default: 'PTZCreateVirtualInput',
           choices: [
             { id: 'PTZCreateVirtualInput', label: 'Create' },
-            { id: 'PTZUpdateVirtualInput', label: 'Update' }
-          ]
-        }
+            { id: 'PTZUpdateVirtualInput', label: 'Update' },
+          ],
+        },
       ],
-      callback: sendBasicCommand
-    }
+      callback: sendBasicCommand,
+    },
   }
 }

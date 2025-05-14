@@ -92,7 +92,7 @@ export const mixDefinitions = async (instance: VMixInstance): Promise<CompanionV
         { name: `Mix ${id} ${type} Mute`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_mute` },
         { name: `Mix ${id} ${type} Frame Delay`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_framedelay` },
         { name: `Mix ${id} ${type} Duration`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_duration` },
-        { name: `Mix ${id} ${type} Remaining`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_remaining` }
+        { name: `Mix ${id} ${type} Remaining`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_remaining` },
       )
 
       if (instance.config.variablesShowInputVolume) {
@@ -106,7 +106,7 @@ export const mixDefinitions = async (instance: VMixInstance): Promise<CompanionV
           { name: `Mix ${id} ${type} Meter F1 Peak 1s`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_meterf1_peak_1s` },
           { name: `Mix ${id} ${type} Meter F2 Peak 1s`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_meterf2_peak_1s` },
           { name: `Mix ${id} ${type} Meter F1 Peak 3s`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_meterf1_peak_3s` },
-          { name: `Mix ${id} ${type} Meter F2 Peak 3s`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_meterf2_peak_3s` }
+          { name: `Mix ${id} ${type} Meter F2 Peak 3s`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_meterf2_peak_3s` },
         )
       }
 
@@ -119,7 +119,7 @@ export const mixDefinitions = async (instance: VMixInstance): Promise<CompanionV
           { name: `Mix ${id} ${type} Position Crop X1`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_position_cropx1` },
           { name: `Mix ${id} ${type} Position Crop X2`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_position_cropx2` },
           { name: `Mix ${id} ${type} Position Crop Y1`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_position_cropy1` },
-          { name: `Mix ${id} ${type} Position Crop Y2`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_position_cropy2` }
+          { name: `Mix ${id} ${type} Position Crop Y2`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_position_cropy2` },
         )
       }
 
@@ -138,7 +138,7 @@ export const mixDefinitions = async (instance: VMixInstance): Promise<CompanionV
           { name: `Mix ${id} ${type} CC Gain R`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_gainr` },
           { name: `Mix ${id} ${type} CC Gain G`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_gaing` },
           { name: `Mix ${id} ${type} CC Gain B`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_gainb` },
-          { name: `Mix ${id} ${type} CC Gain Y`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_gainy` }
+          { name: `Mix ${id} ${type} CC Gain Y`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_gainy` },
         )
       }
 
@@ -147,7 +147,7 @@ export const mixDefinitions = async (instance: VMixInstance): Promise<CompanionV
           definitions.push(
             { name: `Mix ${id} ${type} Layer ${i} Number`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_layer_${i}_number` },
             { name: `Mix ${id} ${type} Layer ${i} Name`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_layer_${i}_name` },
-            { name: `Mix ${id} ${type} Layer ${i} Key`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_layer_${i}_key` }
+            { name: `Mix ${id} ${type} Layer ${i} Key`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_layer_${i}_key` },
           )
 
           if (instance.config.variablesShowInputLayerPosition) {
@@ -163,7 +163,7 @@ export const mixDefinitions = async (instance: VMixInstance): Promise<CompanionV
               { name: `Mix ${id} ${type} Layer ${i} Crop X1`, variableId: `mix_${id}_${type}_layer_${i}_cropx1` },
               { name: `Mix ${id} ${type} Layer ${i} Crop X2`, variableId: `mix_${id}_${type}_layer_${i}_cropx2` },
               { name: `Mix ${id} ${type} Layer ${i} Crop Y1`, variableId: `mix_${id}_${type}_layer_${i}_cropy1` },
-              { name: `Mix ${id} ${type} Layer ${i} Crop Y2`, variableId: `mix_${id}_${type}_layer_${i}_cropy2` }
+              { name: `Mix ${id} ${type} Layer ${i} Crop Y2`, variableId: `mix_${id}_${type}_layer_${i}_cropy2` },
             )
           }
         }
@@ -227,16 +227,16 @@ export const mixValues = async (instance: VMixInstance): Promise<VariablesMixVal
       if (inputDuration !== null) {
         variables[`mix_${id}_${type}_duration`] = inputDuration.ms
       } else {
-				variables[`mix_${id}_${type}_duration`] = ''
-			}
+        variables[`mix_${id}_${type}_duration`] = ''
+      }
 
       const inputRemaining = calcRemaining(input)
 
       if (inputRemaining !== null) {
         variables[`mix_${id}_${type}_remaining`] = inputRemaining.ms
       } else {
-				variables[`mix_${id}_${type}_remaining`] = ''
-			}
+        variables[`mix_${id}_${type}_remaining`] = ''
+      }
 
       if (instance.config.variablesShowInputPosition) {
         variables[`mix_${id}_${type}_position_panx`] = input.inputPosition?.panX ?? ''

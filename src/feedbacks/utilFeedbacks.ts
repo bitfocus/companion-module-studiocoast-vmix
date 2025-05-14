@@ -40,7 +40,7 @@ export const vMixUtilFeedbacks = (instance: VMixInstance): UtilFeedbacks => {
       description: 'Currently selected Mix',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0)
+        bgcolor: combineRgb(255, 255, 0),
       },
       options: [
         {
@@ -66,17 +66,17 @@ export const vMixUtilFeedbacks = (instance: VMixInstance): UtilFeedbacks => {
             { id: 14, label: '15' },
             { id: 15, label: '16' },
             { id: 15, label: '16' },
-            { id: -2, label: 'Variable' }
-          ]
+            { id: -2, label: 'Variable' },
+          ],
         },
-        options.mixVariable
+        options.mixVariable,
       ],
       callback: async (feedback, context) => {
         let mixVariable: string | number = (await instance.parseOption(feedback.options.mixVariable, context))[instance.buttonShift.state]
         mixVariable = parseInt(mixVariable, 10) - 1
         const mix: number = feedback.options.mix === -2 ? mixVariable : feedback.options.mix
         return instance.routingData.mix === mix
-      }
+      },
     },
 
     busSelect: {
@@ -85,7 +85,7 @@ export const vMixUtilFeedbacks = (instance: VMixInstance): UtilFeedbacks => {
       description: 'Currently selected Bus',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0)
+        bgcolor: combineRgb(255, 255, 0),
       },
       options: [
         {
@@ -93,12 +93,12 @@ export const vMixUtilFeedbacks = (instance: VMixInstance): UtilFeedbacks => {
           label: 'Bus',
           id: 'bus',
           default: 'Master',
-          choices: [{ id: 'Master', label: 'Master' }, ...AUDIOBUSSES.map((id) => ({ id, label: id }))]
-        }
+          choices: [{ id: 'Master', label: 'Master' }, ...AUDIOBUSSES.map((id) => ({ id, label: id }))],
+        },
       ],
       callback: (feedback) => {
         return instance.routingData.bus === feedback.options.bus
-      }
+      },
     },
 
     buttonShift: {
@@ -107,12 +107,12 @@ export const vMixUtilFeedbacks = (instance: VMixInstance): UtilFeedbacks => {
       description: 'Indicates Shift state',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0)
+        bgcolor: combineRgb(255, 255, 0),
       },
       options: [],
       callback: () => {
         return instance.buttonShift.state !== 0
-      }
+      },
     },
 
     buttonText: {
@@ -125,14 +125,14 @@ export const vMixUtilFeedbacks = (instance: VMixInstance): UtilFeedbacks => {
           label: 'Text',
           id: 'text',
           default: instance.config.shiftDelimiter,
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       callback: async (feedback, context) => {
         const textSplit = (await instance.parseOption(feedback.options.text, context))[instance.buttonShift.state]
 
         return { text: textSplit || undefined }
-      }
-    }
+      },
+    },
   }
 }

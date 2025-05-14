@@ -80,8 +80,8 @@ export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: Se
             { id: 'OverlayInput1Zoom', label: 'Zoom PIP Overlay 1 to/from fulscreen' },
             { id: 'OverlayInput2Zoom', label: 'Zoom PIP Overlay 2 to/from fulscreen' },
             { id: 'OverlayInput3Zoom', label: 'Zoom PIP Overlay 3 to/from fulscreen' },
-            { id: 'OverlayInput4Zoom', label: 'Zoom PIP Overlay 4 to/from fulscreen' }
-          ]
+            { id: 'OverlayInput4Zoom', label: 'Zoom PIP Overlay 4 to/from fulscreen' },
+          ],
         },
         options.input,
         {
@@ -107,7 +107,7 @@ export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: Se
             { id: 14, label: '15' },
             { id: 15, label: '16' },
             { id: -1, label: 'Selected' },
-            { id: -2, label: 'Variable' }
+            { id: -2, label: 'Variable' },
           ],
           isVisible: (feedbackOptions) => {
             let mixSupport = false
@@ -120,7 +120,7 @@ export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: Se
               'OverlayInput1In',
               'OverlayInput2In',
               'OverlayInput3In',
-              'OverlayInput4In'
+              'OverlayInput4In',
             ]
 
             supportedFunctions.forEach((x) => {
@@ -128,7 +128,7 @@ export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: Se
             })
 
             return mixSupport
-          }
+          },
         },
         {
           type: 'textinput',
@@ -147,7 +147,7 @@ export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: Se
               'OverlayInput1In',
               'OverlayInput2In',
               'OverlayInput3In',
-              'OverlayInput4In'
+              'OverlayInput4In',
             ]
 
             supportedFunctions.forEach((x) => {
@@ -156,10 +156,10 @@ export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: Se
 
             return mixSupport
           },
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: sendBasicCommand
-    }
+      callback: sendBasicCommand,
+    },
   }
 }

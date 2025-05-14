@@ -15,9 +15,9 @@ export const layerDefinitions = (_instance: VMixInstance): CompanionVariableDefi
 
 export const layerValues = async (instance: VMixInstance): Promise<InstanceVariableValue> => {
   const variables: VariablesLayerValues = {
-		layer_routing_input: '',
-		layer_routing_layer: ''
-	}
+    layer_routing_input: '',
+    layer_routing_layer: '',
+  }
 
   const layerRoutingInput = await instance.data.getInput(instance.routingData.layer.destinationInput || '')
 

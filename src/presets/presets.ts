@@ -89,7 +89,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
     ...getTitleGraphicsPresets(),
     ...getTransitionPresets(),
     ...getVideoPlaybackPresets(),
-    ...getVMixFunctionsPresets()
+    ...getVMixFunctionsPresets(),
   ]
 
   return presets as unknown as CompanionPresetDefinitions

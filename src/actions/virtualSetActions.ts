@@ -29,13 +29,13 @@ export const vMixVirtualSetActions = (instance: VMixInstance, _sendBasicCommand:
           label: 'Preset (1-4)',
           id: 'value',
           default: '1',
-          choices: ['1', '2', '3', '4'].map((value) => ({ id: value, label: value }))
-        }
+          choices: ['1', '2', '3', '4'].map((value) => ({ id: value, label: value })),
+        },
       ],
       callback: async (action, context) => {
         const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
         if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SelectIndex Input=${encodeURIComponent(input)}&Value=${action.options.value}`)
-      }
-    }
+      },
+    },
   }
 }

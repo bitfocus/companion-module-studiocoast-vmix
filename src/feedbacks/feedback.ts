@@ -5,7 +5,7 @@ import type {
   CompanionFeedbackAdvancedEvent,
   CompanionFeedbackBooleanEvent,
   CompanionFeedbackContext,
-  SomeCompanionFeedbackInputField
+  SomeCompanionFeedbackInputField,
 } from '@companion-module/base'
 import { type AudioFeedbacks, type AudioCallbacks, vMixAudioFeedbacks } from './audioFeedbacks'
 import { type GeneralFeedbacks, type GeneralCallbacks, vMixGeneralFeedbacks } from './generalFeedbacks'
@@ -73,7 +73,7 @@ interface VMixFeedbackAdvanced<T> {
   options: InputFieldWithDefault[]
   callback: (
     feedback: Readonly<Omit<CompanionFeedbackAdvancedEvent, 'options' | 'type'> & T>,
-    context: CompanionFeedbackContext
+    context: CompanionFeedbackContext,
   ) => CompanionAdvancedFeedbackResult | Promise<CompanionAdvancedFeedbackResult>
   subscribe?: (feedback: Readonly<Omit<CompanionFeedbackAdvancedEvent, 'options' | 'type'> & T>) => CompanionAdvancedFeedbackResult
   unsubscribe?: (feedback: Readonly<Omit<CompanionFeedbackAdvancedEvent, 'options' | 'type'> & T>) => CompanionAdvancedFeedbackResult
@@ -92,6 +92,6 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
     ...vMixTallyFeedbacks(instance),
     ...vMixTransitionFeedbacks(instance),
     ...vMixUtilFeedbacks(instance),
-    ...vMixVideoCallFeedbacks(instance)
+    ...vMixVideoCallFeedbacks(instance),
   }
 }

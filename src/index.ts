@@ -6,7 +6,7 @@ import {
   type CompanionFeedbackDefinitions,
   type CompanionHTTPRequest,
   type CompanionHTTPResponse,
-  type SomeCompanionConfigField
+  type SomeCompanionConfigField,
 } from '@companion-module/base'
 import { type Config, getConfigFields, defaultConfig } from './config'
 import { getActions } from './actions/actions'
@@ -61,12 +61,12 @@ class VMixInstance extends InstanceBase<Config> {
     response: 0,
     parsed: 0,
     feedbacks: 0,
-    variables: 0
+    variables: 0,
   }
   public buttonShift: ButtonShift = {
     state: 0,
     blink: false,
-    blinkInterval: null
+    blinkInterval: null,
   }
   public config: Config = defaultConfig()
   public connected = false
@@ -77,9 +77,9 @@ class VMixInstance extends InstanceBase<Config> {
     bus: 'Master',
     layer: {
       destinationInput: null,
-      destinationLayer: null
+      destinationLayer: null,
     },
-    mix: 0
+    mix: 0,
   }
   public startTime: Date = new Date()
   public tcp: TCP | null = null
@@ -92,10 +92,13 @@ class VMixInstance extends InstanceBase<Config> {
     this.log('debug', `Process ID: ${process.pid}`)
 
     if (config.debugVersionUpdateNotifications) {
-			this.log('info', 'v4.0.0 of this mode has now been released! Patch notes can be found at https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/patch_notes.md')
+      this.log(
+        'info',
+        'v4.0.0 of this mode has now been released! Patch notes can be found at https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/patch_notes.md',
+      )
       this.log(
         'warn',
-        'The vMix Companion module v4 has undergone significant changes to its configuration to allow more granular control over what variables are generated as this has a significant performance impact during large productions'
+        'The vMix Companion module v4 has undergone significant changes to its configuration to allow more granular control over what variables are generated as this has a significant performance impact during large productions',
       )
       this.log('warn', 'Please check the vMix module configuration within Companion and ensure only the variables you wish to use are enabled')
     }

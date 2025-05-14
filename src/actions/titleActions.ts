@@ -137,8 +137,8 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
           choices: [
             { id: 'StartCountdown', label: 'Start' },
             { id: 'StopCountdown', label: 'Stop' },
-            { id: 'PauseCountdown', label: 'Pause' }
-          ]
+            { id: 'PauseCountdown', label: 'Pause' },
+          ],
         },
         options.input,
         {
@@ -146,8 +146,8 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Layer',
           id: 'selectedIndex',
           default: '0',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       callback: async (action, context) => {
         const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
@@ -158,9 +158,9 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
 
         if (instance.tcp)
           return instance.tcp.sendCommand(
-            `FUNCTION ${action.options.functionID} Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'}=${encodeURIComponent(index)}`
+            `FUNCTION ${action.options.functionID} Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'}=${encodeURIComponent(index)}`,
           )
-      }
+      },
     },
 
     setCountdown: {
@@ -172,7 +172,7 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Time (00:00:00)',
           id: 'value',
           default: '00:10:00',
-          useVariables: true
+          useVariables: true,
         },
         options.input,
         {
@@ -180,8 +180,8 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Layer',
           id: 'selectedIndex',
           default: '0',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       callback: async (action, context) => {
         const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
@@ -193,9 +193,9 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
 
         if (instance.tcp)
           return instance.tcp.sendCommand(
-            `FUNCTION SetCountdown Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'}=${encodeURIComponent(index)}&value=${value}`
+            `FUNCTION SetCountdown Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'}=${encodeURIComponent(index)}&value=${value}`,
           )
-      }
+      },
     },
 
     changeCountdown: {
@@ -207,7 +207,7 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Time (00:00:00)',
           id: 'value',
           default: '00:10:00',
-          useVariables: true
+          useVariables: true,
         },
         options.input,
         {
@@ -215,8 +215,8 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Layer',
           id: 'selectedIndex',
           default: '0',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       callback: async (action, context) => {
         const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
@@ -228,9 +228,9 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
 
         if (instance.tcp)
           return instance.tcp.sendCommand(
-            `FUNCTION ChangeCountdown Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'}=${encodeURIComponent(index)}&value=${value}`
+            `FUNCTION ChangeCountdown Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'}=${encodeURIComponent(index)}&value=${value}`,
           )
-      }
+      },
     },
 
     adjustCountdown: {
@@ -242,7 +242,7 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Seconds',
           id: 'value',
           default: '10',
-          useVariables: true
+          useVariables: true,
         },
         options.input,
         {
@@ -250,8 +250,8 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Layer',
           id: 'selectedIndex',
           default: '0',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       callback: async (action, context) => {
         const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
@@ -267,10 +267,10 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
         } else {
           if (instance.tcp)
             return instance.tcp.sendCommand(
-              `FUNCTION AdjustCountdown Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'}=${encodeURIComponent(index)}&Value=${value}`
+              `FUNCTION AdjustCountdown Input=${encodeURIComponent(input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'}=${encodeURIComponent(index)}&Value=${value}`,
             )
         }
-      }
+      },
     },
 
     setText: {
@@ -283,7 +283,7 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Layer',
           id: 'selectedIndex',
           default: '0',
-          useVariables: true
+          useVariables: true,
         },
         options.adjustment,
         {
@@ -291,14 +291,14 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Value',
           id: 'value',
           default: '',
-          useVariables: true
+          useVariables: true,
         },
         {
           type: 'checkbox',
           label: 'Encode Value (needed if text contains special characters)',
           id: 'encode',
-          default: false
-        }
+          default: false,
+        },
       ],
       callback: async (action, context) => {
         const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
@@ -325,7 +325,7 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
             if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetText Input=${encodeURIComponent(input)}&${indexNaNCheck}=${index}&Value=${text}`)
           }
         }
-      }
+      },
     },
 
     setTextColor: {
@@ -339,15 +339,15 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
           tooltip: '(Indexed from 0 or by name)',
           id: 'selectedIndex',
           default: '0',
-          useVariables: true
+          useVariables: true,
         },
         {
           type: 'textinput',
           label: 'Color (#RRGGBB)',
           id: 'value',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       callback: async (action, context) => {
         const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
@@ -359,7 +359,7 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
         } else {
           if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetTextColour Input=${input}&Value=${value}&SelectedIndex=${index}`)
         }
-      }
+      },
     },
 
     setTextVisible: {
@@ -373,7 +373,7 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
           tooltip: '(Indexed from 0 or by name)',
           id: 'selectedIndex',
           default: '0',
-          useVariables: true
+          useVariables: true,
         },
         {
           type: 'dropdown',
@@ -383,9 +383,9 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
           choices: [
             { id: 'Toggle', label: 'Toggle' },
             { id: 'On', label: 'On' },
-            { id: 'Off', label: 'Off' }
-          ]
-        }
+            { id: 'Off', label: 'Off' },
+          ],
+        },
       ],
       callback: async (action, context) => {
         const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
@@ -400,7 +400,7 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
         } else {
           if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${type} Input=${input}&SelectedIndex=${index}`)
         }
-      }
+      },
     },
 
     setColor: {
@@ -413,15 +413,15 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Layer',
           id: 'selectedIndex',
           default: '0',
-          useVariables: true
+          useVariables: true,
         },
         {
           type: 'textinput',
           label: 'Value (#RRGGBB or #AARRGGBB)',
           id: 'value',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       callback: async (action, context) => {
         const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
@@ -434,7 +434,7 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
         const indexNaNCheck = isNaN(parseInt(index, 10)) ? 'SelectedName' : 'SelectedIndex'
 
         if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetColor Input=${encodeURIComponent(input)}&${indexNaNCheck}=${index}&Value=${encodeURIComponent(value)}`)
-      }
+      },
     },
 
     selectTitlePreset: {
@@ -447,10 +447,10 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Preset Index',
           id: 'value',
           default: '0',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     titlePreset: {
@@ -465,11 +465,11 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
           default: 'NextTitlePreset',
           choices: [
             { id: 'NextTitlePreset', label: 'Select Next Title Preset' },
-            { id: 'PreviousTitlePreset', label: 'Select Previous Title Preset' }
-          ]
-        }
+            { id: 'PreviousTitlePreset', label: 'Select Previous Title Preset' },
+          ],
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     titleBeginAnimation: {
@@ -497,11 +497,11 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
             { id: 'Page10', label: 'Page 10' },
             { id: 'Continuous', label: 'Continuous' },
             { id: 'DataChangeIn', label: 'Data Change In' },
-            { id: 'DataChangeOut', label: 'Data Change Out' }
-          ]
-        }
+            { id: 'DataChangeOut', label: 'Data Change Out' },
+          ],
+        },
       ],
-      callback: sendBasicCommand
-    }
+      callback: sendBasicCommand,
+    },
   }
 }

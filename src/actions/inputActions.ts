@@ -110,35 +110,35 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
       name: 'Input - Send Input to Preview',
       description: 'Send to Preview the selected Input',
       options: [options.input, options.mixSelect, options.mixVariable],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     previewInputNext: {
       name: 'Input - Send Next input to Preview',
       description: 'Send to Preview the next Input',
       options: [],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     previewInputPrevious: {
       name: 'Input - Send Previous input to Preview',
       description: 'Send to Preview the previous Input',
       options: [],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     resetInput: {
       name: 'Input - Reset',
       description: 'Reset an Input',
       options: [options.input],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     undo: {
       name: 'Input - Undo',
       description: 'Undo closing an input',
       options: [],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     inputEffect: {
@@ -155,8 +155,8 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
             { id: '1', label: 'Effect 1' },
             { id: '2', label: 'Effect 2' },
             { id: '3', label: 'Effect 3' },
-            { id: '4', label: 'Effect 4' }
-          ]
+            { id: '4', label: 'Effect 4' },
+          ],
         },
         {
           type: 'dropdown',
@@ -166,9 +166,9 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
           choices: [
             { id: '', label: 'Toggle' },
             { id: 'On', label: 'On' },
-            { id: 'Off', label: 'Off' }
-          ]
-        }
+            { id: 'Off', label: 'Off' },
+          ],
+        },
       ],
       callback: async (action, context) => {
         const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
@@ -181,7 +181,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
         if (instance.tcp) {
           return instance.tcp.sendCommand(`FUNCTION ${command} Input=${input.key}`)
         }
-      }
+      },
     },
 
     inputEffectStrength: {
@@ -198,16 +198,16 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
             { id: '1', label: 'Effect 1' },
             { id: '2', label: 'Effect 2' },
             { id: '3', label: 'Effect 3' },
-            { id: '4', label: 'Effect 4' }
-          ]
+            { id: '4', label: 'Effect 4' },
+          ],
         },
         {
           type: 'textinput',
           label: 'Strength 0 to 1',
           id: 'strength',
           default: '1',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       callback: async (action, context) => {
         const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
@@ -222,7 +222,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
         if (instance.tcp) {
           return instance.tcp.sendCommand(`FUNCTION ${command} Input=${input.key}&Value=${parsedValue}`)
         }
-      }
+      },
     },
 
     setCC: {
@@ -249,8 +249,8 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
             { id: 'SetCCLiftG', label: 'Lift G' },
             { id: 'SetCCLiftB', label: 'Lift B' },
             { id: 'SetCCLiftY', label: 'Lift Y' },
-            { id: 'SetCCSaturation', label: 'Saturation' }
-          ]
+            { id: 'SetCCSaturation', label: 'Saturation' },
+          ],
         },
         options.adjustment,
         {
@@ -262,7 +262,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
           isVisible: (options) => {
             const setting = options.setting as string
             return setting.startsWith('SetCCGain')
-          }
+          },
         },
         {
           type: 'textinput',
@@ -273,8 +273,8 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
           isVisible: (options) => {
             const setting = options.setting as string
             return !setting.startsWith('SetCCGain')
-          }
-        }
+          },
+        },
       ],
       callback: async (action, context) => {
         const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
@@ -314,7 +314,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
         if (instance.tcp) {
           return instance.tcp.sendCommand(`FUNCTION ${action.options.setting} Input=${input.key}&Value=${parsedValue}`)
         }
-      }
+      },
     },
 
     inputPosition: {
@@ -335,8 +335,8 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
             { id: 'SetCropY1', label: 'Crop Y1' },
             { id: 'SetCropY2', label: 'Crop Y2' },
             { id: 'SetPanX', label: 'Pan X' },
-            { id: 'SetPanY', label: 'Pan Y' }
-          ]
+            { id: 'SetPanY', label: 'Pan Y' },
+          ],
         },
         {
           type: 'dropdown',
@@ -346,12 +346,12 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
           choices: [
             { id: 'Set', label: 'Set' },
             { id: 'Increase', label: 'Increase' },
-            { id: 'Decrease', label: 'Decrease' }
+            { id: 'Decrease', label: 'Decrease' },
           ],
           isVisible: (options) => {
             const setting = options.setting as string
             return setting !== 'setCrop'
-          }
+          },
         },
         {
           type: 'textinput',
@@ -362,7 +362,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
           isVisible: (options) => {
             const setting = options.setting as string
             return setting === 'SetZoom'
-          }
+          },
         },
         {
           type: 'textinput',
@@ -373,7 +373,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
           isVisible: (options) => {
             const setting = options.setting as string
             return setting === 'SetCrop'
-          }
+          },
         },
         {
           type: 'textinput',
@@ -384,7 +384,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
           isVisible: (options) => {
             const setting = options.setting as string
             return setting.startsWith('SetCropX') || setting.startsWith('SetCropY')
-          }
+          },
         },
         {
           type: 'textinput',
@@ -395,8 +395,8 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
           isVisible: (options) => {
             const setting = options.setting as string
             return setting.startsWith('SetPan')
-          }
-        }
+          },
+        },
       ],
       callback: async (action, context) => {
         const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
@@ -464,7 +464,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
         if (instance.tcp) {
           return instance.tcp.sendCommand(cmd)
         }
-      }
+      },
     },
 
     inputFrameDelay: {
@@ -477,8 +477,8 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Frames',
           id: 'value',
           default: '0',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       callback: async (action, context) => {
         const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
@@ -493,7 +493,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
         if (instance.tcp) {
           return instance.tcp.sendCommand(`FUNCTION SetFrameDelay Input=${input.key}&Value=${value}`)
         }
-      }
-    }
+      },
+    },
   }
 }

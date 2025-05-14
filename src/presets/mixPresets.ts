@@ -10,7 +10,7 @@ export const getMixPresets = (): VMixPresetArray => {
       category: `Mix ${mix}` as PresetCategory,
       name: 'Send Input to Preview',
       type: 'text',
-      text: 'Inputs 1 to 8'
+      text: 'Inputs 1 to 8',
     })
 
     for (let input = 1; input < 9; input++) {
@@ -22,18 +22,18 @@ export const getMixPresets = (): VMixPresetArray => {
           text: `PRV ${input}`,
           size: '24',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [
               {
                 actionId: 'previewInput',
-                options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', input: input.toString() }
-              }
+                options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', input: input.toString() },
+              },
             ],
-            up: []
-          }
+            up: [],
+          },
         ],
         feedbacks: [
           {
@@ -44,10 +44,10 @@ export const getMixPresets = (): VMixPresetArray => {
               input: input.toString(),
               fg: combineRgb(255, 255, 255),
               bg: combineRgb(0, 255, 0),
-              tally: ''
-            }
-          }
-        ]
+              tally: '',
+            },
+          },
+        ],
       })
     }
 
@@ -55,7 +55,7 @@ export const getMixPresets = (): VMixPresetArray => {
       category: `Mix ${mix}` as PresetCategory,
       name: 'Send Input to Program',
       type: 'text',
-      text: 'Inputs 1 to 8'
+      text: 'Inputs 1 to 8',
     })
 
     for (let input = 1; input < 9; input++) {
@@ -67,18 +67,18 @@ export const getMixPresets = (): VMixPresetArray => {
           text: `PGM ${input}`,
           size: '24',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [
               {
                 actionId: 'programCut',
-                options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', input: input.toString() }
-              }
+                options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', input: input.toString() },
+              },
             ],
-            up: []
-          }
+            up: [],
+          },
         ],
 
         feedbacks: [
@@ -90,10 +90,10 @@ export const getMixPresets = (): VMixPresetArray => {
               input: input.toString(),
               fg: combineRgb(255, 255, 255),
               bg: combineRgb(255, 0, 0),
-              tally: ''
-            }
-          }
-        ]
+              tally: '',
+            },
+          },
+        ],
       })
     }
 
@@ -102,7 +102,7 @@ export const getMixPresets = (): VMixPresetArray => {
         category: `Mix ${mix}` as PresetCategory,
         name: 'Transition Preview to Program',
         type: 'text',
-        text: ''
+        text: '',
       },
       {
         category: `Mix ${mix}` as PresetCategory,
@@ -112,20 +112,20 @@ export const getMixPresets = (): VMixPresetArray => {
           text: 'Cut',
           size: '24',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [
               {
                 actionId: 'transitionMix',
-                options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', functionID: 'Cut', duration: '1000' }
-              }
+                options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', functionID: 'Cut', duration: '1000' },
+              },
             ],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
+        feedbacks: [],
       },
       {
         category: `Mix ${mix}` as PresetCategory,
@@ -135,20 +135,20 @@ export const getMixPresets = (): VMixPresetArray => {
           text: 'Fade',
           size: '24',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [
               {
                 actionId: 'transitionMix',
-                options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', functionID: 'Fade', duration: '1000' }
-              }
+                options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', functionID: 'Fade', duration: '1000' },
+              },
             ],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
+        feedbacks: [],
       },
       {
         category: `Mix ${mix}` as PresetCategory,
@@ -158,16 +158,16 @@ export const getMixPresets = (): VMixPresetArray => {
           text: 'Fade',
           size: '24',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [{ actionId: 'transition', options: { functionID: 'Transition1', mix: 0, mixVariable: '' } }],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
-      }
+        feedbacks: [],
+      },
     )
   }
 

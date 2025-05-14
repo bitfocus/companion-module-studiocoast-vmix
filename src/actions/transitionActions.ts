@@ -75,13 +75,13 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
           options: {
             functionID: 'CutDirect',
             input: action.options.input,
-            mix
-          }
+            mix,
+          },
         }
 
         if (programCut.options.mix !== 0) programCut.options.functionID = 'ActiveInput'
         return sendBasicCommand(programCut)
-      }
+      },
     },
 
     transitionMix: {
@@ -95,14 +95,14 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
           label: 'Select transition',
           id: 'functionID',
           default: 'Cut',
-          choices: TRANSITIONS.map((transition) => ({ id: transition, label: transition }))
+          choices: TRANSITIONS.map((transition) => ({ id: transition, label: transition })),
         },
         {
           type: 'textinput',
           label: 'Duration',
           id: 'duration',
           default: '1000',
-          useVariables: true
+          useVariables: true,
         },
         {
           type: 'textinput',
@@ -110,8 +110,8 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
           id: 'input',
           default: '',
           tooltip: 'Number, Name, or GUID',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       callback: async (action, context) => {
         const command: any = {
@@ -119,8 +119,8 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
           options: {
             mix: action.options.mix,
             mixVariable: action.options.mixVariable,
-            functionID: action.options.functionID
-          }
+            functionID: action.options.functionID,
+          },
         }
 
         let duration: string | number = (await instance.parseOption(action.options.duration, context))[instance.buttonShift.state]
@@ -141,7 +141,7 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
 
         if (action.options.input !== '' && action.options.input !== undefined) command.options.input = action.options.input
         return sendBasicCommand(command)
-      }
+      },
     },
 
     transition: {
@@ -161,8 +161,8 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
             { id: 'Stinger1', label: 'Stinger 1' },
             { id: 'Stinger2', label: 'Stinger 2' },
             { id: 'Stinger3', label: 'Stinger 3' },
-            { id: 'Stinger4', label: 'Stinger 4' }
-          ]
+            { id: 'Stinger4', label: 'Stinger 4' },
+          ],
         },
         {
           type: 'dropdown',
@@ -187,21 +187,21 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
             { id: 14, label: '15' },
             { id: 15, label: '16' },
             { id: -1, label: 'Selected' },
-            { id: -2, label: 'Variable' }
+            { id: -2, label: 'Variable' },
           ],
           isVisible: (options) => {
             const opt = options as TransitionOptions
             return opt.functionID.startsWith('Stinger')
-          }
+          },
         },
-        options.mixVariable
+        options.mixVariable,
       ],
-      callback: (action) => {
+      callback: async (action) => {
         const command: any = {
           actionId: 'transition',
           options: {
-            functionID: action.options.functionID
-          }
+            functionID: action.options.functionID,
+          },
         }
 
         if (action.options.functionID.startsWith('Stinger')) {
@@ -210,7 +210,7 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
         }
 
         return sendBasicCommand(command)
-      }
+      },
     },
 
     setTransitionEffect: {
@@ -226,18 +226,18 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
             { id: 'SetTransitionEffect1', label: 'Transition 1' },
             { id: 'SetTransitionEffect2', label: 'Transition 2' },
             { id: 'SetTransitionEffect3', label: 'Transition 3' },
-            { id: 'SetTransitionEffect4', label: 'Transition 4' }
-          ]
+            { id: 'SetTransitionEffect4', label: 'Transition 4' },
+          ],
         },
         {
           type: 'dropdown',
           label: 'Select transition type',
           id: 'value',
           default: 'Cut',
-          choices: TRANSITIONS.map((transition) => ({ id: transition, label: transition }))
-        }
+          choices: TRANSITIONS.map((transition) => ({ id: transition, label: transition })),
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     setTransitionDuration: {
@@ -253,8 +253,8 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
             { id: 'SetTransitionDuration1', label: 'Transition 1' },
             { id: 'SetTransitionDuration2', label: 'Transition 2' },
             { id: 'SetTransitionDuration3', label: 'Transition 3' },
-            { id: 'SetTransitionDuration4', label: 'Transition 4' }
-          ]
+            { id: 'SetTransitionDuration4', label: 'Transition 4' },
+          ],
         },
         {
           type: 'number',
@@ -262,17 +262,17 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
           id: 'value',
           min: 0,
           max: 9999,
-          default: 1000
-        }
+          default: 1000,
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     quickPlay: {
       name: 'Transition - Quick Play input to Program',
       description: 'Sends selected input to Preview, cut to Program, and then plays input',
       options: [options.input],
-      callback: sendBasicCommand
-    }
+      callback: sendBasicCommand,
+    },
   }
 }

@@ -46,7 +46,7 @@ export const vMixMediaActions = (instance: VMixInstance, _sendBasicCommand: Send
           type: 'checkbox',
           label: 'Act on Preview instead of inputs',
           id: 'inputType',
-          default: false
+          default: false,
         },
         {
           type: 'dropdown',
@@ -60,9 +60,9 @@ export const vMixMediaActions = (instance: VMixInstance, _sendBasicCommand: Send
             { id: 'Restart', label: 'Restart Video' },
             { id: 'LoopOn', label: 'Loop Video On' },
             { id: 'LoopOff', label: 'Loop Video Off' },
-            { id: 'Loop', label: 'Loop Video Toggle' }
-          ]
-        }
+            { id: 'Loop', label: 'Loop Video Toggle' },
+          ],
+        },
       ],
       callback: async (action, context) => {
         const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
@@ -70,7 +70,7 @@ export const vMixMediaActions = (instance: VMixInstance, _sendBasicCommand: Send
         if (instance.tcp) {
           return instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Input=${action.options.inputType ? '0' : encodeURIComponent(input)}`)
         }
-      }
+      },
     },
 
     videoPlayhead: {
@@ -82,7 +82,7 @@ export const vMixMediaActions = (instance: VMixInstance, _sendBasicCommand: Send
           type: 'checkbox',
           label: 'Affect Preview instead of inputs',
           id: 'inputType',
-          default: false
+          default: false,
         },
         options.adjustment,
         {
@@ -91,8 +91,8 @@ export const vMixMediaActions = (instance: VMixInstance, _sendBasicCommand: Send
           id: 'value',
           default: 0,
           min: 0,
-          max: Number.MAX_SAFE_INTEGER
-        }
+          max: Number.MAX_SAFE_INTEGER,
+        },
       ],
       callback: async (action, context) => {
         const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
@@ -106,7 +106,7 @@ export const vMixMediaActions = (instance: VMixInstance, _sendBasicCommand: Send
         }
 
         if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetPosition Input=${action.options.inputType ? '0' : encodeURIComponent(input)}&Value=${text}`)
-      }
+      },
     },
 
     videoMark: {
@@ -118,7 +118,7 @@ export const vMixMediaActions = (instance: VMixInstance, _sendBasicCommand: Send
           type: 'checkbox',
           label: 'Affect Preview instead of inputs',
           id: 'inputType',
-          default: false
+          default: false,
         },
         {
           type: 'dropdown',
@@ -130,15 +130,15 @@ export const vMixMediaActions = (instance: VMixInstance, _sendBasicCommand: Send
             { id: 'MarkOut', label: 'Mark Out' },
             { id: 'MarkReset', label: 'Mark Reset' },
             { id: 'MarkResetIn', label: 'Mark Reset In' },
-            { id: 'MarkResetOut', label: 'Mark Reset Out' }
-          ]
-        }
+            { id: 'MarkResetOut', label: 'Mark Reset Out' },
+          ],
+        },
       ],
       callback: async (action, context) => {
         const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
 
         if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Input=${action.options.inputType ? '0' : encodeURIComponent(input)}`)
-      }
-    }
+      },
+    },
   }
 }

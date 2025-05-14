@@ -24,10 +24,7 @@ export interface UtilActions {
   [key: string]: VMixAction<any>
 }
 
-export type UtilCallbacks =
-  | MixSelectCallback
-  | BusSelectCallback
-  | ButtonShiftCallback
+export type UtilCallbacks = MixSelectCallback | BusSelectCallback | ButtonShiftCallback
 
 export const vMixUtilActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): UtilActions => {
   return {
@@ -57,10 +54,10 @@ export const vMixUtilActions = (instance: VMixInstance, _sendBasicCommand: SendB
             { id: 13, label: '14' },
             { id: 14, label: '15' },
             { id: 15, label: '16' },
-            { id: -2, label: 'Variable' }
-          ]
+            { id: -2, label: 'Variable' },
+          ],
         },
-        options.mixVariable
+        options.mixVariable,
       ],
       callback: async (action, context) => {
         const mix = action.options.mix
@@ -81,7 +78,7 @@ export const vMixUtilActions = (instance: VMixInstance, _sendBasicCommand: SendB
 
         instance.variables?.updateVariables()
         instance.checkFeedbacks('mixSelect', 'inputPreview', 'inputLive')
-      }
+      },
     },
 
     busSelect: {
@@ -93,14 +90,14 @@ export const vMixUtilActions = (instance: VMixInstance, _sendBasicCommand: SendB
           label: 'Bus',
           id: 'value',
           default: 'Master',
-          choices: ['Master', 'A', 'B', 'C', 'D', 'E', 'F', 'G'].map((id) => ({ id, label: id }))
-        }
+          choices: ['Master', 'A', 'B', 'C', 'D', 'E', 'F', 'G'].map((id) => ({ id, label: id })),
+        },
       ],
       callback: (action) => {
         instance.routingData.bus = action.options.value
         instance.variables?.updateVariables()
         instance.checkFeedbacks('busSelect', 'busMute', 'busSolo', 'busSendToMaster', 'busVolumeMeter', 'inputBusRouting', 'liveBusVolume')
-      }
+      },
     },
 
     buttonShift: {
@@ -133,11 +130,11 @@ export const vMixUtilActions = (instance: VMixInstance, _sendBasicCommand: SendB
           'selectedDestinationLayer',
           'routableMultiviewLayer',
           'inputOnMultiview',
-          'inputState'
+          'inputState',
         ]
 
         instance.checkFeedbacks(...feedbacks)
-      }
+      },
     },
   }
 }

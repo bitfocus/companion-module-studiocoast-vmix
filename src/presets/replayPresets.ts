@@ -9,7 +9,7 @@ export const getReplayPresets = (): VMixPresetArray => {
       category: 'Replay',
       name: `A Camera`,
       type: 'text',
-      text: ''
+      text: '',
     })
 
     for (let i = 1; i < 9; i++) {
@@ -21,18 +21,18 @@ export const getReplayPresets = (): VMixPresetArray => {
           text: `${channel} Cam ${i}`,
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [
               {
                 actionId: 'replayACamera',
-                options: { functionID: `Replay${channel}Camera${i}` as 'ReplayACamera1' }
-              }
+                options: { functionID: `Replay${channel}Camera${i}` as 'ReplayACamera1' },
+              },
             ],
-            up: []
-          }
+            up: [],
+          },
         ],
         feedbacks: [
           {
@@ -40,10 +40,10 @@ export const getReplayPresets = (): VMixPresetArray => {
             options: { channel: 'A', camera: 1 },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 255, 0)
-            }
-          }
-        ]
+              bgcolor: combineRgb(255, 255, 0),
+            },
+          },
+        ],
       })
     }
   })
@@ -52,7 +52,7 @@ export const getReplayPresets = (): VMixPresetArray => {
     category: 'Replay',
     name: `Channel Select`,
     type: 'text',
-    text: ''
+    text: '',
   })
 
   const channels: ('AB' | 'A' | 'B')[] = ['AB', 'A', 'B']
@@ -66,18 +66,18 @@ export const getReplayPresets = (): VMixPresetArray => {
         text: `Channel${channel}`,
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [
             {
               actionId: 'replaySelectChannel',
-              options: { functionID: `replaySelectChannel${channel}` as 'replaySelectChannelAB' }
-            }
+              options: { functionID: `replaySelectChannel${channel}` as 'replaySelectChannelAB' },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -85,10 +85,10 @@ export const getReplayPresets = (): VMixPresetArray => {
           options: { channel },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 255, 0),
+          },
+        },
+      ],
     })
   })
 
@@ -97,7 +97,7 @@ export const getReplayPresets = (): VMixPresetArray => {
       category: 'Replay',
       name: `Playback`,
       type: 'text',
-      text: ''
+      text: '',
     },
     {
       category: 'Replay',
@@ -107,13 +107,13 @@ export const getReplayPresets = (): VMixPresetArray => {
         text: 'Rec',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'replayRecording', options: { functionID: `ReplayStartStopRecording` } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -121,10 +121,10 @@ export const getReplayPresets = (): VMixPresetArray => {
           options: { status: 'recording' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 0, 0),
+          },
+        },
+      ],
     },
     {
       category: 'Replay',
@@ -134,13 +134,13 @@ export const getReplayPresets = (): VMixPresetArray => {
         text: 'Live',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'replayLiveToggle', options: {} }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -148,10 +148,10 @@ export const getReplayPresets = (): VMixPresetArray => {
           options: { status: 'live' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 0, 0),
+          },
+        },
+      ],
     },
     {
       category: 'Replay',
@@ -161,15 +161,15 @@ export const getReplayPresets = (): VMixPresetArray => {
         text: 'Jump to Now',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'replayJumpToNow', options: { channel: 'Current' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Replay',
@@ -179,15 +179,15 @@ export const getReplayPresets = (): VMixPresetArray => {
         text: 'Play Events',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'replayPlay', options: { channel: 'Current' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Replay',
@@ -197,15 +197,15 @@ export const getReplayPresets = (): VMixPresetArray => {
         text: 'Pause Events',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'replayPause', options: { channel: 'Current' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Replay',
@@ -215,15 +215,15 @@ export const getReplayPresets = (): VMixPresetArray => {
         text: 'Play Selected Event',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'replayPlaySelectedEventToOutput', options: { channel: 'Current' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Replay',
@@ -233,21 +233,21 @@ export const getReplayPresets = (): VMixPresetArray => {
         text: 'Play Events by ID',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'replayPlayEventsByIDToOutput', options: { channel: 'Current', value: 0 } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Replay',
       name: `Mark Event`,
       type: 'text',
-      text: ''
+      text: '',
     },
     {
       category: 'Replay',
@@ -257,15 +257,15 @@ export const getReplayPresets = (): VMixPresetArray => {
         text: 'Mark In',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'replayMark', options: { functionID: 'ReplayMarkIn', value: '0', value2: '10' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Replay',
@@ -275,15 +275,15 @@ export const getReplayPresets = (): VMixPresetArray => {
         text: 'Mark Out',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'replayMark', options: { functionID: 'ReplayMarkOut', value: '0', value2: '10' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Replay',
@@ -293,15 +293,15 @@ export const getReplayPresets = (): VMixPresetArray => {
         text: 'Mark Last 10s',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'replayMark', options: { functionID: 'ReplayMarkInOut', value: '10', value2: '10' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Replay',
@@ -311,15 +311,15 @@ export const getReplayPresets = (): VMixPresetArray => {
         text: 'Mark Last 30s',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'replayMark', options: { functionID: 'ReplayMarkInOut', value: '30', value2: '10' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Replay',
@@ -329,15 +329,15 @@ export const getReplayPresets = (): VMixPresetArray => {
         text: 'Update In',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'replayUpdateInOut', options: { functionID: 'ReplayUpdateSelectedInPoint' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Replay',
@@ -347,16 +347,16 @@ export const getReplayPresets = (): VMixPresetArray => {
         text: 'Update Out',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'replayUpdateInOut', options: { functionID: 'ReplayUpdateSelectedOutPoint' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
-    }
+      feedbacks: [],
+    },
   )
 
   return replayPresets

@@ -36,11 +36,11 @@ export const vMixPlayListActions = (_instance: VMixInstance, sendBasicCommand: S
             { id: 'StartPlayList', label: 'Start Play List' },
             { id: 'StopPlayList', label: 'Stop Play List' },
             { id: 'NextPlayListEntry', label: 'Next Item in Play List' },
-            { id: 'PreviousPlayListEntry', label: 'Previous Item in Play List' }
-          ]
-        }
+            { id: 'PreviousPlayListEntry', label: 'Previous Item in Play List' },
+          ],
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     selectPlayList: {
@@ -52,10 +52,10 @@ export const vMixPlayListActions = (_instance: VMixInstance, sendBasicCommand: S
           label: 'Playlist name',
           id: 'value',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: sendBasicCommand
-    }
+      callback: sendBasicCommand,
+    },
   }
 }

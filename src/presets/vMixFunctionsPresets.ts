@@ -11,13 +11,13 @@ export const getVMixFunctionsPresets = (): VMixPresetArray => {
         text: 'Toggle Multicorder',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'toggleFunctions', options: { functionID: 'StartStopMultiCorder', value: '' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -25,10 +25,10 @@ export const getVMixFunctionsPresets = (): VMixPresetArray => {
           options: { status: 'multiCorder', value: '' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 0, 0),
+          },
+        },
+      ],
     },
     {
       category: 'vMix Functions',
@@ -38,13 +38,13 @@ export const getVMixFunctionsPresets = (): VMixPresetArray => {
         text: 'Toggle Recording',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'toggleFunctions', options: { functionID: 'StartStopRecording', value: '' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -52,10 +52,10 @@ export const getVMixFunctionsPresets = (): VMixPresetArray => {
           options: { status: 'recording', value: '' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 0, 0),
+          },
+        },
+      ],
     },
     {
       category: 'vMix Functions',
@@ -65,13 +65,13 @@ export const getVMixFunctionsPresets = (): VMixPresetArray => {
         text: 'Toggle Stream',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'toggleFunctions', options: { functionID: 'StartStopStreaming', value: '' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -79,10 +79,10 @@ export const getVMixFunctionsPresets = (): VMixPresetArray => {
           options: { status: 'streaming', value: '' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 0, 0),
+          },
+        },
+      ],
     },
     {
       category: 'vMix Functions',
@@ -92,13 +92,13 @@ export const getVMixFunctionsPresets = (): VMixPresetArray => {
         text: 'Toggle External',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'toggleFunctions', options: { functionID: 'StartStopExternal', value: '' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -106,10 +106,10 @@ export const getVMixFunctionsPresets = (): VMixPresetArray => {
           options: { status: 'external', value: '' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 0, 0),
+          },
+        },
+      ],
     },
     {
       category: 'vMix Functions',
@@ -119,13 +119,13 @@ export const getVMixFunctionsPresets = (): VMixPresetArray => {
         text: 'Toggle Fullscreen',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'toggleFunctions', options: { functionID: 'Fullscreen', value: '' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -133,10 +133,10 @@ export const getVMixFunctionsPresets = (): VMixPresetArray => {
           options: { status: 'fullscreen', value: '' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 0, 0),
+          },
+        },
+      ],
     },
     {
       category: 'vMix Functions',
@@ -146,13 +146,13 @@ export const getVMixFunctionsPresets = (): VMixPresetArray => {
         text: 'Toggle FTB',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'toggleFunctions', options: { functionID: 'FadeToBlack', value: '' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -160,11 +160,11 @@ export const getVMixFunctionsPresets = (): VMixPresetArray => {
           options: { status: 'fadeToBlack', value: '' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
-        }
-      ]
-    }
+            bgcolor: combineRgb(255, 0, 0),
+          },
+        },
+      ],
+    },
   ]
 
   return vMixfunctionPresets

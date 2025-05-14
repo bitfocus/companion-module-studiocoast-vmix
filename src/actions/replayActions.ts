@@ -261,10 +261,10 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           label: 'Camera',
           id: 'functionID',
           default: 'ReplayACamera1',
-          choices: [1, 2, 3, 4, 5, 6, 7, 8].map((item) => ({ id: `ReplayACamera${item}`, label: `Camera ${item}` }))
-        }
+          choices: [1, 2, 3, 4, 5, 6, 7, 8].map((item) => ({ id: `ReplayACamera${item}`, label: `Camera ${item}` })),
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replayBCamera: {
@@ -276,10 +276,10 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           label: 'Camera',
           id: 'functionID',
           default: 'ReplayBCamera1',
-          choices: [1, 2, 3, 4, 5, 6, 7, 8].map((item) => ({ id: `ReplayBCamera${item}`, label: `Camera ${item}` }))
-        }
+          choices: [1, 2, 3, 4, 5, 6, 7, 8].map((item) => ({ id: `ReplayBCamera${item}`, label: `Camera ${item}` })),
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replayCamera: {
@@ -291,10 +291,10 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           label: 'Camera',
           id: 'functionID',
           default: 'ReplayCamera1',
-          choices: [1, 2, 3, 4, 5, 6, 7, 8].map((item) => ({ id: `ReplayCamera${item}`, label: `Camera ${item}` }))
-        }
+          choices: [1, 2, 3, 4, 5, 6, 7, 8].map((item) => ({ id: `ReplayCamera${item}`, label: `Camera ${item}` })),
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replaySelectChannel: {
@@ -308,18 +308,18 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           default: 'replaySelectChannelAB',
           choices: ['replaySelectChannelAB', 'replaySelectChannelA', 'replaySelectChannelB'].map((item) => ({
             id: item,
-            label: item.substr(19)
-          }))
-        }
+            label: item.substr(19),
+          })),
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replaySwapChannels: {
       name: 'Replay - Swap A and B channels',
       description: 'Swap cameras on A and B Channels',
       options: [],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replayMark: {
@@ -341,8 +341,8 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
             { id: 'ReplayMarkInOutLiveFuture', label: 'Mark In-Out Future' },
             { id: 'ReplayMarkInOutRecorded', label: 'Mark In-Out Recorded' },
             { id: 'ReplayMarkInRecorded', label: 'Mark In Recorded' },
-            { id: 'ReplayMarkInRecordedNow', label: 'Mark In Recorded Now' }
-          ]
+            { id: 'ReplayMarkInRecordedNow', label: 'Mark In Recorded Now' },
+          ],
         },
         {
           type: 'textinput',
@@ -353,7 +353,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           useVariables: true,
           isVisible: (options) => {
             return ['ReplayMarkInOut', 'ReplayMarkInOutLive', 'ReplayMarkInOutRecorded'].includes(options.functionID as string)
-          }
+          },
         },
         {
           type: 'textinput',
@@ -364,13 +364,13 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           useVariables: true,
           isVisible: (options) => {
             return options.functionID === 'ReplayMarkInOutLiveFuture'
-          }
-        }
+          },
+        },
       ],
-      callback: (action) => {
+      callback: async (action) => {
         const command: any = {
           id: 'replayMark',
-          options: { functionID: action.options.functionID }
+          options: { functionID: action.options.functionID },
         }
 
         if (['ReplayMarkInOut', 'ReplayMarkInOutLive', 'ReplayMarkInOutRecorded'].includes(action.options.functionID as string)) {
@@ -382,7 +382,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
         }
 
         return sendBasicCommand(command)
-      }
+      },
     },
 
     replayMoveInOut: {
@@ -396,18 +396,18 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           default: 'ReplayMoveSelectedInPoint',
           choices: [
             { id: 'ReplayMoveSelectedInPoint', label: 'Move In Point' },
-            { id: 'ReplayMoveSelectedOutPoint', label: 'Move Out Point' }
-          ]
+            { id: 'ReplayMoveSelectedOutPoint', label: 'Move Out Point' },
+          ],
         },
         {
           type: 'textinput',
           label: 'Frames',
           id: 'value',
           default: '30',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replayUpdateInOut: {
@@ -421,11 +421,11 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           default: 'ReplayUpdateSelectedInPoint',
           choices: [
             { id: 'ReplayUpdateSelectedInPoint', label: 'Move In Point' },
-            { id: 'ReplayUpdateSelectedOutPoint', label: 'Move Out Point' }
-          ]
-        }
+            { id: 'ReplayUpdateSelectedOutPoint', label: 'Move Out Point' },
+          ],
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replaySelectEvents: {
@@ -439,19 +439,19 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           default: 'ReplaySelectEvents1',
           choices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((item) => ({
             id: `ReplaySelectEvents${item}`,
-            label: `Events ${item}`
-          }))
+            label: `Events ${item}`,
+          })),
         },
-        options.replayChannel
+        options.replayChannel,
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replayChangeDirection: {
       name: 'Replay - Change Direction',
       description: 'Change Replay playback Direction',
       options: [options.replayChannel],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replayChangeSpeed: {
@@ -466,10 +466,10 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           default: 0.1,
           step: 0.01,
           min: -1,
-          max: 1
-        }
+          max: 1,
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replaySetSpeed: {
@@ -482,7 +482,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           label: 'Speed',
           id: 'value',
           default: '1',
-          useVariables: true
+          useVariables: true,
         },
         {
           type: 'textinput',
@@ -490,8 +490,8 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           id: 'max',
           default: '1',
           tooltip: 'If using a tbar, set this to the max value your tbar sends (eg, 255 for xkeys)',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       callback: async (action, context) => {
         let value = parseFloat((await instance.parseOption(action.options.value, context))[instance.buttonShift.state])
@@ -507,7 +507,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
         if (instance.tcp) {
           return instance.tcp.sendCommand(`FUNCTION ReplaySetSpeed Channel=${action.options.channel}&Value=${position}`)
         }
-      }
+      },
     },
 
     replayMoveEvent: {
@@ -521,8 +521,8 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           default: 'ReplayMoveLastEvent',
           choices: [
             { id: 'ReplayMoveLastEvent', label: 'Move Last' },
-            { id: 'ReplayMoveSelectedEvent', label: 'Move Selected' }
-          ]
+            { id: 'ReplayMoveSelectedEvent', label: 'Move Selected' },
+          ],
         },
         {
           type: 'dropdown',
@@ -531,11 +531,11 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           default: 0,
           choices: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((item, index) => ({
             id: item,
-            label: `Events ${index + 1}`
-          }))
-        }
+            label: `Events ${index + 1}`,
+          })),
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replayMoveEventUpDown: {
@@ -549,11 +549,11 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           default: 'ReplayMoveSelectedEventUp',
           choices: [
             { id: 'ReplayMoveSelectedEventUp', label: 'Move Up' },
-            { id: 'ReplayMoveSelectedEventDown', label: 'Move Down' }
-          ]
-        }
+            { id: 'ReplayMoveSelectedEventDown', label: 'Move Down' },
+          ],
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replayFastForwardBackward: {
@@ -567,8 +567,8 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           default: 'ReplayFastForward',
           choices: [
             { id: 'ReplayFastForward', label: 'Forward' },
-            { id: 'ReplayFastBackward', label: 'Backward' }
-          ]
+            { id: 'ReplayFastBackward', label: 'Backward' },
+          ],
         },
         options.replayChannel,
         {
@@ -577,10 +577,10 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           id: 'value',
           default: 10,
           min: 0,
-          max: 30
-        }
+          max: 30,
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replayJumpFrames: {
@@ -593,10 +593,10 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           label: 'Frames',
           id: 'value',
           default: '60',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replayRecording: {
@@ -611,39 +611,39 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           choices: [
             { id: 'ReplayStartRecording', label: 'Start' },
             { id: 'ReplayStopRecording', label: 'Stop' },
-            { id: 'ReplayStartStopRecording', label: 'Toggle' }
-          ]
-        }
+            { id: 'ReplayStartStopRecording', label: 'Toggle' },
+          ],
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replayJumpToNow: {
       name: 'Replay - Jump To Now',
       description: 'Jump replay to Now',
       options: [options.replayChannel],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replayLiveToggle: {
       name: 'Replay - Toggle Live',
       description: 'Toggle Replay Live',
       options: [],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replayPlay: {
       name: 'Replay - Play',
       description: 'Play Replay',
       options: [options.replayChannel],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replayPause: {
       name: 'Replay - Pause',
       description: 'Pause Replay',
       options: [options.replayChannel],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replayPlayEvent: {
@@ -657,17 +657,17 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           id: 'value',
           default: 0,
           min: 0,
-          max: 1000
-        }
+          max: 1000,
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replayPlaySelectedEventToOutput: {
       name: 'Replay - Play Selected Event To Output',
       description: 'Play Event currently Selected to Output',
       options: [options.replayChannel],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replayPlayEventsByIDToOutput: {
@@ -681,31 +681,31 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           id: 'value',
           default: 0,
           min: 0,
-          max: 1000
-        }
+          max: 1000,
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replayPlayLastEventToOutput: {
       name: 'Replay - Play Last Event to Output',
       description: 'Play last Event',
       options: [options.replayChannel],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replayPlayAllEventsToOutput: {
       name: 'Replay - Play all Events to Output',
       description: 'Play all Events in active list',
       options: [options.replayChannel],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replayStopEvents: {
       name: 'Replay - Stop Events',
       description: 'Stop any currently playing events',
       options: [],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     replayToggleCamera: {
@@ -717,20 +717,20 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           label: 'Destination',
           id: 'camera',
           default: 1,
-          choices: [1, 2, 3, 4, 5, 6, 7, 8].map((item) => ({ id: item, label: `Camera ${item}` }))
-        }
+          choices: [1, 2, 3, 4, 5, 6, 7, 8].map((item) => ({ id: item, label: `Camera ${item}` })),
+        },
       ],
-      callback: (action) => {
+      callback: async (action) => {
         if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ReplayToggleSelectedEventCamera${action.options.camera}`)
         return
-      }
+      },
     },
 
     replayShowHide: {
       name: 'Replay - Show / Hide Replay',
       description: 'Shows or Hides the Replay window',
       options: [],
-      callback: sendBasicCommand
-    }
+      callback: sendBasicCommand,
+    },
   }
 }

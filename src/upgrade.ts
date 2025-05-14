@@ -37,7 +37,7 @@ const upgradeV1_2_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: config,
     updatedActions: [],
-    updatedFeedbacks: []
+    updatedFeedbacks: [],
   }
 
   // Actions
@@ -179,7 +179,7 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: config,
     updatedActions: [],
-    updatedFeedbacks: []
+    updatedFeedbacks: [],
   }
 
   // Actions
@@ -240,7 +240,7 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
       'ScriptStop',
       'ScriptStopAll',
       'Dynamic',
-      'BrowserNavigate'
+      'BrowserNavigate',
     ]
 
     if (toLowerCamelCase.includes(action.actionId)) {
@@ -409,7 +409,7 @@ const upgradeV2_0_6: CompanionStaticUpgradeScript<Config> = (_context, props): C
   const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: null,
     updatedActions: [],
-    updatedFeedbacks: []
+    updatedFeedbacks: [],
   }
 
   actions.forEach((action: any) => {
@@ -438,7 +438,7 @@ const upgradeV3_5_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: null,
     updatedActions: [],
-    updatedFeedbacks: []
+    updatedFeedbacks: [],
   }
 
   if (config && config.tbar !== undefined) {
@@ -462,7 +462,7 @@ const adjustmentFix: CompanionStaticUpgradeScript<Config> = (_context, props): C
   const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: null,
     updatedActions: [],
-    updatedFeedbacks: []
+    updatedFeedbacks: [],
   }
 
   actions.forEach((action: any) => {
@@ -483,7 +483,7 @@ const upgradeV3_6_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: null,
     updatedActions: [],
-    updatedFeedbacks: []
+    updatedFeedbacks: [],
   }
 
   actions.forEach((action: any) => {
@@ -551,7 +551,7 @@ const upgradeV3_6_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
         'inputOnMultiview',
         'mixSelect',
         'busSelect',
-        'buttonShift'
+        'buttonShift',
       ].includes(feedback.feedbackId)
     ) {
       if (!feedback.style) feedback.style = {}
@@ -599,7 +599,7 @@ const upgradeV3_6_2: CompanionStaticUpgradeScript<Config> = (_context, props): C
   const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: null,
     updatedActions: [],
-    updatedFeedbacks: []
+    updatedFeedbacks: [],
   }
 
   actions.forEach((action: any) => {
@@ -619,7 +619,7 @@ const upgradeV3_7_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: null,
     updatedActions: [],
-    updatedFeedbacks: []
+    updatedFeedbacks: [],
   }
 
   actions.forEach((action: any) => {
@@ -652,7 +652,7 @@ const upgradeV3_8_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: null,
     updatedActions: [],
-    updatedFeedbacks: []
+    updatedFeedbacks: [],
   }
 
   actions.forEach((action: any) => {
@@ -693,7 +693,7 @@ const upgradeV3_9_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: null,
     updatedActions: [],
-    updatedFeedbacks: []
+    updatedFeedbacks: [],
   }
 
   actions.forEach((action: any) => {
@@ -713,7 +713,7 @@ const upgradeV3_9_6: CompanionStaticUpgradeScript<Config> = (_context, props): C
   const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: null,
     updatedActions: [],
-    updatedFeedbacks: []
+    updatedFeedbacks: [],
   }
 
   actions.forEach((action: any) => {
@@ -732,7 +732,7 @@ const upgradeV4_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: null,
     updatedActions: [],
-    updatedFeedbacks: []
+    updatedFeedbacks: [],
   }
 
   if (config?.strictInputVariableTypes !== undefined) {
@@ -775,6 +775,6 @@ export const getUpgrades = (): CompanionStaticUpgradeScript<Config>[] => {
     upgradeV3_8_0,
     upgradeV3_9_0,
     upgradeV3_9_6,
-    upgradeV4_0_0
+    upgradeV4_0_0,
   ]
 }

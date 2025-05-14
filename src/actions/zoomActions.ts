@@ -46,11 +46,11 @@ export const vMixZoomActions = (instance: VMixInstance, sendBasicCommand: SendBa
           default: 'zoomMuteSelf',
           choices: [
             { id: 'zoomMuteSelf', label: 'Mute' },
-            { id: 'zoomUnMuteSelf', label: 'Unmute' }
-          ]
-        }
+            { id: 'zoomUnMuteSelf', label: 'Unmute' },
+          ],
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     zoomSelectParticipantByName: {
@@ -63,10 +63,10 @@ export const vMixZoomActions = (instance: VMixInstance, sendBasicCommand: SendBa
           label: 'Name',
           id: 'value',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     zoomJoinMeeting: {
@@ -79,15 +79,15 @@ export const vMixZoomActions = (instance: VMixInstance, sendBasicCommand: SendBa
           label: 'Meeting ID',
           id: 'meetingID',
           default: '',
-          useVariables: true
+          useVariables: true,
         },
         {
           type: 'textinput',
           label: 'Password',
           id: 'password',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       callback: async (action, context) => {
         const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
@@ -97,7 +97,7 @@ export const vMixZoomActions = (instance: VMixInstance, sendBasicCommand: SendBa
         if (selected && meetingID && instance.tcp) {
           return instance.tcp.sendCommand(`FUNCTION ZoomJoinMeeting Input=${selected}&Value=${meetingID},${password}`)
         }
-      }
-    }
+      },
+    },
   }
 }

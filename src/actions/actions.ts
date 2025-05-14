@@ -190,6 +190,6 @@ export function getActions(instance: VMixInstance): VMixActions {
     ...vMixUtilActions(instance, sendBasicCommand),
     ...vMixVideoCallActions(instance, sendBasicCommand),
     ...vMixVirtualSetActions(instance, sendBasicCommand),
-    ...vMixZoomActions(instance, sendBasicCommand)
+    ...vMixZoomActions(instance, sendBasicCommand),
   }
 }

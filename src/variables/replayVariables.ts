@@ -40,7 +40,7 @@ export const replayDefinitions = (instance: VMixInstance): CompanionVariableDefi
     { name: 'Replay Speed B', variableId: 'replay_speedb' },
     { name: 'Replay Timecode', variableId: 'replay_timecode' },
     { name: 'Replay Timecode A', variableId: 'replay_timecodea' },
-    { name: 'Replay Timecode B', variableId: 'replay_timecodeb' }
+    { name: 'Replay Timecode B', variableId: 'replay_timecodeb' },
   )
 
   return definitions

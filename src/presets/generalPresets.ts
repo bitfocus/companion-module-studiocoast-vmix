@@ -11,15 +11,15 @@ export const getGeneralPresets = (): VMixPresetArray => {
         text: 'Send Key Press',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'keyPress', options: { value: '' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Scripting & Commands',
@@ -29,15 +29,15 @@ export const getGeneralPresets = (): VMixPresetArray => {
         text: 'Script Start',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'scriptStart', options: { value: '' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Scripting & Commands',
@@ -47,15 +47,15 @@ export const getGeneralPresets = (): VMixPresetArray => {
         text: 'Script Stop',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'scriptStop', options: { value: '' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Scripting & Commands',
@@ -65,15 +65,15 @@ export const getGeneralPresets = (): VMixPresetArray => {
         text: 'Script Stop All',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'scriptStopAll', options: {} }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Scripting & Commands',
@@ -83,16 +83,16 @@ export const getGeneralPresets = (): VMixPresetArray => {
         text: 'Custom Command',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'command', options: { command: '', encode: false } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
-    }
+      feedbacks: [],
+    },
   ]
 
   return generalPresets

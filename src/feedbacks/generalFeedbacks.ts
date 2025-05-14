@@ -54,8 +54,8 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
           default: 'dynamicInput',
           choices: [
             { id: 'dynamicInput', label: 'Dynamic Input' },
-            { id: 'dynamicValue', label: 'Dynamic Value' }
-          ]
+            { id: 'dynamicValue', label: 'Dynamic Value' },
+          ],
         },
         {
           type: 'dropdown',
@@ -66,26 +66,26 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
             { id: 0, label: '1' },
             { id: 1, label: '2' },
             { id: 2, label: '3' },
-            { id: 3, label: '4' }
-          ]
+            { id: 3, label: '4' },
+          ],
         },
         {
           type: 'textinput',
           label: 'Value',
           id: 'value',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       defaultStyle: {
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       callback: async (feedback, context) => {
         const targetValue = (await instance.parseOption(feedback.options.value, context))[instance.buttonShift.state]
         const dynamic: string = instance.data[feedback.options.type][feedback.options.number]?.value
 
         return targetValue === dynamic
-      }
+      },
     },
 
     outputStatus: {
@@ -94,7 +94,7 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
       description: 'Requires vMix 28+',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       options: [
         {
@@ -109,8 +109,8 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
             { id: 'Output 2', label: 'Output 2' },
             { id: 'Output 3', label: 'Output 3' },
             { id: 'Output 4', label: 'Output 4' },
-            { id: 'Custom', label: 'Use Variable' }
-          ]
+            { id: 'Custom', label: 'Use Variable' },
+          ],
         },
         {
           type: 'textinput',
@@ -118,7 +118,7 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
           id: 'custom',
           default: '',
           useVariables: true,
-          isVisible: (options) => options.output === 'Custom'
+          isVisible: (options) => options.output === 'Custom',
         },
         {
           type: 'dropdown',
@@ -132,8 +132,8 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
             { id: 'MultiView2', label: 'MultiView2' },
             { id: 'Replay', label: 'Replay' },
             { id: 'Mix', label: 'Mix' },
-            { id: 'Input', label: 'Input' }
-          ]
+            { id: 'Input', label: 'Input' },
+          ],
         },
         {
           type: 'textinput',
@@ -141,7 +141,7 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
           id: 'mix',
           default: '',
           useVariables: true,
-          isVisible: (options) => options.type === 'Mix'
+          isVisible: (options) => options.type === 'Mix',
         },
         {
           type: 'textinput',
@@ -149,8 +149,8 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
           id: 'input',
           default: '',
           useVariables: true,
-          isVisible: (options) => options.type === 'Input'
-        }
+          isVisible: (options) => options.type === 'Input',
+        },
       ],
       callback: async (feedback, context) => {
         const outputSelect: any =
@@ -173,7 +173,7 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
         } else {
           return output.source === feedback.options.type
         }
-      }
+      },
     },
 
     outputNDISRT: {
@@ -182,7 +182,7 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
       description: 'Requires vMix 28+',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       options: [
         {
@@ -195,8 +195,8 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
             { id: 'Output 2', label: 'Output 2' },
             { id: 'Output 3', label: 'Output 3' },
             { id: 'Output 4', label: 'Output 4' },
-            { id: 'Custom', label: 'Use Variable' }
-          ]
+            { id: 'Custom', label: 'Use Variable' },
+          ],
         },
         {
           type: 'textinput',
@@ -204,7 +204,7 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
           id: 'custom',
           default: '',
           useVariables: true,
-          isVisible: (options) => options.output === 'Custom'
+          isVisible: (options) => options.output === 'Custom',
         },
         {
           type: 'dropdown',
@@ -213,9 +213,9 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
           default: 'ndi',
           choices: [
             { id: 'ndi', label: 'NDI' },
-            { id: 'srt', label: 'SRT' }
-          ]
-        }
+            { id: 'srt', label: 'SRT' },
+          ],
+        },
       ],
       callback: async (feedback, context) => {
         const outputSelect: any =
@@ -228,7 +228,7 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
         })
         if (!output) return false
         return output[feedback.options.type]
-      }
+      },
     },
 
     status: {
@@ -237,7 +237,7 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
       description: 'Current status of vMix, such as recording, external, etc...',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       options: [
         {
@@ -245,7 +245,7 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
           label: 'Status Type',
           id: 'status',
           default: 'connection',
-          choices: ['connection', 'fadeToBlack', 'recording', 'external', 'streaming', 'multiCorder', 'fullscreen', 'playList'].map((id) => ({ id, label: id }))
+          choices: ['connection', 'fadeToBlack', 'recording', 'external', 'streaming', 'multiCorder', 'fullscreen', 'playList'].map((id) => ({ id, label: id })),
         },
         {
           type: 'dropdown',
@@ -262,8 +262,8 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
           ],
           isVisible: (options) => {
             return options.status === 'streaming'
-          }
-        }
+          },
+        },
       ],
       callback: (feedback) => {
         if (feedback.options.status === 'connection') {
@@ -280,7 +280,7 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
           }
         }
         return false
-      }
-    }
+      },
+    },
   }
 }

@@ -7,8 +7,8 @@ export const getTransitionPresets = (): VMixPresetArray => {
       category: 'Transitions',
       name: 'Transitions 1 to 4',
       type: 'text',
-      text: 'Auto transition 1 to 4 with preset transition type and duration'
-    }
+      text: 'Auto transition 1 to 4 with preset transition type and duration',
+    },
   ]
 
   for (let i = 1; i < 5; i++) {
@@ -20,15 +20,15 @@ export const getTransitionPresets = (): VMixPresetArray => {
         text: `Transition ${i}`,
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'transition', options: { functionID: `Transition${i}` as 'Transition1', mix: 0, mixVariable: '' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     })
   }
 
@@ -41,15 +41,15 @@ export const getTransitionPresets = (): VMixPresetArray => {
         text: `Stinger ${i}`,
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'transition', options: { functionID: `Stinger${i}` as 'Stinger1', mix: 0, mixVariable: '' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     })
   }
 
@@ -59,7 +59,7 @@ export const getTransitionPresets = (): VMixPresetArray => {
         category: 'Transitions',
         name: `Set Transition ${i}`,
         type: 'text',
-        text: `Set the transition type and duration of Transition ${i}`
+        text: `Set the transition type and duration of Transition ${i}`,
       },
       {
         category: 'Transitions',
@@ -69,20 +69,20 @@ export const getTransitionPresets = (): VMixPresetArray => {
           text: `T${i} Set Cut`,
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [
               {
                 actionId: 'setTransitionEffect',
-                options: { functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1', value: 'Cut' }
-              }
+                options: { functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1', value: 'Cut' },
+              },
             ],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
+        feedbacks: [],
       },
       {
         category: 'Transitions',
@@ -92,20 +92,20 @@ export const getTransitionPresets = (): VMixPresetArray => {
           text: `T${i} Set Fade`,
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [
               {
                 actionId: 'setTransitionEffect',
-                options: { functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1', value: 'Fade' }
-              }
+                options: { functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1', value: 'Fade' },
+              },
             ],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
+        feedbacks: [],
       },
       {
         category: 'Transitions',
@@ -115,20 +115,20 @@ export const getTransitionPresets = (): VMixPresetArray => {
           text: `T${i} Set Zoom`,
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [
               {
                 actionId: 'setTransitionEffect',
-                options: { functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1', value: 'Zoom' }
-              }
+                options: { functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1', value: 'Zoom' },
+              },
             ],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
+        feedbacks: [],
       },
       {
         category: 'Transitions',
@@ -138,20 +138,20 @@ export const getTransitionPresets = (): VMixPresetArray => {
           text: `T${i} Set Merge`,
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [
               {
                 actionId: 'setTransitionEffect',
-                options: { functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1', value: 'Merge' }
-              }
+                options: { functionID: `SetTransitionEffect${i}` as 'SetTransitionEffect1', value: 'Merge' },
+              },
             ],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
+        feedbacks: [],
       },
       {
         category: 'Transitions',
@@ -161,15 +161,15 @@ export const getTransitionPresets = (): VMixPresetArray => {
           text: `T${i} Set 250ms`,
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [{ actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 250 } }],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
+        feedbacks: [],
       },
       {
         category: 'Transitions',
@@ -179,15 +179,15 @@ export const getTransitionPresets = (): VMixPresetArray => {
           text: `T${i} Set 500ms`,
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [{ actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 500 } }],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
+        feedbacks: [],
       },
       {
         category: 'Transitions',
@@ -197,15 +197,15 @@ export const getTransitionPresets = (): VMixPresetArray => {
           text: `T${i} Set 1000ms`,
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [{ actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 1000 } }],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
+        feedbacks: [],
       },
       {
         category: 'Transitions',
@@ -215,16 +215,16 @@ export const getTransitionPresets = (): VMixPresetArray => {
           text: `T${i} Set 2000ms`,
           size: '18',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [{ actionId: 'setTransitionDuration', options: { functionID: 'SetTransitionDuration1', value: 2000 } }],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
-      }
+        feedbacks: [],
+      },
     )
   }
 
@@ -233,7 +233,7 @@ export const getTransitionPresets = (): VMixPresetArray => {
       category: 'Transitions',
       name: 'Transition Mix',
       type: 'text',
-      text: ''
+      text: '',
     },
     {
       category: 'Transitions',
@@ -243,15 +243,15 @@ export const getTransitionPresets = (): VMixPresetArray => {
         text: 'Cut',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'transitionMix', options: { functionID: 'Cut', mix: 0, mixVariable: '', duration: '1000' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Transitions',
@@ -261,15 +261,15 @@ export const getTransitionPresets = (): VMixPresetArray => {
         text: 'Fade',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'transitionMix', options: { functionID: 'Fade', mix: 0, mixVariable: '', duration: '1000' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Transitions',
@@ -279,15 +279,15 @@ export const getTransitionPresets = (): VMixPresetArray => {
         text: 'Zoom',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'transitionMix', options: { functionID: 'Zoom', mix: 0, mixVariable: '', duration: '1000' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Transitions',
@@ -297,15 +297,15 @@ export const getTransitionPresets = (): VMixPresetArray => {
         text: 'Wipe',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'transitionMix', options: { functionID: 'Wipe', mix: 0, mixVariable: '', duration: '1000' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Transitions',
@@ -315,20 +315,20 @@ export const getTransitionPresets = (): VMixPresetArray => {
         text: 'Slide',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [
             {
               actionId: 'transitionMix',
-              options: { functionID: 'Slide', mix: 0, mixVariable: '', duration: '1000' }
-            }
+              options: { functionID: 'Slide', mix: 0, mixVariable: '', duration: '1000' },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Transitions',
@@ -338,15 +338,15 @@ export const getTransitionPresets = (): VMixPresetArray => {
         text: 'Fly',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'transitionMix', options: { functionID: 'Fly', mix: 0, mixVariable: '', duration: '1000' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Transitions',
@@ -356,20 +356,20 @@ export const getTransitionPresets = (): VMixPresetArray => {
         text: 'Cross Zoom',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [
             {
               actionId: 'transitionMix',
-              options: { functionID: 'CrossZoom', mix: 0, mixVariable: '', duration: '1000' }
-            }
+              options: { functionID: 'CrossZoom', mix: 0, mixVariable: '', duration: '1000' },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Transitions',
@@ -379,20 +379,20 @@ export const getTransitionPresets = (): VMixPresetArray => {
         text: 'Fly Rotate',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [
             {
               actionId: 'transitionMix',
-              options: { functionID: 'FlyRotate', mix: 0, mixVariable: '', duration: '1000' }
-            }
+              options: { functionID: 'FlyRotate', mix: 0, mixVariable: '', duration: '1000' },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Transitions',
@@ -402,15 +402,15 @@ export const getTransitionPresets = (): VMixPresetArray => {
         text: 'Cube',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'transitionMix', options: { functionID: 'Cube', mix: 0, mixVariable: '', duration: '1000' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Transitions',
@@ -420,20 +420,20 @@ export const getTransitionPresets = (): VMixPresetArray => {
         text: 'Cube Zoom',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [
             {
               actionId: 'transitionMix',
-              options: { functionID: 'CubeZoom', mix: 0, mixVariable: '', duration: '1000' }
-            }
+              options: { functionID: 'CubeZoom', mix: 0, mixVariable: '', duration: '1000' },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Transitions',
@@ -443,20 +443,20 @@ export const getTransitionPresets = (): VMixPresetArray => {
         text: 'Vertical Wipe',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [
             {
               actionId: 'transitionMix',
-              options: { functionID: 'VerticalWipe', mix: 0, mixVariable: '', duration: '1000' }
-            }
+              options: { functionID: 'VerticalWipe', mix: 0, mixVariable: '', duration: '1000' },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Transitions',
@@ -466,20 +466,20 @@ export const getTransitionPresets = (): VMixPresetArray => {
         text: 'Vertical Slide',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [
             {
               actionId: 'transitionMix',
-              options: { functionID: 'VerticalSlide', mix: 0, mixVariable: '', duration: '1000' }
-            }
+              options: { functionID: 'VerticalSlide', mix: 0, mixVariable: '', duration: '1000' },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Transitions',
@@ -489,20 +489,20 @@ export const getTransitionPresets = (): VMixPresetArray => {
         text: 'Merge',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [
             {
               actionId: 'transitionMix',
-              options: { functionID: 'Merge', mix: 0, mixVariable: '', duration: '1000' }
-            }
+              options: { functionID: 'Merge', mix: 0, mixVariable: '', duration: '1000' },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Transitions',
@@ -512,20 +512,20 @@ export const getTransitionPresets = (): VMixPresetArray => {
         text: 'Wipe Reverse',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [
             {
               actionId: 'transitionMix',
-              options: { functionID: 'WipeReverse', mix: 0, mixVariable: '', duration: '1000' }
-            }
+              options: { functionID: 'WipeReverse', mix: 0, mixVariable: '', duration: '1000' },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Transitions',
@@ -535,20 +535,20 @@ export const getTransitionPresets = (): VMixPresetArray => {
         text: 'Slide Reverse',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [
             {
               actionId: 'transitionMix',
-              options: { functionID: 'SlideReverse', mix: 0, mixVariable: '', duration: '1000' }
-            }
+              options: { functionID: 'SlideReverse', mix: 0, mixVariable: '', duration: '1000' },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Transitions',
@@ -558,20 +558,20 @@ export const getTransitionPresets = (): VMixPresetArray => {
         text: 'Vertical Wipe Reverse',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [
             {
               actionId: 'transitionMix',
-              options: { functionID: 'VerticalWipeReverse', mix: 0, mixVariable: '', duration: '1000' }
-            }
+              options: { functionID: 'VerticalWipeReverse', mix: 0, mixVariable: '', duration: '1000' },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Transitions',
@@ -581,21 +581,21 @@ export const getTransitionPresets = (): VMixPresetArray => {
         text: 'Vertical Slide Reverse',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [
             {
               actionId: 'transitionMix',
-              options: { functionID: 'VerticalSlideReverse', mix: 0, mixVariable: '', duration: '1000' }
-            }
+              options: { functionID: 'VerticalSlideReverse', mix: 0, mixVariable: '', duration: '1000' },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
-    }
+      feedbacks: [],
+    },
   )
 
   return transitionPresets

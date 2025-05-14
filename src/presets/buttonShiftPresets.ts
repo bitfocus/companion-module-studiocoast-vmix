@@ -8,19 +8,19 @@ export const getButtonShiftPresets = (instance: VMixInstance): VMixPresetArray =
       category: 'Button Shift',
       name: 'Button Shifting',
       type: 'text',
-      text: `Button Shifting is a feature unique in this module that allows actions/feedbacks to support pointing to 2 different things based on if the 'Shift' button is pressed or not.`
+      text: `Button Shifting is a feature unique in this module that allows actions/feedbacks to support pointing to 2 different things based on if the 'Shift' button is pressed or not.`,
     },
     {
       category: 'Button Shift',
       name: '',
       type: 'text',
-      text: `The two options need to be split by the delimter set in the config, for example an Preview Input action set to "1|5" will preview input 1 by default, or 5 when Shift is pressed, essentially doubling the buttons on a page.`
+      text: `The two options need to be split by the delimter set in the config, for example an Preview Input action set to "1|5" will preview input 1 by default, or 5 when Shift is pressed, essentially doubling the buttons on a page.`,
     },
     {
       category: 'Button Shift',
       name: '',
       type: 'text',
-      text: `Some feedbacks, such as for preview/program can 'blink' through, so a solid green would indicate an input in preview, blinking green means the input on the other Shift being in preview.`
+      text: `Some feedbacks, such as for preview/program can 'blink' through, so a solid green would indicate an input in preview, blinking green means the input on the other Shift being in preview.`,
     },
     {
       category: 'Button Shift',
@@ -30,13 +30,13 @@ export const getButtonShiftPresets = (instance: VMixInstance): VMixPresetArray =
         text: 'Shift',
         size: '24',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'buttonShift', options: <any>[] }],
-          up: [{ actionId: 'buttonShift', options: <any>[] }]
-        }
+          up: [{ actionId: 'buttonShift', options: <any>[] }],
+        },
       ],
       feedbacks: [
         {
@@ -44,16 +44,16 @@ export const getButtonShiftPresets = (instance: VMixInstance): VMixPresetArray =
           options: {},
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 0, 0),
+          },
+        },
+      ],
     },
     {
       category: 'Button Shift',
       name: `Preview 1 ${instance.config.shiftDelimiter} 5 to 4 ${instance.config.shiftDelimiter} 8`,
       type: 'text',
-      text: ''
+      text: '',
     },
     {
       category: 'Button Shift',
@@ -65,11 +65,11 @@ export const getButtonShiftPresets = (instance: VMixInstance): VMixPresetArray =
           down: [
             {
               actionId: 'previewInput',
-              options: { mix: 0, mixVariable: '', input: `1${instance.config.shiftDelimiter}5` }
-            }
+              options: { mix: 0, mixVariable: '', input: `1${instance.config.shiftDelimiter}5` },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -80,11 +80,11 @@ export const getButtonShiftPresets = (instance: VMixInstance): VMixPresetArray =
             input: `1${instance.config.shiftDelimiter}5`,
             fg: combineRgb(255, 255, 255),
             bg: combineRgb(0, 255, 0),
-            tally: ''
-          }
+            tally: '',
+          },
         },
-        { feedbackId: 'buttonText', options: { text: `PRV 1${instance.config.shiftDelimiter}PRV 5` } }
-      ]
+        { feedbackId: 'buttonText', options: { text: `PRV 1${instance.config.shiftDelimiter}PRV 5` } },
+      ],
     },
     {
       category: 'Button Shift',
@@ -96,11 +96,11 @@ export const getButtonShiftPresets = (instance: VMixInstance): VMixPresetArray =
           down: [
             {
               actionId: 'previewInput',
-              options: { mix: 0, mixVariable: '', input: `2${instance.config.shiftDelimiter}6` }
-            }
+              options: { mix: 0, mixVariable: '', input: `2${instance.config.shiftDelimiter}6` },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -111,11 +111,11 @@ export const getButtonShiftPresets = (instance: VMixInstance): VMixPresetArray =
             input: `2${instance.config.shiftDelimiter}6`,
             fg: combineRgb(255, 255, 255),
             bg: combineRgb(0, 255, 0),
-            tally: ''
-          }
+            tally: '',
+          },
         },
-        { feedbackId: 'buttonText', options: { text: `PRV 2${instance.config.shiftDelimiter}PRV 6` } }
-      ]
+        { feedbackId: 'buttonText', options: { text: `PRV 2${instance.config.shiftDelimiter}PRV 6` } },
+      ],
     },
     {
       category: 'Button Shift',
@@ -127,11 +127,11 @@ export const getButtonShiftPresets = (instance: VMixInstance): VMixPresetArray =
           down: [
             {
               actionId: 'previewInput',
-              options: { mix: 0, mixVariable: '', input: `3${instance.config.shiftDelimiter}7` }
-            }
+              options: { mix: 0, mixVariable: '', input: `3${instance.config.shiftDelimiter}7` },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -142,11 +142,11 @@ export const getButtonShiftPresets = (instance: VMixInstance): VMixPresetArray =
             input: `3${instance.config.shiftDelimiter}7`,
             fg: combineRgb(255, 255, 255),
             bg: combineRgb(0, 255, 0),
-            tally: ''
-          }
+            tally: '',
+          },
         },
-        { feedbackId: 'buttonText', options: { text: `PRV 3${instance.config.shiftDelimiter}PRV 7` } }
-      ]
+        { feedbackId: 'buttonText', options: { text: `PRV 3${instance.config.shiftDelimiter}PRV 7` } },
+      ],
     },
     {
       category: 'Button Shift',
@@ -158,11 +158,11 @@ export const getButtonShiftPresets = (instance: VMixInstance): VMixPresetArray =
           down: [
             {
               actionId: 'previewInput',
-              options: { mix: 0, mixVariable: '', input: `4${instance.config.shiftDelimiter}8` }
-            }
+              options: { mix: 0, mixVariable: '', input: `4${instance.config.shiftDelimiter}8` },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -173,18 +173,18 @@ export const getButtonShiftPresets = (instance: VMixInstance): VMixPresetArray =
             input: `4${instance.config.shiftDelimiter}8`,
             fg: combineRgb(255, 255, 255),
             bg: combineRgb(0, 255, 0),
-            tally: ''
-          }
+            tally: '',
+          },
         },
-        { feedbackId: 'buttonText', options: { text: `PRV 4${instance.config.shiftDelimiter}PRV 8` } }
-      ]
+        { feedbackId: 'buttonText', options: { text: `PRV 4${instance.config.shiftDelimiter}PRV 8` } },
+      ],
     },
 
     {
       category: 'Button Shift',
       name: `Program 1 ${instance.config.shiftDelimiter} 5 to 4 ${instance.config.shiftDelimiter} 8`,
       type: 'text',
-      text: ''
+      text: '',
     },
     {
       category: 'Button Shift',
@@ -196,11 +196,11 @@ export const getButtonShiftPresets = (instance: VMixInstance): VMixPresetArray =
           down: [
             {
               actionId: 'programCut',
-              options: { mix: 0, mixVariable: '', input: `1${instance.config.shiftDelimiter}5` }
-            }
+              options: { mix: 0, mixVariable: '', input: `1${instance.config.shiftDelimiter}5` },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -211,11 +211,11 @@ export const getButtonShiftPresets = (instance: VMixInstance): VMixPresetArray =
             input: `1${instance.config.shiftDelimiter}5`,
             fg: combineRgb(255, 255, 255),
             bg: combineRgb(255, 0, 0),
-            tally: ''
-          }
+            tally: '',
+          },
         },
-        { feedbackId: 'buttonText', options: { text: `PRV 1${instance.config.shiftDelimiter}PRV 5` } }
-      ]
+        { feedbackId: 'buttonText', options: { text: `PRV 1${instance.config.shiftDelimiter}PRV 5` } },
+      ],
     },
     {
       category: 'Button Shift',
@@ -227,11 +227,11 @@ export const getButtonShiftPresets = (instance: VMixInstance): VMixPresetArray =
           down: [
             {
               actionId: 'programCut',
-              options: { mix: 0, mixVariable: '', input: `2${instance.config.shiftDelimiter}6` }
-            }
+              options: { mix: 0, mixVariable: '', input: `2${instance.config.shiftDelimiter}6` },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -242,11 +242,11 @@ export const getButtonShiftPresets = (instance: VMixInstance): VMixPresetArray =
             input: `2${instance.config.shiftDelimiter}6`,
             fg: combineRgb(255, 255, 255),
             bg: combineRgb(255, 0, 0),
-            tally: ''
-          }
+            tally: '',
+          },
         },
-        { feedbackId: 'buttonText', options: { text: `PRV 2${instance.config.shiftDelimiter}PRV 6` } }
-      ]
+        { feedbackId: 'buttonText', options: { text: `PRV 2${instance.config.shiftDelimiter}PRV 6` } },
+      ],
     },
     {
       category: 'Button Shift',
@@ -258,11 +258,11 @@ export const getButtonShiftPresets = (instance: VMixInstance): VMixPresetArray =
           down: [
             {
               actionId: 'programCut',
-              options: { mix: 0, mixVariable: '', input: `3${instance.config.shiftDelimiter}7` }
-            }
+              options: { mix: 0, mixVariable: '', input: `3${instance.config.shiftDelimiter}7` },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -273,11 +273,11 @@ export const getButtonShiftPresets = (instance: VMixInstance): VMixPresetArray =
             input: `3${instance.config.shiftDelimiter}7`,
             fg: combineRgb(255, 255, 255),
             bg: combineRgb(255, 0, 0),
-            tally: ''
-          }
+            tally: '',
+          },
         },
-        { feedbackId: 'buttonText', options: { text: `PRV 3${instance.config.shiftDelimiter}PRV 7` } }
-      ]
+        { feedbackId: 'buttonText', options: { text: `PRV 3${instance.config.shiftDelimiter}PRV 7` } },
+      ],
     },
     {
       category: 'Button Shift',
@@ -289,11 +289,11 @@ export const getButtonShiftPresets = (instance: VMixInstance): VMixPresetArray =
           down: [
             {
               actionId: 'programCut',
-              options: { mix: 0, mixVariable: '', input: `4${instance.config.shiftDelimiter}8` }
-            }
+              options: { mix: 0, mixVariable: '', input: `4${instance.config.shiftDelimiter}8` },
+            },
           ],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -304,12 +304,12 @@ export const getButtonShiftPresets = (instance: VMixInstance): VMixPresetArray =
             input: `4${instance.config.shiftDelimiter}8`,
             fg: combineRgb(255, 255, 255),
             bg: combineRgb(255, 0, 0),
-            tally: ''
-          }
+            tally: '',
+          },
         },
-        { feedbackId: 'buttonText', options: { text: `PRV 4${instance.config.shiftDelimiter}PRV 8` } }
-      ]
-    }
+        { feedbackId: 'buttonText', options: { text: `PRV 4${instance.config.shiftDelimiter}PRV 8` } },
+      ],
+    },
   ]
 
   return buttonShiftPresets

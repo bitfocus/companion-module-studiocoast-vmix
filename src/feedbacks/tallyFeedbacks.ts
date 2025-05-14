@@ -91,7 +91,7 @@ export const vMixTallyFeedbacks = (instance: VMixInstance): TallyFeedbacks => {
               width: feedback.image.width,
               height: feedback.image.height,
               size: 4,
-              color: feedback.options.bg
+              color: feedback.options.bg,
             })
           } else if (feedback.options.tally.includes('corner')) {
             let location: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' = 'topLeft'
@@ -105,17 +105,17 @@ export const vMixTallyFeedbacks = (instance: VMixInstance): TallyFeedbacks => {
               height: feedback.image.height,
               color: feedback.options.bg,
               size: 24,
-              location
+              location,
             })
           }
 
           return {
-            imageBuffer: indicator
+            imageBuffer: indicator,
           }
         } else {
           return {}
         }
-      }
+      },
     },
 
     inputLive: {
@@ -162,7 +162,7 @@ export const vMixTallyFeedbacks = (instance: VMixInstance): TallyFeedbacks => {
               width: feedback.image.width,
               height: feedback.image.height,
               size: 4,
-              color: feedback.options.bg
+              color: feedback.options.bg,
             })
           } else if (feedback.options.tally.includes('corner')) {
             let location: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' = 'topLeft'
@@ -176,17 +176,17 @@ export const vMixTallyFeedbacks = (instance: VMixInstance): TallyFeedbacks => {
               height: feedback.image.height,
               color: feedback.options.bg,
               size: 24,
-              location
+              location,
             })
           }
 
           return {
-            imageBuffer: indicator
+            imageBuffer: indicator,
           }
         } else {
           return {}
         }
-      }
+      },
     },
 
     overlayStatus: {
@@ -202,22 +202,22 @@ export const vMixTallyFeedbacks = (instance: VMixInstance): TallyFeedbacks => {
           default: '1',
           choices: ['Any', '1', '2', '3', '4', 'Stinger 1', 'Stinger 2', 'Stinger 3', 'Stinger 4'].map((id, index) => ({
             id: index.toString(),
-            label: id
-          }))
+            label: id,
+          })),
         },
         options.foregroundColor,
         {
           type: 'colorpicker',
           label: 'Preview Background Color',
           id: 'bgPreview',
-          default: combineRgb(0, 255, 0)
+          default: combineRgb(0, 255, 0),
         },
         {
           type: 'colorpicker',
           label: 'Program Background Color',
           id: 'bgProgram',
-          default: combineRgb(255, 0, 0)
-        }
+          default: combineRgb(255, 0, 0),
+        },
       ],
       callback: async (feedback, context) => {
         let inputOptions: any = await instance.parseOption(feedback.options.input, context)
@@ -245,12 +245,12 @@ export const vMixTallyFeedbacks = (instance: VMixInstance): TallyFeedbacks => {
         if (preview || program) {
           return {
             color: feedback.options.fg,
-            bgcolor: program ? feedback.options.bgProgram : feedback.options.bgPreview
+            bgcolor: program ? feedback.options.bgProgram : feedback.options.bgPreview,
           }
         }
 
         return {}
-      }
-    }
+      },
+    },
   }
 }

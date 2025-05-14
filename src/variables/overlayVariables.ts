@@ -16,7 +16,7 @@ export const overlayDefinitions = (instance: VMixInstance): CompanionVariableDef
       { name: `Overlay ${overlay} Input Short Title`, variableId: `overlay_${overlay}_input_name` },
       { name: `Overlay ${overlay} Input Number`, variableId: `overlay_${overlay}_input` },
       { name: `Overlay ${overlay} Active PGM`, variableId: `overlay_${overlay}_pgm` },
-      { name: `Overlay ${overlay} Active PRV`, variableId: `overlay_${overlay}_prv` }
+      { name: `Overlay ${overlay} Active PRV`, variableId: `overlay_${overlay}_prv` },
     )
   })
 

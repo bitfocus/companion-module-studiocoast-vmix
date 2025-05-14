@@ -31,7 +31,7 @@ export const vMixVideoCallFeedbacks = (instance: VMixInstance): VideoCallFeedbac
       description: 'Indicates audio source for a video call',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       options: [
         options.input,
@@ -42,16 +42,16 @@ export const vMixVideoCallFeedbacks = (instance: VMixInstance): VideoCallFeedbac
           default: 'Master',
           choices: ['Master', 'Headphones', 'A', 'B', 'C', 'D', 'E', 'F', 'G'].map((id, index) => ({
             id: index > 1 ? `Bus${id}` : id,
-            label: id
-          }))
-        }
+            label: id,
+          })),
+        },
       ],
       callback: async (feedback, context) => {
         const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
         const input = await instance.data.getInput(inputOption)
 
         return input?.callAudioSource === feedback.options.source
-      }
+      },
     },
 
     videoCallVideoSource: {
@@ -60,7 +60,7 @@ export const vMixVideoCallFeedbacks = (instance: VMixInstance): VideoCallFeedbac
       description: 'Indicates video source for a video call',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       options: [
         options.input,
@@ -69,15 +69,15 @@ export const vMixVideoCallFeedbacks = (instance: VMixInstance): VideoCallFeedbac
           label: 'Source',
           id: 'source',
           default: 'Output1',
-          choices: ['Output1', 'Output2', 'Output3', 'Output4', 'None'].map((id) => ({ id, label: id }))
-        }
+          choices: ['Output1', 'Output2', 'Output3', 'Output4', 'None'].map((id) => ({ id, label: id })),
+        },
       ],
       callback: async (feedback, context) => {
         const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
         const input = await instance.data.getInput(inputOption)
 
         return input?.callVideoSource === feedback.options.source
-      }
-    }
+      },
+    },
   }
 }
