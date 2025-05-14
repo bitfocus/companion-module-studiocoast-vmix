@@ -102,7 +102,6 @@ export const audioValues = async (instance: VMixInstance): Promise<VariablesBusV
       }
 
       const parsedVolume = parseFloat(volume + '')
-			console.log(audioBus?.bus, audioBus?.volume, parsedVolume, parsedVolume.toFixed(2), isNaN(parsedVolume) ? '' : parsedVolume.toFixed(2))
       variables[`bus_${id.toLowerCase()}_volume`] = isNaN(parsedVolume) ? '' : parsedVolume.toFixed(2)
       variables[`bus_${id.toLowerCase()}_volume_db`] = volumedB
       variables[`bus_${id.toLowerCase()}_volume_linear`] = volumeLinear
