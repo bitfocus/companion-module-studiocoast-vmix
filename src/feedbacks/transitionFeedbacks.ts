@@ -1,6 +1,6 @@
 import { combineRgb } from '@companion-module/base'
-import { VMixFeedback, FeedbackCallback } from './feedback'
-import VMixInstance from '../index'
+import type { VMixFeedback, FeedbackCallback } from './feedback'
+import type VMixInstance from '../index'
 import { TRANSITIONS } from '../utils'
 
 type TransitionOptions = {
@@ -29,14 +29,14 @@ export const vMixTransitionFeedbacks = (instance: VMixInstance): TransitionFeedb
           label: 'Transition Number (1 to 4)',
           id: 'number',
           default: '1',
-          useVariables: true
+          useVariables: true,
         },
         {
           type: 'dropdown',
           label: 'Select transition',
           id: 'effect',
           default: 'Cut',
-          choices: TRANSITIONS.map((transition) => ({ id: transition, label: transition }))
+          choices: TRANSITIONS.map((transition) => ({ id: transition, label: transition })),
         },
         {
           type: 'textinput',
@@ -44,11 +44,11 @@ export const vMixTransitionFeedbacks = (instance: VMixInstance): TransitionFeedb
           tooltip: 'Leave empty for any',
           id: 'duration',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
       defaultStyle: {
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       callback: async (feedback, context) => {
         const number = (await instance.parseOption(feedback.options.number, context))[instance.buttonShift.state]
@@ -60,7 +60,7 @@ export const vMixTransitionFeedbacks = (instance: VMixInstance): TransitionFeedb
         if (transition.effect !== effect) return false
         if (duration !== '') return transition.duration.toString() === duration
         return true
-      }
-    }
+      },
+    },
   }
 }

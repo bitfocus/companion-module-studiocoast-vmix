@@ -1,5 +1,5 @@
-import { VMixAction, ActionCallback } from './actions'
-import VMixInstance from '../index'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
+import type VMixInstance from '../index'
 
 type DataSourceAutoNextOptions = {
   functionID: 'DataSourceAutoNextOn' | 'DataSourceAutoNextOff' | 'DataSourceAutoNextOnOff'
@@ -34,7 +34,7 @@ export interface DataSourceActions {
 
 export type DataSourceCallbacks = DataSourceAutoNextCallback | DataSourceNextRowCallback | DataSourcePreviousRowCallback | DataSourceSelectRowCallback
 
-export const vMixDataSourceActions = (_instance: VMixInstance, sendBasicCommand: (action: Readonly<DataSourceCallbacks>) => Promise<void>): DataSourceActions => {
+export const vMixDataSourceActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): DataSourceActions => {
   return {
     dataSourceAutoNext: {
       name: 'DataSource - AutoNext',
@@ -48,18 +48,18 @@ export const vMixDataSourceActions = (_instance: VMixInstance, sendBasicCommand:
           choices: [
             { id: 'DataSourceAutoNextOn', label: 'On' },
             { id: 'DataSourceAutoNextOff', label: 'Off' },
-            { id: 'DataSourceAutoNextOnOff', label: 'On/Off' }
-          ]
+            { id: 'DataSourceAutoNextOnOff', label: 'On/Off' },
+          ],
         },
         {
           type: 'textinput',
           label: 'Name,Table',
           id: 'value',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     dataSourceNextRow: {
@@ -71,10 +71,10 @@ export const vMixDataSourceActions = (_instance: VMixInstance, sendBasicCommand:
           label: 'Name,Table',
           id: 'value',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     dataSourcePreviousRow: {
@@ -86,10 +86,10 @@ export const vMixDataSourceActions = (_instance: VMixInstance, sendBasicCommand:
           label: 'Name,Table',
           id: 'value',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     dataSourceSelectRow: {
@@ -101,10 +101,10 @@ export const vMixDataSourceActions = (_instance: VMixInstance, sendBasicCommand:
           label: 'Name,Table,Index',
           id: 'value',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: sendBasicCommand
-    }
+      callback: sendBasicCommand,
+    },
   }
 }

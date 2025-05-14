@@ -1,5 +1,5 @@
-import VMixInstance from './'
-import { CallAudioSource, CallVideoSource, Input } from './data'
+import type VMixInstance from './'
+import type { CallAudioSource, CallVideoSource, Input } from './data'
 
 type ActivatorEventHandlers =
   | 'handlerBusAudio'
@@ -174,7 +174,7 @@ const eventHandlers: { [key: string]: ActivatorEventHandlers | null } = {
 
   // Unused
   InputHeadphones: null,
-  ButtonPress: null
+  ButtonPress: null,
 }
 
 export class Activators {

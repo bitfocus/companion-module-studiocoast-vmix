@@ -1,7 +1,7 @@
 import { combineRgb } from '@companion-module/base'
-import { VMixFeedback, FeedbackCallback } from './feedback'
+import type { VMixFeedback, FeedbackCallback } from './feedback'
 import { options } from '../utils'
-import VMixInstance from '../index'
+import type VMixInstance from '../index'
 
 type InputStateOptions = {
   type: 'playing' | 'loop'
@@ -67,13 +67,13 @@ export const vMixMediaFeedbacks = (instance: VMixInstance): MediaFeedbacks => {
           default: 'playing',
           choices: [
             { id: 'playing', label: 'Playing' },
-            { id: 'loop', label: 'Loop' }
-          ]
-        }
+            { id: 'loop', label: 'Loop' },
+          ],
+        },
       ],
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       callback: async (feedback, context) => {
         const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
@@ -84,7 +84,7 @@ export const vMixMediaFeedbacks = (instance: VMixInstance): MediaFeedbacks => {
         } else {
           return input?.loop || false
         }
-      }
+      },
     },
 
     videoTimer: {
@@ -97,26 +97,26 @@ export const vMixMediaFeedbacks = (instance: VMixInstance): MediaFeedbacks => {
           type: 'colorpicker',
           label: 'Text color',
           id: 'color',
-          default: combineRgb(255, 255, 255)
+          default: combineRgb(255, 255, 255),
         },
         {
           type: 'colorpicker',
           label: 'Text color under 30s',
           id: 'color30',
-          default: combineRgb(255, 255, 0)
+          default: combineRgb(255, 255, 0),
         },
         {
           type: 'colorpicker',
           label: 'Text color under 10s',
           id: 'color10',
-          default: combineRgb(255, 0, 0)
+          default: combineRgb(255, 0, 0),
         },
         {
           type: 'checkbox',
           label: 'Disable color change if looping',
           id: 'loop',
-          default: false
-        }
+          default: false,
+        },
       ],
       callback: async (feedback, context) => {
         const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
@@ -143,7 +143,7 @@ export const vMixMediaFeedbacks = (instance: VMixInstance): MediaFeedbacks => {
         }
 
         return { color: color() }
-      }
-    }
+      },
+    },
   }
 }

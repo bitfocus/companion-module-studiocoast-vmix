@@ -1,6 +1,6 @@
-import { VMixAction, ActionCallback } from './actions'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
 import { options } from '../utils'
-import VMixInstance from '../index'
+import type VMixInstance from '../index'
 
 type NextPictureOptions = {
   input: string
@@ -49,20 +49,20 @@ export interface ListActions {
 
 export type ListCallbacks = NextPictureCallback | PreviousPictureCallback | SelectIndexCallback | AutoPlayFirstCallback | AutoPlayNextCallback | ListShuffleCallback
 
-export const vMixListActions = (_instance: VMixInstance, sendBasicCommand: (action: Readonly<ListCallbacks>) => Promise<void>): ListActions => {
+export const vMixListActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): ListActions => {
   return {
     nextPicture: {
       name: 'Lists - Next Picture/Slide/Index',
       description: 'Selects next item in a List type input',
       options: [options.input],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     previousPicture: {
       name: 'Lists - Previous Picture/Slide/Index',
       description: 'Selects previous item in a List type input',
       options: [options.input],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     selectIndex: {
@@ -75,10 +75,10 @@ export const vMixListActions = (_instance: VMixInstance, sendBasicCommand: (acti
           label: 'Select Index',
           id: 'value',
           default: '1',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     autoPlayFirst: {
@@ -94,11 +94,11 @@ export const vMixListActions = (_instance: VMixInstance, sendBasicCommand: (acti
           choices: [
             { id: 'AutoPlayFirst', label: 'Toggle' },
             { id: 'AutoPlayFirstOn', label: 'On' },
-            { id: 'AutoPlayFirstOff', label: 'Off' }
-          ]
-        }
+            { id: 'AutoPlayFirstOff', label: 'Off' },
+          ],
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     autoPlayNext: {
@@ -114,18 +114,18 @@ export const vMixListActions = (_instance: VMixInstance, sendBasicCommand: (acti
           choices: [
             { id: 'AutoPlayNext', label: 'Toggle' },
             { id: 'AutoPlayNextOn', label: 'On' },
-            { id: 'AutoPlayNextOff', label: 'Off' }
-          ]
-        }
+            { id: 'AutoPlayNextOff', label: 'Off' },
+          ],
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     listShuffle: {
       name: 'Lists - Shuffle List',
       description: 'Shuffles the items in a List',
       options: [options.input],
-      callback: sendBasicCommand
-    }
+      callback: sendBasicCommand,
+    },
   }
 }

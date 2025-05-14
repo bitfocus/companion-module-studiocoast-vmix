@@ -1,5 +1,5 @@
 import { InstanceStatus, TCPHelper as tcp } from '@companion-module/base'
-import VMixInstance from './'
+import type VMixInstance from './'
 
 interface MessageBuffer {
   dataLength: number
@@ -16,7 +16,7 @@ export class TCP {
   private readonly instance: VMixInstance
   private messageBuffer: MessageBuffer = {
     dataLength: 0,
-    message: Buffer.from('')
+    message: Buffer.from(''),
   }
   private pingInterval: ReturnType<typeof setInterval> | null = null
   private pollAPI: ReturnType<typeof setInterval> | null = null
@@ -25,7 +25,7 @@ export class TCP {
   private sockets: TCPSockets = {
     activator: null,
     functions: null,
-    xml: null
+    xml: null,
   }
   private tcpHost: string
   private tcpPort: number
@@ -247,7 +247,7 @@ export class TCP {
                   'debug',
                   `Message prefix issue - Message length: ${this.messageBuffer.message.length}, Buffer length: ${
                     this.messageBuffer.dataLength
-                  }, Full Message: ${this.messageBuffer.message.toString()}`
+                  }, Full Message: ${this.messageBuffer.message.toString()}`,
                 )
               }
 
@@ -284,7 +284,7 @@ export class TCP {
           if (this.instance.apiProcessing.holdCount === 3) {
             this.instance.log(
               'warn',
-              `Polling and processing of the API is taking longer than polling interval. If this persists it is recommend to increase the API Polling Interval`
+              `Polling and processing of the API is taking longer than polling interval. If this persists it is recommend to increase the API Polling Interval`,
             )
           }
         }
@@ -304,16 +304,21 @@ export class TCP {
    * @param command function and any params
    * @description Check TCP connection status and format command to send to vMix
    */
-  public readonly sendCommand = (command: string): void => {
-    if (this.sockets.functions && this.sockets.functions.isConnected) {
-      const message = `${command}\r\n`
+  public readonly sendCommand = async (command: string): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      if (this.sockets.functions && this.sockets.functions.isConnected) {
+        const message = `${command}\r\n`
 
-      this.instance.log('debug', `Sending command: ${message}`)
+        this.instance.log('debug', `Sending command: ${message}`)
 
-      this.sockets.functions.send(message).catch((err) => {
-        if (err) this.instance.log('debug', err.message)
-      })
-    }
+        this.sockets.functions
+          .send(message)
+          .then(() => resolve())
+          .catch((err: Error) => reject(err))
+      } else {
+        resolve()
+      }
+    })
   }
 
   /**

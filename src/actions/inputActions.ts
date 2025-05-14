@@ -1,6 +1,6 @@
-import { VMixAction, ActionCallback } from './actions'
-import { EmptyOptions, MixOptionEntry, options, valueMinMax } from '../utils'
-import VMixInstance from '../index'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
+import { type EmptyOptions, type MixOptionEntry, options, valueMinMax } from '../utils'
+import type VMixInstance from '../index'
 
 type ColourCorrectionType = 'hue' | 'saturation' | 'liftG' | 'liftB' | 'liftY' | 'gammaR' | 'gammaG' | 'gammaB' | 'gammaY' | 'gainR' | 'gainG' | 'gainB' | 'gainY'
 
@@ -104,41 +104,41 @@ export type InputCallbacks =
   | InputPositionCallback
   | InputFrameDelayCallback
 
-export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (action: Readonly<InputCallbacks>) => Promise<void>): InputActions => {
+export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): InputActions => {
   return {
     previewInput: {
       name: 'Input - Send Input to Preview',
       description: 'Send to Preview the selected Input',
       options: [options.input, options.mixSelect, options.mixVariable],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     previewInputNext: {
       name: 'Input - Send Next input to Preview',
       description: 'Send to Preview the next Input',
       options: [],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     previewInputPrevious: {
       name: 'Input - Send Previous input to Preview',
       description: 'Send to Preview the previous Input',
       options: [],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     resetInput: {
       name: 'Input - Reset',
       description: 'Reset an Input',
       options: [options.input],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     undo: {
       name: 'Input - Undo',
       description: 'Undo closing an input',
       options: [],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     inputEffect: {
@@ -155,8 +155,8 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
             { id: '1', label: 'Effect 1' },
             { id: '2', label: 'Effect 2' },
             { id: '3', label: 'Effect 3' },
-            { id: '4', label: 'Effect 4' }
-          ]
+            { id: '4', label: 'Effect 4' },
+          ],
         },
         {
           type: 'dropdown',
@@ -166,12 +166,12 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
           choices: [
             { id: '', label: 'Toggle' },
             { id: 'On', label: 'On' },
-            { id: 'Off', label: 'Off' }
-          ]
-        }
+            { id: 'Off', label: 'Off' },
+          ],
+        },
       ],
-      callback: async (action) => {
-        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
         const input = await instance.data.getInput(selected)
 
         if (!input) return
@@ -179,9 +179,9 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
         const command = `Effect${action.options.effect}${action.options.state}`
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION ${command} Input=${input.key}`)
+          return instance.tcp.sendCommand(`FUNCTION ${command} Input=${input.key}`)
         }
-      }
+      },
     },
 
     inputEffectStrength: {
@@ -198,21 +198,21 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
             { id: '1', label: 'Effect 1' },
             { id: '2', label: 'Effect 2' },
             { id: '3', label: 'Effect 3' },
-            { id: '4', label: 'Effect 4' }
-          ]
+            { id: '4', label: 'Effect 4' },
+          ],
         },
         {
           type: 'textinput',
           label: 'Strength 0 to 1',
           id: 'strength',
           default: '1',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: async (action) => {
-        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
         const input = await instance.data.getInput(selected)
-        const value = (await instance.parseOption(action.options.strength))[instance.buttonShift.state]
+        const value = (await instance.parseOption(action.options.strength, context))[instance.buttonShift.state]
         const parsedValue = parseFloat(value)
 
         if (!input || isNaN(parsedValue)) return
@@ -220,9 +220,9 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
         const command = `SetEffect${action.options.effect}Strength`
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION ${command} Input=${input.key}&Value=${parsedValue}`)
+          return instance.tcp.sendCommand(`FUNCTION ${command} Input=${input.key}&Value=${parsedValue}`)
         }
-      }
+      },
     },
 
     setCC: {
@@ -249,8 +249,8 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
             { id: 'SetCCLiftG', label: 'Lift G' },
             { id: 'SetCCLiftB', label: 'Lift B' },
             { id: 'SetCCLiftY', label: 'Lift Y' },
-            { id: 'SetCCSaturation', label: 'Saturation' }
-          ]
+            { id: 'SetCCSaturation', label: 'Saturation' },
+          ],
         },
         options.adjustment,
         {
@@ -262,7 +262,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
           isVisible: (options) => {
             const setting = options.setting as string
             return setting.startsWith('SetCCGain')
-          }
+          },
         },
         {
           type: 'textinput',
@@ -273,14 +273,14 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
           isVisible: (options) => {
             const setting = options.setting as string
             return !setting.startsWith('SetCCGain')
-          }
-        }
+          },
+        },
       ],
-      callback: async (action) => {
-        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
         const input = await instance.data.getInput(selected)
         const valueOption = action.options.setting.startsWith('SetCCGain') ? action.options.gainValue : action.options.otherValue
-        const value = (await instance.parseOption(valueOption))[instance.buttonShift.state]
+        const value = (await instance.parseOption(valueOption, context))[instance.buttonShift.state]
         let parsedValue = parseFloat(value)
 
         if (!input || isNaN(parsedValue)) return
@@ -312,9 +312,9 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
         }
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION ${action.options.setting} Input=${input.key}&Value=${parsedValue}`)
+          return instance.tcp.sendCommand(`FUNCTION ${action.options.setting} Input=${input.key}&Value=${parsedValue}`)
         }
-      }
+      },
     },
 
     inputPosition: {
@@ -335,8 +335,8 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
             { id: 'SetCropY1', label: 'Crop Y1' },
             { id: 'SetCropY2', label: 'Crop Y2' },
             { id: 'SetPanX', label: 'Pan X' },
-            { id: 'SetPanY', label: 'Pan Y' }
-          ]
+            { id: 'SetPanY', label: 'Pan Y' },
+          ],
         },
         {
           type: 'dropdown',
@@ -346,12 +346,12 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
           choices: [
             { id: 'Set', label: 'Set' },
             { id: 'Increase', label: 'Increase' },
-            { id: 'Decrease', label: 'Decrease' }
+            { id: 'Decrease', label: 'Decrease' },
           ],
           isVisible: (options) => {
             const setting = options.setting as string
             return setting !== 'setCrop'
-          }
+          },
         },
         {
           type: 'textinput',
@@ -362,7 +362,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
           isVisible: (options) => {
             const setting = options.setting as string
             return setting === 'SetZoom'
-          }
+          },
         },
         {
           type: 'textinput',
@@ -373,7 +373,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
           isVisible: (options) => {
             const setting = options.setting as string
             return setting === 'SetCrop'
-          }
+          },
         },
         {
           type: 'textinput',
@@ -384,7 +384,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
           isVisible: (options) => {
             const setting = options.setting as string
             return setting.startsWith('SetCropX') || setting.startsWith('SetCropY')
-          }
+          },
         },
         {
           type: 'textinput',
@@ -395,11 +395,11 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
           isVisible: (options) => {
             const setting = options.setting as string
             return setting.startsWith('SetPan')
-          }
-        }
+          },
+        },
       ],
-      callback: async (action) => {
-        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
         const input = await instance.data.getInput(selected)
         let cmd = ''
 
@@ -411,7 +411,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
         }
 
         if (action.options.setting === 'SetZoom') {
-          let value: string | number = (await instance.parseOption(action.options.zoomValue))[instance.buttonShift.state]
+          let value: string | number = (await instance.parseOption(action.options.zoomValue, context))[instance.buttonShift.state]
           value = parseFloat(value)
 
           const currentValue = input.inputPosition?.zoomX ?? 1
@@ -424,11 +424,11 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
 
           cmd = `FUNCTION SetZoom Input=${input.key}&Value=${valueMinMax(Math.round(value * 1000) / 1000, 0, 5)}`
         } else if (action.options.setting === 'SetCrop') {
-          const value: string = (await instance.parseOption(action.options.cropValue))[instance.buttonShift.state]
+          const value: string = (await instance.parseOption(action.options.cropValue, context))[instance.buttonShift.state]
 
           cmd = `FUNCTION SetCrop Input=${input.key}&Value=${value}`
         } else if (action.options.setting.startsWith('SetCrop')) {
-          let value: string | number = (await instance.parseOption(action.options.cropValue2))[instance.buttonShift.state]
+          let value: string | number = (await instance.parseOption(action.options.cropValue2, context))[instance.buttonShift.state]
           value = parseFloat(value)
           if (isNaN(value)) return
 
@@ -444,7 +444,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
 
           cmd = `FUNCTION ${action.options.setting} Input=${input.key}&Value=${valueMinMax(Math.round(value * 1000) / 1000, 0, 1)}`
         } else {
-          let value: string | number = (await instance.parseOption(action.options.panValue))[instance.buttonShift.state]
+          let value: string | number = (await instance.parseOption(action.options.panValue, context))[instance.buttonShift.state]
           value = parseFloat(value)
           if (isNaN(value)) return
 
@@ -462,9 +462,9 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
         }
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(cmd)
+          return instance.tcp.sendCommand(cmd)
         }
-      }
+      },
     },
 
     inputFrameDelay: {
@@ -477,13 +477,13 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
           label: 'Frames',
           id: 'value',
           default: '0',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: async (action) => {
-        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
         const input = await instance.data.getInput(selected)
-        let value: number | string = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
+        let value: number | string = (await instance.parseOption(action.options.value, context))[instance.buttonShift.state]
         value = parseInt(value)
 
         if (!input || isNaN(value)) {
@@ -491,9 +491,9 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
         }
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION SetFrameDelay Input=${input.key}&Value=${value}`)
+          return instance.tcp.sendCommand(`FUNCTION SetFrameDelay Input=${input.key}&Value=${value}`)
         }
-      }
-    }
+      },
+    },
   }
 }

@@ -1,5 +1,17 @@
 # Patch Notes
 
+**v4.0.0**
+- Changes to Variable generation based on config options allowing granular control over what variables are generated, resulting in significant performance benefits by only generating the variables a user plans to use
+- Added Variable list doc [docs/variables.md](./docs/variables.md)
+- Added `preset` variable for the currently loaded preset
+- Added `input_X_full_title`, `mix_X_preview_full_title`, `mix_X_program_full_title`, `dynamic_input_X_full_title` variables, which for inputs such as Lists contain the short title and the name of the current item
+- Added `input_X_selectedindex` variable for Photo, VideoList, and VirtualSet, input types
+- `input_X_remaining_mm:ss` renamed to `input_X_remaining_mm.ss`
+- `input_X_remaining_mm:ss.ms` renamed to `input_X_remaining_mm.ss.ms`
+- Fixed missing Stream 4 and 5 options in actions/feedbacks
+- Added Local Variable support (such as $(this:page), $(this:row), etc...) to Actions that support parsing variables
+- Better support for Sequential Action Group (keep in mind vMix only acknowledges receieving a command, not that the command execution is complete, so some use of Wait actions may still be required in an Action Group sequence)
+
 **v3.9.6**
 - Fixed an issue with the upgrade script migrating existing `Overlay - Functions` actions to support the new parameters in vMix 28
 

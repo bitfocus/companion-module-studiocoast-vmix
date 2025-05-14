@@ -1,6 +1,6 @@
-import { VMixAction, ActionCallback } from './actions'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
 import { options } from '../utils'
-import VMixInstance from '../index'
+import type VMixInstance from '../index'
 
 type OverlayFunctionsOptions = {
   functionID:
@@ -44,7 +44,7 @@ export interface OverlayActions {
 
 export type OverlayCallbacks = OverlayFunctionsCallback
 
-export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: (action: Readonly<OverlayCallbacks>) => Promise<void>): OverlayActions => {
+export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): OverlayActions => {
   return {
     overlayFunctions: {
       name: 'Overlay - Functions',
@@ -80,8 +80,8 @@ export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: (a
             { id: 'OverlayInput1Zoom', label: 'Zoom PIP Overlay 1 to/from fulscreen' },
             { id: 'OverlayInput2Zoom', label: 'Zoom PIP Overlay 2 to/from fulscreen' },
             { id: 'OverlayInput3Zoom', label: 'Zoom PIP Overlay 3 to/from fulscreen' },
-            { id: 'OverlayInput4Zoom', label: 'Zoom PIP Overlay 4 to/from fulscreen' }
-          ]
+            { id: 'OverlayInput4Zoom', label: 'Zoom PIP Overlay 4 to/from fulscreen' },
+          ],
         },
         options.input,
         {
@@ -107,7 +107,7 @@ export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: (a
             { id: 14, label: '15' },
             { id: 15, label: '16' },
             { id: -1, label: 'Selected' },
-            { id: -2, label: 'Variable' }
+            { id: -2, label: 'Variable' },
           ],
           isVisible: (feedbackOptions) => {
             let mixSupport = false
@@ -120,7 +120,7 @@ export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: (a
               'OverlayInput1In',
               'OverlayInput2In',
               'OverlayInput3In',
-              'OverlayInput4In'
+              'OverlayInput4In',
             ]
 
             supportedFunctions.forEach((x) => {
@@ -128,7 +128,7 @@ export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: (a
             })
 
             return mixSupport
-          }
+          },
         },
         {
           type: 'textinput',
@@ -147,7 +147,7 @@ export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: (a
               'OverlayInput1In',
               'OverlayInput2In',
               'OverlayInput3In',
-              'OverlayInput4In'
+              'OverlayInput4In',
             ]
 
             supportedFunctions.forEach((x) => {
@@ -156,10 +156,10 @@ export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: (a
 
             return mixSupport
           },
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: sendBasicCommand
-    }
+      callback: sendBasicCommand,
+    },
   }
 }

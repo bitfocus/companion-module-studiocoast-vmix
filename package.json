@@ -1,6 +1,6 @@
 {
 	"name": "studiocoast-vmix",
-	"version": "3.9.6",
+	"version": "4.0.0",
 	"main": "dist/index.js",
 	"scripts": {
 		"dev": "yarn build:watch",
@@ -28,35 +28,35 @@
 	},
 	"license": "MIT",
 	"engines": {
-		"node": "^22.8"
+		"node": "^22.14"
 	},
 	"dependencies": {
-		"@companion-module/base": "~1.11.1",
+		"@companion-module/base": "~1.12.0",
 		"companion-module-utils": "^0.4.0",
 		"lodash": "~4.17.21",
 		"xml2js": "~0.6.2"
 	},
 	"devDependencies": {
-		"@companion-module/tools": "^2.1.0",
-		"@eslint/eslintrc": "^3.2.0",
-		"@eslint/js": "^9.15.0",
+		"@companion-module/tools": "^2.3.0",
+		"@eslint/eslintrc": "^3.3.1",
+		"@eslint/js": "^9.26.0",
 		"@types/jest": "29.5.14",
-		"@types/lodash": "4.17.13",
+		"@types/lodash": "4.17.16",
 		"@types/node": "22.9.0",
 		"@types/xml2js": "0.4.14",
-		"@typescript-eslint/eslint-plugin": "^8.14.0",
-		"@typescript-eslint/parser": "^8.14.0",
-		"eslint": "^9.10.0",
-		"eslint-config-prettier": "9.1.0",
-		"eslint-plugin-prettier": "5.2.1",
-		"globals": "^15.12.0",
-		"husky": "9.1.6",
+		"@typescript-eslint/eslint-plugin": "^8.32.1",
+		"@typescript-eslint/parser": "^8.32.1",
+		"eslint": "9.26.0",
+		"eslint-config-prettier": "10.1.5",
+		"eslint-plugin-prettier": "5.4.0",
+		"globals": "16.1.0",
+		"husky": "9.1.7",
 		"jest": "^29.7.0",
-		"lint-staged": "15.2.10",
-		"prettier": "3.3.3",
+		"lint-staged": "16.0.0",
+		"prettier": "3.5.3",
 		"rimraf": "6.0.1",
-		"ts-jest": "29.2.5",
-		"typescript": "5.6.3",
-		"typescript-eslint": "^8.14.0"
+		"ts-jest": "29.3.3",
+		"typescript": "5.8.3",
+		"typescript-eslint": "^8.32.1"
 	}
 }

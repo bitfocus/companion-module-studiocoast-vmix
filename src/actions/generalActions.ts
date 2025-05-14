@@ -1,5 +1,5 @@
-import { VMixAction, ActionCallback } from './actions'
-import VMixInstance from '../index'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
+import type VMixInstance from '../index'
 
 type KeyPressOptions = {
   value: string
@@ -29,7 +29,7 @@ export interface GeneralActions {
 
 export type GeneralCallbacks = KeyPressCallback | TbarCallback | DynamicCallback
 
-export const vMixGeneralActions = (instance: VMixInstance, sendBasicCommand: (action: Readonly<GeneralCallbacks>) => Promise<void>): GeneralActions => {
+export const vMixGeneralActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): GeneralActions => {
   return {
     keyPress: {
       name: 'General - KeyPress',
@@ -40,10 +40,10 @@ export const vMixGeneralActions = (instance: VMixInstance, sendBasicCommand: (ac
           label: 'Key',
           id: 'value',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     tbar: {
@@ -55,16 +55,16 @@ export const vMixGeneralActions = (instance: VMixInstance, sendBasicCommand: (ac
           label: 'postion 0-255',
           id: 'value',
           default: '0',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: async (action) => {
-        const value = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const value = (await instance.parseOption(action.options.value, context))[instance.buttonShift.state]
 
         if (instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION SetFader Value=${value}`)
+          return instance.tcp.sendCommand(`FUNCTION SetFader Value=${value}`)
         }
-      }
+      },
     },
 
     dynamic: {
@@ -78,8 +78,8 @@ export const vMixGeneralActions = (instance: VMixInstance, sendBasicCommand: (ac
           default: 'Input',
           choices: [
             { id: 'Input', label: 'Dynamic Input' },
-            { id: 'Value', label: 'Dynamic Value' }
-          ]
+            { id: 'Value', label: 'Dynamic Value' },
+          ],
         },
         {
           type: 'dropdown',
@@ -90,22 +90,22 @@ export const vMixGeneralActions = (instance: VMixInstance, sendBasicCommand: (ac
             { id: '1', label: '1' },
             { id: '2', label: '2' },
             { id: '3', label: '3' },
-            { id: '4', label: '4' }
-          ]
+            { id: '4', label: '4' },
+          ],
         },
         {
           type: 'textinput',
           label: 'Value',
           id: 'value',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: async (action) => {
-        const value = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const value = (await instance.parseOption(action.options.value, context))[instance.buttonShift.state]
 
-        if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetDynamic${action.options.type}${action.options.number} Value=${value}`)
-      }
-    }
+        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetDynamic${action.options.type}${action.options.number} Value=${value}`)
+      },
+    },
   }
 }

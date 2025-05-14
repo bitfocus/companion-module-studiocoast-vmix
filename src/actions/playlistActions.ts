@@ -1,5 +1,5 @@
-import { VMixAction, ActionCallback } from './actions'
-import VMixInstance from '../index'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
+import type VMixInstance from '../index'
 
 type PlayListFunctionsOptions = {
   functionID: 'StartPlayList' | 'StopPlayList' | 'NextPlayListEntry' | 'PreviousPlayListEntry'
@@ -21,7 +21,7 @@ export interface PlayListActions {
 
 export type PlayListCallbacks = PlayListFunctionsCallback | SelectPlayListCallback
 
-export const vMixPlayListActions = (_instance: VMixInstance, sendBasicCommand: (action: Readonly<PlayListCallbacks>) => Promise<void>): PlayListActions => {
+export const vMixPlayListActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): PlayListActions => {
   return {
     playListFunctions: {
       name: 'Playlist - Functions',
@@ -36,11 +36,11 @@ export const vMixPlayListActions = (_instance: VMixInstance, sendBasicCommand: (
             { id: 'StartPlayList', label: 'Start Play List' },
             { id: 'StopPlayList', label: 'Stop Play List' },
             { id: 'NextPlayListEntry', label: 'Next Item in Play List' },
-            { id: 'PreviousPlayListEntry', label: 'Previous Item in Play List' }
-          ]
-        }
+            { id: 'PreviousPlayListEntry', label: 'Previous Item in Play List' },
+          ],
+        },
       ],
-      callback: sendBasicCommand
+      callback: sendBasicCommand,
     },
 
     selectPlayList: {
@@ -52,10 +52,10 @@ export const vMixPlayListActions = (_instance: VMixInstance, sendBasicCommand: (
           label: 'Playlist name',
           id: 'value',
           default: '',
-          useVariables: true
-        }
+          useVariables: true,
+        },
       ],
-      callback: sendBasicCommand
-    }
+      callback: sendBasicCommand,
+    },
   }
 }

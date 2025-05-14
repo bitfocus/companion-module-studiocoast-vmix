@@ -1,6 +1,6 @@
 import { combineRgb } from '@companion-module/base'
-import { VMixFeedback, FeedbackCallback } from './feedback'
-import VMixInstance from '../index'
+import type { VMixFeedback, FeedbackCallback } from './feedback'
+import type VMixInstance from '../index'
 
 type ReplayStatusOptions = {
   status: 'recording' | 'live'
@@ -42,7 +42,7 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
       description: 'Indicates current recording or live status of a replay input',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       options: [
         {
@@ -52,13 +52,13 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
           default: 'recording',
           choices: [
             { id: 'recording', label: 'Recording' },
-            { id: 'live', label: 'Live' }
-          ]
-        }
+            { id: 'live', label: 'Live' },
+          ],
+        },
       ],
       callback: (feedback) => {
         return instance.data.replay[feedback.options.status]
-      }
+      },
     },
 
     replayEvents: {
@@ -67,7 +67,7 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
       description: 'Indicates currently selected Events tab',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       options: [
         {
@@ -78,8 +78,8 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
           choices: [
             { id: 'A', label: 'Replay A' },
             { id: 'B', label: 'Replay B' },
-            { id: 'selected', label: 'Replay Selected' }
-          ]
+            { id: 'selected', label: 'Replay Selected' },
+          ],
         },
         {
           type: 'dropdown',
@@ -88,9 +88,9 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
           default: 1,
           choices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((id) => ({
             id: id,
-            label: id.toString()
-          }))
-        }
+            label: id.toString(),
+          })),
+        },
       ],
       callback: (feedback) => {
         const channel = feedback.options.channel
@@ -102,7 +102,7 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
         } else {
           return instance.data.replay.eventsB === feedback.options.events
         }
-      }
+      },
     },
 
     replayCamera: {
@@ -111,7 +111,7 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
       description: 'Indicates current replay camera being live on a channel',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       options: [
         {
@@ -122,16 +122,16 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
           choices: [
             { id: 'A', label: 'Replay A' },
             { id: 'B', label: 'Replay B' },
-            { id: 'selected', label: 'Replay Selected' }
-          ]
+            { id: 'selected', label: 'Replay Selected' },
+          ],
         },
         {
           type: 'dropdown',
           label: 'Camera',
           id: 'camera',
           default: 1,
-          choices: [1, 2, 3, 4, 5, 6, 7, 8].map((id) => ({ id, label: id.toString() }))
-        }
+          choices: [1, 2, 3, 4, 5, 6, 7, 8].map((id) => ({ id, label: id.toString() })),
+        },
       ],
       callback: (feedback) => {
         let channel = feedback.options.channel
@@ -144,7 +144,7 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
         const cameraChannel = ('camera' + channel) as 'cameraA' | 'cameraB'
 
         return instance.data.replay[cameraChannel] == feedback.options.camera
-      }
+      },
     },
 
     replaySelectedChannel: {
@@ -153,7 +153,7 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
       description: 'Indicates currently selected channel',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       options: [
         {
@@ -164,13 +164,13 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
           choices: [
             { id: 'AB', label: 'A|B' },
             { id: 'A', label: 'A' },
-            { id: 'B', label: 'B' }
-          ]
-        }
+            { id: 'B', label: 'B' },
+          ],
+        },
       ],
       callback: (feedback) => {
         return instance.data.replay.channelMode && instance.data.replay.channelMode === feedback.options.channel
-      }
-    }
+      },
+    },
   }
 }

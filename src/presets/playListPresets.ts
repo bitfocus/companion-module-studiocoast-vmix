@@ -1,5 +1,5 @@
 import { combineRgb } from '@companion-module/base'
-import { VMixPresetArray } from './presets'
+import type { VMixPresetArray } from './presets'
 
 export const getPlayListPresets = (): VMixPresetArray => {
   const playListPresets: VMixPresetArray = [
@@ -11,27 +11,27 @@ export const getPlayListPresets = (): VMixPresetArray => {
         text: 'PlayList Start',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'playListFunctions', options: { functionID: 'StartPlayList' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
           feedbackId: 'status',
           options: {
             status: 'playList',
-            value: ''
+            value: '',
           },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 0, 0),
+          },
+        },
+      ],
     },
     {
       category: 'PlayList',
@@ -41,27 +41,27 @@ export const getPlayListPresets = (): VMixPresetArray => {
         text: 'PlayList Stop',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'playListFunctions', options: { functionID: 'StopPlayList' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
           feedbackId: 'status',
           options: {
             status: 'playList',
-            value: ''
+            value: '',
           },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 0, 0),
+          },
+        },
+      ],
     },
     {
       category: 'PlayList',
@@ -71,15 +71,15 @@ export const getPlayListPresets = (): VMixPresetArray => {
         text: 'PlayList Next',
         size: '18',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'playListFunctions', options: { functionID: 'NextPlayListEntry' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'PlayList',
@@ -89,11 +89,11 @@ export const getPlayListPresets = (): VMixPresetArray => {
       steps: [
         {
           down: [{ actionId: 'playListFunctions', options: { functionID: 'PreviousPlayListEntry' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
-    }
+      feedbacks: [],
+    },
   ]
 
   return playListPresets

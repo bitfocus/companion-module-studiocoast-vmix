@@ -1,7 +1,7 @@
 import { combineRgb } from '@companion-module/base'
-import { VMixFeedback, FeedbackCallback } from './feedback'
+import type { VMixFeedback, FeedbackCallback } from './feedback'
 import { options } from '../utils'
-import VMixInstance from '../index'
+import type VMixInstance from '../index'
 
 type InputSelectedIndexOptions = {
   input: string
@@ -42,14 +42,14 @@ export const vMixListFeedbacks = (instance: VMixInstance): ListFeedbacks => {
           type: 'colorpicker',
           label: 'Empty List Warning Text',
           id: 'et',
-          default: combineRgb(0, 0, 0)
+          default: combineRgb(0, 0, 0),
         },
         {
           type: 'colorpicker',
           label: 'Empty List Warning Background',
           id: 'eb',
-          default: combineRgb(255, 255, 0)
-        }
+          default: combineRgb(255, 255, 0),
+        },
       ],
       callback: async (feedback, context) => {
         const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
@@ -69,7 +69,7 @@ export const vMixListFeedbacks = (instance: VMixInstance): ListFeedbacks => {
         }
 
         return {}
-      }
+      },
     },
 
     inputSelectedIndexBoolean: {
@@ -78,7 +78,7 @@ export const vMixListFeedbacks = (instance: VMixInstance): ListFeedbacks => {
       description: '',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
+        bgcolor: combineRgb(255, 0, 0),
       },
       options: [options.input, options.selectedIndex],
       callback: async (feedback, context) => {
@@ -87,7 +87,7 @@ export const vMixListFeedbacks = (instance: VMixInstance): ListFeedbacks => {
         const index = (await instance.parseOption(feedback.options.selectedIndex, context))[instance.buttonShift.state]
 
         return input?.selectedIndex === parseInt(index, 10)
-      }
-    }
+      },
+    },
   }
 }

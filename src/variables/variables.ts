@@ -1,5 +1,5 @@
-import VMixInstance from '..'
-import { CompanionVariableDefinition } from '@companion-module/base'
+import type VMixInstance from '..'
+import type { CompanionVariableDefinition } from '@companion-module/base'
 import { audioDefinitions, audioValues } from './audioVariables'
 import { dynamicDefinitions, dynamicValues } from './dynamicVariables'
 import { generalDefinitions, generalValues } from './generalVariables'
@@ -17,8 +17,10 @@ export interface InstanceVariableValue {
 
 export class Variables {
   private readonly instance: VMixInstance
-  public currentDefinitions: Set<CompanionVariableDefinition> = new Set()
+  public currentDefinitions: CompanionVariableDefinition[] = []
   public currentVariables: InstanceVariableValue = {}
+  public definitionsUpdateDebounce: ReturnType<typeof setTimeout> | null = null
+  public definitionsUpdateNeeded = false
 
   constructor(instance: VMixInstance) {
     this.instance = instance
@@ -29,12 +31,12 @@ export class Variables {
    * @description Updates or removes variable for current instance
    */
   public readonly set = (variables: InstanceVariableValue): void => {
-    const newVariables: { [variableId: string]: string | undefined } = {}
-    const changes: { [variableId: string]: string | undefined } = {}
+    const newVariables: { [variableId: string]: string | number | undefined } = {}
+    const changes: { [variableId: string]: string | number | undefined } = {}
 
     for (const name in variables) {
-      if (this.currentVariables[name] !== variables[name]) changes[name] = variables[name]?.toString()
-      newVariables[name] = variables[name]?.toString()
+      if (this.currentVariables[name] !== variables[name]) changes[name] = variables[name]
+      newVariables[name] = variables[name]
     }
 
     for (const name in this.currentVariables) {
@@ -67,7 +69,7 @@ export class Variables {
         response: 0,
         parsed: 0,
         feedbacks: 0,
-        variables: 0
+        variables: 0,
       }
     }
   }
@@ -76,48 +78,34 @@ export class Variables {
    * @description Sets variable definitions
    */
   public readonly updateDefinitions = async (): Promise<void> => {
-    const variables: Set<CompanionVariableDefinition> = new Set([
+    if (this.definitionsUpdateDebounce !== null) {
+      this.definitionsUpdateNeeded = true
+      return
+    }
+
+    this.definitionsUpdateDebounce = setTimeout(() => {
+      this.definitionsUpdateDebounce = null
+      if (this.definitionsUpdateNeeded) {
+        this.definitionsUpdateNeeded = false
+        this.updateDefinitions()
+      }
+    }, this.instance.config.debugVariableDefinitionDelay)
+
+    const variableDefinitions: CompanionVariableDefinition[] = [
       ...audioDefinitions(this.instance),
       ...(await dynamicDefinitions(this.instance)),
       ...generalDefinitions(this.instance),
       ...inputDefinitions(this.instance),
       ...layerDefinitions(this.instance),
-      ...mixDefinitions(this.instance),
+      ...(await mixDefinitions(this.instance)),
       ...outputDefinitions(this.instance),
       ...overlayDefinitions(this.instance),
       ...replayDefinitions(this.instance),
-      ...transitionDefinitions(this.instance)
-    ])
+      ...transitionDefinitions(this.instance),
+    ]
 
-    this.currentDefinitions = variables
-    this.instance.setVariableDefinitions([...variables])
-  }
-
-  /**
-   * @description Update variables for Timers
-   */
-  public readonly updateTimerVariables = (): void => {
-    const newVariables: InstanceVariableValue = {}
-
-    this.instance.timers.forEach((timer) => {
-      const formats = ['hh:mm:ss', 'mm:ss', 'mm:ss.ms', 'mm:ss.sss']
-      const dataArr = [
-        timer.get({ defaultValue: '00:00:00', format: 'hh:mm:ss' }),
-        timer.get({ defaultValue: '00:00', format: 'mm:ss' }),
-        timer.get({ defaultValue: '00:00.0', format: 'mm:ss.ms' }),
-        timer.get({ defaultValue: '00:00.000', format: 'mm:ss.sss' })
-      ]
-
-      dataArr.forEach((data, index) => {
-        const prefix = `timer_${timer.id}_${formats[index]}_`
-
-        for (const key in data) {
-          newVariables[prefix + key] = data[key]
-        }
-      })
-    })
-
-    this.set(newVariables)
+    this.currentDefinitions = variableDefinitions
+    this.instance.setVariableDefinitions(variableDefinitions)
   }
 
   /**
@@ -136,7 +124,7 @@ export class Variables {
       outputValues(this.instance),
       overlayValues(this.instance),
       replayValues(this.instance),
-      transitionValues(this.instance)
+      transitionValues(this.instance),
     ])
 
     variablesPromise.forEach((variables: InstanceVariableValue) => {

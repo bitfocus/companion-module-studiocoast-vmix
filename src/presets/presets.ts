@@ -1,7 +1,7 @@
-import { CompanionButtonPresetDefinition, CompanionTextPresetDefinition, CompanionPresetDefinitions } from '@companion-module/base'
-import VMixInstance from '../index'
-import { ActionCallbacks } from '../actions/actions'
-import { FeedbackCallbacks } from '../feedbacks/feedback'
+import type { CompanionButtonPresetDefinition, CompanionTextPresetDefinition, CompanionPresetDefinitions } from '@companion-module/base'
+import type VMixInstance from '../index'
+import type { ActionCallbacks } from '../actions/actions'
+import type { FeedbackCallbacks } from '../feedbacks/feedback'
 import { getAudioPresets } from './audioPresets'
 import { getButtonShiftPresets } from './buttonShiftPresets'
 import { getCallPresets } from './callPresets'
@@ -89,7 +89,7 @@ export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
     ...getTitleGraphicsPresets(),
     ...getTransitionPresets(),
     ...getVideoPlaybackPresets(),
-    ...getVMixFunctionsPresets()
+    ...getVMixFunctionsPresets(),
   ]
 
   return presets as unknown as CompanionPresetDefinitions

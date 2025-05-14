@@ -1,5 +1,5 @@
 import { combineRgb } from '@companion-module/base'
-import { VMixPresetArray } from './presets'
+import type { VMixPresetArray } from './presets'
 
 export const getAudioPresets = (): VMixPresetArray => {
   const busses: ('A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G')[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
@@ -9,7 +9,7 @@ export const getAudioPresets = (): VMixPresetArray => {
       category: `Audio`,
       name: 'Input Audio',
       type: 'text',
-      text: 'Example presets here use input 1, but the action/feedback support referencing an input by Name, Number, or GUID, and also supports parsing Variables'
+      text: 'Example presets here use input 1, but the action/feedback support referencing an input by Name, Number, or GUID, and also supports parsing Variables',
     },
     {
       category: 'Audio',
@@ -19,24 +19,24 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: 'Toggle Audio',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'audio', options: { input: '1', functionID: 'Audio' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
           feedbackId: 'inputAudio',
           options: {
-            input: '1'
+            input: '1',
           },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
+            bgcolor: combineRgb(255, 0, 0),
+          },
         },
         {
           feedbackId: 'liveInputVolume',
@@ -49,10 +49,10 @@ export const getAudioPresets = (): VMixPresetArray => {
             color1: combineRgb(255, 255, 0),
             color6: combineRgb(0, 255, 0),
             color18: combineRgb(0, 192, 0),
-            color36: combineRgb(0, 128, 0)
-          }
-        }
-      ]
+            color36: combineRgb(0, 128, 0),
+          },
+        },
+      ],
     },
     {
       category: 'Audio',
@@ -62,24 +62,24 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: 'Set Audio On',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'audio', options: { input: '1', functionID: 'AudioOn' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
           feedbackId: 'inputAudio',
           options: {
-            input: '1'
+            input: '1',
           },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
+            bgcolor: combineRgb(255, 0, 0),
+          },
         },
         {
           feedbackId: 'liveInputVolume',
@@ -92,10 +92,10 @@ export const getAudioPresets = (): VMixPresetArray => {
             color1: combineRgb(255, 255, 0),
             color6: combineRgb(0, 255, 0),
             color18: combineRgb(0, 192, 0),
-            color36: combineRgb(0, 128, 0)
-          }
-        }
-      ]
+            color36: combineRgb(0, 128, 0),
+          },
+        },
+      ],
     },
     {
       category: 'Audio',
@@ -105,24 +105,24 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: 'Set Audio Off',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'audio', options: { input: '1', functionID: 'AudioOff' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
           feedbackId: 'inputAudio',
           options: {
-            input: '1'
+            input: '1',
           },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
+            bgcolor: combineRgb(255, 0, 0),
+          },
         },
         {
           feedbackId: 'liveInputVolume',
@@ -135,10 +135,10 @@ export const getAudioPresets = (): VMixPresetArray => {
             color1: combineRgb(255, 255, 0),
             color6: combineRgb(0, 255, 0),
             color18: combineRgb(0, 192, 0),
-            color36: combineRgb(0, 128, 0)
-          }
-        }
-      ]
+            color36: combineRgb(0, 128, 0),
+          },
+        },
+      ],
     },
     {
       category: 'Audio',
@@ -148,26 +148,26 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: 'Audio Auto Toggle',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'audioAuto', options: { input: '1', functionID: 'AudioAuto' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
           feedbackId: 'inputAudioAuto',
           options: {
-            input: '1'
+            input: '1',
           },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 0, 0),
+          },
+        },
+      ],
     },
     {
       category: 'Audio',
@@ -177,13 +177,13 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: 'Input Solo',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'solo', options: { input: '1', functionID: 'Solo' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -191,10 +191,10 @@ export const getAudioPresets = (): VMixPresetArray => {
           options: { input: '1' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 255, 0),
+          },
+        },
+      ],
     },
     {
       category: 'Audio',
@@ -204,13 +204,13 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: 'Send Input to Master',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'audioBus', options: { input: '1', value: 'Master', functionID: 'AudioBus' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -218,10 +218,10 @@ export const getAudioPresets = (): VMixPresetArray => {
           options: { input: '1', value: 'Master' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 255, 0),
+          },
+        },
+      ],
     },
     {
       category: 'Audio',
@@ -231,13 +231,13 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: 'Send Input to Bus A',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'audioBus', options: { input: '1', value: 'A', functionID: 'AudioBus' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -245,10 +245,10 @@ export const getAudioPresets = (): VMixPresetArray => {
           options: { input: '1', value: 'A' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 255, 0),
+          },
+        },
+      ],
     },
     {
       category: 'Audio',
@@ -258,13 +258,13 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: 'Send Input to Bus B',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'audioBus', options: { input: '1', value: 'B', functionID: 'AudioBus' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -272,10 +272,10 @@ export const getAudioPresets = (): VMixPresetArray => {
           options: { input: '1', value: 'Master' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 255, 0),
+          },
+        },
+      ],
     },
     {
       category: 'Audio',
@@ -285,13 +285,13 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: 'Send Input to Bus C',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'audioBus', options: { input: '1', value: 'C', functionID: 'AudioBus' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -299,10 +299,10 @@ export const getAudioPresets = (): VMixPresetArray => {
           options: { input: '1', value: 'C' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 255, 0),
+          },
+        },
+      ],
     },
     {
       category: 'Audio',
@@ -312,13 +312,13 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: 'Send Input to Bus D',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'audioBus', options: { input: '1', value: 'D', functionID: 'AudioBus' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -326,10 +326,10 @@ export const getAudioPresets = (): VMixPresetArray => {
           options: { input: '1', value: 'D' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 255, 0),
+          },
+        },
+      ],
     },
     {
       category: 'Audio',
@@ -339,13 +339,13 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: 'Send Input to Bus E',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'audioBus', options: { input: '1', value: 'E', functionID: 'AudioBus' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -353,10 +353,10 @@ export const getAudioPresets = (): VMixPresetArray => {
           options: { input: '1', value: 'E' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 255, 0),
+          },
+        },
+      ],
     },
     {
       category: 'Audio',
@@ -366,13 +366,13 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: 'Send Input to Bus F',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'audioBus', options: { input: '1', value: 'F', functionID: 'AudioBus' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -380,10 +380,10 @@ export const getAudioPresets = (): VMixPresetArray => {
           options: { input: '1', value: 'F' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 255, 0),
+          },
+        },
+      ],
     },
     {
       category: 'Audio',
@@ -393,13 +393,13 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: 'Send Input to Bus G',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'audioBus', options: { input: '1', value: 'G', functionID: 'AudioBus' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -407,16 +407,16 @@ export const getAudioPresets = (): VMixPresetArray => {
           options: { input: '1', value: 'G' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 255, 0),
+          },
+        },
+      ],
     },
     {
       category: 'Audio',
       name: 'Input Volume Fade',
       type: 'text',
-      text: 'Fade the Volume on an Input over a default of 2000ms to a target %'
+      text: 'Fade the Volume on an Input over a default of 2000ms to a target %',
     },
     {
       category: 'Audio',
@@ -426,15 +426,15 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: 'Input 1 Vol 0%',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: '0', fadeTime: '2000' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Audio',
@@ -444,15 +444,15 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: 'Input 1 Vol 25%',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: '25', fadeTime: '2000' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Audio',
@@ -462,15 +462,15 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: 'Input 1 Vol 50%',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: '50', fadeTime: '2000' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Audio',
@@ -480,15 +480,15 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: 'Input 1 Vol 75%',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: '75', fadeTime: '2000' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Audio',
@@ -498,16 +498,16 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: 'Input 1 Vol 100%',
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: '100', fadeTime: '2000' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
-    }
+      feedbacks: [],
+    },
   ]
 
   audioPresets.push(
@@ -515,7 +515,7 @@ export const getAudioPresets = (): VMixPresetArray => {
       category: 'Audio',
       name: `Bus Master`,
       type: 'text',
-      text: ''
+      text: '',
     },
     {
       category: 'Audio',
@@ -525,13 +525,13 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: `Bus Master Mute`,
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'busXAudio', options: { value: 'Master', functionID: 'BusXAudio' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -539,8 +539,8 @@ export const getAudioPresets = (): VMixPresetArray => {
           options: { value: 'Master' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
+            bgcolor: combineRgb(255, 0, 0),
+          },
         },
         {
           feedbackId: 'liveBusVolume',
@@ -553,10 +553,10 @@ export const getAudioPresets = (): VMixPresetArray => {
             color1: combineRgb(255, 255, 0),
             color6: combineRgb(0, 255, 0),
             color18: combineRgb(0, 192, 0),
-            color36: combineRgb(0, 128, 0)
-          }
-        }
-      ]
+            color36: combineRgb(0, 128, 0),
+          },
+        },
+      ],
     },
     {
       category: 'Audio',
@@ -566,15 +566,15 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: `Bus Master 0%`,
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'setBusVolume', options: { value: 'Master', adjustment: 'Set', amount: '0' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Audio',
@@ -584,15 +584,15 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: `Bus Master 25%`,
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'setBusVolume', options: { value: 'Master', adjustment: 'Set', amount: '25' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Audio',
@@ -602,15 +602,15 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: `Bus Master 50%`,
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'setBusVolume', options: { value: 'Master', adjustment: 'Set', amount: '50' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Audio',
@@ -620,15 +620,15 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: `Bus Master 75%`,
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'setBusVolume', options: { value: 'Master', adjustment: 'Set', amount: '75' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Audio',
@@ -638,15 +638,15 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: `Bus Master 100%`,
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'setBusVolume', options: { value: 'Master', adjustment: 'Set', amount: '100' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
-      feedbacks: []
+      feedbacks: [],
     },
     {
       category: 'Audio',
@@ -656,29 +656,29 @@ export const getAudioPresets = (): VMixPresetArray => {
         text: `Bus Master\nMeters`,
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'busXAudio', options: { value: 'Master', functionID: 'BusXAudio' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
           feedbackId: 'busVolumeMeter',
-          options: { value: 'Master' }
+          options: { value: 'Master' },
         },
         {
           feedbackId: 'busMute',
           options: { value: 'Master' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
-        }
-      ]
-    }
+            bgcolor: combineRgb(255, 0, 0),
+          },
+        },
+      ],
+    },
   )
 
   busses.forEach((bus) => {
@@ -687,7 +687,7 @@ export const getAudioPresets = (): VMixPresetArray => {
         category: 'Audio',
         name: `Bus ${bus}`,
         type: 'text',
-        text: ''
+        text: '',
       },
       {
         category: 'Audio',
@@ -697,13 +697,13 @@ export const getAudioPresets = (): VMixPresetArray => {
           text: `Bus ${bus} Mute`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [{ actionId: 'busXAudio', options: { value: bus, functionID: 'BusXAudio' } }],
-            up: []
-          }
+            up: [],
+          },
         ],
         feedbacks: [
           {
@@ -711,8 +711,8 @@ export const getAudioPresets = (): VMixPresetArray => {
             options: { value: bus },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0)
-            }
+              bgcolor: combineRgb(255, 0, 0),
+            },
           },
           {
             feedbackId: 'liveBusVolume',
@@ -725,10 +725,10 @@ export const getAudioPresets = (): VMixPresetArray => {
               color1: combineRgb(255, 255, 0),
               color6: combineRgb(0, 255, 0),
               color18: combineRgb(0, 192, 0),
-              color36: combineRgb(0, 128, 0)
-            }
-          }
-        ]
+              color36: combineRgb(0, 128, 0),
+            },
+          },
+        ],
       },
       {
         category: 'Audio',
@@ -738,13 +738,13 @@ export const getAudioPresets = (): VMixPresetArray => {
           text: `Bus ${bus} solo`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [{ actionId: 'busXSolo', options: { value: bus, functionID: 'BusXSolo' } }],
-            up: []
-          }
+            up: [],
+          },
         ],
 
         feedbacks: [
@@ -753,10 +753,10 @@ export const getAudioPresets = (): VMixPresetArray => {
             options: { value: bus },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 255, 0)
-            }
-          }
-        ]
+              bgcolor: combineRgb(255, 255, 0),
+            },
+          },
+        ],
       },
       {
         category: 'Audio',
@@ -766,15 +766,15 @@ export const getAudioPresets = (): VMixPresetArray => {
           text: `Bus ${bus} 0%`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [{ actionId: 'setBusVolume', options: { value: bus, adjustment: 'Set', amount: '0' } }],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
+        feedbacks: [],
       },
       {
         category: 'Audio',
@@ -784,15 +784,15 @@ export const getAudioPresets = (): VMixPresetArray => {
           text: `Bus ${bus} 25%`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [{ actionId: 'setBusVolume', options: { value: bus, adjustment: 'Set', amount: '25' } }],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
+        feedbacks: [],
       },
       {
         category: 'Audio',
@@ -802,15 +802,15 @@ export const getAudioPresets = (): VMixPresetArray => {
           text: `Bus ${bus} 50%`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [{ actionId: 'setBusVolume', options: { value: bus, adjustment: 'Set', amount: '50' } }],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
+        feedbacks: [],
       },
       {
         category: 'Audio',
@@ -820,15 +820,15 @@ export const getAudioPresets = (): VMixPresetArray => {
           text: `Bus ${bus} 75%`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [{ actionId: 'setBusVolume', options: { value: bus, adjustment: 'Set', amount: '75' } }],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
+        feedbacks: [],
       },
       {
         category: 'Audio',
@@ -838,15 +838,15 @@ export const getAudioPresets = (): VMixPresetArray => {
           text: `Bus ${bus} 100%`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [{ actionId: 'setBusVolume', options: { value: bus, adjustment: 'Set', amount: '100' } }],
-            up: []
-          }
+            up: [],
+          },
         ],
-        feedbacks: []
+        feedbacks: [],
       },
       {
         category: 'Audio',
@@ -856,28 +856,28 @@ export const getAudioPresets = (): VMixPresetArray => {
           text: `Bus ${bus}\nMeters`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [{ actionId: 'busXAudio', options: { value: bus, functionID: 'BusXAudio' } }],
-            up: []
-          }
+            up: [],
+          },
         ],
         feedbacks: [
           {
             feedbackId: 'busVolumeMeter',
-            options: { value: bus }
+            options: { value: bus },
           },
           {
             feedbackId: 'busMute',
             options: { value: bus },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0)
-            }
-          }
-        ]
+              bgcolor: combineRgb(255, 0, 0),
+            },
+          },
+        ],
       },
       {
         category: 'Audio',
@@ -887,13 +887,13 @@ export const getAudioPresets = (): VMixPresetArray => {
           text: 'Send Bus to Master',
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [{ actionId: 'busXSendToMaster', options: { value: 'A' } }],
-            up: []
-          }
+            up: [],
+          },
         ],
         feedbacks: [
           {
@@ -901,11 +901,11 @@ export const getAudioPresets = (): VMixPresetArray => {
             options: { value: bus },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(0, 255, 0)
-            }
-          }
-        ]
-      }
+              bgcolor: combineRgb(0, 255, 0),
+            },
+          },
+        ],
+      },
     )
   })
 

@@ -1,6 +1,6 @@
-import { VMixAction, ActionCallback } from './actions'
-import VMixInstance from '../index'
-import { MixOptionEntry, options } from '../utils'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
+import type VMixInstance from '../index'
+import { type MixOptionEntry, options } from '../utils'
 
 type OutputSetOptions = {
   functionID: 'SetOutput2' | 'SetOutput3' | 'SetOutput4' | 'SetOutputExternal2' | 'SetOutputFullscreen' | 'SetOutputFullscreen2'
@@ -43,7 +43,7 @@ export interface OutputActions {
 
 export type OutputCallbacks = OutputSetCallback | ToggleFunctionsCallback
 
-export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: (action: Readonly<OutputCallbacks>) => Promise<void>): OutputActions => {
+export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): OutputActions => {
   return {
     outputSet: {
       name: 'Output - Set Output Source',
@@ -60,8 +60,8 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: (ac
             { id: 'SetOutput4', label: 'Output 4' },
             { id: 'SetOutputExternal2', label: 'Output External 2' },
             { id: 'SetOutputFullscreen', label: 'Output Fullscreen 1' },
-            { id: 'SetOutputFullscreen2', label: 'Output Fullscreen 2' }
-          ]
+            { id: 'SetOutputFullscreen2', label: 'Output Fullscreen 2' },
+          ],
         },
         {
           type: 'dropdown',
@@ -75,26 +75,26 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: (ac
             { id: 'MultiView2', label: 'Multiview2' },
             { id: 'Replay', label: 'Replay' },
             { id: 'Mix', label: 'Mix' },
-            { id: 'Input', label: 'Input' }
-          ]
+            { id: 'Input', label: 'Input' },
+          ],
         },
         {
           ...options.mixSelect,
-          isVisible: (options) => options.value === 'Mix'
+          isVisible: (options) => options.value === 'Mix',
         },
         options.mixVariable,
         {
           ...options.input,
-          isVisible: (options) => options.value === 'Input'
-        }
+          isVisible: (options) => options.value === 'Input',
+        },
       ],
-      callback: async (action) => {
+      callback: async (action, context) => {
         let command = `FUNCTION ${action.options.functionID}`
 
         if (action.options.value === 'Mix') {
           let mix: any = action.options.mix
           if (mix === -2) {
-            mix = parseInt((await instance.parseOption(action.options.mixVariable))[instance.buttonShift.state], 10)
+            mix = parseInt((await instance.parseOption(action.options.mixVariable, context))[instance.buttonShift.state], 10)
 
             if (isNaN(mix)) return
 
@@ -104,14 +104,14 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: (ac
 
           command += ` Value=Mix&Mix=${mix}`
         } else if (action.options.value === 'Input') {
-          const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+          const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
           command += ` Value=${action.options.value}&Input=${encodeURIComponent(input)}`
         } else {
           command += ` Value=${action.options.value}`
         }
 
-        if (instance.tcp) instance.tcp.sendCommand(command)
-      }
+        if (instance.tcp) return instance.tcp.sendCommand(command)
+      },
     },
 
     toggleFunctions: {
@@ -139,8 +139,8 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: (ac
             { id: 'Fullscreen', label: 'Fullscreen On / Off' },
             { id: 'FullscreenOn', label: 'Fullscreen On' },
             { id: 'FullscreenOff', label: 'Fullscreen Off' },
-            { id: 'FadeToBlack', label: 'Fade To Black' }
-          ]
+            { id: 'FadeToBlack', label: 'Fade To Black' },
+          ],
         },
         {
           type: 'dropdown',
@@ -151,23 +151,26 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: (ac
             { id: '', label: 'All' },
             { id: '0', label: '1' },
             { id: '1', label: '2' },
-            { id: '2', label: '3' }
+            { id: '2', label: '3' },
+            { id: '3', label: '4' },
+            { id: '4', label: '5' },
           ],
           isVisible: (options) => {
             const functionID = options.functionID + ''
             return functionID.includes('Streaming')
-          }
-        }
+          },
+        },
       ],
-      callback: (action) => {
+      callback: async (action) => {
         let command = `FUNCTION ${action.options.functionID}`
 
         if (action.options.functionID.includes('Streaming') && action.options.value != '') {
           command += ` value=${action.options.value}`
         }
 
-        if (instance.tcp) instance.tcp.sendCommand(command)
-      }
-    }
+        if (instance.tcp) return instance.tcp.sendCommand(command)
+        return
+      },
+    },
   }
 }

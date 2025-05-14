@@ -1,25 +1,25 @@
-import { CompanionActionEvent, SomeCompanionActionInputField } from '@companion-module/base'
-import { AudioActions, AudioCallbacks, vMixAudioActions } from './audioActions'
-import { BrowserActions, BrowserCallbacks, vMixBrowserActions } from './browserActions'
-import { DataSourceActions, DataSourceCallbacks, vMixDataSourceActions } from './dataSourceActions'
-import { GeneralActions, GeneralCallbacks, vMixGeneralActions } from './generalActions'
-import { InputActions, InputCallbacks, vMixInputActions } from './inputActions'
-import { LayerActions, LayerCallbacks, vMixLayerActions } from './layerActions'
-import { ListActions, ListCallbacks, vMixListActions } from './listActions'
-import { MediaActions, MediaCallbacks, vMixMediaActions } from './mediaActions'
-import { OutputActions, OutputCallbacks, vMixOutputActions } from './outputActions'
-import { OverlayActions, OverlayCallbacks, vMixOverlayActions } from './overlayActions'
-import { PlayListActions, PlayListCallbacks, vMixPlayListActions } from './playlistActions'
-import { PTZActions, PTZCallbacks, vMixPTZActions } from './ptzActions'
-import { ReplayActions, ReplayCallbacks, vMixReplayActions } from './replayActions'
-import { ScriptingActions, ScriptingCallbacks, vMixScriptingActions } from './scriptingActions'
-import { TitleActions, TitleCallbacks, vMixTitleActions } from './titleActions'
-import { TransitionActions, TransitionCallbacks, vMixTransitionActions } from './transitionActions'
-import { UtilActions, UtilCallbacks, vMixUtilActions } from './utilActions'
-import { VideoCallActions, VideoCallCallbacks, vMixVideoCallActions } from './videoCallActions'
-import { VirtualSetActions, VirtualSetCallbacks, vMixVirtualSetActions } from './virtualSetActions'
-import { ZoomActions, ZoomCallbacks, vMixZoomActions } from './zoomActions'
-import VMixInstance from '../index'
+import type { CompanionActionEvent, SomeCompanionActionInputField, CompanionActionContext } from '@companion-module/base'
+import { type AudioActions, type AudioCallbacks, vMixAudioActions } from './audioActions'
+import { type BrowserActions, type BrowserCallbacks, vMixBrowserActions } from './browserActions'
+import { type DataSourceActions, type DataSourceCallbacks, vMixDataSourceActions } from './dataSourceActions'
+import { type GeneralActions, type GeneralCallbacks, vMixGeneralActions } from './generalActions'
+import { type InputActions, type InputCallbacks, vMixInputActions } from './inputActions'
+import { type LayerActions, type LayerCallbacks, vMixLayerActions } from './layerActions'
+import { type ListActions, type ListCallbacks, vMixListActions } from './listActions'
+import { type MediaActions, type MediaCallbacks, vMixMediaActions } from './mediaActions'
+import { type OutputActions, type OutputCallbacks, vMixOutputActions } from './outputActions'
+import { type OverlayActions, type OverlayCallbacks, vMixOverlayActions } from './overlayActions'
+import { type PlayListActions, type PlayListCallbacks, vMixPlayListActions } from './playlistActions'
+import { type PTZActions, type PTZCallbacks, vMixPTZActions } from './ptzActions'
+import { type ReplayActions, type ReplayCallbacks, vMixReplayActions } from './replayActions'
+import { type ScriptingActions, type ScriptingCallbacks, vMixScriptingActions } from './scriptingActions'
+import { type TitleActions, type TitleCallbacks, vMixTitleActions } from './titleActions'
+import { type TransitionActions, type TransitionCallbacks, vMixTransitionActions } from './transitionActions'
+import { type UtilActions, type UtilCallbacks, vMixUtilActions } from './utilActions'
+import { type VideoCallActions, type VideoCallCallbacks, vMixVideoCallActions } from './videoCallActions'
+import { type VirtualSetActions, type VirtualSetCallbacks, vMixVirtualSetActions } from './virtualSetActions'
+import { type ZoomActions, type ZoomCallbacks, vMixZoomActions } from './zoomActions'
+import type VMixInstance from '../index'
 
 type ActionOptionEntry = [string, string | number | boolean]
 
@@ -84,17 +84,19 @@ export interface VMixAction<T> {
   name: string
   description?: string
   options: InputFieldWithDefault[]
-  callback: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>) => void | Promise<void>
+  callback: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>, context: CompanionActionContext) => void | Promise<void>
   subscribe?: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>) => void
   unsubscribe?: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>) => void
 }
+
+export type SendBasicCommand = (action: Readonly<ActionCallbacks>, context?: CompanionActionContext) => Promise<void>
 
 export function getActions(instance: VMixInstance): VMixActions {
   /**
    * @param action Action callback object
    * @description Sends vMix functions/params from actions that don't require complex logic
    */
-  const sendBasicCommand = async (action: Readonly<ActionCallbacks>): Promise<void> => {
+  const sendBasicCommand = async (action: Readonly<ActionCallbacks>, context?: CompanionActionContext): Promise<void> => {
     let functionName: string = action.actionId
 
     if ('functionID' in action.options) {
@@ -136,7 +138,12 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     for (const param of params) {
       if (typeof param[1] === 'string') {
-        param[1] = await instance.parseVariablesInString(param[1])
+        if (context) {
+          param[1] = await context.parseVariablesInString(param[1])
+        } else {
+          param[1] = await instance.parseVariablesInString(param[1])
+        }
+
         if (param[0] === 'mixVariable') param[1] = parseMix(param[1])
         parsedParams.push(param)
       } else {
@@ -159,7 +166,8 @@ export function getActions(instance: VMixInstance): VMixActions {
       .map((param) => `${param[0]}=${encodeURIComponent(param[1])}`)
       .join('&')
 
-    if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${functionName} ${encodedParams}`)
+    if (!instance.tcp) return
+    return instance.tcp.sendCommand(`FUNCTION ${functionName} ${encodedParams}`)
   }
 
   return {
@@ -182,6 +190,6 @@ export function getActions(instance: VMixInstance): VMixActions {
     ...vMixUtilActions(instance, sendBasicCommand),
     ...vMixVideoCallActions(instance, sendBasicCommand),
     ...vMixVirtualSetActions(instance, sendBasicCommand),
-    ...vMixZoomActions(instance, sendBasicCommand)
+    ...vMixZoomActions(instance, sendBasicCommand),
   }
 }

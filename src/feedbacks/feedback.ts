@@ -1,22 +1,22 @@
-import VMixInstance from '../index'
-import {
+import type VMixInstance from '../index'
+import type {
   CompanionAdvancedFeedbackResult,
   CompanionFeedbackButtonStyleResult,
   CompanionFeedbackAdvancedEvent,
   CompanionFeedbackBooleanEvent,
   CompanionFeedbackContext,
-  SomeCompanionFeedbackInputField
+  SomeCompanionFeedbackInputField,
 } from '@companion-module/base'
-import { AudioFeedbacks, AudioCallbacks, vMixAudioFeedbacks } from './audioFeedbacks'
-import { GeneralFeedbacks, GeneralCallbacks, vMixGeneralFeedbacks } from './generalFeedbacks'
-import { LayersFeedbacks, LayersCallbacks, vMixLayersFeedbacks } from './layersFeedbacks'
-import { ListFeedbacks, ListCallbacks, vMixListFeedbacks } from './listFeedbacks'
-import { MediaFeedbacks, MediaCallbacks, vMixMediaFeedbacks } from './mediaFeedbacks'
-import { ReplayFeedbacks, ReplayCallbacks, vMixReplayFeedbacks } from './replayFeedbacks'
-import { TallyFeedbacks, TallyCallbacks, vMixTallyFeedbacks } from './tallyFeedbacks'
-import { TransitionFeedbacks, TransitionCallbacks, vMixTransitionFeedbacks } from './transitionFeedbacks'
-import { UtilFeedbacks, UtilCallbacks, vMixUtilFeedbacks } from './utilFeedbacks'
-import { VideoCallFeedbacks, VideoCallCallbacks, vMixVideoCallFeedbacks } from './videoCallFeedbacks'
+import { type AudioFeedbacks, type AudioCallbacks, vMixAudioFeedbacks } from './audioFeedbacks'
+import { type GeneralFeedbacks, type GeneralCallbacks, vMixGeneralFeedbacks } from './generalFeedbacks'
+import { type LayersFeedbacks, type LayersCallbacks, vMixLayersFeedbacks } from './layersFeedbacks'
+import { type ListFeedbacks, type ListCallbacks, vMixListFeedbacks } from './listFeedbacks'
+import { type MediaFeedbacks, type MediaCallbacks, vMixMediaFeedbacks } from './mediaFeedbacks'
+import { type ReplayFeedbacks, type ReplayCallbacks, vMixReplayFeedbacks } from './replayFeedbacks'
+import { type TallyFeedbacks, type TallyCallbacks, vMixTallyFeedbacks } from './tallyFeedbacks'
+import { type TransitionFeedbacks, type TransitionCallbacks, vMixTransitionFeedbacks } from './transitionFeedbacks'
+import { type UtilFeedbacks, type UtilCallbacks, vMixUtilFeedbacks } from './utilFeedbacks'
+import { type VideoCallFeedbacks, type VideoCallCallbacks, vMixVideoCallFeedbacks } from './videoCallFeedbacks'
 
 export type VMixFeedbackKeys = keyof VMixFeedbacks
 
@@ -73,7 +73,7 @@ interface VMixFeedbackAdvanced<T> {
   options: InputFieldWithDefault[]
   callback: (
     feedback: Readonly<Omit<CompanionFeedbackAdvancedEvent, 'options' | 'type'> & T>,
-    context: CompanionFeedbackContext
+    context: CompanionFeedbackContext,
   ) => CompanionAdvancedFeedbackResult | Promise<CompanionAdvancedFeedbackResult>
   subscribe?: (feedback: Readonly<Omit<CompanionFeedbackAdvancedEvent, 'options' | 'type'> & T>) => CompanionAdvancedFeedbackResult
   unsubscribe?: (feedback: Readonly<Omit<CompanionFeedbackAdvancedEvent, 'options' | 'type'> & T>) => CompanionAdvancedFeedbackResult
@@ -92,6 +92,6 @@ export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
     ...vMixTallyFeedbacks(instance),
     ...vMixTransitionFeedbacks(instance),
     ...vMixUtilFeedbacks(instance),
-    ...vMixVideoCallFeedbacks(instance)
+    ...vMixVideoCallFeedbacks(instance),
   }
 }

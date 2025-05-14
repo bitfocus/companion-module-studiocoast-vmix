@@ -1,5 +1,5 @@
 import { combineRgb } from '@companion-module/base'
-import { VMixButtonPreset, VMixPresetArray } from './presets'
+import type { VMixButtonPreset, VMixPresetArray } from './presets'
 
 export const getCallPresets = (): VMixPresetArray => {
   const callPresets: VMixPresetArray = []
@@ -9,13 +9,13 @@ export const getCallPresets = (): VMixPresetArray => {
       category: `vMix Call`,
       name: `vMix Call Presets`,
       type: 'text',
-      text: 'Each preset will require you to enter the calls input in the Action and Feedback'
+      text: 'Each preset will require you to enter the calls input in the Action and Feedback',
     },
     {
       category: `vMix Call`,
       name: `Audio Source`,
       type: 'text',
-      text: ''
+      text: '',
     },
     {
       category: 'vMix Call',
@@ -25,13 +25,13 @@ export const getCallPresets = (): VMixPresetArray => {
         text: `Audio\nSource\nMaster`,
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'videoCallAudioSource', options: { input: '', value: 'Master' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -39,10 +39,10 @@ export const getCallPresets = (): VMixPresetArray => {
           options: { input: '', source: 'Master' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 0, 0),
+          },
+        },
+      ],
     },
     {
       category: 'vMix Call',
@@ -52,13 +52,13 @@ export const getCallPresets = (): VMixPresetArray => {
         text: `Audio\nSource\nHeadphones`,
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'videoCallAudioSource', options: { input: '', value: 'Headphones' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -66,10 +66,10 @@ export const getCallPresets = (): VMixPresetArray => {
           options: { input: '', source: 'Headphones' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 0, 0),
+          },
+        },
+      ],
     },
     ...['A', 'B', 'C', 'D', 'E', 'F', 'G'].map((bus) => {
       return {
@@ -80,13 +80,13 @@ export const getCallPresets = (): VMixPresetArray => {
           text: `Audio\nSource\nBus ${bus}`,
           size: '14',
           color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0)
+          bgcolor: combineRgb(0, 0, 0),
         },
         steps: [
           {
             down: [{ actionId: 'videoCallAudioSource', options: { input: '', value: `Bus${bus}` as any } }],
-            up: []
-          }
+            up: [],
+          },
         ],
 
         feedbacks: [
@@ -95,17 +95,17 @@ export const getCallPresets = (): VMixPresetArray => {
             options: { input: '', source: `Bus${bus}` as any },
             style: {
               color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0)
-            }
-          }
-        ]
+              bgcolor: combineRgb(255, 0, 0),
+            },
+          },
+        ],
       } as VMixButtonPreset
     }),
     {
       category: `vMix Call`,
       name: `Video Source`,
       type: 'text',
-      text: ''
+      text: '',
     },
     {
       category: 'vMix Call',
@@ -115,13 +115,13 @@ export const getCallPresets = (): VMixPresetArray => {
         text: `Video\nSource\nOutput 1`,
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'videoCallVideoSource', options: { input: '', value: 'Output1' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -129,10 +129,10 @@ export const getCallPresets = (): VMixPresetArray => {
           options: { input: '', source: 'Output1' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 0, 0),
+          },
+        },
+      ],
     },
     {
       category: 'vMix Call',
@@ -142,13 +142,13 @@ export const getCallPresets = (): VMixPresetArray => {
         text: `Video\nSource\nOutput 2`,
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'videoCallVideoSource', options: { input: '', value: 'Output2' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -156,10 +156,10 @@ export const getCallPresets = (): VMixPresetArray => {
           options: { input: '', source: 'Output2' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 0, 0),
+          },
+        },
+      ],
     },
     {
       category: 'vMix Call',
@@ -169,13 +169,13 @@ export const getCallPresets = (): VMixPresetArray => {
         text: `Video\nSource\nOutput 3`,
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'videoCallVideoSource', options: { input: '', value: 'Output3' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -183,10 +183,10 @@ export const getCallPresets = (): VMixPresetArray => {
           options: { input: '', source: 'Output3' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 0, 0),
+          },
+        },
+      ],
     },
     {
       category: 'vMix Call',
@@ -196,13 +196,13 @@ export const getCallPresets = (): VMixPresetArray => {
         text: `Video\nSource\nOutput 4`,
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'videoCallVideoSource', options: { input: '', value: 'Output4' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -210,10 +210,10 @@ export const getCallPresets = (): VMixPresetArray => {
           options: { input: '', source: 'Output4' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
-        }
-      ]
+            bgcolor: combineRgb(255, 0, 0),
+          },
+        },
+      ],
     },
     {
       category: 'vMix Call',
@@ -223,13 +223,13 @@ export const getCallPresets = (): VMixPresetArray => {
         text: `Video\nSource\nNone`,
         size: '14',
         color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0)
+        bgcolor: combineRgb(0, 0, 0),
       },
       steps: [
         {
           down: [{ actionId: 'videoCallVideoSource', options: { input: '', value: 'None' } }],
-          up: []
-        }
+          up: [],
+        },
       ],
       feedbacks: [
         {
@@ -237,11 +237,11 @@ export const getCallPresets = (): VMixPresetArray => {
           options: { input: '', source: 'None' },
           style: {
             color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0)
-          }
-        }
-      ]
-    }
+            bgcolor: combineRgb(255, 0, 0),
+          },
+        },
+      ],
+    },
   )
 
   return callPresets

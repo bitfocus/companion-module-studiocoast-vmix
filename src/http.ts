@@ -1,6 +1,6 @@
-import { CompanionHTTPRequest, CompanionHTTPResponse } from '@companion-module/base'
-import VMixInstance from './index'
-import { VMixData, Input } from './data'
+import type { CompanionHTTPRequest, CompanionHTTPResponse } from '@companion-module/base'
+import type VMixInstance from './index'
+import type { VMixData, Input } from './data'
 import { formatTime } from './utils'
 
 interface DataSourceInput {
@@ -56,7 +56,7 @@ const parseInput = (input: Input): DataSourceInput => {
     position: input.duration > 0 ? formatTime(input.position, 'ms', 'hh:mm:ss.ms') : '00:00:00.0',
     remaining: input.duration > 0 ? formatTime(input.duration - input.position, 'ms', 'hh:mm:ss.ms') : '00:00:00.0',
     muted: input.muted ? 'Muted' : '',
-    loop: input.loop ? 'Loop' : ''
+    loop: input.loop ? 'Loop' : '',
   }
 }
 
@@ -70,9 +70,9 @@ export const httpHandler = async (instance: VMixInstance, request: CompanionHTTP
   const response: CompanionHTTPResponse = {
     status: 404,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ status: 404, message: 'Not Found' })
+    body: JSON.stringify({ status: 404, message: 'Not Found' }),
   }
 
   //  Returns data as structured by this module
@@ -94,7 +94,7 @@ export const httpHandler = async (instance: VMixInstance, request: CompanionHTTP
       value1: instance.data.dynamicValue[0].value,
       value2: instance.data.dynamicValue[1].value,
       value3: instance.data.dynamicValue[2].value,
-      value4: instance.data.dynamicValue[3].value
+      value4: instance.data.dynamicValue[3].value,
     }
 
     response.status = 200
@@ -175,19 +175,6 @@ export const httpHandler = async (instance: VMixInstance, request: CompanionHTTP
     }
   }
 
-  // Returns data for existing instance timers
-  const getTimers = () => {
-    const timers: any = []
-    request.query.defaultValue = request.query.default
-
-    instance.timers.forEach((timer) => {
-      timers.push(timer.get(request.query))
-    })
-
-    response.status = 200
-    response.body = JSON.stringify(timers, null, 2)
-  }
-
   // Returns preset transition types and durations
   const getTransitions = () => {
     const data = instance.data.transitions
@@ -243,14 +230,13 @@ export const httpHandler = async (instance: VMixInstance, request: CompanionHTTP
       data: getData,
       dynamics: getDynamics,
       inputs: getInputs,
-      timers: getTimers,
       transitions: getTransitions,
       variables: getVariables,
-      variabledef: getVariableDefinitions
+      variabledef: getVariableDefinitions,
     },
     POST: {
-      actions: postActions
-    }
+      actions: postActions,
+    },
   }
 
   const endpoint = request.path.replace('/', '').toLowerCase()

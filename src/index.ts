@@ -1,14 +1,14 @@
 import {
   InstanceBase,
   runEntrypoint,
-  CompanionActionDefinitions,
-  CompanionFeedbackContext,
-  CompanionFeedbackDefinitions,
-  CompanionHTTPRequest,
-  CompanionHTTPResponse,
-  SomeCompanionConfigField
+  type CompanionActionDefinitions,
+  type CompanionFeedbackContext,
+  type CompanionFeedbackDefinitions,
+  type CompanionHTTPRequest,
+  type CompanionHTTPResponse,
+  type SomeCompanionConfigField,
 } from '@companion-module/base'
-import { Config, getConfigFields } from './config'
+import { type Config, getConfigFields, defaultConfig } from './config'
 import { getActions } from './actions/actions'
 import { Activators } from './activators'
 import { VMixData } from './data'
@@ -16,7 +16,6 @@ import { getFeedbacks } from './feedbacks/feedback'
 import { httpHandler } from './http'
 import { getPresets } from './presets/presets'
 import { TCP } from './tcp'
-import { Timer } from './timers'
 import { getUpgrades } from './upgrade'
 import { Variables } from './variables/variables'
 
@@ -62,30 +61,14 @@ class VMixInstance extends InstanceBase<Config> {
     response: 0,
     parsed: 0,
     feedbacks: 0,
-    variables: 0
+    variables: 0,
   }
   public buttonShift: ButtonShift = {
     state: 0,
     blink: false,
-    blinkInterval: null
+    blinkInterval: null,
   }
-  public config: Config = {
-    label: '',
-    host: '',
-    tcpPort: 8099,
-    connectionErrorLog: true,
-    apiPollInterval: 250,
-    volumeLinear: false,
-    shiftDelimiter: '/',
-    shiftBlinkPrvPrgm: true,
-    shiftBlinkLayerRouting: true,
-    variablesShowInputs: true,
-    variablesShowInputNumbers: true,
-    variablesShowInputGUID: true,
-    variablesShowInputPosition: false,
-    variablesShowInputLayerPosition: false,
-    strictInputVariableTypes: false
-  }
+  public config: Config = defaultConfig()
   public connected = false
   public data = new VMixData(this)
   public pollAPI: ReturnType<typeof setInterval> | null = null
@@ -94,14 +77,12 @@ class VMixInstance extends InstanceBase<Config> {
     bus: 'Master',
     layer: {
       destinationInput: null,
-      destinationLayer: null
+      destinationLayer: null,
     },
-    mix: 0
+    mix: 0,
   }
   public startTime: Date = new Date()
   public tcp: TCP | null = null
-  public timers: Timer[] = []
-  public timerInterval: ReturnType<typeof setInterval> | null = null
   public variables: Variables | null = null
 
   /**
@@ -109,6 +90,18 @@ class VMixInstance extends InstanceBase<Config> {
    */
   public async init(config: Config): Promise<void> {
     this.log('debug', `Process ID: ${process.pid}`)
+
+    if (config.debugVersionUpdateNotifications) {
+      this.log(
+        'info',
+        'v4.0.0 of this mode has now been released! Patch notes can be found at https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/patch_notes.md',
+      )
+      this.log(
+        'warn',
+        'The vMix Companion module v4 has undergone significant changes to its configuration to allow more granular control over what variables are generated as this has a significant performance impact during large productions',
+      )
+      this.log('warn', 'Please check the vMix module configuration within Companion and ensure only the variables you wish to use are enabled')
+    }
 
     await this.configUpdated(config)
 
@@ -132,10 +125,6 @@ class VMixInstance extends InstanceBase<Config> {
     }, 333)
 
     this.checkFeedbacks('mixSelect', 'buttonText')
-
-    this.timerInterval = setInterval(() => {
-      if (this.variables !== null && this.timers.length > 0) this.variables.updateTimerVariables()
-    }, 100)
   }
 
   /**
@@ -168,7 +157,10 @@ class VMixInstance extends InstanceBase<Config> {
     if (this.buttonShift.blinkInterval !== null) {
       clearInterval(this.buttonShift.blinkInterval)
     }
-    if (this.timerInterval) clearInterval(this.timerInterval)
+
+    if (this.variables?.definitionsUpdateDebounce) {
+      clearTimeout(this.variables.definitionsUpdateDebounce)
+    }
 
     this.log('debug', `Instance destroyed: ${this.id}`)
   }
