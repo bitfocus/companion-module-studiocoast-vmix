@@ -1,4 +1,4 @@
-import type { VMixAction, ActionCallback } from './actions'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
 import { type EmptyOptions, type MixOptionEntry, options, valueMinMax } from '../utils'
 import type VMixInstance from '../index'
 
@@ -91,7 +91,7 @@ export type LayerCallbacks =
   | ClearMultiViewOverlaySelectionCallback
   | SetLayerPositionCallback
 
-export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: (action: Readonly<LayerCallbacks>) => Promise<void>): LayerActions => {
+export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand:SendBasicCommand): LayerActions => {
   return {
     multiViewOverlay: {
       name: 'Layer - Toggle/On/Off Multiview Layer on Input',
@@ -147,9 +147,9 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: (acti
           useVariables: true
         }
       ],
-      callback: async (action) => {
-        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
-        const layer = (await instance.parseOption(action.options.layerInput))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+        const layer = (await instance.parseOption(action.options.layerInput, context))[instance.buttonShift.state]
 
         if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${encodeURIComponent(input)}&Value=${action.options.layer},${encodeURIComponent(layer)}`)
       }
@@ -177,9 +177,9 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: (acti
         options.mixSelect,
         options.mixVariable
       ],
-      callback: async (action) => {
-        const input = (await instance.parseOption(action.options.layerInput))[instance.buttonShift.state]
-        let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const input = (await instance.parseOption(action.options.layerInput, context))[instance.buttonShift.state]
+        let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable, context))[instance.buttonShift.state]
         mixVariable = parseInt(mixVariable, 10) - 1
 
         let mix: number = action.options.mix
@@ -213,9 +213,9 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: (acti
         options.mixSelect,
         options.mixVariable
       ],
-      callback: async (action) => {
-        const input = (await instance.parseOption(action.options.layerInput))[instance.buttonShift.state]
-        let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const input = (await instance.parseOption(action.options.layerInput, context))[instance.buttonShift.state]
+        let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable, context))[instance.buttonShift.state]
         mixVariable = parseInt(mixVariable, 10) - 1
 
         let mix: number = action.options.mix
@@ -239,8 +239,8 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: (acti
           useVariables: true
         }
       ],
-      callback: async (action) => {
-        let destination = (await instance.parseOption(action.options.destinationInput))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        let destination = (await instance.parseOption(action.options.destinationInput, context))[instance.buttonShift.state]
 
         if (destination === '0') destination = instance.data.mix[0].preview.toString()
         if (destination === '-1') destination = instance.data.mix[0].program.toString()
@@ -263,8 +263,8 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: (acti
           useVariables: true
         }
       ],
-      callback: async (action) => {
-        const parseOption = (await instance.parseOption(action.options.destinationLayer + ''))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const parseOption = (await instance.parseOption(action.options.destinationLayer + '', context))[instance.buttonShift.state]
         const layerOption = parseFloat(parseOption)
         const checkNaN = isNaN(layerOption)
         const checkValid = layerOption % 1 === 0 && layerOption > 0 && layerOption <= 10
@@ -292,8 +292,8 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: (acti
           useVariables: true
         }
       ],
-      callback: async (action) => {
-        const input = (await instance.parseOption(action.options.sourceIndex))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const input = (await instance.parseOption(action.options.sourceIndex, context))[instance.buttonShift.state]
 
         if (instance.routingData.layer.destinationInput !== null && instance.routingData.layer.destinationLayer !== null) {
           const inputValue = input === '0' || input === '' ? '' : input
@@ -431,10 +431,10 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: (acti
           }
         }
       ],
-      callback: async (action) => {
-        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
         const input = await instance.data.getInput(selected)
-        const selectedLayer = (await instance.parseOption(action.options.layer))[instance.buttonShift.state]
+        const selectedLayer = (await instance.parseOption(action.options.layer, context))[instance.buttonShift.state]
         const layer = parseInt(selectedLayer)
         const inputLayer = input?.overlay?.find((overlay) => overlay.index === layer - 1)
 
@@ -461,9 +461,9 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: (acti
         let cmd = `FUNCTION SetLayer${layer}${action.options.setting} Input=${input.key}&Value=`
 
         if (action.options.setting === 'Crop') {
-          cmd += (await instance.parseOption(action.options.crop))[instance.buttonShift.state]
+          cmd += (await instance.parseOption(action.options.crop, context))[instance.buttonShift.state]
         } else if (action.options.setting.startsWith('Crop')) {
-          let value: string | number = (await instance.parseOption(action.options.crop2))[instance.buttonShift.state]
+          let value: string | number = (await instance.parseOption(action.options.crop2, context))[instance.buttonShift.state]
           value = parseFloat(value)
           if (isNaN(value)) return
 
@@ -480,7 +480,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: (acti
 
           cmd += valueMinMax(newValue, 0, 1)
         } else if (action.options.setting.startsWith('Pan')) {
-          let value: string | number = (await instance.parseOption(action.options.pan))[instance.buttonShift.state]
+          let value: string | number = (await instance.parseOption(action.options.pan, context))[instance.buttonShift.state]
           value = parseFloat(value)
           if (isNaN(value)) return
 
@@ -497,7 +497,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: (acti
 
           cmd += valueMinMax(newValue, -2, 2)
         } else if (action.options.setting === 'X' || action.options.setting === 'Y') {
-          let value: string | number = (await instance.parseOption(action.options.xy))[instance.buttonShift.state]
+          let value: string | number = (await instance.parseOption(action.options.xy, context))[instance.buttonShift.state]
           value = parseFloat(value)
           if (isNaN(value)) return
 
@@ -513,7 +513,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: (acti
 
           cmd += valueMinMax(newValue, -4096, 4096)
         } else if (action.options.setting === 'Height' || action.options.setting === 'Width') {
-          let value: string | number = (await instance.parseOption(action.options.heightWidth))[instance.buttonShift.state]
+          let value: string | number = (await instance.parseOption(action.options.heightWidth, context))[instance.buttonShift.state]
           value = parseFloat(value)
           if (isNaN(value)) return
 
@@ -529,9 +529,9 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: (acti
 
           cmd += valueMinMax(newValue, -4096, 4096)
         } else if (action.options.setting === 'Rectangle') {
-          cmd += (await instance.parseOption(action.options.rectangle))[instance.buttonShift.state]
+          cmd += (await instance.parseOption(action.options.rectangle, context))[instance.buttonShift.state]
         } else if (action.options.setting === 'Zoom') {
-          let value: string | number = (await instance.parseOption(action.options.zoom))[instance.buttonShift.state]
+          let value: string | number = (await instance.parseOption(action.options.zoom, context))[instance.buttonShift.state]
           value = parseFloat(value)
           if (isNaN(value)) return
 

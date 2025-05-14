@@ -1,4 +1,4 @@
-import type { VMixAction, ActionCallback } from './actions'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
 import type VMixInstance from '../index'
 import { type MixOptionEntry, options } from '../utils'
 
@@ -43,7 +43,7 @@ export interface OutputActions {
 
 export type OutputCallbacks = OutputSetCallback | ToggleFunctionsCallback
 
-export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: (action: Readonly<OutputCallbacks>) => Promise<void>): OutputActions => {
+export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): OutputActions => {
   return {
     outputSet: {
       name: 'Output - Set Output Source',
@@ -88,13 +88,13 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: (ac
           isVisible: (options) => options.value === 'Input'
         }
       ],
-      callback: async (action) => {
+      callback: async (action, context) => {
         let command = `FUNCTION ${action.options.functionID}`
 
         if (action.options.value === 'Mix') {
           let mix: any = action.options.mix
           if (mix === -2) {
-            mix = parseInt((await instance.parseOption(action.options.mixVariable))[instance.buttonShift.state], 10)
+            mix = parseInt((await instance.parseOption(action.options.mixVariable, context))[instance.buttonShift.state], 10)
 
             if (isNaN(mix)) return
 
@@ -104,7 +104,7 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: (ac
 
           command += ` Value=Mix&Mix=${mix}`
         } else if (action.options.value === 'Input') {
-          const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+          const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
           command += ` Value=${action.options.value}&Input=${encodeURIComponent(input)}`
         } else {
           command += ` Value=${action.options.value}`

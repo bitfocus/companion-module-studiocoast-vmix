@@ -1,4 +1,4 @@
-import type { VMixAction, ActionCallback } from './actions'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
 import { type EmptyOptions, options } from '../utils'
 import type VMixInstance from '../index'
 
@@ -12,7 +12,6 @@ type BusSelectOptions = {
 }
 
 type ButtonShiftOptions = EmptyOptions
-
 type MixSelectCallback = ActionCallback<'mixSelect', MixSelectOptions>
 type BusSelectCallback = ActionCallback<'busSelect', BusSelectOptions>
 type ButtonShiftCallback = ActionCallback<'buttonShift', ButtonShiftOptions>
@@ -30,7 +29,7 @@ export type UtilCallbacks =
   | BusSelectCallback
   | ButtonShiftCallback
 
-export const vMixUtilActions = (instance: VMixInstance, _sendBasicCommand: (action: Readonly<UtilCallbacks>) => Promise<void>): UtilActions => {
+export const vMixUtilActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): UtilActions => {
   return {
     mixSelect: {
       name: 'Util - Select Mix',
@@ -63,11 +62,11 @@ export const vMixUtilActions = (instance: VMixInstance, _sendBasicCommand: (acti
         },
         options.mixVariable
       ],
-      callback: async (action) => {
+      callback: async (action, context) => {
         const mix = action.options.mix
 
         if (mix === -2) {
-          const mixVariable = parseInt((await instance.parseOption(action.options.mixVariable))[instance.buttonShift.state], 10)
+          const mixVariable = parseInt((await instance.parseOption(action.options.mixVariable, context))[instance.buttonShift.state], 10)
           if (isNaN(mixVariable) || mixVariable < 1 || mixVariable > 16) {
             instance.log('warn', 'Mix must be an integer between 1 and 16 inclusive')
             return

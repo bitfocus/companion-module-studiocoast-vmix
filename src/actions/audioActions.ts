@@ -1,4 +1,4 @@
-import type { VMixAction, ActionCallback } from './actions'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
 import { type AudioBusOption, type AudioBusMasterOption, type EmptyOptions, options, volumeToLinear } from '../utils'
 import type VMixInstance from '../index'
 
@@ -149,7 +149,7 @@ export type AudioCallbacks =
   | SoloAllOffCallback
   | AudioMixerShowHideCallback
 
-export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: (action: Readonly<AudioCallbacks>) => Promise<void>): AudioActions => {
+export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): AudioActions => {
   return {
     audioBus: {
       name: 'Audio - Route Input to Bus',
@@ -323,9 +323,9 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: (acti
           useVariables: true
         }
       ],
-      callback: async (action) => {
-        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
-        const amount = parseFloat((await instance.parseOption(action.options.amount))[instance.buttonShift.state])
+      callback: async (action, context) => {
+        const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+        const amount = parseFloat((await instance.parseOption(action.options.amount, context))[instance.buttonShift.state])
         const input = await instance.data.getInput(selected)
 
         if (input === null || input.volume === undefined) return
@@ -370,10 +370,10 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: (acti
           useVariables: true
         }
       ],
-      callback: async (action) => {
+      callback: async (action, context) => {
         const selected = action.options.value === 'Selected' ? instance.routingData.bus : action.options.value
-        const fadeVol = (await instance.parseOption(action.options.fadeVol))[instance.buttonShift.state]
-        const fadeTime = (await instance.parseOption(action.options.fadeTime))[instance.buttonShift.state]
+        const fadeVol = (await instance.parseOption(action.options.fadeVol, context))[instance.buttonShift.state]
+        const fadeTime = (await instance.parseOption(action.options.fadeTime, context))[instance.buttonShift.state]
 
         const shortcut = selected === 'Master' ? `SetMasterVolumeFade` : `SetBus${selected}VolumeFade`
 
@@ -403,10 +403,10 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: (acti
           useVariables: true
         }
       ],
-      callback: async (action) => {
-        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
-        const fadeMin = (await instance.parseOption(action.options.fadeMin))[instance.buttonShift.state]
-        const fadeTime = (await instance.parseOption(action.options.fadeTime))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+        const fadeMin = (await instance.parseOption(action.options.fadeMin, context))[instance.buttonShift.state]
+        const fadeTime = (await instance.parseOption(action.options.fadeTime, context))[instance.buttonShift.state]
 
         if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetVolumeFade Value=${fadeMin},${fadeTime}&input=${encodeURIComponent(input)}`)
       }
@@ -426,9 +426,9 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: (acti
           useVariables: true
         }
       ],
-      callback: async (action) => {
+      callback: async (action, context) => {
         const selected = action.options.value === 'Selected' ? instance.routingData.bus : action.options.value
-        const amount = parseFloat((await instance.parseOption(action.options.amount))[instance.buttonShift.state])
+        const amount = parseFloat((await instance.parseOption(action.options.amount, context))[instance.buttonShift.state])
         const command = `Set${selected === 'Master' ? '' : 'Bus'}${selected}Volume`
         const bus = instance.data.getAudioBus(selected)
         if (bus === null) return
@@ -519,10 +519,10 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: (acti
           useVariables: true
         }
       ],
-      callback: async (action) => {
-        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
-        const amount = parseFloat((await instance.parseOption(action.options.amount))[instance.buttonShift.state])
-        const channel = parseInt((await instance.parseOption(action.options.channel))[instance.buttonShift.state])
+      callback: async (action, context) => {
+        const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+        const amount = parseFloat((await instance.parseOption(action.options.amount, context))[instance.buttonShift.state])
+        const channel = parseInt((await instance.parseOption(action.options.channel, context))[instance.buttonShift.state])
         const input = await instance.data.getInput(selected)
 
         if (input === null || isNaN(amount) || isNaN(channel) || input.volumeF1 === undefined || input.volumeF2 === undefined) return
@@ -568,10 +568,10 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: (acti
           useVariables: true
         }
       ],
-      callback: async (action) => {
-        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
-        const amount = parseFloat((await instance.parseOption(action.options.amount))[instance.buttonShift.state])
-        const channel = parseInt((await instance.parseOption(action.options.channel))[instance.buttonShift.state])
+      callback: async (action, context) => {
+        const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+        const amount = parseFloat((await instance.parseOption(action.options.amount, context))[instance.buttonShift.state])
+        const channel = parseInt((await instance.parseOption(action.options.channel, context))[instance.buttonShift.state])
         const input = await instance.data.getInput(selected)
 
         if (input === null || input.volume === undefined || isNaN(amount) || isNaN(channel)) return

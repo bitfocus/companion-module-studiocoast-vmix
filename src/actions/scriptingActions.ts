@@ -1,4 +1,4 @@
-import type { VMixAction, ActionCallback } from './actions'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
 import type { EmptyOptions } from '../utils'
 import type VMixInstance from '../index'
 
@@ -33,7 +33,7 @@ export interface ScriptingActions {
 
 export type ScriptingCallbacks = CommandCallback | ScriptStartCallback | ScriptStopCallback | ScriptStopAllCallback
 
-export const vMixScriptingActions = (instance: VMixInstance, sendBasicCommand: (action: Readonly<ScriptingCallbacks>) => Promise<void>): ScriptingActions => {
+export const vMixScriptingActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): ScriptingActions => {
   return {
     command: {
       name: 'Scripting - Run custom command',
@@ -53,8 +53,8 @@ export const vMixScriptingActions = (instance: VMixInstance, sendBasicCommand: (
           default: false
         }
       ],
-      callback: async (action) => {
-        const commandString = (await instance.parseOption(action.options.command))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const commandString = (await instance.parseOption(action.options.command, context))[instance.buttonShift.state]
         const command = commandString.split(' ')[0]
         const params = commandString.split(' ').slice(1, commandString.split(' ').length).join(' ')
         if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${command} ${action.options.encode ? encodeURIComponent(params) : params}`)

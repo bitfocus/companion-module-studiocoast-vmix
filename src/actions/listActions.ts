@@ -1,4 +1,4 @@
-import type { VMixAction, ActionCallback } from './actions'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
 import { options } from '../utils'
 import type VMixInstance from '../index'
 
@@ -49,7 +49,7 @@ export interface ListActions {
 
 export type ListCallbacks = NextPictureCallback | PreviousPictureCallback | SelectIndexCallback | AutoPlayFirstCallback | AutoPlayNextCallback | ListShuffleCallback
 
-export const vMixListActions = (_instance: VMixInstance, sendBasicCommand: (action: Readonly<ListCallbacks>) => Promise<void>): ListActions => {
+export const vMixListActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): ListActions => {
   return {
     nextPicture: {
       name: 'Lists - Next Picture/Slide/Index',

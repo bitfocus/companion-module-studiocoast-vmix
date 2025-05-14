@@ -1,4 +1,4 @@
-import type { VMixAction, ActionCallback } from './actions'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
 import { options } from '../utils'
 import type VMixInstance from '../index'
 
@@ -44,7 +44,7 @@ export interface PTZActions {
 
 export type PTZCallbacks = PTZMoveCallback | PTZFocusZoomCallback | PTZVirtualInputCallback
 
-export const vMixPTZActions = (_instance: VMixInstance, sendBasicCommand: (action: Readonly<PTZCallbacks>) => Promise<void>): PTZActions => {
+export const vMixPTZActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): PTZActions => {
   return {
     ptzMove: {
       name: 'PTZ - Move',

@@ -1,4 +1,4 @@
-import type { VMixAction, ActionCallback } from './actions'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
 import type VMixInstance from '../index'
 
 type PlayListFunctionsOptions = {
@@ -21,7 +21,7 @@ export interface PlayListActions {
 
 export type PlayListCallbacks = PlayListFunctionsCallback | SelectPlayListCallback
 
-export const vMixPlayListActions = (_instance: VMixInstance, sendBasicCommand: (action: Readonly<PlayListCallbacks>) => Promise<void>): PlayListActions => {
+export const vMixPlayListActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): PlayListActions => {
   return {
     playListFunctions: {
       name: 'Playlist - Functions',

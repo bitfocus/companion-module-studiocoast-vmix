@@ -1,4 +1,4 @@
-import type { VMixAction, ActionCallback } from './actions'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
 import { options } from '../utils'
 import type VMixInstance from '../index'
 
@@ -33,7 +33,7 @@ export interface VideoCallActions {
 
 export type VideoCallCallbacks = VideoCallAudioSourceCallback | VideoCallVideoSourceCallback
 
-export const vMixVideoCallActions = (instance: VMixInstance, sendBasicCommand: (action: Readonly<VideoCallCallbacks>) => Promise<void>): VideoCallActions => {
+export const vMixVideoCallActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): VideoCallActions => {
   return {
     videoCallAudioSource: {
       name: 'VideoCall - Select Audio Source',
@@ -115,14 +115,14 @@ export const vMixVideoCallActions = (instance: VMixInstance, sendBasicCommand: (
           isVisible: (options) => options.functionID === 'VideoCallReconnect'
         }
       ],
-      callback: async (action) => {
-        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
 
         if (action.options.functionID === 'VideoCallConnect') {
           if (instance.tcp) instance.tcp.sendCommand(action.options.functionID + `Input=${selected}`)
         } else {
-          const name = (await instance.parseOption(action.options.name))[instance.buttonShift.state]
-          const password = (await instance.parseOption(action.options.password))[instance.buttonShift.state]
+          const name = (await instance.parseOption(action.options.name, context))[instance.buttonShift.state]
+          const password = (await instance.parseOption(action.options.password, context))[instance.buttonShift.state]
           if (instance.tcp) instance.tcp.sendCommand(action.options.functionID + `Input=${selected}&Value=${name},${password}`)
         }
       }

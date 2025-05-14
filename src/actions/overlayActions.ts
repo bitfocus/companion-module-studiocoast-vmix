@@ -1,4 +1,4 @@
-import type { VMixAction, ActionCallback } from './actions'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
 import { options } from '../utils'
 import type VMixInstance from '../index'
 
@@ -44,7 +44,7 @@ export interface OverlayActions {
 
 export type OverlayCallbacks = OverlayFunctionsCallback
 
-export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: (action: Readonly<OverlayCallbacks>) => Promise<void>): OverlayActions => {
+export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): OverlayActions => {
   return {
     overlayFunctions: {
       name: 'Overlay - Functions',

@@ -1,4 +1,4 @@
-import type { CompanionActionEvent, SomeCompanionActionInputField } from '@companion-module/base'
+import type { CompanionActionEvent, SomeCompanionActionInputField, CompanionFeedbackContext, CompanionActionContext } from '@companion-module/base'
 import { type AudioActions, type AudioCallbacks, vMixAudioActions } from './audioActions'
 import { type BrowserActions, type BrowserCallbacks, vMixBrowserActions } from './browserActions'
 import { type DataSourceActions, type DataSourceCallbacks, vMixDataSourceActions } from './dataSourceActions'
@@ -84,17 +84,19 @@ export interface VMixAction<T> {
   name: string
   description?: string
   options: InputFieldWithDefault[]
-  callback: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>) => void | Promise<void>
+  callback: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>, context: CompanionFeedbackContext) => void | Promise<void>
   subscribe?: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>) => void
   unsubscribe?: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>) => void
 }
+
+export type SendBasicCommand = (action: Readonly<ActionCallbacks>, context?: CompanionActionContext) => Promise<void>
 
 export function getActions(instance: VMixInstance): VMixActions {
   /**
    * @param action Action callback object
    * @description Sends vMix functions/params from actions that don't require complex logic
    */
-  const sendBasicCommand = async (action: Readonly<ActionCallbacks>): Promise<void> => {
+  const sendBasicCommand = async (action: Readonly<ActionCallbacks>, context?: CompanionActionContext): Promise<void> => {
     let functionName: string = action.actionId
 
     if ('functionID' in action.options) {
@@ -136,7 +138,12 @@ export function getActions(instance: VMixInstance): VMixActions {
 
     for (const param of params) {
       if (typeof param[1] === 'string') {
-        param[1] = await instance.parseVariablesInString(param[1])
+        if (context) {
+          param[1] = await context.parseVariablesInString(param[1])
+        } else {
+          param[1] = await instance.parseVariablesInString(param[1])
+        }
+
         if (param[0] === 'mixVariable') param[1] = parseMix(param[1])
         parsedParams.push(param)
       } else {

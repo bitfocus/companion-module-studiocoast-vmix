@@ -1,4 +1,4 @@
-import type { VMixAction, ActionCallback } from './actions'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
 import { options } from '../utils'
 import type VMixInstance from '../index'
 
@@ -32,7 +32,7 @@ export interface ZoomActions {
 
 export type ZoomCallbacks = ZoomMuteSelfCallback | ZoomSelectParticipantByNameCallback
 
-export const vMixZoomActions = (instance: VMixInstance, sendBasicCommand: (action: Readonly<ZoomCallbacks>) => Promise<void>): ZoomActions => {
+export const vMixZoomActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): ZoomActions => {
   return {
     zoomMuteSelf: {
       name: 'Zoom - Mute Self',
@@ -89,10 +89,10 @@ export const vMixZoomActions = (instance: VMixInstance, sendBasicCommand: (actio
           useVariables: true
         }
       ],
-      callback: async (action) => {
-        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
-        const meetingID = (await instance.parseOption(action.options.meetingID))[instance.buttonShift.state]
-        const password = (await instance.parseOption(action.options.password))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+        const meetingID = (await instance.parseOption(action.options.meetingID, context))[instance.buttonShift.state]
+        const password = (await instance.parseOption(action.options.password, context))[instance.buttonShift.state]
 
         if (selected && meetingID && instance.tcp) {
           instance.tcp.sendCommand(`FUNCTION ZoomJoinMeeting Input=${selected}&Value=${meetingID},${password}`)

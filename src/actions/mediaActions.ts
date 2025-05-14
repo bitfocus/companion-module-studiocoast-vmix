@@ -1,4 +1,4 @@
-import type { VMixAction, ActionCallback } from './actions'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
 import { options } from '../utils'
 import type VMixInstance from '../index'
 
@@ -35,7 +35,7 @@ export interface MediaActions {
 
 export type MediaCallbacks = VideoActionsCallback | VideoPlayheadCallback | VideoMarkCallback
 
-export const vMixMediaActions = (instance: VMixInstance, _sendBasicCommand: (action: Readonly<MediaCallbacks>) => Promise<void>): MediaActions => {
+export const vMixMediaActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): MediaActions => {
   return {
     videoActions: {
       name: 'Media - Playback Actions',
@@ -64,8 +64,8 @@ export const vMixMediaActions = (instance: VMixInstance, _sendBasicCommand: (act
           ]
         }
       ],
-      callback: async (action) => {
-        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
 
         if (instance.tcp) {
           instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Input=${action.options.inputType ? '0' : encodeURIComponent(input)}`)
@@ -94,8 +94,8 @@ export const vMixMediaActions = (instance: VMixInstance, _sendBasicCommand: (act
           max: Number.MAX_SAFE_INTEGER
         }
       ],
-      callback: async (action) => {
-        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
         let text = action.options.value.toString()
 
         // URL Encode plus and equals symbols to perform addition/subtraction on value instead of setting to a value.
@@ -134,8 +134,8 @@ export const vMixMediaActions = (instance: VMixInstance, _sendBasicCommand: (act
           ]
         }
       ],
-      callback: async (action) => {
-        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
 
         if (instance.tcp) instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Input=${action.options.inputType ? '0' : encodeURIComponent(input)}`)
       }

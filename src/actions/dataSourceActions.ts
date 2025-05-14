@@ -1,4 +1,4 @@
-import type { VMixAction, ActionCallback } from './actions'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
 import type VMixInstance from '../index'
 
 type DataSourceAutoNextOptions = {
@@ -34,7 +34,7 @@ export interface DataSourceActions {
 
 export type DataSourceCallbacks = DataSourceAutoNextCallback | DataSourceNextRowCallback | DataSourcePreviousRowCallback | DataSourceSelectRowCallback
 
-export const vMixDataSourceActions = (_instance: VMixInstance, sendBasicCommand: (action: Readonly<DataSourceCallbacks>) => Promise<void>): DataSourceActions => {
+export const vMixDataSourceActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): DataSourceActions => {
   return {
     dataSourceAutoNext: {
       name: 'DataSource - AutoNext',

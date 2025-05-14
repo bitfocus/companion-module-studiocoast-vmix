@@ -1,4 +1,4 @@
-import type { VMixAction, ActionCallback } from './actions'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
 import { options } from '../utils'
 import type VMixInstance from '../index'
 
@@ -123,7 +123,7 @@ export type TitleCallbacks =
   | TitlePresetCallback
   | TitleBeginAnimationCallback
 
-export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: (action: Readonly<TitleCallbacks>) => Promise<void>): TitleActions => {
+export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): TitleActions => {
   return {
     controlCountdown: {
       name: 'Title - Start / Stop / Pause Countdown',
@@ -149,9 +149,9 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: (acti
           useVariables: true
         }
       ],
-      callback: async (action) => {
-        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
-        const index = (await instance.parseOption(action.options.selectedIndex))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+        const index = (await instance.parseOption(action.options.selectedIndex, context))[instance.buttonShift.state]
 
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10))
@@ -183,10 +183,10 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: (acti
           useVariables: true
         }
       ],
-      callback: async (action) => {
-        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
-        const index = (await instance.parseOption(action.options.selectedIndex))[instance.buttonShift.state]
-        const value = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+        const index = (await instance.parseOption(action.options.selectedIndex, context))[instance.buttonShift.state]
+        const value = (await instance.parseOption(action.options.value, context))[instance.buttonShift.state]
 
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10))
@@ -218,10 +218,10 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: (acti
           useVariables: true
         }
       ],
-      callback: async (action) => {
-        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
-        const index = (await instance.parseOption(action.options.selectedIndex))[instance.buttonShift.state]
-        const value = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+        const index = (await instance.parseOption(action.options.selectedIndex, context))[instance.buttonShift.state]
+        const value = (await instance.parseOption(action.options.value, context))[instance.buttonShift.state]
 
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10))
@@ -253,10 +253,10 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: (acti
           useVariables: true
         }
       ],
-      callback: async (action) => {
-        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
-        const index = (await instance.parseOption(action.options.selectedIndex))[instance.buttonShift.state]
-        const value = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+        const index = (await instance.parseOption(action.options.selectedIndex, context))[instance.buttonShift.state]
+        const value = (await instance.parseOption(action.options.value, context))[instance.buttonShift.state]
 
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10))
@@ -300,10 +300,10 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: (acti
           default: false
         }
       ],
-      callback: async (action) => {
-        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
-        const index = (await instance.parseOption(action.options.selectedIndex))[instance.buttonShift.state]
-        let text = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+        const index = (await instance.parseOption(action.options.selectedIndex, context))[instance.buttonShift.state]
+        let text = (await instance.parseOption(action.options.value, context))[instance.buttonShift.state]
 
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10)) ? 'SelectedName' : 'SelectedIndex'
@@ -349,10 +349,10 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: (acti
           useVariables: true
         }
       ],
-      callback: async (action) => {
-        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
-        const index = (await instance.parseOption(action.options.selectedIndex))[instance.buttonShift.state]
-        const value = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+        const index = (await instance.parseOption(action.options.selectedIndex, context))[instance.buttonShift.state]
+        const value = (await instance.parseOption(action.options.value, context))[instance.buttonShift.state]
 
         if (isNaN(parseInt(index, 10))) {
           if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetTextColour Input=${input}&Value=${value}&SelectedName=${index}`)
@@ -387,9 +387,9 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: (acti
           ]
         }
       ],
-      callback: async (action) => {
-        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
-        const index = (await instance.parseOption(action.options.selectedIndex))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+        const index = (await instance.parseOption(action.options.selectedIndex, context))[instance.buttonShift.state]
         let type = 'SetTextVisible'
 
         if (action.options.adjustment === 'On') type = 'SetTextVisibleOn'
@@ -423,10 +423,10 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: (acti
           useVariables: true
         }
       ],
-      callback: async (action) => {
-        const input = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
-        const index = (await instance.parseOption(action.options.selectedIndex))[instance.buttonShift.state]
-        let value = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+        const index = (await instance.parseOption(action.options.selectedIndex, context))[instance.buttonShift.state]
+        let value = (await instance.parseOption(action.options.value, context))[instance.buttonShift.state]
 
         if (!value.includes('#')) value = '#' + value
 

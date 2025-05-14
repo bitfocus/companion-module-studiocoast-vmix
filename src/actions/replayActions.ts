@@ -1,4 +1,4 @@
-import type { VMixAction, ActionCallback } from './actions'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
 import { type EmptyOptions, options } from '../utils'
 import type VMixInstance from '../index'
 
@@ -250,7 +250,7 @@ export type ReplayCallbacks =
   | ReplayToggleCameraCallback
   | ReplayShowHideCallback
 
-export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: (action: Readonly<ReplayCallbacks>) => Promise<void>): ReplayActions => {
+export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): ReplayActions => {
   return {
     replayACamera: {
       name: 'Replay - A Camera',
@@ -493,9 +493,9 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: (act
           useVariables: true
         }
       ],
-      callback: async (action) => {
-        let value = parseFloat((await instance.parseOption(action.options.value))[instance.buttonShift.state])
-        const maxValue = parseFloat((await instance.parseOption(action.options.max))[instance.buttonShift.state])
+      callback: async (action, context) => {
+        let value = parseFloat((await instance.parseOption(action.options.value, context))[instance.buttonShift.state])
+        const maxValue = parseFloat((await instance.parseOption(action.options.max, context))[instance.buttonShift.state])
 
         if (isNaN(value) || isNaN(maxValue) || maxValue < 0) return
 

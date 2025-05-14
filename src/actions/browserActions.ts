@@ -1,4 +1,4 @@
-import type { VMixAction, ActionCallback } from './actions'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
 import { options } from '../utils'
 import type VMixInstance from '../index'
 
@@ -25,7 +25,7 @@ export interface BrowserActions {
 
 export type BrowserCallbacks = BrowserCallback | BrowserNavigateCallback
 
-export const vMixBrowserActions = (instance: VMixInstance, sendBasicCommand: (action: Readonly<BrowserCallbacks>) => Promise<void>): BrowserActions => {
+export const vMixBrowserActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): BrowserActions => {
   return {
     browser: {
       name: 'Browser - Functions',
@@ -70,8 +70,8 @@ export const vMixBrowserActions = (instance: VMixInstance, sendBasicCommand: (ac
           default: false
         }
       ],
-      callback: async (action) => {
-        const value = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const value = (await instance.parseOption(action.options.value, context))[instance.buttonShift.state]
 
         if (instance.tcp) instance.tcp.sendCommand(`FUNCTION BrowserNavigate Input=${action.options.input}&Value=${action.options.encode ? encodeURIComponent(value) : value}`)
       }

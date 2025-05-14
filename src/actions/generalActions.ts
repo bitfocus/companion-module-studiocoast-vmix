@@ -1,4 +1,4 @@
-import type { VMixAction, ActionCallback } from './actions'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
 import type VMixInstance from '../index'
 
 type KeyPressOptions = {
@@ -29,7 +29,7 @@ export interface GeneralActions {
 
 export type GeneralCallbacks = KeyPressCallback | TbarCallback | DynamicCallback
 
-export const vMixGeneralActions = (instance: VMixInstance, sendBasicCommand: (action: Readonly<GeneralCallbacks>) => Promise<void>): GeneralActions => {
+export const vMixGeneralActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): GeneralActions => {
   return {
     keyPress: {
       name: 'General - KeyPress',
@@ -58,8 +58,8 @@ export const vMixGeneralActions = (instance: VMixInstance, sendBasicCommand: (ac
           useVariables: true
         }
       ],
-      callback: async (action) => {
-        const value = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const value = (await instance.parseOption(action.options.value, context))[instance.buttonShift.state]
 
         if (instance.tcp) {
           instance.tcp.sendCommand(`FUNCTION SetFader Value=${value}`)
@@ -101,8 +101,8 @@ export const vMixGeneralActions = (instance: VMixInstance, sendBasicCommand: (ac
           useVariables: true
         }
       ],
-      callback: async (action) => {
-        const value = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const value = (await instance.parseOption(action.options.value, context))[instance.buttonShift.state]
 
         if (instance.tcp) instance.tcp.sendCommand(`FUNCTION SetDynamic${action.options.type}${action.options.number} Value=${value}`)
       }

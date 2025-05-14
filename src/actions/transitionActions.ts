@@ -1,4 +1,4 @@
-import type { VMixAction, ActionCallback } from './actions'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
 import { type MixOptionEntry, options, TRANSITIONS } from '../utils'
 import type VMixInstance from '../index'
 
@@ -56,14 +56,14 @@ export interface TransitionActions {
 
 export type TransitionCallbacks = ProgramCutCallback | TransitionMixCallback | TransitionCallback | SetTransitionEffectCallback | SetTransitionDurationCallback | QuickPlayCallback
 
-export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: (action: Readonly<TransitionCallbacks>) => Promise<void>): TransitionActions => {
+export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): TransitionActions => {
   return {
     programCut: {
       name: 'Transition - Send Input to Program',
       description: 'Cuts the input directly to Output without changing Preview',
       options: [options.input, options.mixSelect, options.mixVariable],
-      callback: async (action) => {
-        let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable, context))[instance.buttonShift.state]
         mixVariable = parseInt(mixVariable, 10) - 1
 
         let mix: number = action.options.mix
@@ -113,7 +113,7 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
           useVariables: true
         }
       ],
-      callback: async (action) => {
+      callback: async (action, context) => {
         const command: any = {
           actionId: 'transitionMix',
           options: {
@@ -123,7 +123,7 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
           }
         }
 
-        let duration: string | number = (await instance.parseOption(action.options.duration))[instance.buttonShift.state]
+        let duration: string | number = (await instance.parseOption(action.options.duration, context))[instance.buttonShift.state]
         duration = parseFloat(duration)
 
         if (isNaN(duration)) {

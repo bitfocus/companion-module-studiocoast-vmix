@@ -1,4 +1,4 @@
-import type { VMixAction, ActionCallback } from './actions'
+import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
 import { type EmptyOptions, type MixOptionEntry, options, valueMinMax } from '../utils'
 import type VMixInstance from '../index'
 
@@ -104,7 +104,7 @@ export type InputCallbacks =
   | InputPositionCallback
   | InputFrameDelayCallback
 
-export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (action: Readonly<InputCallbacks>) => Promise<void>): InputActions => {
+export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): InputActions => {
   return {
     previewInput: {
       name: 'Input - Send Input to Preview',
@@ -170,8 +170,8 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
           ]
         }
       ],
-      callback: async (action) => {
-        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
         const input = await instance.data.getInput(selected)
 
         if (!input) return
@@ -209,10 +209,10 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
           useVariables: true
         }
       ],
-      callback: async (action) => {
-        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
         const input = await instance.data.getInput(selected)
-        const value = (await instance.parseOption(action.options.strength))[instance.buttonShift.state]
+        const value = (await instance.parseOption(action.options.strength, context))[instance.buttonShift.state]
         const parsedValue = parseFloat(value)
 
         if (!input || isNaN(parsedValue)) return
@@ -276,11 +276,11 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
           }
         }
       ],
-      callback: async (action) => {
-        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
         const input = await instance.data.getInput(selected)
         const valueOption = action.options.setting.startsWith('SetCCGain') ? action.options.gainValue : action.options.otherValue
-        const value = (await instance.parseOption(valueOption))[instance.buttonShift.state]
+        const value = (await instance.parseOption(valueOption, context))[instance.buttonShift.state]
         let parsedValue = parseFloat(value)
 
         if (!input || isNaN(parsedValue)) return
@@ -398,8 +398,8 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
           }
         }
       ],
-      callback: async (action) => {
-        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
         const input = await instance.data.getInput(selected)
         let cmd = ''
 
@@ -411,7 +411,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
         }
 
         if (action.options.setting === 'SetZoom') {
-          let value: string | number = (await instance.parseOption(action.options.zoomValue))[instance.buttonShift.state]
+          let value: string | number = (await instance.parseOption(action.options.zoomValue, context))[instance.buttonShift.state]
           value = parseFloat(value)
 
           const currentValue = input.inputPosition?.zoomX ?? 1
@@ -424,11 +424,11 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
 
           cmd = `FUNCTION SetZoom Input=${input.key}&Value=${valueMinMax(Math.round(value * 1000) / 1000, 0, 5)}`
         } else if (action.options.setting === 'SetCrop') {
-          const value: string = (await instance.parseOption(action.options.cropValue))[instance.buttonShift.state]
+          const value: string = (await instance.parseOption(action.options.cropValue, context))[instance.buttonShift.state]
 
           cmd = `FUNCTION SetCrop Input=${input.key}&Value=${value}`
         } else if (action.options.setting.startsWith('SetCrop')) {
-          let value: string | number = (await instance.parseOption(action.options.cropValue2))[instance.buttonShift.state]
+          let value: string | number = (await instance.parseOption(action.options.cropValue2, context))[instance.buttonShift.state]
           value = parseFloat(value)
           if (isNaN(value)) return
 
@@ -444,7 +444,7 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
 
           cmd = `FUNCTION ${action.options.setting} Input=${input.key}&Value=${valueMinMax(Math.round(value * 1000) / 1000, 0, 1)}`
         } else {
-          let value: string | number = (await instance.parseOption(action.options.panValue))[instance.buttonShift.state]
+          let value: string | number = (await instance.parseOption(action.options.panValue, context))[instance.buttonShift.state]
           value = parseFloat(value)
           if (isNaN(value)) return
 
@@ -480,10 +480,10 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: (acti
           useVariables: true
         }
       ],
-      callback: async (action) => {
-        const selected = (await instance.parseOption(action.options.input))[instance.buttonShift.state]
+      callback: async (action, context) => {
+        const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
         const input = await instance.data.getInput(selected)
-        let value: number | string = (await instance.parseOption(action.options.value))[instance.buttonShift.state]
+        let value: number | string = (await instance.parseOption(action.options.value, context))[instance.buttonShift.state]
         value = parseInt(value)
 
         if (!input || isNaN(value)) {
