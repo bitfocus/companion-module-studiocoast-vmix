@@ -320,6 +320,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       width: 12,
       label: 'Log entries with new version information/warnings on startup',
       default: true,
+      isVisible: (config) => config.debugSettings === true,
     },
   ]
 }
