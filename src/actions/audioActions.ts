@@ -226,7 +226,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
 
     audio: {
       name: 'Audio - Input Mute',
-      description: 'Mutes an Inputs audio',
+      description: "Mutes an Input's audio",
       options: [
         options.input,
         {
@@ -246,7 +246,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
 
     audioAuto: {
       name: 'Audio - Input Audio Auto',
-      description: 'Sets an Inputs auto toggle audio when transitioned in/out',
+      description: "Sets an Input's auto toggle audio when transitioned in/out",
       options: [
         options.input,
         {
@@ -312,7 +312,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
 
     setInputVolume: {
       name: 'Audio - Set Input Volume',
-      description: 'Sets an Inputs Volume (Note: vMix Volume only supports whole numbers from 0 to 100)',
+      description: "Sets an Input's Volume (Note: vMix Volume only supports whole numbers from 0 to 100)",
       options: [
         options.input,
         options.adjustment,
@@ -386,7 +386,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
 
     setVolumeFade: {
       name: 'Audio - Fade Input Volume',
-      description: 'Fades an Inputs Volume (Note: vMix Volume only supports whole numbers from 0 to 100)',
+      description: "Fades an Input's Volume (Note: vMix Volume only supports whole numbers from 0 to 100)",
       options: [
         options.input,
         {

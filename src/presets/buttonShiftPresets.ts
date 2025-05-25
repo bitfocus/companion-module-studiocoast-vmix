@@ -14,7 +14,7 @@ export const getButtonShiftPresets = (instance: VMixInstance): VMixPresetArray =
       category: 'Button Shift',
       name: '',
       type: 'text',
-      text: `The two options need to be split by the delimter set in the config, for example an Preview Input action set to "1|5" will preview input 1 by default, or 5 when Shift is pressed, essentially doubling the buttons on a page.`,
+      text: `The two options need to be split by the delimiter set in the config, for example an Preview Input action set to "1|5" will preview input 1 by default, or 5 when Shift is pressed, essentially doubling the buttons on a page.`,
     },
     {
       category: 'Button Shift',

@@ -138,7 +138,7 @@ const eventHandlers: { [key: string]: ActivatorEventHandlers | null } = {
   MultiCorder: 'handlerVMixState',
   Fullscreen: 'handlerVMixState',
 
-  // Unused - Activator only triggers if the value matches an input, and returns the input number. It does not trigger if set to a value that doens't match an input
+  // Unused - Activator only triggers if the value matches an input, and returns the input number. It does not trigger if set to a value that doesn't match an input
   InputDynamic1: null,
   InputDynamic2: null,
   InputDynamic3: null,
@@ -379,7 +379,6 @@ export class Activators {
       } else {
         this.updateBuffer('inputLive')
       }
-      this.updateBuffer('instanceVaraible')
     }
   }
 
@@ -455,7 +454,7 @@ export class Activators {
 
   /**
    * @param params [channel, input, value]
-   * @description Currently unused until further tetsing on load from updating up to 16 variables/feedback per input
+   * @description Currently unused until further testing on load from updating up to 16 variables/feedback per input
    */
   private readonly handlerVolumeChannelMixer = async (params: string[]): Promise<void> => {
     const channel = parseInt(params[0].substring(23), 10)
@@ -470,7 +469,7 @@ export class Activators {
 
   /**
    * @param message Activator message from the TCP connection
-   * @description Parses Activator mssage and passes to appropriate handler
+   * @description Parses Activator message and passes to appropriate handler
    */
   readonly parse = (message: string): void => {
     const params = message.split(' ')

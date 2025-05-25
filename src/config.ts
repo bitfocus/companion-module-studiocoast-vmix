@@ -90,7 +90,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       label: 'API Poll Interval warning',
       value:
         'Adjusting the API Polling Interval can impact performance. <br />' +
-        'A lower invterval allows for more responsive feedback, but may impact CPU usage. <br />' +
+        'A lower interval allows for more responsive feedback, but may impact CPU usage. <br />' +
         'See the help section for more details.',
     },
     {
@@ -137,7 +137,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       width: 12,
       label: 'Variable Selection',
       value: `Processing large amounts of variables (tens to hundreds of thousands) can degrade Companion performance, and so for large vMix productions (or situations where Companion is running on a 
-			low power device eg a Rapberry Pi) it is beneficial to limit what variables are generated to just those you wish to utilize.`,
+			low power device eg a Raspberry Pi) it is beneficial to limit what variables are generated to just those you wish to utilize.`,
     },
 
     // Input Variables

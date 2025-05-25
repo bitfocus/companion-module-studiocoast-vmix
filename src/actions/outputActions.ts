@@ -124,9 +124,9 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: Sen
           id: 'functionID',
           default: 'StartStopMultiCorder',
           choices: [
-            { id: 'StartStopMultiCorder', label: 'Start / Stop MultCorder' },
-            { id: 'StartMultiCorder', label: 'Start MultCorder' },
-            { id: 'StopMultiCorder', label: 'Stop MultCorder' },
+            { id: 'StartStopMultiCorder', label: 'Start / Stop MultiCorder' },
+            { id: 'StartMultiCorder', label: 'Start MultiCorder' },
+            { id: 'StopMultiCorder', label: 'Stop MultiCorder' },
             { id: 'StartStopRecording', label: 'Start / Stop Recording' },
             { id: 'StartRecording', label: 'Start Recording' },
             { id: 'StopRecording', label: 'Stop Recording' },

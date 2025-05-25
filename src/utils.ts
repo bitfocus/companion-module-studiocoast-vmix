@@ -8,7 +8,7 @@ interface NumericDropdownChoice {
   label: string
 }
 
-interface NumericInputFieldDropown extends Exclude<CompanionInputFieldDropdown, 'choices'> {
+interface NumericInputFieldDropdown extends Exclude<CompanionInputFieldDropdown, 'choices'> {
   choices: NumericDropdownChoice[]
 }
 
@@ -17,7 +17,7 @@ type EnforceDefault<T, U> = Omit<T, 'default'> & { default: U }
 
 export interface Options {
   input: EnforceDefault<CompanionInputFieldTextInput, string>
-  mixSelect: EnforceDefault<NumericInputFieldDropown, number>
+  mixSelect: EnforceDefault<NumericInputFieldDropdown, number>
   mixVariable: EnforceDefault<CompanionInputFieldTextInput, string>
   audioBus: EnforceDefault<CompanionInputFieldDropdown, string>
   audioBusMaster: EnforceDefault<CompanionInputFieldDropdown, string>
@@ -302,10 +302,10 @@ export const volumeToLinear = (volume: number): number => {
 }
 
 /**
- * @param time Time in miliseconds or seconds
+ * @param time Time in milliseconds or seconds
  * @param interval Interval of the time value - 'ms' or 's'
  * @param format String formatting - 'hh:mm:ss', 'hh:mm:ss.ms', 'mm:ss', or 'mm:ss.ms'
- * @returns Formated time string
+ * @returns Formatted time string
  */
 export const formatTime = (time: number, interval: 'ms' | 's', format: TimeFormat): string => {
   const timeMS = time * (interval === 'ms' ? 1 : 1000)

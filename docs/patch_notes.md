@@ -1,5 +1,10 @@
 # Patch Notes
 
+**v4.0.1**
+- Removed now redundant logging of PID
+- Fixed one debug option not being hidden when debug options are hidden
+- Fixed several typos
+
 **v4.0.0**
 - Changes to Variable generation based on config options allowing granular control over what variables are generated, resulting in significant performance benefits by only generating the variables a user plans to use
 - Added Variable list doc [docs/variables.md](./variables.md)
@@ -10,7 +15,7 @@
 - `input_X_remaining_mm:ss.ms` renamed to `input_X_remaining_mm.ss.ms`
 - Fixed missing Stream 4 and 5 options in actions/feedbacks
 - Added Local Variable support (such as $(this:page), $(this:row), etc...) to Actions that support parsing variables
-- Better support for Sequential Action Group (keep in mind vMix only acknowledges receieving a command, not that the command execution is complete, so some use of Wait actions may still be required in an Action Group sequence)
+- Better support for Sequential Action Group (keep in mind vMix only acknowledges receiving a command, not that the command execution is complete, so some use of Wait actions may still be required in an Action Group sequence)
 
 **v3.9.6**
 - Fixed an issue with the upgrade script migrating existing `Overlay - Functions` actions to support the new parameters in vMix 28
@@ -119,7 +124,7 @@
 - Fix upgrading config `Cannot read properties of null (reading 'tbar')`
 
 **v3.5.2**
-- Added definitions for more mix viarables
+- Added definitions for more mix variables
 - Added actions for `Audio - Show / Hide Audio Mixer`, `Replay - Play Last Event to Output`, `Replay - Play all Events to Output`, `Replay - Stop Events`, and `Replay - Show / Hide Replay`
 - Fix for duration variables
 
@@ -249,7 +254,7 @@
 - Loads more Instance Variables
 - Deprecated titleLayer, inputSelectedIndexName, and multiviewLayer Feedbacks
 - Deprecated input_volume_${input.number} and input_volume_${inputName} instance variables
-- Numerous minor fixees
+- Numerous minor fixes
 
 
 **v1.2.24**
@@ -275,7 +280,7 @@
 **v1.2.19**
 - Rolled back changed to "Custom Command" so it's identical to in v2.1.2, with no encoding.
 - Added a note in the config page about TCP port vs HTTP port in vMix.
-- Added option to disable error logs flodding the Log when vmix is closed.
+- Added option to disable error logs flooding the Log when vmix is closed.
 - Added Variables for recording time, both in full duration (Seconds) and in HH:MM:SS format.
 - Added some new actions for Browser inputs, like "Browser - Navigate" and more.
 - Added Feedback for if input is used on a multiview layer.
@@ -314,17 +319,17 @@
 
 
 **v1.2.13**
-- Added ON/OFF/Togle option to solo and bus solo action
-- Hotfix: LiveBusVolume feedback not updating corectly
+- Added ON/OFF/Toggle option to solo and bus solo action
+- Hotfix: LiveBusVolume feedback not updating correctly
 
 
 **v1.2.12**
 - Added config option to display volume variables/feedback as a linear value (this will match the slider position within vMix, rather than the actual volume level)
-- Fixed serveral input/bus volume variables/feedbacks not correctly updating
+- Fixed several input/bus volume variables/feedbacks not correctly updating
 - Fixed handling of a bug where replay data from the API may be incomplete if polled at during load/unload of the input
 - Fixed a bug where variable definitions was being updated on any change to any input
 - Added Action "SelectIndex" to select specific slides and videos in list inputs
-- Added Feedbacks: inputSelectedIndex and inputSelectedIndexName, provides feedbacks depending on selected index in a list or powerpoints
+- Added Feedbacks: inputSelectedIndex and inputSelectedIndexName, provides feedbacks depending on selected index in a list or powerpoint
 - Added Variables: input_X_selected_name and input_X_selected
 - Added Variables for mix 1-4 program and preview, these can be used with the new trigger menu to press buttons in companion
 - Added Variables for Video call password, call connected, audio source and video source
@@ -358,7 +363,7 @@
 
 
 **v1.2.7**
-- Added ReplayPlaySelectedEventToOutput and ReplayPlayEventsByIDToOutput to the list of suported functions, with included presets.
+- Added ReplayPlaySelectedEventToOutput and ReplayPlayEventsByIDToOutput to the list of supported functions, with included presets.
 - Added SetTransitionEffect and SetTransitionDuration to the list of actions, with presets.
 
 
@@ -369,12 +374,12 @@
 
 
 **v1.2.5**
-- Updated some presets, with coresponding feedbacks
+- Updated some presets, with corresponding feedbacks
 - Updated Video Timer feedback to autodetect and use "Mark out" if set
-- Added More functions Afecting Video Playback and Marking In and Out's
+- Added More functions Affecting Video Playback and Marking In and Out's
 - Added Presets for Video Playback and Marking In and Out's
 - Added Feedback live dB for monitoring Audio on an input or a bus
-- Added Variables that lists the ShortTitle of an imput
+- Added Variables that lists the ShortTitle of an input
 - Added Variables that lists the full title on "list" inputs 
 - Updated Audio presets with the new feedbacks
 
@@ -388,10 +393,10 @@
 **v1.2.3**
 - Added more preset options for existing commands
 - Added a description on how to use Mix 2-4
-- Added a Feedback for audio ON/Off (invers mute)
+- Added a Feedback for audio ON/Off (inverse mute)
 - Added presets for MultiView Overlays
 - Added presets for selecting audio and video source for Vmix Calls
-- Added presets for toggeling audio On/Off
+- Added presets for toggling audio On/Off
 - Added presets for using and settings Title layers and Presets
 
 

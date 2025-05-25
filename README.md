@@ -34,6 +34,11 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 
 
 # Recent Patches
+**v4.0.1**
+- Removed now redundant logging of PID
+- Fixed one debug option not being hidden when debug options are hidden
+- Fixed several typos
+
 **v4.0.0**
 - Changes to Variable generation based on config options allowing granular control over what variables are generated, resulting in significant performance benefits by only generating the variables a user plans to use
 - Added Variable list doc [docs/variables.md](./docs/variables.md)
@@ -44,7 +49,7 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 - `input_X_remaining_mm:ss.ms` renamed to `input_X_remaining_mm.ss.ms`
 - Fixed missing Stream 4 and 5 options in actions/feedbacks
 - Added Local Variable support (such as $(this:page), $(this:row), etc...) to Actions that support parsing variables
-- Better support for Sequential Action Group (keep in mind vMix only acknowledges receieving a command, not that the command execution is complete, so some use of Wait actions may still be required in an Action Group sequence)
+- Better support for Sequential Action Group (keep in mind vMix only acknowledges receiving a command, not that the command execution is complete, so some use of Wait actions may still be required in an Action Group sequence)
 
 **v3.9.6**
 - Fixed an issue with the upgrade script migrating existing `Overlay - Functions` actions to support the new parameters in vMix 28

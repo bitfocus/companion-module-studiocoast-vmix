@@ -512,11 +512,11 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
 
     replayMoveEvent: {
       name: 'Replay - Move event',
-      description: 'Move an Event to a differnt Events tab',
+      description: 'Move an Event to a different Events tab',
       options: [
         {
           type: 'dropdown',
-          label: 'Last/Slected',
+          label: 'Last/Selected',
           id: 'functionID',
           default: 'ReplayMoveLastEvent',
           choices: [
@@ -558,7 +558,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
 
     replayFastForwardBackward: {
       name: 'Replay - Fast Forward/Backward',
-      description: 'Replay Fast Forward/Backwared (1-30x speed)',
+      description: 'Replay Fast Forward/Backward (1-30x speed)',
       options: [
         {
           type: 'dropdown',

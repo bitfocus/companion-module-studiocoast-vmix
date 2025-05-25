@@ -29,7 +29,7 @@ export const vMixBrowserActions = (instance: VMixInstance, sendBasicCommand: Sen
   return {
     browser: {
       name: 'Browser - Functions',
-      description: 'Browser contol functions',
+      description: 'Browser control functions',
       options: [
         options.input,
         {

@@ -69,7 +69,7 @@ export class TCP {
    */
   public readonly init = (): void => {
     if (this.tcpHost === undefined || this.tcpPort === undefined) {
-      this.instance.log('warn', `Unable to connect to vMix, please confugre a host and port in the instance configuration`)
+      this.instance.log('warn', `Unable to connect to vMix, please configure a host and port in the instance configuration`)
       return
     }
 
@@ -343,7 +343,7 @@ export class TCP {
       let ready = true
 
       // Protect against edge case of attempting to destroy a socket that's not in a state where it can be destroyed
-      const destorySocket = (type: 'activator' | 'functions' | 'xml') => {
+      const destroySocket = (type: 'activator' | 'functions' | 'xml') => {
         const socket = this.sockets[type] as any
         if (socket) {
           socket.destroy()
@@ -355,9 +355,9 @@ export class TCP {
         }
       }
 
-      if (this.sockets.activator) destorySocket('activator')
-      if (this.sockets.functions) destorySocket('functions')
-      if (this.sockets.xml) destorySocket('xml')
+      if (this.sockets.activator) destroySocket('activator')
+      if (this.sockets.functions) destroySocket('functions')
+      if (this.sockets.xml) destroySocket('xml')
       if (ready) this.init()
     } else if (pollIntervalCheck) {
       this.initXMLPolling()

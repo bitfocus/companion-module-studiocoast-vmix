@@ -89,8 +89,6 @@ class VMixInstance extends InstanceBase<Config> {
    * @description triggered on instance being enabled
    */
   public async init(config: Config): Promise<void> {
-    this.log('debug', `Process ID: ${process.pid}`)
-
     if (config.debugVersionUpdateNotifications) {
       this.log(
         'info',

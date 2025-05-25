@@ -74,7 +74,7 @@ export const vMixListFeedbacks = (instance: VMixInstance): ListFeedbacks => {
 
     inputSelectedIndexBoolean: {
       type: 'boolean',
-      name: 'List - Change style based on an inputs Selected Index',
+      name: "List - Change style based on an input's Selected Index",
       description: '',
       defaultStyle: {
         color: combineRgb(0, 0, 0),

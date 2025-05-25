@@ -149,17 +149,17 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
     width: 50,
     height: 50,
   })
-  const arrowMidleLeft = graphics.toPNG64({
+  const arrowMiddleLeft = graphics.toPNG64({
     image: graphics.icon({ width: 50, height: 50, type: 'directionLeft' }),
     width: 50,
     height: 50,
   })
-  const arrowMidleCenter = graphics.toPNG64({
+  const arrowMiddleCenter = graphics.toPNG64({
     image: graphics.icon({ width: 50, height: 50, type: 'record' }),
     width: 50,
     height: 50,
   })
-  const arrowMidleRight = graphics.toPNG64({
+  const arrowMiddleRight = graphics.toPNG64({
     image: graphics.icon({ width: 50, height: 50, type: 'directionRight' }),
     width: 50,
     height: 50,
@@ -345,7 +345,7 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
         size: '14',
         color: combineRgb(255, 255, 255),
         bgcolor: combineRgb(0, 0, 0),
-        png64: arrowMidleLeft,
+        png64: arrowMiddleLeft,
         pngalignment: 'center:center',
       },
       steps: [
@@ -382,7 +382,7 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
         size: '14',
         color: combineRgb(255, 255, 255),
         bgcolor: combineRgb(0, 0, 0),
-        png64: arrowMidleCenter,
+        png64: arrowMiddleCenter,
         pngalignment: 'center:center',
       },
       steps: [
@@ -435,7 +435,7 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
         size: '14',
         color: combineRgb(255, 255, 255),
         bgcolor: combineRgb(0, 0, 0),
-        png64: arrowMidleRight,
+        png64: arrowMiddleRight,
         pngalignment: 'center:center',
       },
       steps: [

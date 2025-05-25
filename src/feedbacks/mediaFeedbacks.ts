@@ -57,7 +57,7 @@ export const vMixMediaFeedbacks = (instance: VMixInstance): MediaFeedbacks => {
     inputState: {
       type: 'boolean',
       name: 'Media - Input Playing/Loop',
-      description: 'Indiciates the current Playing or Loop state of an input',
+      description: 'Indicates the current Playing or Loop state of an input',
       options: [
         options.input,
         {

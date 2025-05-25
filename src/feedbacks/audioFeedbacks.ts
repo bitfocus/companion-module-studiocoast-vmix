@@ -381,7 +381,7 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
         },
         {
           type: 'colorpicker',
-          label: 'Basse Text Color',
+          label: 'Base Text Color',
           id: 'colorBase',
           default: combineRgb(255, 255, 255),
         },
@@ -542,7 +542,7 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
     busVolumeMeter: {
       type: 'advanced',
       name: 'Audio - Bus Volume Meters',
-      description: 'Volumer meters for an Bus',
+      description: 'Volume meters for a Bus',
       options: [options.audioBusMaster],
       callback: async (feedback) => {
         if (!feedback.image) return {}
@@ -574,7 +574,7 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
     inputVolumeMeter: {
       type: 'advanced',
       name: 'Audio - Input Volume Meters',
-      description: 'Volumer meters for an input',
+      description: 'Volume meters for an input',
       options: [options.input],
       callback: async (feedback, context) => {
         if (!feedback.image) return {}

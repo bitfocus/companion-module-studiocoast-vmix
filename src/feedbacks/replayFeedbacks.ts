@@ -137,7 +137,7 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
         let channel = feedback.options.channel
 
         if (channel === 'selected') {
-          // Backways compatibility - Default to channel A if prior to v24
+          // Backwards compatibility - Default to channel A if prior to v24
           channel = !instance.data.replay.channelMode || instance.data.replay.channelMode === 'AB' ? 'A' : instance.data.replay.channelMode
         }
 

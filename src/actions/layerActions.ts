@@ -276,7 +276,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           instance.checkFeedbacks('selectedDestinationLayer', 'routableMultiviewLayer')
           instance.variables?.updateVariables()
         } else {
-          instance.log('warn', `Setting Multview Destination layer must be a whole number, 1 to 10`)
+          instance.log('warn', `Setting Multiview Destination layer must be a whole number, 1 to 10`)
         }
       },
     },
