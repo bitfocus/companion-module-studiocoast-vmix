@@ -1,5 +1,8 @@
 # Patch Notes
 
+**v4.0.2**
+- Fixed an issue with missing Dynamic Input variables
+
 **v4.0.1**
 - Removed now redundant logging of PID
 - Fixed one debug option not being hidden when debug options are hidden

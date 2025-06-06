@@ -231,7 +231,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
     // Dynamic Variables
     {
       type: 'checkbox',
-      id: 'variablesShowDynamicInput',
+      id: 'variablesShowDynamicInputs',
       width: 12,
       label: 'Dynamic Input Variables (eg "dynamic_input_1_name")',
       default: false,
