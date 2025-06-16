@@ -488,42 +488,42 @@ const upgradeV3_6_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
 
   actions.forEach((action: any) => {
     if (['previewInput', 'programCut', 'setMultiViewOverlayOnPreview', 'setMultiViewOverlayOnProgram', 'mixSelect'].includes(action.actionId)) {
-      action.options.mixVariable = ''
+      if (action.options.mixVariable === undefined) action.options.mixVariable = ''
       changes.updatedActions.push(action)
     }
 
     if (action.actionId === 'setVolumeFade') {
-      action.options.fadeMin = action.options.fadeMin + ''
-      action.options.fadeTime = action.options.fadeTime + ''
+      if (typeof action.options.fadeMin !== 'string') action.options.fadeMin = action.options.fadeMin + ''
+      if (typeof action.options.fadeTime !== 'string') action.options.fadeTime = action.options.fadeTime + ''
       changes.updatedActions.push(action)
     }
 
     if (action.actionId === 'transitionMix') {
-      action.options.mixVariable = ''
-      action.options.duration = action.options.duration + ''
+      if (action.options.mixVariable === undefined) action.options.mixVariable = ''
+      if (typeof action.options.duration !== 'string') action.options.duration = action.options.duration + ''
       changes.updatedActions.push(action)
     }
 
     if (action.actionId === 'replayMark') {
-      action.options.value = action.options.value + ''
-      action.options.value2 = '10'
+      if (typeof action.options.value !== 'string') action.options.value = action.options.value + ''
+      if (action.options.value2 === undefined) action.options.value2 = '10'
       changes.updatedActions.push(action)
     }
 
     if (action.actionId === 'replayMoveInOut') {
-      action.options.value = action.options.value + ''
+      if (typeof action.options.value !== 'string') action.options.value = action.options.value + ''
       changes.updatedActions.push(action)
     }
 
     if (action.actionId === 'replayJumpFrames') {
-      action.options.value = action.options.value + ''
+      if (typeof action.options.value !== 'string') action.options.value = action.options.value + ''
       changes.updatedActions.push(action)
     }
   })
 
   feedbacks.forEach((feedback: any) => {
     if (['inputPreview', 'inputLive', 'mixSelect'].includes(feedback.feedbackId)) {
-      feedback.options.mixVariable = ''
+      if (feedback.options.mixVariable === undefined) feedback.options.mixVariable = ''
       changes.updatedFeedbacks.push(feedback)
     }
 
@@ -556,16 +556,16 @@ const upgradeV3_6_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
     ) {
       if (!feedback.style) feedback.style = {}
 
-      feedback.style.bgcolor = feedback.options.bg
-      feedback.style.color = feedback.options.fg
+      if (feedback.style.bgcolor === undefined) feedback.style.bgcolor = feedback.options.bg
+      if (feedback.style.color === undefined) feedback.style.color = feedback.options.fg
       if (feedback.options.bg) delete feedback.options.bg
       if (feedback.options.fg) delete feedback.options.fg
 
-      if (feedback.feedbackId === 'replayEvents') {
+      if (feedback.feedbackId === 'replayEvents' && feedback.options.channel === undefined) {
         feedback.options.channel = 'A'
       }
 
-      if (feedback.feedbackId === 'inputOnMultiview') {
+      if (feedback.feedbackId === 'inputOnMultiview' && typeof feedback.options.layer !== 'string') {
         feedback.options.layer = feedback.options.layer + ''
       }
 
@@ -575,8 +575,8 @@ const upgradeV3_6_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
     if (feedback.feedbackId === 'inputAudio') {
       if (!feedback.style) feedback.style = {}
 
-      feedback.style.bgcolor = feedback.options.bgMuted
-      feedback.style.color = feedback.options.fg
+      if (feedback.style.bgcolor === undefined) feedback.style.bgcolor = feedback.options.bg
+      if (feedback.style.color === undefined) feedback.style.color = feedback.options.fg
       if (feedback.options.bgMuted) delete feedback.options.bgMuted
       if (feedback.options.fg) delete feedback.options.fg
 
@@ -584,7 +584,7 @@ const upgradeV3_6_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
     }
 
     if (feedback.feedbackId === 'inputSelectedIndex') {
-      feedback.options.selectedIndex = feedback.options.selectedIndex + ''
+      if (typeof feedback.options.selectedIndex !== 'string') feedback.options.selectedIndex = feedback.options.selectedIndex + ''
 
       changes.updatedFeedbacks.push(feedback)
     }
@@ -698,8 +698,8 @@ const upgradeV3_9_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
 
   actions.forEach((action: any) => {
     if (action.actionId === 'transition') {
-      action.options.mix = 0
-      action.options.mixVariable = ''
+      if (action.options.mix === undefined) action.options.mix = 0
+      if (action.options.mixVariable === undefined) action.options.mixVariable = ''
 
       changes.updatedActions.push(action)
     }
@@ -717,8 +717,7 @@ const upgradeV3_9_6: CompanionStaticUpgradeScript<Config> = (_context, props): C
   }
 
   actions.forEach((action: any) => {
-    if (action.actionId === 'overlayFunctions' && (action.options.mix === 1 || action.options.mix === undefined)) {
-      action.options.mix = 0
+    if (action.actionId === 'overlayFunctions' && action.options.mix === undefined) {
       if (action.options.mixVariable === undefined) action.options.mixVariable = ''
       changes.updatedActions.push(action)
     }
@@ -739,23 +738,23 @@ const upgradeV4_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
     delete config.strictInputVariableTypes
   }
 
-  config.variablesShowInputCC = false
-  config.variablesShowInputLayers = false
-  config.variablesShowInputList = false
-  config.variablesShowInputTitleIndex = false
-  config.variablesShowInputTitleName = false
-  config.variablesShowInputVolume = false
-  config.variablesShowAudio = false
-  config.variablesShowDynamicInputs = false
-  config.variablesShowDynamicValues = false
-  config.variablesShowMix = false
-  config.variablesShowOutputs = false
-  config.variablesShowOverlays = false
-  config.variablesShowReplay = false
-  config.variablesShowTransitions = false
-  config.debugSettings = false
-  config.debugVariableDefinitionDelay = 2000
-  config.debugVersionUpdateNotifications = true
+  if (config.variablesShowInputCC === undefined) config.variablesShowInputCC = false
+  if (config.variablesShowInputLayers === undefined) config.variablesShowInputLayers = false
+  if (config.variablesShowInputList === undefined) config.variablesShowInputList = false
+  if (config.variablesShowInputTitleIndex === undefined) config.variablesShowInputTitleIndex = false
+  if (config.variablesShowInputTitleName === undefined) config.variablesShowInputTitleName = false
+  if (config.variablesShowInputVolume === undefined) config.variablesShowInputVolume = false
+  if (config.variablesShowAudio === undefined) config.variablesShowAudio = false
+  if (config.variablesShowDynamicInputs === undefined) config.variablesShowDynamicInputs = false
+  if (config.variablesShowDynamicValues === undefined) config.variablesShowDynamicValues = false
+  if (config.variablesShowMix === undefined) config.variablesShowMix = false
+  if (config.variablesShowOutputs === undefined) config.variablesShowOutputs = false
+  if (config.variablesShowOverlays === undefined) config.variablesShowOverlays = false
+  if (config.variablesShowReplay === undefined) config.variablesShowReplay = false
+  if (config.variablesShowTransitions === undefined) config.variablesShowTransitions = false
+  if (config.debugSettings === undefined) config.debugSettings = false
+  if (config.debugVariableDefinitionDelay === undefined) config.debugVariableDefinitionDelay = 2000
+  if (config.debugVersionUpdateNotifications === undefined) config.debugVersionUpdateNotifications = true
 
   changes.updatedConfig = config
 
@@ -770,7 +769,7 @@ const upgradeV4_0_2: CompanionStaticUpgradeScript<Config> = (_context, props): C
     updatedFeedbacks: [],
   }
 
-  config.variablesShowDynamicInputs = config.variablesShowDynamicInput || false
+  if (config.variablesShowDynamicInputs === undefined) config.variablesShowDynamicInputs = config.variablesShowDynamicInput || false
 
 	changes.updatedConfig = config
 

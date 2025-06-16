@@ -1,5 +1,8 @@
 # Patch Notes
 
+**v4.0.3**
+- Fixed an issue with certain config fields resetting themselves due to a bug with Companion Core
+
 **v4.0.2**
 - Fixed an issue with missing Dynamic Input variables
 

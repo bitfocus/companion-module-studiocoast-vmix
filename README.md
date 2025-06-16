@@ -34,6 +34,9 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 
 
 # Recent Patches
+**v4.0.3**
+- Fixed an issue with certain config fields resetting themselves due to a bug with Companion Core
+
 **v4.0.2**
 - Fixed an issue with missing Dynamic Input variables
 
