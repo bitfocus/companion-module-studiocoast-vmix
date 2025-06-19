@@ -733,8 +733,9 @@ const upgradeV4_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
     updatedActions: [],
     updatedFeedbacks: [],
   }
+	if (!config) return changes
 
-  if (config?.strictInputVariableTypes !== undefined) {
+  if (config.strictInputVariableTypes !== undefined) {
     delete config.strictInputVariableTypes
   }
 
@@ -768,6 +769,8 @@ const upgradeV4_0_2: CompanionStaticUpgradeScript<Config> = (_context, props): C
     updatedActions: [],
     updatedFeedbacks: [],
   }
+
+	if (!config) return changes
 
   if (config.variablesShowDynamicInputs === undefined) config.variablesShowDynamicInputs = config.variablesShowDynamicInput || false
 

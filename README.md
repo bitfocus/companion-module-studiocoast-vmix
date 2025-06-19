@@ -34,6 +34,9 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 
 
 # Recent Patches
+**v4.0.4**
+- Fixed a crash when running upgrade scripts on certain Companion versions
+
 **v4.0.3**
 - Fixed an issue with certain config fields resetting themselves due to a bug with Companion Core
 
@@ -56,30 +59,6 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 - Fixed missing Stream 4 and 5 options in actions/feedbacks
 - Added Local Variable support (such as $(this:page), $(this:row), etc...) to Actions that support parsing variables
 - Better support for Sequential Action Group (keep in mind vMix only acknowledges receiving a command, not that the command execution is complete, so some use of Wait actions may still be required in an Action Group sequence)
-
-**v3.9.6**
-- Fixed an issue with the upgrade script migrating existing `Overlay - Functions` actions to support the new parameters in vMix 28
-
-**v3.9.5**
-- Fixed issue with mix preview/program variables not migrating to latest version
-- Fixed issue relating to some audio Actions and Feedbacks set to the `selected` bus
-
-**v3.9.4**
-- Fixed issue with selected mix variable
-
-**v3.9.3**
-- Fixed issue with mix preview/program variables
-
-**v3.9.2**
-- Fixed missing MultiView2 and Mix options from `Output - Set Output Source` action
-
-**v3.9.1**
-- Fixed missing `General - Output Status` and  `General - Output NDI/SRT Status` feedbacks
-
-**v3.9.0**
-- Added Mix support for `Transition - Auto/Stinger Transition` action when using a Stinger transition
-- Added `Transition - Transition Effect / Duration` Feedback to check what effect (and optionally duration) is set to Transitions 1 to 4
-- Added `transition_X_effect` and `transition_X_duration` variables (X = 1 to 4)
 
 
 Older patch notes available in [docs/patch_notes.md](./docs/patch_notes.md)

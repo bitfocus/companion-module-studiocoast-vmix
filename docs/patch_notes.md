@@ -1,5 +1,8 @@
 # Patch Notes
 
+**v4.0.4**
+- Fixed a crash when running upgrade scripts on certain Companion versions
+
 **v4.0.3**
 - Fixed an issue with certain config fields resetting themselves due to a bug with Companion Core
 
