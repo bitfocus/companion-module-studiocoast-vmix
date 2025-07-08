@@ -1,7 +1,13 @@
 import type { CompanionVariableDefinition } from '@companion-module/base'
 import type VMixInstance from '../'
 
-type VariablesOutputIDs = `fullscreen_${number}_source` | `output_${number}_source` | `output_${number}_ndi` | `output_${number}_srt`
+type VariablesOutputIDs =
+  | `fullscreen_${number}_source`
+  | `output_${number}_source`
+  | `output_${number}_ndi`
+  | `output_${number}_srt`
+  | `output_${number}_type`
+  | `output_${number}_input_name`
 type VariablesOutputValues = Record<VariablesOutputIDs, string | number | undefined>
 
 export const outputDefinitions = (instance: VMixInstance): CompanionVariableDefinition[] => {
@@ -9,22 +15,19 @@ export const outputDefinitions = (instance: VMixInstance): CompanionVariableDefi
 
   if (!instance.config.variablesShowOutputs) return definitions
 
-  definitions.push(
-    { name: 'Fullscreen 1 Source', variableId: 'fullscreen_1_source' },
-    { name: 'Fullscreen 2 Source', variableId: 'fullscreen_2_source' },
-    { name: 'Output 1 Source', variableId: 'output_1_source' },
-    { name: 'Output 1 NDI', variableId: 'output_1_ndi' },
-    { name: 'Output 1 SRT', variableId: 'output_1_srt' },
-    { name: 'Output 2 Source', variableId: 'output_2_source' },
-    { name: 'Output 2 NDI', variableId: 'output_2_ndi' },
-    { name: 'Output 2 SRT', variableId: 'output_2_srt' },
-    { name: 'Output 3 Source', variableId: 'output_3_source' },
-    { name: 'Output 3 NDI', variableId: 'output_3_ndi' },
-    { name: 'Output 3 SRT', variableId: 'output_3_srt' },
-    { name: 'Output 4 Source', variableId: 'output_4_source' },
-    { name: 'Output 4 NDI', variableId: 'output_4_ndi' },
-    { name: 'Output 4 SRT', variableId: 'output_4_srt' },
-  )
+  for (let i = 1; i < 3; i++) {
+    definitions.push({ name: 'Fullscreen 1 Source', variableId: 'fullscreen_1_source' }, { name: 'Fullscreen 2 Source', variableId: 'fullscreen_2_source' })
+  }
+
+  for (let i = 1; i < 5; i++) {
+    definitions.push(
+      { name: `Output ${i} Source`, variableId: `output_${i}_source` },
+      { name: `Output ${i} NDI`, variableId: `output_${i}_ndi` },
+      { name: `Output ${i} SRT`, variableId: `output_${i}_srt` },
+      { name: `Output ${i} Type`, variableId: `output_${i}_type` },
+      { name: `Output ${i} Input Name`, variableId: `output_${i}_input_name` },
+    )
+  }
 
   return definitions
 }
@@ -39,21 +42,31 @@ export const outputValues = async (instance: VMixInstance): Promise<VariablesOut
   variables['output_1_source'] = ''
   variables['output_1_ndi'] = ''
   variables['output_1_srt'] = ''
+  variables['output_1_type'] = ''
+  variables['output_1_input_name'] = ''
   variables['output_2_source'] = ''
   variables['output_2_ndi'] = ''
   variables['output_2_srt'] = ''
+  variables['output_2_type'] = ''
+  variables['output_2_input_name'] = ''
   variables['output_3_source'] = ''
   variables['output_3_ndi'] = ''
   variables['output_3_srt'] = ''
+  variables['output_3_type'] = ''
+  variables['output_3_input_name'] = ''
   variables['output_4_source'] = ''
   variables['output_4_ndi'] = ''
   variables['output_4_srt'] = ''
+  variables['output_4_type'] = ''
+  variables['output_4_input_name'] = ''
 
-  instance.data.outputs.forEach((output) => {
+  for (const output of instance.data.outputs) {
     let source = ''
 
     if (output.source === 'Input') {
       source = `Input${output.input}`
+      const input = await instance.data.getInput(output.input)
+      if (input) variables[`output_${output.number}_input_name`] = input?.shortTitle || input?.title
     } else if (output.source === 'Mix') {
       source = `Mix${output.mix + 1}`
     } else {
@@ -65,8 +78,9 @@ export const outputValues = async (instance: VMixInstance): Promise<VariablesOut
     if (output.type === 'output') {
       variables[`output_${output.number}_ndi`] = output.ndi.toString()
       variables[`output_${output.number}_srt`] = output.srt.toString()
+      variables[`output_${output.number}_type`] = output.source
     }
-  })
+  }
 
   return variables
 }
