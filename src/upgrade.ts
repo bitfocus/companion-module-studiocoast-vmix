@@ -779,6 +779,23 @@ const upgradeV4_0_2: CompanionStaticUpgradeScript<Config> = (_context, props): C
   return changes
 }
 
+const upgradeV4_1_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
+  const config: any = props.config
+  const changes: CompanionStaticUpgradeResult<Config> = {
+    updatedConfig: null,
+    updatedActions: [],
+    updatedFeedbacks: [],
+  }
+
+	if (!config) return changes
+
+  if (config.variablesShowInputsLowercase === undefined) config.variablesShowInputsLowercase = true
+
+	changes.updatedConfig = config
+
+  return changes
+}
+
 export const getUpgrades = (): CompanionStaticUpgradeScript<Config>[] => {
   return [
     upgradeV1_2_0,
@@ -793,6 +810,7 @@ export const getUpgrades = (): CompanionStaticUpgradeScript<Config>[] => {
     upgradeV3_9_0,
     upgradeV3_9_6,
     upgradeV4_0_0,
-		upgradeV4_0_2
+		upgradeV4_0_2,
+		upgradeV4_1_0,
   ]
 }

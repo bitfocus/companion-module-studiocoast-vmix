@@ -97,7 +97,8 @@ export const inputDefinitions = (instance: VMixInstance): CompanionVariableDefin
 
   instance.data.inputs.forEach((input) => {
     let inputName = input.shortTitle ? input.shortTitle : input.title
-    inputName = inputName.replace(/[^a-z0-9-_.]+/gi, '').toLowerCase()
+    inputName = inputName.replace(/[^a-z0-9-_.]+/gi, '')
+    if (instance.config.variablesShowInputsLowercase) inputName = inputName.toLowerCase()
 
     const inputTypes = [input.number, inputName, input.key]
 
@@ -299,7 +300,9 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
 
     const inputTypes: (string | number)[] = []
     if (instance.config.variablesShowInputNumbers) inputTypes.push(input.number)
-    if (instance.config.variablesShowInputs) inputTypes.push(inputName.replace(/[^a-z0-9-_.]+/gi, '').toLowerCase())
+    if (instance.config.variablesShowInputs) {
+      inputTypes.push(instance.config.variablesShowInputsLowercase ? inputName.toLowerCase() : inputName)
+    }
     if (instance.config.variablesShowInputGUID) inputTypes.push(input.key)
 
     for (const type of inputTypes) {
