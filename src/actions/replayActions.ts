@@ -662,7 +662,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
         {
           type: 'textinput',
           label: 'Event Number',
-					tooltip: '0 is the most recent event, 1 is the next oldest, and so on',
+          tooltip: '0 is the most recent event, 1 is the next oldest, and so on',
           id: 'value',
           default: '',
         },
@@ -685,9 +685,9 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
         {
           type: 'textinput',
           label: 'Event IDs',
-					tooltip: 'Comma separated list of Event IDs',
+          tooltip: 'Comma separated list of Event IDs',
           id: 'value',
-					default: '0000'
+          default: '0000',
         },
       ],
       callback: sendBasicCommand,
@@ -701,7 +701,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
         {
           type: 'textinput',
           label: 'Event ID',
-					tooltip: 'Comma separated list of Event IDs',
+          tooltip: 'Comma separated list of Event IDs',
           id: 'value',
           default: '0000',
         },

@@ -118,8 +118,8 @@ export interface TitleActions {
   setTextColor: VMixAction<SetTextColorCallback>
   setTextVisible: VMixAction<SetTextVisibleCallback>
   setColor: VMixAction<SetColorCallback>
-	setImage: VMixAction<SetImageCallback>
-	setImageVisible: VMixAction<SetImageVisibleCallback>
+  setImage: VMixAction<SetImageCallback>
+  setImageVisible: VMixAction<SetImageVisibleCallback>
   selectTitlePreset: VMixAction<SelectTitlePresetCallback>
   titlePreset: VMixAction<TitlePresetCallback>
   titleBeginAnimation: VMixAction<TitleBeginAnimationCallback>
@@ -462,7 +462,7 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
         {
           type: 'textinput',
           label: 'Layer',
-					tooltip: 'Index starting from 0, or layer name',
+          tooltip: 'Index starting from 0, or layer name',
           id: 'selectedIndex',
           default: '0',
           useVariables: true,
@@ -471,7 +471,7 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
           type: 'textinput',
           label: 'Value',
           id: 'value',
-					tooltip: 'Filename or URL',
+          tooltip: 'Filename or URL',
           default: '',
           useVariables: true,
         },
@@ -503,7 +503,7 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
         {
           type: 'textinput',
           label: 'Layer',
-					tooltip: 'Index starting from 0, or layer name',
+          tooltip: 'Index starting from 0, or layer name',
           id: 'selectedIndex',
           default: '0',
           useVariables: true,
@@ -518,7 +518,7 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
             { id: 'On', label: 'On' },
             { id: 'Off', label: 'Off' },
           ],
-        }
+        },
       ],
       callback: async (action, context) => {
         const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
@@ -527,10 +527,10 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10)) ? 'SelectedName' : 'SelectedIndex'
 
-				let visibility = 'SetImageVisible'
+        let visibility = 'SetImageVisible'
 
-				if (action.options.adjustment === 'On') visibility = 'SetImageVisibleOn'
-				if (action.options.adjustment === 'Off') visibility = 'SetImageVisibleOff'
+        if (action.options.adjustment === 'On') visibility = 'SetImageVisibleOn'
+        if (action.options.adjustment === 'Off') visibility = 'SetImageVisibleOff'
 
         if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${visibility} Input=${encodeURIComponent(input)}&${indexNaNCheck}=${index}`)
       },

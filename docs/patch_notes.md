@@ -1,5 +1,12 @@
 # Patch Notes
 
+**v4.1.0**
+- Added `Title - Set title Image` and `Title - Set title Image Visibility` Actions for setting images in a Title input and adjusting their visibility
+- Added `Replay - Play Events by ID` Action, allowing playing 1 or more events by ID rather than the current `Replay - Play Events` Action which uses Event Number
+- Added a Config option to control if Input Variables should be generated with a lowercase name or match the case in vMix (with special characters still removed)
+- Added `output_X_type` and `output_X_input_name` Variables for the 4 vMix outputs. When the type is `Input` the `output_X_input_name` Variable will show the name of the input as opposed to `output_X_source` which only shows `Input19` for example.
+- Fixed feedback on an inputs playing state being updated by Activator data, improving responsiveness in slow API poll rate environments
+
 **v4.0.4**
 - Fixed a crash when running upgrade scripts on certain Companion versions
 

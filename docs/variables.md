@@ -130,6 +130,7 @@
 # Input Variables
 
 `InputID` = Input Name, Number, or GUID (depending on config settings) | `MixID` = 1 to 16 | `LayerIndex` = 1 to 10 | `TextLayer` = number or string| `Z` = Number | `ListIndex` = Number | `AudioChannel` = `f1` or `f2`
+Note: Input Names in variable IDs support `a to z`, `0 to 9`, `-`, `_`, and `.`. All other characters will be omitted 
 
 | Variable                                         |
 | ------------------------------------------------ |

@@ -292,7 +292,7 @@ export class Activators {
 
     if (params[0] === 'InputPlaying') {
       input.state = params[2] === '0' ? 'Paused' : 'Running'
-			this.updateBuffer('inputState')
+      this.updateBuffer('inputState')
     } else if (params[0] === 'InputVolume') {
       input.volume = parseFloat(params[2]) * 100
       this.updateBuffer('inputVolumeLevel')

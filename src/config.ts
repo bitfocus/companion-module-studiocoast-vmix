@@ -11,7 +11,7 @@ export interface Config {
   shiftBlinkPrvPrgm: boolean
   shiftBlinkLayerRouting: boolean
   variablesShowInputs: boolean
-	variablesShowInputsLowercase: boolean
+  variablesShowInputsLowercase: boolean
   variablesShowInputNumbers: boolean
   variablesShowInputGUID: boolean
   variablesShowInputPosition: boolean
@@ -147,7 +147,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       id: 'variablesShowInputs',
       width: 12,
       label: 'Input Variables by Name (eg "input_vt1_remaining").',
-			tooltip: 'Note: Variable names don\'t support some characters/symbols, these will be omitted from any input names in variables',
+      tooltip: "Note: Variable names don't support some characters/symbols, these will be omitted from any input names in variables",
       default: true,
     },
     {
@@ -155,7 +155,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       id: 'variablesShowInputsLowercase',
       width: 12,
       label: 'Enable to set input names in Variables to lowercase',
-			tooltip: 'eg an Input named VT1 in vMix would be "input_vt1_remaining"',
+      tooltip: 'eg an Input named VT1 in vMix would be "input_vt1_remaining"',
       default: true,
       isVisible: (config) => config.variablesShowInputs === true,
     },
@@ -348,7 +348,7 @@ export const defaultConfig = (): Config => {
     shiftBlinkPrvPrgm: true,
     shiftBlinkLayerRouting: true,
     variablesShowInputs: true,
-		variablesShowInputsLowercase: true,
+    variablesShowInputsLowercase: true,
     variablesShowInputNumbers: true,
     variablesShowInputGUID: false,
     variablesShowInputPosition: false,
