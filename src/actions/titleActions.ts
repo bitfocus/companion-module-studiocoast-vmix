@@ -52,6 +52,19 @@ type SetColorOptions = {
   value: string
 }
 
+type SetImageOptions = {
+  input: string
+  selectedIndex: string
+  value: string
+  encode: boolean
+}
+
+type SetImageVisibleOptions = {
+  input: string
+  selectedIndex: string
+  adjustment: 'Toggle' | 'On' | 'Off'
+}
+
 type SelectTitlePresetOptions = {
   input: string
   value: string
@@ -90,6 +103,8 @@ type SetTextCallback = ActionCallback<'setText', SetTextOptions>
 type SetTextColorCallback = ActionCallback<'setTextColor', SetTextColorOptions>
 type SetTextVisibleCallback = ActionCallback<'setTextVisible', SetTextVisibleOptions>
 type SetColorCallback = ActionCallback<'setColor', SetColorOptions>
+type SetImageCallback = ActionCallback<'setImage', SetImageOptions>
+type SetImageVisibleCallback = ActionCallback<'setImage', SetImageVisibleOptions>
 type SelectTitlePresetCallback = ActionCallback<'selectTitlePreset', SelectTitlePresetOptions>
 type TitlePresetCallback = ActionCallback<'titlePreset', TitlePresetOptions>
 type TitleBeginAnimationCallback = ActionCallback<'titleBeginAnimation', TitleBeginAnimationOptions>
@@ -103,6 +118,8 @@ export interface TitleActions {
   setTextColor: VMixAction<SetTextColorCallback>
   setTextVisible: VMixAction<SetTextVisibleCallback>
   setColor: VMixAction<SetColorCallback>
+	setImage: VMixAction<SetImageCallback>
+	setImageVisible: VMixAction<SetImageVisibleCallback>
   selectTitlePreset: VMixAction<SelectTitlePresetCallback>
   titlePreset: VMixAction<TitlePresetCallback>
   titleBeginAnimation: VMixAction<TitleBeginAnimationCallback>
@@ -434,6 +451,88 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
         const indexNaNCheck = isNaN(parseInt(index, 10)) ? 'SelectedName' : 'SelectedIndex'
 
         if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetColor Input=${encodeURIComponent(input)}&${indexNaNCheck}=${index}&Value=${encodeURIComponent(value)}`)
+      },
+    },
+
+    setImage: {
+      name: 'Title - Set title Image',
+      description: 'Sets Image on a title layer',
+      options: [
+        options.input,
+        {
+          type: 'textinput',
+          label: 'Layer',
+					tooltip: 'Index starting from 0, or layer name',
+          id: 'selectedIndex',
+          default: '0',
+          useVariables: true,
+        },
+        {
+          type: 'textinput',
+          label: 'Value',
+          id: 'value',
+					tooltip: 'Filename or URL',
+          default: '',
+          useVariables: true,
+        },
+        {
+          type: 'checkbox',
+          label: 'Encode Value (needed if text contains special characters)',
+          id: 'encode',
+          default: false,
+        },
+      ],
+      callback: async (action, context) => {
+        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+        const index = (await instance.parseOption(action.options.selectedIndex, context))[instance.buttonShift.state]
+        let image = (await instance.parseOption(action.options.value, context))[instance.buttonShift.state]
+
+        // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
+        const indexNaNCheck = isNaN(parseInt(index, 10)) ? 'SelectedName' : 'SelectedIndex'
+
+        if (action.options.encode) image = encodeURIComponent(image)
+        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetImage Input=${encodeURIComponent(input)}&${indexNaNCheck}=${index}&Value=${image}`)
+      },
+    },
+
+    setImageVisible: {
+      name: 'Title - Set title Image Visibility',
+      description: 'Sets Image Visibility on a title layer',
+      options: [
+        options.input,
+        {
+          type: 'textinput',
+          label: 'Layer',
+					tooltip: 'Index starting from 0, or layer name',
+          id: 'selectedIndex',
+          default: '0',
+          useVariables: true,
+        },
+        {
+          type: 'dropdown',
+          label: 'Adjustment',
+          id: 'adjustment',
+          default: 'Toggle',
+          choices: [
+            { id: 'Toggle', label: 'Toggle' },
+            { id: 'On', label: 'On' },
+            { id: 'Off', label: 'Off' },
+          ],
+        }
+      ],
+      callback: async (action, context) => {
+        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+        const index = (await instance.parseOption(action.options.selectedIndex, context))[instance.buttonShift.state]
+
+        // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
+        const indexNaNCheck = isNaN(parseInt(index, 10)) ? 'SelectedName' : 'SelectedIndex'
+
+				let visibility = 'SetImageVisible'
+
+				if (action.options.adjustment === 'On') visibility = 'SetImageVisibleOn'
+				if (action.options.adjustment === 'Off') visibility = 'SetImageVisibleOff'
+
+        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${visibility} Input=${encodeURIComponent(input)}&${indexNaNCheck}=${index}`)
       },
     },
 
