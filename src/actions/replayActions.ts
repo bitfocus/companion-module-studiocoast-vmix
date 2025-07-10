@@ -127,16 +127,21 @@ type ReplayPauseOptions = {
 
 type ReplayPlayEventOptions = {
   channel: ReplayChannel
-  value: number
+  value: string
 }
 
 type ReplayPlaySelectedEventToOutputOptions = {
   channel: ReplayChannel
 }
 
+type ReplayPlayEventsByIDOptions = {
+  channel: ReplayChannel
+  value: string
+}
+
 type ReplayPlayEventsByIDToOutputOptions = {
   channel: ReplayChannel
-  value: number
+  value: string
 }
 
 type ReplayPlayLastEventToOutputOptions = {
@@ -178,6 +183,7 @@ type ReplayPlayCallback = ActionCallback<'replayPlay', ReplayPlayOptions>
 type ReplayPauseCallback = ActionCallback<'replayPause', ReplayPauseOptions>
 type ReplayPlayEventCallback = ActionCallback<'replayPlayEvent', ReplayPlayEventOptions>
 type ReplayPlaySelectedEventToOutputCallback = ActionCallback<'replayPlaySelectedEventToOutput', ReplayPlaySelectedEventToOutputOptions>
+type ReplayPlayEventsByIDCallback = ActionCallback<'replayPlayEventsByID', ReplayPlayEventsByIDOptions>
 type ReplayPlayEventsByIDToOutputCallback = ActionCallback<'replayPlayEventsByIDToOutput', ReplayPlayEventsByIDToOutputOptions>
 type ReplayPlayLastEventToOutputCallback = ActionCallback<'replayPlayLastEventToOutput', ReplayPlayLastEventToOutputOptions>
 type ReplayPlayAllEventsToOutputCallback = ActionCallback<'replayPlayAllEventsToOutput', ReplayPlayAllEventsToOutputOptions>
@@ -209,6 +215,7 @@ export interface ReplayActions {
   replayPause: VMixAction<ReplayPauseCallback>
   replayPlayEvent: VMixAction<ReplayPlayEventCallback>
   replayPlaySelectedEventToOutput: VMixAction<ReplayPlaySelectedEventToOutputCallback>
+  replayPlayEventsByID: VMixAction<ReplayPlayEventsByIDCallback>
   replayPlayEventsByIDToOutput: VMixAction<ReplayPlayEventsByIDToOutputCallback>
   replayPlayLastEventToOutput: VMixAction<ReplayPlayLastEventToOutputCallback>
   replayPlayAllEventsToOutput: VMixAction<ReplayPlayAllEventsToOutputCallback>
@@ -243,6 +250,7 @@ export type ReplayCallbacks =
   | ReplayPauseCallback
   | ReplayPlayEventCallback
   | ReplayPlaySelectedEventToOutputCallback
+  | ReplayPlayEventsByIDCallback
   | ReplayPlayEventsByIDToOutputCallback
   | ReplayPlayLastEventToOutputCallback
   | ReplayPlayAllEventsToOutputCallback
@@ -648,16 +656,15 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
 
     replayPlayEvent: {
       name: 'Replay - Play Event',
-      description: 'Play an Event',
+      description: 'Play an Event by Event Number (NOT event ID)',
       options: [
         options.replayChannel,
         {
-          type: 'number',
-          label: 'Event ID',
+          type: 'textinput',
+          label: 'Event Number',
+					tooltip: '0 is the most recent event, 1 is the next oldest, and so on',
           id: 'value',
-          default: 0,
-          min: 0,
-          max: 1000,
+          default: '',
         },
       ],
       callback: sendBasicCommand,
@@ -670,18 +677,33 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
       callback: sendBasicCommand,
     },
 
-    replayPlayEventsByIDToOutput: {
-      name: 'Replay - Play Events By ID To Output',
-      description: 'Play events by ID',
+    replayPlayEventsByID: {
+      name: 'Replay - Play Events by ID',
+      description: 'Play Events to Replay Input',
       options: [
         options.replayChannel,
         {
-          type: 'number',
-          label: 'Event ID',
+          type: 'textinput',
+          label: 'Event IDs',
+					tooltip: 'Comma separated list of Event IDs',
           id: 'value',
-          default: 0,
-          min: 0,
-          max: 1000,
+					default: '0000'
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    replayPlayEventsByIDToOutput: {
+      name: 'Replay - Play Events By ID To Output',
+      description: 'Play events by ID to Program Output',
+      options: [
+        options.replayChannel,
+        {
+          type: 'textinput',
+          label: 'Event ID',
+					tooltip: 'Comma separated list of Event IDs',
+          id: 'value',
+          default: '0000',
         },
       ],
       callback: sendBasicCommand,

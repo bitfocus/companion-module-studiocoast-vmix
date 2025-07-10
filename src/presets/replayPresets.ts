@@ -237,7 +237,7 @@ export const getReplayPresets = (): VMixPresetArray => {
       },
       steps: [
         {
-          down: [{ actionId: 'replayPlayEventsByIDToOutput', options: { channel: 'Current', value: 0 } }],
+          down: [{ actionId: 'replayPlayEventsByIDToOutput', options: { channel: 'Current', value: '0000' } }],
           up: [],
         },
       ],

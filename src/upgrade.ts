@@ -733,7 +733,7 @@ const upgradeV4_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
     updatedActions: [],
     updatedFeedbacks: [],
   }
-	if (!config) return changes
+  if (!config) return changes
 
   if (config.strictInputVariableTypes !== undefined) {
     delete config.strictInputVariableTypes
@@ -770,28 +770,36 @@ const upgradeV4_0_2: CompanionStaticUpgradeScript<Config> = (_context, props): C
     updatedFeedbacks: [],
   }
 
-	if (!config) return changes
+  if (!config) return changes
 
   if (config.variablesShowDynamicInputs === undefined) config.variablesShowDynamicInputs = config.variablesShowDynamicInput || false
 
-	changes.updatedConfig = config
+  changes.updatedConfig = config
 
   return changes
 }
 
 const upgradeV4_1_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
   const config: any = props.config
+  const actions: any = props.actions
   const changes: CompanionStaticUpgradeResult<Config> = {
     updatedConfig: null,
     updatedActions: [],
     updatedFeedbacks: [],
   }
 
-	if (!config) return changes
+  actions.forEach((action: any) => {
+    if (action.actionId === 'replayPlayEvent' || action.actionId === 'replayPlayEventsByIDToOutput') {
+      action.options.value = action.options.value + ''
+      changes.updatedActions.push(action)
+    }
+  })
+
+  if (!config) return changes
 
   if (config.variablesShowInputsLowercase === undefined) config.variablesShowInputsLowercase = true
 
-	changes.updatedConfig = config
+  changes.updatedConfig = config
 
   return changes
 }
@@ -810,7 +818,7 @@ export const getUpgrades = (): CompanionStaticUpgradeScript<Config>[] => {
     upgradeV3_9_0,
     upgradeV3_9_6,
     upgradeV4_0_0,
-		upgradeV4_0_2,
-		upgradeV4_1_0,
+    upgradeV4_0_2,
+    upgradeV4_1_0,
   ]
 }
