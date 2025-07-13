@@ -152,18 +152,18 @@ export const mixDefinitions = async (instance: VMixInstance): Promise<CompanionV
 
           if (instance.config.variablesShowInputLayerPosition) {
             definitions.push(
-              { name: `Mix ${id} ${type} Layer ${i} Pan X`, variableId: `mix_${id}_${type}_layer_${i}_panx` },
-              { name: `Mix ${id} ${type} Layer ${i} Pan Y`, variableId: `mix_${id}_${type}_layer_${i}_pany` },
-              { name: `Mix ${id} ${type} Layer ${i} X`, variableId: `mix_${id}_${type}_layer_${i}_x` },
-              { name: `Mix ${id} ${type} Layer ${i} Y`, variableId: `mix_${id}_${type}_layer_${i}_y` },
-              { name: `Mix ${id} ${type} Layer ${i} Zoom X`, variableId: `mix_${id}_${type}_layer_${i}_zoomx` },
-              { name: `Mix ${id} ${type} Layer ${i} Zoom Y`, variableId: `mix_${id}_${type}_layer_${i}_zoomy` },
-              { name: `Mix ${id} ${type} Layer ${i} Width`, variableId: `mix_${id}_${type}_layer_${i}_width` },
-              { name: `Mix ${id} ${type} Layer ${i} Height`, variableId: `mix_${id}_${type}_layer_${i}_height` },
-              { name: `Mix ${id} ${type} Layer ${i} Crop X1`, variableId: `mix_${id}_${type}_layer_${i}_cropx1` },
-              { name: `Mix ${id} ${type} Layer ${i} Crop X2`, variableId: `mix_${id}_${type}_layer_${i}_cropx2` },
-              { name: `Mix ${id} ${type} Layer ${i} Crop Y1`, variableId: `mix_${id}_${type}_layer_${i}_cropy1` },
-              { name: `Mix ${id} ${type} Layer ${i} Crop Y2`, variableId: `mix_${id}_${type}_layer_${i}_cropy2` },
+              { name: `Mix ${id} ${type} Layer ${i} Pan X`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_panx` },
+              { name: `Mix ${id} ${type} Layer ${i} Pan Y`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_pany` },
+              { name: `Mix ${id} ${type} Layer ${i} X`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_x` },
+              { name: `Mix ${id} ${type} Layer ${i} Y`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_y` },
+              { name: `Mix ${id} ${type} Layer ${i} Zoom X`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_zoomx` },
+              { name: `Mix ${id} ${type} Layer ${i} Zoom Y`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_zoomy` },
+              { name: `Mix ${id} ${type} Layer ${i} Width`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_width` },
+              { name: `Mix ${id} ${type} Layer ${i} Height`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_height` },
+              { name: `Mix ${id} ${type} Layer ${i} Crop X1`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_cropx1` },
+              { name: `Mix ${id} ${type} Layer ${i} Crop X2`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_cropx2` },
+              { name: `Mix ${id} ${type} Layer ${i} Crop Y1`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_cropy1` },
+              { name: `Mix ${id} ${type} Layer ${i} Crop Y2`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_cropy2` },
             )
           }
         }

@@ -42,8 +42,8 @@
 | dynamic_input\_`X`\_remaining                      |
 | dynamic_input\_`X`\_remaining_ss                   |
 | dynamic_input\_`X`\_remaining_ss.ms                |
-| dynamic_input\_`X`\_remaining_mm:ss                |
-| dynamic_input\_`X`\_remaining_mm:ss.ms             |
+| dynamic_input\_`X`\_remaining_mm.ss                |
+| dynamic_input\_`X`\_remaining_mm.ss.ms             |
 | dynamic_input\_`X`\_position_panx                  |
 | dynamic_input\_`X`\_position_pany                  |
 | dynamic_input\_`X`\_position_zoomx                 |
@@ -97,6 +97,7 @@
 | dynamic_input\_`X`\_list\_`Z`\_name                |
 | dynamic_input\_`X`\_list\_`Z`\_selected            |
 | dynamic_input\_`X`\_selected                       |
+| dynamic_input\_`X`\_selectedindex                  |
 | dynamic_input\_`X`\_selected_name                  |
 | dynamic_input\_`X`\_call_password                  |
 | dynamic_input\_`X`\_call_connected                 |
@@ -130,7 +131,7 @@
 # Input Variables
 
 `InputID` = Input Name, Number, or GUID (depending on config settings) | `MixID` = 1 to 16 | `LayerIndex` = 1 to 10 | `TextLayer` = number or string| `Z` = Number | `ListIndex` = Number | `AudioChannel` = `f1` or `f2`
-Note: Input Names in variable IDs support `a to z`, `0 to 9`, `-`, `_`, and `.`. All other characters will be omitted 
+Note: Input Names in variable IDs support `a to z`, `0 to 9`, `-`, `_`, and `.`. All other characters will be omitted
 
 | Variable                                         |
 | ------------------------------------------------ |
@@ -291,6 +292,8 @@ Note: Input Names in variable IDs support `a to z`, `0 to 9`, `-`, `_`, and `.`.
 | output\_`OutputID`\_source         |
 | output\_`OutputID`\_ndi            |
 | output\_`OutputID`\_srt            |
+| output\_`OutputID`\_type           |
+| output\_`OutputID`\_input_name     |
 
 # Overlay Variables
 

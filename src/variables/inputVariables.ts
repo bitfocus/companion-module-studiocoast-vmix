@@ -60,7 +60,6 @@ type VariablesInputIDs =
   | `input_${string}_meter${'f1' | 'f2'}_avg_3s`
   | `input_${string}_meter${'f1' | 'f2'}_peak_1s`
   | `input_${string}_meter${'f1' | 'f2'}_peak_3s`
-  | `input_${string}_meterf2_peak_3s`
   | `input_${string}_position_panx`
   | `input_${string}_position_pany`
   | `input_${string}_position_zoomx`
@@ -113,11 +112,10 @@ export const inputDefinitions = (instance: VMixInstance): CompanionVariableDefin
       if (index === 2) inputSet = inputKeyVariables
 
       inputSet.add({ name: `Input ${title} Short Title`, variableId: `input_${type}_name` })
-      inputSet.add({ name: `Input ${title} Full Title`, variableId: `input_${type}_full_Title` })
+      inputSet.add({ name: `Input ${title} Full Title`, variableId: `input_${type}_full_title` })
       inputSet.add({ name: `Input ${title} GUID`, variableId: `input_${type}_guid` })
       inputSet.add({ name: `Input ${title} Type`, variableId: `input_${type}_type` })
       inputSet.add({ name: `Input ${title} Number`, variableId: `input_${type}_number` })
-      inputSet.add({ name: `Input ${title} Full Title`, variableId: `input_${type}_number` })
 
       instance.data.mix
         .filter((mix) => mix.active)
@@ -216,7 +214,6 @@ export const inputDefinitions = (instance: VMixInstance): CompanionVariableDefin
         inputSet.add({ name: `Input ${title} Volume`, variableId: `input_${type}_volume` })
         inputSet.add({ name: `Input ${title} Volume dB`, variableId: `input_${type}_volume_db` })
         inputSet.add({ name: `Input ${title} Volume Linear`, variableId: `input_${type}_volume_linear` })
-        inputSet.add({ name: `Input ${title} Frame Delay`, variableId: `input_${type}_framedelay` })
 
         if (input.volumeF1 !== undefined) {
           inputSet.add({ name: `Input ${title} Volume F1`, variableId: `input_${type}_volume_f1` })
@@ -250,6 +247,8 @@ export const inputDefinitions = (instance: VMixInstance): CompanionVariableDefin
           inputSet.add({ name: `Input ${title} Meter F2 Peak 3s`, variableId: `input_${type}_meterf2_peak_3s` })
         }
       }
+
+      inputSet.add({ name: `Input ${title} Frame Delay`, variableId: `input_${type}_framedelay` })
 
       if (instance.config.variablesShowInputPosition) {
         inputSet.add({ name: `Input ${title} Position Pan X`, variableId: `input_${type}_position_panx` })
@@ -330,29 +329,6 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
       variables[`input_${type}_audio`] = (!inputAudio).toString()
       variables[`input_${type}_solo`] = input.solo?.toString() || 'false'
 
-      if (instance.config.variablesShowInputVolume) {
-        if (input.meterF1 !== undefined) {
-          variables[`input_${type}_meterf1`] = volumeTodB(input.meterF1 * 100).toFixed(1)
-        }
-        if (input.meterF2 !== undefined) {
-          variables[`input_${type}_meterf2`] = volumeTodB(input.meterF2 * 100).toFixed(1)
-        }
-
-        const audioLevel = instance.data.audioLevels.find((level) => level.key === input.key)
-        if (audioLevel) {
-          const audioLevelData = instance.data.getAudioLevelData(audioLevel)
-
-          variables[`input_${type}_meterf1_avg_1s`] = volumeTodB(audioLevelData.s1MeterF1Avg * 100).toFixed(1)
-          variables[`input_${type}_meterf2_avg_1s`] = volumeTodB(audioLevelData.s1MeterF2Avg * 100).toFixed(1)
-          variables[`input_${type}_meterf1_avg_3s`] = volumeTodB(audioLevelData.s3MeterF1Avg * 100).toFixed(1)
-          variables[`input_${type}_meterf2_avg_3s`] = volumeTodB(audioLevelData.s3MeterF2Avg * 100).toFixed(1)
-          variables[`input_${type}_meterf1_peak_1s`] = volumeTodB(audioLevelData.s1MeterF1Peak * 100).toFixed(1)
-          variables[`input_${type}_meterf2_peak_1s`] = volumeTodB(audioLevelData.s1MeterF2Peak * 100).toFixed(1)
-          variables[`input_${type}_meterf1_peak_3s`] = volumeTodB(audioLevelData.s3MeterF1Peak * 100).toFixed(1)
-          variables[`input_${type}_meterf2_peak_3s`] = volumeTodB(audioLevelData.s3MeterF2Peak * 100).toFixed(1)
-        }
-      }
-
       if (input.duration > 1) {
         const inPosition = input.markIn ? input.markIn : 0
         const outPosition = input.markOut ? input.markOut : input.duration
@@ -414,6 +390,7 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
         for (let i = 0; i < 10; i++) {
           variables[`input_${type}_layer_${i + 1}_name`] = ''
           variables[`input_${type}_layer_${i + 1}_number`] = ''
+          variables[`input_${type}_layer_${i + 1}_key`] = ''
         }
 
         for (const layer of input.overlay || []) {
@@ -503,7 +480,6 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
         variables[`input_${type}_volume`] = volume
         variables[`input_${type}_volume_db`] = volumedB
         variables[`input_${type}_volume_linear`] = volumeLinear
-        variables[`input_${type}_framedelay`] = input.frameDelay ?? 0
 
         if (input.volumeF1 !== undefined) {
           variables[`input_${type}_volume_f1`] = (input.volumeF1 * 100).toFixed(2)
@@ -516,7 +492,30 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
           variables[`input_${type}_volume_f2_db`] = volumeTodB(input.volumeF2 * 100).toFixed(1)
           variables[`input_${type}_volume_f2_linear`] = Math.round(volumeToLinear(input.volumeF2 * 100))
         }
+
+        if (input.meterF1 !== undefined) {
+          variables[`input_${type}_meterf1`] = volumeTodB(input.meterF1 * 100).toFixed(1)
+        }
+        if (input.meterF2 !== undefined) {
+          variables[`input_${type}_meterf2`] = volumeTodB(input.meterF2 * 100).toFixed(1)
+        }
+
+        const audioLevel = instance.data.audioLevels.find((level) => level.key === input.key)
+        if (audioLevel) {
+          const audioLevelData = instance.data.getAudioLevelData(audioLevel)
+
+          variables[`input_${type}_meterf1_avg_1s`] = volumeTodB(audioLevelData.s1MeterF1Avg * 100).toFixed(1)
+          variables[`input_${type}_meterf2_avg_1s`] = volumeTodB(audioLevelData.s1MeterF2Avg * 100).toFixed(1)
+          variables[`input_${type}_meterf1_avg_3s`] = volumeTodB(audioLevelData.s3MeterF1Avg * 100).toFixed(1)
+          variables[`input_${type}_meterf2_avg_3s`] = volumeTodB(audioLevelData.s3MeterF2Avg * 100).toFixed(1)
+          variables[`input_${type}_meterf1_peak_1s`] = volumeTodB(audioLevelData.s1MeterF1Peak * 100).toFixed(1)
+          variables[`input_${type}_meterf2_peak_1s`] = volumeTodB(audioLevelData.s1MeterF2Peak * 100).toFixed(1)
+          variables[`input_${type}_meterf1_peak_3s`] = volumeTodB(audioLevelData.s3MeterF1Peak * 100).toFixed(1)
+          variables[`input_${type}_meterf2_peak_3s`] = volumeTodB(audioLevelData.s3MeterF2Peak * 100).toFixed(1)
+        }
       }
+
+      variables[`input_${type}_framedelay`] = input.frameDelay ?? 0
     }
   }
 

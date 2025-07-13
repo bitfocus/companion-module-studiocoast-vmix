@@ -22,8 +22,8 @@ type VariablesDynamicIDs =
   | `dynamic_input_${number}_remaining`
   | `dynamic_input_${number}_remaining_ss`
   | `dynamic_input_${number}_remaining_ss.ms`
-  | `dynamic_input_${number}_remaining_mm:ss`
-  | `dynamic_input_${number}_remaining_mm:ss.ms`
+  | `dynamic_input_${number}_remaining_mm.ss`
+  | `dynamic_input_${number}_remaining_mm.ss.ms`
   | `dynamic_input_${number}_position_panx`
   | `dynamic_input_${number}_position_pany`
   | `dynamic_input_${number}_position_zoomx`
@@ -77,6 +77,7 @@ type VariablesDynamicIDs =
   | `dynamic_input_${number}_list_${number}_name`
   | `dynamic_input_${number}_list_${number}_selected`
   | `dynamic_input_${number}_selected`
+  | `dynamic_input_${number}_selectedindex`
   | `dynamic_input_${number}_selected_name`
   | `dynamic_input_${number}_call_password`
   | `dynamic_input_${number}_call_connected`
@@ -127,13 +128,37 @@ export const dynamicDefinitions = async (instance: VMixInstance): Promise<Compan
 
       if (input.position !== undefined) {
         definitions.push({ name: `Dynamic Input ${dynamic + 1} Remaining`, variableId: `dynamic_input_${dynamic + 1}_remaining` })
+        definitions.push({ name: `Dynamic Input ${dynamic + 1} Remaining ss`, variableId: `dynamic_input_${dynamic + 1}_remaining_ss` })
+        definitions.push({ name: `Dynamic Input ${dynamic + 1} Remaining ss.ms`, variableId: `dynamic_input_${dynamic + 1}_remaining_ss.ms` })
+        definitions.push({ name: `Dynamic Input ${dynamic + 1} Remaining mm:ss`, variableId: `dynamic_input_${dynamic + 1}_remaining_mm.ss` })
+        definitions.push({ name: `Dynamic Input ${dynamic + 1} Remaining mm:ss.ms`, variableId: `dynamic_input_${dynamic + 1}_remaining_mm.ss.ms` })
       }
 
-      for (let i = 1; i < 11; i++) {
-        definitions.push(
-          { name: `Dynamic Input ${dynamic + 1} layer ${i} Name`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_name` },
-          { name: `Dynamic Input ${dynamic + 1} layer ${i} Number`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_number` },
-        )
+      if (instance.config.variablesShowInputLayers) {
+        for (let i = 1; i < 11; i++) {
+          definitions.push(
+            { name: `Dynamic Input ${dynamic + 1}Layer ${i} Number`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_number` },
+            { name: `Dynamic Input ${dynamic + 1}Layer ${i} Name`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_name` },
+            { name: `Dynamic Input ${dynamic + 1}Layer ${i} Key`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_key` },
+          )
+
+          if (instance.config.variablesShowInputLayerPosition) {
+            definitions.push(
+              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Pan X (Percent)`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_panx` },
+              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Pan Y (Percent)`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_pany` },
+              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Pan X (Pixels)`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_x` },
+              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Pan Y (Pixels)`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_y` },
+              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Zoom X`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_zoomx` },
+              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Zoom Y`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_zoomy` },
+              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Width`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_width` },
+              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Height`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_height` },
+              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Crop X1`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_cropx1` },
+              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Crop X2`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_cropx2` },
+              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Crop Y1`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_cropy1` },
+              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Crop Y2`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_cropy2` },
+            )
+          }
+        }
       }
 
       if (input.text && (instance.config.variablesShowInputTitleIndex || instance.config.variablesShowInputTitleName)) {
@@ -148,16 +173,21 @@ export const dynamicDefinitions = async (instance: VMixInstance): Promise<Compan
           if (instance.config.variablesShowInputTitleName) {
             definitions.push({
               name: `Dynamic Input ${dynamic + 1} layer ${textLayer.name} Title Text`,
-              variableId: `dynamic_input_${dynamic + 1}_layer_${textLayer.name}_titletext`,
+              variableId: `dynamic_input_${dynamic + 1}_layer_${textLayer.name.replace(/[^a-z0-9-_.]+/gi, '')}_titletext`,
             })
           }
         })
       }
 
+      if (input.type === 'PowerPoint') {
+        definitions.push({ name: `Dynamic Input ${dynamic + 1} Selected Index`, variableId: `dynamic_input_${dynamic + 1}_selected` })
+      }
+
       if (input.type === 'VideoList' || input.type === 'VirtualSet' || input.type === 'Photos') {
         definitions.push(
-          { name: `Dynamic Input ${dynamic + 1} Selected Index`, variableId: `dynamic_input_${dynamic + 1}_selected` },
-          { name: `Dynamic Input ${dynamic + 1} Selected Index Name`, variableId: `dynamic_input_${dynamic + 1}_selected_name` },
+          { name: `Dynamic Input ${dynamic + 1} Selected Position`, variableId: `dynamic_input_${dynamic + 1}_selected` },
+          { name: `Dynamic Input ${dynamic + 1} Selected Index`, variableId: `dynamic_input_${dynamic + 1}_selectedindex` },
+          { name: `Dynamic Input ${dynamic + 1} Selected Name`, variableId: `dynamic_input_${dynamic + 1}_selected_name` },
         )
       }
 
@@ -209,6 +239,35 @@ export const dynamicDefinitions = async (instance: VMixInstance): Promise<Compan
         if (input.meterF2 !== undefined) {
           definitions.push({ name: `Dynamic Input ${dynamic + 1} MeterF2`, variableId: `dynamic_input_${dynamic + 1}_meterf2` })
         }
+
+        const audioLevel = instance.data.audioLevels.find((level) => level.key === input.key)
+        if (audioLevel) {
+          definitions.push({ name: `Dynamic Input ${dynamic + 1} Meter F1 Average 1s`, variableId: `dynamic_input_${dynamic + 1}_meterf1_avg_1s` })
+          definitions.push({ name: `Dynamic Input ${dynamic + 1} Meter F2 Average 1s`, variableId: `dynamic_input_${dynamic + 1}_meterf2_avg_1s` })
+          definitions.push({ name: `Dynamic Input ${dynamic + 1} Meter F1 Average 3s`, variableId: `dynamic_input_${dynamic + 1}_meterf1_avg_3s` })
+          definitions.push({ name: `Dynamic Input ${dynamic + 1} Meter F2 Average 3s`, variableId: `dynamic_input_${dynamic + 1}_meterf2_avg_3s` })
+          definitions.push({ name: `Dynamic Input ${dynamic + 1} Meter F1 Peak 1s`, variableId: `dynamic_input_${dynamic + 1}_meterf1_peak_1s` })
+          definitions.push({ name: `Dynamic Input ${dynamic + 1} Meter F2 Peak 1s`, variableId: `dynamic_input_${dynamic + 1}_meterf2_peak_1s` })
+          definitions.push({ name: `Dynamic Input ${dynamic + 1} Meter F1 Peak 3s`, variableId: `dynamic_input_${dynamic + 1}_meterf1_peak_3s` })
+          definitions.push({ name: `Dynamic Input ${dynamic + 1} Meter F2 Peak 3s`, variableId: `dynamic_input_${dynamic + 1}_meterf2_peak_3s` })
+        }
+      }
+
+      if (instance.config.variablesShowInputCC) {
+        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Hue`, variableId: `dynamic_input_${dynamic + 1}_cc_hue` })
+        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Saturation`, variableId: `dynamic_input_${dynamic + 1}_cc_saturation` })
+        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Lift R`, variableId: `dynamic_input_${dynamic + 1}_cc_liftr` })
+        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Lift G`, variableId: `dynamic_input_${dynamic + 1}_cc_liftg` })
+        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Lift B`, variableId: `dynamic_input_${dynamic + 1}_cc_liftb` })
+        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Lift Y`, variableId: `dynamic_input_${dynamic + 1}_cc_lifty` })
+        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Gamma R`, variableId: `dynamic_input_${dynamic + 1}_cc_gammar` })
+        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Gamma G`, variableId: `dynamic_input_${dynamic + 1}_cc_gammag` })
+        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Gamma B`, variableId: `dynamic_input_${dynamic + 1}_cc_gammab` })
+        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Gamma Y`, variableId: `dynamic_input_${dynamic + 1}_cc_gammay` })
+        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Gain R`, variableId: `dynamic_input_${dynamic + 1}_cc_gainr` })
+        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Gain G`, variableId: `dynamic_input_${dynamic + 1}_cc_gaing` })
+        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Gain B`, variableId: `dynamic_input_${dynamic + 1}_cc_gainb` })
+        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Gain Y`, variableId: `dynamic_input_${dynamic + 1}_cc_gainy` })
       }
 
       definitions.push({ name: `Dynamic Input ${dynamic + 1} Frame Delay`, variableId: `dynamic_input_${dynamic + 1}_framedelay` })
@@ -236,13 +295,15 @@ export const dynamicValues = async (instance: VMixInstance): Promise<InstanceVar
         variables[`dynamic_input_${dynamic + 1}_guid`] = input.key
         variables[`dynamic_input_${dynamic + 1}_type`] = input.type
 
-        instance.data.mix.forEach((mix) => {
-          const tallyPreview = instance.data.mix[mix.number - 1].previewTally.includes(input.key) || instance.data.mix[mix.number - 1].preview === input.number
-          const tallyProgram = instance.data.mix[mix.number - 1].programTally.includes(input.key) || instance.data.mix[mix.number - 1].program === input.number
+        instance.data.mix
+          .filter((mix) => mix.active)
+          .forEach((mix) => {
+            const tallyPreview = instance.data.mix[mix.number - 1].previewTally.includes(input.key) || instance.data.mix[mix.number - 1].preview === input.number
+            const tallyProgram = instance.data.mix[mix.number - 1].programTally.includes(input.key) || instance.data.mix[mix.number - 1].program === input.number
 
-          variables[`dynamic_input_${dynamic + 1}_mix_${mix.number}_tally_preview`] = tallyPreview.toString()
-          variables[`dynamic_input_${dynamic + 1}_mix_${mix.number}_tally_program`] = tallyProgram.toString()
-        })
+            variables[`dynamic_input_${dynamic + 1}_mix_${mix.number}_tally_preview`] = tallyPreview.toString()
+            variables[`dynamic_input_${dynamic + 1}_mix_${mix.number}_tally_program`] = tallyProgram.toString()
+          })
 
         const inputAudio = input.muted === undefined ? false : input.muted
 
@@ -251,25 +312,6 @@ export const dynamicValues = async (instance: VMixInstance): Promise<InstanceVar
         variables[`dynamic_input_${dynamic + 1}_mute`] = inputAudio.toString()
         variables[`dynamic_input_${dynamic + 1}_audio`] = (!inputAudio).toString()
         variables[`dynamic_input_${dynamic + 1}_solo`] = input.solo?.toString() || 'false'
-
-        const meterF1 = input.meterF1 !== undefined ? volumeTodB(input.meterF1 * 100).toFixed(1) : ''
-        const meterF2 = input.meterF2 !== undefined ? volumeTodB(input.meterF2 * 100).toFixed(1) : ''
-
-        variables[`dynamic_input_${dynamic + 1}_meterf1`] = meterF1
-        variables[`dynamic_input_${dynamic + 1}_meterf2`] = meterF2
-
-        const audioLevel = instance.data.audioLevels.find((level) => level.key === input.key)
-        if (audioLevel) {
-          const audioLevelData = instance.data.getAudioLevelData(audioLevel)
-          variables[`dynamic_input_${dynamic + 1}_meterf1_avg_1s`] = volumeTodB(audioLevelData.s1MeterF1Avg * 100).toFixed(1)
-          variables[`dynamic_input_${dynamic + 1}_meterf2_avg_1s`] = volumeTodB(audioLevelData.s1MeterF2Avg * 100).toFixed(1)
-          variables[`dynamic_input_${dynamic + 1}_meterf1_avg_3s`] = volumeTodB(audioLevelData.s3MeterF1Avg * 100).toFixed(1)
-          variables[`dynamic_input_${dynamic + 1}_meterf2_avg_3s`] = volumeTodB(audioLevelData.s3MeterF2Avg * 100).toFixed(1)
-          variables[`dynamic_input_${dynamic + 1}_meterf1_peak_1s`] = volumeTodB(audioLevelData.s1MeterF1Peak * 100).toFixed(1)
-          variables[`dynamic_input_${dynamic + 1}_meterf2_peak_1s`] = volumeTodB(audioLevelData.s1MeterF2Peak * 100).toFixed(1)
-          variables[`dynamic_input_${dynamic + 1}_meterf1_peak_3s`] = volumeTodB(audioLevelData.s3MeterF1Peak * 100).toFixed(1)
-          variables[`dynamic_input_${dynamic + 1}_meterf2_peak_3s`] = volumeTodB(audioLevelData.s3MeterF2Peak * 100).toFixed(1)
-        }
 
         if (input.duration > 1) {
           const inPosition = input.markIn ? input.markIn : 0
@@ -296,8 +338,8 @@ export const dynamicValues = async (instance: VMixInstance): Promise<InstanceVar
           variables[`dynamic_input_${dynamic + 1}_remaining`] = inputRemaining.ms
           variables[`dynamic_input_${dynamic + 1}_remaining_ss`] = inputRemaining.ss
           variables[`dynamic_input_${dynamic + 1}_remaining_ss.ms`] = inputRemaining.ssms
-          variables[`dynamic_input_${dynamic + 1}_remaining_mm:ss`] = inputRemaining.mmss
-          variables[`dynamic_input_${dynamic + 1}_remaining_mm:ss.ms`] = inputRemaining.mmssms
+          variables[`dynamic_input_${dynamic + 1}_remaining_mm.ss`] = inputRemaining.mmss
+          variables[`dynamic_input_${dynamic + 1}_remaining_mm.ss.ms`] = inputRemaining.mmssms
         }
 
         if (instance.config.variablesShowInputPosition) {
@@ -328,12 +370,13 @@ export const dynamicValues = async (instance: VMixInstance): Promise<InstanceVar
           variables[`dynamic_input_${dynamic + 1}_cc_gainy`] = input.cc?.gainY ?? ''
         }
 
-        for (let i = 0; i < 10; i++) {
-          variables[`dynamic_input_${dynamic + 1}_layer_${i + 1}_name`] = ''
-          variables[`dynamic_input_${dynamic + 1}_layer_${i + 1}_number`] = ''
-        }
-
         if (instance.config.variablesShowInputLayers) {
+          for (let i = 0; i < 10; i++) {
+            variables[`dynamic_input_${dynamic + 1}_layer_${i + 1}_name`] = ''
+            variables[`dynamic_input_${dynamic + 1}_layer_${i + 1}_number`] = ''
+            variables[`dynamic_input_${dynamic + 1}_layer_${i + 1}_key`] = ''
+          }
+
           for (const layer of input.overlay || []) {
             const overlayInput = await instance.data.getInput(layer.key)
             let overlayinputName = ''
@@ -365,11 +408,12 @@ export const dynamicValues = async (instance: VMixInstance): Promise<InstanceVar
         if (input.text && (instance.config.variablesShowInputTitleIndex || instance.config.variablesShowInputTitleName)) {
           input.text.forEach((textLayer) => {
             if (instance.config.variablesShowInputTitleIndex) variables[`dynamic_input_${dynamic + 1}_layer_${textLayer.index}_titletext`] = textLayer.value
-            if (instance.config.variablesShowInputTitleName) variables[`dynamic_input_${dynamic + 1}_layer_${textLayer.name}_titletext`] = textLayer.value
+            if (instance.config.variablesShowInputTitleName)
+              variables[`dynamic_input_${dynamic + 1}_layer_${textLayer.name.replace(/[^a-z0-9-_.]+/gi, '')}_titletext`] = textLayer.value
           })
         }
 
-        if (input.list) {
+        if (input.list && instance.config.variablesShowInputList) {
           input.list.forEach((listItem) => {
             variables[`dynamic_input_${dynamic + 1}_list_${listItem.index + 1}_name`] = listItem.filename
             variables[`dynamic_input_${dynamic + 1}_list_${listItem.index + 1}_selected`] = listItem.selected.toString()
@@ -381,12 +425,13 @@ export const dynamicValues = async (instance: VMixInstance): Promise<InstanceVar
           })
         }
 
-        if (input.type === 'VirtualSet' && input.selectedIndex !== undefined) {
+        if (input.type === 'PowerPoint' && input.selectedIndex !== undefined) {
           variables[`dynamic_input_${dynamic + 1}_selected`] = input.selectedIndex
         }
 
-        if (input.type === 'Photos') {
+        if (input.type === 'Photos' || input.type === 'VideoList' || input.type === 'VirtualSet') {
           variables[`dynamic_input_${dynamic + 1}_selected`] = input.position
+          variables[`dynamic_input_${dynamic + 1}_selectedindex`] = input.selectedIndex
           variables[`dynamic_input_${dynamic + 1}_selected_name`] = input.title.split(`${input.shortTitle} - `)[1]
         }
 
@@ -402,44 +447,59 @@ export const dynamicValues = async (instance: VMixInstance): Promise<InstanceVar
           variables[`dynamic_input_${dynamic + 1}_call_audio_source`] = input.callAudioSource
         }
 
-        let volume
-        let volumedB
-        let volumeLinear
+        if (instance.config.variablesShowInputVolume) {
+          let volume
+          let volumedB
+          let volumeLinear
 
-        if (input.volume !== undefined) {
-          volume = input.volume.toFixed(2)
-          volumedB = volumeTodB(input.volume).toFixed(1)
-          volumeLinear = Math.round(volumeToLinear(input.volume))
-        } else {
-          volume = ''
-          volumedB = ''
-          volumeLinear = ''
+          if (input.volume !== undefined) {
+            volume = input.volume.toFixed(2)
+            volumedB = volumeTodB(input.volume).toFixed(1)
+            volumeLinear = Math.round(volumeToLinear(input.volume))
+          } else {
+            volume = ''
+            volumedB = ''
+            volumeLinear = ''
+          }
+
+          variables[`dynamic_input_${dynamic + 1}_volume`] = volume
+          variables[`dynamic_input_${dynamic + 1}_volume_db`] = volumedB
+          variables[`dynamic_input_${dynamic + 1}_volume_linear`] = volumeLinear
+
+          if (input.volumeF1 !== undefined) {
+            variables[`dynamic_input_${dynamic + 1}_volume_f1`] = (input.volumeF1 * 100).toFixed(2)
+            variables[`dynamic_input_${dynamic + 1}_volume_f1_db`] = volumeTodB(input.volumeF1 * 100).toFixed(1)
+            variables[`dynamic_input_${dynamic + 1}_volume_f1_linear`] = Math.round(volumeToLinear(input.volumeF1 * 100))
+          }
+
+          if (input.volumeF2 !== undefined) {
+            variables[`dynamic_input_${dynamic + 1}_volume_f2`] = (input.volumeF2 * 100).toFixed(2)
+            variables[`dynamic_input_${dynamic + 1}_volume_f2_db`] = volumeTodB(input.volumeF2 * 100).toFixed(1)
+            variables[`dynamic_input_${dynamic + 1}_volume_f2_linear`] = Math.round(volumeToLinear(input.volumeF2 * 100))
+          }
+
+          if (input.meterF1 !== undefined) {
+            variables[`dynamic_input_${dynamic + 1}_meterf1`] = volumeTodB(input.meterF1 * 100).toFixed(1)
+          }
+          if (input.meterF2 !== undefined) {
+            variables[`dynamic_input_${dynamic + 1}_meterf2`] = volumeTodB(input.meterF2 * 100).toFixed(1)
+          }
+
+          const audioLevel = instance.data.audioLevels.find((level) => level.key === input.key)
+          if (audioLevel) {
+            const audioLevelData = instance.data.getAudioLevelData(audioLevel)
+            variables[`dynamic_input_${dynamic + 1}_meterf1_avg_1s`] = volumeTodB(audioLevelData.s1MeterF1Avg * 100).toFixed(1)
+            variables[`dynamic_input_${dynamic + 1}_meterf2_avg_1s`] = volumeTodB(audioLevelData.s1MeterF2Avg * 100).toFixed(1)
+            variables[`dynamic_input_${dynamic + 1}_meterf1_avg_3s`] = volumeTodB(audioLevelData.s3MeterF1Avg * 100).toFixed(1)
+            variables[`dynamic_input_${dynamic + 1}_meterf2_avg_3s`] = volumeTodB(audioLevelData.s3MeterF2Avg * 100).toFixed(1)
+            variables[`dynamic_input_${dynamic + 1}_meterf1_peak_1s`] = volumeTodB(audioLevelData.s1MeterF1Peak * 100).toFixed(1)
+            variables[`dynamic_input_${dynamic + 1}_meterf2_peak_1s`] = volumeTodB(audioLevelData.s1MeterF2Peak * 100).toFixed(1)
+            variables[`dynamic_input_${dynamic + 1}_meterf1_peak_3s`] = volumeTodB(audioLevelData.s3MeterF1Peak * 100).toFixed(1)
+            variables[`dynamic_input_${dynamic + 1}_meterf2_peak_3s`] = volumeTodB(audioLevelData.s3MeterF2Peak * 100).toFixed(1)
+          }
         }
 
-        variables[`dynamic_input_${dynamic + 1}_volume`] = volume
-        variables[`dynamic_input_${dynamic + 1}_volume_db`] = volumedB
-        variables[`dynamic_input_${dynamic + 1}_volume_linear`] = volumeLinear
         variables[`dynamic_input_${dynamic + 1}_framedelay`] = input.frameDelay ?? 0
-
-        variables[`dynamic_input_${dynamic + 1}_volume_f1`] = ''
-        variables[`dynamic_input_${dynamic + 1}_volume_f1_db`] = ''
-        variables[`dynamic_input_${dynamic + 1}_volume_f1_linear`] = ''
-
-        if (input.volumeF1 !== undefined) {
-          variables[`dynamic_input_${dynamic + 1}_volume_f1`] = (input.volumeF1 * 100).toFixed(2)
-          variables[`dynamic_input_${dynamic + 1}_volume_f1_db`] = volumeTodB(input.volumeF1 * 100).toFixed(1)
-          variables[`dynamic_input_${dynamic + 1}_volume_f1_linear`] = Math.round(volumeToLinear(input.volumeF1 * 100))
-        }
-
-        variables[`dynamic_input_${dynamic + 1}_volume_f2`] = ''
-        variables[`dynamic_input_${dynamic + 1}_volume_f2_db`] = ''
-        variables[`dynamic_input_${dynamic + 1}_volume_f2_linear`] = ''
-
-        if (input.volumeF2 !== undefined) {
-          variables[`dynamic_input_${dynamic + 1}_volume_f2`] = (input.volumeF2 * 100).toFixed(2)
-          variables[`dynamic_input_${dynamic + 1}_volume_f2_db`] = volumeTodB(input.volumeF2 * 100).toFixed(1)
-          variables[`dynamic_input_${dynamic + 1}_volume_f2_linear`] = Math.round(volumeToLinear(input.volumeF2 * 100))
-        }
       }
     }
   }
