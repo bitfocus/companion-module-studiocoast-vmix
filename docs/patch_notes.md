@@ -1,5 +1,8 @@
 # Patch Notes
 
+**v4.1.1**
+- Fixed several issues relating to Variable generation
+
 **v4.1.0**
 - Added `Title - Set title Image` and `Title - Set title Image Visibility` Actions for setting images in a Title input and adjusting their visibility
 - Added `Replay - Play Events by ID` Action, allowing playing 1 or more events by ID rather than the current `Replay - Play Events` Action which uses Event Number
