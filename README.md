@@ -34,6 +34,9 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 
 
 # Recent Patches
+**v4.1.2**
+- Fixed an issue with Mix variables not correctly updating if the Preview or Program was set to none
+
 **v4.1.1**
 - Fixed several issues relating to Variable generation
 

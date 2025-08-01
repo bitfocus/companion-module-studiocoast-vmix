@@ -1,5 +1,8 @@
 # Patch Notes
 
+**v4.1.2**
+- Fixed an issue with Mix variables not correctly updating if the Preview or Program was set to none
+
 **v4.1.1**
 - Fixed several issues relating to Variable generation
 

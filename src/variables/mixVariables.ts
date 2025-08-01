@@ -78,8 +78,8 @@ export const mixDefinitions = async (instance: VMixInstance): Promise<CompanionV
     const mixPreviewInput = await instance.data.getInput(mix.preview)
 
     for (const type of mixTypes) {
-      const input = type === 'preview' ? mixPreviewInput : mixProgramInput
-      if (!input) return
+      const input = type === 'Preview' ? mixPreviewInput : mixProgramInput
+      if (!input) continue
 
       definitions.push(
         { name: `Mix ${id} ${type}`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}` },
@@ -195,7 +195,7 @@ export const mixValues = async (instance: VMixInstance): Promise<VariablesMixVal
 
     for (const type of mixTypes) {
       const input = type === 'preview' ? mixPreviewInput : mixProgramInput
-      if (!input) return
+      if (!input) continue
 
       const inputAudio = input.muted === undefined ? false : input.muted
       variables[`mix_${id}_${type}`] = mix[type as 'preview' | 'program']
