@@ -290,6 +290,7 @@ Note: Input Names in variable IDs support `a to z`, `0 to 9`, `-`, `_`, and `.`.
 | ---------------------------------- |
 | fullscreen\_`FullScreenID`\_source |
 | output\_`OutputID`\_source         |
+| output\_`OutputID`\_omt            |
 | output\_`OutputID`\_ndi            |
 | output\_`OutputID`\_srt            |
 | output\_`OutputID`\_type           |
@@ -297,7 +298,7 @@ Note: Input Names in variable IDs support `a to z`, `0 to 9`, `-`, `_`, and `.`.
 
 # Overlay Variables
 
-`OverlayID` = 1 to 4
+`OverlayID` = 1 to 8
 
 | Variable                         |
 | -------------------------------- |
@@ -319,6 +320,7 @@ Note: Input Names in variable IDs support `a to z`, `0 to 9`, `-`, `_`, and `.`.
 | replay_eventsb      |
 | replay_cameraa      |
 | replay_camerab      |
+| replay_quad_view    |
 | replay_speed        |
 | replay_speeda       |
 | replay_speedb       |

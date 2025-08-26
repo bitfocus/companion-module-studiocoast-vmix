@@ -450,6 +450,10 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
         variables[`input_${type}_selected_name`] = input.title.split(`${input.shortTitle} - `)[1]
       }
 
+			if (input.type === 'GT') {
+        variables[`input_${type}_selectedindex`] = input.selectedIndex
+			}
+
       if (input.type === 'VideoCall') {
         let audioSource = input.callAudioSource as string
         if (audioSource.startsWith('Bus')) {
