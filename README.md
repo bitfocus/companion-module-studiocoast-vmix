@@ -45,7 +45,7 @@ This module now supports Companions HTTP API, providing endpoints that can be us
   - Added `Replay - Quad View` Feedback for the new Replay Quad View mode
   - Updated `General - Output NDI/SRT Status` is now `General - Output NDI/OMT/SRT Status`, and supports showing if OMT is enabled on an output
 - Variables:
-  - Added `output_*X*_omt` variables to show OMT status on outputs 1 to 4
+  - Added `output_X_omt` variables to show OMT status on outputs 1 to 4
   - Updated Overlay variables to support 8 overlays
   - Added `replay_quad_view` variable to show if Quad View mode is enabled
 
