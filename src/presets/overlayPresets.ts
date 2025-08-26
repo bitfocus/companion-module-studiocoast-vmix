@@ -15,7 +15,7 @@ export const getOverlayPresets = (): VMixPresetArray => {
       },
       steps: [
         {
-          down: [{ actionId: 'overlayFunctions', options: { functionID: 'OverlayInputAllOff', input: '', mix: '1', mixVariable: '' } }],
+          down: [{ actionId: 'overlayFunctions', options: { type: 'OverlayInputAllOff', input: '', overlay: '1', mix: 1, mixVariable: '' } }],
           up: [],
         },
       ],
@@ -23,7 +23,7 @@ export const getOverlayPresets = (): VMixPresetArray => {
     },
   ]
 
-  for (let i = 1; i < 5; i++) {
+  for (let i = 1; i < 9; i++) {
     overlayPresets.push(
       {
         category: 'Overlays',
@@ -46,7 +46,7 @@ export const getOverlayPresets = (): VMixPresetArray => {
             down: [
               {
                 actionId: 'overlayFunctions',
-                options: { functionID: `OverlayInput${i}` as 'OverlayInput1', input: '', mix: '1', mixVariable: '' },
+                options: { type: 'OverlayInput', input: '', overlay: `${i}`, mix: 1, mixVariable: '' },
               },
             ],
             up: [],
@@ -80,7 +80,7 @@ export const getOverlayPresets = (): VMixPresetArray => {
             down: [
               {
                 actionId: 'overlayFunctions',
-                options: { functionID: `PreviewOverlayInput${i}` as 'PreviewOverlayInput1', input: '', mix: '1', mixVariable: '' },
+                options: { type: 'PreviewOverlayInput', input: '', overlay: '1', mix: 1, mixVariable: '' },
               },
             ],
             up: [],
@@ -114,7 +114,41 @@ export const getOverlayPresets = (): VMixPresetArray => {
             down: [
               {
                 actionId: 'overlayFunctions',
-                options: { functionID: `OverlayInput${i}In` as 'OverlayInput1In', input: '', mix: '1', mixVariable: '' },
+                options: { type: 'In', input: '', overlay: '1', mix: 1, mixVariable: '' },
+              },
+            ],
+            up: [],
+          },
+        ],
+        feedbacks: [
+          {
+            feedbackId: 'overlayStatus',
+            options: {
+              input: '',
+              overlay: i.toString(),
+              fg: combineRgb(255, 255, 255),
+              bgPreview: combineRgb(0, 255, 0),
+              bgProgram: combineRgb(255, 0, 0),
+            },
+          },
+        ],
+      },
+      {
+        category: 'Overlays',
+        name: `Overlay ${i} Last`,
+        type: 'button',
+        style: {
+          text: `Overlay ${i} Last`,
+          size: '14',
+          color: combineRgb(255, 255, 255),
+          bgcolor: combineRgb(0, 0, 0),
+        },
+        steps: [
+          {
+            down: [
+              {
+                actionId: 'overlayFunctions',
+                options: { type: 'Last', input: '', overlay: '1', mix: 1, mixVariable: '' },
               },
             ],
             up: [],
@@ -148,7 +182,7 @@ export const getOverlayPresets = (): VMixPresetArray => {
             down: [
               {
                 actionId: 'overlayFunctions',
-                options: { functionID: `OverlayInput${i}Out` as 'OverlayInput1Out', input: '', mix: '1', mixVariable: '' },
+                options: { type: 'Out', input: '', overlay: '1', mix: 1, mixVariable: '' },
               },
             ],
             up: [],
@@ -182,7 +216,7 @@ export const getOverlayPresets = (): VMixPresetArray => {
             down: [
               {
                 actionId: 'overlayFunctions',
-                options: { functionID: `OverlayInput${i}Off` as 'OverlayInput1Off', input: '', mix: '1', mixVariable: '' },
+                options: { type: 'Off', input: '', overlay: '1', mix: 1, mixVariable: '' },
               },
             ],
             up: [],
@@ -216,7 +250,7 @@ export const getOverlayPresets = (): VMixPresetArray => {
             down: [
               {
                 actionId: 'overlayFunctions',
-                options: { functionID: `OverlayInput${i}Zoom` as 'OverlayInput1Zoom', input: '', mix: '1', mixVariable: '' },
+                options: { type: 'Zoom', input: '', overlay: '1', mix: 1, mixVariable: '' },
               },
             ],
             up: [],

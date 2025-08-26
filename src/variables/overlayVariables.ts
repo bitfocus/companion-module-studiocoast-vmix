@@ -7,7 +7,7 @@ type VariablesOverlayValues = Record<VariablesOverlayIDs, string | number | unde
 
 export const overlayDefinitions = (instance: VMixInstance): CompanionVariableDefinition[] => {
   const definitions: CompanionVariableDefinition[] = []
-  const overlays = [1, 2, 3, 4]
+  const overlays = [1, 2, 3, 4, 5, 6, 7, 8]
 
   if (!instance.config.variablesShowOverlays) return definitions
 
@@ -34,7 +34,7 @@ export const overlayValues = async (instance: VMixInstance): Promise<VariablesOv
     return overlay && overlay.input !== null ? await instance.data.getInput(overlay.input) : null
   }
 
-  const overlays = [0, 1, 2, 3]
+  const overlays = [0, 1, 2, 3, 4, 5, 6, 7]
   for (const id of overlays) {
     if (instance.data.overlays[id] && instance.data.overlays[id].input !== null) {
       const overlay = await getOverlayInput(id + 1)

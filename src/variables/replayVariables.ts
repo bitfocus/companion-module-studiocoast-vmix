@@ -11,6 +11,7 @@ type VariablesReplayIDs =
   | 'replay_eventsb'
   | 'replay_cameraa'
   | 'replay_camerab'
+  | 'replay_quad_view'
   | 'replay_speed'
   | 'replay_speeda'
   | 'replay_speedb'
@@ -35,6 +36,7 @@ export const replayDefinitions = (instance: VMixInstance): CompanionVariableDefi
     { name: 'Replay Events B', variableId: 'replay_eventsb' },
     { name: 'Replay Camera A', variableId: 'replay_cameraa' },
     { name: 'Replay Camera B', variableId: 'replay_camerab' },
+    { name: 'Replay Quad View', variableId: 'replay_quad_view' },
     { name: 'Replay Speed', variableId: 'replay_speed' },
     { name: 'Replay Speed A', variableId: 'replay_speeda' },
     { name: 'Replay Speed B', variableId: 'replay_speedb' },
@@ -60,6 +62,7 @@ export const replayValues = async (instance: VMixInstance): Promise<VariablesRep
   variables.replay_eventsb = instance.data.replay.eventsB
   variables.replay_cameraa = instance.data.replay.cameraA
   variables.replay_camerab = instance.data.replay.cameraB
+  variables.replay_quad_view = instance.data.replay.quadMode.toString()
   variables.replay_speed = instance.data.replay.speed
   variables.replay_speeda = instance.data.replay.speedA
   variables.replay_speedb = instance.data.replay.speedB

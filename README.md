@@ -34,6 +34,21 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 
 
 # Recent Patches
+**v4.2.0**
+- Added support for vMix 29 Beta
+- Actions:
+  - Updated `Overlay - Functions` to support 8 overlays
+  - Updated `Transition - Auto/Stinger Transition` to support 8 stingers
+  - Added `Replay - Quad View` Action to Toggle, set On, or set Off, Quad View mode
+  - Added `Replay - Set/Append Event Text` and `Replay - Clear Event Text` Actions for setting, appending, or clearing, text on an Replay Event
+- Feedbacks:
+  - Added `Replay - Quad View` Feedback for the new Replay Quad View mode
+  - Updated `General - Output NDI/SRT Status` is now `General - Output NDI/OMT/SRT Status`, and supports showing if OMT is enabled on an output
+- Variables:
+  - Added `output_*X*_omt` variables to show OMT status on outputs 1 to 4
+  - Updated Overlay variables to support 8 overlays
+  - Added `replay_quad_view` variable to show if Quad View mode is enabled
+
 **v4.1.2**
 - Fixed an issue with Mix variables not correctly updating if the Preview or Program was set to none
 
@@ -46,32 +61,6 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 - Added a Config option to control if Input Variables should be generated with a lowercase name or match the case in vMix (with special characters still removed)
 - Added `output_X_type` and `output_X_input_name` Variables for the 4 vMix outputs. When the type is `Input` the `output_X_input_name` Variable will show the name of the input as opposed to `output_X_source` which only shows `Input19` for example.
 - Fixed feedback on an inputs playing state being updated by Activator data, improving responsiveness in slow API poll rate environments
-
-**v4.0.4**
-- Fixed a crash when running upgrade scripts on certain Companion versions
-
-**v4.0.3**
-- Fixed an issue with certain config fields resetting themselves due to a bug with Companion Core
-
-**v4.0.2**
-- Fixed an issue with missing Dynamic Input variables
-
-**v4.0.1**
-- Removed now redundant logging of PID
-- Fixed one debug option not being hidden when debug options are hidden
-- Fixed several typos
-
-**v4.0.0**
-- Changes to Variable generation based on config options allowing granular control over what variables are generated, resulting in significant performance benefits by only generating the variables a user plans to use
-- Added Variable list doc [docs/variables.md](./docs/variables.md)
-- Added `preset` variable for the currently loaded preset
-- Added `input_X_full_title`, `mix_X_preview_full_title`, `mix_X_program_full_title`, `dynamic_input_X_full_title` variables, which for inputs such as Lists contain the short title and the name of the current item
-- Added `input_X_selectedindex` variable for Photo, VideoList, and VirtualSet, input types
-- `input_X_remaining_mm:ss` renamed to `input_X_remaining_mm.ss`
-- `input_X_remaining_mm:ss.ms` renamed to `input_X_remaining_mm.ss.ms`
-- Fixed missing Stream 4 and 5 options in actions/feedbacks
-- Added Local Variable support (such as $(this:page), $(this:row), etc...) to Actions that support parsing variables
-- Better support for Sequential Action Group (keep in mind vMix only acknowledges receiving a command, not that the command execution is complete, so some use of Wait actions may still be required in an Action Group sequence)
 
 
 Older patch notes available in [docs/patch_notes.md](./docs/patch_notes.md)

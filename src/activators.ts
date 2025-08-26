@@ -116,6 +116,11 @@ const eventHandlers: { [key: string]: ActivatorEventHandlers | null } = {
   ReplayRecording: 'handlerReplay',
   ReplayPlayForward: 'handlerReplay',
   ReplayPlayBackward: 'handlerReplay',
+  ReplayLive: 'handlerReplay',
+  ReplayChannelAB: 'handlerReplay',
+  ReplayChannelA: 'handlerReplay',
+  ReplayChannelB: 'handlerReplay',
+  ReplayQuadMode: 'handlerReplay',
 
   VideoCallAudioSourceMaster: 'handlerVideoCall',
   VideoCallAudioSourceHeadphones: 'handlerVideoCall',
@@ -167,10 +172,18 @@ const eventHandlers: { [key: string]: ActivatorEventHandlers | null } = {
   Overlay2: null,
   Overlay3: null,
   Overlay4: null,
+  Overlay5: null,
+  Overlay6: null,
+  Overlay7: null,
+  Overlay8: null,
   Overlay1Any: null,
   Overlay2Any: null,
   Overlay3Any: null,
   Overlay4Any: null,
+  Overlay5Any: null,
+  Overlay6Any: null,
+  Overlay7Any: null,
+  Overlay8Any: null,
 
   // Unused
   InputHeadphones: null,
@@ -407,6 +420,16 @@ export class Activators {
       this.updateBuffer('replayStatus')
     } else if (params[0] === 'ReplayPlaying') {
       this.instance.data.replay.live = params[1] === '1'
+    } else if (params[0] === 'ReplayLive') {
+      this.instance.data.replay.live = params[1] === '1'
+      this.updateBuffer('replayStatus')
+    } else if (params[0] === 'ReplayChannelAB' || params[0] === 'ReplayChannelA' || params[0] === 'ReplayChannelB') {
+      const channel = params[0].substring(13) as 'AB' | 'A' | 'B'
+      if (params[1] === '1') this.instance.data.replay.channelMode = channel
+      this.updateBuffer('replaySelectedChannel')
+    } else if (params[0] === 'ReplayQuadMode') {
+      this.instance.data.replay.quadMode = params[1] === '1'
+      this.updateBuffer('replayQuadMode')
     }
   }
 
@@ -474,6 +497,7 @@ export class Activators {
   readonly parse = (message: string): void => {
     const params = message.split(' ')
     const eventType = eventHandlers[params[0]]
+    console.log(params)
 
     if (eventType === undefined) {
       // Limit warnings to once per unknown activator

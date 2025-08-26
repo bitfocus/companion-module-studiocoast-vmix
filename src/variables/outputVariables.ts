@@ -5,6 +5,7 @@ type VariablesOutputIDs =
   | `fullscreen_${number}_source`
   | `output_${number}_source`
   | `output_${number}_ndi`
+  | `output_${number}_omt`
   | `output_${number}_srt`
   | `output_${number}_type`
   | `output_${number}_input_name`
@@ -23,6 +24,7 @@ export const outputDefinitions = (instance: VMixInstance): CompanionVariableDefi
     definitions.push(
       { name: `Output ${i} Source`, variableId: `output_${i}_source` },
       { name: `Output ${i} NDI`, variableId: `output_${i}_ndi` },
+      { name: `Output ${i} OMT`, variableId: `output_${i}_omt` },
       { name: `Output ${i} SRT`, variableId: `output_${i}_srt` },
       { name: `Output ${i} Type`, variableId: `output_${i}_type` },
       { name: `Output ${i} Input Name`, variableId: `output_${i}_input_name` },
@@ -39,26 +41,15 @@ export const outputValues = async (instance: VMixInstance): Promise<VariablesOut
 
   variables['fullscreen_1_source'] = ''
   variables['fullscreen_2_source'] = ''
-  variables['output_1_source'] = ''
-  variables['output_1_ndi'] = ''
-  variables['output_1_srt'] = ''
-  variables['output_1_type'] = ''
-  variables['output_1_input_name'] = ''
-  variables['output_2_source'] = ''
-  variables['output_2_ndi'] = ''
-  variables['output_2_srt'] = ''
-  variables['output_2_type'] = ''
-  variables['output_2_input_name'] = ''
-  variables['output_3_source'] = ''
-  variables['output_3_ndi'] = ''
-  variables['output_3_srt'] = ''
-  variables['output_3_type'] = ''
-  variables['output_3_input_name'] = ''
-  variables['output_4_source'] = ''
-  variables['output_4_ndi'] = ''
-  variables['output_4_srt'] = ''
-  variables['output_4_type'] = ''
-  variables['output_4_input_name'] = ''
+
+  for (let i = 1; i < 5; i++) {
+    variables[`output_${i}_source`] = ''
+    variables[`output_${i}_ndi`] = ''
+    variables[`output_${i}_omt`] = ''
+    variables[`output_${i}_srt`] = ''
+    variables[`output_${i}_type`] = ''
+    variables[`output_${i}_input_name`] = ''
+  }
 
   for (const output of instance.data.outputs) {
     let source = ''
@@ -77,6 +68,7 @@ export const outputValues = async (instance: VMixInstance): Promise<VariablesOut
 
     if (output.type === 'output') {
       variables[`output_${output.number}_ndi`] = output.ndi.toString()
+      variables[`output_${output.number}_omt`] = output.omt.toString()
       variables[`output_${output.number}_srt`] = output.srt.toString()
       variables[`output_${output.number}_type`] = output.source
     }

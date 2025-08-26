@@ -1,5 +1,6 @@
 import { combineRgb } from '@companion-module/base'
 import type { VMixFeedback, FeedbackCallback } from './feedback'
+import { type EmptyOptions } from '../utils'
 import type VMixInstance from '../index'
 
 type ReplayStatusOptions = {
@@ -20,19 +21,23 @@ type ReplaySelectedChannelOptions = {
   channel: 'AB' | 'A' | 'B'
 }
 
+type ReplayQuadModeOptions = EmptyOptions
+
 type ReplayStatusCallback = FeedbackCallback<'replayStatus', ReplayStatusOptions>
 type ReplayEventsCallback = FeedbackCallback<'replayEvents', ReplayEventsOptions>
 type ReplayCameraCallback = FeedbackCallback<'replayCamera', ReplayCameraOptions>
 type ReplaySelectedChannelCallback = FeedbackCallback<'replaySelectedChannel', ReplaySelectedChannelOptions>
+type ReplayQuadModeCallback = FeedbackCallback<'replayQuadMode', ReplayQuadModeOptions>
 
 export interface ReplayFeedbacks {
   replayStatus: VMixFeedback<ReplayStatusCallback>
   replayEvents: VMixFeedback<ReplayEventsCallback>
   replayCamera: VMixFeedback<ReplayCameraCallback>
   replaySelectedChannel: VMixFeedback<ReplaySelectedChannelCallback>
+  replayQuadMode: VMixFeedback<ReplayQuadModeCallback>
 }
 
-export type ReplayCallbacks = ReplayStatusCallback | ReplayEventsCallback | ReplayCameraCallback | ReplaySelectedChannelCallback
+export type ReplayCallbacks = ReplayStatusCallback | ReplayEventsCallback | ReplayCameraCallback | ReplaySelectedChannelCallback | ReplayQuadModeCallback
 
 export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => {
   return {
@@ -170,6 +175,20 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
       ],
       callback: (feedback) => {
         return instance.data.replay.channelMode && instance.data.replay.channelMode === feedback.options.channel
+      },
+    },
+
+    replayQuadMode: {
+      type: 'boolean',
+      name: 'Replay - Quad View',
+      description: 'Indicates if Quad View is enabled',
+      defaultStyle: {
+        color: combineRgb(0, 0, 0),
+        bgcolor: combineRgb(255, 0, 0),
+      },
+      options: [],
+      callback: (_feedback) => {
+        return instance.data.replay.quadMode
       },
     },
   }

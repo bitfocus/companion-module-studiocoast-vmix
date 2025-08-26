@@ -804,6 +804,49 @@ const upgradeV4_1_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   return changes
 }
 
+const upgradeV4_2_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config> => {
+  const actions: any = props.actions
+  const changes: CompanionStaticUpgradeResult<Config> = {
+    updatedConfig: null,
+    updatedActions: [],
+    updatedFeedbacks: [],
+  }
+
+  actions.forEach((action: any) => {
+    if (action.actionId === 'overlayFunctions' && action.options.functionID !== undefined) {
+      const functionID: string = action.options.functionID
+      if (functionID === 'OverlayInput1' || functionID === 'OverlayInput2' || functionID === 'OverlayInput3' || functionID === 'OverlayInput4') {
+        action.options.type = 'OverlayInput'
+        action.options.overlay = functionID.charAt(12)
+      } else if (functionID === 'PreviewOverlayInput1' || functionID === 'PreviewOverlayInput2' || functionID === 'PreviewOverlayInput3' || functionID === 'PreviewOverlayInput4') {
+        action.options.type = 'PreviewOverlayInput'
+        action.options.overlay = functionID.charAt(19)
+      } else if (functionID === 'OverlayInput1In' || functionID === 'OverlayInput2In' || functionID === 'OverlayInput3In' || functionID === 'OverlayInput4In') {
+        action.options.type = 'In'
+        action.options.overlay = functionID.charAt(12)
+      } else if (functionID === 'OverlayInput1Out' || functionID === 'OverlayInput2Out' || functionID === 'OverlayInput3Out' || functionID === 'OverlayInput4Out') {
+        action.options.type = 'Out'
+        action.options.overlay = functionID.charAt(12)
+      } else if (functionID === 'OverlayInput1Off' || functionID === 'OverlayInput2Off' || functionID === 'OverlayInput3Off' || functionID === 'OverlayInput4Off') {
+        action.options.type = 'Off'
+        action.options.overlay = functionID.charAt(12)
+      } else if (functionID === 'OverlayInput1Zoom' || functionID === 'OverlayInput2Zoom' || functionID === 'OverlayInput3Zoom' || functionID === 'OverlayInput4Zoom') {
+        action.options.type = 'Zoom'
+        action.options.overlay = functionID.charAt(12)
+      } else if (functionID === 'OverlayInputAllOff') {
+        action.options.type = 'OverlayInputAllOff'
+        action.options.overlay = ''
+      }
+
+      delete action.options.functionID
+
+      changes.updatedActions.push(action)
+    }
+  })
+
+  return changes
+}
+
 export const getUpgrades = (): CompanionStaticUpgradeScript<Config>[] => {
   return [
     upgradeV1_2_0,
@@ -820,5 +863,6 @@ export const getUpgrades = (): CompanionStaticUpgradeScript<Config>[] => {
     upgradeV4_0_0,
     upgradeV4_0_2,
     upgradeV4_1_0,
+    upgradeV4_2_0,
   ]
 }

@@ -160,6 +160,21 @@ type ReplayToggleCameraOptions = {
 
 type ReplayShowHideOptions = EmptyOptions
 
+type ReplayQuadModeOptions = {
+  functionID: 'ReplayToggleQuadMode' | 'ReplayQuadModeOn' | 'ReplayQuadModeOff'
+}
+
+type ReplayEventTextOptions = {
+  type: 'Set' | 'Append'
+  target: 'Last' | 'Selected'
+  camera: string
+  text: string
+}
+
+type ReplayEventTextClearOptions = {
+  target: 'Last' | 'Selected'
+}
+
 type ReplayACameraCallback = ActionCallback<'replayACamera', ReplayACameraOptions>
 type ReplayBCameraCallback = ActionCallback<'replayBCamera', ReplayBCameraOptions>
 type ReplayCameraCallback = ActionCallback<'replayCamera', ReplayCameraOptions>
@@ -190,6 +205,9 @@ type ReplayPlayAllEventsToOutputCallback = ActionCallback<'replayPlayAllEventsTo
 type ReplayStopEventsCallback = ActionCallback<'replayStopEvents', ReplayStopEventsOptions>
 type ReplayToggleCameraCallback = ActionCallback<'replayToggleCamera', ReplayToggleCameraOptions>
 type ReplayShowHideCallback = ActionCallback<'replayShowHide', ReplayShowHideOptions>
+type ReplayQuadModeCallback = ActionCallback<'replayQuadMode', ReplayQuadModeOptions>
+type ReplayEventTextCallback = ActionCallback<'replayEventText', ReplayEventTextOptions>
+type ReplayEventTextClearCallback = ActionCallback<'replayEventTextClear', ReplayEventTextClearOptions>
 
 export interface ReplayActions {
   replayACamera: VMixAction<ReplayACameraCallback>
@@ -222,6 +240,9 @@ export interface ReplayActions {
   replayStopEvents: VMixAction<ReplayStopEventsCallback>
   replayToggleCamera: VMixAction<ReplayToggleCameraCallback>
   replayShowHide: VMixAction<ReplayShowHideCallback>
+  replayQuadMode: VMixAction<ReplayQuadModeCallback>
+  replayEventText: VMixAction<ReplayEventTextCallback>
+  replayEventTextClear: VMixAction<ReplayEventTextClearCallback>
 
   [key: string]: VMixAction<any>
 }
@@ -257,6 +278,9 @@ export type ReplayCallbacks =
   | ReplayStopEventsCallback
   | ReplayToggleCameraCallback
   | ReplayShowHideCallback
+  | ReplayQuadModeCallback
+  | ReplayEventTextCallback
+  | ReplayEventTextClearCallback
 
 export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): ReplayActions => {
   return {
@@ -753,6 +777,110 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
       description: 'Shows or Hides the Replay window',
       options: [],
       callback: sendBasicCommand,
+    },
+
+    replayQuadMode: {
+      name: 'Replay - Quad View',
+      description: 'Sets Quad View state',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Option',
+          id: 'functionID',
+          default: 'ReplayToggleQuadMode',
+          choices: [
+            { id: 'ReplayQuadModeOn', label: 'On' },
+            { id: 'ReplayQuadModeOff', label: 'Off' },
+            { id: 'ReplayToggleQuadMode', label: 'Toggle' },
+          ],
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    replayEventText: {
+      name: 'Replay - Set/Append Event Text',
+      description: 'Sets, or Appends, text to an Event',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Set / Append',
+          id: 'type',
+          default: 'Set',
+          choices: [
+            { id: 'Set', label: 'Set' },
+            { id: 'Append', label: 'Append' },
+          ],
+        },
+        {
+          type: 'dropdown',
+          label: 'Last Event / Selected Event',
+          id: 'target',
+          default: 'Last',
+          choices: [
+            { id: 'Last', label: 'Last' },
+            { id: 'Selected', label: 'Selected' },
+          ],
+        },
+        {
+          type: 'textinput',
+          label: 'Camera',
+          tooltip: 'Leave empty for default',
+          id: 'camera',
+          default: '',
+          useVariables: true,
+        },
+        {
+          type: 'textinput',
+          label: 'Text',
+          id: 'text',
+          default: '',
+          useVariables: true,
+        },
+      ],
+      callback: async (action, context) => {
+        let camera: string | number = await context.parseVariablesInString(action.options.camera)
+        camera = parseInt(camera)
+        const text = await context.parseVariablesInString(action.options.text)
+
+        let command = `Replay${action.options.type}${action.options.target}EventText`
+
+        if (action.options.camera !== '') {
+          if (isNaN(camera) || camera < 1 || camera > 8) {
+            instance.log('warn', `${camera} is not a valid Replay Camera`)
+            return
+          } else {
+            command += 'Camera'
+            if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${command} Value=${camera},${text}`)
+          }
+        } else {
+          if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${command} Value=${text}`)
+        }
+      },
+    },
+
+    replayEventTextClear: {
+      name: 'Replay - Clear Event Text',
+      description: 'Clears all Event Text for the last or selected Event',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Last Event / Selected Event',
+          id: 'target',
+          default: 'Last',
+          choices: [
+            { id: 'Last', label: 'Last' },
+            { id: 'Selected', label: 'Selected' },
+          ],
+        },
+      ],
+      callback: async (action) => {
+        const command = `ReplaySet${action.options.target}EventTextCamera`
+
+        if (instance.tcp) {
+          for (let i = 1; i < 9; i++) instance.tcp.sendCommand(`FUNCTION ${command} Value=${i},-`)
+        }
+      },
     },
   }
 }

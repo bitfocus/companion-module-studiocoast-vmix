@@ -1,36 +1,11 @@
 import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import { options } from '../utils'
 import type VMixInstance from '../index'
 
 type OverlayFunctionsOptions = {
-  functionID:
-    | 'OverlayInput1'
-    | 'OverlayInput2'
-    | 'OverlayInput3'
-    | 'OverlayInput4'
-    | 'PreviewOverlayInput1'
-    | 'PreviewOverlayInput2'
-    | 'PreviewOverlayInput3'
-    | 'PreviewOverlayInput4'
-    | 'OverlayInput1In'
-    | 'OverlayInput2In'
-    | 'OverlayInput3In'
-    | 'OverlayInput4In'
-    | 'OverlayInput1Out'
-    | 'OverlayInput2Out'
-    | 'OverlayInput3Out'
-    | 'OverlayInput4Out'
-    | 'OverlayInput1Off'
-    | 'OverlayInput2Off'
-    | 'OverlayInput3Off'
-    | 'OverlayInput4Off'
-    | 'OverlayInputAllOff'
-    | 'OverlayInput1Zoom'
-    | 'OverlayInput2Zoom'
-    | 'OverlayInput3Zoom'
-    | 'OverlayInput4Zoom'
+  type: 'OverlayInput' | 'PreviewOverlayInput' | 'In' | 'Last' | 'Out' | 'Off' | 'Zoom' | 'OverlayInputAllOff'
   input: string
-  mix: string
+  overlay: string
+  mix: number
   mixVariable: string
 }
 
@@ -44,7 +19,7 @@ export interface OverlayActions {
 
 export type OverlayCallbacks = OverlayFunctionsCallback
 
-export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): OverlayActions => {
+export const vMixOverlayActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): OverlayActions => {
   return {
     overlayFunctions: {
       name: 'Overlay - Functions',
@@ -53,37 +28,37 @@ export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: Se
         {
           type: 'dropdown',
           label: 'Select Overlay Function',
-          id: 'functionID',
-          default: 'OverlayInput1',
+          id: 'type',
+          default: 'OverlayInput',
           choices: [
-            { id: 'OverlayInput1', label: 'Toggle Overlay 1 on program' },
-            { id: 'OverlayInput2', label: 'Toggle Overlay 2 on program' },
-            { id: 'OverlayInput3', label: 'Toggle Overlay 3 on program' },
-            { id: 'OverlayInput4', label: 'Toggle Overlay 4 on program' },
-            { id: 'PreviewOverlayInput1', label: 'Toggle Overlay 1 on preview' },
-            { id: 'PreviewOverlayInput2', label: 'Toggle Overlay 2 on preview' },
-            { id: 'PreviewOverlayInput3', label: 'Toggle Overlay 3 on preview' },
-            { id: 'PreviewOverlayInput4', label: 'Toggle Overlay 4 on preview' },
-            { id: 'OverlayInput1In', label: 'Transition Overlay 1 on' },
-            { id: 'OverlayInput2In', label: 'Transition Overlay 2 on' },
-            { id: 'OverlayInput3In', label: 'Transition Overlay 3 on' },
-            { id: 'OverlayInput4In', label: 'Transition Overlay 4 on' },
-            { id: 'OverlayInput1Out', label: 'Transition Overlay 1 off' },
-            { id: 'OverlayInput2Out', label: 'Transition Overlay 2 off' },
-            { id: 'OverlayInput3Out', label: 'Transition Overlay 3 off' },
-            { id: 'OverlayInput4Out', label: 'Transition Overlay 4 off' },
-            { id: 'OverlayInput1Off', label: 'Set Overlay 1 off' },
-            { id: 'OverlayInput2Off', label: 'Set Overlay 2 off' },
-            { id: 'OverlayInput3Off', label: 'Set Overlay 3 off' },
-            { id: 'OverlayInput4Off', label: 'Set Overlay 4 off' },
-            { id: 'OverlayInputAllOff', label: 'Set All Overlays off' },
-            { id: 'OverlayInput1Zoom', label: 'Zoom PIP Overlay 1 to/from fullscreen' },
-            { id: 'OverlayInput2Zoom', label: 'Zoom PIP Overlay 2 to/from fullscreen' },
-            { id: 'OverlayInput3Zoom', label: 'Zoom PIP Overlay 3 to/from fullscreen' },
-            { id: 'OverlayInput4Zoom', label: 'Zoom PIP Overlay 4 to/from fullscreen' },
+            { id: `OverlayInput`, label: `Overlay Toggle on Program` },
+            { id: `PreviewOverlayInput`, label: `Overlay Toggle on Preview` },
+            { id: `In`, label: ` Overlay Transition In` },
+            { id: `Out`, label: ` Overlay Transition Out` },
+            { id: `Last`, label: `Overlay Last Input On/Off` },
+            { id: `Off`, label: `Overlay Off` },
+            { id: `Zoom`, label: `Zoom PIP Overlay to/from fullscreen` },
+            { id: 'OverlayInputAllOff', label: 'All Overlays Off' },
           ],
         },
-        options.input,
+        {
+          type: 'textinput',
+          label: 'Input',
+          id: 'input',
+          default: '1',
+          tooltip: 'Number, Name, or GUID',
+          isVisibleExpression: `$(options:type) === 'OverlayInput' || $(options:type) === 'PreviewOverlayInput' || $(options:type) === 'In'`,
+          useVariables: true,
+        },
+        {
+          type: 'textinput',
+          label: 'Overlay',
+          id: 'overlay',
+          default: '1',
+          tooltip: '',
+          isVisibleExpression: `$(options:type) !== 'OverlayInputAllOff'`,
+          useVariables: true,
+        },
         {
           type: 'dropdown',
           label: 'Mix',
@@ -109,26 +84,7 @@ export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: Se
             { id: -1, label: 'Selected' },
             { id: -2, label: 'Variable' },
           ],
-          isVisible: (feedbackOptions) => {
-            let mixSupport = false
-
-            const supportedFunctions = [
-              'OverlayInput1',
-              'OverlayInput2',
-              'OverlayInput3',
-              'OverlayInput4',
-              'OverlayInput1In',
-              'OverlayInput2In',
-              'OverlayInput3In',
-              'OverlayInput4In',
-            ]
-
-            supportedFunctions.forEach((x) => {
-              if (x === feedbackOptions.functionID) mixSupport = true
-            })
-
-            return mixSupport
-          },
+          isVisibleExpression: `$(options:type) !== 'OverlayInputAllOff' && $(options:type) !== 'Off' && $(options:type) !== 'Out' && $(options:type) !== 'Zoom' && $(options:type) !== 'PreviewOverlayInput'`,
         },
         {
           type: 'textinput',
@@ -138,20 +94,10 @@ export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: Se
           tooltip: '',
           isVisible: (feedbackOptions) => {
             let mixSupport = false
-
-            const supportedFunctions = [
-              'OverlayInput1',
-              'OverlayInput2',
-              'OverlayInput3',
-              'OverlayInput4',
-              'OverlayInput1In',
-              'OverlayInput2In',
-              'OverlayInput3In',
-              'OverlayInput4In',
-            ]
+            const supportedFunctions = [`OverlayInput`, `OverlayInputIn`]
 
             supportedFunctions.forEach((x) => {
-              if (x === feedbackOptions.functionID && feedbackOptions.mix === -2) mixSupport = true
+              if (x === feedbackOptions.type && feedbackOptions.mix === -2) mixSupport = true
             })
 
             return mixSupport
@@ -159,7 +105,35 @@ export const vMixOverlayActions = (_instance: VMixInstance, sendBasicCommand: Se
           useVariables: true,
         },
       ],
-      callback: sendBasicCommand,
+      callback: async (action, context) => {
+        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+        let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable, context))[instance.buttonShift.state]
+        mixVariable = parseInt(mixVariable, 10) - 1
+
+        let mix: number = action.options.mix
+        if (mix === -1) mix = instance.routingData.mix
+        if (mix === -2) mix = mixVariable
+
+        const overlayID: string | number = (await instance.parseOption(action.options.overlay, context))[instance.buttonShift.state]
+
+        if (instance.tcp) {
+          if (action.options.type === 'OverlayInput') {
+            return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID} Input=${input}&Mix=${mix}`)
+          } else if (action.options.type === 'PreviewOverlayInput') {
+            return instance.tcp.sendCommand(`FUNCTION PreviewOverlayInput${overlayID} Input=${input}&Mix=${mix}`)
+          } else if (action.options.type === 'OverlayInputAllOff') {
+            return instance.tcp.sendCommand(`FUNCTION OverlayInputAllOff`)
+          } else {
+            if (action.options.type === 'In') {
+              return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type} Input=${input}&Mix=${mix}`)
+            } else if (action.options.type === 'Last') {
+              return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type} Mix=${mix}`)
+            } else {
+              return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type}`)
+            }
+          }
+        }
+      },
     },
   }
 }

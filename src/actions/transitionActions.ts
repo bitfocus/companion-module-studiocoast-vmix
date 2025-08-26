@@ -17,7 +17,7 @@ type TransitionMixOptions = {
 }
 
 type TransitionOptions = {
-  functionID: 'Transition1' | 'Transition2' | 'Transition3' | 'Transition4' | 'Stinger1' | 'Stinger2' | 'Stinger3' | 'Stinger4'
+  functionID: `Transition${number}` | `Stinger${number}`
   mix: MixOptionEntry
   mixVariable: string
 }
@@ -162,6 +162,10 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
             { id: 'Stinger2', label: 'Stinger 2' },
             { id: 'Stinger3', label: 'Stinger 3' },
             { id: 'Stinger4', label: 'Stinger 4' },
+            { id: 'Stinger5', label: 'Stinger 5' },
+            { id: 'Stinger6', label: 'Stinger 6' },
+            { id: 'Stinger7', label: 'Stinger 7' },
+            { id: 'Stinger8', label: 'Stinger 8' },
           ],
         },
         {

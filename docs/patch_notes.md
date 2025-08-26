@@ -1,5 +1,20 @@
 # Patch Notes
 
+**v4.2.0**
+- Added support for vMix 29 Beta
+- Actions:
+  - Updated `Overlay - Functions` to support 8 overlays
+  - Updated `Transition - Auto/Stinger Transition` to support 8 stingers
+  - Added `Replay - Quad View` Action to Toggle, set On, or set Off, Quad View mode
+  - Added `Replay - Set/Append Event Text` and `Replay - Clear Event Text` Actions for setting, appending, or clearing, text on an Replay Event
+- Feedbacks:
+  - Added `Replay - Quad View` Feedback for the new Replay Quad View mode
+  - Updated `General - Output NDI/SRT Status` is now `General - Output NDI/OMT/SRT Status`, and supports showing if OMT is enabled on an output
+- Variables:
+  - Added `output_*X*_omt` variables to show OMT status on outputs 1 to 4
+  - Updated Overlay variables to support 8 overlays
+  - Added `replay_quad_view` variable to show if Quad View mode is enabled
+
 **v4.1.2**
 - Fixed an issue with Mix variables not correctly updating if the Preview or Program was set to none
 

@@ -18,7 +18,7 @@ interface OutputStatusOptions {
 interface OutputNDISRTOptions {
   output: 'Output 1' | 'Output 2' | 'Output 3' | 'Output 4' | 'Custom'
   custom: string
-  type: 'ndi' | 'srt'
+  type: 'ndi' | 'omt' | 'srt'
 }
 
 type StatusOptions = {
@@ -178,7 +178,7 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
 
     outputNDISRT: {
       type: 'boolean',
-      name: 'General - Output NDI/SRT Status',
+      name: 'General - Output NDI/OMT/SRT Status',
       description: 'Requires vMix 28+',
       defaultStyle: {
         color: combineRgb(0, 0, 0),
@@ -213,6 +213,7 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
           default: 'ndi',
           choices: [
             { id: 'ndi', label: 'NDI' },
+            { id: 'omt', label: 'OMT' },
             { id: 'srt', label: 'SRT' },
           ],
         },

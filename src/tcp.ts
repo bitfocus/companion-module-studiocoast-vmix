@@ -177,7 +177,16 @@ export class TCP {
    * @description Request initial Activator data
    */
   public readonly initActivatorData = (): void => {
-    const initialRequests = ['ACTS BusASolo\r\n', 'ACTS BusBSolo\r\n', 'ACTS BusCSolo\r\n', 'ACTS BusDSolo\r\n', 'ACTS BusESolo\r\n', 'ACTS BusFSolo\r\n', 'ACTS BusGSolo\r\n']
+    const initialRequests = [
+      'ACTS BusASolo\r\n',
+      'ACTS BusBSolo\r\n',
+      'ACTS BusCSolo\r\n',
+      'ACTS BusDSolo\r\n',
+      'ACTS BusESolo\r\n',
+      'ACTS BusFSolo\r\n',
+      'ACTS BusGSolo\r\n',
+      'ACTS ReplayQuadMode\r\n',
+    ]
 
     this.sockets.activator?.send(initialRequests.join('')).catch((err) => {
       this.instance.log('debug', err.message)

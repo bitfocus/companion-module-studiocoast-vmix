@@ -171,6 +171,7 @@ export interface Output {
   input: number
   mix: number
   ndi: boolean
+  omt: boolean
   srt: boolean
 }
 
@@ -191,6 +192,7 @@ export interface Replay {
   live: boolean
   forward: boolean
   channelMode: 'AB' | 'A' | 'B'
+  quadMode: boolean
   events: number
   eventsA: number
   eventsB: number
@@ -320,6 +322,7 @@ export class VMixData {
       live: false,
       forward: true,
       channelMode: 'AB',
+      quadMode: false,
       events: 1,
       eventsA: 1,
       eventsB: 1,
@@ -653,6 +656,7 @@ export class VMixData {
           input: parseInt(output.$.inputNumber || 0, 10),
           mix: parseInt(output.$.mix || 0, 10),
           ndi: output.$.ndi || false,
+          omt: output.$.omt || false,
           srt: output.$.srt || false,
         }))
       }
@@ -768,6 +772,7 @@ export class VMixData {
           live: false,
           forward: true,
           channelMode: 'AB',
+          quadMode: false,
           events: 1,
           eventsA: 1,
           eventsB: 1,
@@ -802,6 +807,7 @@ export class VMixData {
             live: replay.$.live,
             forward: this.replay.forward,
             channelMode: replay.$.channelMode ? replay.$.channelMode : 'AB',
+            quadMode: this.replay.quadMode,
             events: parseInt(replay.$.events, 10),
             eventsA: replay.$.eventsA ? parseInt(replay.$.eventsA, 10) : 0,
             eventsB: replay.$.eventsB ? parseInt(replay.$.eventsB, 10) : 0,
