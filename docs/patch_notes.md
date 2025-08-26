@@ -14,6 +14,7 @@
   - Added `output_X_omt` variables to show OMT status on outputs 1 to 4
   - Updated Overlay variables to support 8 overlays
   - Added `replay_quad_view` variable to show if Quad View mode is enabled
+- Fixed `preset` variable not always updating
 
 **v4.1.2**
 - Fixed an issue with Mix variables not correctly updating if the Preview or Program was set to none

@@ -1111,6 +1111,11 @@ export class VMixData {
       changes.add('recording')
     }
 
+    let variablesUpdate = false
+    if (this.version !== newData.version || this.majorVersion !== newData.majorVersion || this.edition !== newData.edition || this.preset !== newData.preset) {
+      variablesUpdate = true
+    }
+
     // Overwrite old data with new data
     this.version = newData.version
     this.majorVersion = newData.majorVersion
@@ -1134,6 +1139,8 @@ export class VMixData {
     // Trigger updates for changes
     if (changes.size > 0) {
       this.instance.checkFeedbacks(...changes)
+      if (this.instance.variables) this.instance.variables.updateVariables()
+    } else if (variablesUpdate) {
       if (this.instance.variables) this.instance.variables.updateVariables()
     } else {
       this.instance.apiProcessing = {
