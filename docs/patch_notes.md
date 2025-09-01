@@ -5,6 +5,7 @@
 - Actions:
   - Updated `Overlay - Functions` to support 8 overlays
   - Updated `Transition - Auto/Stinger Transition` to support 8 stingers
+  - Updated `Transition - Transition Mix` and `Transition - Set Auto Transition Effect` to support the new AlphaFade transition
   - Added `Replay - Quad View` Action to Toggle, set On, or set Off, Quad View mode
   - Added `Replay - Set/Append Event Text` and `Replay - Clear Event Text` Actions for setting, appending, or clearing, text on an Replay Event
 - Feedbacks:
