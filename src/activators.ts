@@ -497,7 +497,6 @@ export class Activators {
   readonly parse = (message: string): void => {
     const params = message.split(' ')
     const eventType = eventHandlers[params[0]]
-    console.log(params)
 
     if (eventType === undefined) {
       // Limit warnings to once per unknown activator

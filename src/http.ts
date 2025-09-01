@@ -221,7 +221,7 @@ export const httpHandler = async (instance: VMixInstance, request: CompanionHTTP
       response.status = 500
       response.body = JSON.stringify({ status: 500, message: `err: ${err}` })
 
-      console.warn(err)
+      instance.log('warn', JSON.stringify(err, null, 2))
     }
   }
 
