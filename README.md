@@ -49,6 +49,7 @@ This module now supports Companions HTTP API, providing endpoints that can be us
   - Added `output_X_omt` variables to show OMT status on outputs 1 to 4
   - Updated Overlay variables to support 8 overlays
   - Added `replay_quad_view` variable to show if Quad View mode is enabled
+  - Added `input_X__layer_Y_titleimage` and `input_X__layer_Y_titlecolor` variables for title inputs image and color values, similar to the titletext variable
 - Fixed `preset` variable not always updating
 
 **v4.1.2**

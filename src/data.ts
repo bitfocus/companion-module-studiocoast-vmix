@@ -101,7 +101,9 @@ export interface Input {
   meterF2?: number
   list?: List[]
   overlay?: Layer[]
-  text?: Text[]
+  text?: TitleText[]
+  image?: TitleImage[]
+  color?: TitleImage[]
   selectedIndex?: number
   callPassword?: string
   callConnected?: boolean
@@ -217,7 +219,19 @@ export interface Status {
   fullscreen: boolean
 }
 
-export interface Text {
+export interface TitleText {
+  index: number
+  name: string
+  value: string
+}
+
+export interface TitleImage {
+  index: number
+  name: string
+  value: string
+}
+
+export interface TitleColor {
   index: number
   name: string
   value: string
@@ -599,6 +613,24 @@ export class VMixData {
               name: text.$.name + '',
               value: text._ === undefined ? '' : text._ + '',
             }))
+          }
+
+          if (input.$.type === 'GT') {
+            if (input.image) {
+              inputData.image = input.image.map((image: any) => ({
+                index: parseInt(image.$.index, 10),
+                name: image.$.name + '',
+                value: image._ === undefined ? '' : image._ + '',
+              }))
+            }
+
+            if (input.color) {
+              inputData.color = input.color.map((color: any) => ({
+                index: parseInt(color.$.index, 10),
+                name: color.$.name + '',
+                value: color._ === undefined ? '' : color._ + '',
+              }))
+            }
           }
 
           if (input.$.type === 'VideoCall') {

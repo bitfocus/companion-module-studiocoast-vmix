@@ -170,6 +170,8 @@ Note: Input Names in variable IDs support `a to z`, `0 to 9`, `-`, `_`, and `.`.
 | input\_`InputID`\_layer\_`LayerIndex`\_cropy1    |
 | input\_`InputID`\_layer\_`LayerIndex`\_cropy2    |
 | input\_`InputID`\_layer\_`TextLayer`\_titletext  |
+| input\_`InputID`\_layer\_`TextLayer`\_titlecolor |
+| input\_`InputID`\_layer\_`TextLayer`\_titleimage |
 | input\_`InputID`\_selected                       |
 | input\_`InputID`\_selectedindex                  |
 | input\_`InputID`\_selected_name                  |

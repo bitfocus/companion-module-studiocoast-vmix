@@ -38,7 +38,7 @@ type VariablesInputIDs =
   | `input_${string}_layer_${number}_cropx2`
   | `input_${string}_layer_${number}_cropy1`
   | `input_${string}_layer_${number}_cropy2`
-  | `input_${string}_layer_${number | string}_titletext`
+  | `input_${string}_layer_${number | string}_title${'text' | 'image' | 'color'}`
   | `input_${string}_selected`
   | `input_${string}_selectedindex`
   | `input_${string}_selected_name`
@@ -171,8 +171,8 @@ export const inputDefinitions = (instance: VMixInstance): CompanionVariableDefin
         }
       }
 
-      if (input.text && (instance.config.variablesShowInputTitleIndex || instance.config.variablesShowInputTitleName)) {
-        input.text.forEach((textLayer) => {
+      if (instance.config.variablesShowInputTitleIndex || instance.config.variablesShowInputTitleName) {
+        input.text?.forEach((textLayer) => {
           if (instance.config.variablesShowInputTitleIndex) {
             inputSet.add({ name: `Input ${title} layer ${textLayer.index} Title Text`, variableId: `input_${type}_layer_${textLayer.index}_titletext` })
           }
@@ -181,6 +181,32 @@ export const inputDefinitions = (instance: VMixInstance): CompanionVariableDefin
             inputSet.add({
               name: `Input ${title} layer ${textLayer.name} Title Text`,
               variableId: `input_${type}_layer_${textLayer.name.replace(/[^a-z0-9-_.]+/gi, '')}_titletext`,
+            })
+          }
+        })
+
+        input.image?.forEach((imageLayer) => {
+          if (instance.config.variablesShowInputTitleIndex) {
+            inputSet.add({ name: `Input ${title} layer ${imageLayer.index} Title Image`, variableId: `input_${type}_layer_${imageLayer.index}_titleimage` })
+          }
+
+          if (instance.config.variablesShowInputTitleName) {
+            inputSet.add({
+              name: `Input ${title} layer ${imageLayer.name} Title Text`,
+              variableId: `input_${type}_layer_${imageLayer.name.replace(/[^a-z0-9-_.]+/gi, '')}_titleimage`,
+            })
+          }
+        })
+
+        input.color?.forEach((imageColor) => {
+          if (instance.config.variablesShowInputTitleIndex) {
+            inputSet.add({ name: `Input ${title} layer ${imageColor.index} Title Color`, variableId: `input_${type}_layer_${imageColor.index}_titlecolor` })
+          }
+
+          if (instance.config.variablesShowInputTitleName) {
+            inputSet.add({
+              name: `Input ${title} layer ${imageColor.name} Title Text`,
+              variableId: `input_${type}_layer_${imageColor.name.replace(/[^a-z0-9-_.]+/gi, '')}_titlecolor`,
             })
           }
         })
@@ -421,10 +447,20 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
         }
       }
 
-      if (input.text && (instance.config.variablesShowInputTitleIndex || instance.config.variablesShowInputTitleName)) {
-        input.text.forEach((textLayer) => {
+      if (instance.config.variablesShowInputTitleIndex || instance.config.variablesShowInputTitleName) {
+        input.text?.forEach((textLayer) => {
           if (instance.config.variablesShowInputTitleIndex) variables[`input_${type}_layer_${textLayer.index}_titletext`] = textLayer.value
           if (instance.config.variablesShowInputTitleName) variables[`input_${type}_layer_${textLayer.name.replace(/[^a-z0-9-_.]+/gi, '')}_titletext`] = textLayer.value
+        })
+
+        input.image?.forEach((imageLayer) => {
+          if (instance.config.variablesShowInputTitleIndex) variables[`input_${type}_layer_${imageLayer.index}_titleimage`] = imageLayer.value
+          if (instance.config.variablesShowInputTitleName) variables[`input_${type}_layer_${imageLayer.name.replace(/[^a-z0-9-_.]+/gi, '')}_titleimage`] = imageLayer.value
+        })
+
+        input.color?.forEach((colorLayer) => {
+          if (instance.config.variablesShowInputTitleIndex) variables[`input_${type}_layer_${colorLayer.index}_titlecolor`] = colorLayer.value
+          if (instance.config.variablesShowInputTitleName) variables[`input_${type}_layer_${colorLayer.name.replace(/[^a-z0-9-_.]+/gi, '')}_titlecolor`] = colorLayer.value
         })
       }
 
@@ -450,9 +486,9 @@ export const inputValues = async (instance: VMixInstance): Promise<InstanceVaria
         variables[`input_${type}_selected_name`] = input.title.split(`${input.shortTitle} - `)[1]
       }
 
-			if (input.type === 'GT') {
+      if (input.type === 'GT') {
         variables[`input_${type}_selectedindex`] = input.selectedIndex
-			}
+      }
 
       if (input.type === 'VideoCall') {
         let audioSource = input.callAudioSource as string
