@@ -114,7 +114,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Layer',
           id: 'value',
           default: '',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: sendBasicCommand,
@@ -129,7 +129,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'MultiView Input',
           id: 'input',
           default: '',
-          useVariables: true,
+          useVariables: { local: true },
         },
         {
           type: 'number',
@@ -144,7 +144,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Input to use on Layer',
           id: 'layerInput',
           default: '',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: async (action, context) => {
@@ -173,7 +173,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Input to use on Layer',
           id: 'layerInput',
           default: '',
-          useVariables: true,
+          useVariables: { local: true },
         },
         options.mixSelect,
         options.mixVariable,
@@ -209,7 +209,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Input to use on Layer',
           id: 'layerInput',
           default: '1',
-          useVariables: true,
+          useVariables: { local: true },
         },
         options.mixSelect,
         options.mixVariable,
@@ -237,7 +237,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Destination Input',
           id: 'destinationInput',
           default: '1',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: async (action, context) => {
@@ -261,7 +261,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Destination Layer (1-10) of destination Input',
           id: 'destinationLayer',
           default: '',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: async (action, context) => {
@@ -290,7 +290,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Input to be routed to destination (0 to clear layer)',
           id: 'sourceIndex',
           default: '1',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: async (action, context) => {
@@ -331,7 +331,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Layer (1 to 10)',
           id: 'layer',
           default: '1',
-          useVariables: true,
+          useVariables: { local: true },
         },
         {
           type: 'dropdown',
@@ -360,7 +360,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Crop (0 = No Crop, 1 = Full Crop) X1,Y1,X2,Y2',
           id: 'crop',
           default: '0,0,1,1',
-          useVariables: true,
+          useVariables: { local: true },
           isVisible: (options) => {
             return options.setting === 'Crop'
           },
@@ -370,7 +370,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Crop (0 = No Crop, 1 = Full Crop)',
           id: 'crop2',
           default: '0',
-          useVariables: true,
+          useVariables: { local: true },
           isVisible: (options) => {
             const setting = options.setting as string
             return setting !== 'Crop' && setting.startsWith('Crop')
@@ -381,7 +381,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Pan (0 = Centered, -2 = 100% to left/bottom, 2 = 100% to right/top)',
           id: 'pan',
           default: '1',
-          useVariables: true,
+          useVariables: { local: true },
           isVisible: (options) => {
             const setting = options.setting as string
             return setting === 'PanX' || setting === 'PanY'
@@ -392,7 +392,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Pan X / Pan Y position in pixels based on preset resolution',
           id: 'xy',
           default: '1',
-          useVariables: true,
+          useVariables: { local: true },
           isVisible: (options) => {
             const setting = options.setting as string
             return setting === 'X' || setting === 'Y'
@@ -403,7 +403,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Zoom X / Zoom Y position in pixels based on preset resolution',
           id: 'heightWidth',
           default: '1',
-          useVariables: true,
+          useVariables: { local: true },
           isVisible: (options) => {
             const setting = options.setting as string
             return setting === 'Height' || setting === 'Width'
@@ -414,7 +414,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Position and Size in pixels (X,Y,Width,Height)',
           id: 'rectangle',
           default: '1',
-          useVariables: true,
+          useVariables: { local: true },
           isVisible: (options) => {
             const setting = options.setting as string
             return setting === 'Rectangle'
@@ -425,7 +425,7 @@ export const vMixLayerActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Zoom (1 = 100%, 0.5 = 50%, 2 = 200%) uses Zoom X for adjustment',
           id: 'zoom',
           default: '1',
-          useVariables: true,
+          useVariables: { local: true },
           isVisible: (options) => {
             const setting = options.setting as string
             return setting === 'Zoom'

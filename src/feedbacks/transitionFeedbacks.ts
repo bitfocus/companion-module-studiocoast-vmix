@@ -29,7 +29,7 @@ export const vMixTransitionFeedbacks = (instance: VMixInstance): TransitionFeedb
           label: 'Transition Number (1 to 4)',
           id: 'number',
           default: '1',
-          useVariables: true,
+          useVariables: { local: true },
         },
         {
           type: 'dropdown',
@@ -44,7 +44,7 @@ export const vMixTransitionFeedbacks = (instance: VMixInstance): TransitionFeedb
           tooltip: 'Leave empty for any',
           id: 'duration',
           default: '',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       defaultStyle: {

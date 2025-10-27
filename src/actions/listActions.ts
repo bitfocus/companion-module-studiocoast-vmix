@@ -75,7 +75,7 @@ export const vMixListActions = (_instance: VMixInstance, sendBasicCommand: SendB
           label: 'Select Index',
           id: 'value',
           default: '1',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: sendBasicCommand,

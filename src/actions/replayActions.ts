@@ -382,7 +382,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           tooltip: 'Number of previous seconds to use when creating a new event',
           id: 'value',
           default: '10',
-          useVariables: true,
+          useVariables: { local: true },
           isVisible: (options) => {
             return ['ReplayMarkInOut', 'ReplayMarkInOutLive', 'ReplayMarkInOutRecorded'].includes(options.functionID as string)
           },
@@ -393,13 +393,13 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           tooltip: 'Number of seconds into the future to use when creating a new event',
           id: 'value2',
           default: '10',
-          useVariables: true,
+          useVariables: { local: true },
           isVisible: (options) => {
             return options.functionID === 'ReplayMarkInOutLiveFuture'
           },
         },
       ],
-      callback: async (action) => {
+      callback: async (action, context) => {
         const command: any = {
           id: 'replayMark',
           options: { functionID: action.options.functionID },
@@ -413,7 +413,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           command.options.value = action.options.value2
         }
 
-        return sendBasicCommand(command)
+        return sendBasicCommand(command, context)
       },
     },
 
@@ -436,7 +436,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           label: 'Frames',
           id: 'value',
           default: '30',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: sendBasicCommand,
@@ -514,7 +514,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           label: 'Speed',
           id: 'value',
           default: '1',
-          useVariables: true,
+          useVariables: { local: true },
         },
         {
           type: 'textinput',
@@ -522,7 +522,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           id: 'max',
           default: '1',
           tooltip: 'If using a tbar, set this to the max value your tbar sends (eg, 255 for xkeys)',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: async (action, context) => {
@@ -625,7 +625,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           label: 'Frames',
           id: 'value',
           default: '60',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: sendBasicCommand,
@@ -689,6 +689,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           tooltip: '0 is the most recent event, 1 is the next oldest, and so on',
           id: 'value',
           default: '',
+          useVariables: { local: true },
         },
       ],
       callback: sendBasicCommand,
@@ -712,6 +713,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           tooltip: 'Comma separated list of Event IDs',
           id: 'value',
           default: '0000',
+          useVariables: { local: true },
         },
       ],
       callback: sendBasicCommand,
@@ -728,6 +730,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           tooltip: 'Comma separated list of Event IDs',
           id: 'value',
           default: '0000',
+          useVariables: { local: true },
         },
       ],
       callback: sendBasicCommand,
@@ -828,14 +831,14 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           tooltip: 'Leave empty for default',
           id: 'camera',
           default: '',
-          useVariables: true,
+          useVariables: { local: true },
         },
         {
           type: 'textinput',
           label: 'Text',
           id: 'text',
           default: '',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: async (action, context) => {

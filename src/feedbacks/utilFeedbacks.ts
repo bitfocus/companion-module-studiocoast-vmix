@@ -125,7 +125,7 @@ export const vMixUtilFeedbacks = (instance: VMixInstance): UtilFeedbacks => {
           label: 'Text',
           id: 'text',
           default: instance.config.shiftDelimiter,
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: async (feedback, context) => {

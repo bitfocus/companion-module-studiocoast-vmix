@@ -17,6 +17,7 @@
   - Updated Overlay variables to support 8 overlays
   - Added `replay_quad_view` variable to show if Quad View mode is enabled
   - Added `input_X_layer_Y_titleimage` and `input_X_layer_Y_titlecolor` variables for title inputs image and color values, similar to the titletext variable
+  - Added more support for Local Variables
 - Fixed `preset` variable not always updating
 - Fixed an issue with Transition feedback/variables not updating under certain conditions
 

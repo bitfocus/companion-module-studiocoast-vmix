@@ -80,7 +80,7 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
         }
 
         if (programCut.options.mix !== 0) programCut.options.functionID = 'ActiveInput'
-        return sendBasicCommand(programCut)
+        return sendBasicCommand(programCut, context)
       },
     },
 
@@ -102,7 +102,7 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
           label: 'Duration',
           id: 'duration',
           default: '1000',
-          useVariables: true,
+          useVariables: { local: true },
         },
         {
           type: 'textinput',
@@ -110,7 +110,7 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
           id: 'input',
           default: '',
           tooltip: 'Number, Name, or GUID',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: async (action, context) => {
@@ -124,6 +124,7 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
         }
 
         let duration: string | number = (await instance.parseOption(action.options.duration, context))[instance.buttonShift.state]
+        const input = (await instance.parseOption(action.options.input || '', context))[instance.buttonShift.state]
         duration = parseFloat(duration)
 
         if (isNaN(duration)) {
@@ -139,8 +140,8 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
 
         command.options.duration = duration
 
-        if (action.options.input !== '' && action.options.input !== undefined) command.options.input = action.options.input
-        return sendBasicCommand(command)
+        if (action.options.input !== '' && action.options.input !== undefined) command.options.input = input
+        return sendBasicCommand(command, context)
       },
     },
 
@@ -200,7 +201,7 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
         },
         options.mixVariable,
       ],
-      callback: async (action) => {
+      callback: async (action, context) => {
         const command: any = {
           actionId: 'transition',
           options: {
@@ -213,7 +214,7 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
           command.options.mixVariable = action.options.mixVariable
         }
 
-        return sendBasicCommand(command)
+        return sendBasicCommand(command, context)
       },
     },
 

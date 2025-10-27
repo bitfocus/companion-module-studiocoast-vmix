@@ -61,7 +61,7 @@ export const vMixBrowserActions = (instance: VMixInstance, sendBasicCommand: Sen
           label: 'URL',
           id: 'value',
           default: '',
-          useVariables: true,
+          useVariables: { local: true },
         },
         {
           type: 'checkbox',

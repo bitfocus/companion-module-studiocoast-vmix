@@ -52,7 +52,7 @@ export const vMixPlayListActions = (_instance: VMixInstance, sendBasicCommand: S
           label: 'Playlist name',
           id: 'value',
           default: '',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: sendBasicCommand,

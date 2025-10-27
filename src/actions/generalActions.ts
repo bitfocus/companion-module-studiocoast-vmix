@@ -40,7 +40,7 @@ export const vMixGeneralActions = (instance: VMixInstance, sendBasicCommand: Sen
           label: 'Key',
           id: 'value',
           default: '',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: sendBasicCommand,
@@ -55,7 +55,7 @@ export const vMixGeneralActions = (instance: VMixInstance, sendBasicCommand: Sen
           label: 'postion 0-255',
           id: 'value',
           default: '0',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: async (action, context) => {
@@ -98,7 +98,7 @@ export const vMixGeneralActions = (instance: VMixInstance, sendBasicCommand: Sen
           label: 'Value',
           id: 'value',
           default: '',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: async (action, context) => {

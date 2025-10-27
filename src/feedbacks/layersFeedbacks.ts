@@ -82,7 +82,7 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
           label: 'Destination Layer of destination Input',
           id: 'selectedIndex',
           default: '',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: async (feedback, context) => {
@@ -152,7 +152,7 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
           id: 'inputX',
           default: '1',
           tooltip: 'Number, Name, or GUID',
-          useVariables: true,
+          useVariables: { local: true },
         },
         {
           type: 'textinput',
@@ -160,7 +160,7 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
           id: 'inputY',
           default: '1',
           tooltip: 'Number, Name, or GUID',
-          useVariables: true,
+          useVariables: { local: true },
         },
         {
           type: 'textinput',
@@ -168,7 +168,7 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
           id: 'layer',
           default: '0',
           tooltip: '1-10, 0 = Any layer',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: async (feedback, context) => {

@@ -89,14 +89,14 @@ export interface VMixAction<T> {
   unsubscribe?: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>) => void
 }
 
-export type SendBasicCommand = (action: Readonly<ActionCallbacks>, context?: CompanionActionContext) => Promise<void>
+export type SendBasicCommand = (action: Readonly<ActionCallbacks>, context: CompanionActionContext) => Promise<void>
 
 export function getActions(instance: VMixInstance): VMixActions {
   /**
    * @param action Action callback object
    * @description Sends vMix functions/params from actions that don't require complex logic
    */
-  const sendBasicCommand = async (action: Readonly<ActionCallbacks>, context?: CompanionActionContext): Promise<void> => {
+  const sendBasicCommand = async (action: Readonly<ActionCallbacks>, context: CompanionActionContext): Promise<void> => {
     let functionName: string = action.actionId
 
     if ('functionID' in action.options) {

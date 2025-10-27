@@ -74,7 +74,7 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
           label: 'Value',
           id: 'value',
           default: '',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       defaultStyle: {
@@ -117,7 +117,7 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
           label: 'Output by Variable',
           id: 'custom',
           default: '',
-          useVariables: true,
+          useVariables: { local: true },
           isVisible: (options) => options.output === 'Custom',
         },
         {
@@ -140,7 +140,7 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
           label: 'Mix (1 to 16)',
           id: 'mix',
           default: '',
-          useVariables: true,
+          useVariables: { local: true },
           isVisible: (options) => options.type === 'Mix',
         },
         {
@@ -148,7 +148,7 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
           label: 'Input',
           id: 'input',
           default: '',
-          useVariables: true,
+          useVariables: { local: true },
           isVisible: (options) => options.type === 'Input',
         },
       ],
@@ -203,7 +203,7 @@ export const vMixGeneralFeedbacks = (instance: VMixInstance): GeneralFeedbacks =
           label: 'Output by Variable',
           id: 'custom',
           default: '',
-          useVariables: true,
+          useVariables: { local: true },
           isVisible: (options) => options.output === 'Custom',
         },
         {

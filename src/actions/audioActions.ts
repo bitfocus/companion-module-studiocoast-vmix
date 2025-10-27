@@ -169,11 +169,11 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
           ],
         },
       ],
-      callback: async (action) => {
+      callback: async (action, context) => {
         const selected = action.options.value === 'Selected' ? instance.routingData.bus : action.options.value
         const commandOptions = { ...action.options, value: selected }
 
-        return sendBasicCommand({ ...action, options: commandOptions })
+        return sendBasicCommand({ ...action, options: commandOptions }, context)
       },
     },
 
@@ -181,12 +181,12 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
       name: 'Audio - Route Bus to Master',
       description: 'Routes the audio from a Bus to Master',
       options: [options.audioBus],
-      callback: async (action) => {
+      callback: async (action, context) => {
         const selected = action.options.value === 'Selected' ? instance.routingData.bus : action.options.value
         if (selected === 'Master') return
         const commandOptions = { ...action.options, value: selected }
 
-        return sendBasicCommand({ ...action, options: commandOptions })
+        return sendBasicCommand({ ...action, options: commandOptions }, context)
       },
     },
 
@@ -281,12 +281,12 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
           ],
         },
       ],
-      callback: async (action) => {
+      callback: async (action, context) => {
         const selected = action.options.value === 'Selected' ? instance.routingData.bus : action.options.value
         if (selected === 'Master') return
         const commandOptions = { ...action.options, value: selected }
 
-        return sendBasicCommand({ ...action, options: commandOptions })
+        return sendBasicCommand({ ...action, options: commandOptions }, context)
       },
     },
 
@@ -321,7 +321,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Volume',
           id: 'amount',
           default: '100',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: async (action, context) => {
@@ -361,14 +361,14 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Fade to volume (Whole number 0 to 100)',
           id: 'fadeVol',
           default: '0',
-          useVariables: true,
+          useVariables: { local: true },
         },
         {
           type: 'textinput',
           label: 'Fade time in ms',
           id: 'fadeTime',
           default: '2000',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: async (action, context) => {
@@ -394,14 +394,14 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Fade to volume',
           id: 'fadeMin',
           default: '0',
-          useVariables: true,
+          useVariables: { local: true },
         },
         {
           type: 'textinput',
           label: 'Fade time in ms',
           id: 'fadeTime',
           default: '2000',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: async (action, context) => {
@@ -424,7 +424,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Value',
           id: 'amount',
           default: '100',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: async (action, context) => {
@@ -496,7 +496,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Preset Name',
           id: 'value',
           default: '',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: sendBasicCommand,
@@ -512,7 +512,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Channel (1 or 2)',
           id: 'channel',
           default: '1',
-          useVariables: true,
+          useVariables: { local: true },
         },
         options.adjustment,
         {
@@ -520,7 +520,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Value',
           id: 'amount',
           default: '100',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: async (action, context) => {
@@ -561,7 +561,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Channel (1 to 16)',
           id: 'channel',
           default: '1',
-          useVariables: true,
+          useVariables: { local: true },
         },
         options.adjustment,
         {
@@ -569,7 +569,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Value',
           id: 'amount',
           default: '100',
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: async (action, context) => {

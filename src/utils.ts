@@ -132,7 +132,7 @@ export const options: Options = {
     id: 'input',
     default: '1',
     tooltip: 'Number, Name, or GUID',
-    useVariables: true,
+    useVariables: { local: true },
   },
 
   mixSelect: {
@@ -169,7 +169,7 @@ export const options: Options = {
     default: '1',
     tooltip: '',
     isVisible: (options) => options.mix === -2,
-    useVariables: true,
+    useVariables: { local: true },
   },
 
   audioBus: {
@@ -193,7 +193,7 @@ export const options: Options = {
     label: 'Bus',
     id: 'value',
     default: 'Master',
-    choices: ['Master', ...AUDIOBUSSESMASTER, 'Selected'].map((id) => ({ id, label: id })),
+    choices: [...AUDIOBUSSESMASTER, 'Selected'].map((id) => ({ id, label: id })),
   },
 
   foregroundColor: {
@@ -236,7 +236,7 @@ export const options: Options = {
     label: 'Selected Index',
     id: 'selectedIndex',
     default: '1',
-    useVariables: true,
+    useVariables: { local: true },
   },
 
   comparison: {

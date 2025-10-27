@@ -82,7 +82,7 @@ export const vMixPTZActions = (_instance: VMixInstance, sendBasicCommand: SendBa
           label: 'Value 0 to 1 (or for move to Virtual Input by Index, 0 to 100)',
           id: 'Value',
           default: '0',
-          useVariables: true,
+          useVariables: { local: true },
           isVisible: (options) => {
             return options.functionID !== 'PTZHome' && options.functionID !== 'PTZMoveStop' && options.functionID !== 'PTZMoveToVirtualInputPosition'
           },
@@ -117,7 +117,7 @@ export const vMixPTZActions = (_instance: VMixInstance, sendBasicCommand: SendBa
           label: 'Speed 0 to 1',
           id: 'Value',
           default: '1',
-          useVariables: true,
+          useVariables: { local: true },
           isVisible: (options) => {
             return options.functionID !== 'PTZFocusAuto' && options.functionID !== 'PTZFocusManual' && options.functionID !== 'PTZFocusStop' && options.functionID !== 'PTZZoomStop'
           },

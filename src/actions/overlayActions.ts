@@ -48,7 +48,7 @@ export const vMixOverlayActions = (instance: VMixInstance, _sendBasicCommand: Se
           default: '1',
           tooltip: 'Number, Name, or GUID',
           isVisibleExpression: `$(options:type) === 'OverlayInput' || $(options:type) === 'PreviewOverlayInput' || $(options:type) === 'In'`,
-          useVariables: true,
+          useVariables: { local: true },
         },
         {
           type: 'textinput',
@@ -57,7 +57,7 @@ export const vMixOverlayActions = (instance: VMixInstance, _sendBasicCommand: Se
           default: '1',
           tooltip: '',
           isVisibleExpression: `$(options:type) !== 'OverlayInputAllOff'`,
-          useVariables: true,
+          useVariables: { local: true },
         },
         {
           type: 'dropdown',
@@ -102,7 +102,7 @@ export const vMixOverlayActions = (instance: VMixInstance, _sendBasicCommand: Se
 
             return mixSupport
           },
-          useVariables: true,
+          useVariables: { local: true },
         },
       ],
       callback: async (action, context) => {
