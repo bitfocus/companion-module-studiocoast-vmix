@@ -64,7 +64,7 @@ export const TRANSITIONS = [
   'VerticalSlideReverse',
   'BarnDoor',
   'RollerDoor',
-	'AlphaFade',
+  'AlphaFade',
 ] as const
 
 export const calcDuration = (input: Input): { ms: string; ss: string; ssms: string; mmss: string; mmssms: string } | null => {

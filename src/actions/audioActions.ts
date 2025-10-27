@@ -431,13 +431,11 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
         const selected = action.options.value === 'Selected' ? instance.routingData.bus : action.options.value
         const amount = parseFloat((await instance.parseOption(action.options.amount, context))[instance.buttonShift.state])
         let command = `Set${selected === 'Master' ? '' : 'Bus'}${selected}Volume`
-				if (selected === 'Headphones') command = 'SetHeadphonesVolume'
-
-        let currentVolume
+        if (selected === 'Headphones') command = 'SetHeadphonesVolume'
 
         const bus = instance.data.getAudioBus(selected !== 'Headphones' ? selected : 'Master')
         if (bus === null) return
-        currentVolume = bus.volume
+        const currentVolume = bus.volume
 
         let target = amount
 

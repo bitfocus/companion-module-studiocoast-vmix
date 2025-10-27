@@ -1097,10 +1097,10 @@ export class VMixData {
       changes.add('busVolumeMeter')
     }
 
-		// Check Transition changes
-		if (!isEqual(newData.transitions, this.transitions)) {
-			changes.add('transition')
-		}
+    // Check Transition changes
+    if (!isEqual(newData.transitions, this.transitions)) {
+      changes.add('transition')
+    }
 
     // Check Video Call changes
     newData.inputs

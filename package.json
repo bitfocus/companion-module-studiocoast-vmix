@@ -1,6 +1,6 @@
 {
 	"name": "studiocoast-vmix",
-	"version": "4.2.0-rc1",
+	"version": "4.2.0",
 	"main": "dist/index.js",
 	"scripts": {
 		"dev": "yarn build:watch",
