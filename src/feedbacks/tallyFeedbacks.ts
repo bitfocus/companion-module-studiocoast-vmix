@@ -200,10 +200,12 @@ export const vMixTallyFeedbacks = (instance: VMixInstance): TallyFeedbacks => {
           label: 'Overlay',
           id: 'overlay',
           default: '1',
-          choices: ['Any', '1', '2', '3', '4', 'Stinger 1', 'Stinger 2', 'Stinger 3', 'Stinger 4'].map((id, index) => ({
-            id: index.toString(),
-            label: id,
-          })),
+          choices: ['Any', '1', '2', '3', '4', '5', '6', '7', '8', 'Stinger 1', 'Stinger 2', 'Stinger 3', 'Stinger 4', 'Stinger 5', 'Stinger 6', 'Stinger 7', 'Stinger 8'].map(
+            (id, index) => ({
+              id: index.toString(),
+              label: id,
+            }),
+          ),
         },
         options.foregroundColor,
         {
