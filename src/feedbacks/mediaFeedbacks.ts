@@ -19,41 +19,15 @@ type VideoTimerOptions = {
 type InputStateCallback = FeedbackCallback<'inputState', InputStateOptions>
 type VideoTimerCallback = FeedbackCallback<'videoTimer', VideoTimerOptions>
 
-/*
-type InputLoopOptions = {
-  input: string
-}
-type InputLoopCallback = FeedbackCallback<'inputLoop', InputLoopOptions>*/
-
 export interface MediaFeedbacks {
   inputState: VMixFeedback<InputStateCallback>
   videoTimer: VMixFeedback<VideoTimerCallback>
-  //inputLoop: VMixFeedback<InputLoopCallback>
 }
 
 export type MediaCallbacks = InputStateCallback | VideoTimerCallback
-//| InputLoopCallback
 
 export const vMixMediaFeedbacks = (instance: VMixInstance): MediaFeedbacks => {
   return {
-    /*
-    inputLoop: {
-      type: 'boolean',
-      name: 'Media - Input Loop',
-      description: 'Input Loop Status',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
-      },
-      options: [options.input],
-      callback: async (feedback, context) => {
-        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
-        const input = await instance.data.getInput(inputOption)
-
-        return input?.loop || false
-      }
-    },*/
-
     inputState: {
       type: 'boolean',
       name: 'Media - Input Playing/Loop',

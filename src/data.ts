@@ -1085,7 +1085,6 @@ export class VMixData {
       changes.add('routableMultiviewLayer')
       changes.add('inputVolumeMeter')
       changes.add('inputState')
-      changes.add('inputLoop')
 
       // DEPRECATED
       changes.add('titleLayer')
@@ -1097,6 +1096,11 @@ export class VMixData {
     if (!isEqual(newData.audio, this.audio) || inputCheck) {
       changes.add('busVolumeMeter')
     }
+
+		// Check Transition changes
+		if (!isEqual(newData.transitions, this.transitions)) {
+			changes.add('transition')
+		}
 
     // Check Video Call changes
     newData.inputs
