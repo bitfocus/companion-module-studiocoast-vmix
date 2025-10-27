@@ -1,5 +1,5 @@
 import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import { type AudioBusOption, type AudioBusMasterOption, type EmptyOptions, options, volumeToLinear } from '../utils'
+import { type AudioBusOption, type AudioBusMasterOption, type AudioBusMasterHeadphonesOption, type EmptyOptions, options, volumeToLinear } from '../utils'
 import type VMixInstance from '../index'
 
 type AudioBusOptions = {
@@ -56,7 +56,7 @@ type SetVolumeFadeOptions = {
 }
 
 type SetBusVolumeOptions = {
-  value: AudioBusMasterOption
+  value: AudioBusMasterHeadphonesOption
   adjustment: 'Set' | 'Increase' | 'Decrease'
   amount: string
 }
@@ -417,7 +417,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
       name: 'Audio - Set Bus Volume',
       description: 'Sets Bus Volume (Note: vMix Volume only supports whole numbers from 0 to 100)',
       options: [
-        options.audioBusMaster,
+        options.audioBusMasterHeadphones,
         options.adjustment,
         {
           type: 'textinput',
@@ -430,17 +430,22 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
       callback: async (action, context) => {
         const selected = action.options.value === 'Selected' ? instance.routingData.bus : action.options.value
         const amount = parseFloat((await instance.parseOption(action.options.amount, context))[instance.buttonShift.state])
-        const command = `Set${selected === 'Master' ? '' : 'Bus'}${selected}Volume`
-        const bus = instance.data.getAudioBus(selected)
+        let command = `Set${selected === 'Master' ? '' : 'Bus'}${selected}Volume`
+				if (selected === 'Headphones') command = 'SetHeadphonesVolume'
+
+        let currentVolume
+
+        const bus = instance.data.getAudioBus(selected !== 'Headphones' ? selected : 'Master')
         if (bus === null) return
+        currentVolume = bus.volume
 
         let target = amount
 
         if (action.options.adjustment === 'Increase') {
-          target = volumeToLinear(bus.volume) + amount
+          target = volumeToLinear(currentVolume) + amount
           if (target > 100) target = 100
         } else if (action.options.adjustment === 'Decrease') {
-          target = volumeToLinear(bus.volume) - amount
+          target = volumeToLinear(currentVolume) - amount
           if (target < 0) target = 0
         }
 
