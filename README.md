@@ -35,9 +35,9 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 
 # Recent Patches
 **v4.2.0**
-- Added support for vMix 29 Beta
+- Added support for vMix 29
 - Actions:
-  - Updated `Overlay - Functions` to support 8 overlays
+  - Updated `Overlay - Functions` to support 8 overlays, and added the capability to select more than one mix.
   - Updated `Transition - Auto/Stinger Transition` to support 8 stingers
   - Updated `Transition - Transition Mix` and `Transition - Set Auto Transition Effect` to support the new AlphaFade transition
   - Updated `Audio - Set Bus Volume` to include support for adjusting Headphones volume

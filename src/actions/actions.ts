@@ -71,7 +71,7 @@ export type ActionCallbacks =
 
 // Force options to have a default to prevent sending undefined values
 type InputFieldWithDefault = Exclude<SomeCompanionActionInputField, 'default'> & {
-  default: string | number | boolean | null
+  default: string | number | boolean | null | (string | number | boolean | null)[]
 }
 
 export interface ActionCallback<A, O> {

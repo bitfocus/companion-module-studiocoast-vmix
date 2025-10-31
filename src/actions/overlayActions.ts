@@ -5,7 +5,7 @@ type OverlayFunctionsOptions = {
   type: 'OverlayInput' | 'PreviewOverlayInput' | 'In' | 'Last' | 'Out' | 'Off' | 'Zoom' | 'OverlayInputAllOff'
   input: string
   overlay: string
-  mix: number
+  mix: number | number[]
   mixVariable: string
 }
 
@@ -60,10 +60,10 @@ export const vMixOverlayActions = (instance: VMixInstance, _sendBasicCommand: Se
           useVariables: { local: true },
         },
         {
-          type: 'dropdown',
+          type: 'multidropdown',
           label: 'Mix',
           id: 'mix',
-          default: 0,
+          default: [0],
           choices: [
             { id: 0, label: '1' },
             { id: 1, label: '2' },
@@ -92,16 +92,7 @@ export const vMixOverlayActions = (instance: VMixInstance, _sendBasicCommand: Se
           id: 'mixVariable',
           default: '1',
           tooltip: '',
-          isVisible: (feedbackOptions) => {
-            let mixSupport = false
-            const supportedFunctions = [`OverlayInput`, `OverlayInputIn`]
-
-            supportedFunctions.forEach((x) => {
-              if (x === feedbackOptions.type && feedbackOptions.mix === -2) mixSupport = true
-            })
-
-            return mixSupport
-          },
+          isVisibleExpression: `($(options:type) == 'OverlayInput' || $(options:type) == 'In' ||  $(options:type) == 'Last') &&  arrayIncludes($(options:mix), -2)`,
           useVariables: { local: true },
         },
       ],
@@ -110,27 +101,30 @@ export const vMixOverlayActions = (instance: VMixInstance, _sendBasicCommand: Se
         let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable, context))[instance.buttonShift.state]
         mixVariable = parseInt(mixVariable, 10) - 1
 
-        let mix: number = action.options.mix
-        if (mix === -1) mix = instance.routingData.mix
-        if (mix === -2) mix = mixVariable
+        let mixArray: number[] = []
+        Array.isArray(action.options.mix) ? mixArray.push(...action.options.mix) : mixArray.push(action.options.mix)
+
+        mixArray = mixArray.map((mix) => {
+          if (mix === -1) return instance.routingData.mix
+          if (mix === -2) return mixVariable
+          return mix
+        })
 
         const overlayID: string | number = (await instance.parseOption(action.options.overlay, context))[instance.buttonShift.state]
 
         if (instance.tcp) {
           if (action.options.type === 'OverlayInput') {
-            return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID} Input=${input}&Mix=${mix}`)
+            return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID} Input=${input}&Mix=${mixArray.join(',')}`)
           } else if (action.options.type === 'PreviewOverlayInput') {
-            return instance.tcp.sendCommand(`FUNCTION PreviewOverlayInput${overlayID} Input=${input}&Mix=${mix}`)
+            return instance.tcp.sendCommand(`FUNCTION PreviewOverlayInput${overlayID} Input=${input}`)
           } else if (action.options.type === 'OverlayInputAllOff') {
             return instance.tcp.sendCommand(`FUNCTION OverlayInputAllOff`)
+          } else if (action.options.type === 'In') {
+            return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type} Input=${input}&Mix=${mixArray.join(',')}`)
+          } else if (action.options.type === 'Last') {
+            return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type} Mix=${mixArray.join(',')}`)
           } else {
-            if (action.options.type === 'In') {
-              return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type} Input=${input}&Mix=${mix}`)
-            } else if (action.options.type === 'Last') {
-              return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type} Mix=${mix}`)
-            } else {
-              return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type}`)
-            }
+            return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type}`)
           }
         }
       },
