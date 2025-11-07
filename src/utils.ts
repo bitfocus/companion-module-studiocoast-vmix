@@ -44,6 +44,24 @@ export type EmptyOptions = Record<string, never>
 export const AUDIOBUSSES = ['A', 'B', 'C', 'D', 'E', 'F', 'G'] as const
 export const AUDIOBUSSESMASTER = ['Master', 'Headphones', 'A', 'B', 'C', 'D', 'E', 'F', 'G'] as const
 
+export const TITLEANIMATIONPAGE = [
+  'TransitionIn',
+  'TransitionOut',
+  'Page1',
+  'Page2',
+  'Page3',
+  'Page4',
+  'Page5',
+  'Page6',
+  'Page7',
+  'Page8',
+  'Page9',
+  'Page10',
+  'Continuous',
+  'DataChangeIn',
+  'DataChangeOut',
+]
+
 export const TRANSITIONS = [
   'Cut',
   'Fade',

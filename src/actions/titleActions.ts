@@ -1,5 +1,5 @@
 import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import { options } from '../utils'
+import { TITLEANIMATIONPAGE, options } from '../utils'
 import type VMixInstance from '../index'
 
 type ControlCountdownOptions = {
@@ -93,6 +93,8 @@ type TitleBeginAnimationOptions = {
     | 'Continuous'
     | 'DataChangeIn'
     | 'DataChangeOut'
+    | 'variable'
+  variable: string
 }
 
 type ControlCountdownCallback = ActionCallback<'controlCountdown', ControlCountdownOptions>
@@ -597,10 +599,34 @@ export const vMixTitleActions = (instance: VMixInstance, sendBasicCommand: SendB
             { id: 'Continuous', label: 'Continuous' },
             { id: 'DataChangeIn', label: 'Data Change In' },
             { id: 'DataChangeOut', label: 'Data Change Out' },
+            { id: 'variable', label: 'Use Variable' },
           ],
         },
+        {
+          type: 'textinput',
+          label: 'State Variable',
+          id: 'variable',
+          default: '',
+          tooltip: 'Must match one of the valid Animation Page options',
+          isVisibleExpression: `$(options:value) === 'variable'`,
+          useVariables: { local: true },
+        },
       ],
-      callback: sendBasicCommand,
+      callback: async (action, context) => {
+        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+        let value: string = action.options.value
+
+        if (value === 'variable') {
+          value = (await instance.parseOption(action.options.variable, context))[instance.buttonShift.state]
+
+          if (!TITLEANIMATIONPAGE.includes(value)) {
+            instance.log('warn', `${value} is not a valid Title Animation`)
+            return
+          }
+        }
+
+        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION TitleBeginAnimation Input=${encodeURIComponent(input)}&Value=${value}`)
+      },
     },
   }
 }

@@ -156,7 +156,7 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
       },
       steps: [
         {
-          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'TransitionIn' } }],
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'TransitionIn', variable: '' } }],
           up: [],
         },
       ],
@@ -174,7 +174,7 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
       },
       steps: [
         {
-          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'TransitionOut' } }],
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'TransitionOut', variable: '' } }],
           up: [],
         },
       ],
@@ -192,7 +192,7 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
       },
       steps: [
         {
-          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'Continuous' } }],
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'Continuous', variable: '' } }],
           up: [],
         },
       ],
@@ -210,7 +210,7 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
       },
       steps: [
         {
-          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'DataChangeIn' } }],
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'DataChangeIn', variable: '' } }],
           up: [],
         },
       ],
@@ -228,7 +228,7 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
       },
       steps: [
         {
-          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'DataChangeOut' } }],
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: 'DataChangeOut', variable: '' } }],
           up: [],
         },
       ],
@@ -249,7 +249,7 @@ export const getTitleGraphicsPresets = (): VMixPresetArray => {
       },
       steps: [
         {
-          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: `Page${i}` as 'Page1' } }],
+          down: [{ actionId: 'titleBeginAnimation', options: { input: '', value: `Page${i}` as 'Page1', variable: '' } }],
           up: [],
         },
       ],
