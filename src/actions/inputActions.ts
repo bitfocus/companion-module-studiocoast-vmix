@@ -10,6 +10,10 @@ interface PreviewInputOptions {
   mixVariable: string
 }
 
+interface GoOptions {
+  input: string
+}
+
 interface ResetInputOptions {
   input: string
 }
@@ -69,6 +73,7 @@ interface InputFrameDelayOptions {
 type PreviewInputCallback = ActionCallback<'previewInput', PreviewInputOptions>
 type PreviewInputNextCallback = ActionCallback<'previewInputNext', EmptyOptions>
 type PreviewInputPreviousCallback = ActionCallback<'previewInputPrevious', EmptyOptions>
+type GoCallback = ActionCallback<'go', GoOptions>
 type ResetInputCallback = ActionCallback<'resetInput', ResetInputOptions>
 type UndoCallback = ActionCallback<'undo', EmptyOptions>
 type InputEffectCallback = ActionCallback<'inputEffect', InputEffectOptions>
@@ -81,6 +86,7 @@ export interface InputActions {
   previewInput: VMixAction<PreviewInputCallback>
   previewInputNext: VMixAction<PreviewInputNextCallback>
   previewInputPrevious: VMixAction<PreviewInputPreviousCallback>
+  go: VMixAction<GoCallback>
   resetInput: VMixAction<ResetInputCallback>
   undo: VMixAction<UndoCallback>
   inputEffect: VMixAction<InputEffectCallback>
@@ -96,6 +102,7 @@ export type InputCallbacks =
   | PreviewInputCallback
   | PreviewInputNextCallback
   | PreviewInputPreviousCallback
+  | GoCallback
   | ResetInputCallback
   | UndoCallback
   | InputEffectCallback
@@ -124,6 +131,13 @@ export const vMixInputActions = (instance: VMixInstance, sendBasicCommand: SendB
       name: 'Input - Send Previous input to Preview',
       description: 'Send to Preview the previous Input',
       options: [],
+      callback: sendBasicCommand,
+    },
+
+    go: {
+      name: 'Input - GO Action',
+      description: 'Run the GO Action of a specified Input',
+      options: [options.input],
       callback: sendBasicCommand,
     },
 
