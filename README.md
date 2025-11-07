@@ -41,6 +41,8 @@ This module now supports Companions HTTP API, providing endpoints that can be us
   - Updated `Transition - Auto/Stinger Transition` to support 8 stingers
   - Updated `Transition - Transition Mix` and `Transition - Set Auto Transition Effect` to support the new AlphaFade transition
   - Updated `Audio - Set Bus Volume` to include support for adjusting Headphones volume
+  - Updated `Title - Begin Animation Page` to support variables for animation selection
+  - Added `Input - GO Action` to start the GO action on an input
   - Added `Replay - Quad View` Action to Toggle, set On, or set Off, Quad View mode
   - Added `Replay - Set/Append Event Text` and `Replay - Clear Event Text` Actions for setting, appending, or clearing, text on an Replay Event
 - Feedbacks:
