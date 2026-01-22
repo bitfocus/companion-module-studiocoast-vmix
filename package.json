@@ -33,7 +33,7 @@
 	"dependencies": {
 		"@companion-module/base": "~1.12.0",
 		"companion-module-utils": "^0.4.0",
-		"lodash": "~4.17.21",
+		"lodash": "~4.17.23",
 		"xml2js": "~0.6.2"
 	},
 	"devDependencies": {
