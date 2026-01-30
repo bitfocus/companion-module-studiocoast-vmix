@@ -5,8 +5,10 @@
 
 # companion-module-studiocoast-vmix
 
-Provides essential control over StudioCoast Vmix, for more info look in HELP.md
-Go over to [vMix](https://www.vmix.com/) to learn more about the software.
+Provides essential control over StudioCoast vMix.
+
+For more information, look in [HELP.md](https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/companion/HELP.md).  
+Go over to [the vMix website](https://www.vmix.com/) to learn more about the software.
 
 
 # API Poll Interval
@@ -16,11 +18,15 @@ The majority of vMix data used by Companion for feedback and variables is retrie
 # Using Custom Commands/shortcuts
 When using vMix shortcuts, please follow this syntax/layout, with space before the first value:
 
+```
 "ReplayMarkInOut Value=5000"
+```
 
-and if there is more than one parameter use "&" as a separator between them like the example below:
+If there is more than one parameter, use "&" as a separator between them:
 
+```
 "SetOutput2 Value=Input&Input=3"
+```
 
 
 # Button Shifting
