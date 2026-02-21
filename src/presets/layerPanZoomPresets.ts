@@ -2,6 +2,27 @@ import { combineRgb } from '@companion-module/base'
 import { graphics } from 'companion-module-utils'
 import type { VMixPresetArray } from './presets'
 
+const panPNG64 = {
+  topLeft:
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA6CAYAAADhu0ooAAABhWlDQ1BJQ0MgcHJvZmlsZQAAKJF9kb9Lw0AcxV9TRZGqQwuKOASsTnZREcdSxSJYKG2FVh1MLv0FTRqSFBdHwbXg4I/FqoOLs64OroIg+APEP0CcFF2kxO8lhRYxHhz34d29x907QGhUmGp2RQFVs4xUPCZmc6tizysEBDGAIYxJzNQT6cUMPMfXPXx8vYvwLO9zf45+JW8ywCcSR5luWMQbxLObls55nzjESpJCfE48adAFiR+5Lrv8xrnosMAzQ0YmNU8cIhaLHSx3MCsZKvEMcVhRNcoXsi4rnLc4q5Uaa92TvzCQ11bSXKc5ijiWkEASImTUUEYFFiK0aqSYSNF+zMM/4viT5JLJVQYjxwKqUCE5fvA/+N2tWZiecpMCMaD7xbY/xoGeXaBZt+3vY9tungD+Z+BKa/urDWDuk/R6WwsfAYPbwMV1W5P3gMsdYPhJlwzJkfw0hUIBeD+jb8oBwVugb83trbWP0wcgQ10t3wAHh8BEkbLXPd7d29nbv2da/f0AqxtyvXVwF8gAAAAGYktHRAAAAAAAAPlDu38AAAAJcEhZcwAALiMAAC4jAXilP3YAAAAHdElNRQfqAhMOIwWHOpexAAAAGXRFWHRDb21tZW50AENyZWF0ZWQgd2l0aCBHSU1QV4EOFwAAAERJREFUaN7t0SEOADAIBEHo//989bU1JMzIEyQbqoDJ+h2S5Otgd08MPVs+KlSoUKFChQoVKlSoUKEAAAAAAAAAALDVBaa7BCC5HEL7AAAAAElFTkSuQmCC',
+  topCenter:
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA6CAYAAADhu0ooAAABhWlDQ1BJQ0MgcHJvZmlsZQAAKJF9kb9Lw0AcxV9TRZGqQwuKOASsTnZREcdSxSJYKG2FVh1MLv0FTRqSFBdHwbXg4I/FqoOLs64OroIg+APEP0CcFF2kxO8lhRYxHhz34d29x907QGhUmGp2RQFVs4xUPCZmc6tizysEBDGAIYxJzNQT6cUMPMfXPXx8vYvwLO9zf45+JW8ywCcSR5luWMQbxLObls55nzjESpJCfE48adAFiR+5Lrv8xrnosMAzQ0YmNU8cIhaLHSx3MCsZKvEMcVhRNcoXsi4rnLc4q5Uaa92TvzCQ11bSXKc5ijiWkEASImTUUEYFFiK0aqSYSNF+zMM/4viT5JLJVQYjxwKqUCE5fvA/+N2tWZiecpMCMaD7xbY/xoGeXaBZt+3vY9tungD+Z+BKa/urDWDuk/R6WwsfAYPbwMV1W5P3gMsdYPhJlwzJkfw0hUIBeD+jb8oBwVugb83trbWP0wcgQ10t3wAHh8BEkbLXPd7d29nbv2da/f0AqxtyvXVwF8gAAAAGYktHRAAAAAAAAPlDu38AAAAJcEhZcwAALiMAAC4jAXilP3YAAAAHdElNRQfqAhMOJAnBzU1dAAAAGXRFWHRDb21tZW50AENyZWF0ZWQgd2l0aCBHSU1QV4EOFwAAAENJREFUaN7t0YEJACAMA8HW/XeOQ6gg9G6AkqdVwM/6xdEkORrVfX3XmvJRoUKFChUqVKhQoUKFCgUAAAAAAAAAgKk2lqwEIEd+VJ8AAAAASUVORK5CYII=',
+  topRight:
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA6CAYAAADhu0ooAAABhWlDQ1BJQ0MgcHJvZmlsZQAAKJF9kb9Lw0AcxV9TRZGqQwuKOASsTnZREcdSxSJYKG2FVh1MLv0FTRqSFBdHwbXg4I/FqoOLs64OroIg+APEP0CcFF2kxO8lhRYxHhz34d29x907QGhUmGp2RQFVs4xUPCZmc6tizysEBDGAIYxJzNQT6cUMPMfXPXx8vYvwLO9zf45+JW8ywCcSR5luWMQbxLObls55nzjESpJCfE48adAFiR+5Lrv8xrnosMAzQ0YmNU8cIhaLHSx3MCsZKvEMcVhRNcoXsi4rnLc4q5Uaa92TvzCQ11bSXKc5ijiWkEASImTUUEYFFiK0aqSYSNF+zMM/4viT5JLJVQYjxwKqUCE5fvA/+N2tWZiecpMCMaD7xbY/xoGeXaBZt+3vY9tungD+Z+BKa/urDWDuk/R6WwsfAYPbwMV1W5P3gMsdYPhJlwzJkfw0hUIBeD+jb8oBwVugb83trbWP0wcgQ10t3wAHh8BEkbLXPd7d29nbv2da/f0AqxtyvXVwF8gAAAAGYktHRAAAAAAAAPlDu38AAAAJcEhZcwAALiMAAC4jAXilP3YAAAAHdElNRQfqAhMOIjTP/6bKAAAAGXRFWHRDb21tZW50AENyZWF0ZWQgd2l0aCBHSU1QV4EOFwAAAEJJREFUaN7t0bENACAMA8GE/Xc2NTVNpNxN4JergMl66rAk+QrrftrOlkeFChUqVKhQoUKFChUqFAAAAAAAAAAAtrqGnQQgZzm5/AAAAABJRU5ErkJggg==',
+  middleLeft:
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA6CAYAAADhu0ooAAABhWlDQ1BJQ0MgcHJvZmlsZQAAKJF9kb9Lw0AcxV9TRZGqQwuKOASsTnZREcdSxSJYKG2FVh1MLv0FTRqSFBdHwbXg4I/FqoOLs64OroIg+APEP0CcFF2kxO8lhRYxHhz34d29x907QGhUmGp2RQFVs4xUPCZmc6tizysEBDGAIYxJzNQT6cUMPMfXPXx8vYvwLO9zf45+JW8ywCcSR5luWMQbxLObls55nzjESpJCfE48adAFiR+5Lrv8xrnosMAzQ0YmNU8cIhaLHSx3MCsZKvEMcVhRNcoXsi4rnLc4q5Uaa92TvzCQ11bSXKc5ijiWkEASImTUUEYFFiK0aqSYSNF+zMM/4viT5JLJVQYjxwKqUCE5fvA/+N2tWZiecpMCMaD7xbY/xoGeXaBZt+3vY9tungD+Z+BKa/urDWDuk/R6WwsfAYPbwMV1W5P3gMsdYPhJlwzJkfw0hUIBeD+jb8oBwVugb83trbWP0wcgQ10t3wAHh8BEkbLXPd7d29nbv2da/f0AqxtyvXVwF8gAAAAGYktHRAAAAAAAAPlDu38AAAAJcEhZcwAALiMAAC4jAXilP3YAAAAHdElNRQfqAhMOJRHLuuRKAAAAGXRFWHRDb21tZW50AENyZWF0ZWQgd2l0aCBHSU1QV4EOFwAAAERJREFUaN7t0SEOADAIBEHo//989bU1JMzIEyQbqgAAAABgqX6HJPk62N0TQ8+WjwoVKlSoUKFChQoVKlQoAAAAADDaBd9UBCBhXGkiAAAAAElFTkSuQmCC',
+  middleCenter:
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA6CAYAAADhu0ooAAABhWlDQ1BJQ0MgcHJvZmlsZQAAKJF9kb9Lw0AcxV9TRZGqQwuKOASsTnZREcdSxSJYKG2FVh1MLv0FTRqSFBdHwbXg4I/FqoOLs64OroIg+APEP0CcFF2kxO8lhRYxHhz34d29x907QGhUmGp2RQFVs4xUPCZmc6tizysEBDGAIYxJzNQT6cUMPMfXPXx8vYvwLO9zf45+JW8ywCcSR5luWMQbxLObls55nzjESpJCfE48adAFiR+5Lrv8xrnosMAzQ0YmNU8cIhaLHSx3MCsZKvEMcVhRNcoXsi4rnLc4q5Uaa92TvzCQ11bSXKc5ijiWkEASImTUUEYFFiK0aqSYSNF+zMM/4viT5JLJVQYjxwKqUCE5fvA/+N2tWZiecpMCMaD7xbY/xoGeXaBZt+3vY9tungD+Z+BKa/urDWDuk/R6WwsfAYPbwMV1W5P3gMsdYPhJlwzJkfw0hUIBeD+jb8oBwVugb83trbWP0wcgQ10t3wAHh8BEkbLXPd7d29nbv2da/f0AqxtyvXVwF8gAAAAGYktHRAAAAAAAAPlDu38AAAAJcEhZcwAALiMAAC4jAXilP3YAAAAHdElNRQfqAhMOJTMe2qWuAAAAGXRFWHRDb21tZW50AENyZWF0ZWQgd2l0aCBHSU1QV4EOFwAAAENJREFUaN7t0YEJACAMA8HW/XeOQ6gg9G6AkqdVAAAAADBUvziaJEejuq/vWlM+KlSoUKFChQoVKlSoUKEAAAAAwNc2z0UEILORrvYAAAAASUVORK5CYII=',
+  middleRight:
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA6CAYAAADhu0ooAAABhWlDQ1BJQ0MgcHJvZmlsZQAAKJF9kb9Lw0AcxV9TRZGqQwuKOASsTnZREcdSxSJYKG2FVh1MLv0FTRqSFBdHwbXg4I/FqoOLs64OroIg+APEP0CcFF2kxO8lhRYxHhz34d29x907QGhUmGp2RQFVs4xUPCZmc6tizysEBDGAIYxJzNQT6cUMPMfXPXx8vYvwLO9zf45+JW8ywCcSR5luWMQbxLObls55nzjESpJCfE48adAFiR+5Lrv8xrnosMAzQ0YmNU8cIhaLHSx3MCsZKvEMcVhRNcoXsi4rnLc4q5Uaa92TvzCQ11bSXKc5ijiWkEASImTUUEYFFiK0aqSYSNF+zMM/4viT5JLJVQYjxwKqUCE5fvA/+N2tWZiecpMCMaD7xbY/xoGeXaBZt+3vY9tungD+Z+BKa/urDWDuk/R6WwsfAYPbwMV1W5P3gMsdYPhJlwzJkfw0hUIBeD+jb8oBwVugb83trbWP0wcgQ10t3wAHh8BEkbLXPd7d29nbv2da/f0AqxtyvXVwF8gAAAAGYktHRAAAAAAAAPlDu38AAAAJcEhZcwAALiMAAC4jAXilP3YAAAAHdElNRQfqAhMOJBncel05AAAAGXRFWHRDb21tZW50AENyZWF0ZWQgd2l0aCBHSU1QV4EOFwAAAEJJREFUaN7t0bENACAMA8GE/Xc2NTVNpNxN4JerAAAAAGCpnjosSb7Cup+2s+VRoUKFChUqVKhQoUKFCgUAAAAARru/NgQgE7PdWgAAAABJRU5ErkJggg==',
+  bottomLeft:
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA6CAYAAADhu0ooAAABhWlDQ1BJQ0MgcHJvZmlsZQAAKJF9kb9Lw0AcxV9TRZGqQwuKOASsTnZREcdSxSJYKG2FVh1MLv0FTRqSFBdHwbXg4I/FqoOLs64OroIg+APEP0CcFF2kxO8lhRYxHhz34d29x907QGhUmGp2RQFVs4xUPCZmc6tizysEBDGAIYxJzNQT6cUMPMfXPXx8vYvwLO9zf45+JW8ywCcSR5luWMQbxLObls55nzjESpJCfE48adAFiR+5Lrv8xrnosMAzQ0YmNU8cIhaLHSx3MCsZKvEMcVhRNcoXsi4rnLc4q5Uaa92TvzCQ11bSXKc5ijiWkEASImTUUEYFFiK0aqSYSNF+zMM/4viT5JLJVQYjxwKqUCE5fvA/+N2tWZiecpMCMaD7xbY/xoGeXaBZt+3vY9tungD+Z+BKa/urDWDuk/R6WwsfAYPbwMV1W5P3gMsdYPhJlwzJkfw0hUIBeD+jb8oBwVugb83trbWP0wcgQ10t3wAHh8BEkbLXPd7d29nbv2da/f0AqxtyvXVwF8gAAAAGYktHRAAAAAAAAPlDu38AAAAJcEhZcwAALiMAAC4jAXilP3YAAAAHdElNRQfqAhMOIh2NTT6mAAAAGXRFWHRDb21tZW50AENyZWF0ZWQgd2l0aCBHSU1QV4EOFwAAAERJREFUaN7t0SEOACAMBMGW///58NgiSJiRJ5psWgUAAAAAAAAAALf1OSTJ6GB3vxi6fvmoUKFChQoVKlSoUKFChQLMbRf8BCAr7g4OAAAAAElFTkSuQmCC',
+  bottomCenter:
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA6CAYAAADhu0ooAAABhWlDQ1BJQ0MgcHJvZmlsZQAAKJF9kb9Lw0AcxV9TRZGqQwuKOASsTnZREcdSxSJYKG2FVh1MLv0FTRqSFBdHwbXg4I/FqoOLs64OroIg+APEP0CcFF2kxO8lhRYxHhz34d29x907QGhUmGp2RQFVs4xUPCZmc6tizysEBDGAIYxJzNQT6cUMPMfXPXx8vYvwLO9zf45+JW8ywCcSR5luWMQbxLObls55nzjESpJCfE48adAFiR+5Lrv8xrnosMAzQ0YmNU8cIhaLHSx3MCsZKvEMcVhRNcoXsi4rnLc4q5Uaa92TvzCQ11bSXKc5ijiWkEASImTUUEYFFiK0aqSYSNF+zMM/4viT5JLJVQYjxwKqUCE5fvA/+N2tWZiecpMCMaD7xbY/xoGeXaBZt+3vY9tungD+Z+BKa/urDWDuk/R6WwsfAYPbwMV1W5P3gMsdYPhJlwzJkfw0hUIBeD+jb8oBwVugb83trbWP0wcgQ10t3wAHh8BEkbLXPd7d29nbv2da/f0AqxtyvXVwF8gAAAAGYktHRAAAAAAAAPlDu38AAAAJcEhZcwAALiMAAC4jAXilP3YAAAAHdElNRQfqAhMOJDXuojHaAAAAGXRFWHRDb21tZW50AENyZWF0ZWQgd2l0aCBHSU1QV4EOFwAAAEJJREFUaN7t0cENADAIAzHo/junQ0BftQdAOVEFAAAAAAAAAADb+sXRJBmN6l7fdX75qFChQoUKFSpUqFChQoUCzF0H7QQgeTH5vwAAAABJRU5ErkJggg==',
+  bottomright:
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA6CAYAAADhu0ooAAABhWlDQ1BJQ0MgcHJvZmlsZQAAKJF9kb9Lw0AcxV9TRZGqQwuKOASsTnZREcdSxSJYKG2FVh1MLv0FTRqSFBdHwbXg4I/FqoOLs64OroIg+APEP0CcFF2kxO8lhRYxHhz34d29x907QGhUmGp2RQFVs4xUPCZmc6tizysEBDGAIYxJzNQT6cUMPMfXPXx8vYvwLO9zf45+JW8ywCcSR5luWMQbxLObls55nzjESpJCfE48adAFiR+5Lrv8xrnosMAzQ0YmNU8cIhaLHSx3MCsZKvEMcVhRNcoXsi4rnLc4q5Uaa92TvzCQ11bSXKc5ijiWkEASImTUUEYFFiK0aqSYSNF+zMM/4viT5JLJVQYjxwKqUCE5fvA/+N2tWZiecpMCMaD7xbY/xoGeXaBZt+3vY9tungD+Z+BKa/urDWDuk/R6WwsfAYPbwMV1W5P3gMsdYPhJlwzJkfw0hUIBeD+jb8oBwVugb83trbWP0wcgQ10t3wAHh8BEkbLXPd7d29nbv2da/f0AqxtyvXVwF8gAAAAGYktHRAAAAAAAAPlDu38AAAAJcEhZcwAALiMAAC4jAXilP3YAAAAHdElNRQfqAhMOIims+coTAAAAGXRFWHRDb21tZW50AENyZWF0ZWQgd2l0aCBHSU1QV4EOFwAAAENJREFUaN7t0bENACAMA8GE/Xc2NXUokLibwC9XAQAAAAAAAADAbf3qsCQZhXUfbeuXR4UKFSpUqFChQoUKFSoUYG4D988EIA7E220AAAAASUVORK5CYII=',
+}
+
 export const getLayerPanZoomPresets = (): VMixPresetArray => {
   const layerPanZoomPresets: VMixPresetArray = [
     {
@@ -614,35 +635,6 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
     },
   )
 
-  const rect = graphics.rect({
-    width: 20,
-    height: 20,
-    color: combineRgb(0, 0, 255),
-    rectWidth: 20,
-    rectHeight: 20,
-    strokeWidth: 2,
-    opacity: 255,
-    fillColor: combineRgb(255, 255, 255),
-    fillOpacity: 255,
-    offsetX: 0,
-    offsetY: 0,
-  })
-
-  const box = graphics.toPNG64({
-    image: graphics.icon({
-      width: 20,
-      height: 20,
-      type: 'custom',
-      custom: rect,
-      offsetX: 0,
-      offsetY: 0,
-      customHeight: 20,
-      customWidth: 20,
-    }),
-    width: 20,
-    height: 20,
-  })
-
   layerPanZoomPresets.push(
     {
       category: 'Layer Pan/Zoom',
@@ -659,8 +651,7 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
         size: '14',
         color: combineRgb(255, 255, 255),
         bgcolor: combineRgb(0, 0, 0),
-        png64: box,
-        pngalignment: 'left:top',
+        png64: panPNG64.topLeft,
       },
       steps: [
         {
@@ -712,8 +703,7 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
         size: '14',
         color: combineRgb(255, 255, 255),
         bgcolor: combineRgb(0, 0, 0),
-        png64: box,
-        pngalignment: 'center:top',
+        png64: panPNG64.topCenter,
       },
       steps: [
         {
@@ -765,8 +755,7 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
         size: '14',
         color: combineRgb(255, 255, 255),
         bgcolor: combineRgb(0, 0, 0),
-        png64: box,
-        pngalignment: 'right:top',
+        png64: panPNG64.topRight,
       },
       steps: [
         {
@@ -824,8 +813,7 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
         size: '14',
         color: combineRgb(255, 255, 255),
         bgcolor: combineRgb(0, 0, 0),
-        png64: box,
-        pngalignment: 'left:center',
+        png64: panPNG64.middleLeft,
       },
       steps: [
         {
@@ -877,8 +865,7 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
         size: '14',
         color: combineRgb(255, 255, 255),
         bgcolor: combineRgb(0, 0, 0),
-        png64: box,
-        pngalignment: 'center:center',
+        png64: panPNG64.middleCenter,
       },
       steps: [
         {
@@ -930,8 +917,7 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
         size: '14',
         color: combineRgb(255, 255, 255),
         bgcolor: combineRgb(0, 0, 0),
-        png64: box,
-        pngalignment: 'right:center',
+        png64: panPNG64.middleRight,
       },
       steps: [
         {
@@ -989,8 +975,7 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
         size: '14',
         color: combineRgb(255, 255, 255),
         bgcolor: combineRgb(0, 0, 0),
-        png64: box,
-        pngalignment: 'left:bottom',
+        png64: panPNG64.bottomLeft,
       },
       steps: [
         {
@@ -1042,8 +1027,7 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
         size: '14',
         color: combineRgb(255, 255, 255),
         bgcolor: combineRgb(0, 0, 0),
-        png64: box,
-        pngalignment: 'center:bottom',
+        png64: panPNG64.bottomCenter,
       },
       steps: [
         {
@@ -1095,8 +1079,7 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
         size: '14',
         color: combineRgb(255, 255, 255),
         bgcolor: combineRgb(0, 0, 0),
-        png64: box,
-        pngalignment: 'right:bottom',
+        png64: panPNG64.bottomright,
       },
       steps: [
         {

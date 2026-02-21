@@ -8,51 +8,6 @@ export const getMixPresets = (): VMixPresetArray => {
   for (let mix = 1; mix < 17; mix++) {
     mixPresets.push({
       category: `Mix ${mix}` as PresetCategory,
-      name: 'Send Input to Preview',
-      type: 'text',
-      text: 'Inputs 1 to 8',
-    })
-
-    for (let input = 1; input < 9; input++) {
-      mixPresets.push({
-        category: `Mix ${mix}` as PresetCategory,
-        name: `PRV ${input}`,
-        type: 'button',
-        style: {
-          text: `PRV ${input}`,
-          size: '24',
-          color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
-        },
-        steps: [
-          {
-            down: [
-              {
-                actionId: 'previewInput',
-                options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', input: input.toString() },
-              },
-            ],
-            up: [],
-          },
-        ],
-        feedbacks: [
-          {
-            feedbackId: 'inputPreview',
-            options: {
-              mix: (mix - 1) as MixOptionEntry,
-              mixVariable: '',
-              input: input.toString(),
-              fg: combineRgb(255, 255, 255),
-              bg: combineRgb(0, 255, 0),
-              tally: '',
-            },
-          },
-        ],
-      })
-    }
-
-    mixPresets.push({
-      category: `Mix ${mix}` as PresetCategory,
       name: 'Send Input to Program',
       type: 'text',
       text: 'Inputs 1 to 8',
@@ -90,6 +45,51 @@ export const getMixPresets = (): VMixPresetArray => {
               input: input.toString(),
               fg: combineRgb(255, 255, 255),
               bg: combineRgb(255, 0, 0),
+              tally: '',
+            },
+          },
+        ],
+      })
+    }
+		
+    mixPresets.push({
+      category: `Mix ${mix}` as PresetCategory,
+      name: 'Send Input to Preview',
+      type: 'text',
+      text: 'Inputs 1 to 8',
+    })
+
+    for (let input = 1; input < 9; input++) {
+      mixPresets.push({
+        category: `Mix ${mix}` as PresetCategory,
+        name: `PRV ${input}`,
+        type: 'button',
+        style: {
+          text: `PRV ${input}`,
+          size: '24',
+          color: combineRgb(255, 255, 255),
+          bgcolor: combineRgb(0, 0, 0),
+        },
+        steps: [
+          {
+            down: [
+              {
+                actionId: 'previewInput',
+                options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', input: input.toString() },
+              },
+            ],
+            up: [],
+          },
+        ],
+        feedbacks: [
+          {
+            feedbackId: 'inputPreview',
+            options: {
+              mix: (mix - 1) as MixOptionEntry,
+              mixVariable: '',
+              input: input.toString(),
+              fg: combineRgb(255, 255, 255),
+              bg: combineRgb(0, 255, 0),
               tally: '',
             },
           },
@@ -155,7 +155,7 @@ export const getMixPresets = (): VMixPresetArray => {
         name: 'Auto',
         type: 'button',
         style: {
-          text: 'Fade',
+          text: 'Auto',
           size: '24',
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
