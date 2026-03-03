@@ -136,7 +136,7 @@ export const vMixAudioPresetActions = (instance: VMixInstance, _sendBasicCommand
           try {
             presetData = JSON.parse(action.options.name)
           } catch (e) {
-            instance.log('warn', `Unable to parse Audio Preset data`)
+            instance.log('warn', `Unable to parse Audio Preset data ${e}`)
             return
           }
         }

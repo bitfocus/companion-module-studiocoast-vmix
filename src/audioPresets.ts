@@ -44,7 +44,7 @@ export class AudioPresets {
     this.instance = instance
   }
 
-  loadPreset = async (data: AudioPreset, settings: LoadAudioPresetOptions, checkStatus: boolean = false) => {
+  loadPreset = async (data: AudioPreset, settings: LoadAudioPresetOptions, checkStatus: boolean = false): Promise<string[] | void> => {
     const commandList: string[] = []
 
     if (settings.busses.length > 0) {
@@ -113,8 +113,8 @@ export class AudioPresets {
 
       for (const presetInput of presetInputs) {
         const input = await this.instance.data.getInput(presetInput.id)
+
         if (!input) {
-          this.instance.log('debug', `Unable to find input ${presetInput.id} from Audio Preset in current vMix connection`)
           return
         }
 
@@ -191,7 +191,7 @@ export class AudioPresets {
     return
   }
 
-  deletePreset = async (name: string) => {
+  deletePreset = async (name: string): Promise<void> => {
     this.instance.log('info', `Deleting preset: ${name}`)
     delete this.presets[name]
 
@@ -200,7 +200,7 @@ export class AudioPresets {
     this.instance.checkFeedbacks('audioPresetActive')
   }
 
-  savePreset = async (settings: SavePresetSettings) => {
+  savePreset = async (settings: SavePresetSettings): Promise<void> => {
     const newDefinition = this.presets[settings.name] !== undefined
 
     const newPreset: AudioPreset = {

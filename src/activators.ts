@@ -149,7 +149,6 @@ const eventHandlers: { [key: string]: ActivatorEventHandlers | null } = {
   InputDynamic3: null,
   InputDynamic4: null,
 
-  // Unused - API doesn't provide channel mixer data, so there's no way to get initial data to ensure accuracy
   InputVolumeChannelMixer1: 'handlerVolumeChannelMixer',
   InputVolumeChannelMixer2: 'handlerVolumeChannelMixer',
   InputVolumeChannelMixer3: 'handlerVolumeChannelMixer',
@@ -157,8 +156,8 @@ const eventHandlers: { [key: string]: ActivatorEventHandlers | null } = {
   InputVolumeChannelMixer5: 'handlerVolumeChannelMixer',
   InputVolumeChannelMixer6: 'handlerVolumeChannelMixer',
   InputVolumeChannelMixer7: 'handlerVolumeChannelMixer',
+  InputVolumeChannelMixer8: 'handlerVolumeChannelMixer',
   InputVolumeChannelMixer9: 'handlerVolumeChannelMixer',
-  InputVolumeChannelMixer0: 'handlerVolumeChannelMixer',
   InputVolumeChannelMixer10: 'handlerVolumeChannelMixer',
   InputVolumeChannelMixer11: 'handlerVolumeChannelMixer',
   InputVolumeChannelMixer12: 'handlerVolumeChannelMixer',

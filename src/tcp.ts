@@ -378,7 +378,6 @@ export class TCP {
     if (!data.startsWith('ACTS')) message = 'ACTS ' + message
     if (!data.endsWith('\r\n')) message += '\r\n'
 
-    this.instance.log('debug', `Sending activator message: ${message}`)
     this.sockets.activator?.send(message).catch((err) => {
       this.instance.log('debug', err.message)
     })

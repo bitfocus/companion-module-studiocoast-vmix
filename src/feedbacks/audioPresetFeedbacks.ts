@@ -88,13 +88,13 @@ export const vMixAudioPresetFeedbacks = (instance: VMixInstance): AudioPresetFee
         },
       ],
       callback: async (feedback) => {
-        if (feedback.options.busses.length === 0 && feedback.options.busses.length === 0) return false
+        if (feedback.options.name.length === 0 || (feedback.options.busses.length === 0 && feedback.options.busses.length === 0)) return false
         let presetData = instance.audioPresets.presets[feedback.options.name]
 
         if (!presetData) {
           try {
             presetData = JSON.parse(feedback.options.name)
-          } catch (e) {
+          } catch (_e) {
             return false
           }
         }

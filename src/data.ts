@@ -1045,7 +1045,12 @@ export class VMixData {
       if (oldInput) {
         newInput.audioAuto = oldInput.audioAuto
       } else {
-        this.instance.tcp?.updateActivatorData(`ACTS InputAudioAuto ${newInput.number}`)
+        const request = [`ACTS InputAudioAuto ${newInput.number}\r\n`]
+        for (let i = 1; i < 17; i++) {
+          request.push(`ACTS InputVolumeChannelMixer${i} ${newInput.number}\r\n`)
+        }
+
+        this.instance.tcp?.updateActivatorData(request.join(''))
       }
     })
 
