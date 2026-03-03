@@ -51,7 +51,7 @@ export const getMixPresets = (): VMixPresetArray => {
         ],
       })
     }
-		
+
     mixPresets.push({
       category: `Mix ${mix}` as PresetCategory,
       name: 'Send Input to Preview',

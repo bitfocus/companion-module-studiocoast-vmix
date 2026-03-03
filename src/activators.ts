@@ -264,6 +264,8 @@ export class Activators {
         this.updateBuffer('busSolo')
       }
     }
+
+    this.updateBuffer('audioPresetActive')
   }
 
   /**
@@ -290,6 +292,7 @@ export class Activators {
     this.updateBuffer('inputMute')
     this.updateBuffer('inputVolumeMeter')
     this.updateBuffer('inputBusRouting')
+    this.updateBuffer('audioPresetActive')
   }
 
   /**

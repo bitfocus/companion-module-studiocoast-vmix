@@ -1,4 +1,5 @@
 import type { SomeCompanionConfigField } from '@companion-module/base'
+import type { AudioPreset } from './audioPresets'
 
 export interface Config {
   label: string
@@ -33,6 +34,8 @@ export interface Config {
   debugSettings: boolean
   debugVariableDefinitionDelay: number
   debugVersionUpdateNotifications: boolean
+
+  audioPresets: Record<string, AudioPreset>
 }
 
 export const getConfigFields = (): SomeCompanionConfigField[] => {
@@ -370,5 +373,7 @@ export const defaultConfig = (): Config => {
     debugSettings: false,
     debugVariableDefinitionDelay: 2000,
     debugVersionUpdateNotifications: true,
+
+    audioPresets: {},
   }
 }

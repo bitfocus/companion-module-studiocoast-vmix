@@ -1,5 +1,6 @@
 import type { CompanionActionEvent, SomeCompanionActionInputField, CompanionActionContext } from '@companion-module/base'
 import { type AudioActions, type AudioCallbacks, vMixAudioActions } from './audioActions'
+import { type AudioPresetActions, type AudioPresetCallbacks, vMixAudioPresetActions } from './audioPresetActions'
 import { type BrowserActions, type BrowserCallbacks, vMixBrowserActions } from './browserActions'
 import { type DataSourceActions, type DataSourceCallbacks, vMixDataSourceActions } from './dataSourceActions'
 import { type GeneralActions, type GeneralCallbacks, vMixGeneralActions } from './generalActions'
@@ -27,6 +28,7 @@ export type VMixActionKeys = keyof VMixActions
 
 export type VMixActions =
   | AudioActions
+  | AudioPresetActions
   | BrowserActions
   | DataSourceActions
   | GeneralActions
@@ -49,6 +51,7 @@ export type VMixActions =
 
 export type ActionCallbacks =
   | AudioCallbacks
+  | AudioPresetCallbacks
   | BrowserCallbacks
   | DataSourceCallbacks
   | GeneralCallbacks
@@ -172,6 +175,7 @@ export function getActions(instance: VMixInstance): VMixActions {
 
   return {
     ...vMixAudioActions(instance, sendBasicCommand),
+    ...vMixAudioPresetActions(instance, sendBasicCommand),
     ...vMixBrowserActions(instance, sendBasicCommand),
     ...vMixDataSourceActions(instance, sendBasicCommand),
     ...vMixGeneralActions(instance, sendBasicCommand),

@@ -8,6 +8,7 @@ import type {
   SomeCompanionFeedbackInputField,
 } from '@companion-module/base'
 import { type AudioFeedbacks, type AudioCallbacks, vMixAudioFeedbacks } from './audioFeedbacks'
+import { type AudioPresetFeedbacks, type AudioPresetCallbacks, vMixAudioPresetFeedbacks } from './audioPresetFeedbacks'
 import { type GeneralFeedbacks, type GeneralCallbacks, vMixGeneralFeedbacks } from './generalFeedbacks'
 import { type LayersFeedbacks, type LayersCallbacks, vMixLayersFeedbacks } from './layersFeedbacks'
 import { type ListFeedbacks, type ListCallbacks, vMixListFeedbacks } from './listFeedbacks'
@@ -22,6 +23,7 @@ export type VMixFeedbackKeys = keyof VMixFeedbacks
 
 export type VMixFeedbacks =
   | AudioFeedbacks
+  | AudioPresetFeedbacks
   | GeneralFeedbacks
   | LayersFeedbacks
   | ListFeedbacks
@@ -34,6 +36,7 @@ export type VMixFeedbacks =
 
 export type FeedbackCallbacks =
   | AudioCallbacks
+  | AudioPresetCallbacks
   | GeneralCallbacks
   | LayersCallbacks
   | ListCallbacks
@@ -46,7 +49,7 @@ export type FeedbackCallbacks =
 
 // Force options to have a default to prevent sending undefined values
 type InputFieldWithDefault = Exclude<SomeCompanionFeedbackInputField, 'default'> & {
-  default: string | number | boolean | null
+  default: string | number | boolean | null | (string | number | boolean | null)[]
 }
 
 export interface FeedbackCallback<I, O> {
@@ -84,6 +87,7 @@ export type VMixFeedback<T> = VMixFeedbackBoolean<T> | VMixFeedbackAdvanced<T>
 export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
   return {
     ...vMixAudioFeedbacks(instance),
+    ...vMixAudioPresetFeedbacks(instance),
     ...vMixGeneralFeedbacks(instance),
     ...vMixLayersFeedbacks(instance),
     ...vMixListFeedbacks(instance),

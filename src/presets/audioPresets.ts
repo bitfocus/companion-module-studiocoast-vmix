@@ -522,7 +522,7 @@ export const getAudioPresets = (): VMixPresetArray => {
       name: `Bus Master Mute`,
       type: 'button',
       style: {
-        text: `Bus Master Mute`,
+        text: `Bus Master\nMute`,
         size: '14',
         color: combineRgb(255, 255, 255),
         bgcolor: combineRgb(0, 0, 0),
@@ -560,10 +560,10 @@ export const getAudioPresets = (): VMixPresetArray => {
     },
     {
       category: 'Audio',
-      name: `Bus Master 0%`,
+      name: `Bus Master\n0%`,
       type: 'button',
       style: {
-        text: `Bus Master 0%`,
+        text: `Bus Master\n0%`,
         size: '14',
         color: combineRgb(255, 255, 255),
         bgcolor: combineRgb(0, 0, 0),
@@ -578,10 +578,10 @@ export const getAudioPresets = (): VMixPresetArray => {
     },
     {
       category: 'Audio',
-      name: `Bus Master 25%`,
+      name: `Bus Master\n25%`,
       type: 'button',
       style: {
-        text: `Bus Master 25%`,
+        text: `Bus Master\n25%`,
         size: '14',
         color: combineRgb(255, 255, 255),
         bgcolor: combineRgb(0, 0, 0),
@@ -596,10 +596,10 @@ export const getAudioPresets = (): VMixPresetArray => {
     },
     {
       category: 'Audio',
-      name: `Bus Master 50%`,
+      name: `Bus Master\n50%`,
       type: 'button',
       style: {
-        text: `Bus Master 50%`,
+        text: `Bus Master\n50%`,
         size: '14',
         color: combineRgb(255, 255, 255),
         bgcolor: combineRgb(0, 0, 0),
@@ -614,10 +614,10 @@ export const getAudioPresets = (): VMixPresetArray => {
     },
     {
       category: 'Audio',
-      name: `Bus Master 75%`,
+      name: `Bus Master\n75%`,
       type: 'button',
       style: {
-        text: `Bus Master 75%`,
+        text: `Bus Master\n75%`,
         size: '14',
         color: combineRgb(255, 255, 255),
         bgcolor: combineRgb(0, 0, 0),
@@ -632,10 +632,10 @@ export const getAudioPresets = (): VMixPresetArray => {
     },
     {
       category: 'Audio',
-      name: `Bus Master 100%`,
+      name: `Bus Master\n100%`,
       type: 'button',
       style: {
-        text: `Bus Master 100%`,
+        text: `Bus Master\n100%`,
         size: '14',
         color: combineRgb(255, 255, 255),
         bgcolor: combineRgb(0, 0, 0),
@@ -691,10 +691,10 @@ export const getAudioPresets = (): VMixPresetArray => {
       },
       {
         category: 'Audio',
-        name: `Bus ${bus} Mute`,
+        name: `Bus ${bus}\nMute`,
         type: 'button',
         style: {
-          text: `Bus ${bus} Mute`,
+          text: `Bus ${bus}\nMute`,
           size: '14',
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
@@ -732,10 +732,10 @@ export const getAudioPresets = (): VMixPresetArray => {
       },
       {
         category: 'Audio',
-        name: `Bus ${bus} solo`,
+        name: `Bus ${bus}\nsolo`,
         type: 'button',
         style: {
-          text: `Bus ${bus} solo`,
+          text: `Bus ${bus}\nsolo`,
           size: '14',
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
@@ -760,10 +760,10 @@ export const getAudioPresets = (): VMixPresetArray => {
       },
       {
         category: 'Audio',
-        name: `Bus ${bus} 0%`,
+        name: `Bus ${bus}\n0%`,
         type: 'button',
         style: {
-          text: `Bus ${bus} 0%`,
+          text: `Bus ${bus}\n0%`,
           size: '14',
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
@@ -778,10 +778,10 @@ export const getAudioPresets = (): VMixPresetArray => {
       },
       {
         category: 'Audio',
-        name: `Bus ${bus} 25%`,
+        name: `Bus ${bus}\n25%`,
         type: 'button',
         style: {
-          text: `Bus ${bus} 25%`,
+          text: `Bus ${bus}\n25%`,
           size: '14',
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
@@ -796,10 +796,10 @@ export const getAudioPresets = (): VMixPresetArray => {
       },
       {
         category: 'Audio',
-        name: `Bus ${bus} 50%`,
+        name: `Bus ${bus}\n50%`,
         type: 'button',
         style: {
-          text: `Bus ${bus} 50%`,
+          text: `Bus ${bus}\n50%`,
           size: '14',
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
@@ -814,10 +814,10 @@ export const getAudioPresets = (): VMixPresetArray => {
       },
       {
         category: 'Audio',
-        name: `Bus ${bus} 75%`,
+        name: `Bus ${bus}\n75%`,
         type: 'button',
         style: {
-          text: `Bus ${bus} 75%`,
+          text: `Bus ${bus}\n75%`,
           size: '14',
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),
@@ -832,10 +832,10 @@ export const getAudioPresets = (): VMixPresetArray => {
       },
       {
         category: 'Audio',
-        name: `Bus ${bus} 100%`,
+        name: `Bus ${bus}\n100%`,
         type: 'button',
         style: {
-          text: `Bus ${bus} 100%`,
+          text: `Bus ${bus}\n100%`,
           size: '14',
           color: combineRgb(255, 255, 255),
           bgcolor: combineRgb(0, 0, 0),

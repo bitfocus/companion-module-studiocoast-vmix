@@ -3,6 +3,7 @@ import type VMixInstance from '../index'
 import type { ActionCallbacks } from '../actions/actions'
 import type { FeedbackCallbacks } from '../feedbacks/feedback'
 import { getAudioPresets } from './audioPresets'
+import { getAudioPresetPresets } from './audioPresetPresets'
 import { getButtonShiftPresets } from './buttonShiftPresets'
 import { getCallPresets } from './callPresets'
 import { getGeneralPresets } from './generalPresets'
@@ -37,6 +38,7 @@ export type PresetCategory =
   | 'Mix 15'
   | 'Mix 16'
   | 'Audio'
+  | 'Audio Presets'
   | 'vMix Call'
   | 'Scripting & Commands'
   | 'MultiView Layers'
@@ -75,6 +77,7 @@ export type VMixPresetArray = VMixPreset[]
 export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
   const presets: VMixPresetArray = [
     ...getAudioPresets(),
+    ...getAudioPresetPresets(),
     ...getButtonShiftPresets(instance),
     ...getCallPresets(),
     ...getGeneralPresets(),

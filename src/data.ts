@@ -40,6 +40,8 @@ export interface AudioBusses {
   E: boolean
   F: boolean
   G: boolean
+
+  [key: string]: boolean
 }
 
 export type CallAudioSource = 'Master' | 'Headphones' | 'BusA' | 'BusB' | 'BusC' | 'BusD' | 'BusE' | 'BusF' | 'BusG'
@@ -1085,6 +1087,7 @@ export class VMixData {
       changes.add('routableMultiviewLayer')
       changes.add('inputVolumeMeter')
       changes.add('inputState')
+      changes.add('audioPresetActive')
 
       // DEPRECATED
       changes.add('titleLayer')
@@ -1095,6 +1098,7 @@ export class VMixData {
     // Check audio changes
     if (!isEqual(newData.audio, this.audio) || inputCheck) {
       changes.add('busVolumeMeter')
+      changes.add('audioPresetActive')
     }
 
     // Check Transition changes

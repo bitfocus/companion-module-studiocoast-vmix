@@ -241,7 +241,7 @@ export const httpHandler = async (instance: VMixInstance, request: CompanionHTTP
 
   const endpoint = request.path.replace('/', '').toLowerCase()
 
-  if (endpoints[request.method][endpoint]) endpoints[request.method][endpoint]()
+  if (endpoints[request.method][endpoint]) await endpoints[request.method][endpoint]()
 
   return response
 }

@@ -18,6 +18,7 @@ import { getPresets } from './presets/presets'
 import { TCP } from './tcp'
 import { getUpgrades } from './upgrade'
 import { Variables } from './variables/variables'
+import { AudioPresets } from './audioPresets'
 
 interface APIProcessing {
   hold: boolean
@@ -63,6 +64,7 @@ class VMixInstance extends InstanceBase<Config> {
     feedbacks: 0,
     variables: 0,
   }
+  public audioPresets = new AudioPresets(this)
   public buttonShift: ButtonShift = {
     state: 0,
     blink: false,
@@ -133,6 +135,7 @@ class VMixInstance extends InstanceBase<Config> {
     this.config = config
     this.updateInstance()
     this.setPresetDefinitions(getPresets(this))
+    this.audioPresets.presets = this.config.audioPresets
     if (this.tcp) this.tcp.update()
     if (this.variables) this.variables.updateVariables()
     return
