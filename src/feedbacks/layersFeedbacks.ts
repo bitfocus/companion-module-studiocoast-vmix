@@ -1,70 +1,54 @@
-import { combineRgb } from '@companion-module/base'
-import type { Input } from '../data'
-import type { VMixFeedback, FeedbackCallback } from './feedback'
-import { options } from '../utils'
-import type VMixInstance from '../index'
+import { type CompanionFeedbackDefinitions } from '@companion-module/base'
+import { options } from '../utils.js'
+import type VMixInstance from '../index.js'
 
-type SelectedDestinationInputOptions = {
-  input: string
+export type LayersFeedbacksSchema = {
+  selectedDestinationInput: {
+    type: 'boolean'
+    options: {
+      input: string
+    }
+  }
+  selectedDestinationLayer: {
+    type: 'boolean'
+    options: {
+      selectedIndex: string
+    }
+  }
+  routableMultiviewLayer: {
+    type: 'boolean'
+    options: {
+      input: string
+    }
+  }
+  inputOnMultiview: {
+    type: 'boolean'
+    options: {
+      inputX: string
+      inputY: string
+      layer: string
+    }
+  }
 }
 
-type SelectedDestinationLayerOptions = {
-  selectedIndex: string
-}
-
-type RoutableMultiviewLayerOptions = {
-  input: string
-}
-
-type InputOnMultiviewOptions = {
-  inputX: string
-  inputY: string
-  layer: string
-}
-
-type SelectedDestinationInputCallback = FeedbackCallback<'selectedDestinationInput', SelectedDestinationInputOptions>
-type SelectedDestinationLayerCallback = FeedbackCallback<'selectedDestinationLayer', SelectedDestinationLayerOptions>
-type RoutableMultiviewLayerCallback = FeedbackCallback<'routableMultiviewLayer', RoutableMultiviewLayerOptions>
-type InputOnMultiviewCallback = FeedbackCallback<'inputOnMultiview', InputOnMultiviewOptions>
-
-export interface LayersFeedbacks {
-  selectedDestinationInput: VMixFeedback<SelectedDestinationInputCallback>
-  selectedDestinationLayer: VMixFeedback<SelectedDestinationLayerCallback>
-  routableMultiviewLayer: VMixFeedback<RoutableMultiviewLayerCallback>
-  inputOnMultiview: VMixFeedback<InputOnMultiviewCallback>
-}
-
-export type LayersCallbacks = SelectedDestinationInputCallback | SelectedDestinationLayerCallback | RoutableMultiviewLayerCallback | InputOnMultiviewCallback
-
-export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => {
+export const getLayersFeedbacks = (instance: VMixInstance): CompanionFeedbackDefinitions<LayersFeedbacksSchema> => {
   return {
     selectedDestinationInput: {
       type: 'boolean',
       name: 'Layers - Destination Input Indicator',
       description: 'Indicates if input is currently selected for Layer Routing',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0x0ffff00 },
       options: [options.input],
-      callback: async (feedback, context) => {
+      callback: async (feedback) => {
         if (instance.routingData.layer.destinationInput === null) return false
 
         const selectInput = (await instance.data.getInput(instance.routingData.layer.destinationInput))?.key || ''
-        const parseInputValue = await instance.parseOption(feedback.options.input, context)
+        let inputID = feedback.options.input
+        if (feedback.options.input === '0') inputID = instance.data.mix[0].preview.toString()
+        if (feedback.options.input === '-1') inputID = instance.data.mix[0].program.toString()
+        const input = await instance.data.getInput(inputID)
 
-        const getInputValue: (string | null)[] = []
-        for (const input of parseInputValue) {
-          let target = input
-          if (input === '0') target = instance.data.mix[0].preview.toString()
-          if (input === '-1') target = instance.data.mix[0].program.toString()
-          const getInput = await instance.data.getInput(target)
-          getInputValue.push(getInput?.key || null)
-        }
-
-        const blink = instance.buttonShift.blink && instance.config.shiftBlinkLayerRouting && getInputValue.includes(selectInput)
-
-        return getInputValue[instance.buttonShift.state] === selectInput || blink
+        return selectInput === input?.key
       },
     },
 
@@ -72,28 +56,18 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
       type: 'boolean',
       name: 'Layers - Destination Layer Indicator',
       description: 'Indicates if layer is currently selected for Layer Routing',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0x0ffff00 },
       options: [
         {
           type: 'textinput',
           label: 'Destination Layer of destination Input',
           id: 'selectedIndex',
           default: '',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
-      callback: async (feedback, context) => {
-        const getIndexValue = await instance.parseOption(feedback.options.selectedIndex + '', context)
-        const blink =
-          instance.routingData.layer.destinationLayer !== null &&
-          instance.buttonShift.blink &&
-          instance.config.shiftBlinkLayerRouting &&
-          getIndexValue.includes(instance.routingData.layer.destinationLayer)
-
-        return getIndexValue[instance.buttonShift.state] === instance.routingData.layer.destinationLayer || blink
+      callback: async (feedback) => {
+        return feedback.options.selectedIndex === instance.routingData.layer.destinationLayer
       },
     },
 
@@ -101,36 +75,18 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
       type: 'boolean',
       name: 'Layers - check if input is on destination Layer of destination input',
       description: 'Indicates if the input is destination layer and input',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0x0ffff00 },
       options: [options.input],
-      callback: async (feedback, context) => {
-        const parseInputValue = await instance.parseOption(feedback.options.input, context)
-        const getInputValue: (string | null)[] = []
-
-        for (const input of parseInputValue) {
-          const value = (await instance.data.getInput(input))?.key || null
-          getInputValue.push(value)
-        }
-
-        if (getInputValue[instance.buttonShift.state] === null || instance.routingData.layer.destinationInput === null || instance.routingData.layer.destinationLayer === null) {
-          return false
-        }
-
-        const selectedInput = await instance.data.getInput(instance.routingData.layer.destinationInput)
+      callback: async (feedback) => {
+        const input = await instance.data.getInput(feedback.options.input)
+        if (instance.routingData.layer.destinationInput === null || instance.routingData.layer.destinationLayer === null || input === null) return false
+        const routingInput = await instance.data.getInput(instance.routingData.layer.destinationInput)
         const index = parseInt(instance.routingData.layer.destinationLayer) - 1
 
-        if (selectedInput !== null && selectedInput.overlay) {
-          const selectedLayer = selectedInput.overlay.find((overlay) => overlay.index === index)
+        if (routingInput !== null && routingInput.overlay) {
+          const selectedLayer = routingInput.overlay.find((overlay) => overlay.index === index)
 
-          let blink = false
-          if (selectedLayer?.key && instance.buttonShift.blink && instance.config.shiftBlinkLayerRouting && getInputValue.includes(selectedLayer.key)) {
-            blink = true
-          }
-
-          return selectedLayer?.key === getInputValue[instance.buttonShift.state] || blink
+          return selectedLayer?.key === input.key
         }
 
         return false
@@ -141,74 +97,50 @@ export const vMixLayersFeedbacks = (instance: VMixInstance): LayersFeedbacks => 
       type: 'boolean',
       name: 'Layers - check if X input is on Layer on Y input',
       description: 'Indicates if the input is currently on a specified layer of an input',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0x0ffff00 },
       options: [
         {
           type: 'textinput',
           label: 'Input X',
           id: 'inputX',
           default: '1',
-          tooltip: 'Number, Name, or GUID',
-          useVariables: { local: true },
+          description: 'Number, Name, or GUID',
+          useVariables: true,
         },
         {
           type: 'textinput',
           label: 'Input Y',
           id: 'inputY',
           default: '1',
-          tooltip: 'Number, Name, or GUID',
-          useVariables: { local: true },
+          description: 'Number, Name, or GUID',
+          useVariables: true,
         },
         {
           type: 'textinput',
           label: 'Layer',
           id: 'layer',
           default: '0',
-          tooltip: '1-10, 0 = Any layer',
-          useVariables: { local: true },
+          description: '1-10, 0 = Any layer',
+          useVariables: true,
         },
       ],
-      callback: async (feedback, context) => {
-        const targetLayer = await instance.parseOption(feedback.options.layer, context)
-        const parseInputXValue = await instance.parseOption(feedback.options.inputX, context)
-        const inputXValue: any = []
+      callback: async (feedback) => {
+        if (feedback.options.inputX === '' || feedback.options.inputY === '' || feedback.options.layer === '') return false
+        const inputX = await instance.data.getInput(feedback.options.inputX)
+        const inputY = await instance.data.getInput(feedback.options.inputY)
+        const layer = parseInt(feedback.options.layer, 10)
 
-        for (const input of parseInputXValue) {
-          const value = (await instance.data.getInput(input))?.key || null
-          inputXValue.push(value)
+        if (!inputX || !inputY || isNaN(layer)) return false
+
+        let hit = false
+        if (layer === 0) {
+          hit = inputY.overlay?.find((overlay) => overlay.key === inputX.key) !== undefined
+        } else {
+          const overlay = inputY?.overlay?.find((overlay: any) => overlay.index === layer - 1)
+          hit = overlay?.key === inputX.key
         }
 
-        const parseInputYValue = await instance.parseOption(feedback.options.inputY, context)
-        const inputYValue: any = []
-
-        for (const input of parseInputYValue) {
-          const value = await instance.data.getInput(input)
-          inputYValue.push(value)
-        }
-
-        const check = (state: number): boolean => {
-          const target = parseInt(targetLayer[state], 10)
-          if (target === 0) {
-            return inputYValue[state]?.overlay?.find((layer: any) => layer.key === inputXValue[state]) !== undefined
-          } else {
-            const layer = inputYValue[state]?.overlay?.find((layer: any) => layer.index === target - 1)
-            return layer?.key === inputXValue[state]
-          }
-        }
-
-        const primaryCheck = check(instance.buttonShift.state)
-        const secondaryCheck = inputYValue.map((input: Input, index: number) => {
-          if (input !== null && inputXValue[index] !== null) {
-            return check(index)
-          } else {
-            return false
-          }
-        })
-
-        return primaryCheck || (secondaryCheck.includes(true) && instance.config.shiftBlinkLayerRouting && instance.buttonShift.blink)
+        return hit
       },
     },
   }

@@ -1,39 +1,29 @@
-import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import type { EmptyOptions } from '../utils'
-import type VMixInstance from '../index'
+import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { SendBasicCommand } from './actions.js'
+import type { EmptyOptions } from '../utils.js'
+import type VMixInstance from '../index.js'
 
-type CommandOptions = {
-  command: string
-  encode: boolean
+export type ScriptingActionsSchema = {
+  command: {
+    options: {
+      command: string
+      encode: boolean
+    }
+  }
+  scriptStart: {
+    options: {
+      value: string
+    }
+  }
+  scriptStop: {
+    options: {
+      value: string
+    }
+  }
+  scriptStopAll: EmptyOptions
 }
 
-type ScriptStartOptions = {
-  value: string
-}
-
-type ScriptStopOptions = {
-  value: string
-}
-
-type ScriptStopAllOptions = EmptyOptions
-
-type CommandCallback = ActionCallback<'command', CommandOptions>
-type ScriptStartCallback = ActionCallback<'scriptStart', ScriptStartOptions>
-type ScriptStopCallback = ActionCallback<'scriptStop', ScriptStopOptions>
-type ScriptStopAllCallback = ActionCallback<'scriptStopAll', ScriptStopAllOptions>
-
-export interface ScriptingActions {
-  command: VMixAction<CommandCallback>
-  scriptStart: VMixAction<ScriptStartCallback>
-  scriptStop: VMixAction<ScriptStopCallback>
-  scriptStopAll: VMixAction<ScriptStopAllCallback>
-
-  [key: string]: VMixAction<any>
-}
-
-export type ScriptingCallbacks = CommandCallback | ScriptStartCallback | ScriptStopCallback | ScriptStopAllCallback
-
-export const vMixScriptingActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): ScriptingActions => {
+export const getScriptingActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<ScriptingActionsSchema> => {
   return {
     command: {
       name: 'Scripting - Run custom command',
@@ -44,7 +34,7 @@ export const vMixScriptingActions = (instance: VMixInstance, sendBasicCommand: S
           label: 'Command',
           id: 'command',
           default: '',
-          useVariables: { local: true },
+          useVariables: true,
         },
         {
           type: 'checkbox',
@@ -53,10 +43,11 @@ export const vMixScriptingActions = (instance: VMixInstance, sendBasicCommand: S
           default: false,
         },
       ],
-      callback: async (action, context) => {
-        const commandString = (await instance.parseOption(action.options.command, context))[instance.buttonShift.state]
+      callback: async (action) => {
+        const commandString = action.options.command
         const command = commandString.split(' ')[0]
         const params = commandString.split(' ').slice(1, commandString.split(' ').length).join(' ')
+
         if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${command} ${action.options.encode ? encodeURIComponent(params) : params}`)
       },
     },
@@ -70,7 +61,7 @@ export const vMixScriptingActions = (instance: VMixInstance, sendBasicCommand: S
           label: 'Script name',
           id: 'value',
           default: '',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
       callback: sendBasicCommand,
@@ -85,7 +76,7 @@ export const vMixScriptingActions = (instance: VMixInstance, sendBasicCommand: S
           label: 'Script name',
           id: 'value',
           default: '',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
       callback: sendBasicCommand,

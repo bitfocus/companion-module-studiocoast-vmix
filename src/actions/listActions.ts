@@ -1,65 +1,80 @@
-import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import { options } from '../utils'
-import type VMixInstance from '../index'
+import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { SendBasicCommand } from './actions.js'
+import { options } from '../utils.js'
+import type VMixInstance from '../index.js'
 
-type NextPictureOptions = {
-  input: string
+export type ListActionsSchema = {
+  nextPicture: {
+    options: {
+      input: string
+    }
+  }
+  previousPicture: {
+    options: {
+      input: string
+    }
+  }
+
+  nextItem: {
+    options: {
+      input: string
+    }
+  }
+  previousItem: {
+    options: {
+      input: string
+    }
+  }
+  selectIndex: {
+    options: {
+      input: string
+      value: string
+    }
+  }
+  autoPlayFirst: {
+    options: {
+      input: string
+      functionID: 'AutoPlayFirst' | 'AutoPlayFirstOn' | 'AutoPlayFirstOff'
+    }
+  }
+  autoPlayNext: {
+    options: {
+      input: string
+      functionID: 'AutoPlayNext' | 'AutoPlayNextOn' | 'AutoPlayNextOff'
+    }
+  }
+  listShuffle: {
+    options: {
+      input: string
+    }
+  }
 }
 
-type PreviousPictureOptions = {
-  input: string
-}
-
-type SelectIndexOptions = {
-  input: string
-  value: string
-}
-
-type AutoPlayFirstOptions = {
-  input: string
-  functionID: 'AutoPlayFirst' | 'AutoPlayFirstOn' | 'AutoPlayFirstOff'
-}
-
-type AutoPlayNextOptions = {
-  input: string
-  functionID: 'AutoPlayNext' | 'AutoPlayNextOn' | 'AutoPlayNextOff'
-}
-
-type ListShuffleOptions = {
-  input: string
-}
-
-type NextPictureCallback = ActionCallback<'nextPicture', NextPictureOptions>
-type PreviousPictureCallback = ActionCallback<'previousPicture', PreviousPictureOptions>
-type SelectIndexCallback = ActionCallback<'selectIndex', SelectIndexOptions>
-type AutoPlayFirstCallback = ActionCallback<'autoPlayFirst', AutoPlayFirstOptions>
-type AutoPlayNextCallback = ActionCallback<'autoPlayNext', AutoPlayNextOptions>
-type ListShuffleCallback = ActionCallback<'listShuffle', ListShuffleOptions>
-
-export interface ListActions {
-  nextPicture: VMixAction<NextPictureCallback>
-  previousPicture: VMixAction<PreviousPictureCallback>
-  selectIndex: VMixAction<SelectIndexCallback>
-  autoPlayFirst: VMixAction<AutoPlayFirstCallback>
-  autoPlayNext: VMixAction<AutoPlayNextCallback>
-  listShuffle: VMixAction<ListShuffleCallback>
-
-  [key: string]: VMixAction<any>
-}
-
-export type ListCallbacks = NextPictureCallback | PreviousPictureCallback | SelectIndexCallback | AutoPlayFirstCallback | AutoPlayNextCallback | ListShuffleCallback
-
-export const vMixListActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): ListActions => {
+export const getListActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<ListActionsSchema> => {
   return {
     nextPicture: {
-      name: 'Lists - Next Picture/Slide/Index',
-      description: 'Selects next item in a List type input',
+      name: 'Lists - Next Picture/Slide',
+      description: 'Selects next item in a Photo or Powerpoint type input',
       options: [options.input],
       callback: sendBasicCommand,
     },
 
     previousPicture: {
-      name: 'Lists - Previous Picture/Slide/Index',
+      name: 'Lists - Previous Picture/Slide',
+      description: 'Selects previous item in a Photo or Powerpoint type input',
+      options: [options.input],
+      callback: sendBasicCommand,
+    },
+
+    nextItem: {
+      name: 'Lists - Next List item',
+      description: 'Selects next item in a List type input',
+      options: [options.input],
+      callback: sendBasicCommand,
+    },
+
+    previousItem: {
+      name: 'Lists - Previous List item',
       description: 'Selects previous item in a List type input',
       options: [options.input],
       callback: sendBasicCommand,
@@ -75,7 +90,7 @@ export const vMixListActions = (_instance: VMixInstance, sendBasicCommand: SendB
           label: 'Select Index',
           id: 'value',
           default: '1',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
       callback: sendBasicCommand,
@@ -96,6 +111,7 @@ export const vMixListActions = (_instance: VMixInstance, sendBasicCommand: SendB
             { id: 'AutoPlayFirstOn', label: 'On' },
             { id: 'AutoPlayFirstOff', label: 'Off' },
           ],
+          disableAutoExpression: true,
         },
       ],
       callback: sendBasicCommand,
@@ -116,6 +132,7 @@ export const vMixListActions = (_instance: VMixInstance, sendBasicCommand: SendB
             { id: 'AutoPlayNextOn', label: 'On' },
             { id: 'AutoPlayNextOff', label: 'Off' },
           ],
+          disableAutoExpression: true,
         },
       ],
       callback: sendBasicCommand,

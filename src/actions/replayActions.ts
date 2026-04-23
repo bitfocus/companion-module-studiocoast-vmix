@@ -1,288 +1,210 @@
-import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import { type EmptyOptions, options } from '../utils'
-import type VMixInstance from '../index'
+import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { SendBasicCommand } from './actions.js'
+import { type EmptyOptions, options } from '../utils.js'
+import type VMixInstance from '../index.js'
+
+export type ReplayActionsSchema = {
+  replayACamera: {
+    options: {
+      functionID: 'ReplayACamera1' | 'ReplayACamera2' | 'ReplayACamera3' | 'ReplayACamera4' | 'ReplayACamera5' | 'ReplayACamera6' | 'ReplayACamera7' | 'ReplayACamera8'
+    }
+  }
+  replayBCamera: {
+    options: {
+      functionID: 'ReplayBCamera1' | 'ReplayBCamera2' | 'ReplayBCamera3' | 'ReplayBCamera4' | 'ReplayBCamera5' | 'ReplayBCamera6' | 'ReplayBCamera7' | 'ReplayBCamera8'
+    }
+  }
+  replayCamera: {
+    options: {
+      functionID: 'ReplayCamera1' | 'ReplayCamera2' | 'ReplayCamera3' | 'ReplayCamera4' | 'ReplayCamera5' | 'ReplayCamera6' | 'ReplayCamera7' | 'ReplayCamera8'
+    }
+  }
+  replaySelectChannel: {
+    options: {
+      functionID: 'replaySelectChannelAB' | 'replaySelectChannelA' | 'replaySelectChannelB'
+    }
+  }
+  replaySwapChannels: EmptyOptions
+  replayMark: {
+    options: {
+      functionID:
+        | 'ReplayMarkCancel'
+        | 'ReplayMarkIn'
+        | 'ReplayMarkInLive'
+        | 'ReplayMarkInOut'
+        | 'ReplayMarkInOutLive'
+        | 'ReplayMarkInOutLiveFuture'
+        | 'ReplayMarkInOutRecorded'
+        | 'ReplayMarkInRecorded'
+        | 'ReplayMarkInRecordedNow'
+        | 'ReplayMarkOut'
+      value: string
+      value2: string
+    }
+  }
+  replayMoveInOut: {
+    options: {
+      functionID: 'ReplayMoveSelectedInPoint' | 'ReplayMoveSelectedOutPoint'
+      value: string
+    }
+  }
+  replayUpdateInOut: {
+    options: {
+      functionID: 'ReplayUpdateSelectedInPoint' | 'ReplayUpdateSelectedOutPoint'
+    }
+  }
+  replaySelectEvents: {
+    options: {
+      functionID:
+        | 'ReplaySelectEvents1'
+        | 'ReplaySelectEvents2'
+        | 'ReplaySelectEvents3'
+        | 'ReplaySelectEvents4'
+        | 'ReplaySelectEvents5'
+        | 'ReplaySelectEvents6'
+        | 'ReplaySelectEvents7'
+        | 'ReplaySelectEvents8'
+        | 'ReplaySelectEvents9'
+        | 'ReplaySelectEvents10'
+        | 'ReplaySelectEvents11'
+        | 'ReplaySelectEvents12'
+        | 'ReplaySelectEvents13'
+        | 'ReplaySelectEvents14'
+        | 'ReplaySelectEvents15'
+        | 'ReplaySelectEvents16'
+        | 'ReplaySelectEvents17'
+        | 'ReplaySelectEvents18'
+        | 'ReplaySelectEvents19'
+        | 'ReplaySelectEvents20'
+      channel: ReplayChannel
+    }
+  }
+  replayChangeDirection: {
+    options: {
+      channel: ReplayChannel
+    }
+  }
+  replayChangeSpeed: {
+    options: {
+      channel: ReplayChannel
+      value: number
+    }
+  }
+  replaySetSpeed: {
+    options: {
+      channel: ReplayChannel
+      value: string
+      max: string
+    }
+  }
+  replayMoveEvent: {
+    options: {
+      functionID: 'ReplayMoveLastEvent' | 'ReplayMoveSelectedEvent'
+      value: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20
+    }
+  }
+  replayMoveEventUpDown: {
+    options: {
+      functionID: 'ReplayMoveSelectedEventUp' | 'ReplayMoveSelectedEventDown'
+    }
+  }
+  replayFastForwardBackward: {
+    options: {
+      functionID: 'ReplayFastForward' | 'ReplayFastBackward'
+      channel: ReplayChannel
+      value: number
+    }
+  }
+  replayJumpFrames: {
+    options: {
+      channel: ReplayChannel
+      value: string
+    }
+  }
+  replayRecording: {
+    options: {
+      functionID: 'ReplayStartRecording' | 'ReplayStopRecording' | 'ReplayStartStopRecording'
+    }
+  }
+  replayJumpToNow: {
+    options: {
+      channel: ReplayChannel
+    }
+  }
+  replayLiveToggle: EmptyOptions
+  replayPlay: {
+    options: {
+      channel: ReplayChannel
+    }
+  }
+  replayPause: {
+    options: {
+      channel: ReplayChannel
+    }
+  }
+  replayPlayEvent: {
+    options: {
+      channel: ReplayChannel
+      value: string
+    }
+  }
+  replayPlaySelectedEventToOutput: {
+    options: {
+      channel: ReplayChannel
+    }
+  }
+  replayPlayEventsByID: {
+    options: {
+      channel: ReplayChannel
+      value: string
+    }
+  }
+  replayPlayEventsByIDToOutput: {
+    options: {
+      channel: ReplayChannel
+      value: string
+    }
+  }
+  replayPlayLastEventToOutput: {
+    options: {
+      channel: ReplayChannel
+    }
+  }
+  replayPlayAllEventsToOutput: {
+    options: {
+      channel: ReplayChannel
+    }
+  }
+  replayStopEvents: EmptyOptions
+  replayToggleCamera: {
+    options: {
+      camera: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
+    }
+  }
+  replayShowHide: EmptyOptions
+  replayQuadMode: {
+    options: {
+      functionID: 'ReplayToggleQuadMode' | 'ReplayQuadModeOn' | 'ReplayQuadModeOff'
+    }
+  }
+  replayEventText: {
+    options: {
+      type: 'Set' | 'Append'
+      target: 'Last' | 'Selected'
+      camera: string
+      text: string
+    }
+  }
+  replayEventTextClear: {
+    options: {
+      target: 'Last' | 'Selected'
+    }
+  }
+}
 
 type ReplayChannel = 'Current' | 'A' | 'B'
 
-type ReplayACameraOptions = {
-  functionID: 'ReplayACamera1' | 'ReplayACamera2' | 'ReplayACamera3' | 'ReplayACamera4' | 'ReplayACamera5' | 'ReplayACamera6' | 'ReplayACamera7' | 'ReplayACamera8'
-}
-
-type ReplayBCameraOptions = {
-  functionID: 'ReplayBCamera1' | 'ReplayBCamera2' | 'ReplayBCamera3' | 'ReplayBCamera4' | 'ReplayBCamera5' | 'ReplayBCamera6' | 'ReplayBCamera7' | 'ReplayBCamera8'
-}
-
-type ReplayCameraOptions = {
-  functionID: 'ReplayCamera1' | 'ReplayCamera2' | 'ReplayCamera3' | 'ReplayCamera4' | 'ReplayCamera5' | 'ReplayCamera6' | 'ReplayCamera7' | 'ReplayCamera8'
-}
-
-type ReplaySelectChannelOptions = {
-  functionID: 'replaySelectChannelAB' | 'replaySelectChannelA' | 'replaySelectChannelB'
-}
-
-type ReplaySwapChannelsOptions = EmptyOptions
-
-type ReplayMarkOptions = {
-  functionID:
-    | 'ReplayMarkCancel'
-    | 'ReplayMarkIn'
-    | 'ReplayMarkInLive'
-    | 'ReplayMarkInOut'
-    | 'ReplayMarkInOutLive'
-    | 'ReplayMarkInOutLiveFuture'
-    | 'ReplayMarkInOutRecorded'
-    | 'ReplayMarkInRecorded'
-    | 'ReplayMarkInRecordedNow'
-    | 'ReplayMarkOut'
-  value: string
-  value2: string
-}
-
-type ReplayMoveInOutOptions = {
-  functionID: 'ReplayMoveSelectedInPoint' | 'ReplayMoveSelectedOutPoint'
-  value: string
-}
-
-type ReplayUpdateInOutOptions = {
-  functionID: 'ReplayUpdateSelectedInPoint' | 'ReplayUpdateSelectedOutPoint'
-}
-
-type ReplaySelectEventsOptions = {
-  functionID:
-    | 'ReplaySelectEvents1'
-    | 'ReplaySelectEvents2'
-    | 'ReplaySelectEvents3'
-    | 'ReplaySelectEvents4'
-    | 'ReplaySelectEvents5'
-    | 'ReplaySelectEvents6'
-    | 'ReplaySelectEvents7'
-    | 'ReplaySelectEvents8'
-    | 'ReplaySelectEvents9'
-    | 'ReplaySelectEvents10'
-    | 'ReplaySelectEvents11'
-    | 'ReplaySelectEvents12'
-    | 'ReplaySelectEvents13'
-    | 'ReplaySelectEvents14'
-    | 'ReplaySelectEvents15'
-    | 'ReplaySelectEvents16'
-    | 'ReplaySelectEvents17'
-    | 'ReplaySelectEvents18'
-    | 'ReplaySelectEvents19'
-    | 'ReplaySelectEvents20'
-  channel: ReplayChannel
-}
-
-type ReplayChangeDirectionOptions = {
-  channel: ReplayChannel
-}
-
-type ReplayChangeSpeedOptions = {
-  channel: ReplayChannel
-  value: number
-}
-
-type ReplaySetSpeedOptions = {
-  channel: ReplayChannel
-  value: string
-  max: string
-}
-
-type ReplayMoveEventOptions = {
-  functionID: 'ReplayMoveLastEvent' | 'ReplayMoveSelectedEvent'
-  value: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20
-}
-
-type ReplayMoveEventUpDownOptions = {
-  functionID: 'ReplayMoveSelectedEventUp' | 'ReplayMoveSelectedEventDown'
-}
-
-type ReplayFastForwardBackwardOptions = {
-  functionID: 'ReplayFastForward' | 'ReplayFastBackward'
-  channel: ReplayChannel
-  value: number
-}
-
-type ReplayJumpFramesOptions = {
-  channel: ReplayChannel
-  value: string
-}
-
-type ReplayRecordingOptions = {
-  functionID: 'ReplayStartRecording' | 'ReplayStopRecording' | 'ReplayStartStopRecording'
-}
-
-type ReplayJumpToNowOptions = {
-  channel: ReplayChannel
-}
-
-type ReplayLiveToggleOptions = EmptyOptions
-
-type ReplayPlayOptions = {
-  channel: ReplayChannel
-}
-
-type ReplayPauseOptions = {
-  channel: ReplayChannel
-}
-
-type ReplayPlayEventOptions = {
-  channel: ReplayChannel
-  value: string
-}
-
-type ReplayPlaySelectedEventToOutputOptions = {
-  channel: ReplayChannel
-}
-
-type ReplayPlayEventsByIDOptions = {
-  channel: ReplayChannel
-  value: string
-}
-
-type ReplayPlayEventsByIDToOutputOptions = {
-  channel: ReplayChannel
-  value: string
-}
-
-type ReplayPlayLastEventToOutputOptions = {
-  channel: ReplayChannel
-}
-
-type ReplayPlayAllEventsToOutputOptions = {
-  channel: ReplayChannel
-}
-
-type ReplayStopEventsOptions = EmptyOptions
-
-type ReplayToggleCameraOptions = {
-  camera: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
-}
-
-type ReplayShowHideOptions = EmptyOptions
-
-type ReplayQuadModeOptions = {
-  functionID: 'ReplayToggleQuadMode' | 'ReplayQuadModeOn' | 'ReplayQuadModeOff'
-}
-
-type ReplayEventTextOptions = {
-  type: 'Set' | 'Append'
-  target: 'Last' | 'Selected'
-  camera: string
-  text: string
-}
-
-type ReplayEventTextClearOptions = {
-  target: 'Last' | 'Selected'
-}
-
-type ReplayACameraCallback = ActionCallback<'replayACamera', ReplayACameraOptions>
-type ReplayBCameraCallback = ActionCallback<'replayBCamera', ReplayBCameraOptions>
-type ReplayCameraCallback = ActionCallback<'replayCamera', ReplayCameraOptions>
-type ReplaySelectChannelCallback = ActionCallback<'replaySelectChannel', ReplaySelectChannelOptions>
-type ReplaySwapChannelsCallback = ActionCallback<'replaySwapChannels', ReplaySwapChannelsOptions>
-type ReplayMarkCallback = ActionCallback<'replayMark', ReplayMarkOptions>
-type ReplayMoveInOutCallback = ActionCallback<'replayMoveInOut', ReplayMoveInOutOptions>
-type ReplayUpdateInOutCallback = ActionCallback<'replayUpdateInOut', ReplayUpdateInOutOptions>
-type ReplaySelectEventsCallback = ActionCallback<'replaySelectEvents', ReplaySelectEventsOptions>
-type ReplayChangeDirectionCallback = ActionCallback<'replayChangeDirection', ReplayChangeDirectionOptions>
-type ReplayChangeSpeedCallback = ActionCallback<'replayChangeSpeed', ReplayChangeSpeedOptions>
-type ReplaySetSpeedCallback = ActionCallback<'replaySetSpeed', ReplaySetSpeedOptions>
-type ReplayMoveEventCallback = ActionCallback<'replayMoveEvent', ReplayMoveEventOptions>
-type ReplayMoveEventUpDownCallback = ActionCallback<'replayMoveEventUpDown', ReplayMoveEventUpDownOptions>
-type ReplayFastForwardBackwardCallback = ActionCallback<'replayFastForwardBackward', ReplayFastForwardBackwardOptions>
-type ReplayJumpFramesCallback = ActionCallback<'replayJumpFrames', ReplayJumpFramesOptions>
-type ReplayRecordingCallback = ActionCallback<'replayRecording', ReplayRecordingOptions>
-type ReplayJumpToNowCallback = ActionCallback<'replayJumpToNow', ReplayJumpToNowOptions>
-type ReplayLiveToggleCallback = ActionCallback<'replayLiveToggle', ReplayLiveToggleOptions>
-type ReplayPlayCallback = ActionCallback<'replayPlay', ReplayPlayOptions>
-type ReplayPauseCallback = ActionCallback<'replayPause', ReplayPauseOptions>
-type ReplayPlayEventCallback = ActionCallback<'replayPlayEvent', ReplayPlayEventOptions>
-type ReplayPlaySelectedEventToOutputCallback = ActionCallback<'replayPlaySelectedEventToOutput', ReplayPlaySelectedEventToOutputOptions>
-type ReplayPlayEventsByIDCallback = ActionCallback<'replayPlayEventsByID', ReplayPlayEventsByIDOptions>
-type ReplayPlayEventsByIDToOutputCallback = ActionCallback<'replayPlayEventsByIDToOutput', ReplayPlayEventsByIDToOutputOptions>
-type ReplayPlayLastEventToOutputCallback = ActionCallback<'replayPlayLastEventToOutput', ReplayPlayLastEventToOutputOptions>
-type ReplayPlayAllEventsToOutputCallback = ActionCallback<'replayPlayAllEventsToOutput', ReplayPlayAllEventsToOutputOptions>
-type ReplayStopEventsCallback = ActionCallback<'replayStopEvents', ReplayStopEventsOptions>
-type ReplayToggleCameraCallback = ActionCallback<'replayToggleCamera', ReplayToggleCameraOptions>
-type ReplayShowHideCallback = ActionCallback<'replayShowHide', ReplayShowHideOptions>
-type ReplayQuadModeCallback = ActionCallback<'replayQuadMode', ReplayQuadModeOptions>
-type ReplayEventTextCallback = ActionCallback<'replayEventText', ReplayEventTextOptions>
-type ReplayEventTextClearCallback = ActionCallback<'replayEventTextClear', ReplayEventTextClearOptions>
-
-export interface ReplayActions {
-  replayACamera: VMixAction<ReplayACameraCallback>
-  replayBCamera: VMixAction<ReplayBCameraCallback>
-  replayCamera: VMixAction<ReplayCameraCallback>
-  replaySelectChannel: VMixAction<ReplaySelectChannelCallback>
-  replaySwapChannels: VMixAction<ReplaySwapChannelsCallback>
-  replayMark: VMixAction<ReplayMarkCallback>
-  replayMoveInOut: VMixAction<ReplayMoveInOutCallback>
-  replayUpdateInOut: VMixAction<ReplayUpdateInOutCallback>
-  replaySelectEvents: VMixAction<ReplaySelectEventsCallback>
-  replayChangeDirection: VMixAction<ReplayChangeDirectionCallback>
-  replayChangeSpeed: VMixAction<ReplayChangeSpeedCallback>
-  replaySetSpeed: VMixAction<ReplaySetSpeedCallback>
-  replayMoveEvent: VMixAction<ReplayMoveEventCallback>
-  replayMoveEventUpDown: VMixAction<ReplayMoveEventUpDownCallback>
-  replayFastForwardBackward: VMixAction<ReplayFastForwardBackwardCallback>
-  replayJumpFrames: VMixAction<ReplayJumpFramesCallback>
-  replayRecording: VMixAction<ReplayRecordingCallback>
-  replayJumpToNow: VMixAction<ReplayJumpToNowCallback>
-  replayLiveToggle: VMixAction<ReplayLiveToggleCallback>
-  replayPlay: VMixAction<ReplayPlayCallback>
-  replayPause: VMixAction<ReplayPauseCallback>
-  replayPlayEvent: VMixAction<ReplayPlayEventCallback>
-  replayPlaySelectedEventToOutput: VMixAction<ReplayPlaySelectedEventToOutputCallback>
-  replayPlayEventsByID: VMixAction<ReplayPlayEventsByIDCallback>
-  replayPlayEventsByIDToOutput: VMixAction<ReplayPlayEventsByIDToOutputCallback>
-  replayPlayLastEventToOutput: VMixAction<ReplayPlayLastEventToOutputCallback>
-  replayPlayAllEventsToOutput: VMixAction<ReplayPlayAllEventsToOutputCallback>
-  replayStopEvents: VMixAction<ReplayStopEventsCallback>
-  replayToggleCamera: VMixAction<ReplayToggleCameraCallback>
-  replayShowHide: VMixAction<ReplayShowHideCallback>
-  replayQuadMode: VMixAction<ReplayQuadModeCallback>
-  replayEventText: VMixAction<ReplayEventTextCallback>
-  replayEventTextClear: VMixAction<ReplayEventTextClearCallback>
-
-  [key: string]: VMixAction<any>
-}
-
-export type ReplayCallbacks =
-  | ReplayACameraCallback
-  | ReplayBCameraCallback
-  | ReplayCameraCallback
-  | ReplaySelectChannelCallback
-  | ReplaySwapChannelsCallback
-  | ReplayMarkCallback
-  | ReplayMoveInOutCallback
-  | ReplayUpdateInOutCallback
-  | ReplaySelectEventsCallback
-  | ReplayChangeDirectionCallback
-  | ReplayChangeSpeedCallback
-  | ReplaySetSpeedCallback
-  | ReplayMoveEventCallback
-  | ReplayMoveEventUpDownCallback
-  | ReplayFastForwardBackwardCallback
-  | ReplayJumpFramesCallback
-  | ReplayRecordingCallback
-  | ReplayJumpToNowCallback
-  | ReplayLiveToggleCallback
-  | ReplayPlayCallback
-  | ReplayPauseCallback
-  | ReplayPlayEventCallback
-  | ReplayPlaySelectedEventToOutputCallback
-  | ReplayPlayEventsByIDCallback
-  | ReplayPlayEventsByIDToOutputCallback
-  | ReplayPlayLastEventToOutputCallback
-  | ReplayPlayAllEventsToOutputCallback
-  | ReplayStopEventsCallback
-  | ReplayToggleCameraCallback
-  | ReplayShowHideCallback
-  | ReplayQuadModeCallback
-  | ReplayEventTextCallback
-  | ReplayEventTextClearCallback
-
-export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): ReplayActions => {
+export const getReplayActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<ReplayActionsSchema> => {
   return {
     replayACamera: {
       name: 'Replay - A Camera',
@@ -294,6 +216,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           id: 'functionID',
           default: 'ReplayACamera1',
           choices: [1, 2, 3, 4, 5, 6, 7, 8].map((item) => ({ id: `ReplayACamera${item}`, label: `Camera ${item}` })),
+          expressionDescription: `Valid Values: 'ReplayACamera1' to 'ReplayACamera8'`,
         },
       ],
       callback: sendBasicCommand,
@@ -309,6 +232,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           id: 'functionID',
           default: 'ReplayBCamera1',
           choices: [1, 2, 3, 4, 5, 6, 7, 8].map((item) => ({ id: `ReplayBCamera${item}`, label: `Camera ${item}` })),
+          expressionDescription: `Valid Values: 'ReplayBCamera1' to 'ReplayBCamera8'`,
         },
       ],
       callback: sendBasicCommand,
@@ -324,6 +248,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           id: 'functionID',
           default: 'ReplayCamera1',
           choices: [1, 2, 3, 4, 5, 6, 7, 8].map((item) => ({ id: `ReplayCamera${item}`, label: `Camera ${item}` })),
+          expressionDescription: `Valid Values: 'ReplayCamera1' to 'ReplayCamera8'`,
         },
       ],
       callback: sendBasicCommand,
@@ -342,6 +267,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
             id: item,
             label: item.substr(19),
           })),
+          disableAutoExpression: true,
         },
       ],
       callback: sendBasicCommand,
@@ -356,7 +282,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
 
     replayMark: {
       name: 'Replay - Mark Functions',
-      description: 'Mark functions for Replay',
+      description: 'Mark In/Out functions',
       options: [
         {
           type: 'dropdown',
@@ -375,37 +301,34 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
             { id: 'ReplayMarkInRecorded', label: 'Mark In Recorded' },
             { id: 'ReplayMarkInRecordedNow', label: 'Mark In Recorded Now' },
           ],
+          disableAutoExpression: true,
         },
         {
           type: 'textinput',
           label: 'Seconds',
-          tooltip: 'Number of previous seconds to use when creating a new event',
+          description: 'Number of previous seconds to use when creating a new event',
           id: 'value',
           default: '10',
-          useVariables: { local: true },
-          isVisible: (options) => {
-            return ['ReplayMarkInOut', 'ReplayMarkInOutLive', 'ReplayMarkInOutRecorded'].includes(options.functionID as string)
-          },
+          useVariables: true,
+          isVisibleExpression: `includes($(options:functionID), 'ReplayMarkInOut') && $(options:functionID) !== 'ReplayMarkInOutLiveFuture'`,
         },
         {
           type: 'textinput',
           label: 'Seconds',
-          tooltip: 'Number of seconds into the future to use when creating a new event',
+          description: 'Number of seconds into the future to use when creating a new event',
           id: 'value2',
           default: '10',
-          useVariables: { local: true },
-          isVisible: (options) => {
-            return options.functionID === 'ReplayMarkInOutLiveFuture'
-          },
+          useVariables: true,
+          isVisibleExpression: `$(options:functionID) === 'ReplayMarkInOutLiveFuture'`,
         },
       ],
-      callback: async (action, context) => {
+      callback: async (action) => {
         const command: any = {
           id: 'replayMark',
           options: { functionID: action.options.functionID },
         }
 
-        if (['ReplayMarkInOut', 'ReplayMarkInOutLive', 'ReplayMarkInOutRecorded'].includes(action.options.functionID as string)) {
+        if (['ReplayMarkInOut', 'ReplayMarkInOutLive', 'ReplayMarkInOutRecorded'].includes(action.options.functionID)) {
           command.options.value = action.options.value
         }
 
@@ -413,7 +336,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           command.options.value = action.options.value2
         }
 
-        return sendBasicCommand(command, context)
+        return sendBasicCommand(command)
       },
     },
 
@@ -430,13 +353,14 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
             { id: 'ReplayMoveSelectedInPoint', label: 'Move In Point' },
             { id: 'ReplayMoveSelectedOutPoint', label: 'Move Out Point' },
           ],
+          disableAutoExpression: true,
         },
         {
           type: 'textinput',
           label: 'Frames',
           id: 'value',
           default: '30',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
       callback: sendBasicCommand,
@@ -455,6 +379,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
             { id: 'ReplayUpdateSelectedInPoint', label: 'Move In Point' },
             { id: 'ReplayUpdateSelectedOutPoint', label: 'Move Out Point' },
           ],
+          disableAutoExpression: true,
         },
       ],
       callback: sendBasicCommand,
@@ -473,6 +398,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
             id: `ReplaySelectEvents${item}`,
             label: `Events ${item}`,
           })),
+          disableAutoExpression: true,
         },
         options.replayChannel,
       ],
@@ -499,6 +425,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           step: 0.01,
           min: -1,
           max: 1,
+          clampValues: true,
         },
       ],
       callback: sendBasicCommand,
@@ -512,24 +439,31 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
         {
           type: 'textinput',
           label: 'Speed',
+          description: '0 to 1',
           id: 'value',
           default: '1',
-          useVariables: { local: true },
+          useVariables: true,
         },
         {
           type: 'textinput',
           label: 'Max Speed',
+          description: 'If using a tbar, set this to the max value your tbar sends (eg, 255 for xkeys), otherwise leave at 1',
           id: 'max',
           default: '1',
-          tooltip: 'If using a tbar, set this to the max value your tbar sends (eg, 255 for xkeys)',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
-      callback: async (action, context) => {
-        let value = parseFloat((await instance.parseOption(action.options.value, context))[instance.buttonShift.state])
-        const maxValue = parseFloat((await instance.parseOption(action.options.max, context))[instance.buttonShift.state])
+      callback: async (action) => {
+        let value = parseFloat(action.options.value)
+        const maxValue = parseFloat(action.options.max)
 
-        if (isNaN(value) || isNaN(maxValue) || maxValue < 0) return
+        if (isNaN(value)) {
+          return instance.log('warn', `Replay - Set Speed - Invalid Speed ${action.options.value}`)
+        }
+
+        if (isNaN(maxValue) || maxValue < 0) {
+          return instance.log('warn', `Replay - Set Speed - Invalid Max Speed ${action.options.value}`)
+        }
 
         if (value > maxValue) value = maxValue
         if (value < 0) value = 0
@@ -555,6 +489,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
             { id: 'ReplayMoveLastEvent', label: 'Move Last' },
             { id: 'ReplayMoveSelectedEvent', label: 'Move Selected' },
           ],
+          disableAutoExpression: true,
         },
         {
           type: 'dropdown',
@@ -565,6 +500,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
             id: item,
             label: `Events ${index + 1}`,
           })),
+          disableAutoExpression: true,
         },
       ],
       callback: sendBasicCommand,
@@ -583,6 +519,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
             { id: 'ReplayMoveSelectedEventUp', label: 'Move Up' },
             { id: 'ReplayMoveSelectedEventDown', label: 'Move Down' },
           ],
+          disableAutoExpression: true,
         },
       ],
       callback: sendBasicCommand,
@@ -601,11 +538,13 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
             { id: 'ReplayFastForward', label: 'Forward' },
             { id: 'ReplayFastBackward', label: 'Backward' },
           ],
+          disableAutoExpression: true,
         },
         options.replayChannel,
         {
           type: 'number',
           label: 'Speed',
+          description: '1 to 30',
           id: 'value',
           default: 10,
           min: 0,
@@ -625,7 +564,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           label: 'Frames',
           id: 'value',
           default: '60',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
       callback: sendBasicCommand,
@@ -645,6 +584,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
             { id: 'ReplayStopRecording', label: 'Stop' },
             { id: 'ReplayStartStopRecording', label: 'Toggle' },
           ],
+          disableAutoExpression: true,
         },
       ],
       callback: sendBasicCommand,
@@ -686,10 +626,10 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
         {
           type: 'textinput',
           label: 'Event Number',
-          tooltip: '0 is the most recent event, 1 is the next oldest, and so on',
+          description: '0 is the most recent event, 1 is the next oldest, and so on',
           id: 'value',
           default: '',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
       callback: sendBasicCommand,
@@ -710,10 +650,10 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
         {
           type: 'textinput',
           label: 'Event IDs',
-          tooltip: 'Comma separated list of Event IDs',
+          description: 'Comma separated list of Event IDs',
           id: 'value',
           default: '0000',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
       callback: sendBasicCommand,
@@ -727,10 +667,10 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
         {
           type: 'textinput',
           label: 'Event ID',
-          tooltip: 'Comma separated list of Event IDs',
+          description: 'Comma separated list of Event IDs',
           id: 'value',
           default: '0000',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
       callback: sendBasicCommand,
@@ -767,6 +707,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
           id: 'camera',
           default: 1,
           choices: [1, 2, 3, 4, 5, 6, 7, 8].map((item) => ({ id: item, label: `Camera ${item}` })),
+          expressionDescription: `1 to 8`,
         },
       ],
       callback: async (action) => {
@@ -796,6 +737,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
             { id: 'ReplayQuadModeOff', label: 'Off' },
             { id: 'ReplayToggleQuadMode', label: 'Toggle' },
           ],
+          disableAutoExpression: true,
         },
       ],
       callback: sendBasicCommand,
@@ -814,6 +756,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
             { id: 'Set', label: 'Set' },
             { id: 'Append', label: 'Append' },
           ],
+          disableAutoExpression: true,
         },
         {
           type: 'dropdown',
@@ -824,40 +767,37 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
             { id: 'Last', label: 'Last' },
             { id: 'Selected', label: 'Selected' },
           ],
+          disableAutoExpression: true,
         },
         {
           type: 'textinput',
           label: 'Camera',
-          tooltip: 'Leave empty for default',
+          description: '1 to 8, or Leave empty for default',
           id: 'camera',
           default: '',
-          useVariables: { local: true },
+          useVariables: true,
         },
         {
           type: 'textinput',
           label: 'Text',
           id: 'text',
           default: '',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
-      callback: async (action, context) => {
-        let camera: string | number = await context.parseVariablesInString(action.options.camera)
-        camera = parseInt(camera)
-        const text = await context.parseVariablesInString(action.options.text)
+      callback: async (action) => {
+        const camera = parseInt(action.options.camera)
 
-        let command = `Replay${action.options.type}${action.options.target}EventText`
+        const command = `Replay${action.options.type}${action.options.target}EventText`
 
         if (action.options.camera !== '') {
           if (isNaN(camera) || camera < 1 || camera > 8) {
-            instance.log('warn', `${camera} is not a valid Replay Camera`)
-            return
+            return instance.log('warn', `${camera} is not a valid Replay Camera`)
           } else {
-            command += 'Camera'
-            if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${command} Value=${camera},${text}`)
+            if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${command}Camera Value=${camera},${action.options.text}`)
           }
         } else {
-          if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${command} Value=${text}`)
+          if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${command} Value=${action.options.text}`)
         }
       },
     },
@@ -875,6 +815,7 @@ export const vMixReplayActions = (instance: VMixInstance, sendBasicCommand: Send
             { id: 'Last', label: 'Last' },
             { id: 'Selected', label: 'Selected' },
           ],
+          disableAutoExpression: true,
         },
       ],
       callback: async (action) => {

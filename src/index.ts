@@ -1,24 +1,16 @@
-import {
-  InstanceBase,
-  runEntrypoint,
-  type CompanionActionDefinitions,
-  type CompanionFeedbackContext,
-  type CompanionFeedbackDefinitions,
-  type CompanionHTTPRequest,
-  type CompanionHTTPResponse,
-  type SomeCompanionConfigField,
-} from '@companion-module/base'
-import { type Config, getConfigFields, defaultConfig } from './config'
-import { getActions } from './actions/actions'
-import { Activators } from './activators'
-import { VMixData } from './data'
-import { getFeedbacks } from './feedbacks/feedback'
-import { httpHandler } from './http'
-import { getPresets } from './presets/presets'
-import { TCP } from './tcp'
-import { getUpgrades } from './upgrade'
-import { Variables } from './variables/variables'
-import { AudioPresets } from './audioPresets'
+import { InstanceBase, type CompanionHTTPRequest, type CompanionHTTPResponse, type SomeCompanionConfigField } from '@companion-module/base'
+import { type Config, getConfigFields, defaultConfig } from './config.js'
+import { getActions } from './actions/actions.js'
+import { Activators } from './activators.js'
+import { VMixData } from './data.js'
+import { getFeedbacks } from './feedbacks/feedback.js'
+import { httpHandler } from './http.js'
+import { getPresetDefinitions, getPresetStructure } from './presets/presets.js'
+import { TCP } from './tcp.js'
+import { getUpgrades } from './upgrades/upgrade.js'
+import { Variables } from './variables/variables.js'
+import { AudioPresets } from './audioPresets.js'
+import type { VMixInstanceTypes } from './utils.js'
 
 interface APIProcessing {
   hold: boolean
@@ -28,12 +20,6 @@ interface APIProcessing {
   parsed: number
   feedbacks: number
   variables: number
-}
-
-interface ButtonShift {
-  state: number
-  blink: boolean
-  blinkInterval: ReturnType<typeof setInterval> | null
 }
 
 interface RoutingData {
@@ -49,10 +35,12 @@ interface RoutingData {
 /**
  * Companion instance class for Studiocoast vMix
  */
-class VMixInstance extends InstanceBase<Config> {
+export default class VMixInstance extends InstanceBase<VMixInstanceTypes> {
   constructor(internal: unknown) {
     super(internal)
     this.instanceOptions.disableVariableValidation = true
+
+    console.log(123, getUpgrades.length)
   }
   public activators: Activators | null = null
   public apiProcessing: APIProcessing = {
@@ -65,11 +53,6 @@ class VMixInstance extends InstanceBase<Config> {
     variables: 0,
   }
   public audioPresets = new AudioPresets(this)
-  public buttonShift: ButtonShift = {
-    state: 0,
-    blink: false,
-    blinkInterval: null,
-  }
   public config: Config = defaultConfig()
   public connected = false
   public data = new VMixData(this)
@@ -81,7 +64,7 @@ class VMixInstance extends InstanceBase<Config> {
       destinationInput: null,
       destinationLayer: null,
     },
-    mix: 0,
+    mix: 1,
   }
   public startTime: Date = new Date()
   public tcp: TCP | null = null
@@ -94,13 +77,8 @@ class VMixInstance extends InstanceBase<Config> {
     if (config.debugVersionUpdateNotifications) {
       this.log(
         'info',
-        'v4.0.0 of this mode has now been released! Patch notes can be found at https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/patch_notes.md',
+        'v5.0.0 of this mode has now been released! Patch notes can be found at https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/patch_notes.md',
       )
-      this.log(
-        'warn',
-        'The vMix Companion module v4 has undergone significant changes to its configuration to allow more granular control over what variables are generated as this has a significant performance impact during large productions',
-      )
-      this.log('warn', 'Please check the vMix module configuration within Companion and ensure only the variables you wish to use are enabled')
     }
 
     await this.configUpdated(config)
@@ -110,21 +88,10 @@ class VMixInstance extends InstanceBase<Config> {
     this.tcp = new TCP(this)
 
     this.updateInstance()
-    this.setPresetDefinitions(getPresets(this))
+    this.setPresetDefinitions(getPresetStructure, getPresetDefinitions(this))
     this.variables.updateDefinitions()
 
-    // Button modifier blinking
-    this.buttonShift.blinkInterval = setInterval(() => {
-      this.buttonShift.blink = !this.buttonShift.blink
-      if (this.config.shiftBlinkPrvPrgm) {
-        this.checkFeedbacks('inputPreview', 'inputLive')
-      }
-      if (this.config.shiftBlinkLayerRouting) {
-        this.checkFeedbacks('selectedDestinationInput', 'selectedDestinationLayer', 'routableMultiviewLayer', 'inputOnMultiview')
-      }
-    }, 333)
-
-    this.checkFeedbacks('mixSelect', 'buttonText')
+    this.checkFeedbacks('mixSelect')
   }
 
   /**
@@ -134,7 +101,7 @@ class VMixInstance extends InstanceBase<Config> {
   public async configUpdated(config: Config): Promise<void> {
     this.config = config
     this.updateInstance()
-    this.setPresetDefinitions(getPresets(this))
+    this.setPresetDefinitions(getPresetStructure, getPresetDefinitions(this))
     this.audioPresets.presets = this.config.audioPresets
     if (this.tcp) this.tcp.update()
     if (this.variables) this.variables.updateVariables()
@@ -155,9 +122,6 @@ class VMixInstance extends InstanceBase<Config> {
   public async destroy(): Promise<void> {
     if (this.tcp) this.tcp.destroy()
     if (this.activators) this.activators.destroy()
-    if (this.buttonShift.blinkInterval !== null) {
-      clearInterval(this.buttonShift.blinkInterval)
-    }
 
     if (this.variables?.definitionsUpdateDebounce) {
       clearTimeout(this.variables.definitionsUpdateDebounce)
@@ -167,36 +131,12 @@ class VMixInstance extends InstanceBase<Config> {
   }
 
   /**
-   * @param option string from text inputs
-   * @param context Optional context provided by feedback
-   * @returns array of strings indexed by the button modifier delimiter
-   * @description first splits the string by the position of the delimiter, then parses any instance variables in each part
-   */
-  public readonly parseOption = async (option: string, context?: CompanionFeedbackContext): Promise<string[]> => {
-    const split = option.split(this.config.shiftDelimiter)
-    const values = []
-
-    for (const value of split) {
-      let parsedValue
-
-      if (context) {
-        parsedValue = await context.parseVariablesInString(value)
-      } else {
-        parsedValue = await this.parseVariablesInString(value)
-      }
-      values.push(parsedValue)
-    }
-
-    return values
-  }
-
-  /**
    * @description sets actions and feedbacks available for this instance
    */
   private updateInstance(): void {
     // Cast actions and feedbacks from VMix types to Companion types
-    const actions = getActions(this) as CompanionActionDefinitions
-    const feedbacks = getFeedbacks(this) as unknown as CompanionFeedbackDefinitions
+    const actions = getActions(this)
+    const feedbacks = getFeedbacks(this)
 
     this.setActionDefinitions(actions)
     this.setFeedbackDefinitions(feedbacks)
@@ -211,6 +151,4 @@ class VMixInstance extends InstanceBase<Config> {
   }
 }
 
-export = VMixInstance
-
-runEntrypoint(VMixInstance, getUpgrades())
+export const UpgradeScripts = getUpgrades

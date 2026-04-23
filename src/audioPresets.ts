@@ -1,7 +1,7 @@
-import type { AudioBusses } from './data'
-import { type LoadAudioPresetOptions } from './actions/audioPresetActions'
-import type VMixInstance from './index'
-import { volumeToLinear } from './utils'
+import type { AudioBusses } from './data.js'
+import { type AudioPresetActionsSchema } from './actions/audioPresetActions.js'
+import type VMixInstance from './index.js'
+import { volumeToLinear } from './utils.js'
 
 type BusPreset = {
   bus: 'master' | 'busA' | 'busB' | 'busC' | 'busD' | 'busE' | 'busF' | 'busG'
@@ -44,7 +44,7 @@ export class AudioPresets {
     this.instance = instance
   }
 
-  loadPreset = async (data: AudioPreset, settings: LoadAudioPresetOptions, checkStatus: boolean = false): Promise<string[] | void> => {
+  loadPreset = async (data: AudioPreset, settings: AudioPresetActionsSchema['loadAudioPreset']['options'], checkStatus: boolean = false): Promise<string[] | void> => {
     const commandList: string[] = []
 
     if (settings.busses.length > 0) {

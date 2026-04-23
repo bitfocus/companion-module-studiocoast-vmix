@@ -1,155 +1,119 @@
-import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import { type AudioBusOption, type AudioBusMasterOption, type AudioBusMasterHeadphonesOption, type EmptyOptions, options, volumeToLinear } from '../utils'
-import type VMixInstance from '../index'
+import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { SendBasicCommand } from './actions.js'
+import { type AudioBusOption, type AudioBusMasterOption, type AudioBusMasterHeadphonesOption, type EmptyOptions, options, volumeToLinear } from '../utils.js'
+import type VMixInstance from '../index.js'
 
-type AudioBusOptions = {
-  input: string
-  value: AudioBusMasterOption
-  functionID: 'AudioBus' | 'AudioBusOn' | 'AudioBusOff'
+export type AudioActionsSchema = {
+  audioBus: {
+    options: {
+      input: string
+      value: AudioBusMasterOption
+      functionID: 'AudioBus' | 'AudioBusOn' | 'AudioBusOff'
+    }
+  }
+  busXSendToMaster: {
+    options: {
+      value: AudioBusOption
+    }
+  }
+  busXAudio: {
+    options: {
+      value: AudioBusMasterOption
+      functionID: 'BusXAudio' | 'BusXAudioOn' | 'BusXAudioOff'
+    }
+  }
+
+  audio: {
+    options: {
+      input: string
+      functionID: 'Audio' | 'AudioOn' | 'AudioOff'
+    }
+  }
+  audioAuto: {
+    options: {
+      input: string
+      functionID: 'AudioAuto' | 'AudioAutoOn' | 'AudioAutoOff'
+    }
+  }
+
+  busXSolo: {
+    options: {
+      value: AudioBusOption
+      functionID: 'BusXSolo' | 'BusXSoloOn' | 'BusXSoloOff'
+    }
+  }
+
+  solo: {
+    options: {
+      input: string
+      functionID: 'Solo' | 'SoloOn' | 'SoloOff'
+    }
+  }
+  setInputVolume: {
+    options: {
+      input: string
+      adjustment: 'Set' | 'Increase' | 'Decrease'
+      amount: string
+    }
+  }
+  setBusVolumeFade: {
+    options: {
+      value: AudioBusMasterOption
+      fadeVol: string
+      fadeTime: string
+    }
+  }
+
+  setVolumeFade: {
+    options: {
+      fadeMin: string
+      fadeTime: string
+      input: string
+    }
+  }
+
+  setBusVolume: {
+    options: {
+      value: AudioBusMasterHeadphonesOption
+      adjustment: 'Set' | 'Increase' | 'Decrease'
+      amount: string
+    }
+  }
+
+  audioPlugin: {
+    options: {
+      input: string
+      value: number
+      functionID: 'AudioPluginOnOff' | 'AudioPluginOn' | 'AudioPluginOff' | 'AudioPluginShow'
+    }
+  }
+  audioChannelMatrixApplyPreset: {
+    options: {
+      input: string
+      value: string
+    }
+  }
+  setVolumeChannel: {
+    options: {
+      input: string
+      channel: string
+      adjustment: 'Set' | 'Increase' | 'Decrease'
+      amount: string
+    }
+  }
+  setVolumeChannelMixer: {
+    options: {
+      input: string
+      channel: string
+      adjustment: 'Set' | 'Increase' | 'Decrease'
+      amount: string
+    }
+  }
+  soloAllOff: EmptyOptions
+  audioMixerShowHide: EmptyOptions
 }
 
-type BusXSendToMasterOptions = {
-  value: AudioBusOption
-}
-
-type BusXAudioOptions = {
-  value: AudioBusMasterOption
-  functionID: 'BusXAudio' | 'BusXAudioOn' | 'BusXAudioOff'
-}
-
-type AudioOptions = {
-  input: string
-  functionID: 'Audio' | 'AudioOn' | 'AudioOff'
-}
-
-type AudioAutoOptions = {
-  input: string
-  functionID: 'AudioAuto' | 'AudioAutoOn' | 'AudioAutoOff'
-}
-
-type BusXSoloOptions = {
-  value: AudioBusOption
-  functionID: 'BusXSolo' | 'BusXSoloOn' | 'BusXSoloOff'
-}
-
-type SoloOptions = {
-  input: string
-  functionID: 'Solo' | 'SoloOn' | 'SoloOff'
-}
-
-type SetInputVolumeOptions = {
-  input: string
-  adjustment: 'Set' | 'Increase' | 'Decrease'
-  amount: string
-}
-
-type SetBusVolumeFadeOptions = {
-  value: AudioBusMasterOption
-  fadeVol: string
-  fadeTime: string
-}
-
-type SetVolumeFadeOptions = {
-  fadeMin: string
-  fadeTime: string
-  input: string
-}
-
-type SetBusVolumeOptions = {
-  value: AudioBusMasterHeadphonesOption
-  adjustment: 'Set' | 'Increase' | 'Decrease'
-  amount: string
-}
-
-type AudioPluginOptions = {
-  input: string
-  value: number
-  functionID: 'AudioPluginOnOff' | 'AudioPluginOn' | 'AudioPluginOff' | 'AudioPluginShow'
-}
-
-type AudioChannelMatrixApplyPresetOptions = {
-  input: string
-  value: string
-}
-
-type SetVolumeChannelOptions = {
-  input: string
-  channel: string
-  adjustment: 'Set' | 'Increase' | 'Decrease'
-  amount: string
-}
-
-type SetVolumeChannelMixerOptions = {
-  input: string
-  channel: string
-  adjustment: 'Set' | 'Increase' | 'Decrease'
-  amount: string
-}
-
-type SoloAllOffOptions = EmptyOptions
-
-type AudioMixerShowHideOptions = EmptyOptions
-
-type AudioBusCallback = ActionCallback<'audioBus', AudioBusOptions>
-type BusXSendToMasterCallback = ActionCallback<'busXSendToMaster', BusXSendToMasterOptions>
-type BusXAudioCallback = ActionCallback<'busXAudio', BusXAudioOptions>
-type AudioCallback = ActionCallback<'audio', AudioOptions>
-type AudioAutoCallback = ActionCallback<'audioAuto', AudioAutoOptions>
-type BusXSoloCallback = ActionCallback<'busXSolo', BusXSoloOptions>
-type SoloCallback = ActionCallback<'solo', SoloOptions>
-type SetInputVolumeCallback = ActionCallback<'setInputVolume', SetInputVolumeOptions>
-type SetBusVolumeFadeCallback = ActionCallback<'setBusVolumeFade', SetBusVolumeFadeOptions>
-type SetVolumeFadeCallback = ActionCallback<'setVolumeFade', SetVolumeFadeOptions>
-type SetBusVolumeCallback = ActionCallback<'setBusVolume', SetBusVolumeOptions>
-type AudioPluginCallback = ActionCallback<'audioPlugin', AudioPluginOptions>
-type AudioChannelMatrixApplyPresetCallback = ActionCallback<'audioChannelMatrixApplyPreset', AudioChannelMatrixApplyPresetOptions>
-type SetVolumeChannelCallback = ActionCallback<'setVolumeChannel', SetVolumeChannelOptions>
-type SetVolumeChannelMixerCallback = ActionCallback<'setVolumeChannelMixer', SetVolumeChannelMixerOptions>
-type SoloAllOffCallback = ActionCallback<'soloAllOff', SoloAllOffOptions>
-type AudioMixerShowHideCallback = ActionCallback<'audioMixerShowHide', AudioMixerShowHideOptions>
-
-export interface AudioActions {
-  audioBus: VMixAction<AudioBusCallback>
-  busXSendToMaster: VMixAction<BusXSendToMasterCallback>
-  busXAudio: VMixAction<BusXAudioCallback>
-  audio: VMixAction<AudioCallback>
-  audioAuto: VMixAction<AudioAutoCallback>
-  busXSolo: VMixAction<BusXSoloCallback>
-  solo: VMixAction<SoloCallback>
-  setInputVolume: VMixAction<SetInputVolumeCallback>
-  setBusVolumeFade: VMixAction<SetBusVolumeFadeCallback>
-  setVolumeFade: VMixAction<SetVolumeFadeCallback>
-  setBusVolume: VMixAction<SetBusVolumeCallback>
-  audioPlugin: VMixAction<AudioPluginCallback>
-  audioChannelMatrixApplyPreset: VMixAction<AudioChannelMatrixApplyPresetCallback>
-  setVolumeChannel: VMixAction<SetVolumeChannelCallback>
-  setVolumeChannelMixer: VMixAction<SetVolumeChannelMixerCallback>
-  soloAllOff: VMixAction<SoloAllOffCallback>
-  audioMixerShowHide: VMixAction<AudioMixerShowHideCallback>
-
-  [key: string]: VMixAction<any>
-}
-
-export type AudioCallbacks =
-  | AudioBusCallback
-  | BusXSendToMasterCallback
-  | BusXAudioCallback
-  | AudioCallback
-  | AudioAutoCallback
-  | BusXSoloCallback
-  | SoloCallback
-  | SetInputVolumeCallback
-  | SetBusVolumeFadeCallback
-  | SetVolumeFadeCallback
-  | SetBusVolumeCallback
-  | AudioPluginCallback
-  | AudioChannelMatrixApplyPresetCallback
-  | SetVolumeChannelCallback
-  | SetVolumeChannelMixerCallback
-  | SoloAllOffCallback
-  | AudioMixerShowHideCallback
-
-export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): AudioActions => {
+export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<AudioActionsSchema> => {
   return {
     audioBus: {
       name: 'Audio - Route Input to Bus',
@@ -167,13 +131,14 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
             { id: 'AudioBusOn', label: 'On' },
             { id: 'AudioBusOff', label: 'Off' },
           ],
+          expressionDescription: `Valid Values: 'AudioBus', 'AudioBusOn', 'AudioBusOff'`,
         },
       ],
-      callback: async (action, context) => {
+      callback: async (action) => {
         const selected = action.options.value === 'Selected' ? instance.routingData.bus : action.options.value
         const commandOptions = { ...action.options, value: selected }
 
-        return sendBasicCommand({ ...action, options: commandOptions }, context)
+        return sendBasicCommand({ ...action, options: commandOptions })
       },
     },
 
@@ -181,12 +146,12 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
       name: 'Audio - Route Bus to Master',
       description: 'Routes the audio from a Bus to Master',
       options: [options.audioBus],
-      callback: async (action, context) => {
+      callback: async (action) => {
         const selected = action.options.value === 'Selected' ? instance.routingData.bus : action.options.value
         if (selected === 'Master') return
         const commandOptions = { ...action.options, value: selected }
 
-        return sendBasicCommand({ ...action, options: commandOptions }, context)
+        return sendBasicCommand({ ...action, options: commandOptions })
       },
     },
 
@@ -205,6 +170,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
             { id: 'BusXAudioOn', label: 'Set Bus Audio ON' },
             { id: 'BusXAudioOff', label: 'Set Bus Audio OFF' },
           ],
+          expressionDescription: `Valid Values: 'BusXAudio', 'BusXAudioOn', 'BusXAudioOff'`,
         },
       ],
       callback: async (action) => {
@@ -239,6 +205,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
             { id: 'AudioOn', label: 'Set input Audio ON' },
             { id: 'AudioOff', label: 'Set input Audio OFF' },
           ],
+          expressionDescription: `Valid Values: 'Audio', 'AudioOn', 'AudioOff'`,
         },
       ],
       callback: sendBasicCommand,
@@ -259,6 +226,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
             { id: 'AudioAutoOn', label: 'Set input Audio Auto ON' },
             { id: 'AudioAutoOff', label: 'Set input Audio Auto OFF' },
           ],
+          expressionDescription: `Valid Values: 'AudioAuto', 'AudioAutoOn', 'AudioAutoOff'`,
         },
       ],
       callback: sendBasicCommand,
@@ -279,14 +247,15 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
             { id: 'BusXSoloOn', label: 'On' },
             { id: 'BusXSoloOff', label: 'Off' },
           ],
+          expressionDescription: `Valid Values: 'BusXSolo', 'BusXSoloOn', 'BusXSoloOff'`,
         },
       ],
-      callback: async (action, context) => {
+      callback: async (action) => {
         const selected = action.options.value === 'Selected' ? instance.routingData.bus : action.options.value
         if (selected === 'Master') return
         const commandOptions = { ...action.options, value: selected }
 
-        return sendBasicCommand({ ...action, options: commandOptions }, context)
+        return sendBasicCommand({ ...action, options: commandOptions })
       },
     },
 
@@ -305,6 +274,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
             { id: 'SoloOn', label: 'On' },
             { id: 'SoloOff', label: 'Off' },
           ],
+          expressionDescription: `Valid Values: 'Solo', 'SoloOn', 'SoloOff'`,
         },
       ],
       callback: sendBasicCommand,
@@ -312,21 +282,22 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
 
     setInputVolume: {
       name: 'Audio - Set Input Volume',
-      description: "Sets an Input's Volume (Note: vMix Volume only supports whole numbers from 0 to 100)",
+      description: "Sets an Input's Volume",
       options: [
         options.input,
         options.adjustment,
         {
           type: 'textinput',
           label: 'Volume',
+          description: 'Whole numbersfrom 0 to 100',
           id: 'amount',
           default: '100',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
-      callback: async (action, context) => {
-        const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
-        const amount = parseFloat((await instance.parseOption(action.options.amount, context))[instance.buttonShift.state])
+      callback: async (action) => {
+        const selected = action.options.input
+        const amount = parseFloat(action.options.amount)
         const input = await instance.data.getInput(selected)
 
         if (input === null || input.volume === undefined) return
@@ -361,20 +332,20 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Fade to volume (Whole number 0 to 100)',
           id: 'fadeVol',
           default: '0',
-          useVariables: { local: true },
+          useVariables: true,
         },
         {
           type: 'textinput',
           label: 'Fade time in ms',
           id: 'fadeTime',
           default: '2000',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
-      callback: async (action, context) => {
+      callback: async (action) => {
         const selected = action.options.value === 'Selected' ? instance.routingData.bus : action.options.value
-        const fadeVol = (await instance.parseOption(action.options.fadeVol, context))[instance.buttonShift.state]
-        const fadeTime = (await instance.parseOption(action.options.fadeTime, context))[instance.buttonShift.state]
+        const fadeVol = action.options.fadeVol
+        const fadeTime = action.options.fadeTime
 
         const shortcut = selected === 'Master' ? `SetMasterVolumeFade` : `SetBus${selected}VolumeFade`
 
@@ -386,28 +357,29 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
 
     setVolumeFade: {
       name: 'Audio - Fade Input Volume',
-      description: "Fades an Input's Volume (Note: vMix Volume only supports whole numbers from 0 to 100)",
+      description: "Fades an Input's Volume",
       options: [
         options.input,
         {
           type: 'textinput',
           label: 'Fade to volume',
+          description: 'Whole number from 0 to 100',
           id: 'fadeMin',
           default: '0',
-          useVariables: { local: true },
+          useVariables: true,
         },
         {
           type: 'textinput',
           label: 'Fade time in ms',
           id: 'fadeTime',
           default: '2000',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
-      callback: async (action, context) => {
-        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
-        const fadeMin = (await instance.parseOption(action.options.fadeMin, context))[instance.buttonShift.state]
-        const fadeTime = (await instance.parseOption(action.options.fadeTime, context))[instance.buttonShift.state]
+      callback: async (action) => {
+        const input = action.options.input
+        const fadeMin = action.options.fadeMin
+        const fadeTime = action.options.fadeTime
 
         if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetVolumeFade Value=${fadeMin},${fadeTime}&input=${encodeURIComponent(input)}`)
       },
@@ -415,21 +387,22 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
 
     setBusVolume: {
       name: 'Audio - Set Bus Volume',
-      description: 'Sets Bus Volume (Note: vMix Volume only supports whole numbers from 0 to 100)',
+      description: 'Sets Bus Volume',
       options: [
         options.audioBusMasterHeadphones,
         options.adjustment,
         {
           type: 'textinput',
           label: 'Value',
+          description: 'Whole number from 0 to 100',
           id: 'amount',
           default: '100',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
-      callback: async (action, context) => {
+      callback: async (action) => {
         const selected = action.options.value === 'Selected' ? instance.routingData.bus : action.options.value
-        const amount = parseFloat((await instance.parseOption(action.options.amount, context))[instance.buttonShift.state])
+        const amount = parseFloat(action.options.amount)
         let command = `Set${selected === 'Master' ? '' : 'Bus'}${selected}Volume`
         if (selected === 'Headphones') command = 'SetHeadphonesVolume'
 
@@ -465,6 +438,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
         {
           type: 'number',
           label: 'Plugin Number',
+          description: '1 to 1000',
           id: 'value',
           default: 1,
           min: 1,
@@ -481,6 +455,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
             { id: 'AudioPluginOff', label: 'Off' },
             { id: 'AudioPluginShow', label: 'Show' },
           ],
+          expressionDescription: `Valid Values: 'AudioPluginOnOff', 'AudioPluiginOn', 'AudioPluginOff', 'AudioPluginShow'`,
         },
       ],
       callback: sendBasicCommand,
@@ -496,7 +471,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Preset Name',
           id: 'value',
           default: '',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
       callback: sendBasicCommand,
@@ -512,7 +487,7 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Channel (1 or 2)',
           id: 'channel',
           default: '1',
-          useVariables: { local: true },
+          useVariables: true,
         },
         options.adjustment,
         {
@@ -520,13 +495,13 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Value',
           id: 'amount',
           default: '100',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
-      callback: async (action, context) => {
-        const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
-        const amount = parseFloat((await instance.parseOption(action.options.amount, context))[instance.buttonShift.state])
-        const channel = parseInt((await instance.parseOption(action.options.channel, context))[instance.buttonShift.state])
+      callback: async (action) => {
+        const selected = action.options.input
+        const amount = parseFloat(action.options.amount)
+        const channel = parseInt(action.options.channel)
         const input = await instance.data.getInput(selected)
 
         if (input === null || isNaN(amount) || isNaN(channel) || input.volumeF1 === undefined || input.volumeF2 === undefined) return
@@ -558,24 +533,26 @@ export const vMixAudioActions = (instance: VMixInstance, sendBasicCommand: SendB
         options.input,
         {
           type: 'textinput',
-          label: 'Channel (1 to 16)',
+          label: 'Channel',
+          description: '1 to 16',
           id: 'channel',
           default: '1',
-          useVariables: { local: true },
+          useVariables: true,
         },
         options.adjustment,
         {
           type: 'textinput',
           label: 'Value',
+          description: '0 to 100',
           id: 'amount',
           default: '100',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
-      callback: async (action, context) => {
-        const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
-        const amount = parseFloat((await instance.parseOption(action.options.amount, context))[instance.buttonShift.state])
-        const channel = parseInt((await instance.parseOption(action.options.channel, context))[instance.buttonShift.state])
+      callback: async (action) => {
+        const selected = action.options.input
+        const amount = parseFloat(action.options.amount)
+        const channel = parseInt(action.options.channel)
         const input = await instance.data.getInput(selected)
 
         if (input === null || input.volume === undefined || isNaN(amount) || isNaN(channel)) return

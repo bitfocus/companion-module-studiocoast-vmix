@@ -1,6 +1,7 @@
 import * as xml2js from 'xml2js'
-import { get, isEqual } from 'lodash'
-import type VMixInstance from './'
+import lodash from 'lodash'
+import type VMixInstance from './index.js'
+import { type FeedbackId } from './feedbacks/feedback.js'
 
 export interface AudioBus {
   bus: 'master' | 'busA' | 'busB' | 'busC' | 'busD' | 'busE' | 'busF' | 'busG'
@@ -431,24 +432,12 @@ export class VMixData {
    */
   public async getInput(value: string | number): Promise<Input | null> {
     const int = RegExp(/^\d+$/)
-    const instanceVariable = RegExp(/\$\(([^:$)]+):([^)$]+)\)/)
-
-    let parsedVariable = value
     let input
 
-    if (typeof value !== 'number' && instanceVariable.test(value)) {
-      const getVariable = await this.instance.parseOption(value)
-      if (getVariable !== undefined) {
-        if (Array.isArray(getVariable)) {
-          parsedVariable = getVariable[0]
-        }
-      }
-    }
-
-    if (typeof parsedVariable === 'number' || int.test(parsedVariable)) {
-      input = this.inputs.find((item) => item.number == parsedVariable)
+    if (typeof value === 'number' || int.test(value)) {
+      input = this.inputs.find((item) => item.number == value)
     } else {
-      input = this.inputs.find((item) => item.shortTitle === parsedVariable || item.title === parsedVariable || item.key === parsedVariable)
+      input = this.inputs.find((item) => item.shortTitle === value || item.title === value || item.key === value)
     }
 
     return input || null
@@ -586,18 +575,18 @@ export class VMixData {
             inputData.overlay = input.overlay.map((overlay: any) => ({
               index: parseInt(overlay.$.index, 10),
               key: overlay.$.key,
-              panX: parseFloat(get(overlay, 'position[0].$.panX', 0)),
-              panY: parseFloat(get(overlay, 'position[0].$.panY', 0)),
-              zoomX: parseFloat(get(overlay, 'position[0].$.zoomX', 1)),
-              zoomY: parseFloat(get(overlay, 'position[0].$.zoomY', 1)),
-              x: parseFloat(get(overlay, 'position[0].$.x', 0)),
-              y: parseFloat(get(overlay, 'position[0].$.y', 0)),
-              width: parseFloat(get(overlay, 'position[0].$.width', 0)),
-              height: parseFloat(get(overlay, 'position[0].$.height', 0)),
-              cropX1: parseFloat(get(overlay, 'crop[0].$.X1', 0)),
-              cropX2: parseFloat(get(overlay, 'crop[0].$.X2', 1)),
-              cropY1: parseFloat(get(overlay, 'crop[0].$.Y1', 0)),
-              cropY2: parseFloat(get(overlay, 'crop[0].$.Y2', 1)),
+              panX: parseFloat(lodash.get(overlay, 'position[0].$.panX', 0)),
+              panY: parseFloat(lodash.get(overlay, 'position[0].$.panY', 0)),
+              zoomX: parseFloat(lodash.get(overlay, 'position[0].$.zoomX', 1)),
+              zoomY: parseFloat(lodash.get(overlay, 'position[0].$.zoomY', 1)),
+              x: parseFloat(lodash.get(overlay, 'position[0].$.x', 0)),
+              y: parseFloat(lodash.get(overlay, 'position[0].$.y', 0)),
+              width: parseFloat(lodash.get(overlay, 'position[0].$.width', 0)),
+              height: parseFloat(lodash.get(overlay, 'position[0].$.height', 0)),
+              cropX1: parseFloat(lodash.get(overlay, 'crop[0].$.X1', 0)),
+              cropX2: parseFloat(lodash.get(overlay, 'crop[0].$.X2', 1)),
+              cropY1: parseFloat(lodash.get(overlay, 'crop[0].$.Y1', 0)),
+              cropY2: parseFloat(lodash.get(overlay, 'crop[0].$.Y2', 1)),
             }))
           }
 
@@ -679,7 +668,7 @@ export class VMixData {
       }
 
       const getOutputs = (): Output[] => {
-        const outputs = get(parsedData, 'outputs[0].output')
+        const outputs = lodash.get(parsedData, 'outputs[0].output')
 
         if (!outputs) return []
 
@@ -696,7 +685,7 @@ export class VMixData {
       }
 
       const getOverlays = (): Overlay[] => {
-        const overlays = get(parsedData, 'overlays[0].overlay')
+        const overlays = lodash.get(parsedData, 'overlays[0].overlay')
 
         if (!overlays) {
           return []
@@ -710,7 +699,7 @@ export class VMixData {
       }
 
       const getTransitions = (): Transition[] => {
-        const transitions = get(parsedData, 'transitions[0].transition')
+        const transitions = lodash.get(parsedData, 'transitions[0].transition')
 
         if (!transitions) {
           return []
@@ -820,7 +809,7 @@ export class VMixData {
           timecodeB: '',
         }
 
-        const inputs = get(parsedData, 'inputs[0].input')
+        const inputs = lodash.get(parsedData, 'inputs[0].input')
 
         if (!inputs) {
           return defaultReplay
@@ -1018,7 +1007,7 @@ export class VMixData {
    * @description compare new and old data to check for changes and trigger feedback/variable updates
    */
   private async setData(newData: APIData): Promise<void> {
-    const changes: Set<string> = new Set()
+    const changes: Set<FeedbackId> = new Set()
 
     // Check inputs for additions/deletions or change in index order
     const inputCheck = newData.inputs.map((input) => input.key).join('') !== this.inputs.map((input) => input.key).join('')
@@ -1055,33 +1044,31 @@ export class VMixData {
     })
 
     // Check mix 1 to 4
-    if (!isEqual(newData.mix, this.mix) || inputCheck) {
+    if (!lodash.isEqual(newData.mix, this.mix) || inputCheck) {
       changes.add('inputPreview')
       changes.add('inputLive')
       changes.add('overlayStatus')
     }
 
     // Check Outputs
-    if (!isEqual(newData.outputs, this.outputs) || inputCheck) {
+    if (!lodash.isEqual(newData.outputs, this.outputs) || inputCheck) {
       changes.add('outputStatus')
       changes.add('outputNDISRT')
     }
 
     // Check overlays
-    if (!isEqual(newData.overlays, this.overlays) || inputCheck) {
+    if (!lodash.isEqual(newData.overlays, this.overlays) || inputCheck) {
       changes.add('overlayStatus')
     }
 
     // Update feedbacks for first load, changes handled by Activators
-    if (!this.loaded && (!isEqual(newData.inputs, this.inputs) || inputCheck)) {
+    if (!this.loaded && (!lodash.isEqual(newData.inputs, this.inputs) || inputCheck)) {
       changes.add('inputVolumeLevel')
     }
 
     // Update feedback if new data differs from previous data
-    if (!isEqual(newData.inputs, this.inputs) || inputCheck) {
+    if (!lodash.isEqual(newData.inputs, this.inputs) || inputCheck) {
       changes.add('videoTimer')
-      changes.add('titleLayer')
-      changes.add('inputMute')
       changes.add('inputAudio')
       changes.add('inputSolo')
       changes.add('inputBusRouting')
@@ -1093,21 +1080,16 @@ export class VMixData {
       changes.add('inputVolumeMeter')
       changes.add('inputState')
       changes.add('audioPresetActive')
-
-      // DEPRECATED
-      changes.add('titleLayer')
-      changes.add('inputSelectedIndexName')
-      changes.add('multiviewLayer')
     }
 
     // Check audio changes
-    if (!isEqual(newData.audio, this.audio) || inputCheck) {
+    if (!lodash.isEqual(newData.audio, this.audio) || inputCheck) {
       changes.add('busVolumeMeter')
       changes.add('audioPresetActive')
     }
 
     // Check Transition changes
-    if (!isEqual(newData.transitions, this.transitions)) {
+    if (!lodash.isEqual(newData.transitions, this.transitions)) {
       changes.add('transition')
     }
 
@@ -1127,12 +1109,12 @@ export class VMixData {
       })
 
     // Check for status changes
-    if (!isEqual(newData.status, this.status)) {
+    if (!lodash.isEqual(newData.status, this.status)) {
       changes.add('status')
     }
 
     // Check Audio status
-    if (!isEqual(newData.audio, this.audio)) {
+    if (!lodash.isEqual(newData.audio, this.audio)) {
       changes.add('busMute')
       changes.add('busSendToMaster')
       changes.add('busVolumeLevel')
@@ -1140,7 +1122,7 @@ export class VMixData {
     }
 
     // Check Replay
-    if (!isEqual(newData.replay, this.replay)) {
+    if (!lodash.isEqual(newData.replay, this.replay)) {
       changes.add('replayStatus')
       changes.add('replayEvents')
       changes.add('replayCamera')
@@ -1148,12 +1130,8 @@ export class VMixData {
     }
 
     // Dynamic Input / Value
-    if (!isEqual(newData.dynamicInput, this.dynamicInput) || !isEqual(newData.dynamicValue, this.dynamicValue)) {
+    if (!lodash.isEqual(newData.dynamicInput, this.dynamicInput) || !lodash.isEqual(newData.dynamicValue, this.dynamicValue)) {
       changes.add('dynamic')
-    }
-
-    if (this.recording.duration !== newData.recording.duration) {
-      changes.add('recording')
     }
 
     let variablesUpdate = false
@@ -1183,7 +1161,8 @@ export class VMixData {
 
     // Trigger updates for changes
     if (changes.size > 0) {
-      this.instance.checkFeedbacks(...changes)
+      const changeArray = [...changes]
+      this.instance.checkFeedbacks(changeArray[0], ...changeArray.slice(1))
       if (this.instance.variables) this.instance.variables.updateVariables()
     } else if (variablesUpdate) {
       if (this.instance.variables) this.instance.variables.updateVariables()

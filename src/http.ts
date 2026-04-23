@@ -1,7 +1,7 @@
 import type { CompanionHTTPRequest, CompanionHTTPResponse } from '@companion-module/base'
-import type VMixInstance from './index'
-import type { VMixData, Input } from './data'
-import { formatTime } from './utils'
+import type VMixInstance from './index.js'
+import type { VMixData, Input } from './data.js'
+import { formatTime } from './utils.js'
 
 interface DataSourceInput {
   number: number
@@ -198,10 +198,10 @@ export const httpHandler = async (instance: VMixInstance, request: CompanionHTTP
   }
 
   const getVariableDefinitions = () => {
-    const data = instance.variables?.currentDefinitions || []
+    const data = instance.variables?.currentDefinitions || {}
 
     response.status = 200
-    response.body = JSON.stringify([...data], null, 2)
+    response.body = JSON.stringify(data, null, 2)
   }
 
   const postActions = () => {

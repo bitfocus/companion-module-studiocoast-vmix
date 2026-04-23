@@ -1,39 +1,62 @@
-import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import { options } from '../utils'
-import type VMixInstance from '../index'
+import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { SendBasicCommand } from './actions.js'
+import { options } from '../utils.js'
+import type VMixInstance from '../index.js'
 
-type ZoomMuteSelfOptions = {
-  input: string
-  type: 'Mute' | 'Unmute'
+export type ZoomActionsSchema = {
+  zoomMuteSelf: {
+    options: {
+      input: string
+      functionID: 'zoomMuteSelf' | 'zoomUnMuteSelf'
+    }
+  }
+  zoomSelectParticipantByName: {
+    options: {
+      input: string
+      value: string
+    }
+  }
+  zoomJoinMeeting: {
+    options: {
+      input: string
+      meetingID: string
+      password: string
+    }
+  }
 }
 
-type ZoomSelectParticipantByNameOptions = {
-  input: string
-  value: string
-}
-
-type ZoomJoinMeetingOptions = {
-  input: string
-  meetingID: string
-  password: string
-}
-
-type ZoomMuteSelfCallback = ActionCallback<'zoomMuteSelf', ZoomMuteSelfOptions>
-type ZoomSelectParticipantByNameCallback = ActionCallback<'zoomSelectParticipantByName', ZoomSelectParticipantByNameOptions>
-type ZoomJoinMeetingCallback = ActionCallback<'zoomJoinMeeting', ZoomJoinMeetingOptions>
-
-export interface ZoomActions {
-  zoomMuteSelf: VMixAction<ZoomMuteSelfCallback>
-  zoomSelectParticipantByName: VMixAction<ZoomSelectParticipantByNameCallback>
-  zoomJoinMeeting: VMixAction<ZoomJoinMeetingCallback>
-
-  [key: string]: VMixAction<any>
-}
-
-export type ZoomCallbacks = ZoomMuteSelfCallback | ZoomSelectParticipantByNameCallback
-
-export const vMixZoomActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): ZoomActions => {
+export const getZoomActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<ZoomActionsSchema> => {
   return {
+    zoomJoinMeeting: {
+      name: 'Zoom - Join Meeting',
+      description: 'Joins a Meeting ID with specified Password',
+      options: [
+        options.input,
+        {
+          type: 'textinput',
+          label: 'Meeting ID',
+          id: 'meetingID',
+          default: '',
+          useVariables: true,
+        },
+        {
+          type: 'textinput',
+          label: 'Password',
+          id: 'password',
+          default: '',
+          useVariables: true,
+        },
+      ],
+      callback: async (action) => {
+        if (!action.options.meetingID) {
+          instance.log('warn', `Zoom - Join Meeting error - Missing Meeting ID`)
+          return
+        } else if (action.options.input && instance.tcp) {
+          return instance.tcp.sendCommand(`FUNCTION ZoomJoinMeeting Input=${action.options.input}&Value=${action.options.meetingID},${action.options.password}`)
+        }
+      },
+    },
+
     zoomMuteSelf: {
       name: 'Zoom - Mute Self',
       description: 'Mute or Unmute the audio being sent to the Zoom Meeting input',
@@ -48,6 +71,7 @@ export const vMixZoomActions = (instance: VMixInstance, sendBasicCommand: SendBa
             { id: 'zoomMuteSelf', label: 'Mute' },
             { id: 'zoomUnMuteSelf', label: 'Unmute' },
           ],
+          disableAutoExpression: true,
         },
       ],
       callback: sendBasicCommand,
@@ -63,41 +87,10 @@ export const vMixZoomActions = (instance: VMixInstance, sendBasicCommand: SendBa
           label: 'Name',
           id: 'value',
           default: '',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
       callback: sendBasicCommand,
-    },
-
-    zoomJoinMeeting: {
-      name: 'Zoom - Join Meeting',
-      description: 'Joins a Meeting ID with specified Password',
-      options: [
-        options.input,
-        {
-          type: 'textinput',
-          label: 'Meeting ID',
-          id: 'meetingID',
-          default: '',
-          useVariables: { local: true },
-        },
-        {
-          type: 'textinput',
-          label: 'Password',
-          id: 'password',
-          default: '',
-          useVariables: { local: true },
-        },
-      ],
-      callback: async (action, context) => {
-        const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
-        const meetingID = (await instance.parseOption(action.options.meetingID, context))[instance.buttonShift.state]
-        const password = (await instance.parseOption(action.options.password, context))[instance.buttonShift.state]
-
-        if (selected && meetingID && instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION ZoomJoinMeeting Input=${selected}&Value=${meetingID},${password}`)
-        }
-      },
     },
   }
 }

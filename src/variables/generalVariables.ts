@@ -1,60 +1,56 @@
-import type { CompanionVariableDefinition } from '@companion-module/base'
-import type VMixInstance from '..'
-import { formatTime } from '../utils'
-import type { InstanceVariableValue } from './variables'
+import type { CompanionVariableDefinitions } from '@companion-module/base'
+import type VMixInstance from '../index.js'
+import { formatTime } from '../utils.js'
 
-type VariablesGeneralIDs =
-  | `connected_state`
-  | `ftb_active`
-  | 'playlist_active'
-  | 'fullscreen_active'
-  | 'external_active'
-  | 'multicorder_active'
-  | 'stream_1_active'
-  | 'stream_2_active'
-  | 'stream_3_active'
-  | 'stream_4_active'
-  | 'stream_5_active'
-  | 'recording_active'
-  | 'recording_duration'
-  | 'recording_hms'
-  | 'recording_filename1'
-  | 'recording_filepath1'
-  | 'recording_filename2'
-  | 'recording_filepath2'
-  | 'preset'
+export type GeneralVariablesSchema = {
+  connected_state: string
+  ftb_active: string
+  playlist_active: string
+  fullscreen_active: string
+  external_active: string
+  multicorder_active: string
+  stream_1_active: string
+  stream_2_active: string
+  stream_3_active: string
+  stream_4_active: string
+  stream_5_active: string
+  recording_active: string
+  recording_duration: string
+  recording_hms: string
+  recording_filename1: string
+  recording_filepath1: string
+  recording_filename2: string
+  recording_filepath2: string
+  preset: string
+}
 
-type VariablesGeneralValues = Record<VariablesGeneralIDs, string | number | undefined>
-
-export const generalDefinitions = (_instance: VMixInstance): CompanionVariableDefinition[] => {
-  const definitions: CompanionVariableDefinition[] = []
-
-  definitions.push(
-    { name: 'Connected to vMix', variableId: 'connected_state' },
-    { name: 'Fade To Black Active', variableId: 'ftb_active' },
-    { name: 'playList Active', variableId: 'playlist_active' },
-    { name: 'Fullscreen Output Active', variableId: 'fullscreen_active' },
-    { name: 'External Output Active', variableId: 'external_active' },
-    { name: 'MultiCorder Active', variableId: 'multicorder_active' },
-    { name: 'Stream 1 Active', variableId: 'stream_1_active' },
-    { name: 'Stream 2 Active', variableId: 'stream_2_active' },
-    { name: 'Stream 3 Active', variableId: 'stream_3_active' },
-    { name: 'Stream 4 Active', variableId: 'stream_4_active' },
-    { name: 'Stream 5 Active', variableId: 'stream_5_active' },
-    { name: 'Recording Active', variableId: 'recording_active' },
-    { name: 'Recording Duration', variableId: 'recording_duration' },
-    { name: 'Recording HH:MM:SS', variableId: 'recording_hms' },
-    { name: 'Recording File Name 1', variableId: 'recording_filename1' },
-    { name: 'Recording File Path 1', variableId: 'recording_filepath1' },
-    { name: 'Recording File Name 2', variableId: 'recording_filename2' },
-    { name: 'Recording File Path 2', variableId: 'recording_filepath2' },
-    { name: 'Preset', variableId: 'preset' },
-  )
+export const generalDefinitions = (_instance: VMixInstance): CompanionVariableDefinitions<GeneralVariablesSchema> => {
+  const definitions: CompanionVariableDefinitions<GeneralVariablesSchema> = {
+    connected_state: { name: 'Connected to vMix' },
+    ftb_active: { name: 'Fade To Black Active' },
+    playlist_active: { name: 'playList Active' },
+    fullscreen_active: { name: 'Fullscreen Output Active' },
+    external_active: { name: 'External Output Active' },
+    multicorder_active: { name: 'MultiCorder Active' },
+    stream_1_active: { name: 'Stream 1 Active' },
+    stream_2_active: { name: 'Stream 2 Active' },
+    stream_3_active: { name: 'Stream 3 Active' },
+    stream_4_active: { name: 'Stream 4 Active' },
+    stream_5_active: { name: 'Stream 5 Active' },
+    recording_active: { name: 'Recording Active' },
+    recording_duration: { name: 'Recording Duration' },
+    recording_hms: { name: 'Recording HH:MM:SS' },
+    recording_filename1: { name: 'Recording File Name 1' },
+    recording_filepath1: { name: 'Recording File Path 1' },
+    recording_filename2: { name: 'Recording File Name 2' },
+    recording_filepath2: { name: 'Recording File Path 2' },
+    preset: { name: 'Preset' },
+  }
 
   return definitions
 }
 
-export const generalValues = async (instance: VMixInstance): Promise<InstanceVariableValue> => {
+export const generalValues = async (instance: VMixInstance): Promise<GeneralVariablesSchema> => {
   const recordingFile1 = instance.data.recording.filename1.split('\\')
   const recordingFile2 = instance.data.recording.filename2.split('\\')
   const recordingFilename1 = recordingFile1[recordingFile1.length - 1] || ''
@@ -64,7 +60,7 @@ export const generalValues = async (instance: VMixInstance): Promise<InstanceVar
   const recordingFilepath2 = recordingFile2
   recordingFilepath2.pop()
 
-  const variables: VariablesGeneralValues = {
+  const variables: GeneralVariablesSchema = {
     connected_state: instance.connected.toString(),
     ftb_active: instance.data.status.fadeToBlack.toString(),
     playlist_active: instance.data.status.playList.toString(),

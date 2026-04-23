@@ -1,162 +1,150 @@
-import type { CompanionVariableDefinition } from '@companion-module/base'
-import type VMixInstance from '..'
-import { calcDuration, calcRemaining, volumeTodB, volumeToLinear } from '../utils'
-import type { InstanceVariableValue } from './variables'
+import type { CompanionVariableDefinitions } from '@companion-module/base'
+import type VMixInstance from '../index.js'
+import { calcDuration, calcRemaining, volumeTodB, volumeToLinear } from '../utils.js'
 
-type VariablesDynamicIDs =
-  | `dynamic_input_${number}`
-  | `dynamic_value_${number}`
-  | `dynamic_input_${number}_name`
-  | `dynamic_input_${number}_full_title`
-  | `dynamic_input_${number}_number`
-  | `dynamic_input_${number}_guid`
-  | `dynamic_input_${number}_type`
-  | `dynamic_input_${number}_mix_${number}_tally_preview`
-  | `dynamic_input_${number}_mix_${number}_tally_program`
-  | `dynamic_input_${number}_playing`
-  | `dynamic_input_${number}_loop`
-  | `dynamic_input_${number}_mute`
-  | `dynamic_input_${number}_audio`
-  | `dynamic_input_${number}_solo`
-  | `dynamic_input_${number}_duration`
-  | `dynamic_input_${number}_remaining`
-  | `dynamic_input_${number}_remaining_ss`
-  | `dynamic_input_${number}_remaining_ss.ms`
-  | `dynamic_input_${number}_remaining_mm.ss`
-  | `dynamic_input_${number}_remaining_mm.ss.ms`
-  | `dynamic_input_${number}_position_panx`
-  | `dynamic_input_${number}_position_pany`
-  | `dynamic_input_${number}_position_zoomx`
-  | `dynamic_input_${number}_position_zoomy`
-  | `dynamic_input_${number}_position_cropx1`
-  | `dynamic_input_${number}_position_cropx2`
-  | `dynamic_input_${number}_position_cropy1`
-  | `dynamic_input_${number}_position_cropy2`
-  | `dynamic_input_${number}_cc_hue`
-  | `dynamic_input_${number}_cc_saturation`
-  | `dynamic_input_${number}_cc_liftr`
-  | `dynamic_input_${number}_cc_liftg`
-  | `dynamic_input_${number}_cc_liftb`
-  | `dynamic_input_${number}_cc_lifty`
-  | `dynamic_input_${number}_cc_gammar`
-  | `dynamic_input_${number}_cc_gammag`
-  | `dynamic_input_${number}_cc_gammab`
-  | `dynamic_input_${number}_cc_gammay`
-  | `dynamic_input_${number}_cc_gainr`
-  | `dynamic_input_${number}_cc_gaing`
-  | `dynamic_input_${number}_cc_gainb`
-  | `dynamic_input_${number}_cc_gainy`
-  | `dynamic_input_${number}_layer_${number}_name`
-  | `dynamic_input_${number}_layer_${number}_number`
-  | `dynamic_input_${number}_layer_${number}_key`
-  | `dynamic_input_${number}_layer_${number}_panx`
-  | `dynamic_input_${number}_layer_${number}_pany`
-  | `dynamic_input_${number}_layer_${number}_x`
-  | `dynamic_input_${number}_layer_${number}_y`
-  | `dynamic_input_${number}_layer_${number}_zoomx`
-  | `dynamic_input_${number}_layer_${number}_zoomy`
-  | `dynamic_input_${number}_layer_${number}_width`
-  | `dynamic_input_${number}_layer_${number}_height`
-  | `dynamic_input_${number}_layer_${number}_cropx1`
-  | `dynamic_input_${number}_layer_${number}_cropx2`
-  | `dynamic_input_${number}_layer_${number}_cropy1`
-  | `dynamic_input_${number}_layer_${number}_cropy2`
-  | `dynamic_input_${number}_layer_${string | number}_titletext`
-  | `dynamic_input_${number}_volume`
-  | `dynamic_input_${number}_volume_db`
-  | `dynamic_input_${number}_volume_linear`
-  | `dynamic_input_${number}_volume_${'f1' | 'f2'}`
-  | `dynamic_input_${number}_volume_${'f1' | 'f2'}_db`
-  | `dynamic_input_${number}_volume_${'f1' | 'f2'}_linear`
-  | `dynamic_input_${number}_meter${'f1' | 'f2'}`
-  | `dynamic_input_${number}_meter${'f1' | 'f2'}_avg_1s`
-  | `dynamic_input_${number}_meter${'f1' | 'f2'}_avg_3s`
-  | `dynamic_input_${number}_meter${'f1' | 'f2'}_peak_1s`
-  | `dynamic_input_${number}_meter${'f1' | 'f2'}_peak_3s`
-  | `dynamic_input_${number}_framedelay`
-  | `dynamic_input_${number}_list_${number}_name`
-  | `dynamic_input_${number}_list_${number}_selected`
-  | `dynamic_input_${number}_selected`
-  | `dynamic_input_${number}_selectedindex`
-  | `dynamic_input_${number}_selected_name`
-  | `dynamic_input_${number}_call_password`
-  | `dynamic_input_${number}_call_connected`
-  | `dynamic_input_${number}_call_video_source`
-  | `dynamic_input_${number}_call_audio_source`
+export type DynamicVariablesSchema = {
+  [key: `dynamic_input_${number}`]: string
+  [key: `dynamic_value_${number}`]: string
+  [key: `dynamic_input_${number}_name`]: string
+  [key: `dynamic_input_${number}_full_title`]: string
+  [key: `dynamic_input_${number}_number`]: number
+  [key: `dynamic_input_${number}_guid`]: string
+  [key: `dynamic_input_${number}_type`]: string
+  [key: `dynamic_input_${number}_mix_${number}_tally_preview`]: string
+  [key: `dynamic_input_${number}_mix_${number}_tally_program`]: string
+  [key: `dynamic_input_${number}_playing`]: string
+  [key: `dynamic_input_${number}_loop`]: string
+  [key: `dynamic_input_${number}_mute`]: string
+  [key: `dynamic_input_${number}_audio`]: string
+  [key: `dynamic_input_${number}_solo`]: string
+  [key: `dynamic_input_${number}_duration`]: string
+  [key: `dynamic_input_${number}_remaining`]: string
+  [key: `dynamic_input_${number}_remaining_ss`]: string
+  [key: `dynamic_input_${number}_remaining_ss.ms`]: string
+  [key: `dynamic_input_${number}_remaining_mm.ss`]: string
+  [key: `dynamic_input_${number}_remaining_mm.ss.ms`]: string
+  [key: `dynamic_input_${number}_position_panx`]: number | string
+  [key: `dynamic_input_${number}_position_pany`]: number | string
+  [key: `dynamic_input_${number}_position_zoomx`]: number | string
+  [key: `dynamic_input_${number}_position_zoomy`]: number | string
+  [key: `dynamic_input_${number}_position_cropx1`]: number | string
+  [key: `dynamic_input_${number}_position_cropx2`]: number | string
+  [key: `dynamic_input_${number}_position_cropy1`]: number | string
+  [key: `dynamic_input_${number}_position_cropy2`]: number | string
+  [key: `dynamic_input_${number}_cc_hue`]: number | string
+  [key: `dynamic_input_${number}_cc_saturation`]: number | string
+  [key: `dynamic_input_${number}_cc_liftr`]: number | string
+  [key: `dynamic_input_${number}_cc_liftg`]: number | string
+  [key: `dynamic_input_${number}_cc_liftb`]: number | string
+  [key: `dynamic_input_${number}_cc_lifty`]: number | string
+  [key: `dynamic_input_${number}_cc_gammar`]: number | string
+  [key: `dynamic_input_${number}_cc_gammag`]: number | string
+  [key: `dynamic_input_${number}_cc_gammab`]: number | string
+  [key: `dynamic_input_${number}_cc_gammay`]: number | string
+  [key: `dynamic_input_${number}_cc_gainr`]: number | string
+  [key: `dynamic_input_${number}_cc_gaing`]: number | string
+  [key: `dynamic_input_${number}_cc_gainb`]: number | string
+  [key: `dynamic_input_${number}_cc_gainy`]: number | string
+  [key: `dynamic_input_${number}_layer_${number}_name`]: string
+  [key: `dynamic_input_${number}_layer_${number}_number`]: number | string
+  [key: `dynamic_input_${number}_layer_${number}_key`]: string
+  [key: `dynamic_input_${number}_layer_${number}_panx`]: number | string
+  [key: `dynamic_input_${number}_layer_${number}_pany`]: number | string
+  [key: `dynamic_input_${number}_layer_${number}_x`]: number | string
+  [key: `dynamic_input_${number}_layer_${number}_y`]: number | string
+  [key: `dynamic_input_${number}_layer_${number}_zoomx`]: number | string
+  [key: `dynamic_input_${number}_layer_${number}_zoomy`]: number | string
+  [key: `dynamic_input_${number}_layer_${number}_width`]: number | string
+  [key: `dynamic_input_${number}_layer_${number}_height`]: number | string
+  [key: `dynamic_input_${number}_layer_${number}_cropx1`]: number | string
+  [key: `dynamic_input_${number}_layer_${number}_cropx2`]: number | string
+  [key: `dynamic_input_${number}_layer_${number}_cropy1`]: number | string
+  [key: `dynamic_input_${number}_layer_${number}_cropy2`]: number | string
+  [key: `dynamic_input_${number}_layer_${string | number}_titletext`]: string
+  [key: `dynamic_input_${number}_volume`]: string
+  [key: `dynamic_input_${number}_volume_db`]: string
+  [key: `dynamic_input_${number}_volume_linear`]: number | string
+  [key: `dynamic_input_${number}_volume_${'f1' | 'f2'}`]: string
+  [key: `dynamic_input_${number}_volume_${'f1' | 'f2'}_db`]: string
+  [key: `dynamic_input_${number}_volume_${'f1' | 'f2'}_linear`]: number | string
+  [key: `dynamic_input_${number}_meter${'f1' | 'f2'}`]: string
+  [key: `dynamic_input_${number}_meter${'f1' | 'f2'}_avg_1s`]: string
+  [key: `dynamic_input_${number}_meter${'f1' | 'f2'}_avg_3s`]: string
+  [key: `dynamic_input_${number}_meter${'f1' | 'f2'}_peak_1s`]: string
+  [key: `dynamic_input_${number}_meter${'f1' | 'f2'}_peak_3s`]: string
+  [key: `dynamic_input_${number}_framedelay`]: number
+  [key: `dynamic_input_${number}_list_${number}_name`]: string
+  [key: `dynamic_input_${number}_list_${number}_selected`]: string
+  [key: `dynamic_input_${number}_selected`]: number | string
+  [key: `dynamic_input_${number}_selectedindex`]: number | string
+  [key: `dynamic_input_${number}_selected_name`]: string
+  [key: `dynamic_input_${number}_call_password`]: string
+  [key: `dynamic_input_${number}_call_connected`]: string
+  [key: `dynamic_input_${number}_call_video_source`]: string
+  [key: `dynamic_input_${number}_call_audio_source`]: string
+}
 
-type VariablesDynamicValues = Record<VariablesDynamicIDs, string | number | undefined>
-
-export const dynamicDefinitions = async (instance: VMixInstance): Promise<CompanionVariableDefinition[]> => {
-  const definitions: CompanionVariableDefinition[] = []
+export const dynamicDefinitions = async (instance: VMixInstance): Promise<CompanionVariableDefinitions> => {
+  const definitions: CompanionVariableDefinitions = {}
   const dynamicIDs = [0, 1, 2, 3]
 
   for (const dynamic of dynamicIDs) {
-    if (instance.config.variablesShowDynamicInputs) definitions.push({ name: `Dynamic Input ${dynamic + 1}`, variableId: `dynamic_input_${dynamic + 1}` })
-    if (instance.config.variablesShowDynamicValues) definitions.push({ name: `Dynamic Value ${dynamic + 1}`, variableId: `dynamic_value_${dynamic + 1}` })
+    if (instance.config.variablesShowDynamicInputs) definitions[`dynamic_input_${dynamic + 1}`] = { name: `Dynamic Input ${dynamic + 1}` }
+    if (instance.config.variablesShowDynamicValues) definitions[`dynamic_value_${dynamic + 1}`] = { name: `Dynamic Value ${dynamic + 1}` }
 
     const input = await instance.data.getInput(instance.data.dynamicInput[dynamic]?.value)
 
     if (input && instance.config.variablesShowDynamicInputs) {
-      definitions.push(
-        { name: `Dynamic Input ${dynamic + 1} Short Title`, variableId: `dynamic_input_${dynamic + 1}_name` },
-        { name: `Dynamic Input ${dynamic + 1} Full Title`, variableId: `dynamic_input_${dynamic + 1}_full_title` },
-        { name: `Dynamic Input ${dynamic + 1} Number`, variableId: `dynamic_input_${dynamic + 1}_number` },
-        { name: `Dynamic Input ${dynamic + 1} GUID`, variableId: `dynamic_input_${dynamic + 1}_guid` },
-        { name: `Dynamic Input ${dynamic + 1} Type`, variableId: `dynamic_input_${dynamic + 1}_type` },
-      )
+      definitions[`dynamic_input_${dynamic + 1}_name`] = { name: `Dynamic Input ${dynamic + 1} Short Title` }
+      definitions[`dynamic_input_${dynamic + 1}_full_title`] = { name: `Dynamic Input ${dynamic + 1} Full Title` }
+      definitions[`dynamic_input_${dynamic + 1}_number`] = { name: `Dynamic Input ${dynamic + 1} Number` }
+      definitions[`dynamic_input_${dynamic + 1}_guid`] = { name: `Dynamic Input ${dynamic + 1} GUID` }
+      definitions[`dynamic_input_${dynamic + 1}_type`] = { name: `Dynamic Input ${dynamic + 1} Type` }
 
       instance.data.mix
         .filter((mix) => mix.active)
         .forEach((mix) => {
-          definitions.push(
-            { name: `Dynamic Input ${dynamic + 1} Mix ${mix.number} Tally Preview`, variableId: `dynamic_input_${dynamic + 1}_mix_${mix.number}_tally_preview` },
-            { name: `Dynamic Input ${dynamic + 1} Mix ${mix.number} Tally Program`, variableId: `dynamic_input_${dynamic + 1}_mix_${mix.number}_tally_program` },
-          )
+          definitions[`dynamic_input_${dynamic + 1}_mix_${mix.number}_tally_preview`] = { name: `Dynamic Input ${dynamic + 1} Mix ${mix.number} Tally Preview` }
+          definitions[`dynamic_input_${dynamic + 1}_mix_${mix.number}_tally_program`] = { name: `Dynamic Input ${dynamic + 1} Mix ${mix.number} Tally Program` }
         })
 
-      definitions.push(
-        { name: `Dynamic Input ${dynamic + 1} Playing`, variableId: `dynamic_input_${dynamic + 1}_playing` },
-        { name: `Dynamic Input ${dynamic + 1} Loop`, variableId: `dynamic_input_${dynamic + 1}_loop` },
-        { name: `Dynamic Input ${dynamic + 1} Muted`, variableId: `dynamic_input_${dynamic + 1}_mute` },
-        { name: `Dynamic Input ${dynamic + 1} Audio`, variableId: `dynamic_input_${dynamic + 1}_audio` },
-        { name: `Dynamic Input ${dynamic + 1} Solo`, variableId: `dynamic_input_${dynamic + 1}_solo` },
-      )
+      definitions[`dynamic_input_${dynamic + 1}_playing`] = { name: `Dynamic Input ${dynamic + 1} Playing` }
+      definitions[`dynamic_input_${dynamic + 1}_loop`] = { name: `Dynamic Input ${dynamic + 1} Loop` }
+      definitions[`dynamic_input_${dynamic + 1}_mute`] = { name: `Dynamic Input ${dynamic + 1} Muted` }
+      definitions[`dynamic_input_${dynamic + 1}_audio`] = { name: `Dynamic Input ${dynamic + 1} Audio` }
+      definitions[`dynamic_input_${dynamic + 1}_solo`] = { name: `Dynamic Input ${dynamic + 1} Solo` }
 
       if (input.duration > 1) {
-        definitions.push({ name: `Dynamic Input ${dynamic + 1} Duration`, variableId: `dynamic_input_${dynamic + 1}_duration` })
+        definitions[`dynamic_input_${dynamic + 1}_duration`] = { name: `Dynamic Input ${dynamic + 1} Duration` }
       }
 
       if (input.position !== undefined) {
-        definitions.push({ name: `Dynamic Input ${dynamic + 1} Remaining`, variableId: `dynamic_input_${dynamic + 1}_remaining` })
-        definitions.push({ name: `Dynamic Input ${dynamic + 1} Remaining ss`, variableId: `dynamic_input_${dynamic + 1}_remaining_ss` })
-        definitions.push({ name: `Dynamic Input ${dynamic + 1} Remaining ss.ms`, variableId: `dynamic_input_${dynamic + 1}_remaining_ss.ms` })
-        definitions.push({ name: `Dynamic Input ${dynamic + 1} Remaining mm:ss`, variableId: `dynamic_input_${dynamic + 1}_remaining_mm.ss` })
-        definitions.push({ name: `Dynamic Input ${dynamic + 1} Remaining mm:ss.ms`, variableId: `dynamic_input_${dynamic + 1}_remaining_mm.ss.ms` })
+        definitions[`dynamic_input_${dynamic + 1}_remaining`] = { name: `Dynamic Input ${dynamic + 1} Remaining` }
+        definitions[`dynamic_input_${dynamic + 1}_remaining_ss`] = { name: `Dynamic Input ${dynamic + 1} Remaining ss` }
+        definitions[`dynamic_input_${dynamic + 1}_remaining_ss.ms`] = { name: `Dynamic Input ${dynamic + 1} Remaining ss.ms` }
+        definitions[`dynamic_input_${dynamic + 1}_remaining_mm.ss`] = { name: `Dynamic Input ${dynamic + 1} Remaining mm:ss` }
+        definitions[`dynamic_input_${dynamic + 1}_remaining_mm.ss.ms`] = { name: `Dynamic Input ${dynamic + 1} Remaining mm:ss.ms` }
       }
 
       if (instance.config.variablesShowInputLayers) {
         for (let i = 1; i < 11; i++) {
-          definitions.push(
-            { name: `Dynamic Input ${dynamic + 1}Layer ${i} Number`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_number` },
-            { name: `Dynamic Input ${dynamic + 1}Layer ${i} Name`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_name` },
-            { name: `Dynamic Input ${dynamic + 1}Layer ${i} Key`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_key` },
-          )
+          definitions[`dynamic_input_${dynamic + 1}_layer_${i}_number`] = { name: `Dynamic Input ${dynamic + 1}Layer ${i} Number` }
+          definitions[`dynamic_input_${dynamic + 1}_layer_${i}_name`] = { name: `Dynamic Input ${dynamic + 1}Layer ${i} Name` }
+          definitions[`dynamic_input_${dynamic + 1}_layer_${i}_key`] = { name: `Dynamic Input ${dynamic + 1}Layer ${i} Key` }
 
           if (instance.config.variablesShowInputLayerPosition) {
-            definitions.push(
-              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Pan X (Percent)`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_panx` },
-              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Pan Y (Percent)`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_pany` },
-              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Pan X (Pixels)`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_x` },
-              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Pan Y (Pixels)`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_y` },
-              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Zoom X`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_zoomx` },
-              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Zoom Y`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_zoomy` },
-              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Width`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_width` },
-              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Height`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_height` },
-              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Crop X1`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_cropx1` },
-              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Crop X2`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_cropx2` },
-              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Crop Y1`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_cropy1` },
-              { name: `Dynamic Input ${dynamic + 1}Layer ${i} Crop Y2`, variableId: `dynamic_input_${dynamic + 1}_layer_${i}_cropy2` },
-            )
+            definitions[`dynamic_input_${dynamic + 1}_layer_${i}_panx`] = { name: `Dynamic Input ${dynamic + 1}Layer ${i} Pan X (Percent)` }
+            definitions[`dynamic_input_${dynamic + 1}_layer_${i}_pany`] = { name: `Dynamic Input ${dynamic + 1}Layer ${i} Pan Y (Percent)` }
+            definitions[`dynamic_input_${dynamic + 1}_layer_${i}_x`] = { name: `Dynamic Input ${dynamic + 1}Layer ${i} Pan X (Pixels)` }
+            definitions[`dynamic_input_${dynamic + 1}_layer_${i}_y`] = { name: `Dynamic Input ${dynamic + 1}Layer ${i} Pan Y (Pixels)` }
+            definitions[`dynamic_input_${dynamic + 1}_layer_${i}_zoomx`] = { name: `Dynamic Input ${dynamic + 1}Layer ${i} Zoom X` }
+            definitions[`dynamic_input_${dynamic + 1}_layer_${i}_zoomy`] = { name: `Dynamic Input ${dynamic + 1}Layer ${i} Zoom Y` }
+            definitions[`dynamic_input_${dynamic + 1}_layer_${i}_width`] = { name: `Dynamic Input ${dynamic + 1}Layer ${i} Width` }
+            definitions[`dynamic_input_${dynamic + 1}_layer_${i}_height`] = { name: `Dynamic Input ${dynamic + 1}Layer ${i} Height` }
+            definitions[`dynamic_input_${dynamic + 1}_layer_${i}_cropx1`] = { name: `Dynamic Input ${dynamic + 1}Layer ${i} Crop X1` }
+            definitions[`dynamic_input_${dynamic + 1}_layer_${i}_cropx2`] = { name: `Dynamic Input ${dynamic + 1}Layer ${i} Crop X2` }
+            definitions[`dynamic_input_${dynamic + 1}_layer_${i}_cropy1`] = { name: `Dynamic Input ${dynamic + 1}Layer ${i} Crop Y1` }
+            definitions[`dynamic_input_${dynamic + 1}_layer_${i}_cropy2`] = { name: `Dynamic Input ${dynamic + 1}Layer ${i} Crop Y2` }
           }
         }
       }
@@ -164,121 +152,105 @@ export const dynamicDefinitions = async (instance: VMixInstance): Promise<Compan
       if (input.text && (instance.config.variablesShowInputTitleIndex || instance.config.variablesShowInputTitleName)) {
         input.text.forEach((textLayer) => {
           if (instance.config.variablesShowInputTitleIndex) {
-            definitions.push({
-              name: `Dynamic Input ${dynamic + 1} layer ${textLayer.index} Title Text`,
-              variableId: `dynamic_input_${dynamic + 1}_layer_${textLayer.index}_titletext`,
-            })
+            definitions[`dynamic_input_${dynamic + 1}_layer_${textLayer.index}_titletext`] = { name: `Dynamic Input ${dynamic + 1} layer ${textLayer.index} Title Text` }
           }
 
           if (instance.config.variablesShowInputTitleName) {
-            definitions.push({
+            definitions[`dynamic_input_${dynamic + 1}_layer_${textLayer.name.replace(/[^a-z0-9-_.]+/gi, '')}_titletext`] = {
               name: `Dynamic Input ${dynamic + 1} layer ${textLayer.name} Title Text`,
-              variableId: `dynamic_input_${dynamic + 1}_layer_${textLayer.name.replace(/[^a-z0-9-_.]+/gi, '')}_titletext`,
-            })
+            }
           }
         })
       }
 
       if (input.type === 'PowerPoint') {
-        definitions.push({ name: `Dynamic Input ${dynamic + 1} Selected Index`, variableId: `dynamic_input_${dynamic + 1}_selected` })
+        definitions[`dynamic_input_${dynamic + 1}_selected`] = { name: `Dynamic Input ${dynamic + 1} Selected Index` }
       }
 
       if (input.type === 'VideoList' || input.type === 'VirtualSet' || input.type === 'Photos') {
-        definitions.push(
-          { name: `Dynamic Input ${dynamic + 1} Selected Position`, variableId: `dynamic_input_${dynamic + 1}_selected` },
-          { name: `Dynamic Input ${dynamic + 1} Selected Index`, variableId: `dynamic_input_${dynamic + 1}_selectedindex` },
-          { name: `Dynamic Input ${dynamic + 1} Selected Name`, variableId: `dynamic_input_${dynamic + 1}_selected_name` },
-        )
+        ;(definitions[`dynamic_input_${dynamic + 1}_selected`] = { name: `Dynamic Input ${dynamic + 1} Selected Position` }),
+          (definitions[`dynamic_input_${dynamic + 1}_selectedindex`] = { name: `Dynamic Input ${dynamic + 1} Selected Index` })
+        definitions[`dynamic_input_${dynamic + 1}_selected_name`] = { name: `Dynamic Input ${dynamic + 1} Selected Name` }
       }
 
       if (input.list && instance.config.variablesShowInputList) {
         input.list.forEach((listItem) => {
-          definitions.push(
-            { name: `Dynamic Input ${dynamic + 1} List ${listItem.index + 1} Name`, variableId: `dynamic_input_${dynamic + 1}_list_${listItem.index + 1}_name` },
-            { name: `Dynamic Input ${dynamic + 1} List ${listItem.index + 1} Selected`, variableId: `dynamic_input_${dynamic + 1}_list_${listItem.index + 1}_selected` },
-          )
+          definitions[`dynamic_input_${dynamic + 1}_list_${listItem.index + 1}_name`] = { name: `Dynamic Input ${dynamic + 1} List ${listItem.index + 1} Name` }
+          definitions[`dynamic_input_${dynamic + 1}_list_${listItem.index + 1}_selected`] = { name: `Dynamic Input ${dynamic + 1} List ${listItem.index + 1} Selected` }
         })
       }
 
       if (input.type === 'VideoCall') {
-        definitions.push(
-          { name: `Dynamic Input ${dynamic + 1} Call Password`, variableId: `dynamic_input_${dynamic + 1}_call_password` },
-          { name: `Dynamic Input ${dynamic + 1} Call Connected`, variableId: `dynamic_input_${dynamic + 1}_call_connected` },
-          { name: `Dynamic Input ${dynamic + 1} Call Video Source`, variableId: `dynamic_input_${dynamic + 1}_call_video_source` },
-          { name: `Dynamic Input ${dynamic + 1} Call Audio Source`, variableId: `dynamic_input_${dynamic + 1}_call_audio_source` },
-        )
+        definitions[`dynamic_input_${dynamic + 1}_call_password`] = { name: `Dynamic Input ${dynamic + 1} Call Password` }
+        definitions[`dynamic_input_${dynamic + 1}_call_connected`] = { name: `Dynamic Input ${dynamic + 1} Call Connected` }
+        definitions[`dynamic_input_${dynamic + 1}_call_video_source`] = { name: `Dynamic Input ${dynamic + 1} Call Video Source` }
+        definitions[`dynamic_input_${dynamic + 1}_call_audio_source`] = { name: `Dynamic Input ${dynamic + 1} Call Audio Source` }
       }
 
       if (instance.config.variablesShowInputVolume) {
-        definitions.push(
-          { name: `Dynamic Input ${dynamic + 1} Volume`, variableId: `dynamic_input_${dynamic + 1}_volume` },
-          { name: `Dynamic Input ${dynamic + 1} Volume dB`, variableId: `dynamic_input_${dynamic + 1}_volume_db` },
-          { name: `Dynamic Input ${dynamic + 1} Volume Linear`, variableId: `dynamic_input_${dynamic + 1}_volume_linear` },
-        )
+        definitions[`dynamic_input_${dynamic + 1}_volume`] = { name: `Dynamic Input ${dynamic + 1} Volume` }
+        definitions[`dynamic_input_${dynamic + 1}_volume_db`] = { name: `Dynamic Input ${dynamic + 1} Volume dB` }
+        definitions[`dynamic_input_${dynamic + 1}_volume_linear`] = { name: `Dynamic Input ${dynamic + 1} Volume Linear` }
 
         if (input.volumeF1 !== undefined) {
-          definitions.push(
-            { name: `Dynamic Input ${dynamic + 1} Volume F1`, variableId: `dynamic_input_${dynamic + 1}_volume_f1` },
-            { name: `Dynamic Input ${dynamic + 1} Volume F1 dB`, variableId: `dynamic_input_${dynamic + 1}_volume_f1_db` },
-            { name: `Dynamic Input ${dynamic + 1} Volume F1 Linear`, variableId: `dynamic_input_${dynamic + 1}_volume_f1_linear` },
-          )
+          definitions[`dynamic_input_${dynamic + 1}_volume_f1`] = { name: `Dynamic Input ${dynamic + 1} Volume F1` }
+          definitions[`dynamic_input_${dynamic + 1}_volume_f1_db`] = { name: `Dynamic Input ${dynamic + 1} Volume F1 dB` }
+          definitions[`dynamic_input_${dynamic + 1}_volume_f1_linear`] = { name: `Dynamic Input ${dynamic + 1} Volume F1 Linear` }
         }
 
         if (input.volumeF2 !== undefined) {
-          definitions.push(
-            { name: `Dynamic Input ${dynamic + 1} Volume F2`, variableId: `dynamic_input_${dynamic + 1}_volume_f2` },
-            { name: `Dynamic Input ${dynamic + 1} Volume F2 dB`, variableId: `dynamic_input_${dynamic + 1}_volume_f2_db` },
-            { name: `Dynamic Input ${dynamic + 1} Volume F2 Linear`, variableId: `dynamic_input_${dynamic + 1}_volume_f2_linear` },
-          )
+          definitions[`dynamic_input_${dynamic + 1}_volume_f2`] = { name: `Dynamic Input ${dynamic + 1} Volume F2` }
+          definitions[`dynamic_input_${dynamic + 1}_volume_f2_db`] = { name: `Dynamic Input ${dynamic + 1} Volume F2 dB` }
+          definitions[`dynamic_input_${dynamic + 1}_volume_f2_linear`] = { name: `Dynamic Input ${dynamic + 1} Volume F2 Linear` }
         }
 
         if (input.meterF1 !== undefined) {
-          definitions.push({ name: `Dynamic Input ${dynamic + 1} MeterF1`, variableId: `dynamic_input_${dynamic + 1}_meterf1` })
+          definitions[`dynamic_input_${dynamic + 1}_meterf1`] = { name: `Dynamic Input ${dynamic + 1} MeterF1` }
         }
 
         if (input.meterF2 !== undefined) {
-          definitions.push({ name: `Dynamic Input ${dynamic + 1} MeterF2`, variableId: `dynamic_input_${dynamic + 1}_meterf2` })
+          definitions[`dynamic_input_${dynamic + 1}_meterf2`] = { name: `Dynamic Input ${dynamic + 1} MeterF2` }
         }
 
         const audioLevel = instance.data.audioLevels.find((level) => level.key === input.key)
         if (audioLevel) {
-          definitions.push({ name: `Dynamic Input ${dynamic + 1} Meter F1 Average 1s`, variableId: `dynamic_input_${dynamic + 1}_meterf1_avg_1s` })
-          definitions.push({ name: `Dynamic Input ${dynamic + 1} Meter F2 Average 1s`, variableId: `dynamic_input_${dynamic + 1}_meterf2_avg_1s` })
-          definitions.push({ name: `Dynamic Input ${dynamic + 1} Meter F1 Average 3s`, variableId: `dynamic_input_${dynamic + 1}_meterf1_avg_3s` })
-          definitions.push({ name: `Dynamic Input ${dynamic + 1} Meter F2 Average 3s`, variableId: `dynamic_input_${dynamic + 1}_meterf2_avg_3s` })
-          definitions.push({ name: `Dynamic Input ${dynamic + 1} Meter F1 Peak 1s`, variableId: `dynamic_input_${dynamic + 1}_meterf1_peak_1s` })
-          definitions.push({ name: `Dynamic Input ${dynamic + 1} Meter F2 Peak 1s`, variableId: `dynamic_input_${dynamic + 1}_meterf2_peak_1s` })
-          definitions.push({ name: `Dynamic Input ${dynamic + 1} Meter F1 Peak 3s`, variableId: `dynamic_input_${dynamic + 1}_meterf1_peak_3s` })
-          definitions.push({ name: `Dynamic Input ${dynamic + 1} Meter F2 Peak 3s`, variableId: `dynamic_input_${dynamic + 1}_meterf2_peak_3s` })
+          definitions[`dynamic_input_${dynamic + 1}_meterf1_avg_1s`] = { name: `Dynamic Input ${dynamic + 1} Meter F1 Average 1s` }
+          definitions[`dynamic_input_${dynamic + 1}_meterf2_avg_1s`] = { name: `Dynamic Input ${dynamic + 1} Meter F2 Average 1s` }
+          definitions[`dynamic_input_${dynamic + 1}_meterf1_avg_3s`] = { name: `Dynamic Input ${dynamic + 1} Meter F1 Average 3s` }
+          definitions[`dynamic_input_${dynamic + 1}_meterf2_avg_3s`] = { name: `Dynamic Input ${dynamic + 1} Meter F2 Average 3s` }
+          definitions[`dynamic_input_${dynamic + 1}_meterf1_peak_1s`] = { name: `Dynamic Input ${dynamic + 1} Meter F1 Peak 1s` }
+          definitions[`dynamic_input_${dynamic + 1}_meterf2_peak_1s`] = { name: `Dynamic Input ${dynamic + 1} Meter F2 Peak 1s` }
+          definitions[`dynamic_input_${dynamic + 1}_meterf1_peak_3s`] = { name: `Dynamic Input ${dynamic + 1} Meter F1 Peak 3s` }
+          definitions[`dynamic_input_${dynamic + 1}_meterf2_peak_3s`] = { name: `Dynamic Input ${dynamic + 1} Meter F2 Peak 3s` }
         }
       }
 
       if (instance.config.variablesShowInputCC) {
-        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Hue`, variableId: `dynamic_input_${dynamic + 1}_cc_hue` })
-        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Saturation`, variableId: `dynamic_input_${dynamic + 1}_cc_saturation` })
-        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Lift R`, variableId: `dynamic_input_${dynamic + 1}_cc_liftr` })
-        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Lift G`, variableId: `dynamic_input_${dynamic + 1}_cc_liftg` })
-        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Lift B`, variableId: `dynamic_input_${dynamic + 1}_cc_liftb` })
-        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Lift Y`, variableId: `dynamic_input_${dynamic + 1}_cc_lifty` })
-        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Gamma R`, variableId: `dynamic_input_${dynamic + 1}_cc_gammar` })
-        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Gamma G`, variableId: `dynamic_input_${dynamic + 1}_cc_gammag` })
-        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Gamma B`, variableId: `dynamic_input_${dynamic + 1}_cc_gammab` })
-        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Gamma Y`, variableId: `dynamic_input_${dynamic + 1}_cc_gammay` })
-        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Gain R`, variableId: `dynamic_input_${dynamic + 1}_cc_gainr` })
-        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Gain G`, variableId: `dynamic_input_${dynamic + 1}_cc_gaing` })
-        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Gain B`, variableId: `dynamic_input_${dynamic + 1}_cc_gainb` })
-        definitions.push({ name: `Dynamic Input ${dynamic + 1} Colour Correction Gain Y`, variableId: `dynamic_input_${dynamic + 1}_cc_gainy` })
+        definitions[`dynamic_input_${dynamic + 1}_cc_hue`] = { name: `Dynamic Input ${dynamic + 1} Colour Correction Hue` }
+        definitions[`dynamic_input_${dynamic + 1}_cc_saturation`] = { name: `Dynamic Input ${dynamic + 1} Colour Correction Saturation` }
+        definitions[`dynamic_input_${dynamic + 1}_cc_liftr`] = { name: `Dynamic Input ${dynamic + 1} Colour Correction Lift R` }
+        definitions[`dynamic_input_${dynamic + 1}_cc_liftg`] = { name: `Dynamic Input ${dynamic + 1} Colour Correction Lift G` }
+        definitions[`dynamic_input_${dynamic + 1}_cc_liftb`] = { name: `Dynamic Input ${dynamic + 1} Colour Correction Lift B` }
+        definitions[`dynamic_input_${dynamic + 1}_cc_lifty`] = { name: `Dynamic Input ${dynamic + 1} Colour Correction Lift Y` }
+        definitions[`dynamic_input_${dynamic + 1}_cc_gammar`] = { name: `Dynamic Input ${dynamic + 1} Colour Correction Gamma R` }
+        definitions[`dynamic_input_${dynamic + 1}_cc_gammag`] = { name: `Dynamic Input ${dynamic + 1} Colour Correction Gamma G` }
+        definitions[`dynamic_input_${dynamic + 1}_cc_gammab`] = { name: `Dynamic Input ${dynamic + 1} Colour Correction Gamma B` }
+        definitions[`dynamic_input_${dynamic + 1}_cc_gammay`] = { name: `Dynamic Input ${dynamic + 1} Colour Correction Gamma Y` }
+        definitions[`dynamic_input_${dynamic + 1}_cc_gainr`] = { name: `Dynamic Input ${dynamic + 1} Colour Correction Gain R` }
+        definitions[`dynamic_input_${dynamic + 1}_cc_gaing`] = { name: `Dynamic Input ${dynamic + 1} Colour Correction Gain G` }
+        definitions[`dynamic_input_${dynamic + 1}_cc_gainb`] = { name: `Dynamic Input ${dynamic + 1} Colour Correction Gain B` }
+        definitions[`dynamic_input_${dynamic + 1}_cc_gainy`] = { name: `Dynamic Input ${dynamic + 1} Colour Correction Gain Y` }
       }
 
-      definitions.push({ name: `Dynamic Input ${dynamic + 1} Frame Delay`, variableId: `dynamic_input_${dynamic + 1}_framedelay` })
+      definitions[`dynamic_input_${dynamic + 1}_framedelay`] = { name: `Dynamic Input ${dynamic + 1} Frame Delay` }
     }
   }
 
   return definitions
 }
 
-export const dynamicValues = async (instance: VMixInstance): Promise<InstanceVariableValue> => {
-  const variables: VariablesDynamicValues = {}
+export const dynamicValues = async (instance: VMixInstance): Promise<DynamicVariablesSchema> => {
+  const variables: DynamicVariablesSchema = {}
   const dynamicIDs = [0, 1, 2, 3]
 
   for (const dynamic of dynamicIDs) {
@@ -431,7 +403,7 @@ export const dynamicValues = async (instance: VMixInstance): Promise<InstanceVar
 
         if (input.type === 'Photos' || input.type === 'VideoList' || input.type === 'VirtualSet') {
           variables[`dynamic_input_${dynamic + 1}_selected`] = input.position
-          variables[`dynamic_input_${dynamic + 1}_selectedindex`] = input.selectedIndex
+          variables[`dynamic_input_${dynamic + 1}_selectedindex`] = input.selectedIndex || ''
           variables[`dynamic_input_${dynamic + 1}_selected_name`] = input.title.split(`${input.shortTitle} - `)[1]
         }
 
@@ -441,10 +413,10 @@ export const dynamicValues = async (instance: VMixInstance): Promise<InstanceVar
             audioSource = audioSource.substr(3)
           }
 
-          variables[`dynamic_input_${dynamic + 1}_call_password`] = input.callPassword
+          variables[`dynamic_input_${dynamic + 1}_call_password`] = input.callPassword || ''
           variables[`dynamic_input_${dynamic + 1}_call_connected`] = input.callConnected ? 'Connected' : 'Disconnected'
-          variables[`dynamic_input_${dynamic + 1}_call_video_source`] = input.callVideoSource
-          variables[`dynamic_input_${dynamic + 1}_call_audio_source`] = input.callAudioSource
+          variables[`dynamic_input_${dynamic + 1}_call_video_source`] = input.callVideoSource || ''
+          variables[`dynamic_input_${dynamic + 1}_call_audio_source`] = input.callAudioSource || ''
         }
 
         if (instance.config.variablesShowInputVolume) {

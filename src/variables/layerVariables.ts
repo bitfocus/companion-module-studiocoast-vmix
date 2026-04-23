@@ -1,20 +1,22 @@
-import type { CompanionVariableDefinition } from '@companion-module/base'
-import type VMixInstance from '../'
-import type { InstanceVariableValue } from './variables'
+import type { CompanionVariableDefinitions } from '@companion-module/base'
+import type VMixInstance from '../index.js'
 
-type VariablesLayerIDs = 'layer_routing_input' | 'layer_routing_layer'
-type VariablesLayerValues = Record<VariablesLayerIDs, string | number | undefined>
+export type LayerVariablesSchema = {
+  layer_routing_input: string
+  layer_routing_layer: string
+}
 
-export const layerDefinitions = (_instance: VMixInstance): CompanionVariableDefinition[] => {
-  const definitions: CompanionVariableDefinition[] = []
-
-  definitions.push({ name: 'Layer Routing Input', variableId: 'layer_routing_input' }, { name: 'Layer Routing Layer', variableId: 'layer_routing_layer' })
+export const layerDefinitions = (_instance: VMixInstance): CompanionVariableDefinitions<LayerVariablesSchema> => {
+  const definitions = {
+    layer_routing_input: { name: 'Layer Routing Input' },
+    layer_routing_layer: { name: 'Layer Routing Layer' },
+  }
 
   return definitions
 }
 
-export const layerValues = async (instance: VMixInstance): Promise<InstanceVariableValue> => {
-  const variables: VariablesLayerValues = {
+export const layerValues = async (instance: VMixInstance): Promise<LayerVariablesSchema> => {
+  const variables: LayerVariablesSchema = {
     layer_routing_input: '',
     layer_routing_layer: '',
   }

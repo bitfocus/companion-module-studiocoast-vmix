@@ -1,5 +1,5 @@
 import { InstanceStatus, TCPHelper as tcp } from '@companion-module/base'
-import type VMixInstance from './'
+import type VMixInstance from './index.js'
 
 interface MessageBuffer {
   dataLength: number
@@ -99,7 +99,7 @@ export class TCP {
 
     this.sockets.functions.on('error', (err: Error) => {
       this.instance.updateStatus(InstanceStatus.UnknownError)
-      this.instance.log(this.instance.config.connectionErrorLog ? 'error' : 'debug', 'Function Socket err: ' + err.message)
+      this.instance.log(this.instance.config.connectionErrorLog ? 'error' : 'debug', 'Function Socket err: ' + err)
     })
 
     this.sockets.functions.on('connect', () => {
@@ -132,8 +132,8 @@ export class TCP {
 
     if (this.pingInterval === null) {
       this.pingInterval = setInterval(() => {
-        if (this.sockets.activator?.isConnected) this.sockets.activator?.send('PING\r\n')
-        if (this.sockets.functions?.isConnected) this.sockets.functions?.send('PING\r\n')
+        if (this.sockets.activator?.isConnected) this.sockets.activator?.sendAsync('PING\r\n')
+        if (this.sockets.functions?.isConnected) this.sockets.functions?.sendAsync('PING\r\n')
       }, 3000)
     }
   }
@@ -149,7 +149,7 @@ export class TCP {
     this.sockets.activator?.on('connect', () => {
       this.instance.log('debug', 'Connected Activator Socket')
 
-      this.sockets.activator?.send('SUBSCRIBE ACTS\r\n').catch((err) => {
+      this.sockets.activator?.sendAsync('SUBSCRIBE ACTS\r\n').catch((err) => {
         this.instance.log('debug', err.message)
       })
     })
@@ -188,7 +188,7 @@ export class TCP {
       'ACTS ReplayQuadMode\r\n',
     ]
 
-    this.sockets.activator?.send(initialRequests.join('')).catch((err) => {
+    this.sockets.activator?.sendAsync(initialRequests.join('')).catch((err) => {
       this.instance.log('debug', err.message)
     })
   }
@@ -285,7 +285,7 @@ export class TCP {
           this.instance.apiProcessing.hold = true
           this.instance.apiProcessing.request = new Date().getTime()
 
-          this.sockets.xml?.send('XML\r\n').catch((err) => {
+          this.sockets.xml?.sendAsync('XML\r\n').catch((err) => {
             this.instance.log('debug', err.message)
           })
         } else {
@@ -321,7 +321,7 @@ export class TCP {
         this.instance.log('debug', `Sending command: ${message}`)
 
         this.sockets.functions
-          .send(message)
+          .sendAsync(message)
           .then(() => resolve())
           .catch((err: Error) => reject(err))
       } else {
@@ -378,7 +378,7 @@ export class TCP {
     if (!data.startsWith('ACTS')) message = 'ACTS ' + message
     if (!data.endsWith('\r\n')) message += '\r\n'
 
-    this.sockets.activator?.send(message).catch((err) => {
+    this.sockets.activator?.sendAsync(message).catch((err) => {
       this.instance.log('debug', err.message)
     })
   }

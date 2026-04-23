@@ -1,37 +1,33 @@
-import { combineRgb } from '@companion-module/base'
-import type { VMixFeedback, FeedbackCallback } from './feedback'
-import { options } from '../utils'
-import type VMixInstance from '../index'
+import { type CompanionFeedbackDefinitions } from '@companion-module/base'
+import { options } from '../utils.js'
+import type VMixInstance from '../index.js'
 
-type InputSelectedIndexOptions = {
-  input: string
-  selectedIndex: string
-  fg: number
-  bg: number
-  et: number
-  eb: number
+export type ListFeedbacksSchema = {
+  inputSelectedIndex: {
+    type: 'advanced'
+    options: {
+      input: string
+      selectedIndex: string
+      fg: number
+      bg: number
+      et: number
+      eb: number
+    }
+  }
+  inputSelectedIndexBoolean: {
+    type: 'boolean'
+    options: {
+      input: string
+      selectedIndex: string
+    }
+  }
 }
 
-type InputSelectedIndexBooleanOptions = {
-  input: string
-  selectedIndex: string
-}
-
-type InputSelectedIndexCallback = FeedbackCallback<'inputSelectedIndex', InputSelectedIndexOptions>
-type InputSelectedIndexBooleanCallback = FeedbackCallback<'inputSelectedIndexBoolean', InputSelectedIndexBooleanOptions>
-
-export interface ListFeedbacks {
-  inputSelectedIndex: VMixFeedback<InputSelectedIndexCallback>
-  inputSelectedIndexBoolean: VMixFeedback<InputSelectedIndexBooleanCallback>
-}
-
-export type ListCallbacks = InputSelectedIndexCallback | InputSelectedIndexBooleanCallback
-
-export const vMixListFeedbacks = (instance: VMixInstance): ListFeedbacks => {
+export const getListFeedbacks = (instance: VMixInstance): CompanionFeedbackDefinitions<ListFeedbacksSchema> => {
   return {
     inputSelectedIndex: {
       type: 'advanced',
-      name: 'List - Change Colors Based On Selected Slide/Index/Virtual Set',
+      name: 'List - Selected Index (Advanced)',
       description: 'If the specified slide/index is selected, change colors of the bank',
       options: [
         options.input,
@@ -42,19 +38,19 @@ export const vMixListFeedbacks = (instance: VMixInstance): ListFeedbacks => {
           type: 'colorpicker',
           label: 'Empty List Warning Text',
           id: 'et',
-          default: combineRgb(0, 0, 0),
+          default: 0x000000,
         },
         {
           type: 'colorpicker',
           label: 'Empty List Warning Background',
           id: 'eb',
-          default: combineRgb(255, 255, 0),
+          default: 0x0ffff00,
         },
       ],
-      callback: async (feedback, context) => {
-        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+      callback: async (feedback) => {
+        const inputOption = feedback.options.input
         const input = await instance.data.getInput(inputOption)
-        const index = (await instance.parseOption(feedback.options.selectedIndex, context))[instance.buttonShift.state]
+        const index = feedback.options.selectedIndex
 
         if (input?.type === 'VideoList') {
           if (input.selectedIndex === parseInt(index, 10)) {
@@ -74,17 +70,14 @@ export const vMixListFeedbacks = (instance: VMixInstance): ListFeedbacks => {
 
     inputSelectedIndexBoolean: {
       type: 'boolean',
-      name: "List - Change style based on an input's Selected Index",
+      name: 'List - Selected Index',
       description: '',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0xff0000 },
       options: [options.input, options.selectedIndex],
-      callback: async (feedback, context) => {
-        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+      callback: async (feedback) => {
+        const inputOption = feedback.options.input
         const input = await instance.data.getInput(inputOption)
-        const index = (await instance.parseOption(feedback.options.selectedIndex, context))[instance.buttonShift.state]
+        const index = feedback.options.selectedIndex
 
         return input?.selectedIndex === parseInt(index, 10)
       },

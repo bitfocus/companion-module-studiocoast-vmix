@@ -1,71 +1,42 @@
-import type { CompanionVariableDefinition } from '@companion-module/base'
-import type VMixInstance from '../'
-import type { Mix } from '../data'
-import { calcDuration, calcRemaining, volumeTodB } from '../utils'
+import type { CompanionVariableDefinitions } from '@companion-module/base'
+import type VMixInstance from '../index.js'
+import type { Mix } from '../data.js'
+import { calcDuration, calcRemaining, volumeTodB } from '../utils.js'
 
-type MixID = number | 'selected'
 type MixType = 'preview' | 'program'
 
-type VariablesMixIDs =
-  | `mix_${MixID}_${MixType}`
-  | `mix_${MixID}_${MixType}_name`
-  | `mix_${MixID}_${MixType}_full_title`
-  | `mix_${MixID}_${MixType}_guid`
-  | `mix_${MixID}_${MixType}_playing`
-  | `mix_${MixID}_${MixType}_loop`
-  | `mix_${MixID}_${MixType}_audio`
-  | `mix_${MixID}_${MixType}_mute`
-  | `mix_${MixID}_${MixType}_framedelay`
-  | `mix_${MixID}_${MixType}_meter${'f1' | 'f2'}`
-  | `mix_${MixID}_${MixType}_meter${'f1' | 'f2'}_avg_1s`
-  | `mix_${MixID}_${MixType}_meter${'f1' | 'f2'}_avg_3s`
-  | `mix_${MixID}_${MixType}_meter${'f1' | 'f2'}_peak_1s`
-  | `mix_${MixID}_${MixType}_meter${'f1' | 'f2'}_peak_3s`
-  | `mix_${MixID}_${MixType}_duration`
-  | `mix_${MixID}_${MixType}_remaining`
-  | `mix_${MixID}_${MixType}_position_panx`
-  | `mix_${MixID}_${MixType}_position_pany`
-  | `mix_${MixID}_${MixType}_position_zoomx`
-  | `mix_${MixID}_${MixType}_position_zoomy`
-  | `mix_${MixID}_${MixType}_position_cropx1`
-  | `mix_${MixID}_${MixType}_position_cropx2`
-  | `mix_${MixID}_${MixType}_position_cropy1`
-  | `mix_${MixID}_${MixType}_position_cropy2`
-  | `mix_${MixID}_${MixType}_cc_hue`
-  | `mix_${MixID}_${MixType}_cc_saturation`
-  | `mix_${MixID}_${MixType}_cc_liftr`
-  | `mix_${MixID}_${MixType}_cc_liftg`
-  | `mix_${MixID}_${MixType}_cc_liftb`
-  | `mix_${MixID}_${MixType}_cc_lifty`
-  | `mix_${MixID}_${MixType}_cc_gammar`
-  | `mix_${MixID}_${MixType}_cc_gammag`
-  | `mix_${MixID}_${MixType}_cc_gammab`
-  | `mix_${MixID}_${MixType}_cc_gammay`
-  | `mix_${MixID}_${MixType}_cc_gainr`
-  | `mix_${MixID}_${MixType}_cc_gaing`
-  | `mix_${MixID}_${MixType}_cc_gainb`
-  | `mix_${MixID}_${MixType}_cc_gainy`
-  | `mix_${MixID}_${MixType}_layer_${number}_number`
-  | `mix_${MixID}_${MixType}_layer_${number}_name`
-  | `mix_${MixID}_${MixType}_layer_${number}_key`
-  | `mix_${MixID}_${MixType}_layer_${number}_panx`
-  | `mix_${MixID}_${MixType}_layer_${number}_pany`
-  | `mix_${MixID}_${MixType}_layer_${number}_x`
-  | `mix_${MixID}_${MixType}_layer_${number}_y`
-  | `mix_${MixID}_${MixType}_layer_${number}_zoomx`
-  | `mix_${MixID}_${MixType}_layer_${number}_zoomy`
-  | `mix_${MixID}_${MixType}_layer_${number}_width`
-  | `mix_${MixID}_${MixType}_layer_${number}_height`
-  | `mix_${MixID}_${MixType}_layer_${number}_cropx1`
-  | `mix_${MixID}_${MixType}_layer_${number}_cropx2`
-  | `mix_${MixID}_${MixType}_layer_${number}_cropy1`
-  | `mix_${MixID}_${MixType}_layer_${number}_cropy2`
-  | `mix_selected`
+type MixMeterTypes = 'f1' | 'f2'
+type MixPositionTypes = 'panx' | 'pany' | 'zoomx' | 'zoomy' | 'cropx1' | 'cropx2' | 'cropy1' | 'cropy2'
+type MixCCTypes = 'hue' | 'saturation' | 'liftr' | 'liftg' | 'liftb' | 'lifty' | 'gammar' | 'gammag' | 'gammab' | 'gammay' | 'gainr' | 'gaing' | 'gainb' | 'gainy'
+type MixLayerTypes = 'number' | 'name' | 'key' | 'panx' | 'pany' | 'x' | 'y' | 'zoomx' | 'zoomy' | 'width' | 'height' | 'cropx1' | 'cropx2' | 'cropy1' | 'cropy2'
 
-type VariablesMixValues = Partial<Record<VariablesMixIDs, string | number | undefined>>
+export type MixVariablesSchema = Partial<{
+  [key: `mix_${string}_${MixType}`]: number
+  [key: `mix_${string}_${MixType}_name`]: string
+  [key: `mix_${string}_${MixType}_full_title`]: string
+  [key: `mix_${string}_${MixType}_guid`]: string
+  [key: `mix_${string}_${MixType}_playing`]: string
+  [key: `mix_${string}_${MixType}_loop`]: string
+  [key: `mix_${string}_${MixType}_audio`]: string
+  [key: `mix_${string}_${MixType}_mute`]: string
+  [key: `mix_${string}_${MixType}_framedelay`]: number
+  [key: `mix_${string}_${MixType}_meter${MixMeterTypes}`]: string
+  [key: `mix_${string}_${MixType}_meter${MixMeterTypes}_avg_1s`]: string
+  [key: `mix_${string}_${MixType}_meter${MixMeterTypes}_avg_3s`]: string
+  [key: `mix_${string}_${MixType}_meter${MixMeterTypes}_peak_1s`]: string
+  [key: `mix_${string}_${MixType}_meter${MixMeterTypes}_peak_3s`]: string
+  [key: `mix_${string}_${MixType}_duration`]: string
+  [key: `mix_${string}_${MixType}_remaining`]: string
+  [key: `mix_${string}_${MixType}_position_${MixPositionTypes}`]: number | string
+  [key: `mix_${string}_${MixType}_cc_${MixCCTypes}`]: number | string
+  [key: `mix_${string}_${MixType}_layer_${number}_${MixLayerTypes}`]: number | string
+  mix_selected: number
+}>
 
-export const mixDefinitions = async (instance: VMixInstance): Promise<CompanionVariableDefinition[]> => {
-  const definitions: CompanionVariableDefinition[] = []
+export const mixDefinitions = async (instance: VMixInstance): Promise<CompanionVariableDefinitions<MixVariablesSchema>> => {
+  const definitions: CompanionVariableDefinitions<MixVariablesSchema> = {
+    mix_selected: { name: `Mix Selected` },
+  }
 
   if (!instance.config.variablesShowMix) return definitions
 
@@ -81,90 +52,80 @@ export const mixDefinitions = async (instance: VMixInstance): Promise<CompanionV
       const input = type === 'Preview' ? mixPreviewInput : mixProgramInput
       if (!input) continue
 
-      definitions.push(
-        { name: `Mix ${id} ${type}`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}` },
-        { name: `Mix ${id} ${type} Short Title`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_name` },
-        { name: `Mix ${id} ${type} Full Title`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_full_title` },
-        { name: `Mix ${id} ${type} GUID`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_guid` },
-        { name: `Mix ${id} ${type} Playing`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_playing` },
-        { name: `Mix ${id} ${type} Loop`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_loop` },
-        { name: `Mix ${id} ${type} Audio`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_audio` },
-        { name: `Mix ${id} ${type} Mute`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_mute` },
-        { name: `Mix ${id} ${type} Frame Delay`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_framedelay` },
-        { name: `Mix ${id} ${type} Duration`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_duration` },
-        { name: `Mix ${id} ${type} Remaining`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_remaining` },
-      )
+      const lowercaseType = type.toLowerCase() as MixType
+
+      definitions[`mix_${id.toLowerCase()}_${lowercaseType}`] = { name: `Mix ${id} ${type}` }
+      definitions[`mix_${id.toLowerCase()}_${lowercaseType}_name`] = { name: `Mix ${id} ${type} Short Title` }
+      definitions[`mix_${id.toLowerCase()}_${lowercaseType}_full_title`] = { name: `Mix ${id} ${type} Full Title` }
+      definitions[`mix_${id.toLowerCase()}_${lowercaseType}_guid`] = { name: `Mix ${id} ${type} GUID` }
+      definitions[`mix_${id.toLowerCase()}_${lowercaseType}_playing`] = { name: `Mix ${id} ${type} Playing` }
+      definitions[`mix_${id.toLowerCase()}_${lowercaseType}_loop`] = { name: `Mix ${id} ${type} Loop` }
+      definitions[`mix_${id.toLowerCase()}_${lowercaseType}_audio`] = { name: `Mix ${id} ${type} Audio` }
+      definitions[`mix_${id.toLowerCase()}_${lowercaseType}_mute`] = { name: `Mix ${id} ${type} Mute` }
+      definitions[`mix_${id.toLowerCase()}_${lowercaseType}_framedelay`] = { name: `Mix ${id} ${type} Frame Delay` }
+      definitions[`mix_${id.toLowerCase()}_${lowercaseType}_duration`] = { name: `Mix ${id} ${type} Duration` }
+      definitions[`mix_${id.toLowerCase()}_${lowercaseType}_remaining`] = { name: `Mix ${id} ${type} Remaining` }
 
       if (instance.config.variablesShowInputVolume) {
-        definitions.push(
-          { name: `Mix ${id} ${type} Meter F1`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_meterf1` },
-          { name: `Mix ${id} ${type} Meter F2`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_meterf2` },
-          { name: `Mix ${id} ${type} Meter F1 Avg 1s`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_meterf1_avg_1s` },
-          { name: `Mix ${id} ${type} Meter F2 Avg 1s`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_meterf2_avg_1s` },
-          { name: `Mix ${id} ${type} Meter F1 Avg 3s`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_meterf1_avg_3s` },
-          { name: `Mix ${id} ${type} Meter F2 Avg 3s`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_meterf2_avg_3s` },
-          { name: `Mix ${id} ${type} Meter F1 Peak 1s`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_meterf1_peak_1s` },
-          { name: `Mix ${id} ${type} Meter F2 Peak 1s`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_meterf2_peak_1s` },
-          { name: `Mix ${id} ${type} Meter F1 Peak 3s`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_meterf1_peak_3s` },
-          { name: `Mix ${id} ${type} Meter F2 Peak 3s`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_meterf2_peak_3s` },
-        )
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_meterf1`] = { name: `Mix ${id} ${type} Meter F1` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_meterf2`] = { name: `Mix ${id} ${type} Meter F2` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_meterf1_avg_1s`] = { name: `Mix ${id} ${type} Meter F1 Avg 1s` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_meterf2_avg_1s`] = { name: `Mix ${id} ${type} Meter F2 Avg 1s` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_meterf1_avg_3s`] = { name: `Mix ${id} ${type} Meter F1 Avg 3s` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_meterf2_avg_3s`] = { name: `Mix ${id} ${type} Meter F2 Avg 3s` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_meterf1_peak_1s`] = { name: `Mix ${id} ${type} Meter F1 Peak 1s` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_meterf2_peak_1s`] = { name: `Mix ${id} ${type} Meter F2 Peak 1s` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_meterf1_peak_3s`] = { name: `Mix ${id} ${type} Meter F1 Peak 3s` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_meterf2_peak_3s`] = { name: `Mix ${id} ${type} Meter F2 Peak 3s` }
       }
 
       if (instance.config.variablesShowInputPosition) {
-        definitions.push(
-          { name: `Mix ${id} ${type} Position Pan X`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_position_panx` },
-          { name: `Mix ${id} ${type} Position Pan Y`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_position_pany` },
-          { name: `Mix ${id} ${type} Position Zoom X`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_position_zoomx` },
-          { name: `Mix ${id} ${type} Position Zoom Y`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_position_zoomy` },
-          { name: `Mix ${id} ${type} Position Crop X1`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_position_cropx1` },
-          { name: `Mix ${id} ${type} Position Crop X2`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_position_cropx2` },
-          { name: `Mix ${id} ${type} Position Crop Y1`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_position_cropy1` },
-          { name: `Mix ${id} ${type} Position Crop Y2`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_position_cropy2` },
-        )
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_position_panx`] = { name: `Mix ${id} ${type} Position Pan X` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_position_pany`] = { name: `Mix ${id} ${type} Position Pan Y` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_position_zoomx`] = { name: `Mix ${id} ${type} Position Zoom X` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_position_zoomy`] = { name: `Mix ${id} ${type} Position Zoom Y` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_position_cropx1`] = { name: `Mix ${id} ${type} Position Crop X1` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_position_cropx2`] = { name: `Mix ${id} ${type} Position Crop X2` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_position_cropy1`] = { name: `Mix ${id} ${type} Position Crop Y1` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_position_cropy2`] = { name: `Mix ${id} ${type} Position Crop Y2` }
       }
 
       if (instance.config.variablesShowInputCC) {
-        definitions.push(
-          { name: `Mix ${id} ${type} CC Hue`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_hue` },
-          { name: `Mix ${id} ${type} CC Saturation`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_saturation` },
-          { name: `Mix ${id} ${type} CC Lift R`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_liftr` },
-          { name: `Mix ${id} ${type} CC Lift G`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_liftg` },
-          { name: `Mix ${id} ${type} CC Lift B`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_liftb` },
-          { name: `Mix ${id} ${type} CC Lift Y`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_lifty` },
-          { name: `Mix ${id} ${type} CC Gamma R`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_gammar` },
-          { name: `Mix ${id} ${type} CC Gamma G`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_gammag` },
-          { name: `Mix ${id} ${type} CC Gamma B`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_gammab` },
-          { name: `Mix ${id} ${type} CC Gamma Y`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_gammay` },
-          { name: `Mix ${id} ${type} CC Gain R`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_gainr` },
-          { name: `Mix ${id} ${type} CC Gain G`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_gaing` },
-          { name: `Mix ${id} ${type} CC Gain B`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_gainb` },
-          { name: `Mix ${id} ${type} CC Gain Y`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_cc_gainy` },
-        )
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_cc_hue`] = { name: `Mix ${id} ${type} CC Hue` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_cc_saturation`] = { name: `Mix ${id} ${type} CC Saturation` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_cc_liftr`] = { name: `Mix ${id} ${type} CC Lift R` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_cc_liftg`] = { name: `Mix ${id} ${type} CC Lift G` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_cc_liftb`] = { name: `Mix ${id} ${type} CC Lift B` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_cc_lifty`] = { name: `Mix ${id} ${type} CC Lift Y` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_cc_gammar`] = { name: `Mix ${id} ${type} CC Gamma R` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_cc_gammag`] = { name: `Mix ${id} ${type} CC Gamma G` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_cc_gammab`] = { name: `Mix ${id} ${type} CC Gamma B` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_cc_gammay`] = { name: `Mix ${id} ${type} CC Gamma Y` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_cc_gainr`] = { name: `Mix ${id} ${type} CC Gain R` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_cc_gaing`] = { name: `Mix ${id} ${type} CC Gain G` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_cc_gainb`] = { name: `Mix ${id} ${type} CC Gain B` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_cc_gainy`] = { name: `Mix ${id} ${type} CC Gain Y` }
       }
 
       if (instance.config.variablesShowInputLayers) {
         for (let i = 1; i < 11; i++) {
-          definitions.push(
-            { name: `Mix ${id} ${type} Layer ${i} Number`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_layer_${i}_number` },
-            { name: `Mix ${id} ${type} Layer ${i} Name`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_layer_${i}_name` },
-            { name: `Mix ${id} ${type} Layer ${i} Key`, variableId: `mix_${id.toLowerCase()}_${type.toLowerCase()}_layer_${i}_key` },
-          )
+          definitions[`mix_${id.toLowerCase()}_${lowercaseType}_layer_${i}_number`] = { name: `Mix ${id} ${type} Layer ${i} Number` }
+          definitions[`mix_${id.toLowerCase()}_${lowercaseType}_layer_${i}_name`] = { name: `Mix ${id} ${type} Layer ${i} Name` }
+          definitions[`mix_${id.toLowerCase()}_${lowercaseType}_layer_${i}_key`] = { name: `Mix ${id} ${type} Layer ${i} Key` }
 
           if (instance.config.variablesShowInputLayerPosition) {
-            definitions.push(
-              { name: `Mix ${id} ${type} Layer ${i} Pan X`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_panx` },
-              { name: `Mix ${id} ${type} Layer ${i} Pan Y`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_pany` },
-              { name: `Mix ${id} ${type} Layer ${i} X`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_x` },
-              { name: `Mix ${id} ${type} Layer ${i} Y`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_y` },
-              { name: `Mix ${id} ${type} Layer ${i} Zoom X`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_zoomx` },
-              { name: `Mix ${id} ${type} Layer ${i} Zoom Y`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_zoomy` },
-              { name: `Mix ${id} ${type} Layer ${i} Width`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_width` },
-              { name: `Mix ${id} ${type} Layer ${i} Height`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_height` },
-              { name: `Mix ${id} ${type} Layer ${i} Crop X1`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_cropx1` },
-              { name: `Mix ${id} ${type} Layer ${i} Crop X2`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_cropx2` },
-              { name: `Mix ${id} ${type} Layer ${i} Crop Y1`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_cropy1` },
-              { name: `Mix ${id} ${type} Layer ${i} Crop Y2`, variableId: `mix_${id}_${type.toLowerCase()}_layer_${i}_cropy2` },
-            )
+            definitions[`mix_${id}_${lowercaseType}_layer_${i}_panx`] = { name: `Mix ${id} ${type} Layer ${i} Pan X` }
+            definitions[`mix_${id}_${lowercaseType}_layer_${i}_pany`] = { name: `Mix ${id} ${type} Layer ${i} Pan Y` }
+            definitions[`mix_${id}_${lowercaseType}_layer_${i}_x`] = { name: `Mix ${id} ${type} Layer ${i} X` }
+            definitions[`mix_${id}_${lowercaseType}_layer_${i}_y`] = { name: `Mix ${id} ${type} Layer ${i} Y` }
+            definitions[`mix_${id}_${lowercaseType}_layer_${i}_zoomx`] = { name: `Mix ${id} ${type} Layer ${i} Zoom X` }
+            definitions[`mix_${id}_${lowercaseType}_layer_${i}_zoomy`] = { name: `Mix ${id} ${type} Layer ${i} Zoom Y` }
+            definitions[`mix_${id}_${lowercaseType}_layer_${i}_width`] = { name: `Mix ${id} ${type} Layer ${i} Width` }
+            definitions[`mix_${id}_${lowercaseType}_layer_${i}_height`] = { name: `Mix ${id} ${type} Layer ${i} Height` }
+            definitions[`mix_${id}_${lowercaseType}_layer_${i}_cropx1`] = { name: `Mix ${id} ${type} Layer ${i} Crop X1` }
+            definitions[`mix_${id}_${lowercaseType}_layer_${i}_cropx2`] = { name: `Mix ${id} ${type} Layer ${i} Crop X2` }
+            definitions[`mix_${id}_${lowercaseType}_layer_${i}_cropy1`] = { name: `Mix ${id} ${type} Layer ${i} Crop Y1` }
+            definitions[`mix_${id}_${lowercaseType}_layer_${i}_cropy2`] = { name: `Mix ${id} ${type} Layer ${i} Crop Y2` }
           }
         }
       }
@@ -176,20 +137,20 @@ export const mixDefinitions = async (instance: VMixInstance): Promise<CompanionV
     if (mix.number === instance.routingData.mix + 1) await setDefinitions(mix, true)
   }
 
-  definitions.push({ name: `Mix Selected`, variableId: `mix_selected` })
-
   return definitions
 }
 
-export const mixValues = async (instance: VMixInstance): Promise<VariablesMixValues> => {
-  const variables: VariablesMixValues = {}
+export const mixValues = async (instance: VMixInstance): Promise<MixVariablesSchema> => {
+  const variables: MixVariablesSchema = {
+    mix_selected: undefined,
+  }
   if (!instance.config.variablesShowMix) return variables
 
   const mixTypes: MixType[] = ['preview', 'program']
   const mixes = instance.data.mix.filter((mix) => mix.active)
 
   const setVariables = async (mix: Mix, selected: boolean = false) => {
-    const id = selected ? 'selected' : mix.number
+    const id = selected ? 'selected' : mix.number.toString()
     const mixProgramInput = await instance.data.getInput(mix.program)
     const mixPreviewInput = await instance.data.getInput(mix.preview)
 
@@ -268,7 +229,7 @@ export const mixValues = async (instance: VMixInstance): Promise<VariablesMixVal
 
       if (instance.config.variablesShowInputLayers) {
         for (let i = 1; i < 11; i++) {
-          variables[`mix_${id}_${type}_layer_${i}_number`] = ''
+          variables[`mix_${id}_${type}_layer_${i}_number`] = undefined
           variables[`mix_${id}_${type}_layer_${i}_name`] = ''
           variables[`mix_${id}_${type}_layer_${i}_key`] = ''
         }
@@ -276,7 +237,7 @@ export const mixValues = async (instance: VMixInstance): Promise<VariablesMixVal
         for (const layer of input.overlay || []) {
           const inputLayer = await instance.data.getInput(layer.key)
 
-          variables[`mix_${id}_${type}_layer_${layer.index + 1}_number`] = inputLayer?.number || ''
+          variables[`mix_${id}_${type}_layer_${layer.index + 1}_number`] = inputLayer?.number || undefined
           variables[`mix_${id}_${type}_layer_${layer.index + 1}_name`] = inputLayer?.shortTitle || inputLayer?.title || ''
           variables[`mix_${id}_${type}_layer_${layer.index + 1}_key`] = layer.key
 

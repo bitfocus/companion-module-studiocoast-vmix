@@ -1,49 +1,47 @@
-import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import type VMixInstance from '../index'
-import { type MixOptionEntry, options } from '../utils'
+import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { SendBasicCommand } from './actions.js'
+import type VMixInstance from '../index.js'
+import { type MixOptionEntry, type EmptyOptions, options } from '../utils.js'
 
-type OutputSetOptions = {
-  functionID: 'SetOutput2' | 'SetOutput3' | 'SetOutput4' | 'SetOutputExternal2' | 'SetOutputFullscreen' | 'SetOutputFullscreen2'
-  value: 'Output' | 'Preview' | 'MultiView' | 'MultiView2' | 'Replay' | 'Mix' | 'Input'
-  input: string
-  mix: MixOptionEntry
-  mixVariable: string
+export type OutputActionsSchema = {
+  outputSet: {
+    options: {
+      functionID: 'SetOutput2' | 'SetOutput3' | 'SetOutput4' | 'SetOutputExternal2' | 'SetOutputFullscreen' | 'SetOutputFullscreen2'
+      value: 'Output' | 'Preview' | 'MultiView' | 'MultiView2' | 'Replay' | 'Mix' | 'Input'
+      input: string
+      mix: MixOptionEntry
+    }
+  }
+  multicorderFunctions: {
+    options: {
+      functionID: 'StartStopMultiCorder' | 'StartMultiCorder' | 'StopMultiCorder'
+    }
+  }
+  recordingFunctions: {
+    options: {
+      functionID: 'StartStopRecording' | 'StartRecording' | 'StopRecording'
+    }
+  }
+  streamingFunctions: {
+    options: {
+      functionID: 'StartStopStreaming' | 'StartStreaming' | 'StopStreaming'
+      value: '' | '1' | '2' | '3' | '4' | '5'
+    }
+  }
+  externalFunctions: {
+    options: {
+      functionID: 'StartStopExternal' | 'StartExternal' | 'StopExternal'
+    }
+  }
+  fullscreenFunctions: {
+    options: {
+      functionID: 'Fullscreen' | 'FullscreenOff' | 'FullscreenOn'
+    }
+  }
+  fadeToBlack: EmptyOptions
 }
 
-type ToggleFunctionsOptions = {
-  functionID:
-    | 'StartStopMultiCorder'
-    | 'StartMultiCorder'
-    | 'StopMultiCorder'
-    | 'StartStopRecording'
-    | 'StartRecording'
-    | 'StopRecording'
-    | 'StartStopStreaming'
-    | 'StartStreaming'
-    | 'StopStreaming'
-    | 'StartStopExternal'
-    | 'StartExternal'
-    | 'StopExternal'
-    | 'Fullscreen'
-    | 'FullscreenOff'
-    | 'FullscreenOn'
-    | 'FadeToBlack'
-  value: '' | '0' | '1' | '2'
-}
-
-type OutputSetCallback = ActionCallback<'outputSet', OutputSetOptions>
-type ToggleFunctionsCallback = ActionCallback<'toggleFunctions', ToggleFunctionsOptions>
-
-export interface OutputActions {
-  outputSet: VMixAction<OutputSetCallback>
-  toggleFunctions: VMixAction<ToggleFunctionsCallback>
-
-  [key: string]: VMixAction<any>
-}
-
-export type OutputCallbacks = OutputSetCallback | ToggleFunctionsCallback
-
-export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): OutputActions => {
+export const getOutputActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<OutputActionsSchema> => {
   return {
     outputSet: {
       name: 'Output - Set Output Source',
@@ -77,34 +75,24 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: Sen
             { id: 'Mix', label: 'Mix' },
             { id: 'Input', label: 'Input' },
           ],
+          disableAutoExpression: true,
         },
         {
           ...options.mixSelect,
-          isVisible: (options) => options.value === 'Mix',
+          isVisibleExpression: `$(options:value) === 'Mix'`,
         },
-        options.mixVariable,
         {
           ...options.input,
-          isVisible: (options) => options.value === 'Input',
+          isVisibleExpression: `$(options:value) === 'Input'`,
         },
       ],
-      callback: async (action, context) => {
+      callback: async (action) => {
         let command = `FUNCTION ${action.options.functionID}`
 
         if (action.options.value === 'Mix') {
-          let mix: any = action.options.mix
-          if (mix === -2) {
-            mix = parseInt((await instance.parseOption(action.options.mixVariable, context))[instance.buttonShift.state], 10)
-
-            if (isNaN(mix)) return
-
-            mix = mix - 1
-          }
-          if (mix === -1) mix = instance.routingData.mix
-
-          command += ` Value=Mix&Mix=${mix}`
+          command += ` Value=Mix&Mix=${action.options.mix}`
         } else if (action.options.value === 'Input') {
-          const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+          const input = action.options.input
           command += ` Value=${action.options.value}&Input=${encodeURIComponent(input)}`
         } else {
           command += ` Value=${action.options.value}`
@@ -114,9 +102,9 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: Sen
       },
     },
 
-    toggleFunctions: {
-      name: 'Output - MultiCorder / Recording / Streaming',
-      description: 'Start / Stop / Toggle vMix Output functions',
+    multicorderFunctions: {
+      name: 'Output - Multicorder',
+      description: 'Start / Stop / Toggle Multicorder',
       options: [
         {
           type: 'dropdown',
@@ -124,23 +112,51 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: Sen
           id: 'functionID',
           default: 'StartStopMultiCorder',
           choices: [
-            { id: 'StartStopMultiCorder', label: 'Start / Stop MultiCorder' },
             { id: 'StartMultiCorder', label: 'Start MultiCorder' },
             { id: 'StopMultiCorder', label: 'Stop MultiCorder' },
-            { id: 'StartStopRecording', label: 'Start / Stop Recording' },
+            { id: 'StartStopMultiCorder', label: 'Start / Stop MultiCorder' },
+          ],
+          expressionDescription: `Valid Values: 'StartMultiCorder', 'StopMultiCorder', 'StartStopMultiCorder'`,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    recordingFunctions: {
+      name: 'Output - Recording',
+      description: 'Start / Stop / Toggle Recording',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Output Function',
+          id: 'functionID',
+          default: 'StartRecording',
+          choices: [
             { id: 'StartRecording', label: 'Start Recording' },
             { id: 'StopRecording', label: 'Stop Recording' },
-            { id: 'StartStopStreaming', label: 'Start / Stop Stream' },
+            { id: 'StartStopRecording', label: 'Toggle Recording' },
+          ],
+          expressionDescription: `Valid Values: 'StartRecording', 'StopRecording', 'StartStopRecording'`,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    streamingFunctions: {
+      name: 'Output - Streaming',
+      description: 'Start / Stop / Toggle Streaming',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Output Function',
+          id: 'functionID',
+          default: 'StartStreaming',
+          choices: [
             { id: 'StartStreaming', label: 'Start Stream' },
             { id: 'StopStreaming', label: 'Stop Stream' },
-            { id: 'StartStopExternal', label: 'Start / Stop External' },
-            { id: 'StartExternal', label: 'Start External' },
-            { id: 'StopExternal', label: 'Stop External' },
-            { id: 'Fullscreen', label: 'Fullscreen On / Off' },
-            { id: 'FullscreenOn', label: 'Fullscreen On' },
-            { id: 'FullscreenOff', label: 'Fullscreen Off' },
-            { id: 'FadeToBlack', label: 'Fade To Black' },
+            { id: 'StartStopStreaming', label: 'Toggle Stream' },
           ],
+          expressionDescription: `Valid Values: 'StartStreaming', 'StopStreaming', 'StartStopStreaming'`,
         },
         {
           type: 'dropdown',
@@ -149,28 +165,71 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: Sen
           default: '',
           choices: [
             { id: '', label: 'All' },
-            { id: '0', label: '1' },
-            { id: '1', label: '2' },
-            { id: '2', label: '3' },
-            { id: '3', label: '4' },
-            { id: '4', label: '5' },
+            { id: 1, label: '1' },
+            { id: 2, label: '2' },
+            { id: 3, label: '3' },
+            { id: 4, label: '4' },
+            { id: 5, label: '5' },
           ],
-          isVisible: (options) => {
-            const functionID = options.functionID + ''
-            return functionID.includes('Streaming')
-          },
+          expressionDescription: `Valid Values: 1 to 5, or empty for All`,
         },
       ],
       callback: async (action) => {
         let command = `FUNCTION ${action.options.functionID}`
 
-        if (action.options.functionID.includes('Streaming') && action.options.value != '') {
+        if (action.options.value != '') {
           command += ` value=${action.options.value}`
         }
 
         if (instance.tcp) return instance.tcp.sendCommand(command)
-        return
       },
+    },
+
+    externalFunctions: {
+      name: 'Output - External',
+      description: 'Start / Stop / Toggle External',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Output Function',
+          id: 'functionID',
+          default: 'StartExternal',
+          choices: [
+            { id: 'StartExternal', label: 'Start External' },
+            { id: 'StopExternal', label: 'Stop External' },
+            { id: 'StartStopExternal', label: 'Toggle External' },
+          ],
+          expressionDescription: `Valid Values: 'StartExternal', 'StopExternal', 'StartStopExternal'`,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    fullscreenFunctions: {
+      name: 'Output - Fullscreen',
+      description: 'Start / Stop / Toggle Fullscreen',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Output Function',
+          id: 'functionID',
+          default: 'FullscreenOn',
+          choices: [
+            { id: 'FullscreenOn', label: 'Fullscreen On' },
+            { id: 'FullscreenOff', label: 'Fullscreen Off' },
+            { id: 'Fullscreen', label: 'Fullscreen Toggle' },
+          ],
+          expressionDescription: `Valid Values: 'FullscreenOn', 'FullscreenOff', 'Fullscreen'`,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    fadeToBlack: {
+      name: 'Output - Fade to Black',
+      description: 'Toggle Fade to Black',
+      options: [],
+      callback: sendBasicCommand,
     },
   }
 }

@@ -1,80 +1,57 @@
-import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import { type EmptyOptions, options } from '../utils'
-import type VMixInstance from '../index'
+import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { SendBasicCommand } from './actions.js'
+import type VMixInstance from '../index.js'
 
-type MixSelectOptions = {
-  mix: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | -2
-  mixVariable: string
+export type UtilActionsSchema = {
+  mixSelect: {
+    options: {
+      mix: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16
+    }
+  }
+  busSelect: {
+    options: {
+      value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
+    }
+  }
 }
 
-type BusSelectOptions = {
-  value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
-}
-
-type ButtonShiftOptions = EmptyOptions
-type MixSelectCallback = ActionCallback<'mixSelect', MixSelectOptions>
-type BusSelectCallback = ActionCallback<'busSelect', BusSelectOptions>
-type ButtonShiftCallback = ActionCallback<'buttonShift', ButtonShiftOptions>
-
-export interface UtilActions {
-  mixSelect: VMixAction<MixSelectCallback>
-  busSelect: VMixAction<BusSelectCallback>
-  buttonShift: VMixAction<ButtonShiftCallback>
-
-  [key: string]: VMixAction<any>
-}
-
-export type UtilCallbacks = MixSelectCallback | BusSelectCallback | ButtonShiftCallback
-
-export const vMixUtilActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): UtilActions => {
+export const getUtilActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<UtilActionsSchema> => {
   return {
     mixSelect: {
       name: 'Util - Select Mix',
-      description: 'Select a Mix for use with other Companion actions',
+      description: 'Select a Mix for use with other Companion actions as the mix_selected variable',
       options: [
         {
           type: 'dropdown',
           label: 'Mix',
           id: 'mix',
-          default: 0,
+          default: 1,
           choices: [
-            { id: 0, label: '1' },
-            { id: 1, label: '2' },
-            { id: 2, label: '3' },
-            { id: 3, label: '4' },
-            { id: 4, label: '5' },
-            { id: 5, label: '6' },
-            { id: 6, label: '7' },
-            { id: 7, label: '8' },
-            { id: 8, label: '9' },
-            { id: 9, label: '10' },
-            { id: 10, label: '11' },
-            { id: 11, label: '12' },
-            { id: 12, label: '13' },
-            { id: 13, label: '14' },
-            { id: 14, label: '15' },
-            { id: 15, label: '16' },
-            { id: -2, label: 'Variable' },
+            { id: 1, label: '1' },
+            { id: 2, label: '2' },
+            { id: 3, label: '3' },
+            { id: 4, label: '4' },
+            { id: 5, label: '5' },
+            { id: 6, label: '6' },
+            { id: 7, label: '7' },
+            { id: 8, label: '8' },
+            { id: 9, label: '9' },
+            { id: 10, label: '10' },
+            { id: 11, label: '11' },
+            { id: 12, label: '12' },
+            { id: 13, label: '13' },
+            { id: 14, label: '14' },
+            { id: 15, label: '15' },
+            { id: 16, label: '16' },
           ],
+          expressionDescription: `Valid Values: 1 to 16`,
         },
-        options.mixVariable,
       ],
-      callback: async (action, context) => {
-        const mix = action.options.mix
+      callback: async (action) => {
+        const mix = (action.options.mix - 1) as typeof instance.routingData.mix
 
-        if (mix === -2) {
-          const mixVariable = parseInt((await instance.parseOption(action.options.mixVariable, context))[instance.buttonShift.state], 10)
-          if (isNaN(mixVariable) || mixVariable < 1 || mixVariable > 16) {
-            instance.log('warn', 'Mix must be an integer between 1 and 16 inclusive')
-            return
-          }
-
-          instance.routingData.mix = (mixVariable - 1) as 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15
-          instance.variables?.set({ mix_selected: mixVariable })
-        } else {
-          instance.routingData.mix = mix
-          instance.variables?.set({ mix_selected: action.options.mix + 1 })
-        }
+        instance.routingData.mix = mix
+        instance.variables?.set({ mix_selected: action.options.mix + 1 })
 
         instance.variables?.updateVariables()
         instance.checkFeedbacks('mixSelect', 'inputPreview', 'inputLive')
@@ -91,49 +68,13 @@ export const vMixUtilActions = (instance: VMixInstance, _sendBasicCommand: SendB
           id: 'value',
           default: 'Master',
           choices: ['Master', 'A', 'B', 'C', 'D', 'E', 'F', 'G'].map((id) => ({ id, label: id })),
+          expressionDescription: `Valid Values: 'Master', 'A', 'B', 'C', 'D', 'E', 'F', 'G'`,
         },
       ],
       callback: (action) => {
         instance.routingData.bus = action.options.value
         instance.variables?.updateVariables()
         instance.checkFeedbacks('busSelect', 'busMute', 'busSolo', 'busSendToMaster', 'busVolumeMeter', 'inputBusRouting', 'liveBusVolume')
-      },
-    },
-
-    buttonShift: {
-      name: 'Util - Toggle Shift',
-      description: 'Toggles the current Shift state within this Companion vMix instance',
-      options: [],
-      callback: () => {
-        instance.buttonShift.state = instance.buttonShift.state === 0 ? 1 : 0
-
-        const feedbacks = [
-          'buttonText',
-          'buttonShift',
-          'inputPreview',
-          'inputLive',
-          'overlayStatus',
-          'videoTimer',
-          'inputAudio',
-          'inputAudioAuto',
-          'inputVolumeMeter',
-          'inputSolo',
-          'inputBusRouting',
-          'liveInputVolume',
-          'inputVolumeLevel',
-          'inputLoop',
-          'videoCallAudioSource',
-          'videoCallVideoSource',
-          'inputSelectedIndex',
-          'inputSelectedIndexBoolean',
-          'selectedDestinationInput',
-          'selectedDestinationLayer',
-          'routableMultiviewLayer',
-          'inputOnMultiview',
-          'inputState',
-        ]
-
-        instance.checkFeedbacks(...feedbacks)
       },
     },
   }

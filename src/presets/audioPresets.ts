@@ -1,25 +1,18 @@
-import { combineRgb } from '@companion-module/base'
-import type { VMixPresetArray } from './presets'
+import type { CompanionPresetDefinitions, CompanionPresetSection, CompanionPresetGroup } from '@companion-module/base'
+import { type VMixInstanceTypes } from '../utils.js'
 
-export const getAudioPresets = (): VMixPresetArray => {
-  const busses: ('A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G')[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+const busses: ('A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G')[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
-  const audioPresets: VMixPresetArray = [
-    {
-      category: `Audio`,
-      name: 'Input Audio',
-      type: 'text',
-      text: 'Example presets here use input 1, but the action/feedback support referencing an input by Name, Number, or GUID, and also supports parsing Variables',
-    },
-    {
-      category: 'Audio',
+export const getAudioDefinitions = (): CompanionPresetDefinitions<VMixInstanceTypes> => {
+  const audioPresets: CompanionPresetDefinitions<VMixInstanceTypes> = {
+    audio_audioToggle: {
       name: 'Toggle Audio',
-      type: 'button',
+      type: 'simple',
       style: {
         text: 'Toggle Audio',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -34,8 +27,8 @@ export const getAudioPresets = (): VMixPresetArray => {
             input: '1',
           },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0),
+            color: 0x000000,
+            bgcolor: 0xff0000,
           },
         },
         {
@@ -44,25 +37,25 @@ export const getAudioPresets = (): VMixPresetArray => {
             input: '1',
             colorTxt: false,
             colorBG: false,
-            colorBase: combineRgb(255, 255, 255),
-            color: combineRgb(255, 0, 0),
-            color1: combineRgb(255, 255, 0),
-            color6: combineRgb(0, 255, 0),
-            color18: combineRgb(0, 192, 0),
-            color36: combineRgb(0, 128, 0),
+            colorBase: 0xffffff,
+            color: 0xff0000,
+            color1: 0xffff00,
+            color6: 0x00ff00,
+            color18: 0x00c000,
+            color36: 0x008000,
           },
         },
       ],
     },
-    {
-      category: 'Audio',
+
+    audio_audioOn: {
       name: 'Set Audio On',
-      type: 'button',
+      type: 'simple',
       style: {
         text: 'Set Audio On',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -77,8 +70,8 @@ export const getAudioPresets = (): VMixPresetArray => {
             input: '1',
           },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0),
+            color: 0x000000,
+            bgcolor: 0xff0000,
           },
         },
         {
@@ -87,25 +80,25 @@ export const getAudioPresets = (): VMixPresetArray => {
             input: '1',
             colorTxt: false,
             colorBG: false,
-            colorBase: combineRgb(255, 255, 255),
-            color: combineRgb(255, 0, 0),
-            color1: combineRgb(255, 255, 0),
-            color6: combineRgb(0, 255, 0),
-            color18: combineRgb(0, 192, 0),
-            color36: combineRgb(0, 128, 0),
+            colorBase: 0xffffff,
+            color: 0xff0000,
+            color1: 0xffff00,
+            color6: 0x00ff00,
+            color18: 0x00c000,
+            color36: 0x008000,
           },
         },
       ],
     },
-    {
-      category: 'Audio',
+
+    audio_audioOff: {
       name: 'Set Audio Off',
-      type: 'button',
+      type: 'simple',
       style: {
         text: 'Set Audio Off',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -120,8 +113,8 @@ export const getAudioPresets = (): VMixPresetArray => {
             input: '1',
           },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0),
+            color: 0x000000,
+            bgcolor: 0xff0000,
           },
         },
         {
@@ -130,25 +123,25 @@ export const getAudioPresets = (): VMixPresetArray => {
             input: '1',
             colorTxt: false,
             colorBG: false,
-            colorBase: combineRgb(255, 255, 255),
-            color: combineRgb(255, 0, 0),
-            color1: combineRgb(255, 255, 0),
-            color6: combineRgb(0, 255, 0),
-            color18: combineRgb(0, 192, 0),
-            color36: combineRgb(0, 128, 0),
+            colorBase: 0xffffff,
+            color: 0xff0000,
+            color1: 0xffff00,
+            color6: 0x00ff00,
+            color18: 0x00c000,
+            color36: 0x008000,
           },
         },
       ],
     },
-    {
-      category: 'Audio',
+
+    audio_AudioAutoToggle: {
       name: 'Audio Auto Toggle',
-      type: 'button',
+      type: 'simple',
       style: {
         text: 'Audio Auto Toggle',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -163,21 +156,21 @@ export const getAudioPresets = (): VMixPresetArray => {
             input: '1',
           },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0),
+            color: 0x000000,
+            bgcolor: 0xff0000,
           },
         },
       ],
     },
-    {
-      category: 'Audio',
+
+    audio_inputSolo: {
       name: 'Input Solo',
-      type: 'button',
+      type: 'simple',
       style: {
         text: 'Input Solo',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -190,21 +183,21 @@ export const getAudioPresets = (): VMixPresetArray => {
           feedbackId: 'inputSolo',
           options: { input: '1' },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0),
+            color: 0x000000,
+            bgcolor: 0xffff00,
           },
         },
       ],
     },
-    {
-      category: 'Audio',
+
+    audio_inputSendToMaster: {
       name: `Send Input to Master`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: 'Send Input to Master',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -217,21 +210,21 @@ export const getAudioPresets = (): VMixPresetArray => {
           feedbackId: 'inputBusRouting',
           options: { input: '1', value: 'Master' },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0),
+            color: 0x000000,
+            bgcolor: 0xffff00,
           },
         },
       ],
     },
-    {
-      category: 'Audio',
+
+    audio_inputSendToBusA: {
       name: `Send Input to Bus A`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: 'Send Input to Bus A',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -244,21 +237,21 @@ export const getAudioPresets = (): VMixPresetArray => {
           feedbackId: 'inputBusRouting',
           options: { input: '1', value: 'A' },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0),
+            color: 0x000000,
+            bgcolor: 0xffff00,
           },
         },
       ],
     },
-    {
-      category: 'Audio',
+
+    audio_inputSendToBusB: {
       name: `Send Input to Bus B`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: 'Send Input to Bus B',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -271,21 +264,21 @@ export const getAudioPresets = (): VMixPresetArray => {
           feedbackId: 'inputBusRouting',
           options: { input: '1', value: 'Master' },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0),
+            color: 0x000000,
+            bgcolor: 0xffff00,
           },
         },
       ],
     },
-    {
-      category: 'Audio',
+
+    audio_inputSendToBusC: {
       name: `Send Input to Bus C`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: 'Send Input to Bus C',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -298,21 +291,21 @@ export const getAudioPresets = (): VMixPresetArray => {
           feedbackId: 'inputBusRouting',
           options: { input: '1', value: 'C' },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0),
+            color: 0x000000,
+            bgcolor: 0xffff00,
           },
         },
       ],
     },
-    {
-      category: 'Audio',
+
+    audio_inputSendToBusD: {
       name: `Send Input to Bus D`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: 'Send Input to Bus D',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -325,21 +318,21 @@ export const getAudioPresets = (): VMixPresetArray => {
           feedbackId: 'inputBusRouting',
           options: { input: '1', value: 'D' },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0),
+            color: 0x000000,
+            bgcolor: 0xffff00,
           },
         },
       ],
     },
-    {
-      category: 'Audio',
+
+    audio_inputSendToBusE: {
       name: `Send Input to Bus E`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: 'Send Input to Bus E',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -352,21 +345,21 @@ export const getAudioPresets = (): VMixPresetArray => {
           feedbackId: 'inputBusRouting',
           options: { input: '1', value: 'E' },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0),
+            color: 0x000000,
+            bgcolor: 0xffff00,
           },
         },
       ],
     },
-    {
-      category: 'Audio',
+
+    audio_inputSendToBusF: {
       name: `Send Input to Bus F`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: 'Send Input to Bus F',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -379,21 +372,21 @@ export const getAudioPresets = (): VMixPresetArray => {
           feedbackId: 'inputBusRouting',
           options: { input: '1', value: 'F' },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0),
+            color: 0x000000,
+            bgcolor: 0xffff00,
           },
         },
       ],
     },
-    {
-      category: 'Audio',
+
+    audio_inputSendToBusG: {
       name: `Send Input to Bus G`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: 'Send Input to Bus G',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -406,27 +399,111 @@ export const getAudioPresets = (): VMixPresetArray => {
           feedbackId: 'inputBusRouting',
           options: { input: '1', value: 'G' },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0),
+            color: 0x000000,
+            bgcolor: 0xffff00,
           },
         },
       ],
     },
-    {
-      category: 'Audio',
-      name: 'Input Volume Fade',
-      type: 'text',
-      text: 'Fade the Volume on an Input over a default of 2000ms to a target %',
-    },
-    {
-      category: 'Audio',
+
+    audio_inputVolume0: {
       name: 'Input 1 Vol 0%',
-      type: 'button',
+      type: 'simple',
       style: {
         text: 'Input 1 Vol 0%',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
+      },
+      steps: [
+        {
+          down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: '0', fadeTime: '0' } }],
+          up: [],
+        },
+      ],
+      feedbacks: [],
+    },
+
+    audio_inputVolume25: {
+      name: 'Input 1 Vol 25%',
+      type: 'simple',
+      style: {
+        text: 'Input 1 Vol 25%',
+        size: '14',
+        color: 0xffffff,
+        bgcolor: 0x000000,
+      },
+      steps: [
+        {
+          down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: '25', fadeTime: '0' } }],
+          up: [],
+        },
+      ],
+      feedbacks: [],
+    },
+
+    audio_inputVolume50: {
+      name: 'Input 1 Vol 50%',
+      type: 'simple',
+      style: {
+        text: 'Input 1 Vol 50%',
+        size: '14',
+        color: 0xffffff,
+        bgcolor: 0x000000,
+      },
+      steps: [
+        {
+          down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: '50', fadeTime: '0' } }],
+          up: [],
+        },
+      ],
+      feedbacks: [],
+    },
+
+    audio_inputVolume75: {
+      name: 'Input 1 Vol 75%',
+      type: 'simple',
+      style: {
+        text: 'Input 1 Vol 75%',
+        size: '14',
+        color: 0xffffff,
+        bgcolor: 0x000000,
+      },
+      steps: [
+        {
+          down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: '75', fadeTime: '0' } }],
+          up: [],
+        },
+      ],
+      feedbacks: [],
+    },
+
+    audio_inputVolume100: {
+      name: 'Input 1 Vol 100%',
+      type: 'simple',
+      style: {
+        text: 'Input 1 Vol 100%',
+        size: '14',
+        color: 0xffffff,
+        bgcolor: 0x000000,
+      },
+      steps: [
+        {
+          down: [{ actionId: 'setVolumeFade', options: { input: '1', fadeMin: '100', fadeTime: '0' } }],
+          up: [],
+        },
+      ],
+      feedbacks: [],
+    },
+
+    audio_inputVolumeFade0: {
+      name: 'Fade Input 1 Vol 0%',
+      type: 'simple',
+      style: {
+        text: 'Fade Input 1 Vol 0%',
+        size: '14',
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -436,15 +513,15 @@ export const getAudioPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Audio',
-      name: 'Input 1 Vol 25%',
-      type: 'button',
+
+    audio_inputVolumeFade25: {
+      name: 'Fade Input 1 Vol 25%',
+      type: 'simple',
       style: {
-        text: 'Input 1 Vol 25%',
+        text: 'Fade Input 1 Vol 25%',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -454,15 +531,15 @@ export const getAudioPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Audio',
-      name: 'Input 1 Vol 50%',
-      type: 'button',
+
+    audio_inputVolumeFade50: {
+      name: 'Fade Input 1 Vol 50%',
+      type: 'simple',
       style: {
-        text: 'Input 1 Vol 50%',
+        text: 'Fade Input 1 Vol 50%',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -472,15 +549,15 @@ export const getAudioPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Audio',
-      name: 'Input 1 Vol 75%',
-      type: 'button',
+
+    audio_inputVolumeFade75: {
+      name: 'Fade Input 1 Vol 75%',
+      type: 'simple',
       style: {
-        text: 'Input 1 Vol 75%',
+        text: 'Fade Input 1 Vol 75%',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -490,15 +567,15 @@ export const getAudioPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Audio',
-      name: 'Input 1 Vol 100%',
-      type: 'button',
+
+    audio_inputVolumeFade100: {
+      name: 'Fade Input 1 Vol 100%',
+      type: 'simple',
       style: {
-        text: 'Input 1 Vol 100%',
+        text: 'Fade Input 1 Vol 100%',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -508,24 +585,15 @@ export const getAudioPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-  ]
 
-  audioPresets.push(
-    {
-      category: 'Audio',
-      name: `Bus Master`,
-      type: 'text',
-      text: '',
-    },
-    {
-      category: 'Audio',
+    audio_busMasterMute: {
       name: `Bus Master Mute`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: `Bus Master\nMute`,
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -538,8 +606,8 @@ export const getAudioPresets = (): VMixPresetArray => {
           feedbackId: 'busMute',
           options: { value: 'Master' },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0),
+            color: 0x000000,
+            bgcolor: 0xff0000,
           },
         },
         {
@@ -548,25 +616,25 @@ export const getAudioPresets = (): VMixPresetArray => {
             value: 'Master',
             colorTxt: false,
             colorBG: false,
-            colorBase: combineRgb(255, 255, 255),
-            color: combineRgb(255, 0, 0),
-            color1: combineRgb(255, 255, 0),
-            color6: combineRgb(0, 255, 0),
-            color18: combineRgb(0, 192, 0),
-            color36: combineRgb(0, 128, 0),
+            colorBase: 0xffffff,
+            color: 0xff0000,
+            color1: 0xffff00,
+            color6: 0x00ff00,
+            color18: 0x00c000,
+            color36: 0x008000,
           },
         },
       ],
     },
-    {
-      category: 'Audio',
+
+    audio_busMaster0: {
       name: `Bus Master\n0%`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: `Bus Master\n0%`,
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -576,15 +644,15 @@ export const getAudioPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Audio',
+
+    audio_busMaster25: {
       name: `Bus Master\n25%`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: `Bus Master\n25%`,
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -594,15 +662,15 @@ export const getAudioPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Audio',
+
+    audio_busMaster50: {
       name: `Bus Master\n50%`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: `Bus Master\n50%`,
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -612,15 +680,15 @@ export const getAudioPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Audio',
+
+    audio_busMaster75: {
       name: `Bus Master\n75%`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: `Bus Master\n75%`,
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -630,15 +698,15 @@ export const getAudioPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Audio',
+
+    audio_busMaster100: {
       name: `Bus Master\n100%`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: `Bus Master\n100%`,
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -648,15 +716,15 @@ export const getAudioPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Audio',
+
+    audio_busMasterMeters: {
       name: `Bus Master\nMeters`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: `Bus Master\nMeters`,
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -673,241 +741,332 @@ export const getAudioPresets = (): VMixPresetArray => {
           feedbackId: 'busMute',
           options: { value: 'Master' },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0),
+            color: 0x000000,
+            bgcolor: 0xff0000,
           },
         },
       ],
     },
-  )
+  }
 
   busses.forEach((bus) => {
-    audioPresets.push(
-      {
-        category: 'Audio',
-        name: `Bus ${bus}`,
-        type: 'text',
-        text: '',
+    audioPresets[`audio_bus${bus}Mute`] = {
+      name: `Bus ${bus}\nMute`,
+      type: 'simple',
+      style: {
+        text: `Bus ${bus}\nMute`,
+        size: '14',
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
-      {
-        category: 'Audio',
-        name: `Bus ${bus}\nMute`,
-        type: 'button',
-        style: {
-          text: `Bus ${bus}\nMute`,
-          size: '14',
-          color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+      steps: [
+        {
+          down: [{ actionId: 'busXAudio', options: { value: bus, functionID: 'BusXAudio' } }],
+          up: [],
         },
-        steps: [
-          {
-            down: [{ actionId: 'busXAudio', options: { value: bus, functionID: 'BusXAudio' } }],
-            up: [],
+      ],
+      feedbacks: [
+        {
+          feedbackId: 'busMute',
+          options: { value: bus },
+          style: {
+            color: 0x000000,
+            bgcolor: 0xff0000,
           },
-        ],
-        feedbacks: [
-          {
-            feedbackId: 'busMute',
-            options: { value: bus },
-            style: {
-              color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-          {
-            feedbackId: 'liveBusVolume',
-            options: {
-              value: bus,
-              colorTxt: false,
-              colorBG: false,
-              colorBase: combineRgb(255, 255, 255),
-              color: combineRgb(255, 0, 0),
-              color1: combineRgb(255, 255, 0),
-              color6: combineRgb(0, 255, 0),
-              color18: combineRgb(0, 192, 0),
-              color36: combineRgb(0, 128, 0),
-            },
-          },
-        ],
-      },
-      {
-        category: 'Audio',
-        name: `Bus ${bus}\nsolo`,
-        type: 'button',
-        style: {
-          text: `Bus ${bus}\nsolo`,
-          size: '14',
-          color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
         },
-        steps: [
-          {
-            down: [{ actionId: 'busXSolo', options: { value: bus, functionID: 'BusXSolo' } }],
-            up: [],
+        {
+          feedbackId: 'liveBusVolume',
+          options: {
+            value: bus,
+            colorTxt: false,
+            colorBG: false,
+            colorBase: 0xffffff,
+            color: 0xff0000,
+            color1: 0xffff00,
+            color6: 0x00ff00,
+            color18: 0x00c000,
+            color36: 0x008000,
           },
-        ],
+        },
+      ],
+    }
 
-        feedbacks: [
-          {
-            feedbackId: 'busSolo',
-            options: { value: bus },
-            style: {
-              color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 255, 0),
-            },
-          },
-        ],
+    audioPresets[`audio_bus${bus}Solo`] = {
+      name: `Bus ${bus}\nsolo`,
+      type: 'simple',
+      style: {
+        text: `Bus ${bus}\nsolo`,
+        size: '14',
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
-      {
-        category: 'Audio',
-        name: `Bus ${bus}\n0%`,
-        type: 'button',
-        style: {
-          text: `Bus ${bus}\n0%`,
-          size: '14',
-          color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+      steps: [
+        {
+          down: [{ actionId: 'busXSolo', options: { value: bus, functionID: 'BusXSolo' } }],
+          up: [],
         },
-        steps: [
-          {
-            down: [{ actionId: 'setBusVolume', options: { value: bus, adjustment: 'Set', amount: '0' } }],
-            up: [],
+      ],
+
+      feedbacks: [
+        {
+          feedbackId: 'busSolo',
+          options: { value: bus },
+          style: {
+            color: 0x000000,
+            bgcolor: 0xffff00,
           },
-        ],
-        feedbacks: [],
-      },
-      {
-        category: 'Audio',
-        name: `Bus ${bus}\n25%`,
-        type: 'button',
-        style: {
-          text: `Bus ${bus}\n25%`,
-          size: '14',
-          color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
         },
-        steps: [
-          {
-            down: [{ actionId: 'setBusVolume', options: { value: bus, adjustment: 'Set', amount: '25' } }],
-            up: [],
-          },
-        ],
-        feedbacks: [],
+      ],
+    }
+
+    audioPresets[`audio_bus${bus}0`] = {
+      name: `Bus ${bus}\n0%`,
+      type: 'simple',
+      style: {
+        text: `Bus ${bus}\n0%`,
+        size: '14',
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
-      {
-        category: 'Audio',
-        name: `Bus ${bus}\n50%`,
-        type: 'button',
-        style: {
-          text: `Bus ${bus}\n50%`,
-          size: '14',
-          color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+      steps: [
+        {
+          down: [{ actionId: 'setBusVolume', options: { value: bus, adjustment: 'Set', amount: '0' } }],
+          up: [],
         },
-        steps: [
-          {
-            down: [{ actionId: 'setBusVolume', options: { value: bus, adjustment: 'Set', amount: '50' } }],
-            up: [],
-          },
-        ],
-        feedbacks: [],
+      ],
+      feedbacks: [],
+    }
+
+    audioPresets[`audio_bus${bus}25`] = {
+      name: `Bus ${bus}\n25%`,
+      type: 'simple',
+      style: {
+        text: `Bus ${bus}\n25%`,
+        size: '14',
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
-      {
-        category: 'Audio',
-        name: `Bus ${bus}\n75%`,
-        type: 'button',
-        style: {
-          text: `Bus ${bus}\n75%`,
-          size: '14',
-          color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+      steps: [
+        {
+          down: [{ actionId: 'setBusVolume', options: { value: bus, adjustment: 'Set', amount: '25' } }],
+          up: [],
         },
-        steps: [
-          {
-            down: [{ actionId: 'setBusVolume', options: { value: bus, adjustment: 'Set', amount: '75' } }],
-            up: [],
-          },
-        ],
-        feedbacks: [],
+      ],
+      feedbacks: [],
+    }
+
+    audioPresets[`audio_bus${bus}50`] = {
+      name: `Bus ${bus}\n50%`,
+      type: 'simple',
+      style: {
+        text: `Bus ${bus}\n50%`,
+        size: '14',
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
-      {
-        category: 'Audio',
-        name: `Bus ${bus}\n100%`,
-        type: 'button',
-        style: {
-          text: `Bus ${bus}\n100%`,
-          size: '14',
-          color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+      steps: [
+        {
+          down: [{ actionId: 'setBusVolume', options: { value: bus, adjustment: 'Set', amount: '50' } }],
+          up: [],
         },
-        steps: [
-          {
-            down: [{ actionId: 'setBusVolume', options: { value: bus, adjustment: 'Set', amount: '100' } }],
-            up: [],
-          },
-        ],
-        feedbacks: [],
+      ],
+      feedbacks: [],
+    }
+
+    audioPresets[`audio_bus${bus}75`] = {
+      name: `Bus ${bus}\n75%`,
+      type: 'simple',
+      style: {
+        text: `Bus ${bus}\n75%`,
+        size: '14',
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
-      {
-        category: 'Audio',
-        name: `Bus ${bus}\nMeters`,
-        type: 'button',
-        style: {
-          text: `Bus ${bus}\nMeters`,
-          size: '14',
-          color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+      steps: [
+        {
+          down: [{ actionId: 'setBusVolume', options: { value: bus, adjustment: 'Set', amount: '75' } }],
+          up: [],
         },
-        steps: [
-          {
-            down: [{ actionId: 'busXAudio', options: { value: bus, functionID: 'BusXAudio' } }],
-            up: [],
-          },
-        ],
-        feedbacks: [
-          {
-            feedbackId: 'busVolumeMeter',
-            options: { value: bus },
-          },
-          {
-            feedbackId: 'busMute',
-            options: { value: bus },
-            style: {
-              color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(255, 0, 0),
-            },
-          },
-        ],
+      ],
+      feedbacks: [],
+    }
+
+    audioPresets[`audio_bus${bus}100`] = {
+      name: `Bus ${bus}\n100%`,
+      type: 'simple',
+      style: {
+        text: `Bus ${bus}\n100%`,
+        size: '14',
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
-      {
-        category: 'Audio',
-        name: 'Send Bus to Master',
-        type: 'button',
-        style: {
-          text: 'Send Bus to Master',
-          size: '14',
-          color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+      steps: [
+        {
+          down: [{ actionId: 'setBusVolume', options: { value: bus, adjustment: 'Set', amount: '100' } }],
+          up: [],
         },
-        steps: [
-          {
-            down: [{ actionId: 'busXSendToMaster', options: { value: 'A' } }],
-            up: [],
-          },
-        ],
-        feedbacks: [
-          {
-            feedbackId: 'busSendToMaster',
-            options: { value: bus },
-            style: {
-              color: combineRgb(0, 0, 0),
-              bgcolor: combineRgb(0, 255, 0),
-            },
-          },
-        ],
+      ],
+      feedbacks: [],
+    }
+
+    audioPresets[`audio_bus${bus}Meters`] = {
+      name: `Bus ${bus}\nMeters`,
+      type: 'simple',
+      style: {
+        text: `Bus ${bus}\nMeters`,
+        size: '14',
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
-    )
+      steps: [
+        {
+          down: [{ actionId: 'busXAudio', options: { value: bus, functionID: 'BusXAudio' } }],
+          up: [],
+        },
+      ],
+      feedbacks: [
+        {
+          feedbackId: 'busVolumeMeter',
+          options: { value: bus },
+        },
+        {
+          feedbackId: 'busMute',
+          options: { value: bus },
+          style: {
+            color: 0x000000,
+            bgcolor: 0xff0000,
+          },
+        },
+      ],
+    }
+
+    audioPresets[`audio_bus${bus}SendToMaster`] = {
+      name: 'Send Bus to Master',
+      type: 'simple',
+      style: {
+        text: 'Send Bus to Master',
+        size: '14',
+        color: 0xffffff,
+        bgcolor: 0x000000,
+      },
+      steps: [
+        {
+          down: [{ actionId: 'busXSendToMaster', options: { value: 'A' } }],
+          up: [],
+        },
+      ],
+      feedbacks: [
+        {
+          feedbackId: 'busSendToMaster',
+          options: { value: bus },
+          style: {
+            color: 0x000000,
+            bgcolor: 0x00ff00,
+          },
+        },
+      ],
+    }
   })
 
   return audioPresets
+}
+
+export const getAudioStructure = (): CompanionPresetSection<VMixInstanceTypes>[] => {
+  const busGroups: CompanionPresetGroup<VMixInstanceTypes>[] = busses.map((bus) => {
+    return {
+      id: `audioBus${bus}`,
+      type: 'simple',
+      name: `Bus ${bus}`,
+      description: `Bus ${bus} volume level`,
+      presets: [
+        `audio_bus${bus}Mute`,
+        `audio_bus${bus}Solo`,
+        `audio_bus${bus}0`,
+        `audio_bus${bus}25`,
+        `audio_bus${bus}50`,
+        `audio_bus${bus}75`,
+        `audio_bus${bus}100`,
+        `audio_bus${bus}Meters`,
+        `audio_bus${bus}SendToMaster`,
+      ],
+    }
+  })
+
+  const structure: CompanionPresetSection<VMixInstanceTypes>[] = [
+    {
+      id: 'audioBusStructure',
+      name: 'Audio Bus',
+      description: 'Bus presets such as Mute, Solo, Routing, Volume, etc...',
+      definitions: [
+        {
+          id: 'audioBusMaster',
+          type: 'simple',
+          name: 'Bus Master',
+          description: 'Master volume level',
+          presets: ['audio_busMasterMute', 'audio_busMaster0', 'audio_busMaster25', 'audio_busMaster50', 'audio_busMaster75', 'audio_busMaster100', 'audio_busMasterMeters'],
+        },
+        ...busGroups,
+      ],
+    },
+    {
+      id: 'audioInputStructure',
+      name: 'Audio Input',
+      description: '',
+      definitions: [
+        {
+          id: 'audioInputStatePresets',
+          type: 'simple',
+          name: 'Input State',
+          description: 'Mute / Audio Auto / Solo',
+          presets: ['audio_audioToggle', 'audio_audioOn', 'audio_audioOff', 'audio_AudioAutoToggle', 'audio_inputSolo'],
+        },
+        {
+          id: 'audioInputVoluimePresets',
+          type: 'simple',
+          name: 'Input Volume',
+          description: 'Set an inputs volume',
+          presets: ['audio_inputVolume0', 'audio_inputVolume25', 'audio_inputVolume50', 'audio_inputVolume75', 'audio_inputVolume100'],
+        },
+        {
+          id: 'audioInputVolumeFadePresets',
+          type: 'simple',
+          name: 'Input Volume Fade',
+          description: 'Fade an inputs volume over time',
+          presets: ['audio_inputVolumeFade0', 'audio_inputVolumeFade25', 'audio_inputVolumeFade50', 'audio_inputVolumeFade75', 'audio_inputVolumeFade100'],
+        },
+        {
+          id: 'audioInputRoutingPresets',
+          type: 'simple',
+          name: 'Input Routing',
+          description: 'Routing an Input to an Audio Bus',
+          presets: [
+            'audio_inputSendToMaster',
+            'audio_inputSendToBusA',
+            'audio_inputSendToBusB',
+            'audio_inputSendToBusC',
+            'audio_inputSendToBusD',
+            'audio_inputSendToBusE',
+            'audio_inputSendToBusF',
+            'audio_inputSendToBusG',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'audioPresetsStructure',
+      name: 'Audio Presets',
+      description: '',
+      definitions: [
+        {
+          id: 'audioPresets',
+          type: 'simple',
+          name: 'Audio Presets',
+          description: 'Save the current state of vMix Busses and Inputs to',
+          presets: ['audioPreset_save', 'audioPreset_load', 'audioPreset_routing', 'audioPreset_delete'],
+        },
+      ],
+    },
+  ]
+
+  return structure
 }

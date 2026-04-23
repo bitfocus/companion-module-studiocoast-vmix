@@ -1,99 +1,61 @@
-import type { CompanionButtonPresetDefinition, CompanionTextPresetDefinition, CompanionPresetDefinitions } from '@companion-module/base'
-import type VMixInstance from '../index'
-import type { ActionCallbacks } from '../actions/actions'
-import type { FeedbackCallbacks } from '../feedbacks/feedback'
-import { getAudioPresets } from './audioPresets'
-import { getAudioPresetPresets } from './audioPresetPresets'
-import { getButtonShiftPresets } from './buttonShiftPresets'
-import { getCallPresets } from './callPresets'
-import { getGeneralPresets } from './generalPresets'
-import { getLayerPanZoomPresets } from './layerPanZoomPresets'
-import { getListPresets } from './listPresets'
-import { getMixPresets } from './mixPresets'
-import { getMultiviewLayersPresets } from './multiviewLayerPresets'
-import { getOutputPresets } from './outputPresets'
-import { getOverlayPresets } from './overlayPresets'
-import { getPlayListPresets } from './playListPresets'
-import { getReplayPresets } from './replayPresets'
-import { getTitleGraphicsPresets } from './titleGraphicsPresets'
-import { getTransitionPresets } from './transitionPresets'
-import { getVideoPlaybackPresets } from './videoPlaybackPresets'
-import { getVMixFunctionsPresets } from './vMixFunctionsPresets'
+import type { CompanionPresetDefinitions, CompanionPresetSection } from '@companion-module/base'
+import type VMixInstance from '../index.js'
+import { type VMixInstanceTypes } from '../utils.js'
+import { getAudioDefinitions, getAudioStructure } from './audioPresets.js'
+import { getAudioPresetDefinitions, getAudioPresetStructure } from './audioPresetPresets.js'
+import { getCallDefinitions, getCallStructure } from './callPresets.js'
+import { getGeneralDefinitions, getGeneralStructure } from './generalPresets.js'
+import { getLayerPanZoomDefinitions, getLayerPanZoomStructure } from './layerPanZoomPresets.js'
+import { getListDefinitions, getListStructure } from './listPresets.js'
+import { getMixDefinitions, getMixStructure } from './mixPresets.js'
+import { getMultiviewLayersDefinitions, getMultviewLayerStructure } from './multiviewLayerPresets.js'
+import { getOutputDefinitions, getOutputStructure } from './outputPresets.js'
+import { getOverlayDefinitions, getOverlayStructure } from './overlayPresets.js'
+import { getPlayListDefinitions, getPlaylistStructure } from './playListPresets.js'
+import { getReplayDefinitions, getReplayStructure } from './replayPresets.js'
+import { getTitleGraphicsDefinitions, getTitleStructure } from './titleGraphicsPresets.js'
+import { getTransitionDefinitions, getTransitionStructure } from './transitionPresets.js'
+import { getVideoPlaybackDefinitions, getVideoPlaybackStructure } from './videoPlaybackPresets.js'
+import { getFunctionDefinitions, getVMixFunctionsStructure } from './vMixFunctionsPresets.js'
 
-export type PresetCategory =
-  | 'Mix 1'
-  | 'Mix 2'
-  | 'Mix 3'
-  | 'Mix 4'
-  | 'Mix 5'
-  | 'Mix 6'
-  | 'Mix 7'
-  | 'Mix 8'
-  | 'Mix 9'
-  | 'Mix 10'
-  | 'Mix 11'
-  | 'Mix 12'
-  | 'Mix 13'
-  | 'Mix 14'
-  | 'Mix 15'
-  | 'Mix 16'
-  | 'Audio'
-  | 'Audio Presets'
-  | 'vMix Call'
-  | 'Scripting & Commands'
-  | 'MultiView Layers'
-  | 'Layer Pan/Zoom'
-  | 'Outputs'
-  | 'Overlays'
-  | 'PlayList'
-  | 'Replay'
-  | 'Slides & Lists'
-  | 'Titles & Graphics'
-  | 'Transitions'
-  | 'Video Playback'
-  | 'vMix Functions'
-  | 'Button Shift'
+export function getPresetDefinitions(_instance: VMixInstance): CompanionPresetDefinitions<VMixInstanceTypes> {
+  const presets: CompanionPresetDefinitions<VMixInstanceTypes> = {
+    ...getAudioDefinitions(),
+    ...getAudioPresetDefinitions(),
+    ...getCallDefinitions(),
+    ...getGeneralDefinitions(),
+    ...getLayerPanZoomDefinitions(),
+    ...getListDefinitions(),
+    ...getMixDefinitions(),
+    ...getMultiviewLayersDefinitions(),
+    ...getOutputDefinitions(),
+    ...getOverlayDefinitions(),
+    ...getPlayListDefinitions(),
+    ...getReplayDefinitions(),
+    ...getTitleGraphicsDefinitions(),
+    ...getTransitionDefinitions(),
+    ...getVideoPlaybackDefinitions(),
+    ...getFunctionDefinitions(),
+  }
 
-type PresetFeedbackCallbacks = FeedbackCallbacks & { style?: any }
-
-interface VMixButtonPresetAdditions {
-  category: PresetCategory
-  steps: {
-    down: ActionCallbacks[]
-    up: ActionCallbacks[]
-  }[]
-  feedbacks: PresetFeedbackCallbacks[]
+  return presets
 }
 
-interface VMixTextPresetAdditions {
-  category: PresetCategory
-}
-
-export type VMixButtonPreset = CompanionButtonPresetDefinition & VMixButtonPresetAdditions
-export type VMixTextPreset = CompanionTextPresetDefinition & VMixTextPresetAdditions
-export type VMixPreset = VMixButtonPreset | VMixTextPreset
-export type VMixPresetArray = VMixPreset[]
-
-export function getPresets(instance: VMixInstance): CompanionPresetDefinitions {
-  const presets: VMixPresetArray = [
-    ...getAudioPresets(),
-    ...getAudioPresetPresets(),
-    ...getButtonShiftPresets(instance),
-    ...getCallPresets(),
-    ...getGeneralPresets(),
-    ...getLayerPanZoomPresets(),
-    ...getListPresets(),
-    ...getMixPresets(),
-    ...getMultiviewLayersPresets(),
-    ...getOutputPresets(),
-    ...getOverlayPresets(),
-    ...getPlayListPresets(),
-    ...getReplayPresets(),
-    ...getTitleGraphicsPresets(),
-    ...getTransitionPresets(),
-    ...getVideoPlaybackPresets(),
-    ...getVMixFunctionsPresets(),
-  ]
-
-  return presets as unknown as CompanionPresetDefinitions
-}
+export const getPresetStructure: CompanionPresetSection<VMixInstanceTypes>[] = [
+  ...getAudioStructure(),
+  ...getAudioPresetStructure(),
+  ...getCallStructure(),
+  ...getGeneralStructure(),
+  ...getLayerPanZoomStructure(),
+  ...getListStructure(),
+  ...getMixStructure(),
+  ...getMultviewLayerStructure(),
+  ...getOutputStructure(),
+  ...getOverlayStructure(),
+  ...getPlaylistStructure(),
+  ...getReplayStructure(),
+  ...getTitleStructure(),
+  ...getTransitionStructure(),
+  ...getVideoPlaybackStructure(),
+  ...getVMixFunctionsStructure(),
+]

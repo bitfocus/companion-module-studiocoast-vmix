@@ -1,36 +1,32 @@
-import { combineRgb } from '@companion-module/base'
-import type { VMixFeedback, FeedbackCallback } from './feedback'
-import { options } from '../utils'
-import type VMixInstance from '../index'
+import { type CompanionFeedbackDefinitions } from '@companion-module/base'
+import { options } from '../utils.js'
+import type VMixInstance from '../index.js'
 
-type InputStateOptions = {
-  type: 'playing' | 'loop'
-  input: string
+export type PlaybackFeedbacksSchema = {
+  inputState: {
+    type: 'boolean'
+    options: {
+      type: 'playing' | 'loop'
+      input: string
+    }
+  }
+  videoTimer: {
+    type: 'advanced'
+    options: {
+      input: string
+      color: number
+      color30: number
+      color10: number
+      loop: boolean
+    }
+  }
 }
 
-type VideoTimerOptions = {
-  input: string
-  color: number
-  color30: number
-  color10: number
-  loop: boolean
-}
-
-type InputStateCallback = FeedbackCallback<'inputState', InputStateOptions>
-type VideoTimerCallback = FeedbackCallback<'videoTimer', VideoTimerOptions>
-
-export interface MediaFeedbacks {
-  inputState: VMixFeedback<InputStateCallback>
-  videoTimer: VMixFeedback<VideoTimerCallback>
-}
-
-export type MediaCallbacks = InputStateCallback | VideoTimerCallback
-
-export const vMixMediaFeedbacks = (instance: VMixInstance): MediaFeedbacks => {
+export const getPlaybackFeedbacks = (instance: VMixInstance): CompanionFeedbackDefinitions<PlaybackFeedbacksSchema> => {
   return {
     inputState: {
       type: 'boolean',
-      name: 'Media - Input Playing/Loop',
+      name: 'Playback - Input Playing/Loop',
       description: 'Indicates the current Playing or Loop state of an input',
       options: [
         options.input,
@@ -43,14 +39,12 @@ export const vMixMediaFeedbacks = (instance: VMixInstance): MediaFeedbacks => {
             { id: 'playing', label: 'Playing' },
             { id: 'loop', label: 'Loop' },
           ],
+          expressionDescription: `Valid Values: 'playing', 'loop'`,
         },
       ],
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
-      },
-      callback: async (feedback, context) => {
-        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+      defaultStyle: { color: 0x000000, bgcolor: 0xff0000 },
+      callback: async (feedback) => {
+        const inputOption = feedback.options.input
         const input = await instance.data.getInput(inputOption)
 
         if (feedback.options.type === 'playing') {
@@ -63,7 +57,7 @@ export const vMixMediaFeedbacks = (instance: VMixInstance): MediaFeedbacks => {
 
     videoTimer: {
       type: 'advanced',
-      name: 'Media - Video Timer',
+      name: 'Playback - Video Timer',
       description: 'Indicate time remaining on video input',
       options: [
         options.input,
@@ -71,19 +65,19 @@ export const vMixMediaFeedbacks = (instance: VMixInstance): MediaFeedbacks => {
           type: 'colorpicker',
           label: 'Text color',
           id: 'color',
-          default: combineRgb(255, 255, 255),
+          default: 0x0ffffff,
         },
         {
           type: 'colorpicker',
           label: 'Text color under 30s',
           id: 'color30',
-          default: combineRgb(255, 255, 0),
+          default: 0x0ffff00,
         },
         {
           type: 'colorpicker',
           label: 'Text color under 10s',
           id: 'color10',
-          default: combineRgb(255, 0, 0),
+          default: 0xff0000,
         },
         {
           type: 'checkbox',
@@ -92,8 +86,8 @@ export const vMixMediaFeedbacks = (instance: VMixInstance): MediaFeedbacks => {
           default: false,
         },
       ],
-      callback: async (feedback, context) => {
-        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+      callback: async (feedback) => {
+        const inputOption = feedback.options.input
         const input = await instance.data.getInput(inputOption)
 
         if (!input || input.duration === 0) {

@@ -1,60 +1,55 @@
-import type { CompanionVariableDefinition } from '@companion-module/base'
-import type VMixInstance from '../'
-import type { AudioBus } from '../data'
-import { AUDIOBUSSESMASTER, volumeTodB, volumeToLinear } from '../utils'
+import type { CompanionVariableDefinitions } from '@companion-module/base'
+import type VMixInstance from '../index.js'
+import type { AudioBus } from '../data.js'
+import { AUDIOBUSSESMASTER, volumeTodB, volumeToLinear } from '../utils.js'
 
-type VariablesBusIDs =
-  | `bus_selected`
-  | `bus_any_solo`
-  | `bus_${string}_volume`
-  | `bus_${string}_volume_db`
-  | `bus_${string}_volume_linear`
-  | `bus_${string}_meterf${number}`
-  | `bus_${string}_meterf${number}_avg_1s`
-  | `bus_${string}_meterf${number}_avg_3s`
-  | `bus_${string}_meterf${number}_peak_1s`
-  | `bus_${string}_meterf${number}_peak_3s`
-  | `bus_${string}_mute`
-  | `bus_${string}_solo`
-  | `bus_${string}_sendtomaster`
+export type AudioVariablesSchema = {
+  bus_selected: string
+  bus_any_solo: string
+  [key: `bus_${string}_volume`]: string
+  [key: `bus_${string}_volume_db`]: string
+  [key: `bus_${string}_volume_linear`]: string | number
+  [key: `bus_${string}_meterf${number}`]: string
+  [key: `bus_${string}_meterf${number}_avg_1s`]: string
+  [key: `bus_${string}_meterf${number}_avg_3s`]: string
+  [key: `bus_${string}_meterf${number}_peak_1s`]: string
+  [key: `bus_${string}_meterf${number}_peak_3s`]: string
+  [key: `bus_${string}_mute`]: string
+  [key: `bus_${string}_solo`]: string
+  [key: `bus_${string}_sendtomaster`]: string
+}
 
-type VariablesBusValues = Record<VariablesBusIDs, string | number | undefined>
+export const audioDefinitions = (instance: VMixInstance): CompanionVariableDefinitions<AudioVariablesSchema> => {
+  const definitions: CompanionVariableDefinitions<AudioVariablesSchema> = {
+    bus_selected: { name: 'Selected Bus' },
+    bus_any_solo: { name: 'Bus Any Solo' },
+  }
 
-export const audioDefinitions = (instance: VMixInstance): CompanionVariableDefinition[] => {
-  const definitions: CompanionVariableDefinition[] = []
   const busses = [...AUDIOBUSSESMASTER, 'Selected']
-
-  definitions.push({ name: 'Selected Bus', variableId: 'bus_selected' }, { name: 'Bus Any Solo', variableId: 'bus_any_solo' })
 
   if (instance.config.variablesShowAudio) {
     busses.forEach((bus) => {
-      definitions.push(
-        { name: `Bus ${bus} Volume`, variableId: `bus_${bus.toLowerCase()}_volume` },
-        { name: `Bus ${bus} dB`, variableId: `bus_${bus.toLowerCase()}_volume_db` },
-        { name: `Bus ${bus} Volume Linear`, variableId: `bus_${bus.toLowerCase()}_volume_linear` },
-      )
+      definitions[`bus_${bus.toLowerCase()}_volume`] = { name: `Bus ${bus} Volume` }
+      definitions[`bus_${bus.toLowerCase()}_volume_db`] = { name: `Bus ${bus} dB` }
+      definitions[`bus_${bus.toLowerCase()}_volume_linear`] = { name: `Bus ${bus} Volume Linear` }
 
       if (bus !== 'Headphones') {
         for (let i = 1; i < 3; i++) {
           const audioLevelID = bus === 'Master' ? 'master' : `bus${bus}`
           const audioLevel = instance.data.audioLevels.find((level) => level.key === audioLevelID)
           if (audioLevel) {
-            definitions.push(
-              { name: `Bus ${bus} MeterF${i}`, variableId: `bus_${bus.toLowerCase()}_meterf${i}` },
-              { name: `Bus ${bus} MeterF${i} Avg 1s`, variableId: `bus_${bus.toLowerCase()}_meterf${i}_avg_1s` },
-              { name: `Bus ${bus} MeterF${i} Avg 3s`, variableId: `bus_${bus.toLowerCase()}_meterf${i}_avg_3s` },
-              { name: `Bus ${bus} MeterF${i} Peak 1s`, variableId: `bus_${bus.toLowerCase()}_meterf${i}_peak_1s` },
-              { name: `Bus ${bus} MeterF${i} Peak 3s`, variableId: `bus_${bus.toLowerCase()}_meterf${i}_peak_3s` },
-            )
+            definitions[`bus_${bus.toLowerCase()}_meterf${i}`] = { name: `Bus ${bus} MeterF${i}` }
+            definitions[`bus_${bus.toLowerCase()}_meterf${i}_avg_1s`] = { name: `Bus ${bus} MeterF${i} Avg 1s` }
+            definitions[`bus_${bus.toLowerCase()}_meterf${i}_avg_3s`] = { name: `Bus ${bus} MeterF${i} Avg 3s` }
+            definitions[`bus_${bus.toLowerCase()}_meterf${i}_peak_1s`] = { name: `Bus ${bus} MeterF${i} Peak 1s` }
+            definitions[`bus_${bus.toLowerCase()}_meterf${i}_peak_3s`] = { name: `Bus ${bus} MeterF${i} Peak 3s` }
           }
         }
 
         if (bus !== 'Master') {
-          definitions.push(
-            { name: `Bus ${bus} Mute`, variableId: `bus_${bus.toLowerCase()}_mute` },
-            { name: `Bus ${bus} Solo`, variableId: `bus_${bus.toLowerCase()}_solo` },
-            { name: `Bus ${bus} Send to Master`, variableId: `bus_${bus.toLowerCase()}_sendtomaster` },
-          )
+          definitions[`bus_${bus.toLowerCase()}_mute`] = { name: `Bus ${bus} Mute` }
+          definitions[`bus_${bus.toLowerCase()}_solo`] = { name: `Bus ${bus} Solo` }
+          definitions[`bus_${bus.toLowerCase()}_sendtomaster`] = { name: `Bus ${bus} Send to Master` }
         }
       }
     })
@@ -63,8 +58,8 @@ export const audioDefinitions = (instance: VMixInstance): CompanionVariableDefin
   return definitions
 }
 
-export const audioValues = async (instance: VMixInstance): Promise<VariablesBusValues> => {
-  const variables: VariablesBusValues = {
+export const audioValues = async (instance: VMixInstance): Promise<AudioVariablesSchema> => {
+  const variables: AudioVariablesSchema = {
     bus_selected: '',
     bus_any_solo: '',
   }

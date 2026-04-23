@@ -1,44 +1,34 @@
-import { combineRgb } from '@companion-module/base'
-import type { VMixFeedback, FeedbackCallback } from './feedback'
-import type VMixInstance from '../index'
+import { type CompanionFeedbackDefinitions } from '@companion-module/base'
+import type VMixInstance from '../index.js'
 
-type CheckBusSettings = 'busRouting' | 'busVolumes' | 'busMute' | 'busSolo' | 'busFilter'
-type CheckInputSettings = 'inputRouting' | 'inputVolumes' | 'inputMute' | 'inputSolo' | 'inputAudioAuto' | 'inputChannelMixer' | 'inputFilter'
-
-type AudioPresetActiveOptions = {
-  name: string
-  busses: CheckBusSettings[]
-  busFilter: string
-  inputs: CheckInputSettings[]
-  inputFilter: string
+export type AudioPresetFeedbacksSchema = {
+  audioPresetActive: {
+    type: 'boolean'
+    options: {
+      name: string
+      busses: ('busRouting' | 'busVolumes' | 'busMute' | 'busSolo' | 'busFilter')[]
+      busFilter: string
+      inputs: ('inputRouting' | 'inputVolumes' | 'inputMute' | 'inputSolo' | 'inputAudioAuto' | 'inputChannelMixer' | 'inputFilter')[]
+      inputFilter: string
+    }
+  }
 }
 
-type AudioPresetActiveCallback = FeedbackCallback<'audioPresetActive', AudioPresetActiveOptions>
-
-export interface AudioPresetFeedbacks {
-  audioPresetActive: VMixFeedback<AudioPresetActiveCallback>
-}
-
-export type AudioPresetCallbacks = AudioPresetActiveCallback
-
-export const vMixAudioPresetFeedbacks = (instance: VMixInstance): AudioPresetFeedbacks => {
+export const getAudioPresetFeedbacks = (instance: VMixInstance): CompanionFeedbackDefinitions<AudioPresetFeedbacksSchema> => {
   return {
     audioPresetActive: {
       type: 'boolean',
       name: 'Audio Presets - Preset Active',
       description: 'Indicate if current vMix state matches a preset',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0xff0000 },
       options: [
         {
           type: 'textinput',
           label: 'Audio Preset Name or Variable',
           id: 'name',
           default: '',
-          tooltip: 'This can be the Name of a preset created within this Companion connection, or a variable containing Audio Preset data',
-          useVariables: { local: true },
+          description: 'This can be the Name of a preset created within this Companion connection, or a variable containing Audio Preset data',
+          useVariables: true,
         },
         {
           type: 'multidropdown',
@@ -52,15 +42,16 @@ export const vMixAudioPresetFeedbacks = (instance: VMixInstance): AudioPresetFee
             { id: 'busSolo', label: 'Bus Solo' },
             { id: 'busFilter', label: 'Filter Busses to match' },
           ],
+          disableAutoExpression: true,
         },
         {
           type: 'textinput',
           label: 'List of Busses load, eg M, A, B (leave blank for all)',
           id: 'busFilter',
           default: '',
-          tooltip: 'Comma separated',
+          description: 'Comma separated',
           isVisibleExpression: `includes($(options:busses), 'busFilter')`,
-          useVariables: { local: true },
+          useVariables: true,
         },
         {
           type: 'multidropdown',
@@ -76,15 +67,16 @@ export const vMixAudioPresetFeedbacks = (instance: VMixInstance): AudioPresetFee
             { id: 'inputChannelMixer', label: 'Input Channel Mixer' },
             { id: 'inputFilter', label: 'Filter Busses to match' },
           ],
+          disableAutoExpression: true,
         },
         {
           type: 'textinput',
           label: 'List of inputs to match (leave blank for all)',
           id: 'inputFilter',
           default: '',
-          tooltip: 'Comma separated',
+          description: 'Comma separated',
           isVisibleExpression: `includes($(options:inputs), 'inputFilter')`,
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
       callback: async (feedback) => {

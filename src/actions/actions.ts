@@ -1,199 +1,123 @@
-import type { CompanionActionEvent, SomeCompanionActionInputField, CompanionActionContext } from '@companion-module/base'
-import { type AudioActions, type AudioCallbacks, vMixAudioActions } from './audioActions'
-import { type AudioPresetActions, type AudioPresetCallbacks, vMixAudioPresetActions } from './audioPresetActions'
-import { type BrowserActions, type BrowserCallbacks, vMixBrowserActions } from './browserActions'
-import { type DataSourceActions, type DataSourceCallbacks, vMixDataSourceActions } from './dataSourceActions'
-import { type GeneralActions, type GeneralCallbacks, vMixGeneralActions } from './generalActions'
-import { type InputActions, type InputCallbacks, vMixInputActions } from './inputActions'
-import { type LayerActions, type LayerCallbacks, vMixLayerActions } from './layerActions'
-import { type ListActions, type ListCallbacks, vMixListActions } from './listActions'
-import { type MediaActions, type MediaCallbacks, vMixMediaActions } from './mediaActions'
-import { type OutputActions, type OutputCallbacks, vMixOutputActions } from './outputActions'
-import { type OverlayActions, type OverlayCallbacks, vMixOverlayActions } from './overlayActions'
-import { type PlayListActions, type PlayListCallbacks, vMixPlayListActions } from './playlistActions'
-import { type PTZActions, type PTZCallbacks, vMixPTZActions } from './ptzActions'
-import { type ReplayActions, type ReplayCallbacks, vMixReplayActions } from './replayActions'
-import { type ScriptingActions, type ScriptingCallbacks, vMixScriptingActions } from './scriptingActions'
-import { type TitleActions, type TitleCallbacks, vMixTitleActions } from './titleActions'
-import { type TransitionActions, type TransitionCallbacks, vMixTransitionActions } from './transitionActions'
-import { type UtilActions, type UtilCallbacks, vMixUtilActions } from './utilActions'
-import { type VideoCallActions, type VideoCallCallbacks, vMixVideoCallActions } from './videoCallActions'
-import { type VirtualSetActions, type VirtualSetCallbacks, vMixVirtualSetActions } from './virtualSetActions'
-import { type ZoomActions, type ZoomCallbacks, vMixZoomActions } from './zoomActions'
-import type VMixInstance from '../index'
+import type { CompanionActionEvent, CompanionActionDefinitions } from '@companion-module/base'
+import type VMixInstance from '../index.js'
+import type { AudioActionsSchema } from './audioActions.js'
+import { getAudioActions } from './audioActions.js'
+import type { AudioPresetActionsSchema } from './audioPresetActions.js'
+import { getAudioPresetActions } from './audioPresetActions.js'
+import type { BrowserActionsSchema } from './browserActions.js'
+import { getBrowserActions } from './browserActions.js'
+import type { DataSourceActionsSchema } from './dataSourceActions.js'
+import { getDataSourceActions } from './dataSourceActions.js'
+import type { GeneralActionsSchema } from './generalActions.js'
+import { getGeneralActions } from './generalActions.js'
+import type { InputActionsSchema } from './inputActions.js'
+import { getInputActions } from './inputActions.js'
+import type { LayerActionsSchema } from './layerActions.js'
+import { getLayerActions } from './layerActions.js'
+import type { ListActionsSchema } from './listActions.js'
+import { getListActions } from './listActions.js'
+import type { PlaybackActionsSchema } from './playbackActions.js'
+import { getPlaybackActions } from './playbackActions.js'
+import type { OutputActionsSchema } from './outputActions.js'
+import { getOutputActions } from './outputActions.js'
+import type { OverlayActionsSchema } from './overlayActions.js'
+import { getOverlayActions } from './overlayActions.js'
+import type { PlayListActionsSchema } from './playlistActions.js'
+import { getPlayListActions } from './playlistActions.js'
+import type { PTZActionsSchema } from './ptzActions.js'
+import { getPTZActions } from './ptzActions.js'
+import type { ReplayActionsSchema } from './replayActions.js'
+import { getReplayActions } from './replayActions.js'
+import type { ScriptingActionsSchema } from './scriptingActions.js'
+import { getScriptingActions } from './scriptingActions.js'
+import type { TitleActionsSchema } from './titleActions.js'
+import { getTitleActions } from './titleActions.js'
+import type { TransitionActionsSchema } from './transitionActions.js'
+import { getTransitionActions } from './transitionActions.js'
+import type { UtilActionsSchema } from './utilActions.js'
+import { getUtilActions } from './utilActions.js'
+import type { VideoCallActionsSchema } from './videoCallActions.js'
+import { getVideoCallActions } from './videoCallActions.js'
+import type { VirtualSetActionsSchema } from './virtualSetActions.js'
+import { getVirtualSetActions } from './virtualSetActions.js'
+import type { ZoomActionsSchema } from './zoomActions.js'
+import { getZoomActions } from './zoomActions.js'
 
-type ActionOptionEntry = [string, string | number | boolean]
+export type ActionsSchema = AudioActionsSchema &
+  AudioPresetActionsSchema &
+  BrowserActionsSchema &
+  DataSourceActionsSchema &
+  GeneralActionsSchema &
+  InputActionsSchema &
+  LayerActionsSchema &
+  ListActionsSchema &
+  PlaybackActionsSchema &
+  OutputActionsSchema &
+  OverlayActionsSchema &
+  PlayListActionsSchema &
+  PTZActionsSchema &
+  ReplayActionsSchema &
+  ScriptingActionsSchema &
+  TitleActionsSchema &
+  TransitionActionsSchema &
+  UtilActionsSchema &
+  VideoCallActionsSchema &
+  VirtualSetActionsSchema &
+  ZoomActionsSchema
 
-export type VMixActionKeys = keyof VMixActions
+export type SendBasicCommand = (action: Readonly<CompanionActionEvent>) => Promise<void>
 
-export type VMixActions =
-  | AudioActions
-  | AudioPresetActions
-  | BrowserActions
-  | DataSourceActions
-  | GeneralActions
-  | InputActions
-  | LayerActions
-  | ListActions
-  | MediaActions
-  | OutputActions
-  | OverlayActions
-  | PlayListActions
-  | PTZActions
-  | ReplayActions
-  | ScriptingActions
-  | TitleActions
-  | TransitionActions
-  | UtilActions
-  | VideoCallActions
-  | VirtualSetActions
-  | ZoomActions
-
-export type ActionCallbacks =
-  | AudioCallbacks
-  | AudioPresetCallbacks
-  | BrowserCallbacks
-  | DataSourceCallbacks
-  | GeneralCallbacks
-  | InputCallbacks
-  | LayerCallbacks
-  | ListCallbacks
-  | MediaCallbacks
-  | OutputCallbacks
-  | OverlayCallbacks
-  | PlayListCallbacks
-  | PTZCallbacks
-  | ReplayCallbacks
-  | ScriptingCallbacks
-  | TitleCallbacks
-  | TransitionCallbacks
-  | UtilCallbacks
-  | VideoCallCallbacks
-  | VirtualSetCallbacks
-  | ZoomCallbacks
-
-// Force options to have a default to prevent sending undefined values
-type InputFieldWithDefault = Exclude<SomeCompanionActionInputField, 'default'> & {
-  default: string | number | boolean | null | (string | number | boolean | null)[]
-}
-
-export interface ActionCallback<A, O> {
-  actionId: A
-  options: Readonly<O>
-}
-
-// Actions specific to vMix
-export interface VMixAction<T> {
-  name: string
-  description?: string
-  options: InputFieldWithDefault[]
-  callback: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>, context: CompanionActionContext) => void | Promise<void>
-  subscribe?: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>) => void
-  unsubscribe?: (action: Readonly<Omit<CompanionActionEvent, 'options' | 'id'> & T>) => void
-}
-
-export type SendBasicCommand = (action: Readonly<ActionCallbacks>, context: CompanionActionContext) => Promise<void>
-
-export function getActions(instance: VMixInstance): VMixActions {
+export function getActions(instance: VMixInstance): CompanionActionDefinitions<ActionsSchema> {
   /**
    * @param action Action callback object
    * @description Sends vMix functions/params from actions that don't require complex logic
    */
-  const sendBasicCommand = async (action: Readonly<ActionCallbacks>, context: CompanionActionContext): Promise<void> => {
-    let functionName: string = action.actionId
+  const sendBasicCommand: SendBasicCommand = async (action) => {
+    if (!instance.tcp) return
+    let functionName = action.actionId
 
-    if ('functionID' in action.options) {
-      functionName = action.options.functionID
+    if (action.options.functionID) {
+      functionName = action.options.functionID as string
     }
 
-    const parseSelectedOptions = (param: ActionOptionEntry | string): ActionOptionEntry | string => {
-      if (param[0] === 'mix' && param[1] === -1) {
-        return ['mix', instance.routingData.mix]
-      } else {
-        return param
-      }
-    }
-
-    // Parse param value based on buttonModifier state
-    const parseButtonShift = (param: ActionOptionEntry): ActionOptionEntry => {
-      if (typeof param[1] === 'string' && param[1].includes(instance.config.shiftDelimiter)) {
-        const paramSplit = param[1].split(instance.config.shiftDelimiter)
-        return [param[0], paramSplit[instance.buttonShift.state]]
-      } else {
-        return param
-      }
-    }
-
-    const parseMix = (value: string): number => {
-      const mix = parseInt(value, 10)
-
-      if (isNaN(mix) || mix < 1) {
-        return 0
-      } else {
-        return mix - 1
-      }
-    }
-
-    let parsedParams: [string, any][] = []
-    const params = Object.entries(action.options)
+    const parsedParams = Object.entries(action.options)
       .filter((param) => param[0] !== 'functionID')
-      .map(parseButtonShift)
-
-    for (const param of params) {
-      if (typeof param[1] === 'string') {
-        if (context) {
-          param[1] = await context.parseVariablesInString(param[1])
-        } else {
-          param[1] = await instance.parseVariablesInString(param[1])
-        }
-
-        if (param[0] === 'mixVariable') param[1] = parseMix(param[1])
-        parsedParams.push(param)
-      } else {
-        parsedParams.push(param)
-      }
-    }
-
-    parsedParams = parsedParams
+      .map((param) => [param[0], typeof param[1] !== 'string' ? JSON.stringify(param[1]) : param[1]])
       .map((param) => {
-        if (param[0] === 'mix' && param[1] === -2) {
-          const mixVariable = parsedParams.find((x) => x[0] === 'mixVariable')
-          param[1] = mixVariable?.[1] ?? param[1]
+        if (param[0] === 'mix' && param[1].toLowerCase() === 'selected') {
+          return ['mix', instance.routingData.mix.toString()]
+        } else {
+          return param
         }
-        return param
       })
       .filter((param) => param[0] !== 'mixVariable')
 
-    const encodedParams = parsedParams
-      .map(parseSelectedOptions)
-      .map((param) => `${param[0]}=${encodeURIComponent(param[1])}`)
-      .join('&')
+    const encodedParams = parsedParams.map((param) => `${param[0]}=${encodeURIComponent(param[1])}`).join('&')
 
-    if (!instance.tcp) return
     return instance.tcp.sendCommand(`FUNCTION ${functionName} ${encodedParams}`)
   }
 
   return {
-    ...vMixAudioActions(instance, sendBasicCommand),
-    ...vMixAudioPresetActions(instance, sendBasicCommand),
-    ...vMixBrowserActions(instance, sendBasicCommand),
-    ...vMixDataSourceActions(instance, sendBasicCommand),
-    ...vMixGeneralActions(instance, sendBasicCommand),
-    ...vMixInputActions(instance, sendBasicCommand),
-    ...vMixLayerActions(instance, sendBasicCommand),
-    ...vMixListActions(instance, sendBasicCommand),
-    ...vMixMediaActions(instance, sendBasicCommand),
-    ...vMixOutputActions(instance, sendBasicCommand),
-    ...vMixOverlayActions(instance, sendBasicCommand),
-    ...vMixPlayListActions(instance, sendBasicCommand),
-    ...vMixPTZActions(instance, sendBasicCommand),
-    ...vMixReplayActions(instance, sendBasicCommand),
-    ...vMixScriptingActions(instance, sendBasicCommand),
-    ...vMixTitleActions(instance, sendBasicCommand),
-    ...vMixTransitionActions(instance, sendBasicCommand),
-    ...vMixUtilActions(instance, sendBasicCommand),
-    ...vMixVideoCallActions(instance, sendBasicCommand),
-    ...vMixVirtualSetActions(instance, sendBasicCommand),
-    ...vMixZoomActions(instance, sendBasicCommand),
+    ...getAudioActions(instance, sendBasicCommand),
+    ...getAudioPresetActions(instance, sendBasicCommand),
+    ...getBrowserActions(instance, sendBasicCommand),
+    ...getDataSourceActions(instance, sendBasicCommand),
+    ...getGeneralActions(instance, sendBasicCommand),
+    ...getInputActions(instance, sendBasicCommand),
+    ...getLayerActions(instance, sendBasicCommand),
+    ...getListActions(instance, sendBasicCommand),
+    ...getPlaybackActions(instance, sendBasicCommand),
+    ...getOutputActions(instance, sendBasicCommand),
+    ...getOverlayActions(instance, sendBasicCommand),
+    ...getPlayListActions(instance, sendBasicCommand),
+    ...getPTZActions(instance, sendBasicCommand),
+    ...getReplayActions(instance, sendBasicCommand),
+    ...getScriptingActions(instance, sendBasicCommand),
+    ...getTitleActions(instance, sendBasicCommand),
+    ...getTransitionActions(instance, sendBasicCommand),
+    ...getUtilActions(instance, sendBasicCommand),
+    ...getVideoCallActions(instance, sendBasicCommand),
+    ...getVirtualSetActions(instance, sendBasicCommand),
+    ...getZoomActions(instance, sendBasicCommand),
   }
 }

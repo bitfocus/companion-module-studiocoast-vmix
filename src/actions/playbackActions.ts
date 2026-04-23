@@ -1,50 +1,43 @@
-import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import { options } from '../utils'
-import type VMixInstance from '../index'
+import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { SendBasicCommand } from './actions.js'
+import { options } from '../utils.js'
+import type VMixInstance from '../index.js'
 
-type VideoActionsOptions = {
-  input: string
-  inputType: boolean
-  functionID: 'Play' | 'Pause' | 'PlayPause' | 'Restart' | 'LoopOn' | 'LoopOff' | 'Loop'
+export type PlaybackActionsSchema = {
+  videoActions: {
+    options: {
+      input: string
+      inputType: boolean
+      functionID: 'Play' | 'Pause' | 'PlayPause' | 'Restart' | 'LoopOn' | 'LoopOff' | 'Loop'
+    }
+  }
+  videoPlayhead: {
+    options: {
+      input: string
+      inputType: boolean
+      adjustment: 'Set' | 'Increase' | 'Decrease'
+      value: number
+    }
+  }
+  videoMark: {
+    options: {
+      input: string
+      inputType: boolean
+      functionID: 'MarkIn' | 'MarkOut' | 'MarkReset' | 'MarkResetIn' | 'MarkResetOut'
+    }
+  }
 }
 
-type VideoPlayheadOptions = {
-  input: string
-  inputType: boolean
-  adjustment: 'Set' | 'Increase' | 'Decrease'
-  value: number
-}
-
-type VideoMarkOptions = {
-  input: string
-  inputType: boolean
-  functionID: 'MarkIn' | 'MarkOut' | 'MarkReset' | 'MarkResetIn' | 'MarkResetOut'
-}
-
-type VideoActionsCallback = ActionCallback<'videoActions', VideoActionsOptions>
-type VideoPlayheadCallback = ActionCallback<'videoPlayhead', VideoPlayheadOptions>
-type VideoMarkCallback = ActionCallback<'videoMark', VideoMarkOptions>
-
-export interface MediaActions {
-  videoActions: VMixAction<VideoActionsCallback>
-  videoPlayhead: VMixAction<VideoPlayheadCallback>
-  videoMark: VMixAction<VideoMarkCallback>
-
-  [key: string]: VMixAction<any>
-}
-
-export type MediaCallbacks = VideoActionsCallback | VideoPlayheadCallback | VideoMarkCallback
-
-export const vMixMediaActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): MediaActions => {
+export const getPlaybackActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<PlaybackActionsSchema> => {
   return {
     videoActions: {
-      name: 'Media - Playback Actions',
-      description: 'Change Playback state/options of an Input',
+      name: 'Playback - Playback Actions',
+      description: 'Play, Pause, Restart, Loop',
       options: [
         options.input,
         {
           type: 'checkbox',
-          label: 'Act on Preview instead of inputs',
+          label: 'Use Preview instead of inputs',
           id: 'inputType',
           default: false,
         },
@@ -62,40 +55,39 @@ export const vMixMediaActions = (instance: VMixInstance, _sendBasicCommand: Send
             { id: 'LoopOff', label: 'Loop Video Off' },
             { id: 'Loop', label: 'Loop Video Toggle' },
           ],
+          expressionDescription: `Valid Values: 'Play', 'Pause', 'PlayPause', 'Restart', 'LoopOn', 'LoopOff', 'Loop'`,
         },
       ],
-      callback: async (action, context) => {
-        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
-
+      callback: async (action) => {
         if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Input=${action.options.inputType ? '0' : encodeURIComponent(input)}`)
+          return instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Input=${action.options.inputType ? '0' : encodeURIComponent(action.options.input)}`)
         }
       },
     },
 
     videoPlayhead: {
-      name: 'Media - Adjust or Set Playhead',
+      name: 'Playback - Adjust or Set Playhead',
       description: 'Change the playhead on an Input',
       options: [
         options.input,
         {
           type: 'checkbox',
-          label: 'Affect Preview instead of inputs',
+          label: 'Use Preview instead of inputs',
           id: 'inputType',
           default: false,
         },
         options.adjustment,
         {
           type: 'number',
-          label: 'value (ms) - vMix will round to the nearest frame',
+          label: 'value in ms - vMix will round to the nearest frame',
           id: 'value',
           default: 0,
           min: 0,
           max: Number.MAX_SAFE_INTEGER,
         },
       ],
-      callback: async (action, context) => {
-        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+      callback: async (action) => {
+        const input = action.options.input
         let text = action.options.value.toString()
 
         // URL Encode plus and equals symbols to perform addition/subtraction on value instead of setting to a value.
@@ -110,13 +102,13 @@ export const vMixMediaActions = (instance: VMixInstance, _sendBasicCommand: Send
     },
 
     videoMark: {
-      name: 'Media - Mark Functions',
+      name: 'Playback - Mark Functions',
       description: 'Mark In and Out points of an input (Not Replay)',
       options: [
         options.input,
         {
           type: 'checkbox',
-          label: 'Affect Preview instead of inputs',
+          label: 'Use Preview instead of inputs',
           id: 'inputType',
           default: false,
         },
@@ -132,10 +124,11 @@ export const vMixMediaActions = (instance: VMixInstance, _sendBasicCommand: Send
             { id: 'MarkResetIn', label: 'Mark Reset In' },
             { id: 'MarkResetOut', label: 'Mark Reset Out' },
           ],
+          disableAutoExpression: true,
         },
       ],
-      callback: async (action, context) => {
-        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+      callback: async (action) => {
+        const input = action.options.input
 
         if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Input=${action.options.inputType ? '0' : encodeURIComponent(input)}`)
       },

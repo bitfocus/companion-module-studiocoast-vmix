@@ -1,23 +1,19 @@
-import { combineRgb } from '@companion-module/base'
-import type { VMixFeedback, FeedbackCallback } from './feedback'
-import type VMixInstance from '../index'
-import { TRANSITIONS } from '../utils'
+import { type CompanionFeedbackDefinitions } from '@companion-module/base'
+import type VMixInstance from '../index.js'
+import { TRANSITIONS } from '../utils.js'
 
-type TransitionOptions = {
-  number: string
-  effect: string
-  duration: string
+export type TransitionFeedbacksSchema = {
+  transition: {
+    type: 'boolean'
+    options: {
+      number: string
+      effect: string
+      duration: string
+    }
+  }
 }
 
-type TransitionCallback = FeedbackCallback<'transition', TransitionOptions>
-
-export interface TransitionFeedbacks {
-  transition: VMixFeedback<TransitionCallback>
-}
-
-export type TransitionCallbacks = TransitionCallback
-
-export const vMixTransitionFeedbacks = (instance: VMixInstance): TransitionFeedbacks => {
+export const getTransitionFeedbacks = (instance: VMixInstance): CompanionFeedbackDefinitions<TransitionFeedbacksSchema> => {
   return {
     transition: {
       type: 'boolean',
@@ -26,10 +22,11 @@ export const vMixTransitionFeedbacks = (instance: VMixInstance): TransitionFeedb
       options: [
         {
           type: 'textinput',
-          label: 'Transition Number (1 to 4)',
+          label: 'Transition Number',
+          description: '1 to 4',
           id: 'number',
           default: '1',
-          useVariables: { local: true },
+          useVariables: true,
         },
         {
           type: 'dropdown',
@@ -37,23 +34,22 @@ export const vMixTransitionFeedbacks = (instance: VMixInstance): TransitionFeedb
           id: 'effect',
           default: 'Cut',
           choices: TRANSITIONS.map((transition) => ({ id: transition, label: transition })),
+          expressionDescription: `Valid Values: ${TRANSITIONS.join(', ')}`,
         },
         {
           type: 'textinput',
           label: 'Transition Duration',
-          tooltip: 'Leave empty for any',
+          description: 'Leave empty for any',
           id: 'duration',
           default: '',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
-      defaultStyle: {
-        bgcolor: combineRgb(255, 0, 0),
-      },
-      callback: async (feedback, context) => {
-        const number = (await instance.parseOption(feedback.options.number, context))[instance.buttonShift.state]
-        const effect = (await instance.parseOption(feedback.options.effect, context))[instance.buttonShift.state]
-        const duration = (await instance.parseOption(feedback.options.duration, context))[instance.buttonShift.state]
+      defaultStyle: { bgcolor: 0xff0000 },
+      callback: async (feedback) => {
+        const number = feedback.options.number
+        const effect = feedback.options.effect
+        const duration = feedback.options.duration
         const transition = instance.data.transitions.find((transition) => transition.number.toString() === number)
 
         if (!transition) return false

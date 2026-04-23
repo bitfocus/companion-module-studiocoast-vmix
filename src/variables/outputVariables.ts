@@ -1,41 +1,38 @@
-import type { CompanionVariableDefinition } from '@companion-module/base'
-import type VMixInstance from '../'
+import type { CompanionVariableDefinitions } from '@companion-module/base'
+import type VMixInstance from '../index.js'
 
-type VariablesOutputIDs =
-  | `fullscreen_${number}_source`
-  | `output_${number}_source`
-  | `output_${number}_ndi`
-  | `output_${number}_omt`
-  | `output_${number}_srt`
-  | `output_${number}_type`
-  | `output_${number}_input_name`
-type VariablesOutputValues = Record<VariablesOutputIDs, string | number | undefined>
+export type OutputVariablesSchema = Partial<{
+  [key: `fullscreen_${number}_source`]: string
+  [key: `output_${number}_source`]: string
+  [key: `output_${number}_ndi`]: string
+  [key: `output_${number}_omt`]: string
+  [key: `output_${number}_srt`]: string
+  [key: `output_${number}_type`]: string
+  [key: `output_${number}_input_name`]: string
+}>
 
-export const outputDefinitions = (instance: VMixInstance): CompanionVariableDefinition[] => {
-  const definitions: CompanionVariableDefinition[] = []
+export const outputDefinitions = (instance: VMixInstance): CompanionVariableDefinitions<OutputVariablesSchema> => {
+  const definitions: CompanionVariableDefinitions<OutputVariablesSchema> = {}
 
   if (!instance.config.variablesShowOutputs) return definitions
 
-  for (let i = 1; i < 3; i++) {
-    definitions.push({ name: 'Fullscreen 1 Source', variableId: 'fullscreen_1_source' }, { name: 'Fullscreen 2 Source', variableId: 'fullscreen_2_source' })
-  }
+  definitions['fullscreen_1_source'] = { name: 'Fullscreen 1 Source' }
+  definitions['fullscreen_2_source'] = { name: 'Fullscreen 2 Source' }
 
   for (let i = 1; i < 5; i++) {
-    definitions.push(
-      { name: `Output ${i} Source`, variableId: `output_${i}_source` },
-      { name: `Output ${i} NDI`, variableId: `output_${i}_ndi` },
-      { name: `Output ${i} OMT`, variableId: `output_${i}_omt` },
-      { name: `Output ${i} SRT`, variableId: `output_${i}_srt` },
-      { name: `Output ${i} Type`, variableId: `output_${i}_type` },
-      { name: `Output ${i} Input Name`, variableId: `output_${i}_input_name` },
-    )
+    definitions[`output_${i}_source`] = { name: `Output ${i} Source` }
+    definitions[`output_${i}_ndi`] = { name: `Output ${i} NDI` }
+    definitions[`output_${i}_omt`] = { name: `Output ${i} OMT` }
+    definitions[`output_${i}_srt`] = { name: `Output ${i} SRT` }
+    definitions[`output_${i}_type`] = { name: `Output ${i} Type` }
+    definitions[`output_${i}_input_name`] = { name: `Output ${i} Input Name` }
   }
 
   return definitions
 }
 
-export const outputValues = async (instance: VMixInstance): Promise<VariablesOutputValues> => {
-  const variables: VariablesOutputValues = {}
+export const outputValues = async (instance: VMixInstance): Promise<OutputVariablesSchema> => {
+  const variables: OutputVariablesSchema = {}
 
   if (!instance.config.variablesShowOutputs) return variables
 

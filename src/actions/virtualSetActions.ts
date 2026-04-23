@@ -1,23 +1,18 @@
-import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import { options } from '../utils'
-import type VMixInstance from '../index'
+import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { SendBasicCommand } from './actions.js'
+import { options } from '../utils.js'
+import type VMixInstance from '../index.js'
 
-type VirtualSetOptions = {
-  input: string
-  value: '1' | '2' | '3' | '4'
+export type VirtualSetActionsSchema = {
+  virtualSet: {
+    options: {
+      input: string
+      value: '1' | '2' | '3' | '4'
+    }
+  }
 }
 
-type VirtualSetCallback = ActionCallback<'virtualSet', VirtualSetOptions>
-
-export interface VirtualSetActions {
-  virtualSet: VMixAction<VirtualSetCallback>
-
-  [key: string]: VMixAction<any>
-}
-
-export type VirtualSetCallbacks = VirtualSetCallback
-
-export const vMixVirtualSetActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): VirtualSetActions => {
+export const getVirtualSetActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<VirtualSetActionsSchema> => {
   return {
     virtualSet: {
       name: 'VirtualSet - Zoom To Selected Preset',
@@ -32,9 +27,8 @@ export const vMixVirtualSetActions = (instance: VMixInstance, _sendBasicCommand:
           choices: ['1', '2', '3', '4'].map((value) => ({ id: value, label: value })),
         },
       ],
-      callback: async (action, context) => {
-        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
-        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SelectIndex Input=${encodeURIComponent(input)}&Value=${action.options.value}`)
+      callback: async (action) => {
+        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SelectIndex Input=${encodeURIComponent(action.options.input)}&Value=${action.options.value}`)
       },
     },
   }

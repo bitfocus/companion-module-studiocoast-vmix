@@ -1,25 +1,19 @@
-import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import type VMixInstance from '../index'
+import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { SendBasicCommand } from './actions.js'
+import type VMixInstance from '../index.js'
 
-type OverlayFunctionsOptions = {
-  type: 'OverlayInput' | 'PreviewOverlayInput' | 'In' | 'Last' | 'Out' | 'Off' | 'Zoom' | 'OverlayInputAllOff'
-  input: string
-  overlay: string
-  mix: number | number[]
-  mixVariable: string
+export type OverlayActionsSchema = {
+  overlayFunctions: {
+    options: {
+      type: 'OverlayInput' | 'PreviewOverlayInput' | 'In' | 'Last' | 'Out' | 'Off' | 'Zoom' | 'OverlayInputAllOff'
+      input: string
+      overlay: string
+      mix: (number | string)[]
+    }
+  }
 }
 
-type OverlayFunctionsCallback = ActionCallback<'overlayFunctions', OverlayFunctionsOptions>
-
-export interface OverlayActions {
-  overlayFunctions: VMixAction<OverlayFunctionsCallback>
-
-  [key: string]: VMixAction<any>
-}
-
-export type OverlayCallbacks = OverlayFunctionsCallback
-
-export const vMixOverlayActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): OverlayActions => {
+export const getOverlayActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<OverlayActionsSchema> => {
   return {
     overlayFunctions: {
       name: 'Overlay - Functions',
@@ -40,89 +34,73 @@ export const vMixOverlayActions = (instance: VMixInstance, _sendBasicCommand: Se
             { id: `Zoom`, label: `Zoom PIP Overlay to/from fullscreen` },
             { id: 'OverlayInputAllOff', label: 'All Overlays Off' },
           ],
+          disableAutoExpression: true,
         },
         {
           type: 'textinput',
           label: 'Input',
+          description: 'Number, Name, or GUID',
           id: 'input',
-          default: '1',
-          tooltip: 'Number, Name, or GUID',
+          default: '',
           isVisibleExpression: `$(options:type) === 'OverlayInput' || $(options:type) === 'PreviewOverlayInput' || $(options:type) === 'In'`,
-          useVariables: { local: true },
+          useVariables: true,
         },
         {
           type: 'textinput',
           label: 'Overlay',
+          description: '1 to 8',
           id: 'overlay',
           default: '1',
-          tooltip: '',
           isVisibleExpression: `$(options:type) !== 'OverlayInputAllOff'`,
-          useVariables: { local: true },
+          useVariables: true,
         },
         {
           type: 'multidropdown',
           label: 'Mix',
           id: 'mix',
-          default: [0],
+          default: [1],
           choices: [
-            { id: 0, label: '1' },
-            { id: 1, label: '2' },
-            { id: 2, label: '3' },
-            { id: 3, label: '4' },
-            { id: 4, label: '5' },
-            { id: 5, label: '6' },
-            { id: 6, label: '7' },
-            { id: 7, label: '8' },
-            { id: 8, label: '9' },
-            { id: 9, label: '10' },
-            { id: 10, label: '11' },
-            { id: 11, label: '12' },
-            { id: 12, label: '13' },
-            { id: 13, label: '14' },
-            { id: 14, label: '15' },
-            { id: 15, label: '16' },
-            { id: -1, label: 'Selected' },
-            { id: -2, label: 'Variable' },
+            { id: 1, label: '1' },
+            { id: 2, label: '2' },
+            { id: 3, label: '3' },
+            { id: 4, label: '4' },
+            { id: 5, label: '5' },
+            { id: 6, label: '6' },
+            { id: 7, label: '7' },
+            { id: 8, label: '8' },
+            { id: 9, label: '9' },
+            { id: 10, label: '10' },
+            { id: 11, label: '11' },
+            { id: 12, label: '12' },
+            { id: 13, label: '13' },
+            { id: 14, label: '14' },
+            { id: 15, label: '15' },
+            { id: 16, label: '16' },
           ],
           isVisibleExpression: `$(options:type) !== 'OverlayInputAllOff' && $(options:type) !== 'Off' && $(options:type) !== 'Out' && $(options:type) !== 'Zoom' && $(options:type) !== 'PreviewOverlayInput'`,
-        },
-        {
-          type: 'textinput',
-          label: 'Mix Variable',
-          id: 'mixVariable',
-          default: '1',
-          tooltip: '',
-          isVisibleExpression: `($(options:type) == 'OverlayInput' || $(options:type) == 'In' ||  $(options:type) == 'Last') &&  arrayIncludes($(options:mix), -2)`,
-          useVariables: { local: true },
+          expressionDescription: `Valid Values: An array of numbers 1 to 16, eg [1, 3, 5]`,
         },
       ],
-      callback: async (action, context) => {
-        const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
-        let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable, context))[instance.buttonShift.state]
-        mixVariable = parseInt(mixVariable, 10) - 1
+      callback: async (action) => {
+        const input = action.options.input
+        const overlayID: string | number = action.options.overlay
 
-        let mixArray: number[] = []
-        Array.isArray(action.options.mix) ? mixArray.push(...action.options.mix) : mixArray.push(action.options.mix)
-
-        mixArray = mixArray.map((mix) => {
-          if (mix === -1) return instance.routingData.mix
-          if (mix === -2) return mixVariable
-          return mix
+        const mix = action.options.mix.map((x) => {
+          if (x === 'Selected') return instance.routingData.mix
+          return (x as number) - 1
         })
-
-        const overlayID: string | number = (await instance.parseOption(action.options.overlay, context))[instance.buttonShift.state]
 
         if (instance.tcp) {
           if (action.options.type === 'OverlayInput') {
-            return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID} Input=${input}&Mix=${mixArray.join(',')}`)
+            return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID} Input=${input}&Mix=${mix.join(',')}`)
           } else if (action.options.type === 'PreviewOverlayInput') {
             return instance.tcp.sendCommand(`FUNCTION PreviewOverlayInput${overlayID} Input=${input}`)
           } else if (action.options.type === 'OverlayInputAllOff') {
             return instance.tcp.sendCommand(`FUNCTION OverlayInputAllOff`)
           } else if (action.options.type === 'In') {
-            return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type} Input=${input}&Mix=${mixArray.join(',')}`)
+            return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type} Input=${input}&Mix=${mix.join(',')}`)
           } else if (action.options.type === 'Last') {
-            return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type} Mix=${mixArray.join(',')}`)
+            return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type} Mix=${mix.join(',')}`)
           } else {
             return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type}`)
           }

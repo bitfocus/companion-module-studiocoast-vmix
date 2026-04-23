@@ -1,6 +1,6 @@
-import { combineRgb } from '@companion-module/base'
+import type { CompanionPresetDefinitions, CompanionPresetGroup, CompanionPresetSection } from '@companion-module/base'
+import { type VMixInstanceTypes } from '../utils.js'
 import { graphics } from 'companion-module-utils'
-import type { VMixPresetArray } from './presets'
 
 const panPNG64 = {
   topLeft:
@@ -23,35 +23,72 @@ const panPNG64 = {
     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA6CAYAAADhu0ooAAABhWlDQ1BJQ0MgcHJvZmlsZQAAKJF9kb9Lw0AcxV9TRZGqQwuKOASsTnZREcdSxSJYKG2FVh1MLv0FTRqSFBdHwbXg4I/FqoOLs64OroIg+APEP0CcFF2kxO8lhRYxHhz34d29x907QGhUmGp2RQFVs4xUPCZmc6tizysEBDGAIYxJzNQT6cUMPMfXPXx8vYvwLO9zf45+JW8ywCcSR5luWMQbxLObls55nzjESpJCfE48adAFiR+5Lrv8xrnosMAzQ0YmNU8cIhaLHSx3MCsZKvEMcVhRNcoXsi4rnLc4q5Uaa92TvzCQ11bSXKc5ijiWkEASImTUUEYFFiK0aqSYSNF+zMM/4viT5JLJVQYjxwKqUCE5fvA/+N2tWZiecpMCMaD7xbY/xoGeXaBZt+3vY9tungD+Z+BKa/urDWDuk/R6WwsfAYPbwMV1W5P3gMsdYPhJlwzJkfw0hUIBeD+jb8oBwVugb83trbWP0wcgQ10t3wAHh8BEkbLXPd7d29nbv2da/f0AqxtyvXVwF8gAAAAGYktHRAAAAAAAAPlDu38AAAAJcEhZcwAALiMAAC4jAXilP3YAAAAHdElNRQfqAhMOIims+coTAAAAGXRFWHRDb21tZW50AENyZWF0ZWQgd2l0aCBHSU1QV4EOFwAAAENJREFUaN7t0bENACAMA8GE/Xc2NXUokLibwC9XAQAAAAAAAADAbf3qsCQZhXUfbeuXR4UKFSpUqFChQoUKFSoUYG4D988EIA7E220AAAAASUVORK5CYII=',
 }
 
-export const getLayerPanZoomPresets = (): VMixPresetArray => {
-  const layerPanZoomPresets: VMixPresetArray = [
-    {
-      category: 'Layer Pan/Zoom',
-      name: 'Example of Layer Pan / Zoom',
-      type: 'text',
-      text: 'vMix 27 added the ability for Pan / Zoom layer actions, this makes it ideal to use an input as a layer on another, zoom/pan to sections, and then merge between the original input and the one with the zoomed layer',
-    },
-    {
-      category: 'Layer Pan/Zoom',
-      name: '',
-      type: 'text',
-      text: 'More complex usage can be done by using a Custom Variables, allowing for controlling multiple inputs/layers/zoom levels with a limited number of buttons,',
-    },
-    {
-      category: 'Layer Pan/Zoom',
-      name: 'Zoom',
-      type: 'text',
-      text: 'Adjust the zoom of Layer 1 on Input 1',
-    },
-    {
-      category: 'Layer Pan/Zoom',
+const zoomLevels = [25, 50, 75, 100, 150, 200, 400]
+
+const arrowTopLeft = graphics.toPNG64({
+  image: graphics.icon({ width: 50, height: 50, type: 'directionUpLeft' }),
+  width: 50,
+  height: 50,
+})
+
+const arrowTopCenter = graphics.toPNG64({
+  image: graphics.icon({ width: 50, height: 50, type: 'directionUp' }),
+  width: 50,
+  height: 50,
+})
+
+const arrowTopRight = graphics.toPNG64({
+  image: graphics.icon({ width: 50, height: 50, type: 'directionUpRight' }),
+  width: 50,
+  height: 50,
+})
+
+const arrowMiddleLeft = graphics.toPNG64({
+  image: graphics.icon({ width: 50, height: 50, type: 'directionLeft' }),
+  width: 50,
+  height: 50,
+})
+
+const arrowMiddleCenter = graphics.toPNG64({
+  image: graphics.icon({ width: 50, height: 50, type: 'record' }),
+  width: 50,
+  height: 50,
+})
+
+const arrowMiddleRight = graphics.toPNG64({
+  image: graphics.icon({ width: 50, height: 50, type: 'directionRight' }),
+  width: 50,
+  height: 50,
+})
+
+const arrowBottomLeft = graphics.toPNG64({
+  image: graphics.icon({ width: 50, height: 50, type: 'directionDownLeft' }),
+  width: 50,
+  height: 50,
+})
+
+const arrowBottomCenter = graphics.toPNG64({
+  image: graphics.icon({ width: 50, height: 50, type: 'directionDown' }),
+  width: 50,
+  height: 50,
+})
+
+const arrowBottomRight = graphics.toPNG64({
+  image: graphics.icon({ width: 50, height: 50, type: 'directionDownRight' }),
+  width: 50,
+  height: 50,
+})
+
+export const getLayerPanZoomDefinitions = (): CompanionPresetDefinitions<VMixInstanceTypes> => {
+  const layerPanZoomDefinitions: CompanionPresetDefinitions<VMixInstanceTypes> = {
+    layer_zoomPlus: {
       name: `Zoom +`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: `Zoom +`,
         size: '18',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -78,15 +115,15 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Layer Pan/Zoom',
+
+    layer_zoomMinus: {
       name: `Zoom -`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: `Zoom -`,
         size: '18',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -113,110 +150,15 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-  ]
 
-  ;[25, 50, 75, 100, 150, 200, 400].forEach((zoom) => {
-    const value = zoom / 100
-
-    layerPanZoomPresets.push({
-      category: 'Layer Pan/Zoom',
-      name: `Zoom ${zoom}%`,
-      type: 'button',
-      style: {
-        text: `Zoom ${zoom}%`,
-        size: '18',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
-      },
-      steps: [
-        {
-          down: [
-            {
-              actionId: 'setLayerPosition',
-              options: {
-                setting: 'Zoom',
-                input: '1',
-                layer: '1',
-                adjustment: 'Set',
-                crop: '',
-                crop2: '',
-                pan: '',
-                xy: '',
-                heightWidth: '',
-                rectangle: '',
-                zoom: value.toString(),
-              },
-            },
-          ],
-          up: [],
-        },
-      ],
-      feedbacks: [],
-    })
-  })
-
-  const arrowTopLeft = graphics.toPNG64({
-    image: graphics.icon({ width: 50, height: 50, type: 'directionUpLeft' }),
-    width: 50,
-    height: 50,
-  })
-  const arrowTopCenter = graphics.toPNG64({
-    image: graphics.icon({ width: 50, height: 50, type: 'directionUp' }),
-    width: 50,
-    height: 50,
-  })
-  const arrowTopRight = graphics.toPNG64({
-    image: graphics.icon({ width: 50, height: 50, type: 'directionUpRight' }),
-    width: 50,
-    height: 50,
-  })
-  const arrowMiddleLeft = graphics.toPNG64({
-    image: graphics.icon({ width: 50, height: 50, type: 'directionLeft' }),
-    width: 50,
-    height: 50,
-  })
-  const arrowMiddleCenter = graphics.toPNG64({
-    image: graphics.icon({ width: 50, height: 50, type: 'record' }),
-    width: 50,
-    height: 50,
-  })
-  const arrowMiddleRight = graphics.toPNG64({
-    image: graphics.icon({ width: 50, height: 50, type: 'directionRight' }),
-    width: 50,
-    height: 50,
-  })
-  const arrowBottomLeft = graphics.toPNG64({
-    image: graphics.icon({ width: 50, height: 50, type: 'directionDownLeft' }),
-    width: 50,
-    height: 50,
-  })
-  const arrowBottomCenter = graphics.toPNG64({
-    image: graphics.icon({ width: 50, height: 50, type: 'directionDown' }),
-    width: 50,
-    height: 50,
-  })
-  const arrowBottomRight = graphics.toPNG64({
-    image: graphics.icon({ width: 50, height: 50, type: 'directionDownRight' }),
-    width: 50,
-    height: 50,
-  })
-
-  layerPanZoomPresets.push(
-    {
-      category: 'Layer Pan/Zoom',
-      name: 'Pan Adjust',
-      type: 'text',
-      text: 'Progressive panning on each button press',
-    },
-    {
-      category: 'Layer Pan/Zoom',
+    layer_arrowUpLeft: {
       name: `Up Left`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: '',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
         png64: arrowTopLeft,
         pngalignment: 'center:center',
       },
@@ -261,15 +203,15 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Layer Pan/Zoom',
+
+    layer_arrowUp: {
       name: `Up`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: '',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
         png64: arrowTopCenter,
         pngalignment: 'center:center',
       },
@@ -298,15 +240,15 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Layer Pan/Zoom',
+
+    layer_arrowUpRight: {
       name: `Top Right`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: '',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
         png64: arrowTopRight,
         pngalignment: 'center:center',
       },
@@ -351,21 +293,15 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Layer Pan/Zoom',
-      name: '',
-      type: 'text',
-      text: '',
-    },
-    {
-      category: 'Layer Pan/Zoom',
+
+    layer_arrowLeft: {
       name: `Left`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: '',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
         png64: arrowMiddleLeft,
         pngalignment: 'center:center',
       },
@@ -394,15 +330,15 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Layer Pan/Zoom',
+
+    layer_arrowCenter: {
       name: `Center`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: '',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
         png64: arrowMiddleCenter,
         pngalignment: 'center:center',
       },
@@ -447,15 +383,15 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Layer Pan/Zoom',
+
+    layer_arrowRight: {
       name: `Right`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: '',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
         png64: arrowMiddleRight,
         pngalignment: 'center:center',
       },
@@ -484,21 +420,15 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Layer Pan/Zoom',
-      name: '',
-      type: 'text',
-      text: '',
-    },
-    {
-      category: 'Layer Pan/Zoom',
+
+    layer_arrowDownleft: {
       name: `Down Left`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: '',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
         png64: arrowBottomLeft,
         pngalignment: 'center:center',
       },
@@ -543,15 +473,15 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Layer Pan/Zoom',
+
+    layer_arrowDown: {
       name: `Down`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: '',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
         png64: arrowBottomCenter,
         pngalignment: 'center:center',
       },
@@ -580,15 +510,15 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Layer Pan/Zoom',
+
+    layer_arrowDownRight: {
       name: `Bottom Right`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: '',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
         png64: arrowBottomRight,
         pngalignment: 'center:center',
       },
@@ -633,24 +563,15 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-  )
 
-  layerPanZoomPresets.push(
-    {
-      category: 'Layer Pan/Zoom',
-      name: 'Pan Set',
-      type: 'text',
-      text: 'Set the Pan to specific positions',
-    },
-    {
-      category: 'Layer Pan/Zoom',
+    layer_panUpLeft: {
       name: `Set Up Left`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: '',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
         png64: panPNG64.topLeft,
       },
       steps: [
@@ -694,15 +615,15 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Layer Pan/Zoom',
+
+    layer_panUp: {
       name: `Set Up`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: '',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
         png64: panPNG64.topCenter,
       },
       steps: [
@@ -746,15 +667,15 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Layer Pan/Zoom',
+
+    layer_panUpRight: {
       name: `Set Up Right`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: '',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
         png64: panPNG64.topRight,
       },
       steps: [
@@ -798,21 +719,15 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Layer Pan/Zoom',
-      name: '',
-      type: 'text',
-      text: '',
-    },
-    {
-      category: 'Layer Pan/Zoom',
+
+    layer_panLeft: {
       name: `Set Left`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: '',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
         png64: panPNG64.middleLeft,
       },
       steps: [
@@ -856,15 +771,15 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Layer Pan/Zoom',
+
+    layer_panCenter: {
       name: `Set Center`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: '',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
         png64: panPNG64.middleCenter,
       },
       steps: [
@@ -908,15 +823,15 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Layer Pan/Zoom',
+
+    layer_panRight: {
       name: `Set Right`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: '',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
         png64: panPNG64.middleRight,
       },
       steps: [
@@ -960,21 +875,15 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Layer Pan/Zoom',
-      name: '',
-      type: 'text',
-      text: '',
-    },
-    {
-      category: 'Layer Pan/Zoom',
-      name: `Set Left`,
-      type: 'button',
+
+    layer_panDownLeft: {
+      name: `Set Bottom Left`,
+      type: 'simple',
       style: {
         text: '',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
         png64: panPNG64.bottomLeft,
       },
       steps: [
@@ -1018,15 +927,15 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Layer Pan/Zoom',
+
+    layer_panDown: {
       name: `Set Bottom Center`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: '',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
         png64: panPNG64.bottomCenter,
       },
       steps: [
@@ -1070,15 +979,15 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'Layer Pan/Zoom',
+
+    layer_panDownRight: {
       name: `Set Bottom Right`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: '',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
         png64: panPNG64.bottomright,
       },
       steps: [
@@ -1122,7 +1031,111 @@ export const getLayerPanZoomPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-  )
+  }
 
-  return layerPanZoomPresets
+  zoomLevels.forEach((zoom) => {
+    const value = zoom / 100
+
+    layerPanZoomDefinitions[`layer_zoom${zoom}`] = {
+      name: `Zoom ${zoom}%`,
+      type: 'simple',
+      style: {
+        text: `Zoom ${zoom}%`,
+        size: '18',
+        color: 0xffffff,
+        bgcolor: 0x000000,
+      },
+      steps: [
+        {
+          down: [
+            {
+              actionId: 'setLayerPosition',
+              options: {
+                setting: 'Zoom',
+                input: '1',
+                layer: '1',
+                adjustment: 'Set',
+                crop: '',
+                crop2: '',
+                pan: '',
+                xy: '',
+                heightWidth: '',
+                rectangle: '',
+                zoom: value.toString(),
+              },
+            },
+          ],
+          up: [],
+        },
+      ],
+      feedbacks: [],
+    }
+  })
+
+  return layerPanZoomDefinitions
+}
+
+export const getLayerPanZoomStructure = (): CompanionPresetSection<VMixInstanceTypes>[] => {
+  const layerZoomGroup: CompanionPresetGroup<VMixInstanceTypes> = {
+    id: 'layerPanZoomZoom',
+    type: 'simple',
+    name: 'Layer Zoom',
+    description: 'Zoom In / Out a Layer',
+    presets: ['layer_zoomPlus', 'layer_zoomMinus'],
+  }
+
+  zoomLevels.forEach((zoom) => {
+    layerZoomGroup.presets.push(`layer_zoom${zoom}`)
+  })
+
+  const structure: CompanionPresetSection<VMixInstanceTypes>[] = [
+    {
+      id: 'layerPanZoomStructure',
+      name: 'Layer Pan / Position / Zoom',
+      description: 'Adjust the Pan, Position, and Zoom, of a Layer on an Input',
+      definitions: [
+        {
+          id: 'layerPanZoomPan1',
+          type: 'simple',
+          name: 'Layer Pan',
+          description: 'Position a Layer on an Input',
+          presets: ['layer_panUpLeft', 'layer_panUp', 'layer_panUpRight'],
+        },
+        {
+          id: 'layerPanZoomPan2',
+          type: 'simple',
+          name: '',
+          presets: ['layer_panLeft', 'layer_panCenter', 'layer_panRight'],
+        },
+        {
+          id: 'layerPanZoomPan3',
+          type: 'simple',
+          name: '',
+          presets: ['layer_panDownLeft', 'layer_panDown', 'layer_panDownRight'],
+        },
+        {
+          id: 'layerPanZoomPosition1',
+          type: 'simple',
+          name: 'Layer Pan',
+          description: 'Position a Layer on an Input',
+          presets: ['layer_arrowUpLeft', 'layer_arrowUp', 'layer_arrowUpRight'],
+        },
+        {
+          id: 'layerPanZoomPosition2',
+          type: 'simple',
+          name: '',
+          presets: ['layer_arrowLeft', 'layer_arrowCenter', 'layer_arrowRight'],
+        },
+        {
+          id: 'layerPanZoomPosition3',
+          type: 'simple',
+          name: '',
+          presets: ['layer_arrowDownleft', 'layer_arrowDown', 'layer_arrowDownRight'],
+        },
+        layerZoomGroup,
+      ],
+    },
+  ]
+
+  return structure
 }
