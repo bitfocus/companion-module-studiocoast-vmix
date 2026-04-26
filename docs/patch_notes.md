@@ -10,6 +10,8 @@
   - Added `Audio Preset` actions to store the current vMix audio states (such as bus routing, volume, etc...) in Companion which when loaded will send the necessary commands to set vMix back to the selected state
 - Feedbacks:
   - Renamed `Media` Feedbacks to `Playback` to better explain their functionality
+- Variables:
+  - Added `input_X_position`, `mix_X_preview_position`, and `mix_X_program_position`, variables giving the current position in ms of an input
 
 **v4.2.0**
 - Added support for vMix 29

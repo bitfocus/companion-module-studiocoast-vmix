@@ -25,6 +25,7 @@ export type MixVariablesSchema = Partial<{
   [key: `mix_${string}_${MixType}_meter${MixMeterTypes}_avg_3s`]: string
   [key: `mix_${string}_${MixType}_meter${MixMeterTypes}_peak_1s`]: string
   [key: `mix_${string}_${MixType}_meter${MixMeterTypes}_peak_3s`]: string
+  [key: `mix_${string}_${MixType}_position`]: string
   [key: `mix_${string}_${MixType}_duration`]: string
   [key: `mix_${string}_${MixType}_remaining`]: string
   [key: `mix_${string}_${MixType}_position_${MixPositionTypes}`]: number | string
@@ -64,6 +65,7 @@ export const mixDefinitions = async (instance: VMixInstance): Promise<CompanionV
       definitions[`mix_${id.toLowerCase()}_${lowercaseType}_mute`] = { name: `Mix ${id} ${type} Mute` }
       definitions[`mix_${id.toLowerCase()}_${lowercaseType}_framedelay`] = { name: `Mix ${id} ${type} Frame Delay` }
       definitions[`mix_${id.toLowerCase()}_${lowercaseType}_duration`] = { name: `Mix ${id} ${type} Duration` }
+      definitions[`mix_${id.toLowerCase()}_${lowercaseType}_position`] = { name: `Mix ${id} ${type} Position` }
       definitions[`mix_${id.toLowerCase()}_${lowercaseType}_remaining`] = { name: `Mix ${id} ${type} Remaining` }
 
       if (instance.config.variablesShowInputVolume) {
@@ -192,6 +194,10 @@ export const mixValues = async (instance: VMixInstance): Promise<MixVariablesSch
       }
 
       const inputRemaining = calcRemaining(input)
+
+			if (input.position !== undefined) {
+				variables[`mix_${id}_${type}_position`] = input.position.toString()
+			}
 
       if (inputRemaining !== null) {
         variables[`mix_${id}_${type}_remaining`] = inputRemaining.ms

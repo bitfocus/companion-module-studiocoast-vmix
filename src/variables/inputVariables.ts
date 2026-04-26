@@ -17,6 +17,7 @@ export type InputVariablesSchema = Partial<{
   [key: `input_${string}_audio`]: string
   [key: `input_${string}_solo`]: string
   [key: `input_${string}_duration`]: string
+  [key: `input_${string}_position`]: string
   [key: `input_${string}_remaining`]: string
   [key: `input_${string}_remaining_ss`]: string
   [key: `input_${string}_remaining_ss.ms`]: string
@@ -135,6 +136,7 @@ export const inputDefinitions = (instance: VMixInstance): CompanionVariableDefin
       }
 
       if (input.position !== undefined) {
+        inputSet.set(`input_${type}_position`, { name: `Input ${title} Position` })
         inputSet.set(`input_${type}_remaining`, { name: `Input ${title} Remaining` })
         inputSet.set(`input_${type}_remaining_ss`, { name: `Input ${title} Remaining ss` })
         inputSet.set(`input_${type}_remaining_ss.ms`, { name: `Input ${title} Remaining ss.ms` })
@@ -366,6 +368,10 @@ export const inputValues = async (instance: VMixInstance): Promise<InputVariable
       }
 
       const inputRemaining = calcRemaining(input)
+
+			if (input.position !== undefined) {
+        variables[`input_${type}_position`] = input.position.toString()
+			}
 
       if (inputRemaining !== null) {
         variables[`input_${type}_remaining`] = inputRemaining.ms
