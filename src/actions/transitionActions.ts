@@ -1,46 +1,34 @@
-import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
 import type { SendBasicCommand } from './actions.js'
 import { type MixOptionEntry, options, TRANSITIONS, parseMix } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type TransitionActionsSchema = {
-  programCut: {
-    options: {
-      input: string
-      mix: MixOptionEntry
-    }
-  }
-  transitionMix: {
-    options: {
-      mix: MixOptionEntry
-      functionID: (typeof TRANSITIONS)[number]
-      duration: string
-      input?: string
-    }
-  }
-  transition: {
-    options: {
-      functionID: `Transition${number}` | `Stinger${number}`
-      mix: MixOptionEntry
-    }
-  }
-  setTransitionEffect: {
-    options: {
-      functionID: 'SetTransitionEffect1' | 'SetTransitionEffect2' | 'SetTransitionEffect3' | 'SetTransitionEffect4'
-      value: (typeof TRANSITIONS)[number]
-    }
-  }
-  setTransitionDuration: {
-    options: {
-      functionID: 'SetTransitionDuration1' | 'SetTransitionDuration2' | 'SetTransitionDuration3' | 'SetTransitionDuration4'
-      value: number
-    }
-  }
-  quickPlay: {
-    options: {
-      input: string
-    }
-  }
+  programCut: CompanionActionSchema<{
+    input: string
+    mix: MixOptionEntry
+  }>
+  transitionMix: CompanionActionSchema<{
+    mix: MixOptionEntry
+    functionID: (typeof TRANSITIONS)[number]
+    duration: string
+    input?: string
+  }>
+  transition: CompanionActionSchema<{
+    functionID: `Transition${number}` | `Stinger${number}`
+    mix: MixOptionEntry
+  }>
+  setTransitionEffect: CompanionActionSchema<{
+    functionID: 'SetTransitionEffect1' | 'SetTransitionEffect2' | 'SetTransitionEffect3' | 'SetTransitionEffect4'
+    value: (typeof TRANSITIONS)[number]
+  }>
+  setTransitionDuration: CompanionActionSchema<{
+    functionID: 'SetTransitionDuration1' | 'SetTransitionDuration2' | 'SetTransitionDuration3' | 'SetTransitionDuration4'
+    value: number
+  }>
+  quickPlay: CompanionActionSchema<{
+    input: string
+  }>
 }
 
 export const getTransitionActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<TransitionActionsSchema> => {

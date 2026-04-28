@@ -1,26 +1,21 @@
+import type { CompanionFeedbackSchema } from '@companion-module/base'
 import { type CompanionFeedbackDefinitions } from '@companion-module/base'
 import { options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type ListFeedbacksSchema = {
-  inputSelectedIndex: {
-    type: 'advanced'
-    options: {
-      input: string
-      selectedIndex: string
-      fg: number
-      bg: number
-      et: number
-      eb: number
-    }
-  }
-  inputSelectedIndexBoolean: {
-    type: 'boolean'
-    options: {
-      input: string
-      selectedIndex: string
-    }
-  }
+  inputSelectedIndex: CompanionFeedbackSchema<{
+    input: string
+    selectedIndex: string
+    fg: number
+    bg: number
+    et: number
+    eb: number
+  }>
+  inputSelectedIndexBoolean: CompanionFeedbackSchema<{
+    input: string
+    selectedIndex: string
+  }>
 }
 
 export const getListFeedbacks = (instance: VMixInstance): CompanionFeedbackDefinitions<ListFeedbacksSchema> => {

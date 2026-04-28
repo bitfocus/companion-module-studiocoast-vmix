@@ -1,20 +1,15 @@
+import type { CompanionFeedbackSchema } from '@companion-module/base'
 import { type CompanionFeedbackDefinitions } from '@companion-module/base'
 import { AUDIOBUSSES } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type UtilFeedbacksSchema = {
-  mixSelect: {
-    type: 'boolean'
-    options: {
-      mix: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16
-    }
-  }
-  busSelect: {
-    type: 'boolean'
-    options: {
-      bus: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
-    }
-  }
+  mixSelect: CompanionFeedbackSchema<{
+    mix: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16
+  }>
+  busSelect: CompanionFeedbackSchema<{
+    bus: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
+  }>
 }
 
 export const getUtilFeedbacks = (instance: VMixInstance): CompanionFeedbackDefinitions<UtilFeedbacksSchema> => {

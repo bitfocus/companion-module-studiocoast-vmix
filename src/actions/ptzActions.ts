@@ -1,41 +1,35 @@
-import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
 import type { SendBasicCommand } from './actions.js'
 import { options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type PTZActionsSchema = {
-  ptzMove: {
-    options: {
-      input: string
-      functionID:
-        | 'PTZHome'
-        | 'PTZMoveStop'
-        | 'PTZMoveUp'
-        | 'PTZMoveUpLeft'
-        | 'PTZMoveUpRight'
-        | 'PTZMoveLeft'
-        | 'PTZMoveRight'
-        | 'PTZMoveDown'
-        | 'PTZMoveDownLeft'
-        | 'PTZMoveDownRight'
-        | 'PTZMoveToVirtualInputPosition'
-        | 'PTZMoveToVirtualInputPositionByIndex'
-      value: string
-    }
-  }
-  ptzFocusZoom: {
-    options: {
-      input: string
-      functionID: 'PTZFocusAuto' | 'PTZFocusFar' | 'PTZFocusManual' | 'PTZFocusNear' | 'PTZFocusStop' | 'PTZZoomIn' | 'PTZZoomOut' | 'PTZZoomStop'
-      value: string
-    }
-  }
-  ptzVirtualInput: {
-    options: {
-      input: string
-      functionID: 'PTZCreateVirtualInput' | 'PTZUpdateVirtualInput'
-    }
-  }
+  ptzMove: CompanionActionSchema<{
+    input: string
+    functionID:
+      | 'PTZHome'
+      | 'PTZMoveStop'
+      | 'PTZMoveUp'
+      | 'PTZMoveUpLeft'
+      | 'PTZMoveUpRight'
+      | 'PTZMoveLeft'
+      | 'PTZMoveRight'
+      | 'PTZMoveDown'
+      | 'PTZMoveDownLeft'
+      | 'PTZMoveDownRight'
+      | 'PTZMoveToVirtualInputPosition'
+      | 'PTZMoveToVirtualInputPositionByIndex'
+    value: string
+  }>
+  ptzFocusZoom: CompanionActionSchema<{
+    input: string
+    functionID: 'PTZFocusAuto' | 'PTZFocusFar' | 'PTZFocusManual' | 'PTZFocusNear' | 'PTZFocusStop' | 'PTZZoomIn' | 'PTZZoomOut' | 'PTZZoomStop'
+    value: string
+  }>
+  ptzVirtualInput: CompanionActionSchema<{
+    input: string
+    functionID: 'PTZCreateVirtualInput' | 'PTZUpdateVirtualInput'
+  }>
 }
 
 export const getPTZActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<PTZActionsSchema> => {

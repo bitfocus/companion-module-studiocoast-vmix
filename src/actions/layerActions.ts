@@ -1,68 +1,52 @@
-import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
 import type { SendBasicCommand } from './actions.js'
 import { type EmptyOptions, type MixOptionEntry, options, valueMinMax } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type LayerActionsSchema = {
-  multiViewOverlay: {
-    options: {
-      functionID: 'MultiViewOverlay' | 'MultiViewOverlayOff' | 'MultiViewOverlayOn'
-      input: string
-      value: string
-    }
-  }
-  setMultiViewOverlay: {
-    options: {
-      input: string
-      layer: number
-      layerInput: string
-    }
-  }
-  setMultiViewOverlayOnPreview: {
-    options: {
-      layer: number
-      layerInput: string
-      mix: MixOptionEntry
-    }
-  }
-  setMultiViewOverlayOnProgram: {
-    options: {
-      layer: number
-      layerInput: string
-      mix: MixOptionEntry
-    }
-  }
-  setMultiViewOverlayDestinationInput: {
-    options: {
-      destinationInput: string
-    }
-  }
-  setMultiViewOverlayDestinationLayer: {
-    options: {
-      destinationLayer: string
-    }
-  }
-  setMultiViewOverlaySourceInput: {
-    options: {
-      sourceIndex: string
-    }
-  }
+  multiViewOverlay: CompanionActionSchema<{
+    functionID: 'MultiViewOverlay' | 'MultiViewOverlayOff' | 'MultiViewOverlayOn'
+    input: string
+    value: string
+  }>
+  setMultiViewOverlay: CompanionActionSchema<{
+    input: string
+    layer: number
+    layerInput: string
+  }>
+  setMultiViewOverlayOnPreview: CompanionActionSchema<{
+    layer: number
+    layerInput: string
+    mix: MixOptionEntry
+  }>
+  setMultiViewOverlayOnProgram: CompanionActionSchema<{
+    layer: number
+    layerInput: string
+    mix: MixOptionEntry
+  }>
+  setMultiViewOverlayDestinationInput: CompanionActionSchema<{
+    destinationInput: string
+  }>
+  setMultiViewOverlayDestinationLayer: CompanionActionSchema<{
+    destinationLayer: string
+  }>
+  setMultiViewOverlaySourceInput: CompanionActionSchema<{
+    sourceIndex: string
+  }>
   clearMultiViewOverlaySelection: EmptyOptions
-  setLayerPosition: {
-    options: {
-      input: string
-      layer: string
-      setting: 'Crop' | 'CropX1' | 'CropX2' | 'CropY1' | 'CropY2' | 'PanX' | 'PanY' | 'X' | 'Y' | 'Height' | 'Width' | 'Rectangle' | 'Zoom'
-      adjustment: 'Set' | 'Increase' | 'Decrease'
-      crop: string
-      crop2: string
-      pan: string
-      xy: string
-      heightWidth: string
-      rectangle: string
-      zoom: string
-    }
-  }
+  setLayerPosition: CompanionActionSchema<{
+    input: string
+    layer: string
+    setting: 'Crop' | 'CropX1' | 'CropX2' | 'CropY1' | 'CropY2' | 'PanX' | 'PanY' | 'X' | 'Y' | 'Height' | 'Width' | 'Rectangle' | 'Zoom'
+    adjustment: 'Set' | 'Increase' | 'Decrease'
+    crop: string
+    crop2: string
+    pan: string
+    xy: string
+    heightWidth: string
+    rectangle: string
+    zoom: string
+  }>
 }
 
 export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<LayerActionsSchema> => {

@@ -1,108 +1,70 @@
+import type { CompanionFeedbackSchema } from '@companion-module/base'
 import { type CompanionFeedbackDefinitions } from '@companion-module/base'
 import { presets } from 'companion-module-utils'
 import { type AudioBusOption, type AudioBusMasterOption, options, volumeToLinear } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type AudioFeedbacksSchema = {
-  busMute: {
-    type: 'boolean'
-    options: {
-      value: AudioBusMasterOption
-    }
-  }
-  busSolo: {
-    type: 'boolean'
-    options: {
-      value: AudioBusOption
-    }
-  }
-  busSendToMaster: {
-    type: 'boolean'
-    options: {
-      value: AudioBusOption
-    }
-  }
-  inputAudio: {
-    type: 'boolean'
-    options: {
-      input: string
-    }
-  }
-  inputAudioAuto: {
-    type: 'boolean'
-    options: {
-      input: string
-    }
-  }
-  inputSolo: {
-    type: 'boolean'
-    options: {
-      input: string
-    }
-  }
-  inputBusRouting: {
-    type: 'boolean'
-    options: {
-      input: string
-      value: AudioBusMasterOption
-    }
-  }
-  liveBusVolume: {
-    type: 'advanced'
-    options: {
-      value: AudioBusMasterOption
-      colorTxt: boolean
-      colorBG: boolean
-      colorBase: number
-      color: number
-      color1: number
-      color6: number
-      color18: number
-      color36: number
-    }
-  }
-  liveInputVolume: {
-    type: 'advanced'
-    options: {
-      input: string
-      colorTxt: boolean
-      colorBG: boolean
-      colorBase: number
-      color: number
-      color1: number
-      color6: number
-      color18: number
-      color36: number
-    }
-  }
-  busVolumeLevel: {
-    type: 'boolean'
-    options: {
-      bus: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'Headphones'
-      comparison: 'eq' | 'lt' | 'lte' | 'gt' | 'gte'
-      value: number
-    }
-  }
-  inputVolumeLevel: {
-    type: 'boolean'
-    options: {
-      input: string
-      comparison: 'eq' | 'lt' | 'lte' | 'gt' | 'gte'
-      value: number
-    }
-  }
-  busVolumeMeter: {
-    type: 'advanced'
-    options: {
-      value: AudioBusMasterOption
-    }
-  }
-  inputVolumeMeter: {
-    type: 'advanced'
-    options: {
-      input: string
-    }
-  }
+  busMute: CompanionFeedbackSchema<{
+    value: AudioBusMasterOption
+  }>
+  busSolo: CompanionFeedbackSchema<{
+    value: AudioBusOption
+  }>
+  busSendToMaster: CompanionFeedbackSchema<{
+    value: AudioBusOption
+  }>
+  inputAudio: CompanionFeedbackSchema<{
+    input: string
+  }>
+  inputAudioAuto: CompanionFeedbackSchema<{
+    input: string
+  }>
+  inputSolo: CompanionFeedbackSchema<{
+    input: string
+  }>
+  inputBusRouting: CompanionFeedbackSchema<{
+    input: string
+    value: AudioBusMasterOption
+  }>
+  liveBusVolume: CompanionFeedbackSchema<{
+    value: AudioBusMasterOption
+    colorTxt: boolean
+    colorBG: boolean
+    colorBase: number
+    color: number
+    color1: number
+    color6: number
+    color18: number
+    color36: number
+  }>
+  liveInputVolume: CompanionFeedbackSchema<{
+    input: string
+    colorTxt: boolean
+    colorBG: boolean
+    colorBase: number
+    color: number
+    color1: number
+    color6: number
+    color18: number
+    color36: number
+  }>
+  busVolumeLevel: CompanionFeedbackSchema<{
+    bus: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'Headphones'
+    comparison: 'eq' | 'lt' | 'lte' | 'gt' | 'gte'
+    value: number
+  }>
+  inputVolumeLevel: CompanionFeedbackSchema<{
+    input: string
+    comparison: 'eq' | 'lt' | 'lte' | 'gt' | 'gte'
+    value: number
+  }>
+  busVolumeMeter: CompanionFeedbackSchema<{
+    value: AudioBusMasterOption
+  }>
+  inputVolumeMeter: CompanionFeedbackSchema<{
+    input: string
+  }>
 }
 
 export const getAudioFeedbacks = (instance: VMixInstance): CompanionFeedbackDefinitions<AudioFeedbacksSchema> => {

@@ -1,17 +1,15 @@
+import type { CompanionFeedbackSchema } from '@companion-module/base'
 import { type CompanionFeedbackDefinitions } from '@companion-module/base'
 import type VMixInstance from '../index.js'
 
 export type AudioPresetFeedbacksSchema = {
-  audioPresetActive: {
-    type: 'boolean'
-    options: {
-      name: string
-      busses: ('busRouting' | 'busVolumes' | 'busMute' | 'busSolo' | 'busFilter')[]
-      busFilter: string
-      inputs: ('inputRouting' | 'inputVolumes' | 'inputMute' | 'inputSolo' | 'inputAudioAuto' | 'inputChannelMixer' | 'inputFilter')[]
-      inputFilter: string
-    }
-  }
+  audioPresetActive: CompanionFeedbackSchema<{
+    name: string
+    busses: ('busRouting' | 'busVolumes' | 'busMute' | 'busSolo' | 'busFilter')[]
+    busFilter: string
+    inputs: ('inputRouting' | 'inputVolumes' | 'inputMute' | 'inputSolo' | 'inputAudioAuto' | 'inputChannelMixer' | 'inputFilter')[]
+    inputFilter: string
+  }>
 }
 
 export const getAudioPresetFeedbacks = (instance: VMixInstance): CompanionFeedbackDefinitions<AudioPresetFeedbacksSchema> => {

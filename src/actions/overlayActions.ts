@@ -1,16 +1,14 @@
-import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
 import type { SendBasicCommand } from './actions.js'
 import type VMixInstance from '../index.js'
 
 export type OverlayActionsSchema = {
-  overlayFunctions: {
-    options: {
-      type: 'OverlayInput' | 'PreviewOverlayInput' | 'In' | 'Last' | 'Out' | 'Off' | 'Zoom' | 'OverlayInputAllOff'
-      input: string
-      overlay: string
-      mix: (number | string)[]
-    }
-  }
+  overlayFunctions: CompanionActionSchema<{
+    type: 'OverlayInput' | 'PreviewOverlayInput' | 'In' | 'Last' | 'Out' | 'Off' | 'Zoom' | 'OverlayInputAllOff'
+    input: string
+    overlay: string
+    mix: (number | string)[]
+  }>
 }
 
 export const getOverlayActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<OverlayActionsSchema> => {

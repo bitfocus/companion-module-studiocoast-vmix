@@ -1,31 +1,25 @@
-import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
 import type { SendBasicCommand } from './actions.js'
 import { options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type PlaybackActionsSchema = {
-  videoActions: {
-    options: {
-      input: string
-      inputType: boolean
-      functionID: 'Play' | 'Pause' | 'PlayPause' | 'Restart' | 'LoopOn' | 'LoopOff' | 'Loop'
-    }
-  }
-  videoPlayhead: {
-    options: {
-      input: string
-      inputType: boolean
-      adjustment: 'Set' | 'Increase' | 'Decrease'
-      value: number
-    }
-  }
-  videoMark: {
-    options: {
-      input: string
-      inputType: boolean
-      functionID: 'MarkIn' | 'MarkOut' | 'MarkReset' | 'MarkResetIn' | 'MarkResetOut'
-    }
-  }
+  videoActions: CompanionActionSchema<{
+    input: string
+    inputType: boolean
+    functionID: 'Play' | 'Pause' | 'PlayPause' | 'Restart' | 'LoopOn' | 'LoopOff' | 'Loop'
+  }>
+  videoPlayhead: CompanionActionSchema<{
+    input: string
+    inputType: boolean
+    adjustment: 'Set' | 'Increase' | 'Decrease'
+    value: number
+  }>
+  videoMark: CompanionActionSchema<{
+    input: string
+    inputType: boolean
+    functionID: 'MarkIn' | 'MarkOut' | 'MarkReset' | 'MarkResetIn' | 'MarkResetOut'
+  }>
 }
 
 export const getPlaybackActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<PlaybackActionsSchema> => {

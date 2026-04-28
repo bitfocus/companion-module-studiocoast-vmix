@@ -1,25 +1,19 @@
-import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
 import type { SendBasicCommand } from './actions.js'
 import type VMixInstance from '../index.js'
 
 export type GeneralActionsSchema = {
-  keyPress: {
-    options: {
-      value: string
-    }
-  }
-  tbar: {
-    options: {
-      value: string
-    }
-  }
-  dynamic: {
-    options: {
-      type: 'Input' | 'Value'
-      number: '1' | '2' | '3' | '4'
-      value: string
-    }
-  }
+  keyPress: CompanionActionSchema<{
+    value: string
+  }>
+  tbar: CompanionActionSchema<{
+    value: string
+  }>
+  dynamic: CompanionActionSchema<{
+    type: 'Input' | 'Value'
+    number: '1' | '2' | '3' | '4'
+    value: string
+  }>
 }
 
 export const getGeneralActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<GeneralActionsSchema> => {

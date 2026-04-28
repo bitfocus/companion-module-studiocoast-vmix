@@ -1,18 +1,14 @@
-import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
 import type { SendBasicCommand } from './actions.js'
 import type VMixInstance from '../index.js'
 
 export type UtilActionsSchema = {
-  mixSelect: {
-    options: {
-      mix: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16
-    }
-  }
-  busSelect: {
-    options: {
-      value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
-    }
-  }
+  mixSelect: CompanionActionSchema<{
+    mix: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16
+  }>
+  busSelect: CompanionActionSchema<{
+    value: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
+  }>
 }
 
 export const getUtilActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<UtilActionsSchema> => {

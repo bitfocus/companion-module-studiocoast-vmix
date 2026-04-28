@@ -1,22 +1,18 @@
-import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
 import type { SendBasicCommand } from './actions.js'
 import { options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type BrowserActionsSchema = {
-  browser: {
-    options: {
-      input: string
-      functionID: 'BrowserReload' | 'BrowserBack' | 'BrowserForward' | 'BrowserKeyboardDisabled' | 'BrowserKeyboardEnabled' | 'BrowserMouseDisabled' | 'BrowserMouseEnabled'
-    }
-  }
-  browserNavigate: {
-    options: {
-      input: string
-      value: string
-      encode: boolean
-    }
-  }
+  browser: CompanionActionSchema<{
+    input: string
+    functionID: 'BrowserReload' | 'BrowserBack' | 'BrowserForward' | 'BrowserKeyboardDisabled' | 'BrowserKeyboardEnabled' | 'BrowserMouseDisabled' | 'BrowserMouseEnabled'
+  }>
+  browserNavigate: CompanionActionSchema<{
+    input: string
+    value: string
+    encode: boolean
+  }>
 }
 
 export const getBrowserActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<BrowserActionsSchema> => {

@@ -1,16 +1,14 @@
+import type { CompanionFeedbackSchema } from '@companion-module/base'
 import { type CompanionFeedbackDefinitions } from '@companion-module/base'
 import type VMixInstance from '../index.js'
 import { TRANSITIONS } from '../utils.js'
 
 export type TransitionFeedbacksSchema = {
-  transition: {
-    type: 'boolean'
-    options: {
-      number: string
-      effect: string
-      duration: string
-    }
-  }
+  transition: CompanionFeedbackSchema<{
+    number: string
+    effect: string
+    duration: string
+  }>
 }
 
 export const getTransitionFeedbacks = (instance: VMixInstance): CompanionFeedbackDefinitions<TransitionFeedbacksSchema> => {

@@ -1,114 +1,78 @@
-import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
 import type { SendBasicCommand } from './actions.js'
 import { type AudioBusOption, type AudioBusMasterOption, type AudioBusMasterHeadphonesOption, type EmptyOptions, options, volumeToLinear } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type AudioActionsSchema = {
-  audioBus: {
-    options: {
-      input: string
-      value: AudioBusMasterOption
-      functionID: 'AudioBus' | 'AudioBusOn' | 'AudioBusOff'
-    }
-  }
-  busXSendToMaster: {
-    options: {
-      value: AudioBusOption
-    }
-  }
-  busXAudio: {
-    options: {
-      value: AudioBusMasterOption
-      functionID: 'BusXAudio' | 'BusXAudioOn' | 'BusXAudioOff'
-    }
-  }
-
-  audio: {
-    options: {
-      input: string
-      functionID: 'Audio' | 'AudioOn' | 'AudioOff'
-    }
-  }
-  audioAuto: {
-    options: {
-      input: string
-      functionID: 'AudioAuto' | 'AudioAutoOn' | 'AudioAutoOff'
-    }
-  }
-
-  busXSolo: {
-    options: {
-      value: AudioBusOption
-      functionID: 'BusXSolo' | 'BusXSoloOn' | 'BusXSoloOff'
-    }
-  }
-
-  solo: {
-    options: {
-      input: string
-      functionID: 'Solo' | 'SoloOn' | 'SoloOff'
-    }
-  }
-  setInputVolume: {
-    options: {
-      input: string
-      adjustment: 'Set' | 'Increase' | 'Decrease'
-      amount: string
-    }
-  }
-  setBusVolumeFade: {
-    options: {
-      value: AudioBusMasterOption
-      fadeVol: string
-      fadeTime: string
-    }
-  }
-
-  setVolumeFade: {
-    options: {
-      fadeMin: string
-      fadeTime: string
-      input: string
-    }
-  }
-
-  setBusVolume: {
-    options: {
-      value: AudioBusMasterHeadphonesOption
-      adjustment: 'Set' | 'Increase' | 'Decrease'
-      amount: string
-    }
-  }
-
-  audioPlugin: {
-    options: {
-      input: string
-      value: number
-      functionID: 'AudioPluginOnOff' | 'AudioPluginOn' | 'AudioPluginOff' | 'AudioPluginShow'
-    }
-  }
-  audioChannelMatrixApplyPreset: {
-    options: {
-      input: string
-      value: string
-    }
-  }
-  setVolumeChannel: {
-    options: {
-      input: string
-      channel: string
-      adjustment: 'Set' | 'Increase' | 'Decrease'
-      amount: string
-    }
-  }
-  setVolumeChannelMixer: {
-    options: {
-      input: string
-      channel: string
-      adjustment: 'Set' | 'Increase' | 'Decrease'
-      amount: string
-    }
-  }
+  audioBus: CompanionActionSchema<{
+    input: string
+    value: AudioBusMasterOption
+    functionID: 'AudioBus' | 'AudioBusOn' | 'AudioBusOff'
+  }>
+  busXSendToMaster: CompanionActionSchema<{
+    value: AudioBusOption
+  }>
+  busXAudio: CompanionActionSchema<{
+    value: AudioBusMasterOption
+    functionID: 'BusXAudio' | 'BusXAudioOn' | 'BusXAudioOff'
+  }>
+  audio: CompanionActionSchema<{
+    input: string
+    functionID: 'Audio' | 'AudioOn' | 'AudioOff'
+  }>
+  audioAuto: CompanionActionSchema<{
+    input: string
+    functionID: 'AudioAuto' | 'AudioAutoOn' | 'AudioAutoOff'
+  }>
+  busXSolo: CompanionActionSchema<{
+    value: AudioBusOption
+    functionID: 'BusXSolo' | 'BusXSoloOn' | 'BusXSoloOff'
+  }>
+  solo: CompanionActionSchema<{
+    input: string
+    functionID: 'Solo' | 'SoloOn' | 'SoloOff'
+  }>
+  setInputVolume: CompanionActionSchema<{
+    input: string
+    adjustment: 'Set' | 'Increase' | 'Decrease'
+    amount: string
+  }>
+  setBusVolumeFade: CompanionActionSchema<{
+    value: AudioBusMasterOption
+    fadeVol: string
+    fadeTime: string
+  }>
+  setVolumeFade: CompanionActionSchema<{
+    fadeMin: string
+    fadeTime: string
+    input: string
+  }>
+  setBusVolume: CompanionActionSchema<{
+    value: AudioBusMasterHeadphonesOption
+    adjustment: 'Set' | 'Increase' | 'Decrease'
+    amount: string
+  }>
+  audioPlugin: CompanionActionSchema<{
+    input: string
+    value: number
+    functionID: 'AudioPluginOnOff' | 'AudioPluginOn' | 'AudioPluginOff' | 'AudioPluginShow'
+  }>
+  audioChannelMatrixApplyPreset: CompanionActionSchema<{
+    input: string
+    value: string
+  }>
+  setVolumeChannel: CompanionActionSchema<{
+    input: string
+    channel: string
+    adjustment: 'Set' | 'Increase' | 'Decrease'
+    amount: string
+  }>
+  setVolumeChannelMixer: CompanionActionSchema<{
+    input: string
+    channel: string
+    adjustment: 'Set' | 'Increase' | 'Decrease'
+    amount: string
+  }>
   soloAllOff: EmptyOptions
   audioMixerShowHide: EmptyOptions
 }

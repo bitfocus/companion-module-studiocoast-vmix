@@ -16,7 +16,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
       },
       steps: [
         {
-          down: [{ actionId: 'transition', options: { functionID: `Transition${i}` as 'Transition1', mix: 1 } }],
+          down: [{ actionId: 'transition', options: { functionID: `Transition${i}`, mix: 1 } }],
           up: [],
         },
       ],
@@ -36,7 +36,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
       },
       steps: [
         {
-          down: [{ actionId: 'transition', options: { functionID: `Stinger${i}` as 'Stinger1', mix: 1 } }],
+          down: [{ actionId: 'transition', options: { functionID: `Stinger${i}`, mix: 1 } }],
           up: [],
         },
       ],

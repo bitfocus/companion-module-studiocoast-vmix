@@ -161,8 +161,8 @@ export const mixValues = async (instance: VMixInstance): Promise<MixVariablesSch
       if (!input) continue
 
       const inputAudio = input.muted === undefined ? false : input.muted
-      variables[`mix_${id}_${type}`] = mix[type as 'preview' | 'program']
-      variables[`mix_${id}_${type}_name`] = await instance.data.getInputTitle(mix[type as 'preview' | 'program'])
+      variables[`mix_${id}_${type}`] = mix[type]
+      variables[`mix_${id}_${type}_name`] = await instance.data.getInputTitle(mix[type])
       variables[`mix_${id}_${type}_full_title`] = input.title
       variables[`mix_${id}_${type}_guid`] = input.key
       variables[`mix_${id}_${type}_playing`] = (input.state === 'Running').toString()
@@ -195,9 +195,9 @@ export const mixValues = async (instance: VMixInstance): Promise<MixVariablesSch
 
       const inputRemaining = calcRemaining(input)
 
-			if (input.position !== undefined) {
-				variables[`mix_${id}_${type}_position`] = input.position.toString()
-			}
+      if (input.position !== undefined) {
+        variables[`mix_${id}_${type}_position`] = input.position.toString()
+      }
 
       if (inputRemaining !== null) {
         variables[`mix_${id}_${type}_remaining`] = inputRemaining.ms

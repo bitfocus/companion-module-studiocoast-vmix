@@ -369,9 +369,9 @@ export const inputValues = async (instance: VMixInstance): Promise<InputVariable
 
       const inputRemaining = calcRemaining(input)
 
-			if (input.position !== undefined) {
+      if (input.position !== undefined) {
         variables[`input_${type}_position`] = input.position.toString()
-			}
+      }
 
       if (inputRemaining !== null) {
         variables[`input_${type}_remaining`] = inputRemaining.ms

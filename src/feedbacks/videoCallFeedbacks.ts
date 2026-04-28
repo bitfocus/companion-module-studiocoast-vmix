@@ -1,22 +1,17 @@
+import type { CompanionFeedbackSchema } from '@companion-module/base'
 import { type CompanionFeedbackDefinitions } from '@companion-module/base'
 import { options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type VideoCallFeedbacksSchema = {
-  videoCallAudioSource: {
-    type: 'boolean'
-    options: {
-      input: string
-      source: 'Master' | 'Headphones' | 'BusA' | 'BusB' | 'BusC' | 'BusD' | 'BusE' | 'BusF' | 'BusG'
-    }
-  }
-  videoCallVideoSource: {
-    type: 'boolean'
-    options: {
-      input: string
-      source: 'Output1' | 'Output2' | 'Output3' | 'Output4' | 'None'
-    }
-  }
+  videoCallAudioSource: CompanionFeedbackSchema<{
+    input: string
+    source: 'Master' | 'Headphones' | 'BusA' | 'BusB' | 'BusC' | 'BusD' | 'BusE' | 'BusF' | 'BusG'
+  }>
+  videoCallVideoSource: CompanionFeedbackSchema<{
+    input: string
+    source: 'Output1' | 'Output2' | 'Output3' | 'Output4' | 'None'
+  }>
 }
 
 export const getVideoCallFeedbacks = (instance: VMixInstance): CompanionFeedbackDefinitions<VideoCallFeedbacksSchema> => {

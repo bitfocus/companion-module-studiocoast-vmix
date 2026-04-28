@@ -58,7 +58,7 @@ export const getReplayDefinitions = (): CompanionPresetDefinitions<VMixInstanceT
           down: [
             {
               actionId: 'replaySelectChannel',
-              options: { functionID: `replaySelectChannel${channel}` as 'replaySelectChannelAB' },
+              options: { functionID: `replaySelectChannel${channel}` },
             },
           ],
           up: [],

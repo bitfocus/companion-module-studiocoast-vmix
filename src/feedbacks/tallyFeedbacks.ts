@@ -1,3 +1,4 @@
+import type { CompanionFeedbackSchema } from '@companion-module/base'
 import { type CompanionFeedbackDefinitions } from '@companion-module/base'
 import { graphics } from 'companion-module-utils'
 import type { Input } from '../data.js'
@@ -5,36 +6,27 @@ import { type MixOptionEntry, options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type TallyFeedbacksSchema = {
-  inputPreview: {
-    type: 'advanced'
-    options: {
-      input: string
-      mix: MixOptionEntry
-      fg: number
-      bg: number
-      tally: TallySelection
-    }
-  }
-  inputLive: {
-    type: 'advanced'
-    options: {
-      input: string
-      mix: MixOptionEntry
-      fg: number
-      bg: number
-      tally: TallySelection
-    }
-  }
-  overlayStatus: {
-    type: 'advanced'
-    options: {
-      input: string
-      overlay: string
-      fg: number
-      bgPreview: number
-      bgProgram: number
-    }
-  }
+  inputPreview: CompanionFeedbackSchema<{
+    input: string
+    mix: MixOptionEntry
+    fg: number
+    bg: number
+    tally: TallySelection
+  }>
+  inputLive: CompanionFeedbackSchema<{
+    input: string
+    mix: MixOptionEntry
+    fg: number
+    bg: number
+    tally: TallySelection
+  }>
+  overlayStatus: CompanionFeedbackSchema<{
+    input: string
+    overlay: string
+    fg: number
+    bgPreview: number
+    bgProgram: number
+  }>
 }
 export type TallySelection = '' | 'border' | 'cornerTL' | 'cornerTR' | 'cornerBL' | 'cornerBR' | 'full'
 

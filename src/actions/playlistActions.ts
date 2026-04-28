@@ -1,18 +1,14 @@
-import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
 import type { SendBasicCommand } from './actions.js'
 import type VMixInstance from '../index.js'
 
 export type PlayListActionsSchema = {
-  playListFunctions: {
-    options: {
-      functionID: 'StartPlayList' | 'StopPlayList' | 'NextPlayListEntry' | 'PreviousPlayListEntry'
-    }
-  }
-  selectPlayList: {
-    options: {
-      value: string
-    }
-  }
+  playListFunctions: CompanionActionSchema<{
+    functionID: 'StartPlayList' | 'StopPlayList' | 'NextPlayListEntry' | 'PreviousPlayListEntry'
+  }>
+  selectPlayList: CompanionActionSchema<{
+    value: string
+  }>
 }
 
 export const getPlayListActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<PlayListActionsSchema> => {

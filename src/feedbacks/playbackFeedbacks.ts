@@ -1,25 +1,20 @@
+import type { CompanionFeedbackSchema } from '@companion-module/base'
 import { type CompanionFeedbackDefinitions } from '@companion-module/base'
 import { options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type PlaybackFeedbacksSchema = {
-  inputState: {
-    type: 'boolean'
-    options: {
-      type: 'playing' | 'loop'
-      input: string
-    }
-  }
-  videoTimer: {
-    type: 'advanced'
-    options: {
-      input: string
-      color: number
-      color30: number
-      color10: number
-      loop: boolean
-    }
-  }
+  inputState: CompanionFeedbackSchema<{
+    type: 'playing' | 'loop'
+    input: string
+  }>
+  videoTimer: CompanionFeedbackSchema<{
+    input: string
+    color: number
+    color30: number
+    color10: number
+    loop: boolean
+  }>
 }
 
 export const getPlaybackFeedbacks = (instance: VMixInstance): CompanionFeedbackDefinitions<PlaybackFeedbacksSchema> => {

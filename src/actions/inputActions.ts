@@ -1,85 +1,69 @@
-import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
 import type { SendBasicCommand } from './actions.js'
 import { type EmptyOptions, type MixOptionEntry, options, valueMinMax } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type InputActionsSchema = {
-  previewInput: {
-    options: {
-      input: string
-      mix: MixOptionEntry
-    }
-  }
+  previewInput: CompanionActionSchema<{
+    input: string
+    mix: MixOptionEntry
+  }>
   previewInputNext: EmptyOptions
   previewInputPrevious: EmptyOptions
-  go: {
-    options: {
-      input: string
-    }
-  }
-  resetInput: {
-    options: {
-      input: string
-    }
-  }
+  go: CompanionActionSchema<{
+    input: string
+  }>
+  resetInput: CompanionActionSchema<{
+    input: string
+  }>
   undo: EmptyOptions
-  inputEffect: {
-    options: {
-      input: string
-      effect: '1' | '2' | '3' | '4'
-      state: '' | 'On' | 'Off'
-    }
-  }
-  inputEffectStrength: {
-    options: {
-      input: string
-      effect: '1' | '2' | '3' | '4'
-      strength: string
-    }
-  }
-  setCC: {
-    options: {
-      input: string
-      setting:
-        | 'SetCCGainR'
-        | 'SetCCGainG'
-        | 'SetCCGainB'
-        | 'SetCCGainRGB'
-        | 'SetCCGainY'
-        | 'SetCCGammaR'
-        | 'SetCCGammaG'
-        | 'SetCCGammaB'
-        | 'SetCCGammaRGB'
-        | 'SetCCGammaY'
-        | 'SetCCHue'
-        | 'SetCCLiftR'
-        | 'SetCCLiftG'
-        | 'SetCCLiftB'
-        | 'SetCCLiftRGB'
-        | 'SetCCLiftY'
-        | 'SetCCSaturation'
-      adjustment: 'Set' | 'Increase' | 'Decrease'
-      gainValue: string
-      otherValue: string
-    }
-  }
-  inputPosition: {
-    options: {
-      input: string
-      setting: 'SetZoom' | 'SetCrop' | 'SetCropX1' | 'SetCropX2' | 'SetCropY1' | 'SetCropY2' | 'SetPanX' | 'SetPanY'
-      adjustment: 'Set' | 'Increase' | 'Decrease'
-      zoomValue: string
-      cropValue: string
-      cropValue2: string
-      panValue: string
-    }
-  }
-  inputFrameDelay: {
-    options: {
-      input: string
-      value: string
-    }
-  }
+  inputEffect: CompanionActionSchema<{
+    input: string
+    effect: '1' | '2' | '3' | '4'
+    state: '' | 'On' | 'Off'
+  }>
+  inputEffectStrength: CompanionActionSchema<{
+    input: string
+    effect: '1' | '2' | '3' | '4'
+    strength: string
+  }>
+  setCC: CompanionActionSchema<{
+    input: string
+    setting:
+      | 'SetCCGainR'
+      | 'SetCCGainG'
+      | 'SetCCGainB'
+      | 'SetCCGainRGB'
+      | 'SetCCGainY'
+      | 'SetCCGammaR'
+      | 'SetCCGammaG'
+      | 'SetCCGammaB'
+      | 'SetCCGammaRGB'
+      | 'SetCCGammaY'
+      | 'SetCCHue'
+      | 'SetCCLiftR'
+      | 'SetCCLiftG'
+      | 'SetCCLiftB'
+      | 'SetCCLiftRGB'
+      | 'SetCCLiftY'
+      | 'SetCCSaturation'
+    adjustment: 'Set' | 'Increase' | 'Decrease'
+    gainValue: string
+    otherValue: string
+  }>
+  inputPosition: CompanionActionSchema<{
+    input: string
+    setting: 'SetZoom' | 'SetCrop' | 'SetCropX1' | 'SetCropX2' | 'SetCropY1' | 'SetCropY2' | 'SetPanX' | 'SetPanY'
+    adjustment: 'Set' | 'Increase' | 'Decrease'
+    zoomValue: string
+    cropValue: string
+    cropValue2: string
+    panValue: string
+  }>
+  inputFrameDelay: CompanionActionSchema<{
+    input: string
+    value: string
+  }>
 }
 
 type ColourCorrectionType = 'hue' | 'saturation' | 'liftG' | 'liftB' | 'liftY' | 'gammaR' | 'gammaG' | 'gammaB' | 'gammaY' | 'gainR' | 'gainG' | 'gainB' | 'gainY'

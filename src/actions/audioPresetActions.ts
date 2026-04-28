@@ -1,35 +1,29 @@
-import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
 import type { SendBasicCommand } from './actions.js'
 import type VMixInstance from '../index.js'
 
 export type AudioPresetActionsSchema = {
-  loadAudioPreset: {
-    options: {
-      name: string
-      busses: ('busRouting' | 'busVolumes' | 'busMute' | 'busSolo' | 'busFilter')[]
-      busFade: string
-      busFilter: string
-      inputs: ('inputRouting' | 'inputVolumes' | 'inputMute' | 'inputSolo' | 'inputAudioAuto' | 'inputChannelMixer' | 'inputFilter')[]
-      inputFade: string
-      inputFilter: string
-      commandDelay: string
-    }
-  }
-  deleteAudioPreset: {
-    options: {
-      name: string
-    }
-  }
-  saveAudioPreset: {
-    options: {
-      name: string
-      overwrite: boolean
-      includeBusses: boolean
-      includeInputs: boolean
-      inputReference: 'title' | 'number' | 'key'
-      filter: string
-    }
-  }
+  loadAudioPreset: CompanionActionSchema<{
+    name: string
+    busses: ('busRouting' | 'busVolumes' | 'busMute' | 'busSolo' | 'busFilter')[]
+    busFade: string
+    busFilter: string
+    inputs: ('inputRouting' | 'inputVolumes' | 'inputMute' | 'inputSolo' | 'inputAudioAuto' | 'inputChannelMixer' | 'inputFilter')[]
+    inputFade: string
+    inputFilter: string
+    commandDelay: string
+  }>
+  deleteAudioPreset: CompanionActionSchema<{
+    name: string
+  }>
+  saveAudioPreset: CompanionActionSchema<{
+    name: string
+    overwrite: boolean
+    includeBusses: boolean
+    includeInputs: boolean
+    inputReference: 'title' | 'number' | 'key'
+    filter: string
+  }>
 }
 
 export const getAudioPresetActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<AudioPresetActionsSchema> => {

@@ -1,115 +1,89 @@
-import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
 import type { SendBasicCommand } from './actions.js'
 import { TITLEANIMATIONPAGE, options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type TitleActionsSchema = {
-  controlCountdown: {
-    options: {
-      functionID: 'StartCountdown' | 'StopCountdown' | 'PauseCountdown'
-      input: string
-      selectedIndex: string
-    }
-  }
-  setCountdown: {
-    options: {
-      value: string
-      input: string
-      selectedIndex: string
-    }
-  }
-  changeCountdown: {
-    options: {
-      value: string
-      input: string
-      selectedIndex: string
-    }
-  }
-  adjustCountdown: {
-    options: {
-      value: string
-      input: string
-      selectedIndex: string
-    }
-  }
-  setText: {
-    options: {
-      input: string
-      selectedIndex: string
-      adjustment: 'Set' | 'Increase' | 'Decrease'
-      value: string
-      encode: boolean
-    }
-  }
-  setTextColor: {
-    options: {
-      input: string
-      selectedIndex: string
-      value: string
-    }
-  }
-  setTextVisible: {
-    options: {
-      input: string
-      selectedIndex: string
-      adjustment: 'Toggle' | 'On' | 'Off'
-    }
-  }
-  setColor: {
-    options: {
-      input: string
-      selectedIndex: string
-      value: string
-    }
-  }
-  setImage: {
-    options: {
-      input: string
-      selectedIndex: string
-      value: string
-      encode: boolean
-    }
-  }
-  setImageVisible: {
-    options: {
-      input: string
-      selectedIndex: string
-      adjustment: 'Toggle' | 'On' | 'Off'
-    }
-  }
-  selectTitlePreset: {
-    options: {
-      input: string
-      value: string
-    }
-  }
-  titlePreset: {
-    options: {
-      input: string
-      functionID: 'NextTitlePreset' | 'PreviousTitlePreset'
-    }
-  }
-  titleBeginAnimation: {
-    options: {
-      input: string
-      value:
-        | 'TransitionIn'
-        | 'TransitionOut'
-        | 'Page1'
-        | 'Page2'
-        | 'Page3'
-        | 'Page4'
-        | 'Page5'
-        | 'Page6'
-        | 'Page7'
-        | 'Page8'
-        | 'Page9'
-        | 'Page10'
-        | 'Continuous'
-        | 'DataChangeIn'
-        | 'DataChangeOut'
-    }
-  }
+  controlCountdown: CompanionActionSchema<{
+    functionID: 'StartCountdown' | 'StopCountdown' | 'PauseCountdown'
+    input: string
+    selectedIndex: string
+  }>
+  setCountdown: CompanionActionSchema<{
+    value: string
+    input: string
+    selectedIndex: string
+  }>
+  changeCountdown: CompanionActionSchema<{
+    value: string
+    input: string
+    selectedIndex: string
+  }>
+  adjustCountdown: CompanionActionSchema<{
+    value: string
+    input: string
+    selectedIndex: string
+  }>
+  setText: CompanionActionSchema<{
+    input: string
+    selectedIndex: string
+    adjustment: 'Set' | 'Increase' | 'Decrease'
+    value: string
+    encode: boolean
+  }>
+  setTextColor: CompanionActionSchema<{
+    input: string
+    selectedIndex: string
+    value: string
+  }>
+  setTextVisible: CompanionActionSchema<{
+    input: string
+    selectedIndex: string
+    adjustment: 'Toggle' | 'On' | 'Off'
+  }>
+  setColor: CompanionActionSchema<{
+    input: string
+    selectedIndex: string
+    value: string
+  }>
+  setImage: CompanionActionSchema<{
+    input: string
+    selectedIndex: string
+    value: string
+    encode: boolean
+  }>
+  setImageVisible: CompanionActionSchema<{
+    input: string
+    selectedIndex: string
+    adjustment: 'Toggle' | 'On' | 'Off'
+  }>
+  selectTitlePreset: CompanionActionSchema<{
+    input: string
+    value: string
+  }>
+  titlePreset: CompanionActionSchema<{
+    input: string
+    functionID: 'NextTitlePreset' | 'PreviousTitlePreset'
+  }>
+  titleBeginAnimation: CompanionActionSchema<{
+    input: string
+    value:
+      | 'TransitionIn'
+      | 'TransitionOut'
+      | 'Page1'
+      | 'Page2'
+      | 'Page3'
+      | 'Page4'
+      | 'Page5'
+      | 'Page6'
+      | 'Page7'
+      | 'Page8'
+      | 'Page9'
+      | 'Page10'
+      | 'Continuous'
+      | 'DataChangeIn'
+      | 'DataChangeOut'
+  }>
 }
 
 export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<TitleActionsSchema> => {

@@ -1,205 +1,147 @@
-import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
 import type { SendBasicCommand } from './actions.js'
 import { type EmptyOptions, options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type ReplayActionsSchema = {
-  replayACamera: {
-    options: {
-      functionID: 'ReplayACamera1' | 'ReplayACamera2' | 'ReplayACamera3' | 'ReplayACamera4' | 'ReplayACamera5' | 'ReplayACamera6' | 'ReplayACamera7' | 'ReplayACamera8'
-    }
-  }
-  replayBCamera: {
-    options: {
-      functionID: 'ReplayBCamera1' | 'ReplayBCamera2' | 'ReplayBCamera3' | 'ReplayBCamera4' | 'ReplayBCamera5' | 'ReplayBCamera6' | 'ReplayBCamera7' | 'ReplayBCamera8'
-    }
-  }
-  replayCamera: {
-    options: {
-      functionID: 'ReplayCamera1' | 'ReplayCamera2' | 'ReplayCamera3' | 'ReplayCamera4' | 'ReplayCamera5' | 'ReplayCamera6' | 'ReplayCamera7' | 'ReplayCamera8'
-    }
-  }
-  replaySelectChannel: {
-    options: {
-      functionID: 'replaySelectChannelAB' | 'replaySelectChannelA' | 'replaySelectChannelB'
-    }
-  }
+  replayACamera: CompanionActionSchema<{
+    functionID: 'ReplayACamera1' | 'ReplayACamera2' | 'ReplayACamera3' | 'ReplayACamera4' | 'ReplayACamera5' | 'ReplayACamera6' | 'ReplayACamera7' | 'ReplayACamera8'
+  }>
+  replayBCamera: CompanionActionSchema<{
+    functionID: 'ReplayBCamera1' | 'ReplayBCamera2' | 'ReplayBCamera3' | 'ReplayBCamera4' | 'ReplayBCamera5' | 'ReplayBCamera6' | 'ReplayBCamera7' | 'ReplayBCamera8'
+  }>
+  replayCamera: CompanionActionSchema<{
+    functionID: 'ReplayCamera1' | 'ReplayCamera2' | 'ReplayCamera3' | 'ReplayCamera4' | 'ReplayCamera5' | 'ReplayCamera6' | 'ReplayCamera7' | 'ReplayCamera8'
+  }>
+  replaySelectChannel: CompanionActionSchema<{
+    functionID: 'replaySelectChannelAB' | 'replaySelectChannelA' | 'replaySelectChannelB'
+  }>
   replaySwapChannels: EmptyOptions
-  replayMark: {
-    options: {
-      functionID:
-        | 'ReplayMarkCancel'
-        | 'ReplayMarkIn'
-        | 'ReplayMarkInLive'
-        | 'ReplayMarkInOut'
-        | 'ReplayMarkInOutLive'
-        | 'ReplayMarkInOutLiveFuture'
-        | 'ReplayMarkInOutRecorded'
-        | 'ReplayMarkInRecorded'
-        | 'ReplayMarkInRecordedNow'
-        | 'ReplayMarkOut'
-      value: string
-      value2: string
-    }
-  }
-  replayMoveInOut: {
-    options: {
-      functionID: 'ReplayMoveSelectedInPoint' | 'ReplayMoveSelectedOutPoint'
-      value: string
-    }
-  }
-  replayUpdateInOut: {
-    options: {
-      functionID: 'ReplayUpdateSelectedInPoint' | 'ReplayUpdateSelectedOutPoint'
-    }
-  }
-  replaySelectEvents: {
-    options: {
-      functionID:
-        | 'ReplaySelectEvents1'
-        | 'ReplaySelectEvents2'
-        | 'ReplaySelectEvents3'
-        | 'ReplaySelectEvents4'
-        | 'ReplaySelectEvents5'
-        | 'ReplaySelectEvents6'
-        | 'ReplaySelectEvents7'
-        | 'ReplaySelectEvents8'
-        | 'ReplaySelectEvents9'
-        | 'ReplaySelectEvents10'
-        | 'ReplaySelectEvents11'
-        | 'ReplaySelectEvents12'
-        | 'ReplaySelectEvents13'
-        | 'ReplaySelectEvents14'
-        | 'ReplaySelectEvents15'
-        | 'ReplaySelectEvents16'
-        | 'ReplaySelectEvents17'
-        | 'ReplaySelectEvents18'
-        | 'ReplaySelectEvents19'
-        | 'ReplaySelectEvents20'
-      channel: ReplayChannel
-    }
-  }
-  replayChangeDirection: {
-    options: {
-      channel: ReplayChannel
-    }
-  }
-  replayChangeSpeed: {
-    options: {
-      channel: ReplayChannel
-      value: number
-    }
-  }
-  replaySetSpeed: {
-    options: {
-      channel: ReplayChannel
-      value: string
-      max: string
-    }
-  }
-  replayMoveEvent: {
-    options: {
-      functionID: 'ReplayMoveLastEvent' | 'ReplayMoveSelectedEvent'
-      value: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20
-    }
-  }
-  replayMoveEventUpDown: {
-    options: {
-      functionID: 'ReplayMoveSelectedEventUp' | 'ReplayMoveSelectedEventDown'
-    }
-  }
-  replayFastForwardBackward: {
-    options: {
-      functionID: 'ReplayFastForward' | 'ReplayFastBackward'
-      channel: ReplayChannel
-      value: number
-    }
-  }
-  replayJumpFrames: {
-    options: {
-      channel: ReplayChannel
-      value: string
-    }
-  }
-  replayRecording: {
-    options: {
-      functionID: 'ReplayStartRecording' | 'ReplayStopRecording' | 'ReplayStartStopRecording'
-    }
-  }
-  replayJumpToNow: {
-    options: {
-      channel: ReplayChannel
-    }
-  }
+  replayMark: CompanionActionSchema<{
+    functionID:
+      | 'ReplayMarkCancel'
+      | 'ReplayMarkIn'
+      | 'ReplayMarkInLive'
+      | 'ReplayMarkInOut'
+      | 'ReplayMarkInOutLive'
+      | 'ReplayMarkInOutLiveFuture'
+      | 'ReplayMarkInOutRecorded'
+      | 'ReplayMarkInRecorded'
+      | 'ReplayMarkInRecordedNow'
+      | 'ReplayMarkOut'
+    value: string
+    value2: string
+  }>
+  replayMoveInOut: CompanionActionSchema<{
+    functionID: 'ReplayMoveSelectedInPoint' | 'ReplayMoveSelectedOutPoint'
+    value: string
+  }>
+  replayUpdateInOut: CompanionActionSchema<{
+    functionID: 'ReplayUpdateSelectedInPoint' | 'ReplayUpdateSelectedOutPoint'
+  }>
+  replaySelectEvents: CompanionActionSchema<{
+    functionID:
+      | 'ReplaySelectEvents1'
+      | 'ReplaySelectEvents2'
+      | 'ReplaySelectEvents3'
+      | 'ReplaySelectEvents4'
+      | 'ReplaySelectEvents5'
+      | 'ReplaySelectEvents6'
+      | 'ReplaySelectEvents7'
+      | 'ReplaySelectEvents8'
+      | 'ReplaySelectEvents9'
+      | 'ReplaySelectEvents10'
+      | 'ReplaySelectEvents11'
+      | 'ReplaySelectEvents12'
+      | 'ReplaySelectEvents13'
+      | 'ReplaySelectEvents14'
+      | 'ReplaySelectEvents15'
+      | 'ReplaySelectEvents16'
+      | 'ReplaySelectEvents17'
+      | 'ReplaySelectEvents18'
+      | 'ReplaySelectEvents19'
+      | 'ReplaySelectEvents20'
+    channel: ReplayChannel
+  }>
+  replayChangeDirection: CompanionActionSchema<{
+    channel: ReplayChannel
+  }>
+  replayChangeSpeed: CompanionActionSchema<{
+    channel: ReplayChannel
+    value: number
+  }>
+  replaySetSpeed: CompanionActionSchema<{
+    channel: ReplayChannel
+    value: string
+    max: string
+  }>
+  replayMoveEvent: CompanionActionSchema<{
+    functionID: 'ReplayMoveLastEvent' | 'ReplayMoveSelectedEvent'
+    value: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20
+  }>
+  replayMoveEventUpDown: CompanionActionSchema<{
+    functionID: 'ReplayMoveSelectedEventUp' | 'ReplayMoveSelectedEventDown'
+  }>
+  replayFastForwardBackward: CompanionActionSchema<{
+    functionID: 'ReplayFastForward' | 'ReplayFastBackward'
+    channel: ReplayChannel
+    value: number
+  }>
+  replayJumpFrames: CompanionActionSchema<{
+    channel: ReplayChannel
+    value: string
+  }>
+  replayRecording: CompanionActionSchema<{
+    functionID: 'ReplayStartRecording' | 'ReplayStopRecording' | 'ReplayStartStopRecording'
+  }>
+  replayJumpToNow: CompanionActionSchema<{
+    channel: ReplayChannel
+  }>
   replayLiveToggle: EmptyOptions
-  replayPlay: {
-    options: {
-      channel: ReplayChannel
-    }
-  }
-  replayPause: {
-    options: {
-      channel: ReplayChannel
-    }
-  }
-  replayPlayEvent: {
-    options: {
-      channel: ReplayChannel
-      value: string
-    }
-  }
-  replayPlaySelectedEventToOutput: {
-    options: {
-      channel: ReplayChannel
-    }
-  }
-  replayPlayEventsByID: {
-    options: {
-      channel: ReplayChannel
-      value: string
-    }
-  }
-  replayPlayEventsByIDToOutput: {
-    options: {
-      channel: ReplayChannel
-      value: string
-    }
-  }
-  replayPlayLastEventToOutput: {
-    options: {
-      channel: ReplayChannel
-    }
-  }
-  replayPlayAllEventsToOutput: {
-    options: {
-      channel: ReplayChannel
-    }
-  }
+  replayPlay: CompanionActionSchema<{
+    channel: ReplayChannel
+  }>
+  replayPause: CompanionActionSchema<{
+    channel: ReplayChannel
+  }>
+  replayPlayEvent: CompanionActionSchema<{
+    channel: ReplayChannel
+    value: string
+  }>
+  replayPlaySelectedEventToOutput: CompanionActionSchema<{
+    channel: ReplayChannel
+  }>
+  replayPlayEventsByID: CompanionActionSchema<{
+    channel: ReplayChannel
+    value: string
+  }>
+  replayPlayEventsByIDToOutput: CompanionActionSchema<{
+    channel: ReplayChannel
+    value: string
+  }>
+  replayPlayLastEventToOutput: CompanionActionSchema<{
+    channel: ReplayChannel
+  }>
+  replayPlayAllEventsToOutput: CompanionActionSchema<{
+    channel: ReplayChannel
+  }>
   replayStopEvents: EmptyOptions
-  replayToggleCamera: {
-    options: {
-      camera: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
-    }
-  }
+  replayToggleCamera: CompanionActionSchema<{
+    camera: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
+  }>
   replayShowHide: EmptyOptions
-  replayQuadMode: {
-    options: {
-      functionID: 'ReplayToggleQuadMode' | 'ReplayQuadModeOn' | 'ReplayQuadModeOff'
-    }
-  }
-  replayEventText: {
-    options: {
-      type: 'Set' | 'Append'
-      target: 'Last' | 'Selected'
-      camera: string
-      text: string
-    }
-  }
-  replayEventTextClear: {
-    options: {
-      target: 'Last' | 'Selected'
-    }
-  }
+  replayQuadMode: CompanionActionSchema<{
+    functionID: 'ReplayToggleQuadMode' | 'ReplayQuadModeOn' | 'ReplayQuadModeOff'
+  }>
+  replayEventText: CompanionActionSchema<{
+    type: 'Set' | 'Append'
+    target: 'Last' | 'Selected'
+    camera: string
+    text: string
+  }>
+  replayEventTextClear: CompanionActionSchema<{
+    target: 'Last' | 'Selected'
+  }>
 }
 
 type ReplayChannel = 'Current' | 'A' | 'B'

@@ -1,43 +1,31 @@
-import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
 import type { SendBasicCommand } from './actions.js'
 import type VMixInstance from '../index.js'
 import { type MixOptionEntry, type EmptyOptions, options } from '../utils.js'
 
 export type OutputActionsSchema = {
-  outputSet: {
-    options: {
-      functionID: 'SetOutput2' | 'SetOutput3' | 'SetOutput4' | 'SetOutputExternal2' | 'SetOutputFullscreen' | 'SetOutputFullscreen2'
-      value: 'Output' | 'Preview' | 'MultiView' | 'MultiView2' | 'Replay' | 'Mix' | 'Input'
-      input: string
-      mix: MixOptionEntry
-    }
-  }
-  multicorderFunctions: {
-    options: {
-      functionID: 'StartStopMultiCorder' | 'StartMultiCorder' | 'StopMultiCorder'
-    }
-  }
-  recordingFunctions: {
-    options: {
-      functionID: 'StartStopRecording' | 'StartRecording' | 'StopRecording'
-    }
-  }
-  streamingFunctions: {
-    options: {
-      functionID: 'StartStopStreaming' | 'StartStreaming' | 'StopStreaming'
-      value: '' | '1' | '2' | '3' | '4' | '5'
-    }
-  }
-  externalFunctions: {
-    options: {
-      functionID: 'StartStopExternal' | 'StartExternal' | 'StopExternal'
-    }
-  }
-  fullscreenFunctions: {
-    options: {
-      functionID: 'Fullscreen' | 'FullscreenOff' | 'FullscreenOn'
-    }
-  }
+  outputSet: CompanionActionSchema<{
+    functionID: 'SetOutput2' | 'SetOutput3' | 'SetOutput4' | 'SetOutputExternal2' | 'SetOutputFullscreen' | 'SetOutputFullscreen2'
+    value: 'Output' | 'Preview' | 'MultiView' | 'MultiView2' | 'Replay' | 'Mix' | 'Input'
+    input: string
+    mix: MixOptionEntry
+  }>
+  multicorderFunctions: CompanionActionSchema<{
+    functionID: 'StartStopMultiCorder' | 'StartMultiCorder' | 'StopMultiCorder'
+  }>
+  recordingFunctions: CompanionActionSchema<{
+    functionID: 'StartStopRecording' | 'StartRecording' | 'StopRecording'
+  }>
+  streamingFunctions: CompanionActionSchema<{
+    functionID: 'StartStopStreaming' | 'StartStreaming' | 'StopStreaming'
+    value: '' | '1' | '2' | '3' | '4' | '5'
+  }>
+  externalFunctions: CompanionActionSchema<{
+    functionID: 'StartStopExternal' | 'StartExternal' | 'StopExternal'
+  }>
+  fullscreenFunctions: CompanionActionSchema<{
+    functionID: 'Fullscreen' | 'FullscreenOff' | 'FullscreenOn'
+  }>
   fadeToBlack: EmptyOptions
 }
 

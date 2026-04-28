@@ -1,34 +1,23 @@
+import type { CompanionFeedbackSchema } from '@companion-module/base'
 import { type CompanionFeedbackDefinitions } from '@companion-module/base'
 import { options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type LayersFeedbacksSchema = {
-  selectedDestinationInput: {
-    type: 'boolean'
-    options: {
-      input: string
-    }
-  }
-  selectedDestinationLayer: {
-    type: 'boolean'
-    options: {
-      selectedIndex: string
-    }
-  }
-  routableMultiviewLayer: {
-    type: 'boolean'
-    options: {
-      input: string
-    }
-  }
-  inputOnMultiview: {
-    type: 'boolean'
-    options: {
-      inputX: string
-      inputY: string
-      layer: string
-    }
-  }
+  selectedDestinationInput: CompanionFeedbackSchema<{
+    input: string
+  }>
+  selectedDestinationLayer: CompanionFeedbackSchema<{
+    selectedIndex: string
+  }>
+  routableMultiviewLayer: CompanionFeedbackSchema<{
+    input: string
+  }>
+  inputOnMultiview: CompanionFeedbackSchema<{
+    inputX: string
+    inputY: string
+    layer: string
+  }>
 }
 
 export const getLayersFeedbacks = (instance: VMixInstance): CompanionFeedbackDefinitions<LayersFeedbacksSchema> => {

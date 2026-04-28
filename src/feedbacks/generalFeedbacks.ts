@@ -1,38 +1,27 @@
+import type { CompanionFeedbackSchema } from '@companion-module/base'
 import { type CompanionFeedbackDefinitions } from '@companion-module/base'
 import type VMixInstance from '../index.js'
 
 export type GeneralFeedbacksSchema = {
-  dynamic: {
-    type: 'boolean'
-    options: {
-      type: 'dynamicInput' | 'dynamicValue'
-      number: number
-      value: string
-    }
-  }
-  outputStatus: {
-    type: 'boolean'
-    options: {
-      output: 'Fullscreen 1' | 'FUllscreen 2' | 'Output 1' | 'Output 2' | 'Output 3' | 'Output 4'
-      type: 'Output' | 'Preview' | 'MultiView' | 'MultiView2' | 'Replay' | 'Mix' | 'Input'
-      mix: string
-      input: string
-    }
-  }
-  outputNDISRT: {
-    type: 'boolean'
-    options: {
-      output: 'Output 1' | 'Output 2' | 'Output 3' | 'Output 4'
-      type: 'ndi' | 'omt' | 'srt'
-    }
-  }
-  status: {
-    type: 'boolean'
-    options: {
-      status: 'connection' | 'fadeToBlack' | 'recording' | 'external' | 'streaming' | 'multiCorder' | 'fullscreen' | 'playList'
-      value: '' | '0' | '1' | '2'
-    }
-  }
+  dynamic: CompanionFeedbackSchema<{
+    type: 'dynamicInput' | 'dynamicValue'
+    number: number
+    value: string
+  }>
+  outputStatus: CompanionFeedbackSchema<{
+    output: 'Fullscreen 1' | 'FUllscreen 2' | 'Output 1' | 'Output 2' | 'Output 3' | 'Output 4'
+    type: 'Output' | 'Preview' | 'MultiView' | 'MultiView2' | 'Replay' | 'Mix' | 'Input'
+    mix: string
+    input: string
+  }>
+  outputNDISRT: CompanionFeedbackSchema<{
+    output: 'Output 1' | 'Output 2' | 'Output 3' | 'Output 4'
+    type: 'ndi' | 'omt' | 'srt'
+  }>
+  status: CompanionFeedbackSchema<{
+    status: 'connection' | 'fadeToBlack' | 'recording' | 'external' | 'streaming' | 'multiCorder' | 'fullscreen' | 'playList'
+    value: '' | '0' | '1' | '2'
+  }>
 }
 
 export const getGeneralFeedbacks = (instance: VMixInstance): CompanionFeedbackDefinitions<GeneralFeedbacksSchema> => {

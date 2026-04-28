@@ -1,38 +1,24 @@
+import type { CompanionFeedbackSchema } from '@companion-module/base'
 import { type CompanionFeedbackDefinitions } from '@companion-module/base'
 import { type EmptyOptions } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type ReplayFeedbacksSchema = {
-  replayStatus: {
-    type: 'boolean'
-    options: {
-      status: 'recording' | 'live'
-    }
-  }
-  replayEvents: {
-    type: 'boolean'
-    options: {
-      channel: 'A' | 'B' | 'selected'
-      events: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20
-    }
-  }
-  replayCamera: {
-    type: 'boolean'
-    options: {
-      channel: 'A' | 'B' | 'selected'
-      camera: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
-    }
-  }
-  replaySelectedChannel: {
-    type: 'boolean'
-    options: {
-      channel: 'AB' | 'A' | 'B'
-    }
-  }
-  replayQuadMode: {
-    type: 'boolean'
-    options: EmptyOptions
-  }
+  replayStatus: CompanionFeedbackSchema<{
+    status: 'recording' | 'live'
+  }>
+  replayEvents: CompanionFeedbackSchema<{
+    channel: 'A' | 'B' | 'selected'
+    events: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20
+  }>
+  replayCamera: CompanionFeedbackSchema<{
+    channel: 'A' | 'B' | 'selected'
+    camera: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
+  }>
+  replaySelectedChannel: CompanionFeedbackSchema<{
+    channel: 'AB' | 'A' | 'B'
+  }>
+  replayQuadMode: CompanionFeedbackSchema<EmptyOptions>
 }
 
 export const getReplayFeedbacks = (instance: VMixInstance): CompanionFeedbackDefinitions<ReplayFeedbacksSchema> => {

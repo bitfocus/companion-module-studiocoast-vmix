@@ -1,53 +1,37 @@
-import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
 import type { SendBasicCommand } from './actions.js'
 import { options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type ListActionsSchema = {
-  nextPicture: {
-    options: {
-      input: string
-    }
-  }
-  previousPicture: {
-    options: {
-      input: string
-    }
-  }
+  nextPicture: CompanionActionSchema<{
+    input: string
+  }>
+  previousPicture: CompanionActionSchema<{
+    input: string
+  }>
 
-  nextItem: {
-    options: {
-      input: string
-    }
-  }
-  previousItem: {
-    options: {
-      input: string
-    }
-  }
-  selectIndex: {
-    options: {
-      input: string
-      value: string
-    }
-  }
-  autoPlayFirst: {
-    options: {
-      input: string
-      functionID: 'AutoPlayFirst' | 'AutoPlayFirstOn' | 'AutoPlayFirstOff'
-    }
-  }
-  autoPlayNext: {
-    options: {
-      input: string
-      functionID: 'AutoPlayNext' | 'AutoPlayNextOn' | 'AutoPlayNextOff'
-    }
-  }
-  listShuffle: {
-    options: {
-      input: string
-    }
-  }
+  nextItem: CompanionActionSchema<{
+    input: string
+  }>
+  previousItem: CompanionActionSchema<{
+    input: string
+  }>
+  selectIndex: CompanionActionSchema<{
+    input: string
+    value: string
+  }>
+  autoPlayFirst: CompanionActionSchema<{
+    input: string
+    functionID: 'AutoPlayFirst' | 'AutoPlayFirstOn' | 'AutoPlayFirstOff'
+  }>
+  autoPlayNext: CompanionActionSchema<{
+    input: string
+    functionID: 'AutoPlayNext' | 'AutoPlayNextOn' | 'AutoPlayNextOff'
+  }>
+  listShuffle: CompanionActionSchema<{
+    input: string
+  }>
 }
 
 export const getListActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<ListActionsSchema> => {
