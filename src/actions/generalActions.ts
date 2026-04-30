@@ -99,3 +99,9 @@ export const getGeneralActions = (instance: VMixInstance, sendBasicCommand: Send
     },
   }
 }
+
+export const vMixGeneralFunctions = {
+  keyPress: ['KeyPress'],
+  tbar: ['SetFader'],
+  dynamic: ['SetDynamicInput1', 'SetDynamicValue1', 'SetDynamicInput2', 'SetDynamicValue2', 'SetDynamicInput3', 'SetDynamicValue3', 'SetDynamicInput4', 'SetDynamicValue4'],
+}

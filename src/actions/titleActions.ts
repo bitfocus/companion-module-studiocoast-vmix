@@ -545,3 +545,19 @@ export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBa
     },
   }
 }
+
+export const vMixTitleFunctions = {
+  controlCountdown: ['StartCountdown', 'StopCountdown', 'PauseCountdown'],
+  setCountdown: ['SetCountdown'],
+  changeCountdown: ['ChangeCountdown'],
+  adjustCountdown: ['AdjustCountdown'],
+  setText: ['SetText'],
+  setTextColor: ['SetTextColour'],
+  setTextVisible: ['SetTextVisible'],
+  setColor: ['SetColor'],
+  setImage: ['SetImage'],
+  setImageVisible: ['SetImageVisible'],
+  selectTitlePreset: ['SelectTitlePreset'],
+  titlePreset: ['NextTitlePreset', 'PreviousTitlePreset'],
+  titleBeginAnimation: ['TitleBeginAnimation'],
+}

@@ -34,40 +34,6 @@ export type PTZActionsSchema = {
 
 export const getPTZActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<PTZActionsSchema> => {
   return {
-    ptzFocusZoom: {
-      name: 'PTZ - Focus & Zoom',
-      description: 'Control PTZ Input Focus and Zoom',
-      options: [
-        options.input,
-        {
-          type: 'dropdown',
-          label: 'Focus / Zoom',
-          id: 'functionID',
-          default: 'PTZFocusAuto',
-          choices: [
-            { id: 'PTZFocusAuto', label: 'Focus Auto' },
-            { id: 'PTZFocusFar', label: 'Focus Far' },
-            { id: 'PTZFocusManual', label: 'Focus Manual' },
-            { id: 'PTZFocusNear', label: 'Focus near' },
-            { id: 'PTZFocusStop', label: 'Focus Stop' },
-            { id: 'PTZZoomIn', label: 'Zoom In' },
-            { id: 'PTZZoomOut', label: 'Zoom Out' },
-            { id: 'PTZZoomStop', label: 'Zoom Stop' },
-          ],
-          disableAutoExpression: true,
-        },
-        {
-          type: 'textinput',
-          label: 'Speed 0 to 1',
-          id: 'value',
-          default: '1',
-          useVariables: true,
-          isVisibleExpression: `!arrayIncludes(['PTZFocusAuto', 'PTZFocusManual', 'PTZFocusStop', 'PTZZoomStop'], $(options:functionID))`,
-        },
-      ],
-      callback: sendBasicCommand,
-    },
-
     ptzMove: {
       name: 'PTZ - Move',
       description: 'Control PTZ Input movement',
@@ -106,6 +72,40 @@ export const getPTZActions = (_instance: VMixInstance, sendBasicCommand: SendBas
       callback: sendBasicCommand,
     },
 
+    ptzFocusZoom: {
+      name: 'PTZ - Focus & Zoom',
+      description: 'Control PTZ Input Focus and Zoom',
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Focus / Zoom',
+          id: 'functionID',
+          default: 'PTZFocusAuto',
+          choices: [
+            { id: 'PTZFocusAuto', label: 'Focus Auto' },
+            { id: 'PTZFocusFar', label: 'Focus Far' },
+            { id: 'PTZFocusManual', label: 'Focus Manual' },
+            { id: 'PTZFocusNear', label: 'Focus near' },
+            { id: 'PTZFocusStop', label: 'Focus Stop' },
+            { id: 'PTZZoomIn', label: 'Zoom In' },
+            { id: 'PTZZoomOut', label: 'Zoom Out' },
+            { id: 'PTZZoomStop', label: 'Zoom Stop' },
+          ],
+          disableAutoExpression: true,
+        },
+        {
+          type: 'textinput',
+          label: 'Speed 0 to 1',
+          id: 'value',
+          default: '1',
+          useVariables: true,
+          isVisibleExpression: `!arrayIncludes(['PTZFocusAuto', 'PTZFocusManual', 'PTZFocusStop', 'PTZZoomStop'], $(options:functionID))`,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
     ptzVirtualInput: {
       name: 'PTZ - Virtual Input Create/Update',
       description: 'Creates or Updates a PTZ Virtual Input',
@@ -126,4 +126,23 @@ export const getPTZActions = (_instance: VMixInstance, sendBasicCommand: SendBas
       callback: sendBasicCommand,
     },
   }
+}
+
+export const vMixPTZFunctions = {
+  ptzMove: [
+    'PTZHome',
+    'PTZMoveStop',
+    'PTZMoveUp',
+    'PTZMoveUpLeft',
+    'PTZMoveUpRight',
+    'PTZMoveLeft',
+    'PTZMoveRight',
+    'PTZMoveDown',
+    'PTZMoveDownLeft',
+    'PTZMoveDownRight',
+    'PTZMoveToVirtualInputPosition',
+    'PTZMoveToVirtualInputPositionByIndex',
+  ],
+  ptzFocusZoom: ['PTZFocusAuto', 'PTZFocusFar', 'PTZFocusManual', 'PTZFocusNear', 'PTZFocusStop', 'PTZZoomIn', 'PTZZoomOut', 'PTZZoomStop'],
+  ptzVirtualInput: ['PTZCreateVirtualInput', 'PTZUpdateVirtualInput'],
 }

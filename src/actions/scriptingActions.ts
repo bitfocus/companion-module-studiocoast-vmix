@@ -84,3 +84,9 @@ export const getScriptingActions = (instance: VMixInstance, sendBasicCommand: Se
     },
   }
 }
+
+export const vMixScriptingFunctions = {
+  scriptStart: ['ScriptStart'],
+  scriptStop: ['ScriptStop'],
+  scriptStopAll: ['ScriptStopAll'],
+}

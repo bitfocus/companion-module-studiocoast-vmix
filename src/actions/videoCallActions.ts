@@ -115,3 +115,9 @@ export const getVideoCallActions = (instance: VMixInstance, sendBasicCommand: Se
     },
   }
 }
+
+export const vMixVideoCallFunctions = {
+  videoCallConnect: ['VideoCallConnect', 'VideoCallReconnect'],
+  videoCallAudioSource: ['VideoCallAudioSource'],
+  videoCallVideoSource: ['VideoCallVideoSource'],
+}

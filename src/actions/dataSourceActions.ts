@@ -93,3 +93,10 @@ export const getDataSourceActions = (_instance: VMixInstance, sendBasicCommand: 
     },
   }
 }
+
+export const vMixDataSourceFunctions = {
+  dataSourceAutoNext: ['DataSourceAutoNextOn', 'DataSourceAutoNextOff', 'DataSourceAutoNextOnOff'],
+  dataSourceNextRow: ['DataSourceNextRow'],
+  dataSourcePreviousRow: ['DataSourcePreviousRow'],
+  dataSourceSelectRow: ['DataSourceSelectRow'],
+}

@@ -129,3 +129,9 @@ export const getPlaybackActions = (instance: VMixInstance, _sendBasicCommand: Se
     },
   }
 }
+
+export const vMixPlaybackFunctions = {
+  videoActions: ['Play', 'Pause', 'PlayPause', 'Restart', 'LoopOn', 'LoopOff', 'Loop'],
+  videoPlayhead: ['SetPosition'],
+  videoMark: ['MarkIn', 'MarkOut', 'MarkReset', 'MarkResetIn', 'MarkResetOut'],
+}

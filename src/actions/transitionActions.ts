@@ -236,3 +236,33 @@ export const getTransitionActions = (instance: VMixInstance, sendBasicCommand: S
     },
   }
 }
+
+export const vMixTransitionFunctions = {
+  programCut: ['ActiveInput', 'CutDirect'],
+  transitionMix: [
+    'Cut',
+    'Fade',
+    'Zoom',
+    'Wipe',
+    'Slide',
+    'Fly',
+    'CrossZoom',
+    'FlyRotate',
+    'Cube',
+    'CubeZoom',
+    'VerticalWipe',
+    'VerticalSlide',
+    'Merge',
+    'WipeReverse',
+    'SlideReverse',
+    'VerticalWipeReverse',
+    'VerticalSlideReverse',
+    'BarnDoor',
+    'RollerDoor',
+    'AlphaFade',
+  ],
+  transition: ['Transition1', 'Transition2', 'Transition3', 'Transition4', 'Stinger1', 'Stinger2', 'Stinger3', 'Stinger4', 'Stinger5', 'Stinger6', 'Stinger7', 'Stinger8'],
+  setTransitionEffect: ['SetTransitionEffect1', 'SetTransitionEffect2', 'SetTransitionEffect3', 'SetTransitionEffect4'],
+  setTransitionDuration: ['SetTransitionDuration1', 'SetTransitionDuration2', 'SetTransitionDuration3', 'SetTransitionDuration4'],
+  quickPlay: ['QuickPlay'],
+}

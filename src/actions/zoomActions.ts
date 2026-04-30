@@ -88,3 +88,9 @@ export const getZoomActions = (instance: VMixInstance, sendBasicCommand: SendBas
     },
   }
 }
+
+export const vMixZoomFunctions = {
+  zoomMuteSelf: ['ZoomMuteSelf', 'ZoomUnMuteSelf'],
+  zoomSelectParticipantByName: ['ZoomSelectParticipantByName'],
+  zoomJoinMeeting: ['ZoomJoinMeeting'],
+}

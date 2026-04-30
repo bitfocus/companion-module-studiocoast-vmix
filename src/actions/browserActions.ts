@@ -70,3 +70,8 @@ export const getBrowserActions = (instance: VMixInstance, sendBasicCommand: Send
     },
   }
 }
+
+export const vMixBrowserFunctions = {
+  browser: ['BrowserReload', 'BrowserBack', 'BrowserForward', 'BrowserKeyboardDisabled', 'BrowserKeyboardEnabled', 'BrowserMouseDisabled', 'BrowserMouseEnabled'],
+  browserNavigate: ['BrowserNavigate'],
+}

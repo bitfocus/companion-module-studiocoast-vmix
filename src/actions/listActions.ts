@@ -10,7 +10,6 @@ export type ListActionsSchema = {
   previousPicture: CompanionActionSchema<{
     input: string
   }>
-
   nextItem: CompanionActionSchema<{
     input: string
   }>
@@ -129,4 +128,15 @@ export const getListActions = (_instance: VMixInstance, sendBasicCommand: SendBa
       callback: sendBasicCommand,
     },
   }
+}
+
+export const vMixListFunctions = {
+  nextPicture: ['NextPicture'],
+  previousPicture: ['PreviousPicture'],
+  nextItem: ['NextItem'],
+  previousItem: ['PreviousItem'],
+  selectIndex: ['SelectIndex'],
+  autoPlayFirst: ['AutoPlayFirst', 'AutoPlayFirstOn', 'AutoPlayFirstOff'],
+  autoPlayNext: ['AutoPlayNext', 'AutoPlayNextOn', 'AutoPlayNextOff'],
+  listShuffle: ['ListShuffle'],
 }

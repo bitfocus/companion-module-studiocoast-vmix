@@ -221,3 +221,13 @@ export const getOutputActions = (instance: VMixInstance, sendBasicCommand: SendB
     },
   }
 }
+
+export const vMixOutputFunctions = {
+  outputSet: ['SetOutput2', 'SetOutput3', 'SetOutput4', 'SetOutputExternal2', 'SetOutputFullscreen', 'SetOutputFullscreen2'],
+  multicorderFunctions: ['StartStopMultiCorder', 'StartMultiCorder', 'StopMultiCorder'],
+  recordingFunctions: ['StartStopRecording', 'StartRecording', 'StopRecording'],
+  streamingFunctions: ['StartStopStreaming', 'StartStreaming', 'StopStreaming'],
+  externalFunctions: ['StartStopExternal', 'StartExternal', 'StopExternal'],
+  fullscreenFunctions: ['Fullscreen', 'FullscreenOff', 'FullscreenOn'],
+  fadeToBlack: ['FadeToBlack'],
+}

@@ -31,3 +31,7 @@ export const getVirtualSetActions = (instance: VMixInstance, _sendBasicCommand: 
     },
   }
 }
+
+export const vMixVirtualSetFunctions = {
+  virtualSet: ['SelectIndex'],
+}

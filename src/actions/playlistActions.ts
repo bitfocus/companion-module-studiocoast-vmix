@@ -50,3 +50,8 @@ export const getPlayListActions = (_instance: VMixInstance, sendBasicCommand: Se
     },
   }
 }
+
+export const vMixPlaylistFunctions = {
+  playListFunctions: ['StartPlayList', 'StopPlayList', 'NextPlayListEntry', 'PreviousPlayListEntry'],
+  selectPlayList: ['SelectPlayList'],
+}

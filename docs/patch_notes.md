@@ -3,6 +3,7 @@
 **v5.0.0**
 - BREAKING CHANGE: Removed the deprecated 'Button Shift' functionality, as it's now redundant with Companions native Expression capabilities
 - Many Actions/Feedbacks have been updated to support Companions new capability of toggling an option between standard and Expression modes
+- Added documentation for a list of vMix Shortcuts and the corresponding Companion Actions, available [Here](https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/shortcut_list.md)
 - Added more descriptions for Actions/Feedbacks and their options
 - Actions:
   - `Output - MultiCorder / Recording / Streaming` Action has been replaced by individual actions for MultiCorder, Recording, Streaming, External, Fullscreen, and FTB

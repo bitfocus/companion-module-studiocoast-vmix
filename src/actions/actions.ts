@@ -1,26 +1,26 @@
 import type { CompanionActionEvent, CompanionActionDefinitions } from '@companion-module/base'
 import type VMixInstance from '../index.js'
-import { type AudioActionsSchema, getAudioActions } from './audioActions.js'
+import { type AudioActionsSchema, getAudioActions, vMixAudioFunctions } from './audioActions.js'
 import { type AudioPresetActionsSchema, getAudioPresetActions } from './audioPresetActions.js'
-import { type BrowserActionsSchema, getBrowserActions } from './browserActions.js'
-import { type DataSourceActionsSchema, getDataSourceActions } from './dataSourceActions.js'
-import { type GeneralActionsSchema, getGeneralActions } from './generalActions.js'
-import { type InputActionsSchema, getInputActions } from './inputActions.js'
-import { type LayerActionsSchema, getLayerActions } from './layerActions.js'
-import { type ListActionsSchema, getListActions } from './listActions.js'
-import { type PlaybackActionsSchema, getPlaybackActions } from './playbackActions.js'
-import { type OutputActionsSchema, getOutputActions } from './outputActions.js'
-import { type OverlayActionsSchema, getOverlayActions } from './overlayActions.js'
-import { type PlayListActionsSchema, getPlayListActions } from './playlistActions.js'
-import { type PTZActionsSchema, getPTZActions } from './ptzActions.js'
-import { type ReplayActionsSchema, getReplayActions } from './replayActions.js'
-import { type ScriptingActionsSchema, getScriptingActions } from './scriptingActions.js'
-import { type TitleActionsSchema, getTitleActions } from './titleActions.js'
-import { type TransitionActionsSchema, getTransitionActions } from './transitionActions.js'
+import { type BrowserActionsSchema, getBrowserActions, vMixBrowserFunctions } from './browserActions.js'
+import { type DataSourceActionsSchema, getDataSourceActions, vMixDataSourceFunctions } from './dataSourceActions.js'
+import { type GeneralActionsSchema, getGeneralActions, vMixGeneralFunctions } from './generalActions.js'
+import { type InputActionsSchema, getInputActions, vMixInputFunctions } from './inputActions.js'
+import { type LayerActionsSchema, getLayerActions, vMixLayerFunctions } from './layerActions.js'
+import { type ListActionsSchema, getListActions, vMixListFunctions } from './listActions.js'
+import { type PlaybackActionsSchema, getPlaybackActions, vMixPlaybackFunctions } from './playbackActions.js'
+import { type OutputActionsSchema, getOutputActions, vMixOutputFunctions } from './outputActions.js'
+import { type OverlayActionsSchema, getOverlayActions, vMixOverlayFunctions } from './overlayActions.js'
+import { type PlayListActionsSchema, getPlayListActions, vMixPlaylistFunctions } from './playlistActions.js'
+import { type PTZActionsSchema, getPTZActions, vMixPTZFunctions } from './ptzActions.js'
+import { type ReplayActionsSchema, getReplayActions, vMixReplayFunctions } from './replayActions.js'
+import { type ScriptingActionsSchema, getScriptingActions, vMixScriptingFunctions } from './scriptingActions.js'
+import { type TitleActionsSchema, getTitleActions, vMixTitleFunctions } from './titleActions.js'
+import { type TransitionActionsSchema, getTransitionActions, vMixTransitionFunctions } from './transitionActions.js'
 import { type UtilActionsSchema, getUtilActions } from './utilActions.js'
-import { type VideoCallActionsSchema, getVideoCallActions } from './videoCallActions.js'
-import { type VirtualSetActionsSchema, getVirtualSetActions } from './virtualSetActions.js'
-import { type ZoomActionsSchema, getZoomActions } from './zoomActions.js'
+import { type VideoCallActionsSchema, getVideoCallActions, vMixVideoCallFunctions } from './videoCallActions.js'
+import { type VirtualSetActionsSchema, getVirtualSetActions, vMixVirtualSetFunctions } from './virtualSetActions.js'
+import { type ZoomActionsSchema, getZoomActions, vMixZoomFunctions } from './zoomActions.js'
 
 export type ActionsSchema = AudioActionsSchema &
   AudioPresetActionsSchema &
@@ -99,4 +99,26 @@ export function getActions(instance: VMixInstance): CompanionActionDefinitions<A
     ...getVirtualSetActions(instance, sendBasicCommand),
     ...getZoomActions(instance, sendBasicCommand),
   }
+}
+
+export const vMixFunctions = {
+  ...vMixAudioFunctions,
+  ...vMixBrowserFunctions,
+  ...vMixDataSourceFunctions,
+  ...vMixGeneralFunctions,
+  ...vMixInputFunctions,
+  ...vMixLayerFunctions,
+  ...vMixListFunctions,
+  ...vMixPlaybackFunctions,
+  ...vMixOutputFunctions,
+  ...vMixOverlayFunctions,
+  ...vMixPlaylistFunctions,
+  ...vMixPTZFunctions,
+  ...vMixReplayFunctions,
+  ...vMixScriptingFunctions,
+  ...vMixTitleFunctions,
+  ...vMixTransitionFunctions,
+  ...vMixVideoCallFunctions,
+  ...vMixVirtualSetFunctions,
+  ...vMixZoomFunctions,
 }

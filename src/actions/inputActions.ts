@@ -441,3 +441,32 @@ export const getInputActions = (instance: VMixInstance, sendBasicCommand: SendBa
     },
   }
 }
+
+export const vMixInputFunctions = {
+  previewInput: ['PreviewInput'],
+  previewInputNext: ['PreviewInputNext'],
+  previewInputPrevious: ['PreviewInputPrevious'],
+  go: ['GO'],
+  resetInput: ['ResetInput'],
+  undo: ['Undo'],
+  inputEffect: ['Effect1', 'Effect1On', 'Effect1Off', 'Effect2', 'Effect2On', 'Effect2Off', 'Effect3', 'Effect3On', 'Effect3Off', 'Effect4', 'Effect4On', 'Effect4Off'],
+  inputEffectStrength: ['SetEffect1Strength', 'SetEffect2Strength', 'SetEffect3Strength', 'SetEffect4Strength'],
+  setCC: [
+    'SetCCGainR',
+    'SetCCGainG',
+    'SetCCGainB',
+    'SetCCGainY',
+    'SetCCGammaR',
+    'SetCCGammaG',
+    'SetCCGammaB',
+    'SetCCGammaY',
+    'SetCCHue',
+    'SetCCLiftR',
+    'SetCCLiftG',
+    'SetCCLiftB',
+    'SetCCLiftY',
+    'SetCCSaturation',
+  ],
+  inputPosition: ['SetZoom', 'SetCrop', 'SetCropX1', 'SetCropX2', 'SetCropY1', 'SetCropY2', 'SetPanX', 'SetPanY'],
+  inputFrameDelay: ['SetFrameDelay'],
+}

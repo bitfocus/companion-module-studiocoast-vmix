@@ -490,3 +490,17 @@ export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBa
     },
   }
 }
+
+export const vMixLayerFunctions: Record<string, string[]> = {
+  multiViewOverlay: ['MultiViewOverlay', 'MultiViewOverlayOff', 'MultiViewOverlayOn'],
+  setMultiViewOverlay: ['SetMultiViewOverlay'],
+  setLayerPosition: [],
+}
+
+for (let i = 1; i < 11; i++) {
+  const positions = ['Crop', 'CropX1', 'CropX2', 'CropY1', 'CropY2', 'PanX', 'PanY', 'X', 'Y', 'Height', 'Width', 'Rectangle', 'Zoom']
+
+  positions.forEach((type) => {
+    vMixLayerFunctions.setLayerPosition.push(`SetLayer${i}${type}`)
+  })
+}
