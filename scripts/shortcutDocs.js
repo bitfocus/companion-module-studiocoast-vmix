@@ -14,9 +14,9 @@ the Actions designed for specific shortcuts can include validation, and more app
 
 vMix.functions.forEach((func) => {
   if (!categories[func.category]) {
-		categories[func.category] = {}
-		functionDoc += `[${func.category}](#${func.category})  \n`
-	}
+    categories[func.category] = {}
+    functionDoc += `[${func.category}](#${func.category})  \n`
+  }
   categories[func.category][func.id] = []
 })
 
@@ -32,10 +32,10 @@ Object.entries(vMixFunctions).forEach(([action, ids]) => {
 Object.entries(categories).forEach(([cat, funcs]) => {
   functionDoc += `## ${cat}\n| Shortcuts | Actions |\n| --- | --- |\n`
   Object.entries(funcs).forEach(([id, actionIDs]) => {
-		const actionList = actionIDs.map(x =>actions[x].name)
+    const actionList = actionIDs.map((x) => actions[x].name)
 
     functionDoc += `| ${id} | ${actionList.join(', ')} |\n`
-		if (actionList.length > 0) coverage++
+    if (actionList.length > 0) coverage++
   })
   functionDoc += '\n\n'
 })

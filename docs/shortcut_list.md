@@ -30,10 +30,10 @@ the Actions designed for specific shortcuts can include validation, and more app
 ## General
 | Shortcuts | Actions |
 | --- | --- |
-| ActivatorRefresh |  |
-| CallManagerShowHide |  |
+| ActivatorRefresh | General - Activator Refresh |
+| CallManagerShowHide | General - Toggle Call Manager |
 | KeyPress | General - KeyPress |
-| SendKeys |  |
+| SendKeys | General - Send keys |
 | SetDynamicValue1 | General - Set Dynamic Inputs and Values |
 | SetDynamicValue2 | General - Set Dynamic Inputs and Values |
 | SetDynamicValue3 | General - Set Dynamic Inputs and Values |
@@ -59,41 +59,41 @@ the Actions designed for specific shortcuts can include validation, and more app
 | AudioPluginOn | Audio - Audio Plugin On/Off/Toggle/Show On Input |
 | AudioPluginOnOff | Audio - Audio Plugin On/Off/Toggle/Show On Input |
 | AudioPluginShow | Audio - Audio Plugin On/Off/Toggle/Show On Input |
-| BusAAudio |  |
-| BusAAudioOff |  |
-| BusAAudioOn |  |
-| BusAAudioPluginOff |  |
-| BusAAudioPluginOn |  |
-| BusAAudioPluginOnOff |  |
-| BusAAudioPluginShow |  |
-| BusBAudio |  |
-| BusBAudioOff |  |
-| BusBAudioOn |  |
-| BusBAudioPluginOff |  |
-| BusBAudioPluginOn |  |
-| BusBAudioPluginOnOff |  |
-| BusBAudioPluginShow |  |
+| BusAAudio | Audio - Bus Mute |
+| BusAAudioOff | Audio - Bus Mute |
+| BusAAudioOn | Audio - Bus Mute |
+| BusAAudioPluginOff | Audio - Bus Plugins |
+| BusAAudioPluginOn | Audio - Bus Plugins |
+| BusAAudioPluginOnOff | Audio - Bus Plugins |
+| BusAAudioPluginShow | Audio - Bus Plugins |
+| BusBAudio | Audio - Bus Mute |
+| BusBAudioOff | Audio - Bus Mute |
+| BusBAudioOn | Audio - Bus Mute |
+| BusBAudioPluginOff | Audio - Bus Plugins |
+| BusBAudioPluginOn | Audio - Bus Plugins |
+| BusBAudioPluginOnOff | Audio - Bus Plugins |
+| BusBAudioPluginShow | Audio - Bus Plugins |
 | BusXAudio | Audio - Bus Mute |
 | BusXAudioOff | Audio - Bus Mute |
 | BusXAudioOn | Audio - Bus Mute |
-| BusXAudioPluginOff |  |
-| BusXAudioPluginOn |  |
-| BusXAudioPluginOnOff |  |
-| BusXAudioPluginShow |  |
+| BusXAudioPluginOff | Audio - Bus Plugins |
+| BusXAudioPluginOn | Audio - Bus Plugins |
+| BusXAudioPluginOnOff | Audio - Bus Plugins |
+| BusXAudioPluginShow | Audio - Bus Plugins |
 | BusXSendToMaster | Audio - Route Bus to Master |
-| BusXSendToMasterOff |  |
-| BusXSendToMasterOn |  |
+| BusXSendToMasterOff | Audio - Route Bus to Master |
+| BusXSendToMasterOn | Audio - Route Bus to Master |
 | BusXSolo | Audio - Bus Solo |
 | BusXSoloOff | Audio - Bus Solo |
 | BusXSoloOn | Audio - Bus Solo |
 | MasterAudio | Audio - Bus Mute |
 | MasterAudioOff | Audio - Bus Mute |
 | MasterAudioOn | Audio - Bus Mute |
-| MasterAudioPluginOff |  |
-| MasterAudioPluginOn |  |
-| MasterAudioPluginOnOff |  |
-| MasterAudioPluginShow |  |
-| SetBalance |  |
+| MasterAudioPluginOff | Audio - Bus Plugins |
+| MasterAudioPluginOn | Audio - Bus Plugins |
+| MasterAudioPluginOnOff | Audio - Bus Plugins |
+| MasterAudioPluginShow | Audio - Bus Plugins |
+| SetBalance | Audio - Set Input Balance |
 | SetBusAVolume | Audio - Set Bus Volume |
 | SetBusAVolumeFade | Audio - Fade Bus Volume |
 | SetBusBVolume | Audio - Set Bus Volume |
@@ -108,22 +108,22 @@ the Actions designed for specific shortcuts can include validation, and more app
 | SetBusFVolumeFade | Audio - Fade Bus Volume |
 | SetBusGVolume | Audio - Set Bus Volume |
 | SetBusGVolumeFade | Audio - Fade Bus Volume |
-| SetGain |  |
-| SetGainChannel1 |  |
-| SetGainChannel2 |  |
+| SetGain | Audio - Set Input Gain |
+| SetGainChannel1 | Audio - Set Input Gain |
+| SetGainChannel2 | Audio - Set Input Gain |
 | SetHeadphonesVolume | Audio - Set Bus Volume |
 | SetMasterVolume | Audio - Set Bus Volume |
 | SetMasterVolumeFade | Audio - Fade Bus Volume |
 | SetVolume | Audio - Set Input Volume |
-| SetVolumeBusMixer |  |
-| SetVolumeBusMixerA |  |
-| SetVolumeBusMixerB |  |
-| SetVolumeBusMixerC |  |
-| SetVolumeBusMixerD |  |
-| SetVolumeBusMixerE |  |
-| SetVolumeBusMixerF |  |
-| SetVolumeBusMixerG |  |
-| SetVolumeBusMixerM |  |
+| SetVolumeBusMixer | Audio - Set Volume of an Input's Bus Mixer |
+| SetVolumeBusMixerA | Audio - Set Volume of an Input's Bus Mixer |
+| SetVolumeBusMixerB | Audio - Set Volume of an Input's Bus Mixer |
+| SetVolumeBusMixerC | Audio - Set Volume of an Input's Bus Mixer |
+| SetVolumeBusMixerD | Audio - Set Volume of an Input's Bus Mixer |
+| SetVolumeBusMixerE | Audio - Set Volume of an Input's Bus Mixer |
+| SetVolumeBusMixerF | Audio - Set Volume of an Input's Bus Mixer |
+| SetVolumeBusMixerG | Audio - Set Volume of an Input's Bus Mixer |
+| SetVolumeBusMixerM | Audio - Set Volume of an Input's Bus Mixer |
 | SetVolumeChannel1 | Audio - Set Input separate mono Channel Volume |
 | SetVolumeChannel2 | Audio - Set Input separate mono Channel Volume |
 | SetVolumeChannelMixer | Audio - Set Input Channel Volume |
@@ -148,9 +148,9 @@ the Actions designed for specific shortcuts can include validation, and more app
 | SoloAllOff | Audio - Solo All Off |
 | SoloOff | Audio - Input Solo |
 | SoloOn | Audio - Input Solo |
-| SoloPFL |  |
-| SoloPFLOff |  |
-| SoloPFLOn |  |
+| SoloPFL | Audio - Set AFL/PFL mode on an input |
+| SoloPFLOff | Audio - Set AFL/PFL mode on an input |
+| SoloPFLOn | Audio - Set AFL/PFL mode on an input |
 
 
 ## Transition
@@ -180,14 +180,14 @@ the Actions designed for specific shortcuts can include validation, and more app
 | FadeToBlack | Output - Fade to Black |
 | QuickPlay | Transition - Quick Play input to Program |
 | SetFader | General - Set t-bar position |
-| SetStingerGTInput1 |  |
-| SetStingerGTInput2 |  |
-| SetStingerGTInput3 |  |
-| SetStingerGTInput4 |  |
-| SetStingerGTInput5 |  |
-| SetStingerGTInput6 |  |
-| SetStingerGTInput7 |  |
-| SetStingerGTInput8 |  |
+| SetStingerGTInput1 | Transition - Set Stinger GT Input |
+| SetStingerGTInput2 | Transition - Set Stinger GT Input |
+| SetStingerGTInput3 | Transition - Set Stinger GT Input |
+| SetStingerGTInput4 | Transition - Set Stinger GT Input |
+| SetStingerGTInput5 | Transition - Set Stinger GT Input |
+| SetStingerGTInput6 | Transition - Set Stinger GT Input |
+| SetStingerGTInput7 | Transition - Set Stinger GT Input |
+| SetStingerGTInput8 | Transition - Set Stinger GT Input |
 | SetTransitionDuration1 | Transition - Set Auto Transition Duration |
 | SetTransitionDuration2 | Transition - Set Auto Transition Duration |
 | SetTransitionDuration3 | Transition - Set Auto Transition Duration |
@@ -222,28 +222,28 @@ the Actions designed for specific shortcuts can include validation, and more app
 | SetOutputExternal2 | Output - Set Output Source |
 | SetOutputFullscreen | Output - Set Output Source |
 | SetOutputFullscreen2 | Output - Set Output Source |
-| Snapshot |  |
-| SnapshotInput |  |
+| Snapshot | Output - Snapshot / Snapshot Input |
+| SnapshotInput | Output - Snapshot / Snapshot Input |
 | StartExternal | Output - External |
 | StartMultiCorder | Output - Multicorder |
 | StartRecording | Output - Recording |
-| StartSRTOutput |  |
+| StartSRTOutput | Output - SRT |
 | StartStopExternal | Output - External |
 | StartStopMultiCorder | Output - Multicorder |
 | StartStopRecording | Output - Recording |
-| StartStopSRTOutput |  |
+| StartStopSRTOutput | Output - SRT |
 | StartStopStreaming | Output - Streaming |
 | StartStreaming | Output - Streaming |
 | StopExternal | Output - External |
 | StopMultiCorder | Output - Multicorder |
 | StopRecording | Output - Recording |
-| StopSRTOutput |  |
+| StopSRTOutput | Output - SRT |
 | StopStreaming | Output - Streaming |
-| StreamingSetKey |  |
-| StreamingSetPassword |  |
-| StreamingSetURL |  |
-| StreamingSetUsername |  |
-| WriteDurationToRecordingLog |  |
+| StreamingSetKey | Output - Streaming Settings |
+| StreamingSetPassword | Output - Streaming Settings |
+| StreamingSetURL | Output - Streaming Settings |
+| StreamingSetUsername | Output - Streaming Settings |
+| WriteDurationToRecordingLog | Output - Write Recording duration to log |
 
 
 ## Title
@@ -252,26 +252,26 @@ the Actions designed for specific shortcuts can include validation, and more app
 | AdjustCountdown | Title - Add / Subtract seconds on Countdown |
 | ChangeCountdown | Title - Change Countdown Time |
 | NextTitlePreset | Title - Next / Prev Title Preset |
-| PauseCountdown | Title - Start / Stop / Pause Countdown |
-| PauseRender |  |
+| PauseCountdown | Title - Start / Stop / Pause / Suspend Countdown |
+| PauseRender | Title - Pause / Resume render |
 | PreviousTitlePreset | Title - Next / Prev Title Preset |
-| ResumeRender |  |
+| ResumeRender | Title - Pause / Resume render |
 | SelectTitlePreset | Title - Select Title Preset |
 | SetColor | Title - Adjust title shape color |
 | SetCountdown | Title - Set Countdown Duration |
 | SetImage | Title - Set title Image |
 | SetImageVisible | Title - Set title Image Visibility |
-| SetImageVisibleOff |  |
-| SetImageVisibleOn |  |
+| SetImageVisibleOff | Title - Set title Image Visibility |
+| SetImageVisibleOn | Title - Set title Image Visibility |
 | SetText | Title - Adjust title text |
 | SetTextColour | Title - Adjust title text Color |
 | SetTextVisible | Title - Adjust title text visibility |
-| SetTextVisibleOff |  |
-| SetTextVisibleOn |  |
-| SetTickerSpeed |  |
-| StartCountdown | Title - Start / Stop / Pause Countdown |
-| StopCountdown | Title - Start / Stop / Pause Countdown |
-| SuspendCountdown |  |
+| SetTextVisibleOff | Title - Adjust title text visibility |
+| SetTextVisibleOn | Title - Adjust title text visibility |
+| SetTickerSpeed | Title - Set Ticker speed |
+| StartCountdown | Title - Start / Stop / Pause / Suspend Countdown |
+| StopCountdown | Title - Start / Stop / Pause / Suspend Countdown |
+| SuspendCountdown | Title - Start / Stop / Pause / Suspend Countdown |
 | TitleBeginAnimation | Title - Begin Animation Page |
 
 
@@ -279,24 +279,24 @@ the Actions designed for specific shortcuts can include validation, and more app
 | Shortcuts | Actions |
 | --- | --- |
 | ActiveInput | Transition - Send Input to Program |
-| AddInput |  |
-| AutoPauseOff |  |
-| AutoPauseOn |  |
+| AddInput | Input - Add Input |
+| AutoPauseOff | Input - Auto Play/Pause/Restart |
+| AutoPauseOn | Input - Auto Play/Pause/Restart |
 | AutoPlayFirst | Lists - Auto Play First |
 | AutoPlayFirstOff | Lists - Auto Play First |
 | AutoPlayFirstOn | Lists - Auto Play First |
 | AutoPlayNext | Lists - Auto Play Next |
 | AutoPlayNextOff | Lists - Auto Play Next |
 | AutoPlayNextOn | Lists - Auto Play Next |
-| AutoPlayOff |  |
-| AutoPlayOn |  |
-| AutoRestartOff |  |
-| AutoRestartOn |  |
-| ColourCorrectionAuto |  |
-| ColourCorrectionReset |  |
-| CreateVirtualInput |  |
-| DeinterlaceOff |  |
-| DeinterlaceOn |  |
+| AutoPlayOff | Input - Auto Play/Pause/Restart |
+| AutoPlayOn | Input - Auto Play/Pause/Restart |
+| AutoRestartOff | Input - Auto Play/Pause/Restart |
+| AutoRestartOn | Input - Auto Play/Pause/Restart |
+| ColourCorrectionAuto | Input - Colour Correction |
+| ColourCorrectionReset | Input - Colour Correction |
+| CreateVirtualInput | Input - Create Virtual Input |
+| DeinterlaceOff | Input - Deinterlace |
+| DeinterlaceOn | Input - Deinterlace |
 | Effect1 | Input - Effect Toggle/On/Off |
 | Effect1Off | Input - Effect Toggle/On/Off |
 | Effect1On | Input - Effect Toggle/On/Off |
@@ -310,20 +310,20 @@ the Actions designed for specific shortcuts can include validation, and more app
 | Effect4Off | Input - Effect Toggle/On/Off |
 | Effect4On | Input - Effect Toggle/On/Off |
 | GO | Input - GO Action |
-| InputPreviewHide |  |
-| InputPreviewShow |  |
-| InputPreviewShowHide |  |
-| LayerOff |  |
-| LayerOn |  |
-| LayerOnOff |  |
-| ListAdd |  |
-| ListExport |  |
-| ListPlayOut |  |
-| ListRemove |  |
-| ListRemoveAll |  |
-| ListShowHide |  |
+| InputPreviewHide | Input - Input Preview |
+| InputPreviewShow | Input - Input Preview |
+| InputPreviewShowHide | Input - Input Preview |
+| LayerOff | Layer - Toggle/On/Off Multiview Layer on Input |
+| LayerOn | Layer - Toggle/On/Off Multiview Layer on Input |
+| LayerOnOff | Layer - Toggle/On/Off Multiview Layer on Input |
+| ListAdd | List - Add item to List |
+| ListExport | List - Export List |
+| ListPlayOut | List - Play Out Highlighted item |
+| ListRemove | List - Remove item from List |
+| ListRemoveAll | List - Remove all items from List |
+| ListShowHide | List - Show/Hide List |
 | ListShuffle | Lists - Shuffle List |
-| LivePlayPause |  |
+| LivePlayPause | Playback - Playback Actions |
 | Loop | Playback - Playback Actions |
 | LoopOff | Playback - Playback Actions |
 | LoopOn | Playback - Playback Actions |
@@ -332,10 +332,10 @@ the Actions designed for specific shortcuts can include validation, and more app
 | MarkReset | Playback - Mark Functions |
 | MarkResetIn | Playback - Mark Functions |
 | MarkResetOut | Playback - Mark Functions |
-| MirrorOff |  |
-| MirrorOn |  |
-| MoveInput |  |
-| MoveLayer |  |
+| MirrorOff | Input - Mirror Input |
+| MirrorOn | Input - Mirror Input |
+| MoveInput | Input - Move Input |
+| MoveLayer | Layer - Move Layer |
 | NextItem | Lists - Next List item |
 | NextPicture | Lists - Next Picture/Slide |
 | Pause | Playback - Playback Actions |
@@ -346,28 +346,28 @@ the Actions designed for specific shortcuts can include validation, and more app
 | PreviewInputPrevious | Input - Send Previous input to Preview |
 | PreviousItem | Lists - Previous List item |
 | PreviousPicture | Lists - Previous Picture/Slide |
-| RemoveInput |  |
+| RemoveInput | Input - Remove Input |
 | ResetInput | Input - Reset |
 | Restart | Playback - Playback Actions |
-| SaveVideoDelay |  |
-| SelectCategory |  |
+| SaveVideoDelay | Input - Save Video Delay |
+| SelectCategory | Input - Select Category |
 | SelectIndex | Lists - Select Specific Picture/Slide/Index, VirtualSet - Zoom To Selected Preset |
-| SetAlpha |  |
+| SetAlpha | Input - Set Alpha |
 | SetCCGainB | Input - Colour Correction |
 | SetCCGainG | Input - Colour Correction |
 | SetCCGainR | Input - Colour Correction |
-| SetCCGainRGB |  |
+| SetCCGainRGB | Input - Colour Correction |
 | SetCCGainY | Input - Colour Correction |
 | SetCCGammaB | Input - Colour Correction |
 | SetCCGammaG | Input - Colour Correction |
 | SetCCGammaR | Input - Colour Correction |
-| SetCCGammaRGB |  |
+| SetCCGammaRGB | Input - Colour Correction |
 | SetCCGammaY | Input - Colour Correction |
 | SetCCHue | Input - Colour Correction |
 | SetCCLiftB | Input - Colour Correction |
 | SetCCLiftG | Input - Colour Correction |
 | SetCCLiftR | Input - Colour Correction |
-| SetCCLiftRGB |  |
+| SetCCLiftRGB | Input - Colour Correction |
 | SetCCLiftY | Input - Colour Correction |
 | SetCCSaturation | Input - Colour Correction |
 | SetCrop | Input - Position |
@@ -384,8 +384,8 @@ the Actions designed for specific shortcuts can include validation, and more app
 | SetEffect3Strength | Input - Effect Strength |
 | SetEffect4Strength | Input - Effect Strength |
 | SetFrameDelay | Input - Frame Delay |
-| SetInputName |  |
-| SetLayer |  |
+| SetInputName | Input - Set Input Name |
+| SetLayer | Layer - Set Input as Multiview Layer |
 | SetLayer1Crop | Layer - Position |
 | SetLayer1CropX1 | Layer - Position |
 | SetLayer1CropX2 | Layer - Position |
@@ -516,40 +516,40 @@ the Actions designed for specific shortcuts can include validation, and more app
 | SetLayer10X | Layer - Position |
 | SetLayer10Y | Layer - Position |
 | SetLayer10Zoom | Layer - Position |
-| SetLayerAnimated |  |
-| SetLayerDynamicCrop |  |
-| SetLayerDynamicCropX1 |  |
-| SetLayerDynamicCropX2 |  |
-| SetLayerDynamicCropY1 |  |
-| SetLayerDynamicCropY2 |  |
-| SetLayerDynamicHeight |  |
-| SetLayerDynamicPanX |  |
-| SetLayerDynamicPanY |  |
-| SetLayerDynamicRectangle |  |
-| SetLayerDynamicWidth |  |
-| SetLayerDynamicX |  |
-| SetLayerDynamicY |  |
-| SetLayerDynamicZoom |  |
+| SetLayerAnimated | Layer - Set Layer (Animated) |
+| SetLayerDynamicCrop | Layer - Position |
+| SetLayerDynamicCropX1 | Layer - Position |
+| SetLayerDynamicCropX2 | Layer - Position |
+| SetLayerDynamicCropY1 | Layer - Position |
+| SetLayerDynamicCropY2 | Layer - Position |
+| SetLayerDynamicHeight | Layer - Position |
+| SetLayerDynamicPanX | Layer - Position |
+| SetLayerDynamicPanY | Layer - Position |
+| SetLayerDynamicRectangle | Layer - Position |
+| SetLayerDynamicWidth | Layer - Position |
+| SetLayerDynamicX | Layer - Position |
+| SetLayerDynamicY | Layer - Position |
+| SetLayerDynamicZoom | Layer - Position |
 | SetPanX | Input - Position |
 | SetPanY | Input - Position |
-| SetPictureEffect |  |
-| SetPictureEffectDuration |  |
-| SetPictureTransition |  |
+| SetPictureEffect | Input - Set Picture Effect/Duration |
+| SetPictureEffectDuration | Input - Set Picture Effect/Duration |
+| SetPictureTransition | Input - Set Picture Transition |
 | SetPosition | Playback - Adjust or Set Playhead |
-| SetRate |  |
-| SetRateSlowMotion |  |
+| SetRate | Input - Set Rate |
+| SetRateSlowMotion | Replay - Set Speed |
 | SetZoom | Input - Position |
-| SharpenOff |  |
-| SharpenOn |  |
-| SwapLayerAnimated |  |
+| SharpenOff | Input - Sharpen On/Off |
+| SharpenOn | Input - Sharpen On/Off |
+| SwapLayerAnimated | Layer - Move/Swap Layer (Animated) |
 | VideoCallAudioSource | VideoCall - Select Audio Source |
 | VideoCallConnect | VideoCall - Connect / Reconnect |
 | VideoCallReconnect | VideoCall - Connect / Reconnect |
 | VideoCallVideoSource | VideoCall - Select Video Source |
-| VideoDelayStartRecording |  |
-| VideoDelayStartStopRecording |  |
-| VideoDelayStopRecording |  |
-| WaitForCompletion |  |
+| VideoDelayStartRecording | Input - Video Delay Recording |
+| VideoDelayStartStopRecording | Input - Video Delay Recording |
+| VideoDelayStopRecording | Input - Video Delay Recording |
+| WaitForCompletion | Scripting - Run custom command |
 | ZoomJoinMeeting | Zoom - Join Meeting |
 | ZoomMuteSelf | Zoom - Mute Self |
 | ZoomSelectParticipantByName | Zoom - Select Participant by Name |
@@ -559,7 +559,7 @@ the Actions designed for specific shortcuts can include validation, and more app
 ## Overlay
 | Shortcuts | Actions |
 | --- | --- |
-| MoveMultiViewOverlay |  |
+| MoveMultiViewOverlay | Layer - Move Layer |
 | MultiViewOverlay | Layer - Toggle/On/Off Multiview Layer on Input |
 | MultiViewOverlayOff | Layer - Toggle/On/Off Multiview Layer on Input |
 | MultiViewOverlayOn | Layer - Toggle/On/Off Multiview Layer on Input |
@@ -637,10 +637,10 @@ the Actions designed for specific shortcuts can include validation, and more app
 | Shortcuts | Actions |
 | --- | --- |
 | ScriptStart | Scripting - Script start |
-| ScriptStartDynamic |  |
+| ScriptStartDynamic | Scripting - Start/Stop Dynamic Script |
 | ScriptStop | Scripting - Script stop |
 | ScriptStopAll | Scripting - Script stop all |
-| ScriptStopDynamic |  |
+| ScriptStopDynamic | Scripting - Start/Stop Dynamic Script |
 
 
 ## Replay
@@ -674,43 +674,43 @@ the Actions designed for specific shortcuts can include validation, and more app
 | ReplayCamera6 | Replay - Selected Channel Camera |
 | ReplayCamera7 | Replay - Selected Channel Camera |
 | ReplayCamera8 | Replay - Selected Channel Camera |
-| ReplayCCamera1 |  |
-| ReplayCCamera2 |  |
-| ReplayCCamera3 |  |
-| ReplayCCamera4 |  |
-| ReplayCCamera5 |  |
-| ReplayCCamera6 |  |
-| ReplayCCamera7 |  |
-| ReplayCCamera8 |  |
-| ReplayChangeDirection | Replay - Change Direction |
+| ReplayCCamera1 | Replay - C Camera |
+| ReplayCCamera2 | Replay - C Camera |
+| ReplayCCamera3 | Replay - C Camera |
+| ReplayCCamera4 | Replay - C Camera |
+| ReplayCCamera5 | Replay - C Camera |
+| ReplayCCamera6 | Replay - C Camera |
+| ReplayCCamera7 | Replay - C Camera |
+| ReplayCCamera8 | Replay - C Camera |
+| ReplayChangeDirection | Replay - Toggle Change Direction |
 | ReplayChangeSpeed | Replay - Change Speed |
-| ReplayCopyLastEvent |  |
-| ReplayCopySelectedEvent |  |
-| ReplayDCamera1 |  |
-| ReplayDCamera2 |  |
-| ReplayDCamera3 |  |
-| ReplayDCamera4 |  |
-| ReplayDCamera5 |  |
-| ReplayDCamera6 |  |
-| ReplayDCamera7 |  |
-| ReplayDCamera8 |  |
-| ReplayDeleteLastEvent |  |
-| ReplayDeleteSelectedEvent |  |
-| ReplayDuplicateLastEvent |  |
-| ReplayDuplicateSelectedEvent |  |
-| ReplayExportLastEvent |  |
+| ReplayCopyLastEvent | Replay - Copy Event |
+| ReplayCopySelectedEvent | Replay - Copy Event |
+| ReplayDCamera1 | Replay - D Camera |
+| ReplayDCamera2 | Replay - D Camera |
+| ReplayDCamera3 | Replay - D Camera |
+| ReplayDCamera4 | Replay - D Camera |
+| ReplayDCamera5 | Replay - D Camera |
+| ReplayDCamera6 | Replay - D Camera |
+| ReplayDCamera7 | Replay - D Camera |
+| ReplayDCamera8 | Replay - D Camera |
+| ReplayDeleteLastEvent | Replay - Delete Event |
+| ReplayDeleteSelectedEvent | Replay - Delete Event |
+| ReplayDuplicateLastEvent | Replay - Duplicate Event |
+| ReplayDuplicateSelectedEvent | Replay - Duplicate Event |
+| ReplayExportLastEvent | Replay - Export last Event |
 | ReplayFastBackward | Replay - Fast Forward/Backward |
 | ReplayFastForward | Replay - Fast Forward/Backward |
 | ReplayJumpFrames | Replay - Jump Frames |
-| ReplayJumpFramesFastOff |  |
-| ReplayJumpFramesFastOn |  |
+| ReplayJumpFramesFastOff | Replay - Jump Frames Fast On/Off |
+| ReplayJumpFramesFastOn | Replay - Jump Frames Fast On/Off |
 | ReplayJumpToNow | Replay - Jump To Now |
-| ReplayJumpToSelectedInPoint |  |
-| ReplayJumpToSelectedOutPoint |  |
-| ReplayLastEventCameraOff |  |
-| ReplayLastEventCameraOn |  |
-| ReplayLastEventSingleCameraOn |  |
-| ReplayLive |  |
+| ReplayJumpToSelectedInPoint | Replay - Jump to selected In/Out point |
+| ReplayJumpToSelectedOutPoint | Replay - Jump to selected In/Out point |
+| ReplayLastEventCameraOff | Replay - Set camera On/Off on Selected / Last Event |
+| ReplayLastEventCameraOn | Replay - Set camera On/Off on Selected / Last Event |
+| ReplayLastEventSingleCameraOn | Replay - Set camera On/Off on Selected / Last Event |
+| ReplayLive | Replay - Live / Recorded |
 | ReplayLiveToggle | Replay - Toggle Live |
 | ReplayMarkCancel | Replay - Mark Functions |
 | ReplayMarkIn | Replay - Mark Functions |
@@ -730,32 +730,32 @@ the Actions designed for specific shortcuts can include validation, and more app
 | ReplayMoveSelectedOutPoint | Replay - Move Selected Event In/Out |
 | ReplayPause | Replay - Pause |
 | ReplayPlay | Replay - Play |
-| ReplayPlayAllEvents |  |
+| ReplayPlayAllEvents | Replay - Play all Events |
 | ReplayPlayAllEventsToOutput | Replay - Play all Events to Output |
-| ReplayPlayBackward |  |
+| ReplayPlayBackward | Replay - Play Forward/Backward |
 | ReplayPlayEvent | Replay - Play Event |
 | ReplayPlayEventsByID | Replay - Play Events by ID |
 | ReplayPlayEventsByIDToOutput | Replay - Play Events By ID To Output |
-| ReplayPlayEventToOutput |  |
-| ReplayPlayForward |  |
-| ReplayPlayLastEvent |  |
+| ReplayPlayEventToOutput | Replay - Play Event to Output |
+| ReplayPlayForward | Replay - Play Forward/Backward |
+| ReplayPlayLastEvent | Replay - Play Last Event |
 | ReplayPlayLastEventToOutput | Replay - Play Last Event to Output |
-| ReplayPlayNext |  |
-| ReplayPlayPause |  |
-| ReplayPlayPrevious |  |
-| ReplayPlaySelectedEvent |  |
+| ReplayPlayNext | Replay - Play Next / Previous |
+| ReplayPlayPause | Replay - Toggle Play / Pause |
+| ReplayPlayPrevious | Replay - Play Next / Previous |
+| ReplayPlaySelectedEvent | Replay - Play Selected Event |
 | ReplayPlaySelectedEventToOutput | Replay - Play Selected Event To Output |
 | ReplayQuadModeOff | Replay - Quad View |
 | ReplayQuadModeOn | Replay - Quad View |
-| ReplayRecorded |  |
-| ReplayScrollSelectedEvent |  |
-| ReplaySelectAllEvents |  |
+| ReplayRecorded | Replay - Live / Recorded |
+| ReplayScrollSelectedEvent | Replay - Scroll Selected Event |
+| ReplaySelectAllEvents | Replay - Select Event |
 | ReplaySelectChannelA | Replay - Select Channel |
 | ReplaySelectChannelAB | Replay - Select Channel |
 | ReplaySelectChannelB | Replay - Select Channel |
-| ReplaySelectedEventCameraOff |  |
-| ReplaySelectedEventCameraOn |  |
-| ReplaySelectedEventSingleCameraOn |  |
+| ReplaySelectedEventCameraOff | Replay - Set camera On/Off on Selected / Last Event |
+| ReplaySelectedEventCameraOn | Replay - Set camera On/Off on Selected / Last Event |
+| ReplaySelectedEventSingleCameraOn | Replay - Set camera On/Off on Selected / Last Event |
 | ReplaySelectEvents1 | Replay - Replay Select Events |
 | ReplaySelectEvents2 | Replay - Replay Select Events |
 | ReplaySelectEvents3 | Replay - Replay Select Events |
@@ -776,37 +776,37 @@ the Actions designed for specific shortcuts can include validation, and more app
 | ReplaySelectEvents18 | Replay - Replay Select Events |
 | ReplaySelectEvents19 | Replay - Replay Select Events |
 | ReplaySelectEvents20 | Replay - Replay Select Events |
-| ReplaySelectFirstEvent |  |
-| ReplaySelectLastEvent |  |
-| ReplaySelectNextEvent |  |
-| ReplaySelectPreviousEvent |  |
-| ReplaySetAudioSource |  |
-| ReplaySetChannelAToBTimecode |  |
-| ReplaySetChannelAToBTimecodeAndCamera |  |
-| ReplaySetChannelBToATimecode |  |
-| ReplaySetChannelBToATimecodeAndCamera |  |
-| ReplaySetDirectionBackward |  |
-| ReplaySetDirectionForward |  |
+| ReplaySelectFirstEvent | Replay - Select Event |
+| ReplaySelectLastEvent | Replay - Select Event |
+| ReplaySelectNextEvent | Replay - Select Event |
+| ReplaySelectPreviousEvent | Replay - Select Event |
+| ReplaySetAudioSource | Replay - Set Audio Source |
+| ReplaySetChannelAToBTimecode | Replay - Set Timecode |
+| ReplaySetChannelAToBTimecodeAndCamera | Replay - Set Timecode |
+| ReplaySetChannelBToATimecode | Replay - Set Timecode |
+| ReplaySetChannelBToATimecodeAndCamera | Replay - Set Timecode |
+| ReplaySetDirectionBackward | Replay - Set Forward/Backward |
+| ReplaySetDirectionForward | Replay - Set Forward/Backward |
 | ReplaySetLastEventText | Replay - Set/Append Event Text |
 | ReplaySetLastEventTextCamera | Replay - Set/Append Event Text |
 | ReplaySetSelectedEventText | Replay - Set/Append Event Text |
 | ReplaySetSelectedEventTextCamera | Replay - Set/Append Event Text |
 | ReplaySetSpeed | Replay - Set Speed |
-| ReplaySetTimecode |  |
+| ReplaySetTimecode | Replay - Set Timecode |
 | ReplayShowHide | Replay - Show / Hide Replay |
 | ReplayStartRecording | Replay - Recording Start/Stop/Toggle |
 | ReplayStartStopRecording | Replay - Recording Start/Stop/Toggle |
 | ReplayStopEvents | Replay - Stop Events |
 | ReplayStopRecording | Replay - Recording Start/Stop/Toggle |
 | ReplaySwapChannels | Replay - Swap A and B channels |
-| ReplayToggleLastEventCamera1 |  |
-| ReplayToggleLastEventCamera2 |  |
-| ReplayToggleLastEventCamera3 |  |
-| ReplayToggleLastEventCamera4 |  |
-| ReplayToggleLastEventCamera5 |  |
-| ReplayToggleLastEventCamera6 |  |
-| ReplayToggleLastEventCamera7 |  |
-| ReplayToggleLastEventCamera8 |  |
+| ReplayToggleLastEventCamera1 | Replay - Toggle Last Event Camera |
+| ReplayToggleLastEventCamera2 | Replay - Toggle Last Event Camera |
+| ReplayToggleLastEventCamera3 | Replay - Toggle Last Event Camera |
+| ReplayToggleLastEventCamera4 | Replay - Toggle Last Event Camera |
+| ReplayToggleLastEventCamera5 | Replay - Toggle Last Event Camera |
+| ReplayToggleLastEventCamera6 | Replay - Toggle Last Event Camera |
+| ReplayToggleLastEventCamera7 | Replay - Toggle Last Event Camera |
+| ReplayToggleLastEventCamera8 | Replay - Toggle Last Event Camera |
 | ReplayToggleQuadMode | Replay - Quad View |
 | ReplayToggleSelectedEventCamera1 | Replay - Toggle Selected Event Camera |
 | ReplayToggleSelectedEventCamera2 | Replay - Toggle Selected Event Camera |
@@ -818,28 +818,28 @@ the Actions designed for specific shortcuts can include validation, and more app
 | ReplayToggleSelectedEventCamera8 | Replay - Toggle Selected Event Camera |
 | ReplayUpdateSelectedInPoint | Replay - Move Selected Event In/Out to Now |
 | ReplayUpdateSelectedOutPoint | Replay - Move Selected Event In/Out to Now |
-| ReplayUpdateSelectedSpeed |  |
-| ReplayUpdateSelectedSpeedDefault |  |
-| ReplayUpdateSelectedSpeedFromValue |  |
+| ReplayUpdateSelectedSpeed | Replay - Update Selected Event Speed |
+| ReplayUpdateSelectedSpeedDefault | Replay - Update Selected Event Speed |
+| ReplayUpdateSelectedSpeedFromValue | Replay - Update Selected Event Speed |
 
 
 ## NDI
 | Shortcuts | Actions |
 | --- | --- |
-| NDICommand |  |
-| NDISelectSourceByIndex |  |
-| NDISelectSourceByName |  |
-| NDIStartRecording |  |
-| NDIStopRecording |  |
+| NDICommand | NDI - Send Command |
+| NDISelectSourceByIndex | NDI - Select Source |
+| NDISelectSourceByName | NDI - Select Source |
+| NDIStartRecording | NDI - Recording |
+| NDIStopRecording | NDI - Recording |
 
 
 ## OMT
 | Shortcuts | Actions |
 | --- | --- |
-| OMTPreviewOff |  |
-| OMTPreviewOn |  |
-| OMTSelectSourceByIndex |  |
-| OMTSelectSourceByName |  |
+| OMTPreviewOff | OMT - Preview Input |
+| OMTPreviewOn | OMT - Preview Input |
+| OMTSelectSourceByIndex | OMT - Select Source |
+| OMTSelectSourceByName | OMT - Select Source |
 
 
 ## PTZ
@@ -872,9 +872,9 @@ the Actions designed for specific shortcuts can include validation, and more app
 ## Preset
 | Shortcuts | Actions |
 | --- | --- |
-| LastPreset |  |
-| OpenPreset |  |
-| SavePreset |  |
+| LastPreset | Preset - Save / Open / Last Preset |
+| OpenPreset | Preset - Save / Open / Last Preset |
+| SavePreset | Preset - Save / Open / Last Preset |
 
 
 ## DataSources
@@ -884,9 +884,9 @@ the Actions designed for specific shortcuts can include validation, and more app
 | DataSourceAutoNextOn | DataSource - AutoNext |
 | DataSourceAutoNextOnOff | DataSource - AutoNext |
 | DataSourceNextRow | DataSource - Next Row |
-| DataSourcePause |  |
-| DataSourcePlay |  |
-| DataSourcePlayPause |  |
+| DataSourcePause | DataSource - Play / Pause updates |
+| DataSourcePlay | DataSource - Play / Pause updates |
+| DataSourcePlayPause | DataSource - Play / Pause updates |
 | DataSourcePreviousRow | DataSource - Previous Row |
 | DataSourceSelectRow | DataSource - Select Row |
 

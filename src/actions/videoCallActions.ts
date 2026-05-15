@@ -1,5 +1,5 @@
 import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
-import type { SendBasicCommand } from './actions.js'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import { options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
@@ -116,7 +116,7 @@ export const getVideoCallActions = (instance: VMixInstance, sendBasicCommand: Se
   }
 }
 
-export const vMixVideoCallFunctions = {
+export const vMixVideoCallFunctions: ActionFunctionsList<VideoCallActionsSchema> = {
   videoCallConnect: ['VideoCallConnect', 'VideoCallReconnect'],
   videoCallAudioSource: ['VideoCallAudioSource'],
   videoCallVideoSource: ['VideoCallVideoSource'],

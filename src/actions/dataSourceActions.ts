@@ -1,5 +1,5 @@
 import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
-import type { SendBasicCommand } from './actions.js'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import type VMixInstance from '../index.js'
 
 export type DataSourceActionsSchema = {
@@ -14,6 +14,10 @@ export type DataSourceActionsSchema = {
     value: string
   }>
   dataSourceSelectRow: CompanionActionSchema<{
+    value: string
+  }>
+  dataSourcePlayPause: CompanionActionSchema<{
+    functionID: 'DataSourcePlayPause' | 'DataSourcePlay' | 'DataSourcePause'
     value: string
   }>
 }
@@ -91,12 +95,40 @@ export const getDataSourceActions = (_instance: VMixInstance, sendBasicCommand: 
       ],
       callback: sendBasicCommand,
     },
+
+    dataSourcePlayPause: {
+      name: 'DataSource - Play / Pause updates',
+      description: 'Controls vMix polling the data source for updates',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'AutoNext State',
+          id: 'functionID',
+          default: 'DataSourcePlayPause',
+          choices: [
+            { id: 'DataSourcePlayPause', label: 'Toggle' },
+            { id: 'DataSourcePlay', label: 'Play' },
+            { id: 'DataSourcePause', label: 'Pause' },
+          ],
+          expressionDescription: `Valid Values: 'DataSourcePlayPause', 'DataSourcePlay', 'DataSourcePause'`,
+        },
+        {
+          type: 'textinput',
+          label: 'Data Source Name',
+          id: 'value',
+          default: '',
+          useVariables: true,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
   }
 }
 
-export const vMixDataSourceFunctions = {
+export const vMixDataSourceFunctions: ActionFunctionsList<DataSourceActionsSchema> = {
   dataSourceAutoNext: ['DataSourceAutoNextOn', 'DataSourceAutoNextOff', 'DataSourceAutoNextOnOff'],
   dataSourceNextRow: ['DataSourceNextRow'],
   dataSourcePreviousRow: ['DataSourcePreviousRow'],
   dataSourceSelectRow: ['DataSourceSelectRow'],
+  dataSourcePlayPause: ['DataSourcePlayPause', 'DataSourcePlay', 'DataSourcePause'],
 }

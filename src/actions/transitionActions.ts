@@ -1,5 +1,5 @@
 import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
-import type { SendBasicCommand } from './actions.js'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import { type MixOptionEntry, options, TRANSITIONS, parseMix } from '../utils.js'
 import type VMixInstance from '../index.js'
 
@@ -28,6 +28,10 @@ export type TransitionActionsSchema = {
   }>
   quickPlay: CompanionActionSchema<{
     input: string
+  }>
+  setStingerGTInput: CompanionActionSchema<{
+    input: string
+    stinger: number
   }>
 }
 
@@ -234,10 +238,36 @@ export const getTransitionActions = (instance: VMixInstance, sendBasicCommand: S
       options: [options.input],
       callback: sendBasicCommand,
     },
+
+    setStingerGTInput: {
+      name: 'Transition - Set Stinger GT Input',
+      description: 'Assigns a GT Input to be used as a Stinger Transition',
+      options: [
+        options.input,
+        {
+          type: 'number',
+          label: 'Stinger',
+          description: 'Valid Values: 1 to 8',
+          id: 'stinger',
+          default: 1,
+          min: 1,
+          max: 8,
+          step: 1,
+        },
+      ],
+      callback: async (action) => {
+        const input = await instance.data.getInput(action.options.input)
+        if (input === null) return
+
+        if (instance.tcp) {
+          return instance.tcp.sendCommand(`FUNCTION SetStingerGTInput${action.options.stinger} Input=${input.key}`)
+        }
+      },
+    },
   }
 }
 
-export const vMixTransitionFunctions = {
+export const vMixTransitionFunctions: ActionFunctionsList<TransitionActionsSchema> = {
   programCut: ['ActiveInput', 'CutDirect'],
   transitionMix: [
     'Cut',
@@ -265,4 +295,14 @@ export const vMixTransitionFunctions = {
   setTransitionEffect: ['SetTransitionEffect1', 'SetTransitionEffect2', 'SetTransitionEffect3', 'SetTransitionEffect4'],
   setTransitionDuration: ['SetTransitionDuration1', 'SetTransitionDuration2', 'SetTransitionDuration3', 'SetTransitionDuration4'],
   quickPlay: ['QuickPlay'],
+  setStingerGTInput: [
+    'SetStingerGTInput1',
+    'SetStingerGTInput2',
+    'SetStingerGTInput3',
+    'SetStingerGTInput4',
+    'SetStingerGTInput5',
+    'SetStingerGTInput6',
+    'SetStingerGTInput7',
+    'SetStingerGTInput8',
+  ],
 }

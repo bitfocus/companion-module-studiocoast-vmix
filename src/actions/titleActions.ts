@@ -1,11 +1,11 @@
 import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
-import type { SendBasicCommand } from './actions.js'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import { TITLEANIMATIONPAGE, options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type TitleActionsSchema = {
   controlCountdown: CompanionActionSchema<{
-    functionID: 'StartCountdown' | 'StopCountdown' | 'PauseCountdown'
+    functionID: 'StartCountdown' | 'StopCountdown' | 'PauseCountdown' | 'SuspendCountdown'
     input: string
     selectedIndex: string
   }>
@@ -84,12 +84,21 @@ export type TitleActionsSchema = {
       | 'DataChangeIn'
       | 'DataChangeOut'
   }>
+  titleRender: CompanionActionSchema<{
+    input: string
+    functionID: 'PauseRender' | 'ResumeRender'
+  }>
+  setTickerSpeed: CompanionActionSchema<{
+    input: string
+    selectedIndex: string
+    value: number
+  }>
 }
 
 export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<TitleActionsSchema> => {
   return {
     controlCountdown: {
-      name: 'Title - Start / Stop / Pause Countdown',
+      name: 'Title - Start / Stop / Pause / Suspend Countdown',
       description: 'Control Countdown running state',
       options: [
         {
@@ -101,6 +110,7 @@ export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBa
             { id: 'StartCountdown', label: 'Start' },
             { id: 'StopCountdown', label: 'Stop' },
             { id: 'PauseCountdown', label: 'Pause' },
+            { id: 'SuspendCountdown', label: 'Suspend' },
           ],
           disableAutoExpression: true,
         },
@@ -543,21 +553,82 @@ export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBa
         if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION TitleBeginAnimation Input=${encodeURIComponent(action.options.input)}&Value=${action.options.value}`)
       },
     },
+
+    titleRender: {
+      name: 'Title - Pause / Resume render',
+      description: 'Pause Title Input while making multiple updates then Resume to start rendering again',
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Pause / Resume',
+          id: 'functionID',
+          default: 'PauseRender',
+          choices: [
+            { id: 'PauseRender', label: 'Pause' },
+            { id: 'ResumeRender', label: 'Resume' },
+          ],
+          disableAutoExpression: true,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    setTickerSpeed: {
+      name: 'Title - Set Ticker speed',
+      description: 'Sets the speed of a Ticker element in a Title input',
+      options: [
+        options.input,
+        {
+          type: 'textinput',
+          label: 'Layer',
+          description: 'Layer Index or Name',
+          id: 'selectedIndex',
+          default: '0',
+          useVariables: true,
+        },
+        {
+          type: 'number',
+          label: 'Speed',
+          description: 'Valid Values: 0 to 1000',
+          id: 'value',
+          default: 10,
+          min: 0,
+          max: 1000,
+        },
+      ],
+      callback: async (action) => {
+        const input = await instance.data.getInput(action.options.input)
+
+        if (input === null) return
+
+        // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
+        const indexNaNCheck = isNaN(parseInt(action.options.selectedIndex, 10)) ? 'SelectedName' : 'SelectedIndex'
+
+        if (instance.tcp) {
+          return instance.tcp.sendCommand(
+            `FUNCTION SetTickerSpeed Input=${input.key}&${indexNaNCheck}=${encodeURIComponent(action.options.selectedIndex)}&Value=${action.options.value}`,
+          )
+        }
+      },
+    },
   }
 }
 
-export const vMixTitleFunctions = {
-  controlCountdown: ['StartCountdown', 'StopCountdown', 'PauseCountdown'],
+export const vMixTitleFunctions: ActionFunctionsList<TitleActionsSchema> = {
+  controlCountdown: ['StartCountdown', 'StopCountdown', 'PauseCountdown', 'SuspendCountdown'],
   setCountdown: ['SetCountdown'],
   changeCountdown: ['ChangeCountdown'],
   adjustCountdown: ['AdjustCountdown'],
   setText: ['SetText'],
   setTextColor: ['SetTextColour'],
-  setTextVisible: ['SetTextVisible'],
+  setTextVisible: ['SetTextVisible', 'SetTextVisibleOn', 'SetTextVisibleOff'],
   setColor: ['SetColor'],
   setImage: ['SetImage'],
-  setImageVisible: ['SetImageVisible'],
+  setImageVisible: ['SetImageVisible', 'SetImageVisibleOn', 'SetImageVisibleOff'],
   selectTitlePreset: ['SelectTitlePreset'],
   titlePreset: ['NextTitlePreset', 'PreviousTitlePreset'],
   titleBeginAnimation: ['TitleBeginAnimation'],
+  titleRender: ['PauseRender', 'ResumeRender'],
+  setTickerSpeed: ['SetTickerSpeed'],
 }

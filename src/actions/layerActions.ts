@@ -1,5 +1,6 @@
 import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
-import type { SendBasicCommand } from './actions.js'
+import type { FunctionIDs } from '@distdev/vmix-utils'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import { type EmptyOptions, type MixOptionEntry, options, valueMinMax } from '../utils.js'
 import type VMixInstance from '../index.js'
 
@@ -46,6 +47,22 @@ export type LayerActionsSchema = {
     heightWidth: string
     rectangle: string
     zoom: string
+  }>
+  moveLayer: CompanionActionSchema<{
+    input: string
+    from: number
+    to: number
+  }>
+  swapLayerAnimated: CompanionActionSchema<{
+    input: string
+    from: number
+    to: number
+    duration: number
+  }>
+  setLayerAnimated: CompanionActionSchema<{
+    input: string
+    layer: number
+    layerInput: string
   }>
 }
 
@@ -114,6 +131,41 @@ export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBa
           return instance.tcp.sendCommand(
             `FUNCTION SetMultiViewOverlay Input=${encodeURIComponent(action.options.input)}&Value=${action.options.layer},${encodeURIComponent(layer)}`,
           )
+      },
+    },
+
+    setLayerAnimated: {
+      name: 'Layer - Set Layer (Animated)',
+      description: 'Change Layer Index to Input. Animate if input exists in another layer',
+      options: [
+        options.input,
+        {
+          type: 'number',
+          label: 'Layer',
+          description: `Valid Values: 1 to 10`,
+          id: 'layer',
+          default: 1,
+          min: 1,
+          max: 10,
+          step: 1,
+        },
+        {
+          type: 'textinput',
+          label: 'Input to use on Layer',
+          id: 'layerInput',
+          default: '',
+          useVariables: true,
+        },
+      ],
+      callback: async (action) => {
+        const input = await instance.data.getInput(action.options.input)
+        const layerInput = await instance.data.getInput(action.options.layerInput)
+
+        if (input === null || layerInput === null) return
+
+        if (instance.tcp) {
+          return instance.tcp.sendCommand(`FUNCTION SetLayerAnimated Input=${input.key}&Value=${action.options.layer},${layerInput.key}`)
+        }
       },
     },
 
@@ -488,19 +540,115 @@ export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBa
         }
       },
     },
+
+    moveLayer: {
+      name: 'Layer - Move Layer',
+      description: 'Moves a layer within an Input',
+      options: [
+        options.input,
+        {
+          type: 'number',
+          label: 'From',
+          description: `Valid Values: 1 to 10`,
+          id: 'from',
+          default: 1,
+          min: 1,
+          max: 10,
+          step: 1,
+        },
+        {
+          type: 'number',
+          label: 'To',
+          description: `Valid Values: 1 to 10`,
+          id: 'to',
+          default: 2,
+          min: 1,
+          max: 10,
+          step: 1,
+        },
+      ],
+      callback: async (action) => {
+        const input = await instance.data.getInput(action.options.input)
+
+        if (input === null) return
+
+        if (instance.tcp) {
+          return instance.tcp.sendCommand(`FUNCTION MoveLayer Input=${input.key}&Value=${action.options.from},${action.options.to}`)
+        }
+      },
+    },
+
+    swapLayerAnimated: {
+      name: 'Layer - Move/Swap Layer (Animated)',
+      description: 'Animate swapping the Layers in Input',
+      options: [
+        options.input,
+        {
+          type: 'number',
+          label: 'From',
+          description: `Valid Values: 1 to 10`,
+          id: 'from',
+          default: 1,
+          min: 1,
+          max: 10,
+          step: 1,
+        },
+        {
+          type: 'number',
+          label: 'To',
+          description: `Valid Values: 1 to 10`,
+          id: 'to',
+          default: 2,
+          min: 1,
+          max: 10,
+          step: 1,
+        },
+        {
+          type: 'number',
+          label: 'Duration',
+          description: `Milliseconds`,
+          id: 'duration',
+          default: 1000,
+          min: 1,
+          max: 60000,
+          step: 1,
+        },
+      ],
+      callback: async (action) => {
+        const input = await instance.data.getInput(action.options.input)
+
+        if (input === null) return
+
+        if (instance.tcp) {
+          return instance.tcp.sendCommand(`FUNCTION SwapLayerAnimated Input=${input.key}&Value=${action.options.from},${action.options.to},${action.options.duration}`)
+        }
+      },
+    },
   }
 }
 
-export const vMixLayerFunctions: Record<string, string[]> = {
-  multiViewOverlay: ['MultiViewOverlay', 'MultiViewOverlayOff', 'MultiViewOverlayOn'],
-  setMultiViewOverlay: ['SetMultiViewOverlay'],
+export const vMixLayerFunctions: ActionFunctionsList<LayerActionsSchema> = {
+  multiViewOverlay: ['MultiViewOverlay', 'MultiViewOverlayOff', 'MultiViewOverlayOn', 'LayerOnOff', 'LayerOn', 'LayerOff'],
+  setMultiViewOverlay: ['SetMultiViewOverlay', 'SetLayer'],
+  setLayerAnimated: ['SetLayerAnimated'],
+  setMultiViewOverlayOnPreview: [],
+  setMultiViewOverlayOnProgram: [],
+  setMultiViewOverlayDestinationInput: [],
+  setMultiViewOverlayDestinationLayer: [],
+  setMultiViewOverlaySourceInput: [],
+  clearMultiViewOverlaySelection: [],
   setLayerPosition: [],
+  moveLayer: ['MoveLayer', 'MoveMultiViewOverlay'],
+  swapLayerAnimated: ['SwapLayerAnimated'],
 }
 
+const layerPositions = ['Crop', 'CropX1', 'CropX2', 'CropY1', 'CropY2', 'PanX', 'PanY', 'X', 'Y', 'Height', 'Width', 'Rectangle', 'Zoom']
 for (let i = 1; i < 11; i++) {
-  const positions = ['Crop', 'CropX1', 'CropX2', 'CropY1', 'CropY2', 'PanX', 'PanY', 'X', 'Y', 'Height', 'Width', 'Rectangle', 'Zoom']
-
-  positions.forEach((type) => {
-    vMixLayerFunctions.setLayerPosition.push(`SetLayer${i}${type}`)
+  layerPositions.forEach((type) => {
+    vMixLayerFunctions.setLayerPosition.push(`SetLayer${i}${type}` as FunctionIDs)
   })
 }
+
+layerPositions.forEach((type) => {
+  vMixLayerFunctions.setLayerPosition.push(`SetLayerDynamic${type}` as FunctionIDs)
+})

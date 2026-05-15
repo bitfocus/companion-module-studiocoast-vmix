@@ -1,5 +1,5 @@
 import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
-import type { SendBasicCommand } from './actions.js'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import type VMixInstance from '../index.js'
 
 export type OverlayActionsSchema = {
@@ -108,7 +108,7 @@ export const getOverlayActions = (instance: VMixInstance, _sendBasicCommand: Sen
   }
 }
 
-export const vMixOverlayFunctions = {
+export const vMixOverlayFunctions: ActionFunctionsList<OverlayActionsSchema> = {
   overlayFunctions: [
     'OverlayInput1',
     'OverlayInput1In',

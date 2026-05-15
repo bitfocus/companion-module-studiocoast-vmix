@@ -1,9 +1,19 @@
 import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
-import type { SendBasicCommand } from './actions.js'
-import { type EmptyOptions, type MixOptionEntry, options, valueMinMax } from '../utils.js'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
+import { type EmptyOptions, type MixOptionEntry, options, TRANSITIONS, valueMinMax } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type InputActionsSchema = {
+  addInput: CompanionActionSchema<{
+    value: string
+  }>
+  removeInput: CompanionActionSchema<{
+    input: string
+  }>
+  setInputName: CompanionActionSchema<{
+    input: string
+    value: string
+  }>
   previewInput: CompanionActionSchema<{
     input: string
     mix: MixOptionEntry
@@ -27,9 +37,15 @@ export type InputActionsSchema = {
     effect: '1' | '2' | '3' | '4'
     strength: string
   }>
+  setAlpha: CompanionActionSchema<{
+    input: string
+    value: number
+  }>
   setCC: CompanionActionSchema<{
     input: string
     setting:
+      | 'ColourCorrectionAuto'
+      | 'ColourCorrectionReset'
       | 'SetCCGainR'
       | 'SetCCGainG'
       | 'SetCCGainB'
@@ -60,9 +76,86 @@ export type InputActionsSchema = {
     cropValue2: string
     panValue: string
   }>
+  inputSharpen: CompanionActionSchema<{
+    input: string
+    functionID: 'SharpenOn' | 'SharpenOff'
+  }>
   inputFrameDelay: CompanionActionSchema<{
     input: string
     value: string
+  }>
+  inputAuto: CompanionActionSchema<{
+    input: string
+    functionID: 'AutoPlayOn' | 'AutoPlayOff' | 'AutoPauseOn' | 'AutoPauseOff' | 'AutoRestartOn' | 'AutoRestartOff'
+  }>
+  createVirtualInput: CompanionActionSchema<{
+    input: string
+  }>
+  deinterlace: CompanionActionSchema<{
+    input: string
+    functionID: 'DeinterlaceOn' | 'DeinterlaceOff'
+  }>
+  inputPreview: CompanionActionSchema<{
+    input: string
+    functionID: 'InputPreviewShowHide' | 'InputPreviewShow' | 'InputPreviewHide'
+  }>
+  mirrorInput: CompanionActionSchema<{
+    input: string
+    functionID: 'MirrorOn' | 'MirrorOff'
+  }>
+  moveInput: CompanionActionSchema<{
+    input: string
+    value: number
+  }>
+  selectCategory: CompanionActionSchema<{
+    value:
+      | 'All'
+      | 'Red'
+      | 'Green'
+      | 'Orange'
+      | 'Purple'
+      | 'Aqua'
+      | 'Blue'
+      | 'Custom1'
+      | 'Custom2'
+      | 'Custom3'
+      | 'Custom4'
+      | 'Custom5'
+      | 'Custom6'
+      | 'Custom7'
+      | 'Custom8'
+      | 'Custom9'
+      | 'Custom10'
+      | 'Custom11'
+      | 'Custom12'
+      | 'Custom13'
+      | 'Custom14'
+      | 'Custom15'
+      | 'Custom16'
+      | 'Search'
+  }>
+  saveVideoDelay: CompanionActionSchema<{
+    input: string
+    duration: number
+  }>
+  setPictureEffect: CompanionActionSchema<{
+    input: string
+    type: 'Effect' | 'Duration'
+    transition: (typeof TRANSITIONS)[number]
+    duration: number
+  }>
+  setPictureTransition: CompanionActionSchema<{
+    input: string
+    value: number
+  }>
+  setRate: CompanionActionSchema<{
+    input: string
+    value: number
+  }>
+  videoDelayRecording: CompanionActionSchema<{
+    input: string
+    functionID: 'VideoDelayStartStopRecording' | 'VideoDelayStartRecording' | 'VideoDelayStopRecording'
+    duration: number
   }>
 }
 
@@ -70,6 +163,45 @@ type ColourCorrectionType = 'hue' | 'saturation' | 'liftG' | 'liftB' | 'liftY' |
 
 export const getInputActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<InputActionsSchema> => {
   return {
+    addInput: {
+      name: 'Input - Add Input',
+      description: 'Add an input with the specified type and filename',
+      options: [
+        {
+          type: 'textinput',
+          label: 'Value',
+          description: 'Must be in the format of: TYPE|FILENAME, eg Video|c:\\path\\to\\video.avi',
+          id: 'value',
+          default: 'TYPE|FILENAME',
+          useVariables: true,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+    removeInput: {
+      name: 'Input - Remove Input',
+      description: 'Removes the specified Input',
+      options: [options.input],
+      callback: sendBasicCommand,
+    },
+
+    setInputName: {
+      name: 'Input - Set Input Name',
+      description: 'Set the Display Name of the Input',
+      options: [
+        options.input,
+        {
+          type: 'textinput',
+          label: 'Name',
+          description: 'Recommend to avoid special characters in Input Names',
+          id: 'value',
+          default: '',
+          useVariables: true,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
     previewInput: {
       name: 'Input - Send Input to Preview',
       description: 'Send to Preview the selected Input',
@@ -193,6 +325,25 @@ export const getInputActions = (instance: VMixInstance, sendBasicCommand: SendBa
       },
     },
 
+    setAlpha: {
+      name: 'Input - Set Alpha',
+      description: 'Set Input transparency according to Value',
+      options: [
+        options.input,
+        {
+          type: 'number',
+          label: 'Value',
+          description: `Valid Values: 0 to 255`,
+          id: 'value',
+          default: 255,
+          min: 0,
+          max: 255,
+          step: 1,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
     setCC: {
       name: 'Input - Colour Correction',
       description: 'Control CC Gain, Gamma, Hue, Lift, or Saturation',
@@ -204,6 +355,8 @@ export const getInputActions = (instance: VMixInstance, sendBasicCommand: SendBa
           id: 'setting',
           default: 'SetCCGainR',
           choices: [
+            { id: 'ColourCorrectionAuto', label: 'Auto Colour Correction' },
+            { id: 'ColourCorrectionReset', label: 'Reset Colour Correction' },
             { id: 'SetCCGainR', label: 'Gain R' },
             { id: 'SetCCGainG', label: 'Gain G' },
             { id: 'SetCCGainB', label: 'Gain B' },
@@ -221,7 +374,7 @@ export const getInputActions = (instance: VMixInstance, sendBasicCommand: SendBa
           ],
           disableAutoExpression: true,
         },
-        options.adjustment,
+        { ...options.adjustment, isVisibleExpression: `!includes($(options:setting), 'ColourCorrection')` },
         {
           type: 'textinput',
           label: 'Gain Value',
@@ -238,7 +391,7 @@ export const getInputActions = (instance: VMixInstance, sendBasicCommand: SendBa
           id: 'otherValue',
           default: '0',
           useVariables: true,
-          isVisibleExpression: `!includes($(options:setting), 'SetCCGain')`,
+          isVisibleExpression: `!includes($(options:setting), 'SetCCGain') && !includes($(options:setting), 'ColourCorrection')`,
         },
       ],
       callback: async (action) => {
@@ -276,7 +429,11 @@ export const getInputActions = (instance: VMixInstance, sendBasicCommand: SendBa
         }
 
         if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION ${action.options.setting} Input=${input.key}&Value=${parsedValue}`)
+          if (action.options.setting === 'ColourCorrectionAuto' || action.options.setting === 'ColourCorrectionReset') {
+            return instance.tcp.sendCommand(`FUNCTION ${action.options.setting} Input=${input.key}`)
+          } else {
+            return instance.tcp.sendCommand(`FUNCTION ${action.options.setting} Input=${input.key}&Value=${parsedValue}`)
+          }
         }
       },
     },
@@ -413,6 +570,26 @@ export const getInputActions = (instance: VMixInstance, sendBasicCommand: SendBa
       },
     },
 
+    inputSharpen: {
+      name: 'Input - Sharpen On/Off',
+      description: `Set an Inputs Sharpen setting On or Off`,
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Category',
+          id: 'functionID',
+          default: 'SharpenOn',
+          choices: [
+            { id: 'SharpenOn', label: 'On' },
+            { id: 'SharpenOff', label: 'Off' },
+          ],
+          expressionDescription: `Valid Values: 'SharpenOn', 'SharpenOff'`,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
     inputFrameDelay: {
       name: 'Input - Frame Delay',
       description: 'Set the delay in frames on supported inputs (eg, Cameras)',
@@ -439,10 +616,300 @@ export const getInputActions = (instance: VMixInstance, sendBasicCommand: SendBa
         }
       },
     },
+
+    inputAuto: {
+      name: 'Input - Auto Play/Pause/Restart',
+      description: 'Set an Inputs auto Play, Pause, or Restart, setting',
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Setting',
+          id: 'functionID',
+          default: 'AutoPlayOn',
+          choices: [
+            { id: 'AutoPlayOn', label: 'Auto Play ON' },
+            { id: 'AutoPlayOff', label: 'Auto Play Off' },
+            { id: 'AutoPauseOn', label: 'Auto Pause On' },
+            { id: 'AutoPauseOff', label: 'Auto Pause Off' },
+            { id: 'AutoRestartOn', label: 'Auto Restart On' },
+            { id: 'AutoRestartOff', label: 'Auto Restart Off' },
+          ],
+          disableAutoExpression: true,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    createVirtualInput: {
+      name: 'Input - Create Virtual Input',
+      description: 'Create a new Virtual Input from the specified Input',
+      options: [options.input],
+      callback: sendBasicCommand,
+    },
+
+    deinterlace: {
+      name: 'Input - Deinterlace',
+      description: '',
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Setting',
+          id: 'functionID',
+          default: 'DeinterlaceOn',
+          choices: [
+            { id: 'DeinterlaceOn', label: 'Deinterlace ON' },
+            { id: 'DeinterlaceOff', label: 'Deinterlace Off' },
+          ],
+          expressionDescription: `Valid Values: 'DeinterlaceOn' or 'DeinterlaceOff'`,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    inputPreview: {
+      name: 'Input - Input Preview',
+      description: 'Shows or Hides an Inputs large preview in the vMix UI',
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Setting',
+          id: 'functionID',
+          default: 'InputPreviewShowHide',
+          choices: [
+            { id: 'InputPreviewShowHide', label: 'Toggle Preview' },
+            { id: 'InputPreviewShow', label: 'Show Preview' },
+            { id: 'InputPreviewHide', label: 'Hide Preview' },
+          ],
+          expressionDescription: `Valid Values: 'InputPreviewShowHide', 'InputPreviewShow', or 'InputPreviewHide'`,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    mirrorInput: {
+      name: 'Input - Mirror Input',
+      description: 'Sets the Mirror setting on an Input On or Off',
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Setting',
+          id: 'functionID',
+          default: 'MirrorOn',
+          choices: [
+            { id: 'MirrorOn', label: 'Mirror On' },
+            { id: 'MirrorOff', label: 'Mirror Off' },
+          ],
+          expressionDescription: `Valid Values: 'MirrorOn' or 'MirrorOff'`,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    moveInput: {
+      name: 'Input - Move Input',
+      description: 'Moves an input to the specified number',
+      options: [
+        options.input,
+        {
+          type: 'number',
+          label: 'Input Number',
+          description: 'Number to move the Input to',
+          id: 'value',
+          default: 1,
+          min: 1,
+          max: 1000,
+          step: 1,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    selectCategory: {
+      name: 'Input - Select Category',
+      description: 'Change to Category according to Value',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Category',
+          id: 'value',
+          default: 'All',
+          choices: [
+            { id: 'All', label: 'All' },
+            { id: 'Red', label: 'Red' },
+            { id: 'Green', label: 'Green' },
+            { id: 'Orange', label: 'Orange' },
+            { id: 'Purple', label: 'Purple' },
+            { id: 'Aqua', label: 'Aqua' },
+            { id: 'Blue', label: 'Blue' },
+            { id: 'Custom1', label: 'Custom1' },
+            { id: 'Custom2', label: 'Custom2' },
+            { id: 'Custom3', label: 'Custom3' },
+            { id: 'Custom4', label: 'Custom4' },
+            { id: 'Custom5', label: 'Custom5' },
+            { id: 'Custom6', label: 'Custom6' },
+            { id: 'Custom7', label: 'Custom7' },
+            { id: 'Custom8', label: 'Custom8' },
+            { id: 'Custom9', label: 'Custom9' },
+            { id: 'Custom10', label: 'Custom10' },
+            { id: 'Custom11', label: 'Custom11' },
+            { id: 'Custom12', label: 'Custom12' },
+            { id: 'Custom13', label: 'Custom13' },
+            { id: 'Custom14', label: 'Custom14' },
+            { id: 'Custom15', label: 'Custom15' },
+            { id: 'Custom16', label: 'Custom16' },
+            { id: 'Search', label: 'Search' },
+          ],
+          expressionDescription: `Valid Values: All, Red, Green, Orange, Purple, Aqua, Blue, Custom1-16, Search`,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    saveVideoDelay: {
+      name: 'Input - Save Video Delay',
+      description: 'Save video clip from Video Delay according to Duration',
+      options: [
+        options.input,
+        {
+          type: 'number',
+          label: 'Duration',
+          description: 'Milliseconds',
+          id: 'duration',
+          default: 1,
+          min: 1,
+          max: Number.MAX_SAFE_INTEGER,
+          step: 1,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    setPictureEffect: {
+      name: 'Input - Set Picture Effect/Duration',
+      description: '',
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Type',
+          id: 'type',
+          default: 'Effect',
+          choices: [{ id: 'Effect', label: 'Effect' }],
+          disableAutoExpression: true,
+        },
+        {
+          type: 'dropdown',
+          label: 'Select transition',
+          id: 'transition',
+          default: 'Cut',
+          choices: TRANSITIONS.map((transition) => ({ id: transition, label: transition })),
+          expressionDescription: `Valid Values: ${TRANSITIONS.join(', ')}`,
+          isVisibleExpression: `$(options:type) === 'Effect'`,
+        },
+        {
+          type: 'number',
+          label: 'Duration',
+          description: 'Milliseconds',
+          id: 'duration',
+          default: 1000,
+          min: 0,
+          max: 60000,
+          step: 1,
+        },
+      ],
+      callback: async (action) => {
+        const input = await instance.data.getInput(action.options.input)
+
+        if (input === null) return
+
+        const functionID = action.options.type === 'Effect' ? 'SetPictureEffect' : 'SetPictureEffectDuration'
+        const value = action.options.type === 'Effect' ? action.options.transition : action.options.duration
+
+        if (instance.tcp) {
+          return instance.tcp.sendCommand(`FUNCTION ${functionID} Input=${input.key}&Value=${value}`)
+        }
+      },
+    },
+
+    setPictureTransition: {
+      name: 'Input - Set Picture Transition',
+      description: 'Set transition time between Photos and PowerPoint slides in Seconds',
+      options: [
+        options.input,
+        {
+          type: 'number',
+          label: 'Duration',
+          description: 'Seconds',
+          id: 'value',
+          default: 5,
+          min: 0,
+          max: 86400,
+          step: 1,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    setRate: {
+      name: 'Input - Set Rate',
+      description: 'Set Playback speed/rate for Videos and Video Delays',
+      options: [
+        options.input,
+        {
+          type: 'number',
+          label: 'Duration',
+          description: '0.5=50%, 1=100%, 2=200% etc',
+          id: 'value',
+          default: 5,
+          min: 0.1,
+          max: 4,
+          step: 0.01,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    videoDelayRecording: {
+      name: 'Input - Video Delay Recording',
+      description: 'Toggle / Start / Stop ',
+      options: [
+        options.input,
+        {
+          type: 'dropdown',
+          label: 'Option',
+          id: 'functionID',
+          default: 'VideoDelayStartStopRecording',
+          choices: [
+            { id: 'VideoDelayStartStopRecording', label: 'Toggle' },
+            { id: 'VideoDelayStartRecording', label: 'Start' },
+            { id: 'VideoDelayStopRecording', label: 'Stop' },
+          ],
+          expressionDescription: `Valid Values: 'VideoDelayStartStopRecording', 'VideoDelayStartRecording', 'VideoDelayStopRecording'`,
+        },
+        {
+          type: 'number',
+          label: 'Duration',
+          description: 'Milliseconds',
+          id: 'duration',
+          default: 1000,
+          min: 0,
+          max: 86400,
+          step: 1,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
   }
 }
 
-export const vMixInputFunctions = {
+export const vMixInputFunctions: ActionFunctionsList<InputActionsSchema> = {
+  addInput: ['AddInput'],
+  removeInput: ['RemoveInput'],
+  setInputName: ['SetInputName'],
   previewInput: ['PreviewInput'],
   previewInputNext: ['PreviewInputNext'],
   previewInputPrevious: ['PreviewInputPrevious'],
@@ -451,22 +918,41 @@ export const vMixInputFunctions = {
   undo: ['Undo'],
   inputEffect: ['Effect1', 'Effect1On', 'Effect1Off', 'Effect2', 'Effect2On', 'Effect2Off', 'Effect3', 'Effect3On', 'Effect3Off', 'Effect4', 'Effect4On', 'Effect4Off'],
   inputEffectStrength: ['SetEffect1Strength', 'SetEffect2Strength', 'SetEffect3Strength', 'SetEffect4Strength'],
+  setAlpha: ['SetAlpha'],
   setCC: [
+    'ColourCorrectionAuto',
+    'ColourCorrectionReset',
     'SetCCGainR',
     'SetCCGainG',
     'SetCCGainB',
+    'SetCCGainRGB',
     'SetCCGainY',
     'SetCCGammaR',
     'SetCCGammaG',
     'SetCCGammaB',
+    'SetCCGammaRGB',
     'SetCCGammaY',
     'SetCCHue',
     'SetCCLiftR',
     'SetCCLiftG',
     'SetCCLiftB',
+    'SetCCLiftRGB',
     'SetCCLiftY',
     'SetCCSaturation',
   ],
   inputPosition: ['SetZoom', 'SetCrop', 'SetCropX1', 'SetCropX2', 'SetCropY1', 'SetCropY2', 'SetPanX', 'SetPanY'],
+  inputSharpen: ['SharpenOn', 'SharpenOff'],
   inputFrameDelay: ['SetFrameDelay'],
+  inputAuto: ['AutoPlayOn', 'AutoPlayOff', 'AutoPauseOn', 'AutoPauseOff', 'AutoRestartOn', 'AutoRestartOff'],
+  createVirtualInput: ['CreateVirtualInput'],
+  deinterlace: ['DeinterlaceOn', 'DeinterlaceOff'],
+  inputPreview: ['InputPreviewShowHide', 'InputPreviewShow', 'InputPreviewHide'],
+  mirrorInput: ['MirrorOn', 'MirrorOff'],
+  moveInput: ['MoveInput'],
+  selectCategory: ['SelectCategory'],
+  saveVideoDelay: ['SaveVideoDelay'],
+  setPictureEffect: ['SetPictureEffect', 'SetPictureEffectDuration'],
+  setPictureTransition: ['SetPictureTransition'],
+  setRate: ['SetRate'],
+  videoDelayRecording: ['VideoDelayStartStopRecording', 'VideoDelayStartRecording', 'VideoDelayStopRecording'],
 }

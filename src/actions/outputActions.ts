@@ -1,5 +1,5 @@
 import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
-import type { SendBasicCommand } from './actions.js'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import type VMixInstance from '../index.js'
 import { type MixOptionEntry, type EmptyOptions, options } from '../utils.js'
 
@@ -26,7 +26,24 @@ export type OutputActionsSchema = {
   fullscreenFunctions: CompanionActionSchema<{
     functionID: 'Fullscreen' | 'FullscreenOff' | 'FullscreenOn'
   }>
+  srtFunctions: CompanionActionSchema<{
+    functionID: 'StartStopSRTOutput' | 'StartSRTOutput' | 'StopSRTOutput'
+  }>
   fadeToBlack: EmptyOptions
+  streamingSettings: CompanionActionSchema<{
+    functionID: 'StreamingSetKey' | 'StreamingSetPassword' | 'StreamingSetURL' | 'StreamingSetUsername'
+    url: string
+    key: string
+    username: string
+    password: string
+  }>
+  snapshot: CompanionActionSchema<{
+    input: string
+    value: string
+  }>
+  writeDurationToRecordingLog: CompanionActionSchema<{
+    value: string
+  }>
 }
 
 export const getOutputActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<OutputActionsSchema> => {
@@ -213,21 +230,154 @@ export const getOutputActions = (instance: VMixInstance, sendBasicCommand: SendB
       callback: sendBasicCommand,
     },
 
+    srtFunctions: {
+      name: 'Output - SRT',
+      description: 'Start / Stop / Toggle SRT',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Output Function',
+          id: 'functionID',
+          default: 'StartStopSRTOutput',
+          choices: [
+            { id: 'StartSRTOutput', label: 'SRT On' },
+            { id: 'StopSRTOutput', label: 'SRT Off' },
+            { id: 'StartStopSRTOutput', label: 'Toggle SRT' },
+          ],
+          expressionDescription: `Valid Values: 'StartSRTOutput', 'StopSRTOutput', 'StartStopSRTOutput'`,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
     fadeToBlack: {
       name: 'Output - Fade to Black',
       description: 'Toggle Fade to Black',
       options: [],
       callback: sendBasicCommand,
     },
+
+    streamingSettings: {
+      name: 'Output - Streaming Settings',
+      description: 'Start / Stop / Toggle SRT',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Output Function',
+          id: 'functionID',
+          default: 'StreamingSetURL',
+          choices: [
+            { id: 'StreamingSetURL', label: 'URL' },
+            { id: 'StreamingSetKey', label: 'Key' },
+            { id: 'StreamingSetUsername', label: 'Username' },
+            { id: 'StreamingSetPassword', label: 'Password' },
+          ],
+          disableAutoExpression: true,
+        },
+        {
+          type: 'textinput',
+          label: 'URL',
+          description: 'Custom RTMP Stream. Optional stream number starting from 0 at start followed by comma, e.g 0,rtmp://myurl/',
+          id: 'url',
+          default: '',
+          isVisibleExpression: `$(options:functionID) === 'StreamingSetURL'`,
+        },
+        {
+          type: 'textinput',
+          label: 'Key',
+          description: 'Key on Custom RTMP Stream. Optional stream number starting from 0 at start followed by comma, e.g 0,myStreamKey',
+          id: 'key',
+          default: '',
+          isVisibleExpression: `$(options:functionID) === 'StreamingSetKey'`,
+        },
+        {
+          type: 'textinput',
+          label: 'Username',
+          description: 'Username on Custom RTMP Stream. Optional stream number starting from 0 at start followed by comma, e.g 0,username',
+          id: 'username',
+          default: '',
+          isVisibleExpression: `$(options:functionID) === 'StreamingSetUsername'`,
+        },
+        {
+          type: 'textinput',
+          label: 'Password',
+          description: 'Password on Custom RTMP Stream. Optional stream number starting from 0 at start followed by comma, e.g 0,password',
+          id: 'password',
+          default: '',
+          isVisibleExpression: `$(options:functionID) === 'StreamingSetPassword'`,
+        },
+      ],
+      callback: async (action) => {
+        let value = ''
+        if (action.options.functionID === 'StreamingSetURL') value = action.options.url
+        if (action.options.functionID === 'StreamingSetKey') value = action.options.key
+        if (action.options.functionID === 'StreamingSetUsername') value = action.options.username
+        if (action.options.functionID === 'StreamingSetPassword') value = action.options.password
+
+        if (instance.tcp) {
+          return instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Value=${value}`)
+        }
+      },
+    },
+
+    snapshot: {
+      name: 'Output - Snapshot / Snapshot Input',
+      description: 'Creates a Snapshot of either the current Output or a specified Input',
+      options: [
+        { ...options.input, description: 'Number, Name, GUID, or leave blank to Snapshot Output', default: '' },
+        {
+          type: 'textinput',
+          label: 'Filename',
+          description: 'Leave blank for a Save dialog window, otherwise Filename can specify date, for example mySnapshot {0:dd MMM yyyy}.jpg',
+          id: 'value',
+          default: '',
+        },
+      ],
+      callback: async (action) => {
+        let command = 'FUNCTION Snapshot'
+
+        if (action.options.input !== '') {
+          const input = await instance.data.getInput(action.options.input)
+          if (input === null) return
+          command = `FUNCTION SnapshotInput Input=${input.key}`
+          if (action.options.value !== '') command += `&Value=${action.options.value}`
+        } else {
+          if (action.options.value !== '') command += ` Value=${action.options.value}`
+        }
+
+        if (instance.tcp) {
+          return instance.tcp.sendCommand(command)
+        }
+      },
+    },
+
+    writeDurationToRecordingLog: {
+      name: 'Output - Write Recording duration to log',
+      description: 'Write current recording duration to log file with optional tag text Value',
+      options: [
+        {
+          type: 'textinput',
+          label: 'Tag text',
+          description: '',
+          id: 'value',
+          default: '',
+        },
+      ],
+      callback: sendBasicCommand,
+    },
   }
 }
 
-export const vMixOutputFunctions = {
+export const vMixOutputFunctions: ActionFunctionsList<OutputActionsSchema> = {
   outputSet: ['SetOutput2', 'SetOutput3', 'SetOutput4', 'SetOutputExternal2', 'SetOutputFullscreen', 'SetOutputFullscreen2'],
   multicorderFunctions: ['StartStopMultiCorder', 'StartMultiCorder', 'StopMultiCorder'],
   recordingFunctions: ['StartStopRecording', 'StartRecording', 'StopRecording'],
   streamingFunctions: ['StartStopStreaming', 'StartStreaming', 'StopStreaming'],
   externalFunctions: ['StartStopExternal', 'StartExternal', 'StopExternal'],
   fullscreenFunctions: ['Fullscreen', 'FullscreenOff', 'FullscreenOn'],
+  srtFunctions: ['StartSRTOutput', 'StopSRTOutput', 'StartStopSRTOutput'],
   fadeToBlack: ['FadeToBlack'],
+  streamingSettings: ['StreamingSetURL', 'StreamingSetKey', 'StreamingSetUsername', 'StreamingSetPassword'],
+  snapshot: ['Snapshot', 'SnapshotInput'],
+  writeDurationToRecordingLog: ['WriteDurationToRecordingLog'],
 }

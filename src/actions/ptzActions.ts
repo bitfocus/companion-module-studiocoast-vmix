@@ -1,5 +1,5 @@
 import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
-import type { SendBasicCommand } from './actions.js'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import { options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
@@ -128,7 +128,7 @@ export const getPTZActions = (_instance: VMixInstance, sendBasicCommand: SendBas
   }
 }
 
-export const vMixPTZFunctions = {
+export const vMixPTZFunctions: ActionFunctionsList<PTZActionsSchema> = {
   ptzMove: [
     'PTZHome',
     'PTZMoveStop',

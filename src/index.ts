@@ -39,8 +39,6 @@ export default class VMixInstance extends InstanceBase<VMixInstanceTypes> {
   constructor(internal: unknown) {
     super(internal)
     this.instanceOptions.disableVariableValidation = true
-
-    console.log(123, getUpgrades.length)
   }
   public activators: Activators | null = null
   public apiProcessing: APIProcessing = {

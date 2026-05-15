@@ -1,5 +1,5 @@
 import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
-import type { SendBasicCommand } from './actions.js'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import type { EmptyOptions } from '../utils.js'
 import type VMixInstance from '../index.js'
 
@@ -15,6 +15,10 @@ export type ScriptingActionsSchema = {
     value: string
   }>
   scriptStopAll: EmptyOptions
+  scriptDynamic: CompanionActionSchema<{
+    functionID: 'ScriptStartDynamic' | 'ScriptStopDynamic'
+    value: string
+  }>
 }
 
 export const getScriptingActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<ScriptingActionsSchema> => {
@@ -82,11 +86,40 @@ export const getScriptingActions = (instance: VMixInstance, sendBasicCommand: Se
       options: [],
       callback: sendBasicCommand,
     },
+
+    scriptDynamic: {
+      name: `Scripting - Start / Stop Dynamic Script`,
+      description: 'Starts running a dynamic script by sending code to vMix',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Start / Stop',
+          id: 'functionID',
+          default: 'ScriptStartDynamic',
+          choices: [
+            { id: 'ScriptStartDynamic', label: 'Start Script' },
+            { id: 'ScriptStopDynamic', label: 'Stop Script' },
+          ],
+          disableAutoExpression: true,
+        },
+        {
+          type: 'textinput',
+          label: 'Code',
+          id: 'value',
+          default: '',
+          useVariables: true,
+          isVisibleExpression: `$(options:functionID) === 'ScriptStartDynamic'`,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
   }
 }
 
-export const vMixScriptingFunctions = {
+export const vMixScriptingFunctions: ActionFunctionsList<ScriptingActionsSchema> = {
+  command: ['WaitForCompletion'],
   scriptStart: ['ScriptStart'],
   scriptStop: ['ScriptStop'],
   scriptStopAll: ['ScriptStopAll'],
+  scriptDynamic: ['ScriptStartDynamic', 'ScriptStopDynamic'],
 }

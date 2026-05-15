@@ -1,9 +1,13 @@
 import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
-import type { SendBasicCommand } from './actions.js'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import type VMixInstance from '../index.js'
+import type { EmptyOptions } from 'src/utils.js'
 
 export type GeneralActionsSchema = {
   keyPress: CompanionActionSchema<{
+    value: string
+  }>
+  sendKeys: CompanionActionSchema<{
     value: string
   }>
   tbar: CompanionActionSchema<{
@@ -14,6 +18,8 @@ export type GeneralActionsSchema = {
     number: '1' | '2' | '3' | '4'
     value: string
   }>
+  activatorRefresh: EmptyOptions
+  callManagerShowHide: EmptyOptions
 }
 
 export const getGeneralActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<GeneralActionsSchema> => {
@@ -25,6 +31,7 @@ export const getGeneralActions = (instance: VMixInstance, sendBasicCommand: Send
         {
           type: 'textinput',
           label: 'Key',
+          description: 'Send a single key press to vMix',
           id: 'value',
           default: '',
           useVariables: true,
@@ -32,7 +39,21 @@ export const getGeneralActions = (instance: VMixInstance, sendBasicCommand: Send
       ],
       callback: sendBasicCommand,
     },
-
+    sendKeys: {
+      name: 'General - Send keys',
+      description: 'Send multiple key presses to vMix',
+      options: [
+        {
+          type: 'textinput',
+          label: 'Key',
+          description: 'Comma separated list of keys to send ot vMIx',
+          id: 'value',
+          default: '',
+          useVariables: true,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
     tbar: {
       name: 'General - Set t-bar position',
       description: 'Sets the TBar to the specified position',
@@ -54,7 +75,6 @@ export const getGeneralActions = (instance: VMixInstance, sendBasicCommand: Send
         }
       },
     },
-
     dynamic: {
       name: 'General - Set Dynamic Inputs and Values',
       description: 'Sets an input or value to the specified Dynamic Input or Dynamic Value',
@@ -97,11 +117,26 @@ export const getGeneralActions = (instance: VMixInstance, sendBasicCommand: Send
         if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetDynamic${action.options.type}${action.options.number} Value=${value}`)
       },
     },
+    activatorRefresh: {
+      name: 'General - Activator Refresh',
+      description: 'Refresh all activator device lights and controls',
+      options: [],
+      callback: sendBasicCommand,
+    },
+    callManagerShowHide: {
+      name: 'General - Toggle Call Manager',
+      description: '',
+      options: [],
+      callback: sendBasicCommand,
+    },
   }
 }
 
-export const vMixGeneralFunctions = {
+export const vMixGeneralFunctions: ActionFunctionsList<GeneralActionsSchema> = {
   keyPress: ['KeyPress'],
+  sendKeys: ['SendKeys'],
   tbar: ['SetFader'],
   dynamic: ['SetDynamicInput1', 'SetDynamicValue1', 'SetDynamicInput2', 'SetDynamicValue2', 'SetDynamicInput3', 'SetDynamicValue3', 'SetDynamicInput4', 'SetDynamicValue4'],
+  activatorRefresh: ['ActivatorRefresh'],
+  callManagerShowHide: ['CallManagerShowHide'],
 }

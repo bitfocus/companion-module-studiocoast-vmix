@@ -35,14 +35,19 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 
 # Recent Patches
 **v5.0.0**
-- BREAKING CHANGE: Removed the deprecated 'Button Shift' functionality, as it's now redundant with Companions native Expression capabilities
+- BREAKING CHANGE: Removed the deprecated 'Button Shift' functionality, as it's now redundant with Companion v4.3 native Expression capabilities
 - Many Actions/Feedbacks have been updated to support Companions new capability of toggling an option between standard and Expression modes
-- Added documentation for a list of vMix Shortcuts and the corresponding Companion Actions, available [Here](https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/shortcut_list.md)
+- Added documentation for a list of vMix Shortcuts and the corresponding Companion Actions, available at [https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/shortcut_list.md](https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/shortcut_list.md)
 - Added more descriptions for Actions/Feedbacks and their options
 - Actions:
   - `Output - MultiCorder / Recording / Streaming` Action has been replaced by individual actions for MultiCorder, Recording, Streaming, External, Fullscreen, and FTB
   - Renamed `Media` Actions to `Playback` to better explain their functionality
   - Added `Audio Preset` actions to store the current vMix audio states (such as bus routing, volume, etc...) in Companion which when loaded will send the necessary commands to set vMix back to the selected state
+  - Added 80 new Actions, resulting in 100% coverage of vMix Shortcut Functions (full list of new actions can be found at [https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/patch_notes.md](https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/patch_notes.md))
+  - Updated `Audio - Route Bus to Master` with an option to choose between Toggle, On, or Off
+  - Updated `Title - Start / Stop / Pause Countdown` to now also include an option to Suspend a Countdown
+  - Updated `Input - Colour Correction` to include options for Auto and Resetting Colour Correction
+  - Updated `Playback - Playback Actions` to include an option to Play/Pause a Live input (such as an NDI/OMT feed)
 - Feedbacks:
   - Renamed `Media` Feedbacks to `Playback` to better explain their functionality
 - Variables:

@@ -107,6 +107,11 @@ const upgradeV5_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
 
       changes.updatedActions.push(action)
     }
+
+    if (action.actionId === 'busXSendToMaster') {
+      action.options.functionID = { isExpression: false, value: 'BusXSendToMaster' }
+      changes.updatedActions.push(action)
+    }
   }
 
   const mixSelectFeedback = ['inputPreview', 'inputLive', 'mixSelect']

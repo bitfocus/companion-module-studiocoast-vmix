@@ -1,5 +1,5 @@
 import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
-import type { SendBasicCommand } from './actions.js'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import { options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
@@ -44,6 +44,7 @@ export const getPlaybackActions = (instance: VMixInstance, _sendBasicCommand: Se
             { id: 'Play', label: 'Play Video' },
             { id: 'Pause', label: 'Pause Video' },
             { id: 'PlayPause', label: 'Toggle Play and Pause' },
+            { id: 'LivePlayPause', label: 'Toggle Play and Pause (Live Input)' },
             { id: 'Restart', label: 'Restart Video' },
             { id: 'LoopOn', label: 'Loop Video On' },
             { id: 'LoopOff', label: 'Loop Video Off' },
@@ -130,8 +131,8 @@ export const getPlaybackActions = (instance: VMixInstance, _sendBasicCommand: Se
   }
 }
 
-export const vMixPlaybackFunctions = {
-  videoActions: ['Play', 'Pause', 'PlayPause', 'Restart', 'LoopOn', 'LoopOff', 'Loop'],
+export const vMixPlaybackFunctions: ActionFunctionsList<PlaybackActionsSchema> = {
+  videoActions: ['Play', 'Pause', 'PlayPause', 'LivePlayPause', 'Restart', 'LoopOn', 'LoopOff', 'Loop'],
   videoPlayhead: ['SetPosition'],
   videoMark: ['MarkIn', 'MarkOut', 'MarkReset', 'MarkResetIn', 'MarkResetOut'],
 }

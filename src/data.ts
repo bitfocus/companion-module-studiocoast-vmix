@@ -98,6 +98,7 @@ export interface Input {
   audioBusses?: AudioBusses
   audioAuto?: boolean
   balance?: number
+  gain?: number
   volumeF1?: number
   volumeF2?: number
   meterF1?: number
@@ -486,6 +487,9 @@ export class VMixData {
             selectedIndex: parseInt(input.$.selectedIndex, 10),
             frameDelay: parseInt(input.$.frameDelay, 10) || 0,
           }
+
+          if (input.$.balance !== undefined) inputData.balance = parseFloat(input.$.balance)
+          if (input.$.gainDb !== undefined) inputData.gain = parseFloat(input.$.gainDb)
 
           if (input.list) {
             if (input.list[0] !== '') {

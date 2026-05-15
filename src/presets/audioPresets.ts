@@ -951,7 +951,7 @@ export const getAudioDefinitions = (): CompanionPresetDefinitions<VMixInstanceTy
       },
       steps: [
         {
-          down: [{ actionId: 'busXSendToMaster', options: { value: 'A' } }],
+          down: [{ actionId: 'busXSendToMaster', options: { value: 'A', functionID: 'BusXSendToMaster' } }],
           up: [],
         },
       ],
@@ -1021,7 +1021,7 @@ export const getAudioStructure = (): CompanionPresetSection<VMixInstanceTypes>[]
           presets: ['audio_audioToggle', 'audio_audioOn', 'audio_audioOff', 'audio_AudioAutoToggle', 'audio_inputSolo'],
         },
         {
-          id: 'audioInputVoluimePresets',
+          id: 'audioInputVolumePresets',
           type: 'simple',
           name: 'Input Volume',
           description: 'Set an inputs volume',

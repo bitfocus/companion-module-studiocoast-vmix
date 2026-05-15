@@ -1,5 +1,5 @@
 import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
-import type { SendBasicCommand } from './actions.js'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import { options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
@@ -71,7 +71,7 @@ export const getBrowserActions = (instance: VMixInstance, sendBasicCommand: Send
   }
 }
 
-export const vMixBrowserFunctions = {
+export const vMixBrowserFunctions: ActionFunctionsList<BrowserActionsSchema> = {
   browser: ['BrowserReload', 'BrowserBack', 'BrowserForward', 'BrowserKeyboardDisabled', 'BrowserKeyboardEnabled', 'BrowserMouseDisabled', 'BrowserMouseEnabled'],
   browserNavigate: ['BrowserNavigate'],
 }

@@ -1,5 +1,5 @@
 import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
-import type { SendBasicCommand } from './actions.js'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import { options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
@@ -32,6 +32,6 @@ export const getVirtualSetActions = (instance: VMixInstance, _sendBasicCommand: 
   }
 }
 
-export const vMixVirtualSetFunctions = {
+export const vMixVirtualSetFunctions: ActionFunctionsList<VirtualSetActionsSchema> = {
   virtualSet: ['SelectIndex'],
 }

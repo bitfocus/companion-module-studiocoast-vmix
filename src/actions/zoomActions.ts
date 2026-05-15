@@ -1,5 +1,5 @@
 import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
-import type { SendBasicCommand } from './actions.js'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import { options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
@@ -89,7 +89,7 @@ export const getZoomActions = (instance: VMixInstance, sendBasicCommand: SendBas
   }
 }
 
-export const vMixZoomFunctions = {
+export const vMixZoomFunctions: ActionFunctionsList<ZoomActionsSchema> = {
   zoomMuteSelf: ['ZoomMuteSelf', 'ZoomUnMuteSelf'],
   zoomSelectParticipantByName: ['ZoomSelectParticipantByName'],
   zoomJoinMeeting: ['ZoomJoinMeeting'],
