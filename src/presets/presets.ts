@@ -8,7 +8,7 @@ import { getGeneralDefinitions, getGeneralStructure } from './generalPresets.js'
 import { getLayerPanZoomDefinitions, getLayerPanZoomStructure } from './layerPanZoomPresets.js'
 import { getListDefinitions, getListStructure } from './listPresets.js'
 import { getMixDefinitions, getMixStructure } from './mixPresets.js'
-import { getMultiviewLayersDefinitions, getMultviewLayerStructure } from './multiviewLayerPresets.js'
+import { getMultiviewLayersDefinitions, getMultiviewLayerStructure } from './multiviewLayerPresets.js'
 import { getOutputDefinitions, getOutputStructure } from './outputPresets.js'
 import { getOverlayDefinitions, getOverlayStructure } from './overlayPresets.js'
 import { getPlayListDefinitions, getPlaylistStructure } from './playListPresets.js'
@@ -49,7 +49,7 @@ export const getPresetStructure: CompanionPresetSection<VMixInstanceTypes>[] = [
   ...getLayerPanZoomStructure(),
   ...getListStructure(),
   ...getMixStructure(),
-  ...getMultviewLayerStructure(),
+  ...getMultiviewLayerStructure(),
   ...getOutputStructure(),
   ...getOverlayStructure(),
   ...getPlaylistStructure(),

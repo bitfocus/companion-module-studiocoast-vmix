@@ -171,7 +171,7 @@ export const getMultiviewLayersDefinitions = (): CompanionPresetDefinitions<VMix
   return multiviewLayersDefinitions
 }
 
-export const getMultviewLayerStructure = (): CompanionPresetSection<VMixInstanceTypes>[] => {
+export const getMultiviewLayerStructure = (): CompanionPresetSection<VMixInstanceTypes>[] => {
   const layerGroups: CompanionPresetGroup<VMixInstanceTypes>[] = []
 
   const layerToggle: CompanionPresetGroup<VMixInstanceTypes> = {
