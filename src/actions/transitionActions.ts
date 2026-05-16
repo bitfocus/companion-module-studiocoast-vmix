@@ -259,9 +259,7 @@ export const getTransitionActions = (instance: VMixInstance, sendBasicCommand: S
         const input = await instance.data.getInput(action.options.input)
         if (input === null) return
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION SetStingerGTInput${action.options.stinger} Input=${input.key}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION SetStingerGTInput${action.options.stinger} Input=${input.key}`)
       },
     },
   }

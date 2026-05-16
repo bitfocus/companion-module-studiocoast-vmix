@@ -103,7 +103,7 @@ export const getOutputActions = (instance: VMixInstance, sendBasicCommand: SendB
           command += ` Value=${action.options.value}`
         }
 
-        if (instance.tcp) return instance.tcp.sendCommand(command)
+        return instance.tcp.sendCommand(command)
       },
     },
 
@@ -186,7 +186,7 @@ export const getOutputActions = (instance: VMixInstance, sendBasicCommand: SendB
           command += ` value=${action.options.value}`
         }
 
-        if (instance.tcp) return instance.tcp.sendCommand(command)
+        return instance.tcp.sendCommand(command)
       },
     },
 
@@ -314,9 +314,7 @@ export const getOutputActions = (instance: VMixInstance, sendBasicCommand: SendB
         if (action.options.functionID === 'StreamingSetUsername') value = action.options.username
         if (action.options.functionID === 'StreamingSetPassword') value = action.options.password
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Value=${value}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Value=${value}`)
       },
     },
 
@@ -345,9 +343,7 @@ export const getOutputActions = (instance: VMixInstance, sendBasicCommand: SendB
           if (action.options.value !== '') command += ` Value=${action.options.value}`
         }
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(command)
-        }
+        return instance.tcp.sendCommand(command)
       },
     },
 

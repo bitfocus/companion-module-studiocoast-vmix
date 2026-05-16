@@ -56,9 +56,7 @@ export const getOMTActions = (instance: VMixInstance, sendBasicCommand: SendBasi
 
         const indexCheck = parseInt(action.options.value)
 
-        if (instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION ${indexCheck ? 'OMTSelectSourceByIndex' : 'OMTSelectSourceByName'} Input=${input.key}&Value=${action.options.value}`)
-        }
+        instance.tcp.sendCommand(`FUNCTION ${indexCheck ? 'OMTSelectSourceByIndex' : 'OMTSelectSourceByName'} Input=${input.key}&Value=${action.options.value}`)
       },
     },
   }

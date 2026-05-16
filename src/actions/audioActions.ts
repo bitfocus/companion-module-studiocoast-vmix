@@ -189,8 +189,7 @@ export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBa
           command += `${action.options.functionID} Value=${selected}`
         }
 
-        if (instance.tcp) return instance.tcp.sendCommand(command)
-        return
+        return instance.tcp.sendCommand(command)
       },
     },
 
@@ -235,7 +234,7 @@ export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBa
           command += `${action.options.functionID} Value=${selected},${action.options.plugin}`
         }
 
-        if (instance.tcp) return instance.tcp.sendCommand(command)
+        return instance.tcp.sendCommand(command)
       },
     },
 
@@ -365,9 +364,7 @@ export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBa
 
         if (isNaN(target)) return
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION SetVolume input=${input.key}&Value=${target}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION SetVolume input=${input.key}&Value=${target}`)
       },
     },
 
@@ -398,9 +395,7 @@ export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBa
 
         const shortcut = selected === 'Master' ? `SetMasterVolumeFade` : `SetBus${selected}VolumeFade`
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION ${shortcut} value=${fadeVol},${fadeTime}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION ${shortcut} value=${fadeVol},${fadeTime}`)
       },
     },
 
@@ -430,7 +425,7 @@ export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBa
         const fadeMin = action.options.fadeMin
         const fadeTime = action.options.fadeTime
 
-        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetVolumeFade Value=${fadeMin},${fadeTime}&input=${encodeURIComponent(input)}`)
+        return instance.tcp.sendCommand(`FUNCTION SetVolumeFade Value=${fadeMin},${fadeTime}&input=${encodeURIComponent(input)}`)
       },
     },
 
@@ -458,7 +453,7 @@ export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBa
         const bus = instance.data.getAudioBus(selected !== 'Headphones' ? selected : 'Master')
         if (bus === null) return
         const currentVolume = selected !== 'Headphones' ? bus.volume : bus.headphonesVolume
-				if (currentVolume === undefined) return
+        if (currentVolume === undefined) return
 
         let target = amount
 
@@ -474,9 +469,7 @@ export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBa
 
         if (isNaN(target)) return
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION ${command} Value=${target}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION ${command} Value=${target}`)
       },
     },
 
@@ -549,9 +542,7 @@ export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBa
 
         if (input === null) return
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION SetVolumeBusMixer Input=${input.key}&Value=${action.options.value},${action.options.amount}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION SetVolumeBusMixer Input=${input.key}&Value=${action.options.value},${action.options.amount}`)
       },
     },
 
@@ -598,9 +589,7 @@ export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBa
         if (newValue > 100) newValue = 100
         if (newValue < 0) newValue = 0
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION ${channel === 1 ? 'SetVolumeChannel1' : 'SetVolumeChannel2'} Input=${input.key}&Value=${newValue}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION ${channel === 1 ? 'SetVolumeChannel1' : 'SetVolumeChannel2'} Input=${input.key}&Value=${newValue}`)
       },
     },
 
@@ -650,9 +639,7 @@ export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBa
         if (newValue > 100) newValue = 100
         if (newValue < 0) newValue = 0
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION SetVolumeChannelMixer Input=${input.key}&Value=${channel},${newValue}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION SetVolumeChannelMixer Input=${input.key}&Value=${channel},${newValue}`)
       },
     },
 
@@ -691,9 +678,7 @@ export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBa
           }
         }
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION SetBalance Input=${input.key}&Value=${newValue.toFixed(2)}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION SetBalance Input=${input.key}&Value=${newValue.toFixed(2)}`)
       },
     },
 
@@ -753,9 +738,7 @@ export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBa
           }
         }
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION ${type} Input=${input.key}&Value=${Math.round(newValue)}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION ${type} Input=${input.key}&Value=${Math.round(newValue)}`)
       },
     },
 

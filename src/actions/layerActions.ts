@@ -127,10 +127,7 @@ export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBa
       callback: async (action) => {
         const layer = action.options.layerInput
 
-        if (instance.tcp)
-          return instance.tcp.sendCommand(
-            `FUNCTION SetMultiViewOverlay Input=${encodeURIComponent(action.options.input)}&Value=${action.options.layer},${encodeURIComponent(layer)}`,
-          )
+        return instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${encodeURIComponent(action.options.input)}&Value=${action.options.layer},${encodeURIComponent(layer)}`)
       },
     },
 
@@ -163,9 +160,7 @@ export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBa
 
         if (input === null || layerInput === null) return
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION SetLayerAnimated Input=${input.key}&Value=${action.options.layer},${layerInput.key}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION SetLayerAnimated Input=${input.key}&Value=${action.options.layer},${layerInput.key}`)
       },
     },
 
@@ -196,8 +191,7 @@ export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBa
         let mix = action.options.mix
         if (mix === 'Selected') mix = instance.routingData.mix + 1
 
-        if (instance.tcp)
-          return instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix - 1].preview}&Value=${action.options.layer},${encodeURIComponent(input)}`)
+        return instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix - 1].preview}&Value=${action.options.layer},${encodeURIComponent(input)}`)
       },
     },
 
@@ -228,8 +222,7 @@ export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBa
         let mix = action.options.mix
         if (mix === 'Selected') mix = instance.routingData.mix + 1
 
-        if (instance.tcp)
-          return instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix - 1].program}&Value=${action.options.layer},${encodeURIComponent(input)}`)
+        return instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix - 1].program}&Value=${action.options.layer},${encodeURIComponent(input)}`)
       },
     },
 
@@ -306,10 +299,8 @@ export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBa
 
         if (destinationInput !== null && destinationLayer !== null) {
           const inputValue = input === '0' || input === '' ? '' : input
-          if (instance.tcp)
-            return instance.tcp.sendCommand(
-              `FUNCTION SetMultiViewOverlay Input=${encodeURIComponent(destinationInput)}&Value=${destinationLayer},${encodeURIComponent(inputValue)}`,
-            )
+
+          return instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${encodeURIComponent(destinationInput)}&Value=${destinationLayer},${encodeURIComponent(inputValue)}`)
         }
       },
     },
@@ -535,9 +526,7 @@ export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBa
           return
         }
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(cmd)
-        }
+        return instance.tcp.sendCommand(cmd)
       },
     },
 
@@ -572,9 +561,7 @@ export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBa
 
         if (input === null) return
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION MoveLayer Input=${input.key}&Value=${action.options.from},${action.options.to}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION MoveLayer Input=${input.key}&Value=${action.options.from},${action.options.to}`)
       },
     },
 
@@ -619,9 +606,7 @@ export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBa
 
         if (input === null) return
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION SwapLayerAnimated Input=${input.key}&Value=${action.options.from},${action.options.to},${action.options.duration}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION SwapLayerAnimated Input=${input.key}&Value=${action.options.from},${action.options.to},${action.options.duration}`)
       },
     },
   }

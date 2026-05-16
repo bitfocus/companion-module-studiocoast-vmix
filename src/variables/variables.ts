@@ -114,8 +114,8 @@ export class Variables {
       ...transitionDefinitions(this.instance),
     }
 
+		if (JSON.stringify(this.currentDefinitions) !== JSON.stringify(variableDefinitions)) this.instance.setVariableDefinitions(variableDefinitions)
     this.currentDefinitions = variableDefinitions
-    this.instance.setVariableDefinitions(variableDefinitions)
   }
 
   /**

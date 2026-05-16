@@ -88,20 +88,18 @@ export const getOverlayActions = (instance: VMixInstance, _sendBasicCommand: Sen
           return (x as number) - 1
         })
 
-        if (instance.tcp) {
-          if (action.options.type === 'OverlayInput') {
-            return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID} Input=${input}&Mix=${mix.join(',')}`)
-          } else if (action.options.type === 'PreviewOverlayInput') {
-            return instance.tcp.sendCommand(`FUNCTION PreviewOverlayInput${overlayID} Input=${input}`)
-          } else if (action.options.type === 'OverlayInputAllOff') {
-            return instance.tcp.sendCommand(`FUNCTION OverlayInputAllOff`)
-          } else if (action.options.type === 'In') {
-            return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type} Input=${input}&Mix=${mix.join(',')}`)
-          } else if (action.options.type === 'Last') {
-            return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type} Mix=${mix.join(',')}`)
-          } else {
-            return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type}`)
-          }
+        if (action.options.type === 'OverlayInput') {
+          return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID} Input=${input}&Mix=${mix.join(',')}`)
+        } else if (action.options.type === 'PreviewOverlayInput') {
+          return instance.tcp.sendCommand(`FUNCTION PreviewOverlayInput${overlayID} Input=${input}`)
+        } else if (action.options.type === 'OverlayInputAllOff') {
+          return instance.tcp.sendCommand(`FUNCTION OverlayInputAllOff`)
+        } else if (action.options.type === 'In') {
+          return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type} Input=${input}&Mix=${mix.join(',')}`)
+        } else if (action.options.type === 'Last') {
+          return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type} Mix=${mix.join(',')}`)
+        } else {
+          return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type}`)
         }
       },
     },

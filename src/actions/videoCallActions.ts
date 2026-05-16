@@ -57,9 +57,9 @@ export const getVideoCallActions = (instance: VMixInstance, sendBasicCommand: Se
       ],
       callback: async (action) => {
         if (action.options.functionID === 'VideoCallConnect') {
-          if (instance.tcp) return instance.tcp.sendCommand(action.options.functionID + `Input=${action.options.input}&Value=${action.options.name},${action.options.password}`)
+          return instance.tcp.sendCommand(action.options.functionID + `Input=${action.options.input}&Value=${action.options.name},${action.options.password}`)
         } else {
-          if (instance.tcp) return instance.tcp.sendCommand(action.options.functionID + `Input=${action.options.input}`)
+          return instance.tcp.sendCommand(action.options.functionID + `Input=${action.options.input}`)
         }
       },
     },

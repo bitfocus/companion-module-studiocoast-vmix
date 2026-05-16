@@ -65,7 +65,7 @@ export default class VMixInstance extends InstanceBase<VMixInstanceTypes> {
     mix: 1,
   }
   public startTime: Date = new Date()
-  public tcp: TCP | null = null
+  public tcp: TCP = new TCP(this)
   public variables: Variables | null = null
 
   /**
@@ -79,12 +79,11 @@ export default class VMixInstance extends InstanceBase<VMixInstanceTypes> {
       )
     }
 
-    await this.configUpdated(config)
-
+    this.config = config
+    this.tcp.init()
     this.variables = new Variables(this)
     this.activators = new Activators(this)
-    this.tcp = new TCP(this)
-
+    this.audioPresets.presets = this.config.audioPresets
     this.updateInstance()
     this.setPresetDefinitions(getPresetStructure, getPresetDefinitions(this))
     this.variables.updateDefinitions()
@@ -101,7 +100,7 @@ export default class VMixInstance extends InstanceBase<VMixInstanceTypes> {
     this.updateInstance()
     this.setPresetDefinitions(getPresetStructure, getPresetDefinitions(this))
     this.audioPresets.presets = this.config.audioPresets
-    if (this.tcp) this.tcp.update()
+    this.tcp.update()
     if (this.variables) this.variables.updateVariables()
     return
   }
@@ -132,7 +131,6 @@ export default class VMixInstance extends InstanceBase<VMixInstanceTypes> {
    * @description sets actions and feedbacks available for this instance
    */
   private updateInstance(): void {
-    // Cast actions and feedbacks from VMix types to Companion types
     const actions = getActions(this)
     const feedbacks = getFeedbacks(this)
 

@@ -35,8 +35,6 @@ export class TCP {
     this.pollInterval = instance.config.apiPollInterval
     this.tcpHost = instance.config.host
     this.tcpPort = instance.config.tcpPort
-
-    this.init()
   }
 
   /**

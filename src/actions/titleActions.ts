@@ -130,8 +130,7 @@ export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBa
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10)) ? 'SelectedName' : 'SelectedIndex'
 
-        if (instance.tcp)
-          return instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Input=${encodeURIComponent(action.options.input)}&${indexNaNCheck}=${encodeURIComponent(index)}`)
+        return instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Input=${encodeURIComponent(action.options.input)}&${indexNaNCheck}=${encodeURIComponent(index)}`)
       },
     },
 
@@ -163,8 +162,7 @@ export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBa
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10)) ? 'SelectedName' : 'SelectedIndex'
 
-        if (instance.tcp)
-          return instance.tcp.sendCommand(`FUNCTION SetCountdown Input=${encodeURIComponent(action.options.input)}&${indexNaNCheck}=${encodeURIComponent(index)}&value=${value}`)
+        return instance.tcp.sendCommand(`FUNCTION SetCountdown Input=${encodeURIComponent(action.options.input)}&${indexNaNCheck}=${encodeURIComponent(index)}&value=${value}`)
       },
     },
 
@@ -196,10 +194,9 @@ export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBa
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10))
 
-        if (instance.tcp)
-          return instance.tcp.sendCommand(
-            `FUNCTION ChangeCountdown Input=${encodeURIComponent(action.options.input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'}=${encodeURIComponent(index)}&value=${value}`,
-          )
+        return instance.tcp.sendCommand(
+          `FUNCTION ChangeCountdown Input=${encodeURIComponent(action.options.input)}&${indexNaNCheck ? 'SelectedName' : 'SelectedIndex'}=${encodeURIComponent(index)}&value=${value}`,
+        )
       },
     },
 
@@ -235,10 +232,7 @@ export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBa
         if (isNaN(parseFloat(value)) || parseFloat(value) % 1 != 0) {
           instance.log('warn', "'Seconds' for adjusting a countdown must be a whole number")
         } else {
-          if (instance.tcp)
-            return instance.tcp.sendCommand(
-              `FUNCTION AdjustCountdown Input=${encodeURIComponent(action.options.input)}&${indexNaNCheck}=${encodeURIComponent(index)}&Value=${value}`,
-            )
+          return instance.tcp.sendCommand(`FUNCTION AdjustCountdown Input=${encodeURIComponent(action.options.input)}&${indexNaNCheck}=${encodeURIComponent(index)}&Value=${value}`)
         }
       },
     },
@@ -280,7 +274,7 @@ export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBa
 
         if (action.options.adjustment === 'Set') {
           if (action.options.encode) text = encodeURIComponent(text)
-          if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetText Input=${encodeURIComponent(action.options.input)}&${indexNaNCheck}=${index}&Value=${text}`)
+          return instance.tcp.sendCommand(`FUNCTION SetText Input=${encodeURIComponent(action.options.input)}&${indexNaNCheck}=${index}&Value=${text}`)
         } else {
           if (isNaN(parseFloat(text))) {
             instance.log('warn', 'Increasing/Decreasing a title requires Value to be a number')
@@ -292,7 +286,7 @@ export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBa
               text = '-%3d' + text
             }
 
-            if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetText Input=${encodeURIComponent(action.options.input)}&${indexNaNCheck}=${index}&Value=${text}`)
+            return instance.tcp.sendCommand(`FUNCTION SetText Input=${encodeURIComponent(action.options.input)}&${indexNaNCheck}=${index}&Value=${text}`)
           }
         }
       },
@@ -325,7 +319,7 @@ export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBa
         const value = action.options.value
         const indexNaNCheck = isNaN(parseInt(index, 10)) ? 'SelectedName' : 'SelectedIndex'
 
-        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetTextColour Input=${action.options.input}&Value=${value}&${indexNaNCheck}=${index}`)
+        return instance.tcp.sendCommand(`FUNCTION SetTextColour Input=${action.options.input}&Value=${value}&${indexNaNCheck}=${index}`)
       },
     },
 
@@ -363,7 +357,7 @@ export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBa
         if (action.options.adjustment === 'On') type = 'SetTextVisibleOn'
         if (action.options.adjustment === 'Off') type = 'SetTextVisibleOff'
 
-        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${type} Input=${action.options.input}&${indexNaNCheck}=${index}`)
+        return instance.tcp.sendCommand(`FUNCTION ${type} Input=${action.options.input}&${indexNaNCheck}=${index}`)
       },
     },
 
@@ -397,8 +391,7 @@ export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBa
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(index, 10)) ? 'SelectedName' : 'SelectedIndex'
 
-        if (instance.tcp)
-          return instance.tcp.sendCommand(`FUNCTION SetColor Input=${encodeURIComponent(action.options.input)}&${indexNaNCheck}=${index}&Value=${encodeURIComponent(value)}`)
+        return instance.tcp.sendCommand(`FUNCTION SetColor Input=${encodeURIComponent(action.options.input)}&${indexNaNCheck}=${index}&Value=${encodeURIComponent(value)}`)
       },
     },
 
@@ -438,7 +431,7 @@ export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBa
         const indexNaNCheck = isNaN(parseInt(index, 10)) ? 'SelectedName' : 'SelectedIndex'
 
         if (action.options.encode) image = encodeURIComponent(image)
-        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetImage Input=${encodeURIComponent(action.options.input)}&${indexNaNCheck}=${index}&Value=${image}`)
+        return instance.tcp.sendCommand(`FUNCTION SetImage Input=${encodeURIComponent(action.options.input)}&${indexNaNCheck}=${index}&Value=${image}`)
       },
     },
 
@@ -479,7 +472,7 @@ export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBa
         if (action.options.adjustment === 'On') visibility = 'SetImageVisibleOn'
         if (action.options.adjustment === 'Off') visibility = 'SetImageVisibleOff'
 
-        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${visibility} Input=${encodeURIComponent(action.options.input)}&${indexNaNCheck}=${index}`)
+        return instance.tcp.sendCommand(`FUNCTION ${visibility} Input=${encodeURIComponent(action.options.input)}&${indexNaNCheck}=${index}`)
       },
     },
 
@@ -550,7 +543,7 @@ export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBa
         },
       ],
       callback: async (action) => {
-        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION TitleBeginAnimation Input=${encodeURIComponent(action.options.input)}&Value=${action.options.value}`)
+        return instance.tcp.sendCommand(`FUNCTION TitleBeginAnimation Input=${encodeURIComponent(action.options.input)}&Value=${action.options.value}`)
       },
     },
 
@@ -605,11 +598,9 @@ export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBa
         // Check if layer is a name or an index to switch between SelectedName and SelectedIndex
         const indexNaNCheck = isNaN(parseInt(action.options.selectedIndex, 10)) ? 'SelectedName' : 'SelectedIndex'
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(
-            `FUNCTION SetTickerSpeed Input=${input.key}&${indexNaNCheck}=${encodeURIComponent(action.options.selectedIndex)}&Value=${action.options.value}`,
-          )
-        }
+        return instance.tcp.sendCommand(
+          `FUNCTION SetTickerSpeed Input=${input.key}&${indexNaNCheck}=${encodeURIComponent(action.options.selectedIndex)}&Value=${action.options.value}`,
+        )
       },
     },
   }

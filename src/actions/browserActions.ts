@@ -64,8 +64,7 @@ export const getBrowserActions = (instance: VMixInstance, sendBasicCommand: Send
       callback: async (action) => {
         const value = action.options.value
 
-        if (instance.tcp)
-          return instance.tcp.sendCommand(`FUNCTION BrowserNavigate Input=${action.options.input}&Value=${action.options.encode ? encodeURIComponent(value) : value}`)
+        return instance.tcp.sendCommand(`FUNCTION BrowserNavigate Input=${action.options.input}&Value=${action.options.encode ? encodeURIComponent(value) : value}`)
       },
     },
   }

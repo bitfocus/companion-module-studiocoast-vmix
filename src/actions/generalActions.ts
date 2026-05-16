@@ -70,9 +70,7 @@ export const getGeneralActions = (instance: VMixInstance, sendBasicCommand: Send
       callback: async (action) => {
         const value = action.options.value
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION SetFader Value=${value}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION SetFader Value=${value}`)
       },
     },
     dynamic: {
@@ -114,7 +112,7 @@ export const getGeneralActions = (instance: VMixInstance, sendBasicCommand: Send
       callback: async (action) => {
         const value = action.options.value
 
-        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SetDynamic${action.options.type}${action.options.number} Value=${value}`)
+        return instance.tcp.sendCommand(`FUNCTION SetDynamic${action.options.type}${action.options.number} Value=${value}`)
       },
     },
     activatorRefresh: {

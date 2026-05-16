@@ -35,9 +35,7 @@ export const getPresetActions = (instance: VMixInstance, _sendBasicCommand: Send
         },
       ],
       callback: async (action) => {
-        if (instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION ${action.options.functionID}${action.options.functionID !== 'LastPreset' ? ` Value=${action.options.value}` : ''}`)
-        }
+        instance.tcp.sendCommand(`FUNCTION ${action.options.functionID}${action.options.functionID !== 'LastPreset' ? ` Value=${action.options.value}` : ''}`)
       },
     },
   }

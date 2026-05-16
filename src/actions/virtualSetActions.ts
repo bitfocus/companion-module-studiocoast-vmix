@@ -26,7 +26,7 @@ export const getVirtualSetActions = (instance: VMixInstance, _sendBasicCommand: 
         },
       ],
       callback: async (action) => {
-        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION SelectIndex Input=${encodeURIComponent(action.options.input)}&Value=${action.options.value}`)
+        return instance.tcp.sendCommand(`FUNCTION SelectIndex Input=${encodeURIComponent(action.options.input)}&Value=${action.options.value}`)
       },
     },
   }

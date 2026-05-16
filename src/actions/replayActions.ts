@@ -534,7 +534,7 @@ export const getReplayActions = (instance: VMixInstance, sendBasicCommand: SendB
 
     replaySetAudioSource: {
       name: 'Replay - Set Audio Source',
-      description: 'Sets the sudio source used for Replay',
+      description: 'Sets the audio source used for Replay',
       options: [
         {
           type: 'dropdown',
@@ -598,9 +598,7 @@ export const getReplayActions = (instance: VMixInstance, sendBasicCommand: SendB
 
         const position = value / maxValue
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION ReplaySetSpeed Channel=${action.options.channel}&Value=${position}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION ReplaySetSpeed Channel=${action.options.channel}&Value=${position}`)
       },
     },
 
@@ -640,9 +638,7 @@ export const getReplayActions = (instance: VMixInstance, sendBasicCommand: SendB
           command += ` Channel=${action.options.channel}&Value=${action.options.value}`
         }
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION ${command}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION ${command}`)
       },
     },
 
@@ -764,9 +760,7 @@ export const getReplayActions = (instance: VMixInstance, sendBasicCommand: SendB
       ],
       callback: async (action) => {
         const value = action.options.value - 1
-        if (instance.tcp) {
-          instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Value=${value}`)
-        }
+        instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Value=${value}`)
       },
     },
 
@@ -1021,9 +1015,7 @@ export const getReplayActions = (instance: VMixInstance, sendBasicCommand: SendB
         let functionID = action.options.functionID
         if (functionID === 'Toggle') functionID = instance.data.replay.forward ? 'ReplayPlayBackward' : 'ReplayPlayForward'
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION ${functionID} Channel=${action.options.channel}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION ${functionID} Channel=${action.options.channel}`)
       },
     },
 
@@ -1178,7 +1170,7 @@ export const getReplayActions = (instance: VMixInstance, sendBasicCommand: SendB
         },
       ],
       callback: async (action) => {
-        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ReplayToggleLastEventCamera${action.options.camera}`)
+        return instance.tcp.sendCommand(`FUNCTION ReplayToggleLastEventCamera${action.options.camera}`)
         return
       },
     },
@@ -1197,7 +1189,7 @@ export const getReplayActions = (instance: VMixInstance, sendBasicCommand: SendB
         },
       ],
       callback: async (action) => {
-        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ReplayToggleSelectedEventCamera${action.options.camera}`)
+        return instance.tcp.sendCommand(`FUNCTION ReplayToggleSelectedEventCamera${action.options.camera}`)
         return
       },
     },
@@ -1280,10 +1272,10 @@ export const getReplayActions = (instance: VMixInstance, sendBasicCommand: SendB
           if (isNaN(camera) || camera < 1 || camera > 8) {
             return instance.log('warn', `${camera} is not a valid Replay Camera`)
           } else {
-            if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${command}Camera Value=${camera},${action.options.text}`)
+            return instance.tcp.sendCommand(`FUNCTION ${command}Camera Value=${camera},${action.options.text}`)
           }
         } else {
-          if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${command} Value=${action.options.text}`)
+          return instance.tcp.sendCommand(`FUNCTION ${command} Value=${action.options.text}`)
         }
       },
     },
@@ -1307,9 +1299,7 @@ export const getReplayActions = (instance: VMixInstance, sendBasicCommand: SendB
       callback: async (action) => {
         const command = `ReplaySet${action.options.target}EventTextCamera`
 
-        if (instance.tcp) {
-          for (let i = 1; i < 9; i++) instance.tcp.sendCommand(`FUNCTION ${command} Value=${i},-`)
-        }
+        for (let i = 1; i < 9; i++) instance.tcp.sendCommand(`FUNCTION ${command} Value=${i},-`)
       },
     },
 
@@ -1348,9 +1338,7 @@ export const getReplayActions = (instance: VMixInstance, sendBasicCommand: SendB
           command += ` Channel=${action.options.channel}&Value=${action.options.value}`
         }
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION ${command}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION ${command}`)
       },
     },
   }

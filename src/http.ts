@@ -209,10 +209,8 @@ export const httpHandler = async (instance: VMixInstance, request: CompanionHTTP
       const body = JSON.parse(request.body || '')
 
       body.forEach((action: string) => {
-        if (instance.tcp) {
-          instance.log('info', `sending command: FUNCTION ${action}`)
-          instance.tcp.sendCommand(`FUNCTION ${action}`)
-        }
+        instance.log('info', `sending command: FUNCTION ${action}`)
+        instance.tcp.sendCommand(`FUNCTION ${action}`)
       })
 
       response.status = 200

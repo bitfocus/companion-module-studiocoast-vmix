@@ -278,9 +278,7 @@ export const getInputActions = (instance: VMixInstance, sendBasicCommand: SendBa
       callback: async (action) => {
         const command = `Effect${action.options.effect}${action.options.state}`
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION ${command} Input=${action.options.input}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION ${command} Input=${action.options.input}`)
       },
     },
 
@@ -319,9 +317,7 @@ export const getInputActions = (instance: VMixInstance, sendBasicCommand: SendBa
 
         const command = `SetEffect${action.options.effect}Strength`
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION ${command} Input=${action.options.input}&Value=${parsedValue}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION ${command} Input=${action.options.input}&Value=${parsedValue}`)
       },
     },
 
@@ -428,12 +424,10 @@ export const getInputActions = (instance: VMixInstance, sendBasicCommand: SendBa
           }
         }
 
-        if (instance.tcp) {
-          if (action.options.setting === 'ColourCorrectionAuto' || action.options.setting === 'ColourCorrectionReset') {
-            return instance.tcp.sendCommand(`FUNCTION ${action.options.setting} Input=${input.key}`)
-          } else {
-            return instance.tcp.sendCommand(`FUNCTION ${action.options.setting} Input=${input.key}&Value=${parsedValue}`)
-          }
+        if (action.options.setting === 'ColourCorrectionAuto' || action.options.setting === 'ColourCorrectionReset') {
+          return instance.tcp.sendCommand(`FUNCTION ${action.options.setting} Input=${input.key}`)
+        } else {
+          return instance.tcp.sendCommand(`FUNCTION ${action.options.setting} Input=${input.key}&Value=${parsedValue}`)
         }
       },
     },
@@ -564,9 +558,7 @@ export const getInputActions = (instance: VMixInstance, sendBasicCommand: SendBa
           cmd = `FUNCTION ${action.options.setting} Input=${input.key}&Value=${valueMinMax(Math.round(value * 1000) / 1000, -2, 2)}`
         }
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(cmd)
-        }
+        return instance.tcp.sendCommand(cmd)
       },
     },
 
@@ -611,9 +603,7 @@ export const getInputActions = (instance: VMixInstance, sendBasicCommand: SendBa
 
         if (!input || isNaN(value)) return
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION SetFrameDelay Input=${input.key}&Value=${value}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION SetFrameDelay Input=${input.key}&Value=${value}`)
       },
     },
 
@@ -829,9 +819,7 @@ export const getInputActions = (instance: VMixInstance, sendBasicCommand: SendBa
         const functionID = action.options.type === 'Effect' ? 'SetPictureEffect' : 'SetPictureEffectDuration'
         const value = action.options.type === 'Effect' ? action.options.transition : action.options.duration
 
-        if (instance.tcp) {
-          return instance.tcp.sendCommand(`FUNCTION ${functionID} Input=${input.key}&Value=${value}`)
-        }
+        return instance.tcp.sendCommand(`FUNCTION ${functionID} Input=${input.key}&Value=${value}`)
       },
     },
 
