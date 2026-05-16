@@ -293,10 +293,10 @@
     tar "^7.5.13"
     zx "^8.8.5"
 
-"@distdev/vmix-utils@^1.2.4":
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/@distdev/vmix-utils/-/vmix-utils-1.2.4.tgz#f4b7eda8aa1ac426fa189aac5ec9fc3dd12c9c8e"
-  integrity sha512-ukaQvDj+JDEFd6JeuxL9yckBO0BeuRi2QOCGG8wAVG0PcbsH6ojw2ft4ii+L8qO51o0yVQrYSShESkPV/dcf3A==
+"@distdev/vmix-utils@^1.2.5":
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@distdev/vmix-utils/-/vmix-utils-1.2.5.tgz#88b03aff9df821799ef1392f43225bb6a3d19c7b"
+  integrity sha512-vXTcLuNE+BqqfCG0H0DAs04x+rGGwYl8OqPacrdN0EsStyPOBnrITIBku3lnAEtx/vJjj3YgWr11woYGeibe1g==
 
 "@esbuild/aix-ppc64@0.27.7":
   version "0.27.7"

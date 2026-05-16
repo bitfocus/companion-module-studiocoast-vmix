@@ -457,7 +457,8 @@ export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBa
 
         const bus = instance.data.getAudioBus(selected !== 'Headphones' ? selected : 'Master')
         if (bus === null) return
-        const currentVolume = bus.volume
+        const currentVolume = selected !== 'Headphones' ? bus.volume : bus.headphonesVolume
+				if (currentVolume === undefined) return
 
         let target = amount
 
