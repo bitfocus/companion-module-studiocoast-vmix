@@ -1,5 +1,6 @@
 import * as xml2js from 'xml2js'
 import lodash from 'lodash'
+import { createModuleLogger } from '@companion-module/base'
 import type VMixInstance from './index.js'
 import { type FeedbackId } from './feedbacks/feedback.js'
 
@@ -265,6 +266,8 @@ interface APIData {
   dynamicInput: DynamicInput[]
   dynamicValue: DynamicValue[]
 }
+
+const log = createModuleLogger('Data')
 
 const parserOptions = {
   tagNameProcessors: [],
@@ -1200,7 +1203,7 @@ export class VMixData {
         return
       })
       .catch((err) => {
-        this.instance.log('debug', JSON.stringify(err))
+        log.debug(JSON.stringify(err))
         this.instance.checkFeedbacks('status')
         return
       })

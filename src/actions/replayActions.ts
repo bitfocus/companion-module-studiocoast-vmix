@@ -1,4 +1,4 @@
-import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import { type CompanionActionDefinitions, type CompanionActionSchema, createModuleLogger } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import { type EmptyOptions, options } from '../utils.js'
 import type VMixInstance from '../index.js'
@@ -240,6 +240,8 @@ export type ReplayActionsSchema = {
 }
 
 type ReplayChannel = 'Current' | 'A' | 'B'
+
+const log = createModuleLogger('Actions - Replay')
 
 export const getReplayActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<ReplayActionsSchema> => {
   return {
@@ -586,11 +588,11 @@ export const getReplayActions = (instance: VMixInstance, sendBasicCommand: SendB
         const maxValue = parseFloat(action.options.max)
 
         if (isNaN(value)) {
-          return instance.log('warn', `Replay - Set Speed - Invalid Speed ${action.options.value}`)
+          return log.warn(`Replay - Set Speed - Invalid Speed ${action.options.value}`)
         }
 
         if (isNaN(maxValue) || maxValue < 0) {
-          return instance.log('warn', `Replay - Set Speed - Invalid Max Speed ${action.options.value}`)
+          return log.warn(`Replay - Set Speed - Invalid Max Speed ${action.options.value}`)
         }
 
         if (value > maxValue) value = maxValue
@@ -1270,7 +1272,7 @@ export const getReplayActions = (instance: VMixInstance, sendBasicCommand: SendB
 
         if (action.options.camera !== '') {
           if (isNaN(camera) || camera < 1 || camera > 8) {
-            return instance.log('warn', `${camera} is not a valid Replay Camera`)
+            return log.warn(`${camera} is not a valid Replay Camera`)
           } else {
             return instance.tcp.sendCommand(`FUNCTION ${command}Camera Value=${camera},${action.options.text}`)
           }

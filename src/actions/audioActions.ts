@@ -1,4 +1,4 @@
-import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import { type CompanionActionDefinitions, type CompanionActionSchema, createModuleLogger } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import { type AudioBusOption, type AudioBusMasterOption, type AudioBusMasterHeadphonesOption, type EmptyOptions, options, volumeToLinear } from '../utils.js'
 import type VMixInstance from '../index.js'
@@ -102,6 +102,8 @@ export type AudioActionsSchema = {
   soloAllOff: EmptyOptions
   audioMixerShowHide: EmptyOptions
 }
+
+const log = createModuleLogger('Actions - Audio')
 
 export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<AudioActionsSchema> => {
   return {
@@ -668,7 +670,7 @@ export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBa
 
         if (action.options.adjustment !== 'Set') {
           if (input.balance === undefined) {
-            return instance.log('warn', `Unable to adjust balance of input ${action.options.input}, input does not have a balance value`)
+            return log.warn(`Unable to adjust balance of input ${action.options.input}, input does not have a balance value`)
           }
 
           if (action.options.adjustment === 'Increase') {
@@ -724,11 +726,11 @@ export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBa
 
         if (action.options.adjustment !== 'Set') {
           if (type === 'SetGainChannel2') {
-            return instance.log('warn', `Unable to ${action.options.adjustment} Channel 2, vMix only provides data on Channel 1 Gain`)
+            return log.warn(`Unable to ${action.options.adjustment} Channel 2, vMix only provides data on Channel 1 Gain`)
           }
 
           if (input.gain === undefined) {
-            return instance.log('warn', `Unable to adjust gain of input ${action.options.input}, input does not have a gain value`)
+            return log.warn(`Unable to adjust gain of input ${action.options.input}, input does not have a gain value`)
           }
 
           if (action.options.adjustment === 'Increase') {

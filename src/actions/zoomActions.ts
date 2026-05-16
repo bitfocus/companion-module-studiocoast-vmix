@@ -1,4 +1,4 @@
-import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import { type CompanionActionDefinitions, type CompanionActionSchema, createModuleLogger } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import { options } from '../utils.js'
 import type VMixInstance from '../index.js'
@@ -18,6 +18,8 @@ export type ZoomActionsSchema = {
     password: string
   }>
 }
+
+const log = createModuleLogger('Actions - Zoom')
 
 export const getZoomActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<ZoomActionsSchema> => {
   return {
@@ -43,8 +45,7 @@ export const getZoomActions = (instance: VMixInstance, sendBasicCommand: SendBas
       ],
       callback: async (action) => {
         if (!action.options.meetingID) {
-          instance.log('warn', `Zoom - Join Meeting error - Missing Meeting ID`)
-          return
+          return log.warn(`Zoom - Join Meeting error - Missing Meeting ID`)
         } else if (action.options.input && instance.tcp) {
           return instance.tcp.sendCommand(`FUNCTION ZoomJoinMeeting Input=${action.options.input}&Value=${action.options.meetingID},${action.options.password}`)
         }

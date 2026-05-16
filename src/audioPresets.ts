@@ -1,3 +1,4 @@
+import { createModuleLogger } from '@companion-module/base'
 import type { AudioBusses } from './data.js'
 import { type AudioPresetActionsSchema } from './actions/audioPresetActions.js'
 import type VMixInstance from './index.js'
@@ -35,6 +36,8 @@ type SavePresetSettings = {
   inputReference: 'title' | 'number' | 'key'
   inputFilter: string
 }
+
+const log = createModuleLogger('Audio Presets')
 
 export class AudioPresets {
   instance: VMixInstance
@@ -186,13 +189,13 @@ export class AudioPresets {
       await commandDelay()
     }
 
-    this.instance.log('info', `Loading Audio Preset: ${data.name}`)
+    log.info(`Loading Audio Preset: ${data.name}`)
 
     return
   }
 
   deletePreset = async (name: string): Promise<void> => {
-    this.instance.log('info', `Deleting preset: ${name}`)
+    log.info(`Deleting preset: ${name}`)
     delete this.presets[name]
 
     this.instance.config.audioPresets = this.presets
@@ -266,7 +269,7 @@ export class AudioPresets {
 
     this.presets[newPreset.name] = newPreset
 
-    this.instance.log('info', `Saving preset: ${newPreset.name}`)
+    log.info(`Saving preset: ${newPreset.name}`)
     this.instance.config.audioPresets = this.presets
     this.instance.saveConfig(this.instance.config)
 

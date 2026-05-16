@@ -1,4 +1,4 @@
-import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import { type CompanionActionDefinitions, type CompanionActionSchema, createModuleLogger } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import { type MixOptionEntry, options, TRANSITIONS, parseMix } from '../utils.js'
 import type VMixInstance from '../index.js'
@@ -35,6 +35,8 @@ export type TransitionActionsSchema = {
   }>
 }
 
+const log = createModuleLogger('Actions - Transition')
+
 export const getTransitionActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<TransitionActionsSchema> => {
   return {
     programCut: {
@@ -43,7 +45,7 @@ export const getTransitionActions = (instance: VMixInstance, sendBasicCommand: S
       options: [options.input, options.mixSelect],
       callback: async (action) => {
         const mix = parseMix(action.options.mix)
-        if (mix === null) return instance.log('warn', `Transition - Send Input to Program - Invalid Mix option: ${action.options.mix}`)
+        if (mix === null) return log.warn(`Transition - Send Input to Program - Invalid Mix option: ${action.options.mix}`)
 
         const programCut: any = {
           id: 'programCut',
@@ -90,18 +92,17 @@ export const getTransitionActions = (instance: VMixInstance, sendBasicCommand: S
       ],
       callback: async (action) => {
         const mix = parseMix(action.options.mix)
-        if (mix === null) return instance.log('warn', `Transition - Transition Mix - Invalid Mix option: ${action.options.mix}`)
+        if (mix === null) return log.warn(`Transition - Transition Mix - Invalid Mix option: ${action.options.mix}`)
 
         let duration: number = parseFloat(action.options.duration)
 
         if (isNaN(duration)) {
-          instance.log('warn', `Transition - Transition Mix - Duration must be a number`)
-          return
+          return log.warn(`Transition - Transition Mix - Duration must be a number`)
         }
 
         if (duration < 0) duration = 0
         if (duration > 9999) {
-          instance.log('warn', `Transition - Transition Mix - Duration limited by vMix to 9999ms`)
+          log.warn(`Transition - Transition Mix - Duration limited by vMix to 9999ms`)
           duration = 9999
         }
 
@@ -156,7 +157,7 @@ export const getTransitionActions = (instance: VMixInstance, sendBasicCommand: S
       ],
       callback: async (action) => {
         const mix = parseMix(action.options.mix)
-        if (mix === null) return instance.log('warn', `Transition - Auto/Stinger Transition - Invalid Mix option: ${action.options.mix}`)
+        if (mix === null) return log.warn(`Transition - Auto/Stinger Transition - Invalid Mix option: ${action.options.mix}`)
 
         const command: any = {
           actionId: 'transition',

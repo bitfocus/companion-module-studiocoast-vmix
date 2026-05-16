@@ -1,4 +1,4 @@
-import { InstanceBase, type CompanionHTTPRequest, type CompanionHTTPResponse, type SomeCompanionConfigField } from '@companion-module/base'
+import { InstanceBase, createModuleLogger, type CompanionHTTPRequest, type CompanionHTTPResponse, type SomeCompanionConfigField } from '@companion-module/base'
 import { type Config, getConfigFields, defaultConfig } from './config.js'
 import { getActions } from './actions/actions.js'
 import { Activators } from './activators.js'
@@ -31,6 +31,8 @@ interface RoutingData {
   }
   mix: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15
 }
+
+const log = createModuleLogger('Main')
 
 /**
  * Companion instance class for Studiocoast vMix
@@ -73,10 +75,7 @@ export default class VMixInstance extends InstanceBase<VMixInstanceTypes> {
    */
   public async init(config: Config): Promise<void> {
     if (config.debugVersionUpdateNotifications) {
-      this.log(
-        'info',
-        'v5.0.0 of this mode has now been released! Patch notes can be found at https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/patch_notes.md',
-      )
+      log.info('v5.0.0 of this mode has now been released! Patch notes can be found at https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/patch_notes.md')
     }
 
     this.config = config
@@ -124,7 +123,7 @@ export default class VMixInstance extends InstanceBase<VMixInstanceTypes> {
       clearTimeout(this.variables.definitionsUpdateDebounce)
     }
 
-    this.log('debug', `Instance destroyed: ${this.id}`)
+    log.debug(`Instance destroyed: ${this.id}`)
   }
 
   /**

@@ -1,4 +1,4 @@
-import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import { type CompanionActionDefinitions, type CompanionActionSchema, createModuleLogger } from '@companion-module/base'
 import type { SendBasicCommand } from './actions.js'
 import type VMixInstance from '../index.js'
 
@@ -25,6 +25,8 @@ export type AudioPresetActionsSchema = {
     filter: string
   }>
 }
+
+const log = createModuleLogger('Actions - Audio Preset')
 
 export const getAudioPresetActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<AudioPresetActionsSchema> => {
   return {
@@ -120,14 +122,14 @@ export const getAudioPresetActions = (instance: VMixInstance, _sendBasicCommand:
           try {
             presetData = JSON.parse(action.options.name)
           } catch (e) {
-            instance.log('warn', `Unable to parse Audio Preset data ${e}`)
+            log.warn(`Unable to parse Audio Preset data ${e}`)
             return
           }
         }
 
         if (!presetData.name || !Array.isArray(presetData.inputs) || !Array.isArray(presetData.busses)) {
-          instance.log('warn', 'Invalid Audio Preset Data')
-          instance.log('debug', JSON.stringify(presetData))
+          log.warn('Invalid Audio Preset Data')
+          log.debug(JSON.stringify(presetData))
           return
         }
 
@@ -151,7 +153,7 @@ export const getAudioPresetActions = (instance: VMixInstance, _sendBasicCommand:
         if (instance.audioPresets.presets[action.options.name]) {
           return instance.audioPresets.deletePreset(action.options.name)
         } else {
-          instance.log('warn', `Unable to find preset to delete named: ${action.options.name}`)
+          log.warn(`Unable to find preset to delete named: ${action.options.name}`)
         }
       },
     },
@@ -210,7 +212,7 @@ export const getAudioPresetActions = (instance: VMixInstance, _sendBasicCommand:
       ],
       callback: async (action, _context) => {
         if (!action.options.overwrite && instance.audioPresets.presets[action.options.name] !== undefined) {
-          return instance.log('warn', `Unable to Save Audio Preset: ${action.options.name} already exists`)
+          return log.warn(`Unable to Save Audio Preset: ${action.options.name} already exists`)
         }
 
         instance.audioPresets.savePreset({

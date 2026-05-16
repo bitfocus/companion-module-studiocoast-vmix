@@ -1,4 +1,4 @@
-import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import { type CompanionActionDefinitions, type CompanionActionSchema, createModuleLogger } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import { type EmptyOptions, type MixOptionEntry, options, TRANSITIONS, valueMinMax } from '../utils.js'
 import type VMixInstance from '../index.js'
@@ -160,6 +160,8 @@ export type InputActionsSchema = {
 }
 
 type ColourCorrectionType = 'hue' | 'saturation' | 'liftG' | 'liftB' | 'liftY' | 'gammaR' | 'gammaG' | 'gammaB' | 'gammaY' | 'gainR' | 'gainG' | 'gainB' | 'gainY'
+
+const log = createModuleLogger('Actions - Input')
 
 export const getInputActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<InputActionsSchema> => {
   return {
@@ -400,8 +402,7 @@ export const getInputActions = (instance: VMixInstance, sendBasicCommand: SendBa
 
         if (action.options.adjustment !== 'Set' || !input.cc) {
           if (instance.data.majorVersion < 27) {
-            instance.log('warn', 'Input CC Increase/Decrease is only available in vMix 27 or later')
-            return
+            return log.warn('Input CC Increase/Decrease is only available in vMix 27 or later')
           }
 
           let type = action.options.setting.substring(5)
@@ -503,8 +504,7 @@ export const getInputActions = (instance: VMixInstance, sendBasicCommand: SendBa
         if (!input) return
 
         if (action.options.adjustment !== 'Set' && instance.data.majorVersion < 27) {
-          instance.log('warn', 'Input Position Adjustment Increase/Decrease is only available in vMix 27 or later')
-          return
+          return log.warn('Input Position Adjustment Increase/Decrease is only available in vMix 27 or later')
         }
 
         if (action.options.setting === 'SetZoom') {

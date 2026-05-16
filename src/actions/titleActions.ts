@@ -1,4 +1,4 @@
-import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import { type CompanionActionDefinitions, type CompanionActionSchema, createModuleLogger } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import { TITLEANIMATIONPAGE, options } from '../utils.js'
 import type VMixInstance from '../index.js'
@@ -94,6 +94,8 @@ export type TitleActionsSchema = {
     value: number
   }>
 }
+
+const log = createModuleLogger('Actions - Title')
 
 export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<TitleActionsSchema> => {
   return {
@@ -230,7 +232,7 @@ export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBa
 
         // Check if value is valid
         if (isNaN(parseFloat(value)) || parseFloat(value) % 1 != 0) {
-          instance.log('warn', "'Seconds' for adjusting a countdown must be a whole number")
+          log.warn("'Seconds' for adjusting a countdown must be a whole number")
         } else {
           return instance.tcp.sendCommand(`FUNCTION AdjustCountdown Input=${encodeURIComponent(action.options.input)}&${indexNaNCheck}=${encodeURIComponent(index)}&Value=${value}`)
         }
@@ -277,7 +279,7 @@ export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBa
           return instance.tcp.sendCommand(`FUNCTION SetText Input=${encodeURIComponent(action.options.input)}&${indexNaNCheck}=${index}&Value=${text}`)
         } else {
           if (isNaN(parseFloat(text))) {
-            instance.log('warn', 'Increasing/Decreasing a title requires Value to be a number')
+            return log.warn('Increasing/Decreasing a title requires Value to be a number')
           } else {
             // URL Encode plus and equals symbols to perform addition/subtraction on value instead of setting to a value.
             if (action.options.adjustment === 'Increase') {

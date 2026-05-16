@@ -1,3 +1,4 @@
+import { createModuleLogger } from '@companion-module/base'
 import type VMixInstance from './index.js'
 import type { CallAudioSource, CallVideoSource, Input } from './data.js'
 import type { FeedbackId } from './feedbacks/feedback.js'
@@ -13,6 +14,8 @@ type ActivatorEventHandlers =
   | 'handlerVolumeChannelMixer'
 type AudioBusMasterID = 'M' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
 type StatusType = 'fadeToBlack' | 'recording' | 'external' | 'streaming' | 'playList' | 'multiCorder' | 'fullscreen'
+
+const log = createModuleLogger('Activators')
 
 // Event types and their handlers
 const eventHandlers: { [key: string]: ActivatorEventHandlers | null } = {
@@ -505,7 +508,7 @@ export class Activators {
       // Limit warnings to once per unknown activator
       if (!this.unknownActivatorWarning.includes(params[0])) {
         this.unknownActivatorWarning.push(params[0])
-        this.instance.log('debug', `Unknown vMix activator: ${params[0]}`)
+        log.debug(`Unknown vMix activator: ${params[0]}`)
       }
     } else if (eventType === null) {
       // Unused event

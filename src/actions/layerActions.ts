@@ -1,4 +1,4 @@
-import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import { type CompanionActionDefinitions, type CompanionActionSchema, createModuleLogger } from '@companion-module/base'
 import type { FunctionIDs } from '@distdev/vmix-utils'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import { type EmptyOptions, type MixOptionEntry, options, valueMinMax } from '../utils.js'
@@ -65,6 +65,8 @@ export type LayerActionsSchema = {
     layerInput: string
   }>
 }
+
+const log = createModuleLogger('Actions - Layer')
 
 export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<LayerActionsSchema> => {
   return {
@@ -275,7 +277,7 @@ export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBa
           instance.checkFeedbacks('selectedDestinationLayer', 'routableMultiviewLayer')
           instance.variables?.updateVariables()
         } else {
-          instance.log('warn', `Setting Multiview Destination layer must be a whole number, 1 to 10`)
+          log.warn(`Setting Multiview Destination layer must be a whole number, 1 to 10`)
         }
       },
     },
@@ -419,19 +421,19 @@ export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBa
         const inputLayer = input?.overlay?.find((overlay) => overlay.index === layer - 1)
 
         if (!input || isNaN(layer)) {
-          return instance.log('debug', `Input not found, or layer number invalid`)
+          return log.debug(`Input not found, or layer number invalid`)
         }
 
         if (inputLayer === undefined) {
-          return instance.log('debug', `Unable to find layer ${layer} on input ${selected}`)
+          return log.debug(`Unable to find layer ${layer} on input ${selected}`)
         }
 
         if (layer < 1 || layer > 10) {
-          return instance.log('warn', 'Invalid layer, value must be 1 to 10')
+          return log.warn('Invalid layer, value must be 1 to 10')
         }
 
         if (action.options.adjustment !== 'Set' && instance.data.majorVersion < 27) {
-          return instance.log('warn', 'Input Layer Position Adjustment Increase/Decrease is only available in vMix 27 or later')
+          return log.warn('Input Layer Position Adjustment Increase/Decrease is only available in vMix 27 or later')
         }
 
         let cmd = `FUNCTION SetLayer${layer}${action.options.setting} Input=${input.key}&Value=`

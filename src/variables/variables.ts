@@ -1,5 +1,5 @@
 import type VMixInstance from '../index.js'
-import type { CompanionVariableDefinitions } from '@companion-module/base'
+import { type CompanionVariableDefinitions, createModuleLogger } from '@companion-module/base'
 import { type AudioVariablesSchema, audioDefinitions, audioValues } from './audioVariables.js'
 import { type DynamicVariablesSchema, dynamicDefinitions, dynamicValues } from './dynamicVariables.js'
 import { type GeneralVariablesSchema, generalDefinitions, generalValues } from './generalVariables.js'
@@ -25,6 +25,8 @@ export type VariablesSchema = AudioVariablesSchema &
   OverlayVariablesSchema &
   ReplayVariablesSchema &
   TransitionVariablesSchema
+
+const log = createModuleLogger('Variables')
 
 export class Variables {
   private readonly instance: VMixInstance
@@ -66,9 +68,9 @@ export class Variables {
 
       if (duration > this.instance.config.apiPollInterval && !freshStart) {
         if (duration > this.instance.config.apiPollInterval * 3) {
-          this.instance.log('warn', `API Processing took ${duration}ms, but the API Polling Interval is set to ${this.instance.config.apiPollInterval}ms`)
+          log.warn(`API Processing took ${duration}ms, but the API Polling Interval is set to ${this.instance.config.apiPollInterval}ms`)
         } else {
-          this.instance.log('debug', `API Processing took ${duration}ms, but the API Polling Interval is set to ${this.instance.config.apiPollInterval}ms`)
+          log.debug(`API Processing took ${duration}ms, but the API Polling Interval is set to ${this.instance.config.apiPollInterval}ms`)
         }
       }
 
@@ -114,7 +116,7 @@ export class Variables {
       ...transitionDefinitions(this.instance),
     }
 
-		if (JSON.stringify(this.currentDefinitions) !== JSON.stringify(variableDefinitions)) this.instance.setVariableDefinitions(variableDefinitions)
+    if (JSON.stringify(this.currentDefinitions) !== JSON.stringify(variableDefinitions)) this.instance.setVariableDefinitions(variableDefinitions)
     this.currentDefinitions = variableDefinitions
   }
 
