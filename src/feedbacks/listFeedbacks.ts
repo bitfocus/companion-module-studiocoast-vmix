@@ -1,5 +1,4 @@
-import type { CompanionFeedbackSchema } from '@companion-module/base'
-import { type CompanionFeedbackDefinitions } from '@companion-module/base'
+import type { CompanionFeedbackSchema, CompanionFeedbackDefinitions } from '@companion-module/base'
 import { options } from '../utils.js'
 import type VMixInstance from '../index.js'
 

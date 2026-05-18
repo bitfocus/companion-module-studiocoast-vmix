@@ -1,5 +1,4 @@
-import type { CompanionFeedbackSchema } from '@companion-module/base'
-import { type CompanionFeedbackDefinitions } from '@companion-module/base'
+import type { CompanionFeedbackSchema, CompanionFeedbackDefinitions } from '@companion-module/base'
 import { graphics } from 'companion-module-utils'
 import type { Input } from '../data.js'
 import { type MixOptionEntry, options } from '../utils.js'

@@ -1,5 +1,4 @@
-import type { CompanionFeedbackSchema } from '@companion-module/base'
-import { type CompanionFeedbackDefinitions } from '@companion-module/base'
+import type { CompanionFeedbackSchema, CompanionFeedbackDefinitions } from '@companion-module/base'
 import { presets } from 'companion-module-utils'
 import { type AudioBusOption, type AudioBusMasterOption, options, volumeToLinear } from '../utils.js'
 import type VMixInstance from '../index.js'

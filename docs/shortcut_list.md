@@ -115,15 +115,15 @@ the Actions designed for specific shortcuts can include validation, and more app
 | SetMasterVolume | Audio - Set Bus Volume |
 | SetMasterVolumeFade | Audio - Fade Bus Volume |
 | SetVolume | Audio - Set Input Volume |
-| SetVolumeBusMixer | Audio - Set Volume of an Input's Bus Mixer |
-| SetVolumeBusMixerA | Audio - Set Volume of an Input's Bus Mixer |
-| SetVolumeBusMixerB | Audio - Set Volume of an Input's Bus Mixer |
-| SetVolumeBusMixerC | Audio - Set Volume of an Input's Bus Mixer |
-| SetVolumeBusMixerD | Audio - Set Volume of an Input's Bus Mixer |
-| SetVolumeBusMixerE | Audio - Set Volume of an Input's Bus Mixer |
-| SetVolumeBusMixerF | Audio - Set Volume of an Input's Bus Mixer |
-| SetVolumeBusMixerG | Audio - Set Volume of an Input's Bus Mixer |
-| SetVolumeBusMixerM | Audio - Set Volume of an Input's Bus Mixer |
+| SetVolumeBusMixer | Audio - Set Volume Input Bus Mixer |
+| SetVolumeBusMixerA | Audio - Set Volume Input Bus Mixer |
+| SetVolumeBusMixerB | Audio - Set Volume Input Bus Mixer |
+| SetVolumeBusMixerC | Audio - Set Volume Input Bus Mixer |
+| SetVolumeBusMixerD | Audio - Set Volume Input Bus Mixer |
+| SetVolumeBusMixerE | Audio - Set Volume Input Bus Mixer |
+| SetVolumeBusMixerF | Audio - Set Volume Input Bus Mixer |
+| SetVolumeBusMixerG | Audio - Set Volume Input Bus Mixer |
+| SetVolumeBusMixerM | Audio - Set Volume Input Bus Mixer |
 | SetVolumeChannel1 | Audio - Set Input separate mono Channel Volume |
 | SetVolumeChannel2 | Audio - Set Input separate mono Channel Volume |
 | SetVolumeChannelMixer | Audio - Set Input Channel Volume |
@@ -637,10 +637,10 @@ the Actions designed for specific shortcuts can include validation, and more app
 | Shortcuts | Actions |
 | --- | --- |
 | ScriptStart | Scripting - Script start |
-| ScriptStartDynamic | Scripting - Start/Stop Dynamic Script |
+| ScriptStartDynamic | Scripting - Start / Stop Dynamic Script |
 | ScriptStop | Scripting - Script stop |
 | ScriptStopAll | Scripting - Script stop all |
-| ScriptStopDynamic | Scripting - Start/Stop Dynamic Script |
+| ScriptStopDynamic | Scripting - Start / Stop Dynamic Script |
 
 
 ## Replay
@@ -653,11 +653,11 @@ the Actions designed for specific shortcuts can include validation, and more app
 | ReplayACamera5 | Replay - A Camera |
 | ReplayACamera6 | Replay - A Camera |
 | ReplayACamera7 | Replay - A Camera |
+| ReplayACamera8 | Replay - A Camera |
 | ReplayAppendLastEventText | Replay - Set/Append Event Text |
 | ReplayAppendLastEventTextCamera | Replay - Set/Append Event Text |
 | ReplayAppendSelectedEventText | Replay - Set/Append Event Text |
 | ReplayAppendSelectedEventTextCamera | Replay - Set/Append Event Text |
-| ReplayACamera8 | Replay - A Camera |
 | ReplayBCamera1 | Replay - B Camera |
 | ReplayBCamera2 | Replay - B Camera |
 | ReplayBCamera3 | Replay - B Camera |
@@ -732,12 +732,12 @@ the Actions designed for specific shortcuts can include validation, and more app
 | ReplayPlay | Replay - Play |
 | ReplayPlayAllEvents | Replay - Play all Events |
 | ReplayPlayAllEventsToOutput | Replay - Play all Events to Output |
-| ReplayPlayBackward | Replay - Play Forward/Backward |
+| ReplayPlayBackward | Replay - Play Forward / Backward |
 | ReplayPlayEvent | Replay - Play Event |
 | ReplayPlayEventsByID | Replay - Play Events by ID |
 | ReplayPlayEventsByIDToOutput | Replay - Play Events By ID To Output |
 | ReplayPlayEventToOutput | Replay - Play Event to Output |
-| ReplayPlayForward | Replay - Play Forward/Backward |
+| ReplayPlayForward | Replay - Play Forward / Backward |
 | ReplayPlayLastEvent | Replay - Play Last Event |
 | ReplayPlayLastEventToOutput | Replay - Play Last Event to Output |
 | ReplayPlayNext | Replay - Play Next / Previous |
@@ -785,8 +785,8 @@ the Actions designed for specific shortcuts can include validation, and more app
 | ReplaySetChannelAToBTimecodeAndCamera | Replay - Set Timecode |
 | ReplaySetChannelBToATimecode | Replay - Set Timecode |
 | ReplaySetChannelBToATimecodeAndCamera | Replay - Set Timecode |
-| ReplaySetDirectionBackward | Replay - Set Forward/Backward |
-| ReplaySetDirectionForward | Replay - Set Forward/Backward |
+| ReplaySetDirectionBackward | Replay - Set Forward / Backward |
+| ReplaySetDirectionForward | Replay - Set Forward / Backward |
 | ReplaySetLastEventText | Replay - Set/Append Event Text |
 | ReplaySetLastEventTextCamera | Replay - Set/Append Event Text |
 | ReplaySetSelectedEventText | Replay - Set/Append Event Text |
