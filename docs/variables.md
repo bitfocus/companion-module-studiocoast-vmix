@@ -14,6 +14,7 @@
 | bus\_`BusID`\_meter`AudioChannel`\_avg_3s  |
 | bus\_`BusID`\_meter`AudioChannel`\_peak_1s |
 | bus\_`BusID`\_meter`AudioChannel`\_peak_3s |
+| bus\_`BusID`\_meter`AudioChannel`\_linear  |
 | bus\_`BusID`\_mute                         |
 | bus\_`BusID`\_solo                         |
 | bus\_`BusID`\_sendtomaster                 |

@@ -14,6 +14,7 @@ export type AudioVariablesSchema = {
   [key: `bus_${string}_meterf${number}_avg_3s`]: string
   [key: `bus_${string}_meterf${number}_peak_1s`]: string
   [key: `bus_${string}_meterf${number}_peak_3s`]: string
+  [key: `bus_${string}_meterf${number}_linear`]: string
   [key: `bus_${string}_mute`]: string
   [key: `bus_${string}_solo`]: string
   [key: `bus_${string}_sendtomaster`]: string
@@ -43,6 +44,7 @@ export const audioDefinitions = (instance: VMixInstance): CompanionVariableDefin
             definitions[`bus_${bus.toLowerCase()}_meterf${i}_avg_3s`] = { name: `Bus ${bus} MeterF${i} Avg 3s` }
             definitions[`bus_${bus.toLowerCase()}_meterf${i}_peak_1s`] = { name: `Bus ${bus} MeterF${i} Peak 1s` }
             definitions[`bus_${bus.toLowerCase()}_meterf${i}_peak_3s`] = { name: `Bus ${bus} MeterF${i} Peak 3s` }
+            definitions[`bus_${bus.toLowerCase()}_meterf${i}_linear`] = { name: `Bus ${bus} MeterF${i} Linear` }
           }
         }
 
@@ -104,6 +106,8 @@ export const audioValues = async (instance: VMixInstance): Promise<AudioVariable
         if (audioLevel) {
           variables[`bus_${id.toLowerCase()}_meterf1`] = meterF1
           variables[`bus_${id.toLowerCase()}_meterf2`] = meterF2
+          variables[`bus_${id.toLowerCase()}_meterf1_linear`] = Math.round(volumeToLinear((audioBus?.meterF1 || 0) * 100)) + ''
+          variables[`bus_${id.toLowerCase()}_meterf2_linear`] = Math.round(volumeToLinear((audioBus?.meterF2 || 0) * 100)) + ''
 
           const audioLevelData = instance.data.getAudioLevelData(audioLevel)
           variables[`bus_${id.toLowerCase()}_meterf1_avg_1s`] = volumeTodB(audioLevelData.s1MeterF1Avg * 100).toFixed(1)
