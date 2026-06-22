@@ -95,8 +95,8 @@ export const getOutputActions = (instance: VMixInstance, sendBasicCommand: SendB
         let command = `FUNCTION ${action.options.functionID}`
 
         if (action.options.value === 'Mix') {
-					let mix = action.options.mix === 'Selected' ? instance.routingData.mix - 1 : parseMix(action.options.mix)
-					if (mix === null) return
+          const mix = action.options.mix === 'Selected' ? instance.routingData.mix - 1 : parseMix(action.options.mix)
+          if (mix === null) return
           command += ` Value=Mix&Mix=${mix}`
         } else if (action.options.value === 'Input') {
           const input = action.options.input

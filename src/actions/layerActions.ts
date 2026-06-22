@@ -190,7 +190,7 @@ export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBa
       ],
       callback: async (action) => {
         const input = action.options.layerInput
-        let mix = action.options.mix === 'Selected' ? instance.routingData.mix - 1 : parseMix(action.options.mix)
+        const mix = action.options.mix === 'Selected' ? instance.routingData.mix - 1 : parseMix(action.options.mix)
         if (mix === null) return
 
         return instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].preview}&Value=${action.options.layer},${encodeURIComponent(input)}`)
@@ -221,7 +221,7 @@ export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBa
       ],
       callback: async (action) => {
         const input = action.options.layerInput
-        let mix = action.options.mix === 'Selected' ? instance.routingData.mix - 1 : parseMix(action.options.mix)
+        const mix = action.options.mix === 'Selected' ? instance.routingData.mix - 1 : parseMix(action.options.mix)
         if (mix === null) return
 
         return instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].program}&Value=${action.options.layer},${encodeURIComponent(input)}`)

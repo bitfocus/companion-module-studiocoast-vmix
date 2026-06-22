@@ -74,12 +74,12 @@ export function getActions(instance: VMixInstance): CompanionActionDefinitions<A
       .map((param) => [param[0], typeof param[1] !== 'string' ? JSON.stringify(param[1]) : param[1]])
       .map((param) => {
         if (param[0] === 'mix') {
-        	let mix = action.options.mix === 'Selected' ? instance.routingData.mix - 1 : parseMix(param[1])
-					if (mix === null) mix = 0
+          let mix = action.options.mix === 'Selected' ? instance.routingData.mix - 1 : parseMix(param[1])
+          if (mix === null) mix = 0
           return ['mix', mix]
         } else {
-					return param
-				}
+          return param
+        }
       })
 
     const encodedParams = parsedParams.map((param) => `${param[0]}=${encodeURIComponent(param[1])}`).join('&')

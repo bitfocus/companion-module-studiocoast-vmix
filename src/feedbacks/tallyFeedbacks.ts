@@ -37,8 +37,8 @@ export const getTallyFeedbacks = (instance: VMixInstance): CompanionFeedbackDefi
       description: 'Indicates if an input is in Preview (or is a layer of an input that is if layer tally is selected)',
       options: [options.input, options.mixSelect, options.foregroundColor, options.backgroundColorPreview, options.layerTallyIndicator],
       callback: async (feedback) => {
-				let mix = feedback.options.mix === 'Selected' ? instance.routingData.mix - 1 : parseMix(feedback.options.mix)
-				if (mix === null) return {}
+        const mix = feedback.options.mix === 'Selected' ? instance.routingData.mix - 1 : parseMix(feedback.options.mix)
+        if (mix === null) return {}
 
         // Check if an input is not in preview at all (0), currently in preview (1), or in preview as a layer (2)
         const checkInput = (input: Input | null): 0 | 1 | 2 => {
@@ -103,8 +103,8 @@ export const getTallyFeedbacks = (instance: VMixInstance): CompanionFeedbackDefi
       description: 'Indicates if an input is in Program (or is a layer of an input that is if layer tally is selected)',
       options: [options.input, options.mixSelect, options.foregroundColor, options.backgroundColorProgram, options.layerTallyIndicator],
       callback: async (feedback) => {
-				let mix = feedback.options.mix === 'Selected' ? instance.routingData.mix - 1 : parseMix(feedback.options.mix)
-				if (mix === null) return {}
+        const mix = feedback.options.mix === 'Selected' ? instance.routingData.mix - 1 : parseMix(feedback.options.mix)
+        if (mix === null) return {}
 
         // Check if an input is not in program at all (0), currently in program (1), or in program as a layer (2)
         const checkInput = (input: Input | null): 0 | 1 | 2 => {

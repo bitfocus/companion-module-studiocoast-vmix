@@ -1,6 +1,6 @@
 import { type CompanionActionDefinitions, type CompanionActionSchema, createModuleLogger } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
-import { type MixOptionEntry, options, parseMix, TRANSITIONS } from '../utils.js'
+import { type MixOptionEntry, options, TRANSITIONS } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type TransitionActionsSchema = {
@@ -44,7 +44,7 @@ export const getTransitionActions = (instance: VMixInstance, sendBasicCommand: S
       description: 'Cuts the input directly to Output without changing Preview',
       options: [options.input, options.mixSelect],
       callback: async (action) => {
-        let mix = action.options.mix === 'Selected' ? instance.routingData.mix : action.options.mix
+        const mix = action.options.mix === 'Selected' ? instance.routingData.mix : action.options.mix
         if (mix === null) return log.warn(`Transition - Send Input to Program - Invalid Mix option: ${action.options.mix}`)
 
         const programCut: any = {
