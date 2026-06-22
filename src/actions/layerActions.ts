@@ -1,7 +1,7 @@
 import { type CompanionActionDefinitions, type CompanionActionSchema, createModuleLogger } from '@companion-module/base'
 import type { FunctionIDs } from '@distdev/vmix-utils'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
-import { type EmptyOptions, type MixOptionEntry, options, valueMinMax } from '../utils.js'
+import { type EmptyOptions, type MixOptionEntry, options, parseMix, valueMinMax } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type LayerActionsSchema = {
@@ -190,10 +190,10 @@ export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBa
       ],
       callback: async (action) => {
         const input = action.options.layerInput
-        let mix = action.options.mix
-        if (mix === 'Selected') mix = instance.routingData.mix + 1
+        let mix = action.options.mix === 'Selected' ? instance.routingData.mix - 1 : parseMix(action.options.mix)
+        if (mix === null) return
 
-        return instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix - 1].preview}&Value=${action.options.layer},${encodeURIComponent(input)}`)
+        return instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].preview}&Value=${action.options.layer},${encodeURIComponent(input)}`)
       },
     },
 
@@ -221,10 +221,10 @@ export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBa
       ],
       callback: async (action) => {
         const input = action.options.layerInput
-        let mix = action.options.mix
-        if (mix === 'Selected') mix = instance.routingData.mix + 1
+        let mix = action.options.mix === 'Selected' ? instance.routingData.mix - 1 : parseMix(action.options.mix)
+        if (mix === null) return
 
-        return instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix - 1].program}&Value=${action.options.layer},${encodeURIComponent(input)}`)
+        return instance.tcp.sendCommand(`FUNCTION SetMultiViewOverlay Input=${instance.data.mix[mix].program}&Value=${action.options.layer},${encodeURIComponent(input)}`)
       },
     },
 

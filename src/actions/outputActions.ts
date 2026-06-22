@@ -1,7 +1,7 @@
 import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import type VMixInstance from '../index.js'
-import { type MixOptionEntry, type EmptyOptions, options } from '../utils.js'
+import { type MixOptionEntry, type EmptyOptions, options, parseMix } from '../utils.js'
 
 export type OutputActionsSchema = {
   outputSet: CompanionActionSchema<{
@@ -95,7 +95,9 @@ export const getOutputActions = (instance: VMixInstance, sendBasicCommand: SendB
         let command = `FUNCTION ${action.options.functionID}`
 
         if (action.options.value === 'Mix') {
-          command += ` Value=Mix&Mix=${action.options.mix}`
+					let mix = action.options.mix === 'Selected' ? instance.routingData.mix - 1 : parseMix(action.options.mix)
+					if (mix === null) return
+          command += ` Value=Mix&Mix=${mix}`
         } else if (action.options.value === 'Input') {
           const input = action.options.input
           command += ` Value=${action.options.value}&Input=${encodeURIComponent(input)}`

@@ -1,6 +1,6 @@
 import { type CompanionActionDefinitions, type CompanionActionSchema, createModuleLogger } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
-import { type MixOptionEntry, options, TRANSITIONS, parseMix } from '../utils.js'
+import { type MixOptionEntry, options, parseMix, TRANSITIONS } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type TransitionActionsSchema = {
@@ -44,7 +44,7 @@ export const getTransitionActions = (instance: VMixInstance, sendBasicCommand: S
       description: 'Cuts the input directly to Output without changing Preview',
       options: [options.input, options.mixSelect],
       callback: async (action) => {
-        const mix = parseMix(action.options.mix)
+        let mix = action.options.mix === 'Selected' ? instance.routingData.mix : action.options.mix
         if (mix === null) return log.warn(`Transition - Send Input to Program - Invalid Mix option: ${action.options.mix}`)
 
         const programCut: any = {
@@ -52,7 +52,7 @@ export const getTransitionActions = (instance: VMixInstance, sendBasicCommand: S
           options: {
             functionID: mix !== 1 ? 'ActiveInput' : 'CutDirect',
             input: action.options.input,
-            mix: mix - 1,
+            mix: mix,
           },
         }
 
@@ -91,9 +91,6 @@ export const getTransitionActions = (instance: VMixInstance, sendBasicCommand: S
         },
       ],
       callback: async (action) => {
-        const mix = parseMix(action.options.mix)
-        if (mix === null) return log.warn(`Transition - Transition Mix - Invalid Mix option: ${action.options.mix}`)
-
         let duration: number = parseFloat(action.options.duration)
 
         if (isNaN(duration)) {
@@ -109,7 +106,7 @@ export const getTransitionActions = (instance: VMixInstance, sendBasicCommand: S
         const command: any = {
           actionId: 'transitionMix',
           options: {
-            mix: mix,
+            mix: action.options.mix,
             functionID: action.options.functionID,
             duration,
           },
@@ -156,7 +153,7 @@ export const getTransitionActions = (instance: VMixInstance, sendBasicCommand: S
         },
       ],
       callback: async (action) => {
-        const mix = parseMix(action.options.mix)
+        const mix = action.options.mix
         if (mix === null) return log.warn(`Transition - Auto/Stinger Transition - Invalid Mix option: ${action.options.mix}`)
 
         const command: any = {

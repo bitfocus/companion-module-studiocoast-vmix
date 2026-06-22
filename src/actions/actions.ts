@@ -1,6 +1,7 @@
 import type { CompanionActionEvent, CompanionActionDefinitions } from '@companion-module/base'
 import type { FunctionIDs } from '@distdev/vmix-utils'
 import type VMixInstance from '../index.js'
+import { parseMix } from '../utils.js'
 import { type AudioActionsSchema, getAudioActions, vMixAudioFunctions } from './audioActions.js'
 import { type AudioPresetActionsSchema, getAudioPresetActions } from './audioPresetActions.js'
 import { type BrowserActionsSchema, getBrowserActions, vMixBrowserFunctions } from './browserActions.js'
@@ -72,13 +73,14 @@ export function getActions(instance: VMixInstance): CompanionActionDefinitions<A
       .filter((param) => param[0] !== 'functionID')
       .map((param) => [param[0], typeof param[1] !== 'string' ? JSON.stringify(param[1]) : param[1]])
       .map((param) => {
-        if (param[0] === 'mix' && param[1].toLowerCase() === 'selected') {
-          return ['mix', instance.routingData.mix.toString()]
+        if (param[0] === 'mix') {
+        	let mix = action.options.mix === 'Selected' ? instance.routingData.mix - 1 : parseMix(param[1])
+					if (mix === null) mix = 0
+          return ['mix', mix]
         } else {
-          return param
-        }
+					return param
+				}
       })
-      .filter((param) => param[0] !== 'mixVariable')
 
     const encodedParams = parsedParams.map((param) => `${param[0]}=${encodeURIComponent(param[1])}`).join('&')
 
