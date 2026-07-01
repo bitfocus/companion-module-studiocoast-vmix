@@ -5,6 +5,7 @@ import { parseMix } from '../utils.js'
 import { type AudioActionsSchema, getAudioActions, vMixAudioFunctions } from './audioActions.js'
 import { type AudioPresetActionsSchema, getAudioPresetActions } from './audioPresetActions.js'
 import { type BrowserActionsSchema, getBrowserActions, vMixBrowserFunctions } from './browserActions.js'
+import { type ConfigActionsSchema, getConfigActions } from './configActions.js'
 import { type DataSourceActionsSchema, getDataSourceActions, vMixDataSourceFunctions } from './dataSourceActions.js'
 import { type GeneralActionsSchema, getGeneralActions, vMixGeneralFunctions } from './generalActions.js'
 import { type InputActionsSchema, getInputActions, vMixInputFunctions } from './inputActions.js'
@@ -30,6 +31,7 @@ import { type ZoomActionsSchema, getZoomActions, vMixZoomFunctions } from './zoo
 export type ActionsSchema = AudioActionsSchema &
   AudioPresetActionsSchema &
   BrowserActionsSchema &
+	ConfigActionsSchema &
   DataSourceActionsSchema &
   GeneralActionsSchema &
   InputActionsSchema &
@@ -91,6 +93,7 @@ export function getActions(instance: VMixInstance): CompanionActionDefinitions<A
     ...getAudioActions(instance, sendBasicCommand),
     ...getAudioPresetActions(instance, sendBasicCommand),
     ...getBrowserActions(instance, sendBasicCommand),
+		...getConfigActions(instance),
     ...getDataSourceActions(instance, sendBasicCommand),
     ...getGeneralActions(instance, sendBasicCommand),
     ...getInputActions(instance, sendBasicCommand),

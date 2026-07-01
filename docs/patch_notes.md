@@ -9,6 +9,7 @@
   - `Output - MultiCorder / Recording / Streaming` Action has been replaced by individual actions for MultiCorder, Recording, Streaming, External, Fullscreen, and FTB
   - Renamed `Media` Actions to `Playback` to better explain their functionality
   - Added `Audio Preset` actions to store the current vMix audio states (such as bus routing, volume, etc...) in Companion which when loaded will send the necessary commands to set vMix back to the selected state
+  - Added `General - vMix Connection`, `Config - Set Host`, and `Config - Set Port`, Actions to allow for easily swapping from one vMix instance to another.
   - Added the following Actions:
     - `Audio - Bus Plugins`
     - `Audio - Set Volume Input Bus Mixer`

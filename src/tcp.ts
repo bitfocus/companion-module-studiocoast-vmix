@@ -62,6 +62,9 @@ export class TCP {
     if (this.sockets.xml) {
       this.sockets.xml.destroy()
     }
+		
+    this.instance.connected = false
+    this.instance.updateStatus(InstanceStatus.Disconnected)
   }
 
   /**
@@ -326,11 +329,11 @@ export class TCP {
   /**
    * @description Check for config changes and start new connections/polling if needed
    */
-  public readonly update = (): void => {
+  public readonly update = (force: boolean = false): void => {
     const hostCheck = this.instance.config.host !== this.tcpHost || this.instance.config.tcpPort !== this.tcpPort
     const pollIntervalCheck = this.instance.config.apiPollInterval !== this.pollInterval
 
-    if (hostCheck) {
+    if (hostCheck || force) {
       if (this.pollAPI !== null) {
         clearInterval(this.pollAPI)
       }

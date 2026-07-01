@@ -20,6 +20,9 @@ export type GeneralActionsSchema = {
   }>
   activatorRefresh: EmptyOptions
   callManagerShowHide: EmptyOptions
+  vMixConnection: CompanionActionSchema<{
+    type: 'Connect' | 'Disconnect' | 'Reconnect'
+  }>
 }
 
 export const getGeneralActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<GeneralActionsSchema> => {
@@ -39,6 +42,7 @@ export const getGeneralActions = (instance: VMixInstance, sendBasicCommand: Send
       ],
       callback: sendBasicCommand,
     },
+
     sendKeys: {
       name: 'General - Send keys',
       description: 'Send multiple key presses to vMix',
@@ -54,6 +58,7 @@ export const getGeneralActions = (instance: VMixInstance, sendBasicCommand: Send
       ],
       callback: sendBasicCommand,
     },
+
     tbar: {
       name: 'General - Set t-bar position',
       description: 'Sets the TBar to the specified position',
@@ -73,6 +78,7 @@ export const getGeneralActions = (instance: VMixInstance, sendBasicCommand: Send
         return instance.tcp.sendCommand(`FUNCTION SetFader Value=${value}`)
       },
     },
+
     dynamic: {
       name: 'General - Set Dynamic Inputs and Values',
       description: 'Sets an input or value to the specified Dynamic Input or Dynamic Value',
@@ -115,18 +121,51 @@ export const getGeneralActions = (instance: VMixInstance, sendBasicCommand: Send
         return instance.tcp.sendCommand(`FUNCTION SetDynamic${action.options.type}${action.options.number} Value=${value}`)
       },
     },
+
     activatorRefresh: {
       name: 'General - Activator Refresh',
       description: 'Refresh all activator device lights and controls',
       options: [],
       callback: sendBasicCommand,
     },
+
     callManagerShowHide: {
       name: 'General - Toggle Call Manager',
       description: '',
       options: [],
       callback: sendBasicCommand,
     },
+
+    vMixConnection: {
+			name: 'General - vMix Connection',
+			description: 'Connect/disconnect/Reconnect to a vMix server',
+			options: [
+        {
+          type: 'dropdown',
+          label: 'Connect / Disconnect / Reconnect',
+          id: 'type',
+          default: 'Connect',
+          choices: [
+            { id: 'Connect', label: 'Connect' },
+            { id: 'Disconnect', label: 'Disconnect' },
+            { id: 'Reconnect', label: 'Reconnect' },
+          ],
+          expressionDescription: `Valid Values: 'Connect','Disconnect', or'Reconnect'`,
+        },
+			],
+			callback: (action) => {
+				if (action.options.type === 'Connect') {
+					instance.tcp.update(true)
+				}
+				if (action.options.type === 'Disconnect') {
+					instance.tcp.destroy()
+				}
+				if (action.options.type === 'Reconnect') {
+					instance.tcp.destroy()
+					instance.tcp.update(true)
+				}
+			}
+		},
   }
 }
 
@@ -137,4 +176,5 @@ export const vMixGeneralFunctions: ActionFunctionsList<GeneralActionsSchema> = {
   dynamic: ['SetDynamicInput1', 'SetDynamicValue1', 'SetDynamicInput2', 'SetDynamicValue2', 'SetDynamicInput3', 'SetDynamicValue3', 'SetDynamicInput4', 'SetDynamicValue4'],
   activatorRefresh: ['ActivatorRefresh'],
   callManagerShowHide: ['CallManagerShowHide'],
+	vMixConnection: [],
 }

@@ -43,6 +43,7 @@ This module now supports Companions HTTP API, providing endpoints that can be us
   - `Output - MultiCorder / Recording / Streaming` Action has been replaced by individual actions for MultiCorder, Recording, Streaming, External, Fullscreen, and FTB
   - Renamed `Media` Actions to `Playback` to better explain their functionality
   - Added `Audio Preset` actions to store the current vMix audio states (such as bus routing, volume, etc...) in Companion which when loaded will send the necessary commands to set vMix back to the selected state
+  - Added `General - vMix Connection`, `Config - Set Host`, and `Config - Set Port`, Actions to allow for easily swapping from one vMix instance to another.
   - Added 80 new Actions, resulting in 100% coverage of vMix Shortcut Functions (full list of new actions can be found at [https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/patch_notes.md](https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/patch_notes.md))
   - Updated `Audio - Route Bus to Master` with an option to choose between Toggle, On, or Off
   - Updated `Title - Start / Stop / Pause Countdown` to now also include an option to Suspend a Countdown
