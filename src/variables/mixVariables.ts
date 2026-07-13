@@ -144,7 +144,7 @@ export const mixDefinitions = async (instance: VMixInstance): Promise<CompanionV
 
 export const mixValues = async (instance: VMixInstance): Promise<MixVariablesSchema> => {
   const variables: MixVariablesSchema = {
-    mix_selected: undefined,
+    mix_selected: instance.routingData.mix,
   }
   if (!instance.config.variablesShowMix) return variables
 
@@ -273,7 +273,7 @@ export const mixValues = async (instance: VMixInstance): Promise<MixVariablesSch
     if (mix.number === instance.routingData.mix + 1) await setVariables(mix, true)
   }
 
-  variables['mix_selected'] = instance.routingData.mix + 1
+  variables['mix_selected'] = instance.routingData.mix
 
   return variables
 }

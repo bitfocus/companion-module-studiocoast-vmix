@@ -44,10 +44,10 @@ export const getUtilActions = (instance: VMixInstance, _sendBasicCommand: SendBa
         },
       ],
       callback: async (action) => {
-        const mix = (action.options.mix - 1) as typeof instance.routingData.mix
+        const mix = (action.options.mix) as typeof instance.routingData.mix
 
         instance.routingData.mix = mix
-        instance.variables?.set({ mix_selected: action.options.mix + 1 })
+        instance.variables?.set({ mix_selected: action.options.mix })
 
         instance.variables?.updateVariables()
         instance.checkFeedbacks('mixSelect', 'inputPreview', 'inputLive')
