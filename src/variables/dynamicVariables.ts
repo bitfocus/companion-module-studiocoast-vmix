@@ -1,10 +1,10 @@
-import type { CompanionVariableDefinitions } from '@companion-module/base'
+import type { CompanionVariableDefinitions, JsonValue } from '@companion-module/base'
 import type VMixInstance from '../index.js'
 import { calcDuration, calcRemaining, volumeTodB, volumeToLinear } from '../utils.js'
 
 export type DynamicVariablesSchema = {
-  [key: `dynamic_input_${number}`]: string
   [key: `dynamic_value_${number}`]: string
+  [key: `dynamic_input_${number}`]: string
   [key: `dynamic_input_${number}_name`]: string
   [key: `dynamic_input_${number}_full_title`]: string
   [key: `dynamic_input_${number}_number`]: number
@@ -82,6 +82,7 @@ export type DynamicVariablesSchema = {
   [key: `dynamic_input_${number}_call_connected`]: string
   [key: `dynamic_input_${number}_call_video_source`]: string
   [key: `dynamic_input_${number}_call_audio_source`]: string
+  [key: `dynamic_input_${number}_json`]: JsonValue
 }
 
 export const dynamicDefinitions = async (instance: VMixInstance): Promise<CompanionVariableDefinitions> => {
@@ -240,6 +241,10 @@ export const dynamicDefinitions = async (instance: VMixInstance): Promise<Compan
         definitions[`dynamic_input_${dynamic + 1}_cc_gaing`] = { name: `Dynamic Input ${dynamic + 1} Colour Correction Gain G` }
         definitions[`dynamic_input_${dynamic + 1}_cc_gainb`] = { name: `Dynamic Input ${dynamic + 1} Colour Correction Gain B` }
         definitions[`dynamic_input_${dynamic + 1}_cc_gainy`] = { name: `Dynamic Input ${dynamic + 1} Colour Correction Gain Y` }
+      }
+
+      if (instance.config.variablesShowInputJSON) {
+        definitions[`dynamic_input_${dynamic + 1}_json`] = { name: `Dynamic Input ${dynamic + 1} JSON data` }
       }
 
       definitions[`dynamic_input_${dynamic + 1}_framedelay`] = { name: `Dynamic Input ${dynamic + 1} Frame Delay` }
@@ -469,6 +474,10 @@ export const dynamicValues = async (instance: VMixInstance): Promise<DynamicVari
             variables[`dynamic_input_${dynamic + 1}_meterf1_peak_3s`] = volumeTodB(audioLevelData.s3MeterF1Peak * 100).toFixed(1)
             variables[`dynamic_input_${dynamic + 1}_meterf2_peak_3s`] = volumeTodB(audioLevelData.s3MeterF2Peak * 100).toFixed(1)
           }
+        }
+
+        if (instance.config.variablesShowInputJSON) {
+          variables[`dynamic_input_${dynamic + 1}_json`] = input as unknown as JsonValue || {}
         }
 
         variables[`dynamic_input_${dynamic + 1}_framedelay`] = input.frameDelay ?? 0

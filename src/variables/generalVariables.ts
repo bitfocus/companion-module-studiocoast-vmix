@@ -1,4 +1,4 @@
-import type { CompanionVariableDefinitions } from '@companion-module/base'
+import type { CompanionVariableDefinitions, JsonValue } from '@companion-module/base'
 import type VMixInstance from '../index.js'
 import { formatTime } from '../utils.js'
 
@@ -9,11 +9,13 @@ export type GeneralVariablesSchema = {
   fullscreen_active: string
   external_active: string
   multicorder_active: string
+	streams: JsonValue
   stream_1_active: string
   stream_2_active: string
   stream_3_active: string
   stream_4_active: string
   stream_5_active: string
+	recording: JsonValue
   recording_active: string
   recording_duration: string
   recording_hms: string
@@ -32,11 +34,13 @@ export const generalDefinitions = (_instance: VMixInstance): CompanionVariableDe
     fullscreen_active: { name: 'Fullscreen Output Active' },
     external_active: { name: 'External Output Active' },
     multicorder_active: { name: 'MultiCorder Active' },
+    streams: { name: 'Streams data' },
     stream_1_active: { name: 'Stream 1 Active' },
     stream_2_active: { name: 'Stream 2 Active' },
     stream_3_active: { name: 'Stream 3 Active' },
     stream_4_active: { name: 'Stream 4 Active' },
     stream_5_active: { name: 'Stream 5 Active' },
+    recording: { name: 'Recording data' },
     recording_active: { name: 'Recording Active' },
     recording_duration: { name: 'Recording Duration' },
     recording_hms: { name: 'Recording HH:MM:SS' },
@@ -67,11 +71,13 @@ export const generalValues = async (instance: VMixInstance): Promise<GeneralVari
     fullscreen_active: instance.data.status.fullscreen.toString(),
     external_active: instance.data.status.external.toString(),
     multicorder_active: instance.data.status.multiCorder.toString(),
+		streams: instance.data.status.stream,
     stream_1_active: instance.data.status.stream[0].toString(),
     stream_2_active: instance.data.status.stream[1].toString(),
     stream_3_active: instance.data.status.stream[2].toString(),
     stream_4_active: instance.data.status.stream[3].toString(),
     stream_5_active: instance.data.status.stream[4].toString(),
+		recording: instance.data.recording as unknown as JsonValue,
     recording_active: instance.data.status.recording.toString(),
     recording_duration: formatTime(instance.data.recording.duration, 's', 'auto'),
     recording_hms: formatTime(instance.data.recording.duration, 's', 'hh:mm:ss'),

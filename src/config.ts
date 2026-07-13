@@ -20,6 +20,7 @@ export interface Config {
   variablesShowInputTitleIndex: boolean
   variablesShowInputTitleName: boolean
   variablesShowInputVolume: boolean
+	variablesShowInputJSON: boolean
   variablesShowAudio: boolean
   variablesShowDynamicInputs: boolean
   variablesShowDynamicValues: boolean
@@ -219,6 +220,13 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       label: 'Input Volume Variables\n(input_music_volume_db)',
       default: false,
     },
+    {
+      type: 'checkbox',
+      id: 'variablesShowInputJSON',
+      width: 12,
+      label: 'Input JSON data',
+      default: false,
+    },
 
     // Audio Variables
     {
@@ -354,6 +362,7 @@ export const defaultConfig = (): Config => {
     variablesShowInputTitleIndex: false,
     variablesShowInputTitleName: false,
     variablesShowInputVolume: false,
+		variablesShowInputJSON: false,
     variablesShowAudio: false,
     variablesShowDynamicInputs: false,
     variablesShowDynamicValues: false,

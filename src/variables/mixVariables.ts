@@ -1,4 +1,4 @@
-import type { CompanionVariableDefinitions } from '@companion-module/base'
+import type { CompanionVariableDefinitions, JsonValue } from '@companion-module/base'
 import type VMixInstance from '../index.js'
 import type { Mix } from '../data.js'
 import { calcDuration, calcRemaining, volumeTodB } from '../utils.js'
@@ -31,6 +31,8 @@ export type MixVariablesSchema = Partial<{
   [key: `mix_${string}_${MixType}_position_${MixPositionTypes}`]: number | string
   [key: `mix_${string}_${MixType}_cc_${MixCCTypes}`]: number | string
   [key: `mix_${string}_${MixType}_layer_${number}_${MixLayerTypes}`]: number | string
+  [key: `mix_${string}_${MixType}_json`]: JsonValue
+
   mix_selected: number
 }>
 
@@ -130,6 +132,10 @@ export const mixDefinitions = async (instance: VMixInstance): Promise<CompanionV
             definitions[`mix_${id}_${lowercaseType}_layer_${i}_cropy2`] = { name: `Mix ${id} ${type} Layer ${i} Crop Y2` }
           }
         }
+      }
+
+      if (instance.config.variablesShowInputJSON) {
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_json`] = { name: `Mix ${id} ${type} JSON` }
       }
     }
   }
@@ -262,6 +268,10 @@ export const mixValues = async (instance: VMixInstance): Promise<MixVariablesSch
             variables[`mix_${id}_${type}_layer_${layer.index + 1}_cropy2`] = layer.cropY2 ?? ''
           }
         }
+      }
+
+      if (instance.config.variablesShowInputJSON) {
+        variables[`mix_${id}_${type}_json`] = input as unknown as JsonValue
       }
 
       variables[`mix_${id}_${type}_framedelay`] = input.frameDelay ?? 0

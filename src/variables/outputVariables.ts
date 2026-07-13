@@ -1,4 +1,4 @@
-import type { CompanionVariableDefinitions } from '@companion-module/base'
+import type { CompanionVariableDefinitions, JsonValue } from '@companion-module/base'
 import type VMixInstance from '../index.js'
 
 export type OutputVariablesSchema = Partial<{
@@ -9,6 +9,7 @@ export type OutputVariablesSchema = Partial<{
   [key: `output_${number}_srt`]: string
   [key: `output_${number}_type`]: string
   [key: `output_${number}_input_name`]: string
+  [key: `output_${number}_json`]: JsonValue
 }>
 
 export const outputDefinitions = (instance: VMixInstance): CompanionVariableDefinitions<OutputVariablesSchema> => {
@@ -26,6 +27,7 @@ export const outputDefinitions = (instance: VMixInstance): CompanionVariableDefi
     definitions[`output_${i}_srt`] = { name: `Output ${i} SRT` }
     definitions[`output_${i}_type`] = { name: `Output ${i} Type` }
     definitions[`output_${i}_input_name`] = { name: `Output ${i} Input Name` }
+    definitions[`output_${i}_json`] = { name: `Output ${i} JSON data` }
   }
 
   return definitions
@@ -46,6 +48,7 @@ export const outputValues = async (instance: VMixInstance): Promise<OutputVariab
     variables[`output_${i}_srt`] = ''
     variables[`output_${i}_type`] = ''
     variables[`output_${i}_input_name`] = ''
+    variables[`output_${i}_json`] = {}
   }
 
   for (const output of instance.data.outputs) {
@@ -69,6 +72,7 @@ export const outputValues = async (instance: VMixInstance): Promise<OutputVariab
       variables[`output_${output.number}_srt`] = output.srt.toString()
       variables[`output_${output.number}_type`] = output.source
     }
+    variables[`output_${output.number}_json`] = output as unknown as JsonValue
   }
 
   return variables

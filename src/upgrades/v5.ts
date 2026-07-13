@@ -135,6 +135,7 @@ const upgradeV5_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
     delete newConfig.shiftDelimiter
     delete newConfig.shiftBlinkPrvPrgm
     delete newConfig.shiftBlinkLayerRouting
+		newConfig.variablesShowInputJSON = false
     changes.updatedConfig = newConfig
   }
 

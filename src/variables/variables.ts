@@ -1,5 +1,5 @@
 import type VMixInstance from '../index.js'
-import { type CompanionVariableDefinitions, createModuleLogger } from '@companion-module/base'
+import { type CompanionVariableDefinitions, JsonValue, createModuleLogger } from '@companion-module/base'
 import { type AudioVariablesSchema, audioDefinitions, audioValues } from './audioVariables.js'
 import { type DynamicVariablesSchema, dynamicDefinitions, dynamicValues } from './dynamicVariables.js'
 import { type GeneralVariablesSchema, generalDefinitions, generalValues } from './generalVariables.js'
@@ -12,7 +12,7 @@ import { type ReplayVariablesSchema, replayDefinitions, replayValues } from './r
 import { type TransitionVariablesSchema, transitionDefinitions, transitionValues } from './transitionVariables.js'
 
 export interface InstanceVariableValue {
-  [key: string]: string | number | undefined
+  [key: string]: string | number | JsonValue | undefined
 }
 
 export type VariablesSchema = AudioVariablesSchema &

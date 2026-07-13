@@ -1,4 +1,4 @@
-import type { CompanionVariableDefinitions } from '@companion-module/base'
+import type { CompanionVariableDefinitions, JsonValue } from '@companion-module/base'
 import type VMixInstance from '../index.js'
 
 export type ReplayVariablesSchema = Partial<{
@@ -18,6 +18,7 @@ export type ReplayVariablesSchema = Partial<{
   replay_timecode: string
   replay_timecodea: string
   replay_timecodeb: string
+	replay_json: JsonValue
 }>
 
 export const replayDefinitions = (instance: VMixInstance): CompanionVariableDefinitions<ReplayVariablesSchema> => {
@@ -41,6 +42,7 @@ export const replayDefinitions = (instance: VMixInstance): CompanionVariableDefi
   definitions.replay_timecode = { name: 'Replay Timecode' }
   definitions.replay_timecodea = { name: 'Replay Timecode A' }
   definitions.replay_timecodeb = { name: 'Replay Timecode B' }
+  definitions.replay_json = { name: 'Replay JSON data' }
 
   return definitions
 }
@@ -66,6 +68,7 @@ export const replayValues = async (instance: VMixInstance): Promise<ReplayVariab
   variables.replay_timecode = instance.data.replay.timecode
   variables.replay_timecodea = instance.data.replay.timecodeA
   variables.replay_timecodeb = instance.data.replay.timecodeB
+  variables.replay_json = instance.data.replay as unknown as JsonValue
 
   return variables
 }

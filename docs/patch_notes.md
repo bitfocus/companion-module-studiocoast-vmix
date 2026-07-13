@@ -100,6 +100,7 @@
   - Renamed `Media` Feedbacks to `Playback` to better explain their functionality
 - Variables:
   - Added `input_X_position`, `mix_X_preview_position`, and `mix_X_program_position`, variables giving the current position in ms of an input
+  - Added `dynamic_input_X_json`, `streams`, `recording`, `input_X_json`, `mix_X_pewview_json`, `mix_X_program_json`, `output_X_json`, `overlay_X_json`, and `replay_json`, variables to give JSON data for use in Expressions
 
 **v4.2.0**
 - Added support for vMix 29

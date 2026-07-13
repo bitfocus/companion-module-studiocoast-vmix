@@ -1,4 +1,4 @@
-import type { CompanionVariableDefinition, CompanionVariableDefinitions } from '@companion-module/base'
+import type { CompanionVariableDefinition, CompanionVariableDefinitions, JsonValue } from '@companion-module/base'
 import type VMixInstance from '../index.js'
 import { calcDuration, calcRemaining, volumeTodB, volumeToLinear } from '../utils.js'
 
@@ -82,6 +82,7 @@ export type InputVariablesSchema = Partial<{
   [key: `input_${string}_cc_gaing`]: number | string
   [key: `input_${string}_cc_gainb`]: number | string
   [key: `input_${string}_cc_gainy`]: number | string
+  [key: `input_${string}_json`]: JsonValue
 }>
 
 export const inputDefinitions = (instance: VMixInstance): CompanionVariableDefinitions => {
@@ -295,6 +296,10 @@ export const inputDefinitions = (instance: VMixInstance): CompanionVariableDefin
         inputSet.set(`input_${type}_cc_gaing`, { name: `Input ${title} Colour Correction Gain G` })
         inputSet.set(`input_${type}_cc_gainb`, { name: `Input ${title} Colour Correction Gain B` })
         inputSet.set(`input_${type}_cc_gainy`, { name: `Input ${title} Colour Correction Gain Y` })
+      }
+
+      if (instance.config.variablesShowInputJSON) {
+        inputSet.set(`input_${type}_json`, { name: `Input ${title} JSON data` })
       }
     }
   })
@@ -553,6 +558,10 @@ export const inputValues = async (instance: VMixInstance): Promise<InputVariable
       }
 
       variables[`input_${type}_framedelay`] = input.frameDelay ?? 0
+
+      if (instance.config.variablesShowInputJSON) {
+        variables[`input_${type}_json`] = input as unknown as JsonValue
+      }
     }
   }
 
