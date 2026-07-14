@@ -9,7 +9,7 @@ assignees: ''
 **Describe the feature**
 A clear and concise description of what the feature does
 
-**Is this version dependent (vMix v24.)?**
+**Is this version dependent (vMix v29.)?**
 
 **If documentation is required to implement, do you know where to find it?**
 If applicable, add screenshots, protocol description PDFs, etc., to help the developers along.

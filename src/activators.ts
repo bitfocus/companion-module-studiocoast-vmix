@@ -1,5 +1,7 @@
-import type VMixInstance from './'
-import type { CallAudioSource, CallVideoSource, Input } from './data'
+import { createModuleLogger } from '@companion-module/base'
+import type VMixInstance from './index.js'
+import type { CallAudioSource, CallVideoSource, Input } from './data.js'
+import type { FeedbackId } from './feedbacks/feedback.js'
 
 type ActivatorEventHandlers =
   | 'handlerBusAudio'
@@ -12,6 +14,8 @@ type ActivatorEventHandlers =
   | 'handlerVolumeChannelMixer'
 type AudioBusMasterID = 'M' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
 type StatusType = 'fadeToBlack' | 'recording' | 'external' | 'streaming' | 'playList' | 'multiCorder' | 'fullscreen'
+
+const log = createModuleLogger('Activators')
 
 // Event types and their handlers
 const eventHandlers: { [key: string]: ActivatorEventHandlers | null } = {
@@ -191,7 +195,7 @@ const eventHandlers: { [key: string]: ActivatorEventHandlers | null } = {
 
 export class Activators {
   private bufferDelay = 50
-  private bufferFeedback: Set<string> = new Set()
+  private bufferFeedback: Set<FeedbackId> = new Set()
   private bufferTimeout: NodeJS.Timeout | null = null
   private instance
   private unknownActivatorWarning: string[] = []
@@ -213,7 +217,8 @@ export class Activators {
    * @description Triggers feedback checks and updates variables
    */
   private executeBuffer = (): void => {
-    this.instance.checkFeedbacks(...this.bufferFeedback)
+    const feedbackIDs: FeedbackId[] = [...this.bufferFeedback]
+    this.instance.checkFeedbacks(feedbackIDs[0], ...feedbackIDs.slice(1))
     this.bufferFeedback.clear()
     if (this.instance.variables) this.instance.variables.updateVariables()
     this.bufferTimeout = null
@@ -288,7 +293,7 @@ export class Activators {
 
     input.audioBusses[bus] = params[2] === '1'
 
-    this.updateBuffer('inputMute')
+    this.updateBuffer('inputAudio')
     this.updateBuffer('inputVolumeMeter')
     this.updateBuffer('inputBusRouting')
     this.updateBuffer('audioPresetActive')
@@ -313,7 +318,7 @@ export class Activators {
       this.updateBuffer('inputVolumeLevel')
     } else if (params[0] === 'InputAudio') {
       input.muted = params[2] !== '1'
-      this.updateBuffer('inputMute')
+      this.updateBuffer('inputAudio')
       this.updateBuffer('inputVolumeMeter')
       this.updateBuffer('inputAudio')
     } else if (params[0] === 'InputAudioAuto') {
@@ -414,7 +419,6 @@ export class Activators {
     } else if (params[0] === 'ReplayPlayForward') {
       // Only triggers if Replay is playing
       this.instance.data.replay.forward = params[1] === '1'
-      this.updateBuffer('replayPlayDirection')
     } else if (params[0] === 'ReplayPlayBackward') {
       // Unused as ReplayPlayForward can determine playback direction
     } else if (params[0] === 'ReplayRecording') {
@@ -504,7 +508,7 @@ export class Activators {
       // Limit warnings to once per unknown activator
       if (!this.unknownActivatorWarning.includes(params[0])) {
         this.unknownActivatorWarning.push(params[0])
-        this.instance.log('debug', `Unknown vMix activator: ${params[0]}`)
+        log.debug(`Unknown vMix activator: ${params[0]}`)
       }
     } else if (eventType === null) {
       // Unused event
@@ -517,8 +521,8 @@ export class Activators {
    * @param name feedback name
    * @description Adds feedback or variable changes to a buffer to debounce updates
    */
-  private updateBuffer = (name: string): void => {
-    if (name !== '') this.bufferFeedback.add(name)
+  private updateBuffer = (name: FeedbackId): void => {
+    this.bufferFeedback.add(name)
 
     // Start a new timeout if not already running
     if (this.bufferTimeout === null) {

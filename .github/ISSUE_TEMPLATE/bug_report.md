@@ -25,8 +25,9 @@ If applicable, add screenshots to help explain your problem.
 
 **System (please complete the following information):**
 
-- Companion Version [e.g. 2.2.0 (70d5207-2717)]
-- vMix version [e.g. v23]
+- Companion Version [e.g. 4.3.3 (70d5207-2717)]
+- Module Version [e.g, 5.0.0]
+- vMix version [e.g. v29]
 
 **Additional context**
 Add any other context about the problem here.

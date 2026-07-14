@@ -1,35 +1,26 @@
-import { combineRgb } from '@companion-module/base'
-import type { PresetCategory, VMixPresetArray } from './presets'
-import type { MixOptionEntry } from '../utils'
+import type { CompanionPresetDefinitions, CompanionPresetGroup, CompanionPresetSection } from '@companion-module/base'
+import type { VMixInstanceTypes, MixOptionEntry } from '../utils.js'
 
-export const getMixPresets = (): VMixPresetArray => {
-  const mixPresets: VMixPresetArray = []
+export const getMixDefinitions = (): CompanionPresetDefinitions<VMixInstanceTypes> => {
+  const mixDefinitions: CompanionPresetDefinitions<VMixInstanceTypes> = {}
 
   for (let mix = 1; mix < 17; mix++) {
-    mixPresets.push({
-      category: `Mix ${mix}` as PresetCategory,
-      name: 'Send Input to Program',
-      type: 'text',
-      text: 'Inputs 1 to 8',
-    })
-
     for (let input = 1; input < 9; input++) {
-      mixPresets.push({
-        category: `Mix ${mix}` as PresetCategory,
+      mixDefinitions[`mix_${mix}pgm${input}`] = {
         name: `PGM ${input}`,
-        type: 'button',
+        type: 'simple',
         style: {
           text: `PGM ${input}`,
-          size: '24',
-          color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          size: '18',
+          color: 0xffffff,
+          bgcolor: 0x000000,
         },
         steps: [
           {
             down: [
               {
                 actionId: 'programCut',
-                options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', input: input.toString() },
+                options: { mix: mix as MixOptionEntry, input: input.toString() },
               },
             ],
             up: [],
@@ -40,42 +31,33 @@ export const getMixPresets = (): VMixPresetArray => {
           {
             feedbackId: 'inputLive',
             options: {
-              mix: (mix - 1) as MixOptionEntry,
-              mixVariable: '',
+              mix: mix as MixOptionEntry,
               input: input.toString(),
-              fg: combineRgb(255, 255, 255),
-              bg: combineRgb(255, 0, 0),
+              fg: 0xffffff,
+              bg: 0xff0000,
               tally: '',
             },
           },
         ],
-      })
+      }
     }
 
-    mixPresets.push({
-      category: `Mix ${mix}` as PresetCategory,
-      name: 'Send Input to Preview',
-      type: 'text',
-      text: 'Inputs 1 to 8',
-    })
-
     for (let input = 1; input < 9; input++) {
-      mixPresets.push({
-        category: `Mix ${mix}` as PresetCategory,
+      mixDefinitions[`mix_${mix}prv${input}`] = {
         name: `PRV ${input}`,
-        type: 'button',
+        type: 'simple',
         style: {
           text: `PRV ${input}`,
-          size: '24',
-          color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+          size: '18',
+          color: 0xffffff,
+          bgcolor: 0x000000,
         },
         steps: [
           {
             down: [
               {
                 actionId: 'previewInput',
-                options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', input: input.toString() },
+                options: { mix: mix as MixOptionEntry, input: input.toString() },
               },
             ],
             up: [],
@@ -85,91 +67,152 @@ export const getMixPresets = (): VMixPresetArray => {
           {
             feedbackId: 'inputPreview',
             options: {
-              mix: (mix - 1) as MixOptionEntry,
-              mixVariable: '',
+              mix: mix as MixOptionEntry,
               input: input.toString(),
-              fg: combineRgb(255, 255, 255),
-              bg: combineRgb(0, 255, 0),
+              fg: 0xffffff,
+              bg: 0x00ff00,
               tally: '',
             },
           },
         ],
-      })
+      }
     }
 
-    mixPresets.push(
-      {
-        category: `Mix ${mix}` as PresetCategory,
-        name: 'Transition Preview to Program',
-        type: 'text',
-        text: '',
+    mixDefinitions[`mix_${mix}cut`] = {
+      name: 'Cut',
+      type: 'simple',
+      style: {
+        text: 'Cut',
+        size: '18',
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
-      {
-        category: `Mix ${mix}` as PresetCategory,
-        name: 'Cut',
-        type: 'button',
-        style: {
-          text: 'Cut',
-          size: '24',
-          color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+      steps: [
+        {
+          down: [
+            {
+              actionId: 'transitionMix',
+              options: { mix: mix as MixOptionEntry, functionID: 'Cut', duration: '1000' },
+            },
+          ],
+          up: [],
         },
-        steps: [
-          {
-            down: [
-              {
-                actionId: 'transitionMix',
-                options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', functionID: 'Cut', duration: '1000' },
-              },
-            ],
-            up: [],
-          },
-        ],
-        feedbacks: [],
+      ],
+      feedbacks: [],
+    }
+
+    mixDefinitions[`mix_${mix}fade`] = {
+      name: 'Fade',
+      type: 'simple',
+      style: {
+        text: 'Fade',
+        size: '18',
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
-      {
-        category: `Mix ${mix}` as PresetCategory,
-        name: 'Fade',
-        type: 'button',
-        style: {
-          text: 'Fade',
-          size: '24',
-          color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+      steps: [
+        {
+          down: [
+            {
+              actionId: 'transitionMix',
+              options: { mix: mix as MixOptionEntry, functionID: 'Fade', duration: '1000' },
+            },
+          ],
+          up: [],
         },
-        steps: [
-          {
-            down: [
-              {
-                actionId: 'transitionMix',
-                options: { mix: (mix - 1) as MixOptionEntry, mixVariable: '', functionID: 'Fade', duration: '1000' },
-              },
-            ],
-            up: [],
-          },
-        ],
-        feedbacks: [],
+      ],
+      feedbacks: [],
+    }
+
+    mixDefinitions[`mix_${mix}merge`] = {
+      name: 'Merge',
+      type: 'simple',
+      style: {
+        text: 'Merge',
+        size: '18',
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
-      {
-        category: `Mix ${mix}` as PresetCategory,
-        name: 'Auto',
-        type: 'button',
-        style: {
-          text: 'Auto',
-          size: '24',
-          color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
+      steps: [
+        {
+          down: [
+            {
+              actionId: 'transitionMix',
+              options: { mix: mix as MixOptionEntry, functionID: 'Merge', duration: '1000' },
+            },
+          ],
+          up: [],
         },
-        steps: [
-          {
-            down: [{ actionId: 'transition', options: { functionID: 'Transition1', mix: 0, mixVariable: '' } }],
-            up: [],
-          },
-        ],
-        feedbacks: [],
+      ],
+      feedbacks: [],
+    }
+
+    mixDefinitions[`mix_${mix}auto`] = {
+      name: 'Auto',
+      type: 'simple',
+      style: {
+        text: 'Auto',
+        size: '18',
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
-    )
+      steps: [
+        {
+          down: [{ actionId: 'transition', options: { functionID: 'Transition1', mix: 1 } }],
+          up: [],
+        },
+      ],
+      feedbacks: [],
+    }
   }
 
-  return mixPresets
+  return mixDefinitions
+}
+
+export const getMixStructure = (): CompanionPresetSection<VMixInstanceTypes>[] => {
+  const mixGroups: CompanionPresetGroup<VMixInstanceTypes>[] = []
+
+  for (let mix = 1; mix < 17; mix++) {
+    const transition: CompanionPresetGroup<VMixInstanceTypes> = {
+      id: `mix${mix}transition`,
+      type: 'simple',
+      name: `Mix ${mix} Transition`,
+      description: '',
+      presets: [`mix_${mix}cut`, `mix_${mix}fade`, `mix_${mix}merge`, `mix_${mix}auto`],
+    }
+
+    const program: CompanionPresetGroup<VMixInstanceTypes> = {
+      id: `mix${mix}pgm`,
+      type: 'simple',
+      name: `Mix ${mix} Program`,
+      description: '',
+      presets: [],
+    }
+
+    const preview: CompanionPresetGroup<VMixInstanceTypes> = {
+      id: `mix${mix}prv`,
+      type: 'simple',
+      name: `Mix ${mix} Preview`,
+      description: '',
+      presets: [],
+    }
+
+    for (let input = 1; input < 9; input++) {
+      program.presets.push(`mix_${mix}pgm${input}`)
+      preview.presets.push(`mix_${mix}prv${input}`)
+    }
+
+    mixGroups.push(transition, program, preview)
+  }
+
+  const structure: CompanionPresetSection<VMixInstanceTypes>[] = [
+    {
+      id: 'mixStructure',
+      name: 'Mix 1 to 16',
+      description: 'Program, Preview, and Transition, presets for each Mix',
+      definitions: [...mixGroups],
+    },
+  ]
+
+  return structure
 }

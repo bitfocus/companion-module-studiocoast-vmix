@@ -1,5 +1,5 @@
-import type { SomeCompanionConfigField } from '@companion-module/base'
-import type { AudioPreset } from './audioPresets'
+import type { SomeCompanionConfigField, JsonValue } from '@companion-module/base'
+import type { AudioPreset } from './audioPresets.js'
 
 export interface Config {
   label: string
@@ -8,9 +8,6 @@ export interface Config {
   connectionErrorLog: boolean
   apiPollInterval: number
   volumeLinear: boolean
-  shiftDelimiter: string
-  shiftBlinkPrvPrgm: boolean
-  shiftBlinkLayerRouting: boolean
   variablesShowInputs: boolean
   variablesShowInputsLowercase: boolean
   variablesShowInputNumbers: boolean
@@ -23,6 +20,7 @@ export interface Config {
   variablesShowInputTitleIndex: boolean
   variablesShowInputTitleName: boolean
   variablesShowInputVolume: boolean
+  variablesShowInputJSON: boolean
   variablesShowAudio: boolean
   variablesShowDynamicInputs: boolean
   variablesShowDynamicValues: boolean
@@ -36,6 +34,8 @@ export interface Config {
   debugVersionUpdateNotifications: boolean
 
   audioPresets: Record<string, AudioPreset>
+
+  [x: string]: JsonValue
 }
 
 export const getConfigFields = (): SomeCompanionConfigField[] => {
@@ -64,13 +64,15 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       max: 65535,
       step: 1,
     },
+
     {
-      type: 'checkbox',
-      id: 'connectionErrorLog',
-      label: 'Enable',
-      width: 1,
-      default: true,
+      type: 'static-text',
+      id: 'configBreak1',
+      width: 12,
+      label: '---',
+      value: '',
     },
+
     {
       type: 'static-text',
       id: 'errorInfo',
@@ -79,13 +81,11 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       value: 'Disabling this can help with clutter in the Log when vMix is closed.',
     },
     {
-      type: 'number',
-      id: 'apiPollInterval',
-      label: 'API Polling interval (ms) (default: 250, min: 100, 0 for disabled)',
-      width: 12,
-      default: 250,
-      min: 0,
-      max: 60000,
+      type: 'checkbox',
+      id: 'connectionErrorLog',
+      label: 'Enable',
+      width: 1,
+      default: true,
     },
     {
       type: 'static-text',
@@ -98,41 +98,29 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
         'See the help section for more details.',
     },
     {
+      type: 'number',
+      id: 'apiPollInterval',
+      label: 'API Polling interval (ms)',
+      description: 'default: 250, min: 100, 0 for disabled',
+      width: 12,
+      default: 250,
+      min: 0,
+      max: 60000,
+    },
+    {
       type: 'checkbox',
       id: 'volumeLinear',
       label: 'Linear vol scale',
       width: 4,
       default: false,
     },
-    { type: 'textinput', id: 'shiftDelimiter', width: 12, label: 'Shift Separator', default: '|' },
+
     {
       type: 'static-text',
-      id: 'shiftBlinkInfo',
+      id: 'configBreak2',
       width: 12,
-      label: 'Feedback Blink',
-      value: 'When using button shifts, this will enable feedback to blink if active on a separate button layer',
-    },
-    {
-      type: 'checkbox',
-      id: 'shiftBlinkPrvPrgm',
-      width: 3,
-      label: 'Prv/Prgm Blink',
-      default: true,
-    },
-    {
-      type: 'checkbox',
-      id: 'shiftBlinkLayerRouting',
-      width: 3,
-      label: 'Layer Routing Blink',
-      default: true,
-    },
-    {
-      type: 'static-text',
-      id: 'variablesInfo',
-      width: 12,
-      label: 'Instance Variables',
-      value:
-        'Toggle which variables are shown in the Variables List (all will still be usable, even if not displayed in the list). Disabling variables being shown can improve the performance of the Companion Web UI.',
+      label: '---',
+      value: '',
     },
 
     {
@@ -149,7 +137,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       type: 'checkbox',
       id: 'variablesShowInputs',
       width: 12,
-      label: 'Input Variables by Name (eg "input_vt1_remaining").',
+      label: 'Input Variables by Name\n(input_vt1_remaining).',
       tooltip: "Note: Variable names don't support some characters/symbols, these will be omitted from any input names in variables",
       default: true,
     },
@@ -160,76 +148,83 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       label: 'Enable to set input names in Variables to lowercase',
       tooltip: 'eg an Input named VT1 in vMix would be "input_vt1_remaining"',
       default: true,
-      isVisible: (config) => config.variablesShowInputs === true,
+      isVisibleExpression: `$(options:variablesShowInputs)`,
     },
     {
       type: 'checkbox',
       id: 'variablesShowInputNumbers',
       width: 12,
-      label: 'Input Variables by Number (eg "input_5_remaining")',
+      label: 'Input Variables by Number\n(input_5_remaining)',
       default: true,
     },
     {
       type: 'checkbox',
       id: 'variablesShowInputGUID',
       width: 12,
-      label: 'Input Variables by GUID (eg "input_89b3994b-c010-4c9b-a743-01193d63620e_remaining")',
+      label: 'Input Variables by GUID\n(input_89b3994b-c010_remaining)',
       default: false,
     },
     {
       type: 'checkbox',
       id: 'variablesShowInputPosition',
       width: 12,
-      label: 'Input Position Variables (eg "input_logo_position_panx")',
+      label: 'Input Position Variables\n(input_logo_position_panx)',
       default: false,
     },
     {
       type: 'checkbox',
       id: 'variablesShowInputCC',
       width: 12,
-      label: 'Input Color Correction Variables (eg "input_logo_cc_hue)',
+      label: 'Input Color Correction Variables\n(input_logo_cc_hu)',
       default: false,
     },
     {
       type: 'checkbox',
       id: 'variablesShowInputLayers',
       width: 12,
-      label: 'Input Layer Name/Number/GUID (eg "input_groupshot_layer_1_name")',
+      label: 'Input Layer Name/Number/GUID\n(input_groupshot_layer_1_name)',
       default: false,
     },
     {
       type: 'checkbox',
       id: 'variablesShowInputLayerPosition',
       width: 12,
-      label: 'Input Layer Position Variables (eg "input_groupshot_layer_1_panx")',
+      label: 'Input Layer Position Variables\n(input_groupshot_layer_1_panx)',
       default: false,
     },
     {
       type: 'checkbox',
       id: 'variablesShowInputList',
       width: 12,
-      label: 'Input List Variables (eg "input_photos_list_1_name")',
+      label: 'Input List Variables\n(input_photos_list_1_name)',
       default: false,
     },
     {
       type: 'checkbox',
       id: 'variablesShowInputTitleIndex',
       width: 12,
-      label: 'Input Title Variables by index (eg "input_scores_layer_1_titletext")',
+      label: 'Input Title Variables by index\n(input_scores_layer_1_titletext)',
       default: false,
     },
     {
       type: 'checkbox',
       id: 'variablesShowInputTitleName',
       width: 12,
-      label: 'Input Title Variables by name (eg "input_scores_layer_team1_titletext")',
+      label: 'Input Title Variables by name\n(input_scores_layer_team1_titletext)',
       default: false,
     },
     {
       type: 'checkbox',
       id: 'variablesShowInputVolume',
       width: 12,
-      label: 'Input Volume Variables (eg "input_music_volume_db")',
+      label: 'Input Volume Variables\n(input_music_volume_db)',
+      default: false,
+    },
+    {
+      type: 'checkbox',
+      id: 'variablesShowInputJSON',
+      width: 12,
+      label: 'Input JSON data',
       default: false,
     },
 
@@ -238,7 +233,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       type: 'checkbox',
       id: 'variablesShowAudio',
       width: 12,
-      label: 'Bus Audio Variables (eg "bus_master_volume_db")',
+      label: 'Bus Audio Variables\n(bus_master_volume_db)',
       default: false,
     },
 
@@ -247,14 +242,14 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       type: 'checkbox',
       id: 'variablesShowDynamicInputs',
       width: 12,
-      label: 'Dynamic Input Variables (eg "dynamic_input_1_name")',
+      label: 'Dynamic Input Variables\n(dynamic_input_1_name)',
       default: false,
     },
     {
       type: 'checkbox',
       id: 'variablesShowDynamicValues',
       width: 12,
-      label: 'Dynamic Value Variables (eg "dynamic_value_1")',
+      label: 'Dynamic Value Variables\n(dynamic_value_1)',
       default: false,
     },
 
@@ -263,7 +258,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       type: 'checkbox',
       id: 'variablesShowMix',
       width: 12,
-      label: 'Mix input Variables (eg "mix_1_preview_name")',
+      label: 'Mix input Variables\n(mix_1_preview_name)',
       default: false,
     },
 
@@ -272,7 +267,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       type: 'checkbox',
       id: 'variablesShowOutputs',
       width: 12,
-      label: 'Output Variables (eg "output_1_source")',
+      label: 'Output Variables\n(output_1_source)',
       default: false,
     },
 
@@ -281,7 +276,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       type: 'checkbox',
       id: 'variablesShowOverlays',
       width: 12,
-      label: 'Overlay Variables (eg "overlay_1_input_name")',
+      label: 'Overlay Variables\n(overlay_1_input_name)',
       default: false,
     },
 
@@ -290,7 +285,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       type: 'checkbox',
       id: 'variablesShowReplay',
       width: 12,
-      label: 'Replay Variables (eg "replay_recording")',
+      label: 'Replay Variables\n(replay_recording)',
       default: false,
     },
 
@@ -299,8 +294,16 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       type: 'checkbox',
       id: 'variablesShowTransitions',
       width: 12,
-      label: 'Transition Variables (eg "transition_1_effect")',
+      label: 'Transition Variables\n(transition_1_effect)',
       default: false,
+    },
+
+    {
+      type: 'static-text',
+      id: 'configBreak3',
+      width: 12,
+      label: '---',
+      value: '',
     },
 
     // Debug Settings
@@ -326,7 +329,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       default: 5000,
       min: 0,
       max: 60000,
-      isVisible: (config) => config.debugSettings === true,
+      isVisibleExpression: `$(options:debugSettings)`,
     },
     {
       type: 'checkbox',
@@ -334,7 +337,7 @@ export const getConfigFields = (): SomeCompanionConfigField[] => {
       width: 12,
       label: 'Log entries with new version information/warnings on startup',
       default: true,
-      isVisible: (config) => config.debugSettings === true,
+      isVisibleExpression: `$(options:debugSettings)`,
     },
   ]
 }
@@ -347,9 +350,6 @@ export const defaultConfig = (): Config => {
     connectionErrorLog: true,
     apiPollInterval: 250,
     volumeLinear: false,
-    shiftDelimiter: '/',
-    shiftBlinkPrvPrgm: true,
-    shiftBlinkLayerRouting: true,
     variablesShowInputs: true,
     variablesShowInputsLowercase: true,
     variablesShowInputNumbers: true,
@@ -362,6 +362,7 @@ export const defaultConfig = (): Config => {
     variablesShowInputTitleIndex: false,
     variablesShowInputTitleName: false,
     variablesShowInputVolume: false,
+    variablesShowInputJSON: false,
     variablesShowAudio: false,
     variablesShowDynamicInputs: false,
     variablesShowDynamicValues: false,

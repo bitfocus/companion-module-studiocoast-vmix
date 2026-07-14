@@ -1,5 +1,107 @@
 # Patch Notes
 
+**v5.0.0**
+- BREAKING CHANGE: Removed the deprecated 'Button Shift' functionality, as it's now redundant with Companion v4.3 native Expression capabilities
+- Many Actions/Feedbacks have been updated to support Companions new capability of toggling an option between standard and Expression modes
+- Added documentation for a list of vMix Shortcuts and the corresponding Companion Actions, available at [https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/shortcut_list.md](https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/shortcut_list.md)
+- Added more descriptions for Actions/Feedbacks and their options
+- Actions:
+  - `Output - MultiCorder / Recording / Streaming` Action has been replaced by individual actions for MultiCorder, Recording, Streaming, External, Fullscreen, and FTB
+  - Renamed `Media` Actions to `Playback` to better explain their functionality
+  - Added `Audio Preset` actions to store the current vMix audio states (such as bus routing, volume, etc...) in Companion which when loaded will send the necessary commands to set vMix back to the selected state
+  - Added `General - vMix Connection`, `Config - Set Host`, and `Config - Set Port`, Actions to allow for easily swapping from one vMix instance to another.
+  - Added the following Actions:
+    - `Audio - Bus Plugins`
+    - `Audio - Set Volume Input Bus Mixer`
+    - `Audio - Set Input Balance`
+    - `Audio - Set Input Gain`
+    - `Audio - Set AFL/PFL mode on an input`
+    - `Audio Preset - Load`
+    - `Audio Preset - Delete`
+    - `Audio Preset - Save`
+    - `DataSource - Play / Pause updates`
+    - `General - Activator Refresh`
+    - `General - Toggle Call Manager`
+    - `General - Send keys`
+    - `Input - Add Input`
+    - `Input - Remove Input`
+    - `Input - Set Input Name`
+    - `Input - Set Alpha`
+    - `Input - Sharpen On/Off`
+    - `Input - Auto Play/Pause/Restart`
+    - `Input - Create Virtual Input`
+    - `Input - Deinterlace`
+    - `Input - Input Preview`
+    - `Input - Mirror Input`
+    - `Input - Move Input`
+    - `Input - Select Category`
+    - `Input - Save Video Delay`
+    - `Input - Set Picture Effect/Duration`
+    - `Input - Set Picture Transition`
+    - `Input - Set Rate`
+    - `Input - Video Delay Recording`
+    - `Layer - Move Layer`
+    - `Layer - Set Layer (Animated)`
+    - `Layer - Move/Swap Layer (Animated)`
+    - `List - Add item to List`
+    - `List - Remove item from List`
+    - `List - Remove all items from List`
+    - `List - List - Export List`
+    - `List - List - Show/Hide List`
+    - `List - Play Out Highlighted item`
+    - `NDI - Send Command`
+    - `NDI - Select Source`
+    - `NDI - Recording`
+    - `OMT - Preview Input`
+    - `OMT - Select Source`
+    - `Output - SRT`
+    - `Output = Streaming Settings`
+    - `Output - Snapshot / Snapshot Input`
+    - `Output - Write Recording duration to log`
+    - `Preset - Save / Open / Last Preset`
+    - `Replay - C Camera`
+    - `Replay - D Camera`
+    - `Replay - Set camera On/Off on Selected / Last Event`
+    - `Replay - Set Audio Source`
+    - `Replay - Update Selected Event Speed`
+    - `Replay - Select Event`
+    = `Replay - Scroll Selected Event`
+    - `Replay - Copy Event`
+    - `Replay - Delete Event`
+    - `Replay - Duplicate Event`
+    - `Replay - Export last Event`
+    - `Replay - Jump Frames Fast On/Off`
+    - `Replay - Jump To Now`
+    - `Replay - Jump to selected In/Out point`
+    - `Replay - Live / Recorded`
+    - `Replay - Live`
+    - `Replay - Play Next / Previous`
+    - `Replay - Last Event Camera On/Off`
+    - `Replay - Set camera On/Off on Last Event`
+    - `Replay - Toggle Last Event Camera`
+    - `Replay - Play all Events`
+    - `Replay - Play Event to Output`
+    - `Replay - Play Forward / Backward`
+    - `Replay - Set Forward / Backward`
+    - `Replay - Toggle Change Direction`
+    - `Replay - Toggle Play / Pause`
+    - `Replay - Play Selected Event`
+    - `Replay - Play Last Event`
+    - `Replay - Set Timecode`
+    - `Scripting - Start / Stop Dynamic Script`
+    - `Title - Pause / Resume render`
+    - `Title - Set Ticker speed`
+    - `Transition - Set Stinger GT Input`
+  - Updated `Audio - Route Bus to Master` with an option to choose between Toggle, On, or Off
+  - Updated `Title - Start / Stop / Pause Countdown` to now also include an option to Suspend a Countdown
+  - Updated `Input - Colour Correction` to include options for Auto and Resetting Colour Correction
+  - Updated `Playback - Playback Actions` to include an option to Play/Pause a Live input (such as an NDI/OMT feed)
+- Feedbacks:
+  - Renamed `Media` Feedbacks to `Playback` to better explain their functionality
+- Variables:
+  - Added `input_X_position`, `mix_X_preview_position`, and `mix_X_program_position`, variables giving the current position in ms of an input
+  - Added `dynamic_input_X_json`, `streams`, `recording`, `input_X_json`, `mix_X_preview_json`, `mix_X_program_json`, `output_X_json`, `overlay_X_json`, and `replay_json`, variables to give JSON data for use in Expressions
+
 **v4.2.0**
 - Added support for vMix 29
 - Actions:

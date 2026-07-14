@@ -1,54 +1,32 @@
-import { combineRgb } from '@companion-module/base'
-import type { VMixFeedback, FeedbackCallback } from './feedback'
-import { type EmptyOptions } from '../utils'
-import type VMixInstance from '../index'
+import type { CompanionFeedbackSchema, CompanionFeedbackDefinitions } from '@companion-module/base'
+import { type EmptyOptions } from '../utils.js'
+import type VMixInstance from '../index.js'
 
-type ReplayStatusOptions = {
-  status: 'recording' | 'live'
+export type ReplayFeedbacksSchema = {
+  replayStatus: CompanionFeedbackSchema<{
+    status: 'recording' | 'live'
+  }>
+  replayEvents: CompanionFeedbackSchema<{
+    channel: 'A' | 'B' | 'selected'
+    events: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20
+  }>
+  replayCamera: CompanionFeedbackSchema<{
+    channel: 'A' | 'B' | 'selected'
+    camera: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
+  }>
+  replaySelectedChannel: CompanionFeedbackSchema<{
+    channel: 'AB' | 'A' | 'B'
+  }>
+  replayQuadMode: CompanionFeedbackSchema<EmptyOptions>
 }
 
-type ReplayEventsOptions = {
-  channel: 'A' | 'B' | 'selected'
-  events: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20
-}
-
-type ReplayCameraOptions = {
-  channel: 'A' | 'B' | 'selected'
-  camera: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
-}
-
-type ReplaySelectedChannelOptions = {
-  channel: 'AB' | 'A' | 'B'
-}
-
-type ReplayQuadModeOptions = EmptyOptions
-
-type ReplayStatusCallback = FeedbackCallback<'replayStatus', ReplayStatusOptions>
-type ReplayEventsCallback = FeedbackCallback<'replayEvents', ReplayEventsOptions>
-type ReplayCameraCallback = FeedbackCallback<'replayCamera', ReplayCameraOptions>
-type ReplaySelectedChannelCallback = FeedbackCallback<'replaySelectedChannel', ReplaySelectedChannelOptions>
-type ReplayQuadModeCallback = FeedbackCallback<'replayQuadMode', ReplayQuadModeOptions>
-
-export interface ReplayFeedbacks {
-  replayStatus: VMixFeedback<ReplayStatusCallback>
-  replayEvents: VMixFeedback<ReplayEventsCallback>
-  replayCamera: VMixFeedback<ReplayCameraCallback>
-  replaySelectedChannel: VMixFeedback<ReplaySelectedChannelCallback>
-  replayQuadMode: VMixFeedback<ReplayQuadModeCallback>
-}
-
-export type ReplayCallbacks = ReplayStatusCallback | ReplayEventsCallback | ReplayCameraCallback | ReplaySelectedChannelCallback | ReplayQuadModeCallback
-
-export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => {
+export const getReplayFeedbacks = (instance: VMixInstance): CompanionFeedbackDefinitions<ReplayFeedbacksSchema> => {
   return {
     replayStatus: {
       type: 'boolean',
       name: 'Replay - Recording/Live',
       description: 'Indicates current recording or live status of a replay input',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0xff0000 },
       options: [
         {
           type: 'dropdown',
@@ -59,6 +37,7 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
             { id: 'recording', label: 'Recording' },
             { id: 'live', label: 'Live' },
           ],
+          expressionDescription: `Valid Values: 'recording', 'live'`,
         },
       ],
       callback: (feedback) => {
@@ -70,10 +49,7 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
       type: 'boolean',
       name: 'Replay - Events Tab',
       description: 'Indicates currently selected Events tab',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0xff0000 },
       options: [
         {
           type: 'dropdown',
@@ -85,6 +61,7 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
             { id: 'B', label: 'Replay B' },
             { id: 'selected', label: 'Replay Selected' },
           ],
+          expressionDescription: `Valid Values: 'A', 'B', 'selected'`,
         },
         {
           type: 'dropdown',
@@ -95,6 +72,7 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
             id: id,
             label: id.toString(),
           })),
+          expressionDescription: `Valid Values: 1 to 20`,
         },
       ],
       callback: (feedback) => {
@@ -114,10 +92,7 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
       type: 'boolean',
       name: 'Replay - Camera Live',
       description: 'Indicates current replay camera being live on a channel',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0xff0000 },
       options: [
         {
           type: 'dropdown',
@@ -129,6 +104,7 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
             { id: 'B', label: 'Replay B' },
             { id: 'selected', label: 'Replay Selected' },
           ],
+          expressionDescription: `Valid Values: 'A', 'B', 'selected'`,
         },
         {
           type: 'dropdown',
@@ -136,6 +112,7 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
           id: 'camera',
           default: 1,
           choices: [1, 2, 3, 4, 5, 6, 7, 8].map((id) => ({ id, label: id.toString() })),
+          expressionDescription: `Valid Values: 1 to 8`,
         },
       ],
       callback: (feedback) => {
@@ -156,10 +133,7 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
       type: 'boolean',
       name: 'Replay - Selected Channel',
       description: 'Indicates currently selected channel',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0xff0000 },
       options: [
         {
           type: 'dropdown',
@@ -171,6 +145,7 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
             { id: 'A', label: 'A' },
             { id: 'B', label: 'B' },
           ],
+          expressionDescription: `Valid Values: 'AB, 'A', 'B'`,
         },
       ],
       callback: (feedback) => {
@@ -182,12 +157,9 @@ export const vMixReplayFeedbacks = (instance: VMixInstance): ReplayFeedbacks => 
       type: 'boolean',
       name: 'Replay - Quad View',
       description: 'Indicates if Quad View is enabled',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0xff0000 },
       options: [],
-      callback: (_feedback) => {
+      callback: () => {
         return instance.data.replay.quadMode
       },
     },

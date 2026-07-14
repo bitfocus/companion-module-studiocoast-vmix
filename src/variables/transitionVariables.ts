@@ -1,26 +1,26 @@
-import type { CompanionVariableDefinition } from '@companion-module/base'
-import type VMixInstance from '..'
+import type { CompanionVariableDefinitions } from '@companion-module/base'
+import type VMixInstance from '../index.js'
 
-type VariablesTransitionIDs = `transition_${number}_effect` | `transition_${number}_duration`
-type VariablesTransitionValues = Record<VariablesTransitionIDs, string | number | undefined>
+export type TransitionVariablesSchema = Partial<{
+  [key: `transition_${number}_effect`]: string
+  [key: `transition_${number}_duration`]: string
+}>
 
-export const transitionDefinitions = (instance: VMixInstance): CompanionVariableDefinition[] => {
-  const definitions: CompanionVariableDefinition[] = []
+export const transitionDefinitions = (instance: VMixInstance): CompanionVariableDefinitions<TransitionVariablesSchema> => {
+  const definitions: CompanionVariableDefinitions<TransitionVariablesSchema> = {}
 
   if (!instance.config.variablesShowTransitions) return definitions
 
   instance.data.transitions.forEach((transition) => {
-    definitions.push(
-      { name: `Transition ${transition.number} Effect`, variableId: `transition_${transition.number}_effect` },
-      { name: `Transition ${transition.number} Duration`, variableId: `transition_${transition.number}_duration` },
-    )
+    definitions[`transition_${transition.number}_effect`] = { name: `Transition ${transition.number} Effect` }
+    definitions[`transition_${transition.number}_duration`] = { name: `Transition ${transition.number} Duration` }
   })
 
   return definitions
 }
 
-export const transitionValues = async (instance: VMixInstance): Promise<VariablesTransitionValues> => {
-  const variables: VariablesTransitionValues = {}
+export const transitionValues = async (instance: VMixInstance): Promise<TransitionVariablesSchema> => {
+  const variables: TransitionVariablesSchema = {}
 
   if (!instance.config.variablesShowTransitions) return variables
 

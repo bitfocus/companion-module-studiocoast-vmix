@@ -1,49 +1,52 @@
-import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import type VMixInstance from '../index'
-import { type MixOptionEntry, options } from '../utils'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
+import type VMixInstance from '../index.js'
+import { type MixOptionEntry, type EmptyOptions, options, parseMix } from '../utils.js'
 
-type OutputSetOptions = {
-  functionID: 'SetOutput2' | 'SetOutput3' | 'SetOutput4' | 'SetOutputExternal2' | 'SetOutputFullscreen' | 'SetOutputFullscreen2'
-  value: 'Output' | 'Preview' | 'MultiView' | 'MultiView2' | 'Replay' | 'Mix' | 'Input'
-  input: string
-  mix: MixOptionEntry
-  mixVariable: string
+export type OutputActionsSchema = {
+  outputSet: CompanionActionSchema<{
+    functionID: 'SetOutput2' | 'SetOutput3' | 'SetOutput4' | 'SetOutputExternal2' | 'SetOutputFullscreen' | 'SetOutputFullscreen2'
+    value: 'Output' | 'Preview' | 'MultiView' | 'MultiView2' | 'Replay' | 'Mix' | 'Input'
+    input: string
+    mix: MixOptionEntry
+  }>
+  multicorderFunctions: CompanionActionSchema<{
+    functionID: 'StartStopMultiCorder' | 'StartMultiCorder' | 'StopMultiCorder'
+  }>
+  recordingFunctions: CompanionActionSchema<{
+    functionID: 'StartStopRecording' | 'StartRecording' | 'StopRecording'
+  }>
+  streamingFunctions: CompanionActionSchema<{
+    functionID: 'StartStopStreaming' | 'StartStreaming' | 'StopStreaming'
+    value: '' | '1' | '2' | '3' | '4' | '5'
+  }>
+  externalFunctions: CompanionActionSchema<{
+    functionID: 'StartStopExternal' | 'StartExternal' | 'StopExternal'
+  }>
+  fullscreenFunctions: CompanionActionSchema<{
+    functionID: 'Fullscreen' | 'FullscreenOff' | 'FullscreenOn'
+  }>
+  srtFunctions: CompanionActionSchema<{
+    functionID: 'StartStopSRTOutput' | 'StartSRTOutput' | 'StopSRTOutput'
+  }>
+  fadeToBlack: EmptyOptions
+  streamingSettings: CompanionActionSchema<{
+    functionID: 'StreamingSetKey' | 'StreamingSetPassword' | 'StreamingSetURL' | 'StreamingSetUsername'
+    url: string
+    key: string
+    username: string
+    password: string
+  }>
+  snapshot: CompanionActionSchema<{
+    input: string
+    value: string
+  }>
+  writeDurationToRecordingLog: CompanionActionSchema<{
+    value: string
+  }>
 }
 
-type ToggleFunctionsOptions = {
-  functionID:
-    | 'StartStopMultiCorder'
-    | 'StartMultiCorder'
-    | 'StopMultiCorder'
-    | 'StartStopRecording'
-    | 'StartRecording'
-    | 'StopRecording'
-    | 'StartStopStreaming'
-    | 'StartStreaming'
-    | 'StopStreaming'
-    | 'StartStopExternal'
-    | 'StartExternal'
-    | 'StopExternal'
-    | 'Fullscreen'
-    | 'FullscreenOff'
-    | 'FullscreenOn'
-    | 'FadeToBlack'
-  value: '' | '0' | '1' | '2'
-}
-
-type OutputSetCallback = ActionCallback<'outputSet', OutputSetOptions>
-type ToggleFunctionsCallback = ActionCallback<'toggleFunctions', ToggleFunctionsOptions>
-
-export interface OutputActions {
-  outputSet: VMixAction<OutputSetCallback>
-  toggleFunctions: VMixAction<ToggleFunctionsCallback>
-
-  [key: string]: VMixAction<any>
-}
-
-export type OutputCallbacks = OutputSetCallback | ToggleFunctionsCallback
-
-export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): OutputActions => {
+export const getOutputActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<OutputActionsSchema> => {
   return {
     outputSet: {
       name: 'Output - Set Output Source',
@@ -77,46 +80,38 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: Sen
             { id: 'Mix', label: 'Mix' },
             { id: 'Input', label: 'Input' },
           ],
+          disableAutoExpression: true,
         },
         {
           ...options.mixSelect,
-          isVisible: (options) => options.value === 'Mix',
+          isVisibleExpression: `$(options:value) === 'Mix'`,
         },
-        options.mixVariable,
         {
           ...options.input,
-          isVisible: (options) => options.value === 'Input',
+          isVisibleExpression: `$(options:value) === 'Input'`,
         },
       ],
-      callback: async (action, context) => {
+      callback: async (action) => {
         let command = `FUNCTION ${action.options.functionID}`
 
         if (action.options.value === 'Mix') {
-          let mix: any = action.options.mix
-          if (mix === -2) {
-            mix = parseInt((await instance.parseOption(action.options.mixVariable, context))[instance.buttonShift.state], 10)
-
-            if (isNaN(mix)) return
-
-            mix = mix - 1
-          }
-          if (mix === -1) mix = instance.routingData.mix
-
+          const mix = action.options.mix === 'Selected' ? instance.routingData.mix - 1 : parseMix(action.options.mix)
+          if (mix === null) return
           command += ` Value=Mix&Mix=${mix}`
         } else if (action.options.value === 'Input') {
-          const input = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
+          const input = action.options.input
           command += ` Value=${action.options.value}&Input=${encodeURIComponent(input)}`
         } else {
           command += ` Value=${action.options.value}`
         }
 
-        if (instance.tcp) return instance.tcp.sendCommand(command)
+        return instance.tcp.sendCommand(command)
       },
     },
 
-    toggleFunctions: {
-      name: 'Output - MultiCorder / Recording / Streaming',
-      description: 'Start / Stop / Toggle vMix Output functions',
+    multicorderFunctions: {
+      name: 'Output - Multicorder',
+      description: 'Start / Stop / Toggle Multicorder',
       options: [
         {
           type: 'dropdown',
@@ -124,23 +119,51 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: Sen
           id: 'functionID',
           default: 'StartStopMultiCorder',
           choices: [
-            { id: 'StartStopMultiCorder', label: 'Start / Stop MultiCorder' },
             { id: 'StartMultiCorder', label: 'Start MultiCorder' },
             { id: 'StopMultiCorder', label: 'Stop MultiCorder' },
-            { id: 'StartStopRecording', label: 'Start / Stop Recording' },
+            { id: 'StartStopMultiCorder', label: 'Start / Stop MultiCorder' },
+          ],
+          expressionDescription: `Valid Values: 'StartMultiCorder', 'StopMultiCorder', 'StartStopMultiCorder'`,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    recordingFunctions: {
+      name: 'Output - Recording',
+      description: 'Start / Stop / Toggle Recording',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Output Function',
+          id: 'functionID',
+          default: 'StartRecording',
+          choices: [
             { id: 'StartRecording', label: 'Start Recording' },
             { id: 'StopRecording', label: 'Stop Recording' },
-            { id: 'StartStopStreaming', label: 'Start / Stop Stream' },
+            { id: 'StartStopRecording', label: 'Toggle Recording' },
+          ],
+          expressionDescription: `Valid Values: 'StartRecording', 'StopRecording', 'StartStopRecording'`,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    streamingFunctions: {
+      name: 'Output - Streaming',
+      description: 'Start / Stop / Toggle Streaming',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Output Function',
+          id: 'functionID',
+          default: 'StartStreaming',
+          choices: [
             { id: 'StartStreaming', label: 'Start Stream' },
             { id: 'StopStreaming', label: 'Stop Stream' },
-            { id: 'StartStopExternal', label: 'Start / Stop External' },
-            { id: 'StartExternal', label: 'Start External' },
-            { id: 'StopExternal', label: 'Stop External' },
-            { id: 'Fullscreen', label: 'Fullscreen On / Off' },
-            { id: 'FullscreenOn', label: 'Fullscreen On' },
-            { id: 'FullscreenOff', label: 'Fullscreen Off' },
-            { id: 'FadeToBlack', label: 'Fade To Black' },
+            { id: 'StartStopStreaming', label: 'Toggle Stream' },
           ],
+          expressionDescription: `Valid Values: 'StartStreaming', 'StopStreaming', 'StartStopStreaming'`,
         },
         {
           type: 'dropdown',
@@ -149,28 +172,210 @@ export const vMixOutputActions = (instance: VMixInstance, _sendBasicCommand: Sen
           default: '',
           choices: [
             { id: '', label: 'All' },
-            { id: '0', label: '1' },
-            { id: '1', label: '2' },
-            { id: '2', label: '3' },
-            { id: '3', label: '4' },
-            { id: '4', label: '5' },
+            { id: 1, label: '1' },
+            { id: 2, label: '2' },
+            { id: 3, label: '3' },
+            { id: 4, label: '4' },
+            { id: 5, label: '5' },
           ],
-          isVisible: (options) => {
-            const functionID = options.functionID + ''
-            return functionID.includes('Streaming')
-          },
+          expressionDescription: `Valid Values: 1 to 5, or empty for All`,
         },
       ],
       callback: async (action) => {
         let command = `FUNCTION ${action.options.functionID}`
 
-        if (action.options.functionID.includes('Streaming') && action.options.value != '') {
+        if (action.options.value != '') {
           command += ` value=${action.options.value}`
         }
 
-        if (instance.tcp) return instance.tcp.sendCommand(command)
-        return
+        return instance.tcp.sendCommand(command)
       },
     },
+
+    externalFunctions: {
+      name: 'Output - External',
+      description: 'Start / Stop / Toggle External',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Output Function',
+          id: 'functionID',
+          default: 'StartExternal',
+          choices: [
+            { id: 'StartExternal', label: 'Start External' },
+            { id: 'StopExternal', label: 'Stop External' },
+            { id: 'StartStopExternal', label: 'Toggle External' },
+          ],
+          expressionDescription: `Valid Values: 'StartExternal', 'StopExternal', 'StartStopExternal'`,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    fullscreenFunctions: {
+      name: 'Output - Fullscreen',
+      description: 'Start / Stop / Toggle Fullscreen',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Output Function',
+          id: 'functionID',
+          default: 'FullscreenOn',
+          choices: [
+            { id: 'FullscreenOn', label: 'Fullscreen On' },
+            { id: 'FullscreenOff', label: 'Fullscreen Off' },
+            { id: 'Fullscreen', label: 'Fullscreen Toggle' },
+          ],
+          expressionDescription: `Valid Values: 'FullscreenOn', 'FullscreenOff', 'Fullscreen'`,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    srtFunctions: {
+      name: 'Output - SRT',
+      description: 'Start / Stop / Toggle SRT',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Output Function',
+          id: 'functionID',
+          default: 'StartStopSRTOutput',
+          choices: [
+            { id: 'StartSRTOutput', label: 'SRT On' },
+            { id: 'StopSRTOutput', label: 'SRT Off' },
+            { id: 'StartStopSRTOutput', label: 'Toggle SRT' },
+          ],
+          expressionDescription: `Valid Values: 'StartSRTOutput', 'StopSRTOutput', 'StartStopSRTOutput'`,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    fadeToBlack: {
+      name: 'Output - Fade to Black',
+      description: 'Toggle Fade to Black',
+      options: [],
+      callback: sendBasicCommand,
+    },
+
+    streamingSettings: {
+      name: 'Output - Streaming Settings',
+      description: 'Start / Stop / Toggle SRT',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Output Function',
+          id: 'functionID',
+          default: 'StreamingSetURL',
+          choices: [
+            { id: 'StreamingSetURL', label: 'URL' },
+            { id: 'StreamingSetKey', label: 'Key' },
+            { id: 'StreamingSetUsername', label: 'Username' },
+            { id: 'StreamingSetPassword', label: 'Password' },
+          ],
+          disableAutoExpression: true,
+        },
+        {
+          type: 'textinput',
+          label: 'URL',
+          description: 'Custom RTMP Stream. Optional stream number starting from 0 at start followed by comma, e.g 0,rtmp://myurl/',
+          id: 'url',
+          default: '',
+          isVisibleExpression: `$(options:functionID) === 'StreamingSetURL'`,
+        },
+        {
+          type: 'textinput',
+          label: 'Key',
+          description: 'Key on Custom RTMP Stream. Optional stream number starting from 0 at start followed by comma, e.g 0,myStreamKey',
+          id: 'key',
+          default: '',
+          isVisibleExpression: `$(options:functionID) === 'StreamingSetKey'`,
+        },
+        {
+          type: 'textinput',
+          label: 'Username',
+          description: 'Username on Custom RTMP Stream. Optional stream number starting from 0 at start followed by comma, e.g 0,username',
+          id: 'username',
+          default: '',
+          isVisibleExpression: `$(options:functionID) === 'StreamingSetUsername'`,
+        },
+        {
+          type: 'textinput',
+          label: 'Password',
+          description: 'Password on Custom RTMP Stream. Optional stream number starting from 0 at start followed by comma, e.g 0,password',
+          id: 'password',
+          default: '',
+          isVisibleExpression: `$(options:functionID) === 'StreamingSetPassword'`,
+        },
+      ],
+      callback: async (action) => {
+        let value = ''
+        if (action.options.functionID === 'StreamingSetURL') value = action.options.url
+        if (action.options.functionID === 'StreamingSetKey') value = action.options.key
+        if (action.options.functionID === 'StreamingSetUsername') value = action.options.username
+        if (action.options.functionID === 'StreamingSetPassword') value = action.options.password
+
+        return instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Value=${value}`)
+      },
+    },
+
+    snapshot: {
+      name: 'Output - Snapshot / Snapshot Input',
+      description: 'Creates a Snapshot of either the current Output or a specified Input',
+      options: [
+        { ...options.input, description: 'Number, Name, GUID, or leave blank to Snapshot Output', default: '' },
+        {
+          type: 'textinput',
+          label: 'Filename',
+          description: 'Leave blank for a Save dialog window, otherwise Filename can specify date, for example mySnapshot {0:dd MMM yyyy}.jpg',
+          id: 'value',
+          default: '',
+        },
+      ],
+      callback: async (action) => {
+        let command = 'FUNCTION Snapshot'
+
+        if (action.options.input !== '') {
+          const input = await instance.data.getInput(action.options.input)
+          if (input === null) return
+          command = `FUNCTION SnapshotInput Input=${input.key}`
+          if (action.options.value !== '') command += `&Value=${action.options.value}`
+        } else {
+          if (action.options.value !== '') command += ` Value=${action.options.value}`
+        }
+
+        return instance.tcp.sendCommand(command)
+      },
+    },
+
+    writeDurationToRecordingLog: {
+      name: 'Output - Write Recording duration to log',
+      description: 'Write current recording duration to log file with optional tag text Value',
+      options: [
+        {
+          type: 'textinput',
+          label: 'Tag text',
+          description: '',
+          id: 'value',
+          default: '',
+        },
+      ],
+      callback: sendBasicCommand,
+    },
   }
+}
+
+export const vMixOutputFunctions: ActionFunctionsList<OutputActionsSchema> = {
+  outputSet: ['SetOutput2', 'SetOutput3', 'SetOutput4', 'SetOutputExternal2', 'SetOutputFullscreen', 'SetOutputFullscreen2'],
+  multicorderFunctions: ['StartStopMultiCorder', 'StartMultiCorder', 'StopMultiCorder'],
+  recordingFunctions: ['StartStopRecording', 'StartRecording', 'StopRecording'],
+  streamingFunctions: ['StartStopStreaming', 'StartStreaming', 'StopStreaming'],
+  externalFunctions: ['StartStopExternal', 'StartExternal', 'StopExternal'],
+  fullscreenFunctions: ['Fullscreen', 'FullscreenOff', 'FullscreenOn'],
+  srtFunctions: ['StartSRTOutput', 'StopSRTOutput', 'StartStopSRTOutput'],
+  fadeToBlack: ['FadeToBlack'],
+  streamingSettings: ['StreamingSetURL', 'StreamingSetKey', 'StreamingSetUsername', 'StreamingSetPassword'],
+  snapshot: ['Snapshot', 'SnapshotInput'],
+  writeDurationToRecordingLog: ['WriteDurationToRecordingLog'],
 }

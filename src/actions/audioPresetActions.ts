@@ -1,48 +1,34 @@
-import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import type VMixInstance from '../index'
+import { type CompanionActionDefinitions, type CompanionActionSchema, createModuleLogger } from '@companion-module/base'
+import type { SendBasicCommand } from './actions.js'
+import type VMixInstance from '../index.js'
 
-type LoadBusSettings = 'busRouting' | 'busVolumes' | 'busMute' | 'busSolo' | 'busFilter'
-type LoadInputSettings = 'inputRouting' | 'inputVolumes' | 'inputMute' | 'inputSolo' | 'inputAudioAuto' | 'inputChannelMixer' | 'inputFilter'
-
-export type LoadAudioPresetOptions = {
-  name: string
-  busses: LoadBusSettings[]
-  busFade: string
-  busFilter: string
-  inputs: LoadInputSettings[]
-  inputFade: string
-  inputFilter: string
-  commandDelay: string
+export type AudioPresetActionsSchema = {
+  loadAudioPreset: CompanionActionSchema<{
+    name: string
+    busses: ('busRouting' | 'busVolumes' | 'busMute' | 'busSolo' | 'busFilter')[]
+    busFade: string
+    busFilter: string
+    inputs: ('inputRouting' | 'inputVolumes' | 'inputMute' | 'inputSolo' | 'inputAudioAuto' | 'inputChannelMixer' | 'inputFilter')[]
+    inputFade: string
+    inputFilter: string
+    commandDelay: string
+  }>
+  deleteAudioPreset: CompanionActionSchema<{
+    name: string
+  }>
+  saveAudioPreset: CompanionActionSchema<{
+    name: string
+    overwrite: boolean
+    includeBusses: boolean
+    includeInputs: boolean
+    inputReference: 'title' | 'number' | 'key'
+    filter: string
+  }>
 }
 
-type DeleteAudioPresetOptions = {
-  name: string
-}
+const log = createModuleLogger('Actions - Audio Preset')
 
-type SaveAudioPresetOptions = {
-  name: string
-  overwrite: boolean
-  includeBusses: boolean
-  includeInputs: boolean
-  inputReference: 'title' | 'number' | 'key'
-  filter: string
-}
-
-type LoadAudioPresetCallback = ActionCallback<'loadAudioPreset', LoadAudioPresetOptions>
-type DeleteAudioPresetCallback = ActionCallback<'deleteAudioPreset', DeleteAudioPresetOptions>
-type SaveAudioPresetCallback = ActionCallback<'saveAudioPreset', SaveAudioPresetOptions>
-
-export interface AudioPresetActions {
-  loadAudioPreset: VMixAction<LoadAudioPresetCallback>
-  deleteAudioPreset: VMixAction<DeleteAudioPresetCallback>
-  saveAudioPreset: VMixAction<SaveAudioPresetCallback>
-
-  [key: string]: VMixAction<any>
-}
-
-export type AudioPresetCallbacks = LoadAudioPresetCallback | DeleteAudioPresetCallback | SaveAudioPresetCallback
-
-export const vMixAudioPresetActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): AudioPresetActions => {
+export const getAudioPresetActions = (instance: VMixInstance, _sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<AudioPresetActionsSchema> => {
   return {
     loadAudioPreset: {
       name: 'Audio Preset - Load',
@@ -54,7 +40,7 @@ export const vMixAudioPresetActions = (instance: VMixInstance, _sendBasicCommand
           id: 'name',
           default: '',
           tooltip: 'This can be the Name of a preset created within this Companion connection, or a variable containing Audio Preset data',
-          useVariables: { local: true },
+          useVariables: true,
         },
         {
           type: 'multidropdown',
@@ -68,24 +54,24 @@ export const vMixAudioPresetActions = (instance: VMixInstance, _sendBasicCommand
             { id: 'busSolo', label: 'Bus Solo' },
             { id: 'busFilter', label: 'Filter Busses to load' },
           ],
+          disableAutoExpression: true,
         },
         {
           type: 'textinput',
           label: 'Fade Bus Volume ms (leave empty for instant)',
           id: 'busFade',
           default: '',
-          tooltip: '',
           isVisibleExpression: `includes($(options:busses), 'busVolumes')`,
-          useVariables: { local: true },
+          useVariables: true,
         },
         {
           type: 'textinput',
           label: 'List of Busses load, eg M, A, B (leave blank for all)',
           id: 'busFilter',
           default: '',
-          tooltip: 'Comma separated',
+          description: 'Comma separated',
           isVisibleExpression: `includes($(options:busses), 'busFilter')`,
-          useVariables: { local: true },
+          useVariables: true,
         },
         {
           type: 'multidropdown',
@@ -101,24 +87,24 @@ export const vMixAudioPresetActions = (instance: VMixInstance, _sendBasicCommand
             { id: 'inputChannelMixer', label: 'Input Channel Mixer' },
             { id: 'inputFilter', label: 'Filter Busses to load' },
           ],
+          disableAutoExpression: true,
         },
         {
           type: 'textinput',
           label: 'Fade Input Volume ms (leave empty for instant)',
           id: 'inputFade',
           default: '',
-          tooltip: '',
           isVisibleExpression: `includes($(options:inputs), 'inputVolumes')`,
-          useVariables: { local: true },
+          useVariables: true,
         },
         {
           type: 'textinput',
           label: 'List of inputs to load (leave blank for all)',
           id: 'inputFilter',
           default: '',
-          tooltip: 'Comma separated',
+          description: 'Comma separated',
           isVisibleExpression: `includes($(options:inputs), 'inputFilter')`,
-          useVariables: { local: true },
+          useVariables: true,
         },
         {
           type: 'textinput',
@@ -126,7 +112,7 @@ export const vMixAudioPresetActions = (instance: VMixInstance, _sendBasicCommand
           id: 'commandDelay',
           default: '0',
           tooltip: 'Keep as low as possible, only increase if vMix has issues with large changes',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
       callback: async (action, _context) => {
@@ -136,14 +122,14 @@ export const vMixAudioPresetActions = (instance: VMixInstance, _sendBasicCommand
           try {
             presetData = JSON.parse(action.options.name)
           } catch (e) {
-            instance.log('warn', `Unable to parse Audio Preset data ${e}`)
+            log.warn(`Unable to parse Audio Preset data ${e}`)
             return
           }
         }
 
         if (!presetData.name || !Array.isArray(presetData.inputs) || !Array.isArray(presetData.busses)) {
-          instance.log('warn', 'Invalid Audio Preset Data')
-          instance.log('debug', JSON.stringify(presetData))
+          log.warn('Invalid Audio Preset Data')
+          log.debug(JSON.stringify(presetData))
           return
         }
 
@@ -160,15 +146,14 @@ export const vMixAudioPresetActions = (instance: VMixInstance, _sendBasicCommand
           label: 'Name for Audio Preset',
           id: 'name',
           default: '',
-          tooltip: '',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
       callback: async (action, _context) => {
         if (instance.audioPresets.presets[action.options.name]) {
           return instance.audioPresets.deletePreset(action.options.name)
         } else {
-          instance.log('warn', `Unable to find preset to delete named: ${action.options.name}`)
+          log.warn(`Unable to find preset to delete named: ${action.options.name}`)
         }
       },
     },
@@ -182,8 +167,7 @@ export const vMixAudioPresetActions = (instance: VMixInstance, _sendBasicCommand
           label: 'Name for Audio Preset',
           id: 'name',
           default: '',
-          tooltip: '',
-          useVariables: { local: true },
+          useVariables: true,
         },
         {
           type: 'checkbox',
@@ -202,6 +186,7 @@ export const vMixAudioPresetActions = (instance: VMixInstance, _sendBasicCommand
           label: 'Save Input settings',
           id: 'includeInputs',
           default: true,
+          disableAutoExpression: true,
         },
         {
           type: 'dropdown',
@@ -220,16 +205,14 @@ export const vMixAudioPresetActions = (instance: VMixInstance, _sendBasicCommand
           label: 'List of inputs to save (leave blank for all)',
           id: 'filter',
           default: '',
-          tooltip: 'Comma separated',
+          description: 'Comma separated',
           isVisibleExpression: `$(options:includeInputs) === true`,
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
       callback: async (action, _context) => {
         if (!action.options.overwrite && instance.audioPresets.presets[action.options.name] !== undefined) {
-          instance.log('warn', `Unable to Save Audio Preset: ${action.options.name} already exists`)
-
-          return
+          return log.warn(`Unable to Save Audio Preset: ${action.options.name} already exists`)
         }
 
         instance.audioPresets.savePreset({

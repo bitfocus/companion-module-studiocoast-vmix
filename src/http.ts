@@ -1,7 +1,7 @@
-import type { CompanionHTTPRequest, CompanionHTTPResponse } from '@companion-module/base'
-import type VMixInstance from './index'
-import type { VMixData, Input } from './data'
-import { formatTime } from './utils'
+import { type CompanionHTTPRequest, type CompanionHTTPResponse, createModuleLogger } from '@companion-module/base'
+import type VMixInstance from './index.js'
+import type { VMixData, Input } from './data.js'
+import { formatTime } from './utils.js'
 
 interface DataSourceInput {
   number: number
@@ -30,6 +30,8 @@ interface Endpoints {
     [endpoint: string]: () => void | Promise<void>
   }
 }
+
+const log = createModuleLogger('HTTP')
 
 /**
  * @returns HTTP Request
@@ -198,10 +200,10 @@ export const httpHandler = async (instance: VMixInstance, request: CompanionHTTP
   }
 
   const getVariableDefinitions = () => {
-    const data = instance.variables?.currentDefinitions || []
+    const data = instance.variables?.currentDefinitions || {}
 
     response.status = 200
-    response.body = JSON.stringify([...data], null, 2)
+    response.body = JSON.stringify(data, null, 2)
   }
 
   const postActions = () => {
@@ -209,10 +211,8 @@ export const httpHandler = async (instance: VMixInstance, request: CompanionHTTP
       const body = JSON.parse(request.body || '')
 
       body.forEach((action: string) => {
-        if (instance.tcp) {
-          instance.log('info', `sending command: FUNCTION ${action}`)
-          instance.tcp.sendCommand(`FUNCTION ${action}`)
-        }
+        log.info(`sending command: FUNCTION ${action}`)
+        instance.tcp.sendCommand(`FUNCTION ${action}`)
       })
 
       response.status = 200
@@ -221,7 +221,7 @@ export const httpHandler = async (instance: VMixInstance, request: CompanionHTTP
       response.status = 500
       response.body = JSON.stringify({ status: 500, message: `err: ${err}` })
 
-      instance.log('warn', JSON.stringify(err, null, 2))
+      log.warn(JSON.stringify(err, null, 2))
     }
   }
 

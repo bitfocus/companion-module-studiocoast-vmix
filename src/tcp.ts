@@ -1,5 +1,5 @@
-import { InstanceStatus, TCPHelper as tcp } from '@companion-module/base'
-import type VMixInstance from './'
+import { InstanceStatus, TCPHelper as tcp, createModuleLogger } from '@companion-module/base'
+import type VMixInstance from './index.js'
 
 interface MessageBuffer {
   dataLength: number
@@ -11,6 +11,8 @@ interface TCPSockets {
   functions: tcp | null
   xml: tcp | null
 }
+
+const log = createModuleLogger('TCP')
 
 export class TCP {
   private readonly instance: VMixInstance
@@ -35,8 +37,6 @@ export class TCP {
     this.pollInterval = instance.config.apiPollInterval
     this.tcpHost = instance.config.host
     this.tcpPort = instance.config.tcpPort
-
-    this.init()
   }
 
   /**
@@ -62,6 +62,9 @@ export class TCP {
     if (this.sockets.xml) {
       this.sockets.xml.destroy()
     }
+
+    this.instance.connected = false
+    this.instance.updateStatus(InstanceStatus.Disconnected)
   }
 
   /**
@@ -69,15 +72,14 @@ export class TCP {
    */
   public readonly init = (): void => {
     if (this.tcpHost === undefined || this.tcpPort === undefined) {
-      this.instance.log('warn', `Unable to connect to vMix, please configure a host and port in the instance configuration`)
-      return
+      return log.warn(`Unable to connect to vMix, please configure a host and port in the instance configuration`)
     }
 
     // The functions socket is primary and controls the module status and startup of activator and xml sockets
     this.sockets.functions = new tcp(this.tcpHost, this.tcpPort)
 
     this.sockets.functions.on('status_change', (status, message) => {
-      this.instance.log('debug', `Function socket - Status: ${status}${message ? ' - Message: ' + message : ''}`)
+      log.debug(`Function socket - Status: ${status}${message ? ' - Message: ' + message : ''}`)
 
       if (status === 'ok') {
         this.instance.connected = true
@@ -99,11 +101,11 @@ export class TCP {
 
     this.sockets.functions.on('error', (err: Error) => {
       this.instance.updateStatus(InstanceStatus.UnknownError)
-      this.instance.log(this.instance.config.connectionErrorLog ? 'error' : 'debug', 'Function Socket err: ' + err.message)
+      log[this.instance.config.connectionErrorLog ? 'error' : 'debug']('Function Socket err: ' + err)
     })
 
     this.sockets.functions.on('connect', () => {
-      this.instance.log('debug', 'Connected Function Socket')
+      log.debug('Connected Function Socket')
 
       if (this.sockets.activator) {
         this.sockets.activator.destroy()
@@ -127,13 +129,13 @@ export class TCP {
         return
       }
 
-      this.instance.log('debug', `Command Response: ${message}`)
+      log.debug(`Command Response: ${message}`)
     })
 
     if (this.pingInterval === null) {
       this.pingInterval = setInterval(() => {
-        if (this.sockets.activator?.isConnected) this.sockets.activator?.send('PING\r\n')
-        if (this.sockets.functions?.isConnected) this.sockets.functions?.send('PING\r\n')
+        if (this.sockets.activator?.isConnected) this.sockets.activator?.sendAsync('PING\r\n')
+        if (this.sockets.functions?.isConnected) this.sockets.functions?.sendAsync('PING\r\n')
       }, 3000)
     }
   }
@@ -143,19 +145,19 @@ export class TCP {
    */
   private readonly initActivators = (): void => {
     this.sockets.activator?.on('error', (err: Error) => {
-      this.instance.log('debug', 'ACT Socket err: ' + err.message)
+      log.debug('ACT Socket err: ' + err.message)
     })
 
     this.sockets.activator?.on('connect', () => {
-      this.instance.log('debug', 'Connected Activator Socket')
+      log.debug('Connected Activator Socket')
 
-      this.sockets.activator?.send('SUBSCRIBE ACTS\r\n').catch((err) => {
-        this.instance.log('debug', err.message)
+      this.sockets.activator?.sendAsync('SUBSCRIBE ACTS\r\n').catch((err) => {
+        log.debug(err.message)
       })
     })
 
     this.sockets.activator?.on('status_change', (status, message) => {
-      this.instance.log('debug', `Activator socket - Status: ${status}${message ? ' - Message: ' + message : ''}`)
+      log.debug(`Activator socket - Status: ${status}${message ? ' - Message: ' + message : ''}`)
     })
 
     this.sockets.activator?.on('data', (data: Buffer) => {
@@ -167,7 +169,7 @@ export class TCP {
         } else if (message.startsWith('ACTS OK')) {
           if (this.instance.activators) this.instance.activators.parse(message.substr(8).trim())
         } else {
-          this.instance.log('debug', `Unknown activator message: ${message}`)
+          log.debug(`Unknown activator message: ${message}`)
         }
       })
     })
@@ -188,8 +190,8 @@ export class TCP {
       'ACTS ReplayQuadMode\r\n',
     ]
 
-    this.sockets.activator?.send(initialRequests.join('')).catch((err) => {
-      this.instance.log('debug', err.message)
+    this.sockets.activator?.sendAsync(initialRequests.join('')).catch((err) => {
+      log.debug(err.message)
     })
   }
 
@@ -198,16 +200,16 @@ export class TCP {
    */
   private readonly initXML = (): void => {
     this.sockets.xml?.on('error', (err: Error) => {
-      this.instance.log('debug', 'XML Socket err: ' + err.message)
+      log.debug('XML Socket err: ' + err.message)
     })
 
     this.sockets.xml?.on('connect', () => {
-      this.instance.log('debug', 'Connected XML Socket')
+      log.debug('Connected XML Socket')
       this.initXMLPolling()
     })
 
     this.sockets.activator?.on('status_change', (status, message) => {
-      this.instance.log('debug', `XML socket - Status: ${status}${message ? ' - Message: ' + message : ''}`)
+      log.debug(`XML socket - Status: ${status}${message ? ' - Message: ' + message : ''}`)
     })
 
     this.sockets.xml?.on('data', (data: Buffer) => {
@@ -225,7 +227,7 @@ export class TCP {
         // If XML data is larger than 2 full TCP messages (8KB per message) send a warning
         if (!this.sizeWarning && this.messageBuffer.dataLength > 131072) {
           this.sizeWarning = true
-          this.instance.log('warn', 'Large vMix XML data size!')
+          log.warn('Large vMix XML data size!')
         }
       } else {
         this.messageBuffer.message = Buffer.concat([this.messageBuffer.message, data])
@@ -252,19 +254,16 @@ export class TCP {
 
               const controlMessage = message.startsWith('<?')
               if (!controlMessage) {
-                this.instance.log(
-                  'debug',
-                  `Message prefix issue - Message length: ${this.messageBuffer.message.length}, Buffer length: ${
-                    this.messageBuffer.dataLength
-                  }, Full Message: ${this.messageBuffer.message.toString()}`,
-                )
+                const messageLength = this.messageBuffer.message.length
+                const dataLength = this.messageBuffer.dataLength
+                log.debug(`Message prefix issue - Message length: ${messageLength}, Buffer length: ${dataLength}, Full Message: ${this.messageBuffer.message.toString()}`)
               }
 
               this.instance.apiProcessing.response = new Date().getTime()
               this.instance.data.update(data)
             }
           } else {
-            this.instance.log('debug', `Unknown TCP message: ${message}`)
+            log.debug(`Unknown TCP message: ${message}`)
           }
         }
       }
@@ -285,16 +284,13 @@ export class TCP {
           this.instance.apiProcessing.hold = true
           this.instance.apiProcessing.request = new Date().getTime()
 
-          this.sockets.xml?.send('XML\r\n').catch((err) => {
-            this.instance.log('debug', err.message)
+          this.sockets.xml?.sendAsync('XML\r\n').catch((err) => {
+            log.debug(err.message)
           })
         } else {
           this.instance.apiProcessing.holdCount++
           if (this.instance.apiProcessing.holdCount === 3) {
-            this.instance.log(
-              'warn',
-              `Polling and processing of the API is taking longer than polling interval. If this persists it is recommend to increase the API Polling Interval`,
-            )
+            log.warn(`Polling and processing of the API is taking longer than polling interval. If this persists it is recommend to increase the API Polling Interval`)
           }
         }
       }
@@ -318,10 +314,10 @@ export class TCP {
       if (this.sockets.functions && this.sockets.functions.isConnected) {
         const message = `${command}\r\n`
 
-        this.instance.log('debug', `Sending command: ${message}`)
+        log.debug(`Sending command: ${message}`)
 
         this.sockets.functions
-          .send(message)
+          .sendAsync(message)
           .then(() => resolve())
           .catch((err: Error) => reject(err))
       } else {
@@ -333,11 +329,11 @@ export class TCP {
   /**
    * @description Check for config changes and start new connections/polling if needed
    */
-  public readonly update = (): void => {
+  public readonly update = (force: boolean = false): void => {
     const hostCheck = this.instance.config.host !== this.tcpHost || this.instance.config.tcpPort !== this.tcpPort
     const pollIntervalCheck = this.instance.config.apiPollInterval !== this.pollInterval
 
-    if (hostCheck) {
+    if (hostCheck || force) {
       if (this.pollAPI !== null) {
         clearInterval(this.pollAPI)
       }
@@ -358,7 +354,7 @@ export class TCP {
           socket.destroy()
         } else {
           if (socket !== null) {
-            this.instance.log('debug', `vMix socket error: Cannot update connections while they're initializing`)
+            log.debug(`vMix socket error: Cannot update connections while they're initializing`)
             ready = false
           }
         }
@@ -378,8 +374,8 @@ export class TCP {
     if (!data.startsWith('ACTS')) message = 'ACTS ' + message
     if (!data.endsWith('\r\n')) message += '\r\n'
 
-    this.sockets.activator?.send(message).catch((err) => {
-      this.instance.log('debug', err.message)
+    this.sockets.activator?.sendAsync(message).catch((err) => {
+      log.debug(err.message)
     })
   }
 }
