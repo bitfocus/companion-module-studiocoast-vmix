@@ -1,31 +1,21 @@
-import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import { options } from '../utils'
-import type VMixInstance from '../index'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
+import { options } from '../utils.js'
+import type VMixInstance from '../index.js'
 
-type BrowserOptions = {
-  input: string
-  functionID: 'BrowserReload' | 'BrowserBack' | 'BrowserForward' | 'BrowserKeyboardDisabled' | 'BrowserKeyboardEnabled' | 'BrowserMouseDisabled' | 'BrowserMouseEnabled'
+export type BrowserActionsSchema = {
+  browser: CompanionActionSchema<{
+    input: string
+    functionID: 'BrowserReload' | 'BrowserBack' | 'BrowserForward' | 'BrowserKeyboardDisabled' | 'BrowserKeyboardEnabled' | 'BrowserMouseDisabled' | 'BrowserMouseEnabled'
+  }>
+  browserNavigate: CompanionActionSchema<{
+    input: string
+    value: string
+    encode: boolean
+  }>
 }
 
-type BrowserNavigateOptions = {
-  input: string
-  value: string
-  encode: boolean
-}
-
-type BrowserCallback = ActionCallback<'browser', BrowserOptions>
-type BrowserNavigateCallback = ActionCallback<'browserNavigate', BrowserNavigateOptions>
-
-export interface BrowserActions {
-  browser: VMixAction<BrowserCallback>
-  browserNavigate: VMixAction<BrowserNavigateCallback>
-
-  [key: string]: VMixAction<any>
-}
-
-export type BrowserCallbacks = BrowserCallback | BrowserNavigateCallback
-
-export const vMixBrowserActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): BrowserActions => {
+export const getBrowserActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<BrowserActionsSchema> => {
   return {
     browser: {
       name: 'Browser - Functions',
@@ -46,6 +36,7 @@ export const vMixBrowserActions = (instance: VMixInstance, sendBasicCommand: Sen
             { id: 'BrowserMouseDisabled', label: 'Mouse Disabled' },
             { id: 'BrowserMouseEnabled', label: 'Mouse Enabled' },
           ],
+          disableAutoExpression: true,
         },
       ],
       callback: sendBasicCommand,
@@ -61,7 +52,7 @@ export const vMixBrowserActions = (instance: VMixInstance, sendBasicCommand: Sen
           label: 'URL',
           id: 'value',
           default: '',
-          useVariables: { local: true },
+          useVariables: true,
         },
         {
           type: 'checkbox',
@@ -70,12 +61,16 @@ export const vMixBrowserActions = (instance: VMixInstance, sendBasicCommand: Sen
           default: false,
         },
       ],
-      callback: async (action, context) => {
-        const value = (await instance.parseOption(action.options.value, context))[instance.buttonShift.state]
+      callback: async (action) => {
+        const value = action.options.value
 
-        if (instance.tcp)
-          return instance.tcp.sendCommand(`FUNCTION BrowserNavigate Input=${action.options.input}&Value=${action.options.encode ? encodeURIComponent(value) : value}`)
+        return instance.tcp.sendCommand(`FUNCTION BrowserNavigate Input=${action.options.input}&Value=${action.options.encode ? encodeURIComponent(value) : value}`)
       },
     },
   }
+}
+
+export const vMixBrowserFunctions: ActionFunctionsList<BrowserActionsSchema> = {
+  browser: ['BrowserReload', 'BrowserBack', 'BrowserForward', 'BrowserKeyboardDisabled', 'BrowserKeyboardEnabled', 'BrowserMouseDisabled', 'BrowserMouseEnabled'],
+  browserNavigate: ['BrowserNavigate'],
 }

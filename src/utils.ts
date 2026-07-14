@@ -1,44 +1,44 @@
 import type { CompanionInputFieldColor, CompanionInputFieldDropdown, CompanionInputFieldTextInput } from '@companion-module/base'
-import type { Input } from './data'
+import type { ActionsSchema } from './actions/actions.js'
+import type { FeedbacksSchema } from './feedbacks/feedback.js'
+import type { VariablesSchema } from './variables/variables.js'
+import type { Config } from './config.js'
+import type { Input } from './data.js'
+
+export interface VMixInstanceTypes {
+  config: Config
+  secrets: undefined
+  actions: ActionsSchema
+  feedbacks: FeedbacksSchema
+  variables: VariablesSchema
+}
 
 export type TimeFormat = 'hh:mm:ss' | 'hh:mm:ss.ms' | 'mm:ss' | 'mm:ss.ms' | 'mm:ss.sss' | 'auto'
 
-interface NumericDropdownChoice {
-  id: number
-  label: string
-}
-
-interface NumericInputFieldDropdown extends Exclude<CompanionInputFieldDropdown, 'choices'> {
-  choices: NumericDropdownChoice[]
-}
-
-// Force options to have a default to prevent sending undefined values
-type EnforceDefault<T, U> = Omit<T, 'default'> & { default: U }
-
 export interface Options {
-  input: EnforceDefault<CompanionInputFieldTextInput, string>
-  mixSelect: EnforceDefault<NumericInputFieldDropdown, number>
-  mixVariable: EnforceDefault<CompanionInputFieldTextInput, string>
-  audioBus: EnforceDefault<CompanionInputFieldDropdown, string>
-  audioBusMaster: EnforceDefault<CompanionInputFieldDropdown, string>
-  audioBusMasterHeadphones: EnforceDefault<CompanionInputFieldDropdown, string>
-  foregroundColor: EnforceDefault<CompanionInputFieldColor, number>
-  foregroundColorBlack: EnforceDefault<CompanionInputFieldColor, number>
-  backgroundColorPreview: EnforceDefault<CompanionInputFieldColor, number>
-  backgroundColorProgram: EnforceDefault<CompanionInputFieldColor, number>
-  backgroundColorYellow: EnforceDefault<CompanionInputFieldColor, number>
-  selectedIndex: EnforceDefault<CompanionInputFieldTextInput, string>
-  comparison: EnforceDefault<CompanionInputFieldDropdown, string>
-  layerTallyIndicator: EnforceDefault<CompanionInputFieldDropdown, string>
-  replayChannel: EnforceDefault<CompanionInputFieldDropdown, string>
-  adjustment: EnforceDefault<CompanionInputFieldDropdown, string>
+  input: CompanionInputFieldTextInput<'input'>
+  mixSelect: CompanionInputFieldDropdown<'mix'>
+  audioBus: CompanionInputFieldDropdown<'value'>
+  audioBusMaster: CompanionInputFieldDropdown<'value'>
+  audioBusMasterHeadphones: CompanionInputFieldDropdown<'value'>
+  foregroundColor: CompanionInputFieldColor<'fg'>
+  foregroundColorBlack: CompanionInputFieldColor<'fg'>
+  backgroundColorPreview: CompanionInputFieldColor<'bg'>
+  backgroundColorProgram: CompanionInputFieldColor<'bg'>
+  backgroundColorYellow: CompanionInputFieldColor<'bg'>
+  selectedIndex: CompanionInputFieldTextInput<'selectedIndex'>
+  comparison: CompanionInputFieldDropdown<'comparison'>
+  layerTallyIndicator: CompanionInputFieldDropdown<'tally'>
+  replayChannel: CompanionInputFieldDropdown<'channel'>
+  adjustment: CompanionInputFieldDropdown<'adjustment'>
 }
 
 export type AudioBusOption = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'Selected'
 export type AudioBusMasterOption = 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'Selected'
 export type AudioBusMasterHeadphonesOption = 'Master' | 'Headphones' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'Selected'
-export type MixOptionEntry = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | -1 | -2
-export type EmptyOptions = Record<string, never>
+//export type MixOptionEntry = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | -1 | -2
+export type MixOptionEntry = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 'Selected'
+export type EmptyOptions = { options: Record<string, never> }
 
 // Static Variables
 export const AUDIOBUSSES = ['A', 'B', 'C', 'D', 'E', 'F', 'G'] as const
@@ -131,16 +131,6 @@ export const calcRemaining = (input: Input): { ms: string; ss: string; ssms: str
 }
 
 /**
- * @param red 0-255
- * @param green 0-255
- * @param blue 0-255
- * @returns RGB value encoded for Companion Bank styling
- */
-export const rgb = (red: number, green: number, blue: number): number => {
-  return ((red & 0xff) << 16) | ((green & 0xff) << 8) | (blue & 0xff)
-}
-
-/**
  * @description Common Action and Feedback options
  */
 export const options: Options = {
@@ -149,45 +139,35 @@ export const options: Options = {
     label: 'Input',
     id: 'input',
     default: '1',
-    tooltip: 'Number, Name, or GUID',
-    useVariables: { local: true },
+    description: 'Number, Name, or GUID',
+    useVariables: true,
   },
 
   mixSelect: {
     type: 'dropdown',
     label: 'Mix',
     id: 'mix',
-    default: 0,
+    default: 1,
     choices: [
-      { id: 0, label: '1' },
-      { id: 1, label: '2' },
-      { id: 2, label: '3' },
-      { id: 3, label: '4' },
-      { id: 4, label: '5' },
-      { id: 5, label: '6' },
-      { id: 6, label: '7' },
-      { id: 7, label: '8' },
-      { id: 8, label: '9' },
-      { id: 9, label: '10' },
-      { id: 10, label: '11' },
-      { id: 11, label: '12' },
-      { id: 12, label: '13' },
-      { id: 13, label: '14' },
-      { id: 14, label: '15' },
-      { id: 15, label: '16' },
-      { id: -1, label: 'Selected' },
-      { id: -2, label: 'Variable' },
+      { id: 1, label: '1' },
+      { id: 2, label: '2' },
+      { id: 3, label: '3' },
+      { id: 4, label: '4' },
+      { id: 5, label: '5' },
+      { id: 6, label: '6' },
+      { id: 7, label: '7' },
+      { id: 8, label: '8' },
+      { id: 9, label: '9' },
+      { id: 10, label: '10' },
+      { id: 11, label: '11' },
+      { id: 12, label: '12' },
+      { id: 13, label: '13' },
+      { id: 14, label: '14' },
+      { id: 15, label: '15' },
+      { id: 16, label: '16' },
+      { id: 'Selected', label: 'Selected' },
     ],
-  },
-
-  mixVariable: {
-    type: 'textinput',
-    label: 'Mix Variable',
-    id: 'mixVariable',
-    default: '1',
-    tooltip: '',
-    isVisible: (options) => options.mix === -2,
-    useVariables: { local: true },
+    expressionDescription: `Valid Values: 1 to 16 or 'Selected'`,
   },
 
   audioBus: {
@@ -196,6 +176,7 @@ export const options: Options = {
     id: 'value',
     default: 'A',
     choices: [...AUDIOBUSSES, 'Selected'].map((id) => ({ id, label: id })),
+    expressionDescription: `Valid Values: ${AUDIOBUSSES.map((bus) => `'${bus}'`).join(', ')}`,
   },
 
   audioBusMaster: {
@@ -204,6 +185,7 @@ export const options: Options = {
     id: 'value',
     default: 'Master',
     choices: ['Master', ...AUDIOBUSSES, 'Selected'].map((id) => ({ id, label: id })),
+    expressionDescription: `Valid Values: 'Master', ${AUDIOBUSSES.map((bus) => `'${bus}'`).join(', ')}`,
   },
 
   audioBusMasterHeadphones: {
@@ -212,41 +194,42 @@ export const options: Options = {
     id: 'value',
     default: 'Master',
     choices: [...AUDIOBUSSESMASTER, 'Selected'].map((id) => ({ id, label: id })),
+    expressionDescription: `Valid Values: ${AUDIOBUSSESMASTER.map((bus) => `'${bus}'`).join(', ')}`,
   },
 
   foregroundColor: {
     type: 'colorpicker',
     label: 'Foreground color',
     id: 'fg',
-    default: rgb(255, 255, 255),
+    default: 0xffffff,
   },
 
   foregroundColorBlack: {
     type: 'colorpicker',
     label: 'Foreground color',
     id: 'fg',
-    default: rgb(0, 0, 0),
+    default: 0x000000,
   },
 
   backgroundColorPreview: {
     type: 'colorpicker',
     label: 'Background color',
     id: 'bg',
-    default: rgb(0, 255, 0),
+    default: 0x00ff00,
   },
 
   backgroundColorProgram: {
     type: 'colorpicker',
     label: 'Background color',
     id: 'bg',
-    default: rgb(255, 0, 0),
+    default: 0xff0000,
   },
 
   backgroundColorYellow: {
     type: 'colorpicker',
     label: 'Background color',
     id: 'bg',
-    default: rgb(255, 255, 0),
+    default: 0xffff00,
   },
 
   selectedIndex: {
@@ -254,7 +237,7 @@ export const options: Options = {
     label: 'Selected Index',
     id: 'selectedIndex',
     default: '1',
-    useVariables: { local: true },
+    useVariables: true,
   },
 
   comparison: {
@@ -297,6 +280,7 @@ export const options: Options = {
       { id: 'A', label: 'A' },
       { id: 'B', label: 'B' },
     ],
+    expressionDescription: `Valid Values: 'Current', 'A', 'B'`,
   },
 
   adjustment: {
@@ -309,6 +293,7 @@ export const options: Options = {
       { id: 'Increase', label: 'Increase' },
       { id: 'Decrease', label: 'Decrease' },
     ],
+    expressionDescription: `Valid Values: 'Set', 'Increase', 'Decrease'`,
   },
 }
 
@@ -388,4 +373,9 @@ export const valueMinMax = (value: number, min: number, max: number): number => 
   if (adjustedValue > max) adjustedValue = max
   if (adjustedValue < min) adjustedValue = min
   return adjustedValue
+}
+
+export const parseMix = (value: string | number): number | null => {
+  const mix = typeof value === 'string' ? parseInt(value) : value
+  return isNaN(mix) ? null : mix - 1
 }

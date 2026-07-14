@@ -1,39 +1,27 @@
-import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import type { EmptyOptions } from '../utils'
-import type VMixInstance from '../index'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
+import type { EmptyOptions } from '../utils.js'
+import type VMixInstance from '../index.js'
 
-type CommandOptions = {
-  command: string
-  encode: boolean
+export type ScriptingActionsSchema = {
+  command: CompanionActionSchema<{
+    command: string
+    encode: boolean
+  }>
+  scriptStart: CompanionActionSchema<{
+    value: string
+  }>
+  scriptStop: CompanionActionSchema<{
+    value: string
+  }>
+  scriptStopAll: EmptyOptions
+  scriptDynamic: CompanionActionSchema<{
+    functionID: 'ScriptStartDynamic' | 'ScriptStopDynamic'
+    value: string
+  }>
 }
 
-type ScriptStartOptions = {
-  value: string
-}
-
-type ScriptStopOptions = {
-  value: string
-}
-
-type ScriptStopAllOptions = EmptyOptions
-
-type CommandCallback = ActionCallback<'command', CommandOptions>
-type ScriptStartCallback = ActionCallback<'scriptStart', ScriptStartOptions>
-type ScriptStopCallback = ActionCallback<'scriptStop', ScriptStopOptions>
-type ScriptStopAllCallback = ActionCallback<'scriptStopAll', ScriptStopAllOptions>
-
-export interface ScriptingActions {
-  command: VMixAction<CommandCallback>
-  scriptStart: VMixAction<ScriptStartCallback>
-  scriptStop: VMixAction<ScriptStopCallback>
-  scriptStopAll: VMixAction<ScriptStopAllCallback>
-
-  [key: string]: VMixAction<any>
-}
-
-export type ScriptingCallbacks = CommandCallback | ScriptStartCallback | ScriptStopCallback | ScriptStopAllCallback
-
-export const vMixScriptingActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): ScriptingActions => {
+export const getScriptingActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<ScriptingActionsSchema> => {
   return {
     command: {
       name: 'Scripting - Run custom command',
@@ -44,7 +32,7 @@ export const vMixScriptingActions = (instance: VMixInstance, sendBasicCommand: S
           label: 'Command',
           id: 'command',
           default: '',
-          useVariables: { local: true },
+          useVariables: true,
         },
         {
           type: 'checkbox',
@@ -53,11 +41,12 @@ export const vMixScriptingActions = (instance: VMixInstance, sendBasicCommand: S
           default: false,
         },
       ],
-      callback: async (action, context) => {
-        const commandString = (await instance.parseOption(action.options.command, context))[instance.buttonShift.state]
+      callback: async (action) => {
+        const commandString = action.options.command
         const command = commandString.split(' ')[0]
         const params = commandString.split(' ').slice(1, commandString.split(' ').length).join(' ')
-        if (instance.tcp) return instance.tcp.sendCommand(`FUNCTION ${command} ${action.options.encode ? encodeURIComponent(params) : params}`)
+
+        return instance.tcp.sendCommand(`FUNCTION ${command} ${action.options.encode ? encodeURIComponent(params) : params}`)
       },
     },
 
@@ -70,7 +59,7 @@ export const vMixScriptingActions = (instance: VMixInstance, sendBasicCommand: S
           label: 'Script name',
           id: 'value',
           default: '',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
       callback: sendBasicCommand,
@@ -85,7 +74,7 @@ export const vMixScriptingActions = (instance: VMixInstance, sendBasicCommand: S
           label: 'Script name',
           id: 'value',
           default: '',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
       callback: sendBasicCommand,
@@ -97,5 +86,40 @@ export const vMixScriptingActions = (instance: VMixInstance, sendBasicCommand: S
       options: [],
       callback: sendBasicCommand,
     },
+
+    scriptDynamic: {
+      name: `Scripting - Start / Stop Dynamic Script`,
+      description: 'Starts running a dynamic script by sending code to vMix',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Start / Stop',
+          id: 'functionID',
+          default: 'ScriptStartDynamic',
+          choices: [
+            { id: 'ScriptStartDynamic', label: 'Start Script' },
+            { id: 'ScriptStopDynamic', label: 'Stop Script' },
+          ],
+          disableAutoExpression: true,
+        },
+        {
+          type: 'textinput',
+          label: 'Code',
+          id: 'value',
+          default: '',
+          useVariables: true,
+          isVisibleExpression: `$(options:functionID) === 'ScriptStartDynamic'`,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
   }
+}
+
+export const vMixScriptingFunctions: ActionFunctionsList<ScriptingActionsSchema> = {
+  command: ['WaitForCompletion'],
+  scriptStart: ['ScriptStart'],
+  scriptStop: ['ScriptStop'],
+  scriptStopAll: ['ScriptStopAll'],
+  scriptDynamic: ['ScriptStartDynamic', 'ScriptStopDynamic'],
 }

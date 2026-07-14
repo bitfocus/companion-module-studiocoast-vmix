@@ -14,6 +14,7 @@
 | bus\_`BusID`\_meter`AudioChannel`\_avg_3s  |
 | bus\_`BusID`\_meter`AudioChannel`\_peak_1s |
 | bus\_`BusID`\_meter`AudioChannel`\_peak_3s |
+| bus\_`BusID`\_meter`AudioChannel`\_linear  |
 | bus\_`BusID`\_mute                         |
 | bus\_`BusID`\_solo                         |
 | bus\_`BusID`\_sendtomaster                 |
@@ -114,11 +115,13 @@
 | fullscreen_active   |
 | external_active     |
 | multicorder_active  |
+| streams             |
 | stream_1_active     |
 | stream_2_active     |
 | stream_3_active     |
 | stream_4_active     |
 | stream_5_active     |
+| recording           |
 | recording_active    |
 | recording_duration  |
 | recording_hms       |
@@ -215,6 +218,7 @@ Note: Input Names in variable IDs support `a to z`, `0 to 9`, `-`, `_`, and `.`.
 | input\_`InputID`\_cc_gaing                       |
 | input\_`InputID`\_cc_gainb                       |
 | input\_`InputID`\_cc_gainy                       |
+| input\_`InputID`\_json                           |
 
 # Layer Routing Variables
 
@@ -282,6 +286,7 @@ Note: Input Names in variable IDs support `a to z`, `0 to 9`, `-`, `_`, and `.`.
 | mix\_`X`\_`Y`_layer_`LayerIndex`\_cropx2    |
 | mix\_`X`\_`Y`_layer_`LayerIndex`\_cropy1    |
 | mix\_`X`\_`Y`_layer_`LayerIndex`\_cropy2    |
+| mix\_`X`\_`Y`\_json                         |
 | mix_selected                                |
 
 # Output Variables
@@ -297,6 +302,7 @@ Note: Input Names in variable IDs support `a to z`, `0 to 9`, `-`, `_`, and `.`.
 | output\_`OutputID`\_srt            |
 | output\_`OutputID`\_type           |
 | output\_`OutputID`\_input_name     |
+| output\_`OutputID`\_json           |
 
 # Overlay Variables
 
@@ -308,6 +314,7 @@ Note: Input Names in variable IDs support `a to z`, `0 to 9`, `-`, `_`, and `.`.
 | overlay\_`OverlayID`\_input      |
 | overlay\_`OverlayID`\_pgm        |
 | overlay\_`OverlayID`\_prv        |
+| overlay\_`OverlayID`\_json       |
 
 # Replay Variables
 
@@ -329,6 +336,7 @@ Note: Input Names in variable IDs support `a to z`, `0 to 9`, `-`, `_`, and `.`.
 | replay_timecode     |
 | replay_timecodea    |
 | replay_timecodeb    |
+| replay_json         |
 
 # Transition Variables
 

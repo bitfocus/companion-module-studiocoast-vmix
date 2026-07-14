@@ -1,5 +1,5 @@
 **Sponsor**<br />
-This module, as with Companion, is free and open source, but if you'd like to support the continued development of this and my other modules (Google Sheets, Twitch, Discord, Voicemeeter, and more) tips will always be appreciated either on [Github](https://github.com/sponsors/thedist) or [Ko-Fi](https://ko-fi.com/thedist).
+This module, as with Companion, is free and open source, but if you'd like to support the continued development of this and my other modules (Google Sheets, Twitch, Discord, Voicemeeter, and more) tips will always be appreciated either on [Github](https://github.com/sponsors/thedist), [Ko-Fi](https://ko-fi.com/thedist), or Subscribe to me on Twitch [https://www.twitch.tv/subs/dist](https://www.twitch.tv/subs/dist).
 
 **API Polling Interval**<br />
 The majority of vMix data used by Companion for feedback and variables is retrieved through the vMix REST API, the frequency at which this data is polled can be changed in the instance config.
@@ -11,12 +11,6 @@ If you experience high vMix CPU usage while this Companion instance is enabled, 
 Default: 250ms <br />
 Minimum: 100ms <br />
 Set to 0 to disable API Polling.
-
-
-**Button Shifting**<br />
-We've added the ability to modify the action and feedback options by using the Toggle Shift action, which will split text inputs by the configured Shift Delimiter and determine which value to use based on the state of the Shift Action.
-
-For some feedback, such as Tally and Layer Routing it's possible to enable 'blinking' which causes the feedback to indicate a solid color if the current Shift layer is active, or flash that color if it's an one of the inactive Shift layers that is showing feedback. For example, if you have a feedback to show the preview with the input set to "Cam1/Cam2", when shift is not toggled it would show a solid green when "Cam1" is in preview, or flash if "cam2" is in preview, and when Shift is toggled on the reverse would happen.
 
 
 **Functions**<br />

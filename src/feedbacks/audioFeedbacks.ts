@@ -1,137 +1,78 @@
-import { combineRgb } from '@companion-module/base'
+import type { CompanionFeedbackSchema, CompanionFeedbackDefinitions } from '@companion-module/base'
 import { presets } from 'companion-module-utils'
-import type { VMixFeedback, FeedbackCallback } from './feedback'
-import { type AudioBusOption, type AudioBusMasterOption, options, volumeToLinear } from '../utils'
-import type VMixInstance from '../index'
+import { type AudioBusOption, type AudioBusMasterOption, options, volumeToLinear } from '../utils.js'
+import type VMixInstance from '../index.js'
 
-type BusMuteOptions = {
-  value: AudioBusMasterOption
+export type AudioFeedbacksSchema = {
+  busMute: CompanionFeedbackSchema<{
+    value: AudioBusMasterOption
+  }>
+  busSolo: CompanionFeedbackSchema<{
+    value: AudioBusOption
+  }>
+  busSendToMaster: CompanionFeedbackSchema<{
+    value: AudioBusOption
+  }>
+  inputAudio: CompanionFeedbackSchema<{
+    input: string
+  }>
+  inputAudioAuto: CompanionFeedbackSchema<{
+    input: string
+  }>
+  inputSolo: CompanionFeedbackSchema<{
+    input: string
+  }>
+  inputBusRouting: CompanionFeedbackSchema<{
+    input: string
+    value: AudioBusMasterOption
+  }>
+  liveBusVolume: CompanionFeedbackSchema<{
+    value: AudioBusMasterOption
+    colorTxt: boolean
+    colorBG: boolean
+    colorBase: number
+    color: number
+    color1: number
+    color6: number
+    color18: number
+    color36: number
+  }>
+  liveInputVolume: CompanionFeedbackSchema<{
+    input: string
+    colorTxt: boolean
+    colorBG: boolean
+    colorBase: number
+    color: number
+    color1: number
+    color6: number
+    color18: number
+    color36: number
+  }>
+  busVolumeLevel: CompanionFeedbackSchema<{
+    bus: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'Headphones'
+    comparison: 'eq' | 'lt' | 'lte' | 'gt' | 'gte'
+    value: number
+  }>
+  inputVolumeLevel: CompanionFeedbackSchema<{
+    input: string
+    comparison: 'eq' | 'lt' | 'lte' | 'gt' | 'gte'
+    value: number
+  }>
+  busVolumeMeter: CompanionFeedbackSchema<{
+    value: AudioBusMasterOption
+  }>
+  inputVolumeMeter: CompanionFeedbackSchema<{
+    input: string
+  }>
 }
 
-type BusSoloOptions = {
-  value: AudioBusOption
-}
-
-type BusSendToMasterOptions = {
-  value: AudioBusOption
-}
-
-type InputAudioOptions = {
-  input: string
-}
-
-type InputAudioAutoOptions = {
-  input: string
-}
-
-type InputSoloOptions = {
-  input: string
-}
-
-type InputBusRoutingOptions = {
-  input: string
-  value: AudioBusMasterOption
-}
-
-type LiveBusVolumeOptions = {
-  value: AudioBusMasterOption
-  colorTxt: boolean
-  colorBG: boolean
-  colorBase: number
-  color: number
-  color1: number
-  color6: number
-  color18: number
-  color36: number
-}
-
-type LiveInputVolumeOptions = {
-  input: string
-  colorTxt: boolean
-  colorBG: boolean
-  colorBase: number
-  color: number
-  color1: number
-  color6: number
-  color18: number
-  color36: number
-}
-
-type BusVolumeLevelOptions = {
-  bus: 'Master' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'Headphones'
-  comparison: 'eq' | 'lt' | 'lte' | 'gt' | 'gte'
-  value: number
-}
-
-type InputVolumeLevelOptions = {
-  input: string
-  comparison: 'eq' | 'lt' | 'lte' | 'gt' | 'gte'
-  value: number
-}
-
-type BusVolumeMeterOptions = {
-  value: AudioBusMasterOption
-}
-
-type InputVolumeMeterOptions = {
-  input: string
-}
-
-type BusMuteCallback = FeedbackCallback<'busMute', BusMuteOptions>
-type BusSoloCallback = FeedbackCallback<'busSolo', BusSoloOptions>
-type BusSendToMasterCallback = FeedbackCallback<'busSendToMaster', BusSendToMasterOptions>
-type InputAudioCallback = FeedbackCallback<'inputAudio', InputAudioOptions>
-type InputAudioAutoCallback = FeedbackCallback<'inputAudioAuto', InputAudioAutoOptions>
-type InputSoloCallback = FeedbackCallback<'inputSolo', InputSoloOptions>
-type InputBusRoutingCallback = FeedbackCallback<'inputBusRouting', InputBusRoutingOptions>
-type LiveBusVolumeCallback = FeedbackCallback<'liveBusVolume', LiveBusVolumeOptions>
-type LiveInputVolumeCallback = FeedbackCallback<'liveInputVolume', LiveInputVolumeOptions>
-type BusVolumeLevelCallback = FeedbackCallback<'busVolumeLevel', BusVolumeLevelOptions>
-type InputVolumeLevelCallback = FeedbackCallback<'inputVolumeLevel', InputVolumeLevelOptions>
-type BusVolumeMeterCallback = FeedbackCallback<'busVolumeMeter', BusVolumeMeterOptions>
-type InputVolumeMeterCallback = FeedbackCallback<'inputVolumeMeter', InputVolumeMeterOptions>
-
-export interface AudioFeedbacks {
-  busMute: VMixFeedback<BusMuteCallback>
-  busSolo: VMixFeedback<BusSoloCallback>
-  busSendToMaster: VMixFeedback<BusSendToMasterCallback>
-  inputAudio: VMixFeedback<InputAudioCallback>
-  inputAudioAuto: VMixFeedback<InputAudioAutoCallback>
-  inputSolo: VMixFeedback<InputSoloCallback>
-  inputBusRouting: VMixFeedback<InputBusRoutingCallback>
-  liveBusVolume: VMixFeedback<LiveBusVolumeCallback>
-  liveInputVolume: VMixFeedback<LiveInputVolumeCallback>
-  busVolumeLevel: VMixFeedback<BusVolumeLevelCallback>
-  inputVolumeLevel: VMixFeedback<InputVolumeLevelCallback>
-  busVolumeMeter: VMixFeedback<BusVolumeMeterCallback>
-  inputVolumeMeter: VMixFeedback<InputVolumeMeterCallback>
-}
-
-export type AudioCallbacks =
-  | BusMuteCallback
-  | BusSoloCallback
-  | BusSendToMasterCallback
-  | InputAudioCallback
-  | InputAudioAutoCallback
-  | InputSoloCallback
-  | InputBusRoutingCallback
-  | LiveBusVolumeCallback
-  | LiveInputVolumeCallback
-  | BusVolumeLevelCallback
-  | InputVolumeLevelCallback
-  | BusVolumeMeterCallback
-  | InputVolumeMeterCallback
-
-export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
+export const getAudioFeedbacks = (instance: VMixInstance): CompanionFeedbackDefinitions<AudioFeedbacksSchema> => {
   return {
     busMute: {
       type: 'boolean',
       name: 'Audio - Bus mute',
       description: 'Indicate if a bus is muted',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0xff0000 },
       options: [options.audioBusMaster],
       callback: (feedback) => {
         let busID
@@ -151,10 +92,7 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
       type: 'boolean',
       name: 'Audio - Bus solo',
       description: 'Requires vMix v25+',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0x0ffff00 },
       options: [options.audioBus],
       callback: (feedback) => {
         let busID
@@ -174,10 +112,7 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
       type: 'boolean',
       name: 'Audio - Bus Send to Master',
       description: 'Requires vMix v27+',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0x0ffff00 },
       options: [options.audioBus],
       callback: (feedback) => {
         let busID
@@ -197,13 +132,10 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
       type: 'boolean',
       name: 'Audio - Input mute',
       description: 'Indicate if an input is muted or enabled',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0xff0000 },
       options: [options.input],
-      callback: async (feedback, context) => {
-        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+      callback: async (feedback) => {
+        const inputOption = feedback.options.input
         const input = await instance.data.getInput(inputOption)
 
         return input?.muted || false
@@ -214,13 +146,10 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
       type: 'boolean',
       name: 'Audio - Input Audio Auto',
       description: 'Indicate if an input will auto enable/disable audio when transitioned to/from',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(0, 255, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0x00ff00 },
       options: [options.input],
-      callback: async (feedback, context) => {
-        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+      callback: async (feedback) => {
+        const inputOption = feedback.options.input
         const input = await instance.data.getInput(inputOption)
 
         return input?.audioAuto || false
@@ -231,13 +160,10 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
       type: 'boolean',
       name: 'Audio - Input solo',
       description: 'Indicate if an input is set to Solo',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0x0ffff00 },
       options: [options.input],
-      callback: async (feedback, context) => {
-        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+      callback: async (feedback) => {
+        const inputOption = feedback.options.input
         const input = await instance.data.getInput(inputOption)
 
         return input?.solo || false
@@ -248,13 +174,10 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
       type: 'boolean',
       name: 'Audio - Input Bus Routing',
       description: 'Indicate which busses an input will output to',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 255, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0x0ffff00 },
       options: [options.input, options.audioBusMaster],
-      callback: async (feedback, context) => {
-        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+      callback: async (feedback) => {
+        const inputOption = feedback.options.input
         const input = await instance.data.getInput(inputOption)
 
         if (feedback.options.value === 'Selected') {
@@ -289,37 +212,37 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
           type: 'colorpicker',
           label: 'Base Text Color',
           id: 'colorBase',
-          default: combineRgb(255, 255, 255),
+          default: 0x0ffffff,
         },
         {
           type: 'colorpicker',
           label: 'Text color above -1 dB',
           id: 'color',
-          default: combineRgb(255, 0, 0),
+          default: 0xff0000,
         },
         {
           type: 'colorpicker',
           label: 'Text color below -1 dB',
           id: 'color1',
-          default: combineRgb(255, 255, 0),
+          default: 0x0ffff00,
         },
         {
           type: 'colorpicker',
           label: 'Text color below -6 dB',
           id: 'color6',
-          default: combineRgb(0, 255, 0),
+          default: 0x00ff00,
         },
         {
           type: 'colorpicker',
           label: 'Text color below -18 dB',
           id: 'color18',
-          default: combineRgb(0, 192, 0),
+          default: 0x00c000,
         },
         {
           type: 'colorpicker',
           label: 'Text color below -36 dB',
           id: 'color36',
-          default: combineRgb(0, 128, 0),
+          default: 0x008000,
         },
       ],
       callback: (feedback) => {
@@ -383,41 +306,41 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
           type: 'colorpicker',
           label: 'Base Text Color',
           id: 'colorBase',
-          default: combineRgb(255, 255, 255),
+          default: 0x0ffffff,
         },
         {
           type: 'colorpicker',
           label: 'Text color above -1 dB',
           id: 'color',
-          default: combineRgb(255, 0, 0),
+          default: 0xff0000,
         },
         {
           type: 'colorpicker',
           label: 'Text color below -1 dB',
           id: 'color1',
-          default: combineRgb(255, 255, 0),
+          default: 0x0ffff00,
         },
         {
           type: 'colorpicker',
           label: 'Text color below -6 dB',
           id: 'color6',
-          default: combineRgb(0, 255, 0),
+          default: 0x00ff00,
         },
         {
           type: 'colorpicker',
           label: 'Text color below -18 dB',
           id: 'color18',
-          default: combineRgb(0, 192, 0),
+          default: 0x00c000,
         },
         {
           type: 'colorpicker',
           label: 'Text color below -36 dB',
           id: 'color36',
-          default: combineRgb(0, 128, 0),
+          default: 0x008000,
         },
       ],
-      callback: async (feedback, context) => {
-        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+      callback: async (feedback) => {
+        const inputOption = feedback.options.input
         const input = await instance.data.getInput(inputOption)
 
         // Detect if there is sound enabled on an input
@@ -453,10 +376,7 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
       type: 'boolean',
       name: 'Audio - Bus Volume',
       description: 'Indicate if an output bus fader is within a set range',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(0, 255, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0x00ff00 },
       options: [
         {
           type: 'dropdown',
@@ -464,6 +384,7 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
           id: 'bus',
           default: 'Master',
           choices: ['Master', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'Headphones'].map((id) => ({ id, label: id })),
+          expressionDescription: `Valid Values: 'Master', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'Headphones'`,
         },
         options.comparison,
         {
@@ -473,6 +394,7 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
           min: 0,
           max: 100,
           default: 100,
+          expressionDescription: `Valid Values: 0 to 100`,
         },
       ],
       callback: (feedback) => {
@@ -503,10 +425,7 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
       type: 'boolean',
       name: 'Audio - Input Volume',
       description: 'Indicate if an input fader is in a set value',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(0, 255, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0x00ff00 },
       options: [
         options.input,
         options.comparison,
@@ -517,10 +436,11 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
           min: 0,
           max: 100,
           default: 100,
+          expressionDescription: `Valid Values: 0 to 100`,
         },
       ],
-      callback: async (feedback, context) => {
-        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+      callback: async (feedback) => {
+        const inputOption = feedback.options.input
         const input = await instance.data.getInput(inputOption)
 
         if (input?.volume === undefined) return false
@@ -566,7 +486,7 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
         })
 
         return {
-          imageBuffer: meter,
+          imageBuffer: Buffer.from(meter).toString('base64'),
         }
       },
     },
@@ -576,9 +496,9 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
       name: 'Audio - Input Volume Meters',
       description: 'Volume meters for an input',
       options: [options.input],
-      callback: async (feedback, context) => {
+      callback: async (feedback) => {
         if (!feedback.image) return {}
-        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+        const inputOption = feedback.options.input
         const input = await instance.data.getInput(inputOption)
 
         if (!input || input.meterF1 === undefined || input.meterF2 === undefined) {
@@ -594,7 +514,7 @@ export const vMixAudioFeedbacks = (instance: VMixInstance): AudioFeedbacks => {
         })
 
         return {
-          imageBuffer: meter,
+          imageBuffer: Buffer.from(meter).toString('base64'),
         }
       },
     },

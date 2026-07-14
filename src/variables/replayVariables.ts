@@ -1,55 +1,54 @@
-import type { CompanionVariableDefinition } from '@companion-module/base'
-import type VMixInstance from '../'
+import type { CompanionVariableDefinitions, JsonValue } from '@companion-module/base'
+import type VMixInstance from '../index.js'
 
-type VariablesReplayIDs =
-  | 'replay_recording'
-  | 'replay_live'
-  | 'replay_forward'
-  | 'replay_channel_mode'
-  | 'replay_events'
-  | 'replay_eventsa'
-  | 'replay_eventsb'
-  | 'replay_cameraa'
-  | 'replay_camerab'
-  | 'replay_quad_view'
-  | 'replay_speed'
-  | 'replay_speeda'
-  | 'replay_speedb'
-  | 'replay_timecode'
-  | 'replay_timecodea'
-  | 'replay_timecodeb'
+export type ReplayVariablesSchema = Partial<{
+  replay_recording: string
+  replay_live: string
+  replay_forward: string
+  replay_channel_mode: string
+  replay_events: number
+  replay_eventsa: number
+  replay_eventsb: number
+  replay_cameraa: number
+  replay_camerab: number
+  replay_quad_view: string
+  replay_speed: number
+  replay_speeda: number
+  replay_speedb: number
+  replay_timecode: string
+  replay_timecodea: string
+  replay_timecodeb: string
+  replay_json: JsonValue
+}>
 
-type VariablesReplayValues = Partial<Record<VariablesReplayIDs, string | number | undefined>>
-
-export const replayDefinitions = (instance: VMixInstance): CompanionVariableDefinition[] => {
-  const definitions: CompanionVariableDefinition[] = []
+export const replayDefinitions = (instance: VMixInstance): CompanionVariableDefinitions<ReplayVariablesSchema> => {
+  const definitions: CompanionVariableDefinitions = {}
 
   if (!instance.config.variablesShowReplay) return definitions
 
-  definitions.push(
-    { name: 'Replay Recording', variableId: 'replay_recording' },
-    { name: 'Replay Live', variableId: 'replay_live' },
-    { name: 'Replay Forward', variableId: 'replay_forward' },
-    { name: 'Replay Channel Mode', variableId: 'replay_channel_mode' },
-    { name: 'Replay Events', variableId: 'replay_events' },
-    { name: 'Replay Events A', variableId: 'replay_eventsa' },
-    { name: 'Replay Events B', variableId: 'replay_eventsb' },
-    { name: 'Replay Camera A', variableId: 'replay_cameraa' },
-    { name: 'Replay Camera B', variableId: 'replay_camerab' },
-    { name: 'Replay Quad View', variableId: 'replay_quad_view' },
-    { name: 'Replay Speed', variableId: 'replay_speed' },
-    { name: 'Replay Speed A', variableId: 'replay_speeda' },
-    { name: 'Replay Speed B', variableId: 'replay_speedb' },
-    { name: 'Replay Timecode', variableId: 'replay_timecode' },
-    { name: 'Replay Timecode A', variableId: 'replay_timecodea' },
-    { name: 'Replay Timecode B', variableId: 'replay_timecodeb' },
-  )
+  definitions.replay_recording = { name: 'Replay Recording' }
+  definitions.replay_live = { name: 'Replay Live' }
+  definitions.replay_forward = { name: 'Replay Forward' }
+  definitions.replay_channel_mode = { name: 'Replay Channel Mode' }
+  definitions.replay_events = { name: 'Replay Events' }
+  definitions.replay_eventsa = { name: 'Replay Events A' }
+  definitions.replay_eventsb = { name: 'Replay Events B' }
+  definitions.replay_cameraa = { name: 'Replay Camera A' }
+  definitions.replay_camerab = { name: 'Replay Camera B' }
+  definitions.replay_quad_view = { name: 'Replay Quad View' }
+  definitions.replay_speed = { name: 'Replay Speed' }
+  definitions.replay_speeda = { name: 'Replay Speed A' }
+  definitions.replay_speedb = { name: 'Replay Speed B' }
+  definitions.replay_timecode = { name: 'Replay Timecode' }
+  definitions.replay_timecodea = { name: 'Replay Timecode A' }
+  definitions.replay_timecodeb = { name: 'Replay Timecode B' }
+  definitions.replay_json = { name: 'Replay JSON data' }
 
   return definitions
 }
 
-export const replayValues = async (instance: VMixInstance): Promise<VariablesReplayValues> => {
-  const variables: VariablesReplayValues = {}
+export const replayValues = async (instance: VMixInstance): Promise<ReplayVariablesSchema> => {
+  const variables: ReplayVariablesSchema = {}
 
   if (!instance.config.variablesShowReplay) return variables
 
@@ -69,6 +68,7 @@ export const replayValues = async (instance: VMixInstance): Promise<VariablesRep
   variables.replay_timecode = instance.data.replay.timecode
   variables.replay_timecodea = instance.data.replay.timecodeA
   variables.replay_timecodeb = instance.data.replay.timecodeB
+  variables.replay_json = instance.data.replay as unknown as JsonValue
 
   return variables
 }

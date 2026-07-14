@@ -1,40 +1,28 @@
-import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import type VMixInstance from '../index'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
+import type VMixInstance from '../index.js'
 
-type DataSourceAutoNextOptions = {
-  functionID: 'DataSourceAutoNextOn' | 'DataSourceAutoNextOff' | 'DataSourceAutoNextOnOff'
-  value: string
+export type DataSourceActionsSchema = {
+  dataSourceAutoNext: CompanionActionSchema<{
+    functionID: 'DataSourceAutoNextOn' | 'DataSourceAutoNextOff' | 'DataSourceAutoNextOnOff'
+    value: string
+  }>
+  dataSourceNextRow: CompanionActionSchema<{
+    value: string
+  }>
+  dataSourcePreviousRow: CompanionActionSchema<{
+    value: string
+  }>
+  dataSourceSelectRow: CompanionActionSchema<{
+    value: string
+  }>
+  dataSourcePlayPause: CompanionActionSchema<{
+    functionID: 'DataSourcePlayPause' | 'DataSourcePlay' | 'DataSourcePause'
+    value: string
+  }>
 }
 
-type DataSourceNextRowOptions = {
-  value: string
-}
-
-type DataSourcePreviousRowOptions = {
-  value: string
-}
-
-type DataSourceSelectRowOptions = {
-  value: string
-}
-
-type DataSourceAutoNextCallback = ActionCallback<'dataSourceAutoNext', DataSourceAutoNextOptions>
-type DataSourceNextRowCallback = ActionCallback<'dataSourceNextRow', DataSourceNextRowOptions>
-type DataSourcePreviousRowCallback = ActionCallback<'dataSourcePreviousRow', DataSourcePreviousRowOptions>
-type DataSourceSelectRowCallback = ActionCallback<'dataSourceSelectRow', DataSourceSelectRowOptions>
-
-export interface DataSourceActions {
-  dataSourceAutoNext: VMixAction<DataSourceAutoNextCallback>
-  dataSourceNextRow: VMixAction<DataSourceNextRowCallback>
-  dataSourcePreviousRow: VMixAction<DataSourcePreviousRowCallback>
-  dataSourceSelectRow: VMixAction<DataSourceSelectRowCallback>
-
-  [key: string]: VMixAction<any>
-}
-
-export type DataSourceCallbacks = DataSourceAutoNextCallback | DataSourceNextRowCallback | DataSourcePreviousRowCallback | DataSourceSelectRowCallback
-
-export const vMixDataSourceActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): DataSourceActions => {
+export const getDataSourceActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<DataSourceActionsSchema> => {
   return {
     dataSourceAutoNext: {
       name: 'DataSource - AutoNext',
@@ -50,13 +38,14 @@ export const vMixDataSourceActions = (_instance: VMixInstance, sendBasicCommand:
             { id: 'DataSourceAutoNextOff', label: 'Off' },
             { id: 'DataSourceAutoNextOnOff', label: 'On/Off' },
           ],
+          disableAutoExpression: true,
         },
         {
           type: 'textinput',
           label: 'Name,Table',
           id: 'value',
           default: '',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
       callback: sendBasicCommand,
@@ -71,7 +60,7 @@ export const vMixDataSourceActions = (_instance: VMixInstance, sendBasicCommand:
           label: 'Name,Table',
           id: 'value',
           default: '',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
       callback: sendBasicCommand,
@@ -86,7 +75,7 @@ export const vMixDataSourceActions = (_instance: VMixInstance, sendBasicCommand:
           label: 'Name,Table',
           id: 'value',
           default: '',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
       callback: sendBasicCommand,
@@ -101,10 +90,45 @@ export const vMixDataSourceActions = (_instance: VMixInstance, sendBasicCommand:
           label: 'Name,Table,Index',
           id: 'value',
           default: '',
-          useVariables: { local: true },
+          useVariables: true,
+        },
+      ],
+      callback: sendBasicCommand,
+    },
+
+    dataSourcePlayPause: {
+      name: 'DataSource - Play / Pause updates',
+      description: 'Controls vMix polling the data source for updates',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'AutoNext State',
+          id: 'functionID',
+          default: 'DataSourcePlayPause',
+          choices: [
+            { id: 'DataSourcePlayPause', label: 'Toggle' },
+            { id: 'DataSourcePlay', label: 'Play' },
+            { id: 'DataSourcePause', label: 'Pause' },
+          ],
+          expressionDescription: `Valid Values: 'DataSourcePlayPause', 'DataSourcePlay', 'DataSourcePause'`,
+        },
+        {
+          type: 'textinput',
+          label: 'Data Source Name',
+          id: 'value',
+          default: '',
+          useVariables: true,
         },
       ],
       callback: sendBasicCommand,
     },
   }
+}
+
+export const vMixDataSourceFunctions: ActionFunctionsList<DataSourceActionsSchema> = {
+  dataSourceAutoNext: ['DataSourceAutoNextOn', 'DataSourceAutoNextOff', 'DataSourceAutoNextOnOff'],
+  dataSourceNextRow: ['DataSourceNextRow'],
+  dataSourcePreviousRow: ['DataSourcePreviousRow'],
+  dataSourceSelectRow: ['DataSourceSelectRow'],
+  dataSourcePlayPause: ['DataSourcePlayPause', 'DataSourcePlay', 'DataSourcePause'],
 }

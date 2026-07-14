@@ -1,7 +1,8 @@
-import type { AudioBusses } from './data'
-import { type LoadAudioPresetOptions } from './actions/audioPresetActions'
-import type VMixInstance from './index'
-import { volumeToLinear } from './utils'
+import { createModuleLogger } from '@companion-module/base'
+import type { AudioBusses } from './data.js'
+import { type AudioPresetActionsSchema } from './actions/audioPresetActions.js'
+import type VMixInstance from './index.js'
+import { volumeToLinear } from './utils.js'
 
 type BusPreset = {
   bus: 'master' | 'busA' | 'busB' | 'busC' | 'busD' | 'busE' | 'busF' | 'busG'
@@ -36,6 +37,8 @@ type SavePresetSettings = {
   inputFilter: string
 }
 
+const log = createModuleLogger('Audio Presets')
+
 export class AudioPresets {
   instance: VMixInstance
   presets: Record<string, AudioPreset> = {}
@@ -44,7 +47,7 @@ export class AudioPresets {
     this.instance = instance
   }
 
-  loadPreset = async (data: AudioPreset, settings: LoadAudioPresetOptions, checkStatus: boolean = false): Promise<string[] | void> => {
+  loadPreset = async (data: AudioPreset, settings: AudioPresetActionsSchema['loadAudioPreset']['options'], checkStatus: boolean = false): Promise<string[] | void> => {
     const commandList: string[] = []
 
     if (settings.busses.length > 0) {
@@ -186,13 +189,13 @@ export class AudioPresets {
       await commandDelay()
     }
 
-    this.instance.log('info', `Loading Audio Preset: ${data.name}`)
+    log.info(`Loading Audio Preset: ${data.name}`)
 
     return
   }
 
   deletePreset = async (name: string): Promise<void> => {
-    this.instance.log('info', `Deleting preset: ${name}`)
+    log.info(`Deleting preset: ${name}`)
     delete this.presets[name]
 
     this.instance.config.audioPresets = this.presets
@@ -266,7 +269,7 @@ export class AudioPresets {
 
     this.presets[newPreset.name] = newPreset
 
-    this.instance.log('info', `Saving preset: ${newPreset.name}`)
+    log.info(`Saving preset: ${newPreset.name}`)
     this.instance.config.audioPresets = this.presets
     this.instance.saveConfig(this.instance.config)
 

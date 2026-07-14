@@ -1,50 +1,38 @@
-import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import { options } from '../utils'
-import type VMixInstance from '../index'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
+import { options } from '../utils.js'
+import type VMixInstance from '../index.js'
 
-type PTZMoveOptions = {
-  input: string
-  functionID:
-    | 'PTZHome'
-    | 'PTZMoveStop'
-    | 'PTZMoveUp'
-    | 'PTZMoveUpLeft'
-    | 'PTZMoveUpRight'
-    | 'PTZMoveLeft'
-    | 'PTZMoveRight'
-    | 'PTZMoveDown'
-    | 'PTZMoveDownLeft'
-    | 'PTZMoveDownRight'
-    | 'PTZMoveToVirtualInputPosition'
-    | 'PTZMoveToVirtualInputPositionByIndex'
-  value?: string
+export type PTZActionsSchema = {
+  ptzMove: CompanionActionSchema<{
+    input: string
+    functionID:
+      | 'PTZHome'
+      | 'PTZMoveStop'
+      | 'PTZMoveUp'
+      | 'PTZMoveUpLeft'
+      | 'PTZMoveUpRight'
+      | 'PTZMoveLeft'
+      | 'PTZMoveRight'
+      | 'PTZMoveDown'
+      | 'PTZMoveDownLeft'
+      | 'PTZMoveDownRight'
+      | 'PTZMoveToVirtualInputPosition'
+      | 'PTZMoveToVirtualInputPositionByIndex'
+    value: string
+  }>
+  ptzFocusZoom: CompanionActionSchema<{
+    input: string
+    functionID: 'PTZFocusAuto' | 'PTZFocusFar' | 'PTZFocusManual' | 'PTZFocusNear' | 'PTZFocusStop' | 'PTZZoomIn' | 'PTZZoomOut' | 'PTZZoomStop'
+    value: string
+  }>
+  ptzVirtualInput: CompanionActionSchema<{
+    input: string
+    functionID: 'PTZCreateVirtualInput' | 'PTZUpdateVirtualInput'
+  }>
 }
 
-type PTZFocusZoomOptions = {
-  input: string
-  value: string
-}
-
-type PTZVirtualInputOptions = {
-  input: string
-  functionID: 'PTZCreateVirtualInput' | 'PTZUpdateVirtualInput'
-}
-
-type PTZMoveCallback = ActionCallback<'ptzMove', PTZMoveOptions>
-type PTZFocusZoomCallback = ActionCallback<'ptzFocusZoom', PTZFocusZoomOptions>
-type PTZVirtualInputCallback = ActionCallback<'ptzVirtualInput', PTZVirtualInputOptions>
-
-export interface PTZActions {
-  ptzMove: VMixAction<PTZMoveCallback>
-  ptzFocusZoom: VMixAction<PTZFocusZoomCallback>
-  ptzVirtualInput: VMixAction<PTZVirtualInputCallback>
-
-  [key: string]: VMixAction<any>
-}
-
-export type PTZCallbacks = PTZMoveCallback | PTZFocusZoomCallback | PTZVirtualInputCallback
-
-export const vMixPTZActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): PTZActions => {
+export const getPTZActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<PTZActionsSchema> => {
   return {
     ptzMove: {
       name: 'PTZ - Move',
@@ -67,25 +55,18 @@ export const vMixPTZActions = (_instance: VMixInstance, sendBasicCommand: SendBa
             { id: 'PTZMoveDown', label: 'Down' },
             { id: 'PTZMoveDownLeft', label: 'Down Left' },
             { id: 'PTZMoveDownRight', label: 'Down Right' },
-            {
-              id: 'PTZMoveToVirtualInputPosition',
-              label: 'Move to PTZ Virtual Input without selecting it into Preview',
-            },
-            {
-              id: 'PTZMoveToVirtualInputPositionByIndex',
-              label: 'Move to PTZ Virtual Input associated with this Input',
-            },
+            { id: 'PTZMoveToVirtualInputPosition', label: 'Move to PTZ Virtual Input without selecting it into Preview' },
+            { id: 'PTZMoveToVirtualInputPositionByIndex', label: 'Move to PTZ Virtual Input associated with this Input' },
           ],
+          disableAutoExpression: true,
         },
         {
           type: 'textinput',
           label: 'Value 0 to 1 (or for move to Virtual Input by Index, 0 to 100)',
-          id: 'Value',
+          id: 'value',
           default: '0',
-          useVariables: { local: true },
-          isVisible: (options) => {
-            return options.functionID !== 'PTZHome' && options.functionID !== 'PTZMoveStop' && options.functionID !== 'PTZMoveToVirtualInputPosition'
-          },
+          useVariables: true,
+          isVisibleExpression: `!arrayIncludes(['PTZHome', 'PTZMoveStop', 'PTZMoveToVirtualInputPosition'], $(options:functionID))`,
         },
       ],
       callback: sendBasicCommand,
@@ -98,7 +79,7 @@ export const vMixPTZActions = (_instance: VMixInstance, sendBasicCommand: SendBa
         options.input,
         {
           type: 'dropdown',
-          label: 'Move',
+          label: 'Focus / Zoom',
           id: 'functionID',
           default: 'PTZFocusAuto',
           choices: [
@@ -111,16 +92,15 @@ export const vMixPTZActions = (_instance: VMixInstance, sendBasicCommand: SendBa
             { id: 'PTZZoomOut', label: 'Zoom Out' },
             { id: 'PTZZoomStop', label: 'Zoom Stop' },
           ],
+          disableAutoExpression: true,
         },
         {
           type: 'textinput',
           label: 'Speed 0 to 1',
-          id: 'Value',
+          id: 'value',
           default: '1',
-          useVariables: { local: true },
-          isVisible: (options) => {
-            return options.functionID !== 'PTZFocusAuto' && options.functionID !== 'PTZFocusManual' && options.functionID !== 'PTZFocusStop' && options.functionID !== 'PTZZoomStop'
-          },
+          useVariables: true,
+          isVisibleExpression: `!arrayIncludes(['PTZFocusAuto', 'PTZFocusManual', 'PTZFocusStop', 'PTZZoomStop'], $(options:functionID))`,
         },
       ],
       callback: sendBasicCommand,
@@ -140,9 +120,29 @@ export const vMixPTZActions = (_instance: VMixInstance, sendBasicCommand: SendBa
             { id: 'PTZCreateVirtualInput', label: 'Create' },
             { id: 'PTZUpdateVirtualInput', label: 'Update' },
           ],
+          disableAutoExpression: true,
         },
       ],
       callback: sendBasicCommand,
     },
   }
+}
+
+export const vMixPTZFunctions: ActionFunctionsList<PTZActionsSchema> = {
+  ptzMove: [
+    'PTZHome',
+    'PTZMoveStop',
+    'PTZMoveUp',
+    'PTZMoveUpLeft',
+    'PTZMoveUpRight',
+    'PTZMoveLeft',
+    'PTZMoveRight',
+    'PTZMoveDown',
+    'PTZMoveDownLeft',
+    'PTZMoveDownRight',
+    'PTZMoveToVirtualInputPosition',
+    'PTZMoveToVirtualInputPositionByIndex',
+  ],
+  ptzFocusZoom: ['PTZFocusAuto', 'PTZFocusFar', 'PTZFocusManual', 'PTZFocusNear', 'PTZFocusStop', 'PTZZoomIn', 'PTZZoomOut', 'PTZZoomStop'],
+  ptzVirtualInput: ['PTZCreateVirtualInput', 'PTZUpdateVirtualInput'],
 }

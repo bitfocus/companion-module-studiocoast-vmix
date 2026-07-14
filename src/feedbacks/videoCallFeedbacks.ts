@@ -1,38 +1,25 @@
-import { combineRgb } from '@companion-module/base'
-import type { VMixFeedback, FeedbackCallback } from './feedback'
-import { options } from '../utils'
-import type VMixInstance from '../index'
+import type { CompanionFeedbackSchema, CompanionFeedbackDefinitions } from '@companion-module/base'
+import { options } from '../utils.js'
+import type VMixInstance from '../index.js'
 
-type VideoCallAudioSourceOptions = {
-  input: string
-  source: 'Master' | 'Headphones' | 'BusA' | 'BusB' | 'BusC' | 'BusD' | 'BusE' | 'BusF' | 'BusG'
+export type VideoCallFeedbacksSchema = {
+  videoCallAudioSource: CompanionFeedbackSchema<{
+    input: string
+    source: 'Master' | 'Headphones' | 'BusA' | 'BusB' | 'BusC' | 'BusD' | 'BusE' | 'BusF' | 'BusG'
+  }>
+  videoCallVideoSource: CompanionFeedbackSchema<{
+    input: string
+    source: 'Output1' | 'Output2' | 'Output3' | 'Output4' | 'None'
+  }>
 }
 
-type VideoCallVideoSourceOptions = {
-  input: string
-  source: 'Output1' | 'Output2' | 'Output3' | 'Output4' | 'None'
-}
-
-type VideoCallAudioSourceCallback = FeedbackCallback<'videoCallAudioSource', VideoCallAudioSourceOptions>
-type VideoCallVideoSourceCallback = FeedbackCallback<'videoCallVideoSource', VideoCallVideoSourceOptions>
-
-export interface VideoCallFeedbacks {
-  videoCallAudioSource: VMixFeedback<VideoCallAudioSourceCallback>
-  videoCallVideoSource: VMixFeedback<VideoCallVideoSourceCallback>
-}
-
-export type VideoCallCallbacks = VideoCallAudioSourceCallback | VideoCallVideoSourceCallback
-
-export const vMixVideoCallFeedbacks = (instance: VMixInstance): VideoCallFeedbacks => {
+export const getVideoCallFeedbacks = (instance: VMixInstance): CompanionFeedbackDefinitions<VideoCallFeedbacksSchema> => {
   return {
     videoCallAudioSource: {
       type: 'boolean',
       name: 'Video Call - Audio Source',
       description: 'Indicates audio source for a video call',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0xff0000 },
       options: [
         options.input,
         {
@@ -44,10 +31,11 @@ export const vMixVideoCallFeedbacks = (instance: VMixInstance): VideoCallFeedbac
             id: index > 1 ? `Bus${id}` : id,
             label: id,
           })),
+          expressionDescription: `Valid Values: 'Master', 'Headphones', 'A', 'B', 'C', 'D', 'E', 'F', 'G'`,
         },
       ],
-      callback: async (feedback, context) => {
-        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+      callback: async (feedback) => {
+        const inputOption = feedback.options.input
         const input = await instance.data.getInput(inputOption)
 
         return input?.callAudioSource === feedback.options.source
@@ -58,10 +46,7 @@ export const vMixVideoCallFeedbacks = (instance: VMixInstance): VideoCallFeedbac
       type: 'boolean',
       name: 'Video Call - Video Source',
       description: 'Indicates video source for a video call',
-      defaultStyle: {
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0),
-      },
+      defaultStyle: { color: 0x000000, bgcolor: 0xff0000 },
       options: [
         options.input,
         {
@@ -70,10 +55,11 @@ export const vMixVideoCallFeedbacks = (instance: VMixInstance): VideoCallFeedbac
           id: 'source',
           default: 'Output1',
           choices: ['Output1', 'Output2', 'Output3', 'Output4', 'None'].map((id) => ({ id, label: id })),
+          expressionDescription: `Valid Values: 'Output1', 'Output2', 'Output3', 'Output4', 'None'`,
         },
       ],
-      callback: async (feedback, context) => {
-        const inputOption = (await instance.parseOption(feedback.options.input, context))[instance.buttonShift.state]
+      callback: async (feedback) => {
+        const inputOption = feedback.options.input
         const input = await instance.data.getInput(inputOption)
 
         return input?.callVideoSource === feedback.options.source

@@ -1,101 +1,43 @@
-import type VMixInstance from '../index'
-import type {
-  CompanionAdvancedFeedbackResult,
-  CompanionFeedbackButtonStyleResult,
-  CompanionFeedbackAdvancedEvent,
-  CompanionFeedbackBooleanEvent,
-  CompanionFeedbackContext,
-  SomeCompanionFeedbackInputField,
-} from '@companion-module/base'
-import { type AudioFeedbacks, type AudioCallbacks, vMixAudioFeedbacks } from './audioFeedbacks'
-import { type AudioPresetFeedbacks, type AudioPresetCallbacks, vMixAudioPresetFeedbacks } from './audioPresetFeedbacks'
-import { type GeneralFeedbacks, type GeneralCallbacks, vMixGeneralFeedbacks } from './generalFeedbacks'
-import { type LayersFeedbacks, type LayersCallbacks, vMixLayersFeedbacks } from './layersFeedbacks'
-import { type ListFeedbacks, type ListCallbacks, vMixListFeedbacks } from './listFeedbacks'
-import { type MediaFeedbacks, type MediaCallbacks, vMixMediaFeedbacks } from './mediaFeedbacks'
-import { type ReplayFeedbacks, type ReplayCallbacks, vMixReplayFeedbacks } from './replayFeedbacks'
-import { type TallyFeedbacks, type TallyCallbacks, vMixTallyFeedbacks } from './tallyFeedbacks'
-import { type TransitionFeedbacks, type TransitionCallbacks, vMixTransitionFeedbacks } from './transitionFeedbacks'
-import { type UtilFeedbacks, type UtilCallbacks, vMixUtilFeedbacks } from './utilFeedbacks'
-import { type VideoCallFeedbacks, type VideoCallCallbacks, vMixVideoCallFeedbacks } from './videoCallFeedbacks'
+import type { CompanionFeedbackDefinitions, StringKeys } from '@companion-module/base'
+import type VMixInstance from '../index.js'
+import { type AudioFeedbacksSchema, getAudioFeedbacks } from './audioFeedbacks.js'
+import { type AudioPresetFeedbacksSchema, getAudioPresetFeedbacks } from './audioPresetFeedbacks.js'
+import { type GeneralFeedbacksSchema, getGeneralFeedbacks } from './generalFeedbacks.js'
+import { type LayersFeedbacksSchema, getLayersFeedbacks } from './layersFeedbacks.js'
+import { type ListFeedbacksSchema, getListFeedbacks } from './listFeedbacks.js'
+import { type PlaybackFeedbacksSchema, getPlaybackFeedbacks } from './playbackFeedbacks.js'
+import { type ReplayFeedbacksSchema, getReplayFeedbacks } from './replayFeedbacks.js'
+import { type TallyFeedbacksSchema, getTallyFeedbacks } from './tallyFeedbacks.js'
+import { type TransitionFeedbacksSchema, getTransitionFeedbacks } from './transitionFeedbacks.js'
+import { type UtilFeedbacksSchema, getUtilFeedbacks } from './utilFeedbacks.js'
+import { type VideoCallFeedbacksSchema, getVideoCallFeedbacks } from './videoCallFeedbacks.js'
 
-export type VMixFeedbackKeys = keyof VMixFeedbacks
+export type FeedbacksSchema = AudioFeedbacksSchema &
+  AudioPresetFeedbacksSchema &
+  GeneralFeedbacksSchema &
+  LayersFeedbacksSchema &
+  ListFeedbacksSchema &
+  PlaybackFeedbacksSchema &
+  ReplayFeedbacksSchema &
+  TallyFeedbacksSchema &
+  TransitionFeedbacksSchema &
+  UtilFeedbacksSchema &
+  VideoCallFeedbacksSchema
 
-export type VMixFeedbacks =
-  | AudioFeedbacks
-  | AudioPresetFeedbacks
-  | GeneralFeedbacks
-  | LayersFeedbacks
-  | ListFeedbacks
-  | MediaFeedbacks
-  | ReplayFeedbacks
-  | TallyFeedbacks
-  | TransitionFeedbacks
-  | UtilFeedbacks
-  | VideoCallFeedbacks
+export type FeedbackId = StringKeys<FeedbacksSchema>
 
-export type FeedbackCallbacks =
-  | AudioCallbacks
-  | AudioPresetCallbacks
-  | GeneralCallbacks
-  | LayersCallbacks
-  | ListCallbacks
-  | MediaCallbacks
-  | ReplayCallbacks
-  | TallyCallbacks
-  | TransitionCallbacks
-  | UtilCallbacks
-  | VideoCallCallbacks
-
-// Force options to have a default to prevent sending undefined values
-type InputFieldWithDefault = Exclude<SomeCompanionFeedbackInputField, 'default'> & {
-  default: string | number | boolean | null | (string | number | boolean | null)[]
-}
-
-export interface FeedbackCallback<I, O> {
-  feedbackId: I
-  options: Readonly<O>
-}
-
-// vMix Boolean and Advanced feedback types
-interface VMixFeedbackBoolean<T> {
-  type: 'boolean'
-  name: string
-  description: string
-  defaultStyle: Partial<CompanionFeedbackButtonStyleResult>
-  options: InputFieldWithDefault[]
-  callback: (feedback: Readonly<Omit<CompanionFeedbackBooleanEvent, 'options' | 'type'> & T>, context: CompanionFeedbackContext) => boolean | Promise<boolean>
-  subscribe?: (feedback: Readonly<Omit<CompanionFeedbackBooleanEvent, 'options' | 'type'> & T>) => boolean
-  unsubscribe?: (feedback: Readonly<Omit<CompanionFeedbackBooleanEvent, 'options' | 'type'> & T>) => boolean
-}
-
-interface VMixFeedbackAdvanced<T> {
-  type: 'advanced'
-  name: string
-  description: string
-  options: InputFieldWithDefault[]
-  callback: (
-    feedback: Readonly<Omit<CompanionFeedbackAdvancedEvent, 'options' | 'type'> & T>,
-    context: CompanionFeedbackContext,
-  ) => CompanionAdvancedFeedbackResult | Promise<CompanionAdvancedFeedbackResult>
-  subscribe?: (feedback: Readonly<Omit<CompanionFeedbackAdvancedEvent, 'options' | 'type'> & T>) => CompanionAdvancedFeedbackResult
-  unsubscribe?: (feedback: Readonly<Omit<CompanionFeedbackAdvancedEvent, 'options' | 'type'> & T>) => CompanionAdvancedFeedbackResult
-}
-
-export type VMixFeedback<T> = VMixFeedbackBoolean<T> | VMixFeedbackAdvanced<T>
-
-export function getFeedbacks(instance: VMixInstance): VMixFeedbacks {
+export function getFeedbacks(instance: VMixInstance): CompanionFeedbackDefinitions<FeedbacksSchema> {
   return {
-    ...vMixAudioFeedbacks(instance),
-    ...vMixAudioPresetFeedbacks(instance),
-    ...vMixGeneralFeedbacks(instance),
-    ...vMixLayersFeedbacks(instance),
-    ...vMixListFeedbacks(instance),
-    ...vMixMediaFeedbacks(instance),
-    ...vMixReplayFeedbacks(instance),
-    ...vMixTallyFeedbacks(instance),
-    ...vMixTransitionFeedbacks(instance),
-    ...vMixUtilFeedbacks(instance),
-    ...vMixVideoCallFeedbacks(instance),
+    ...getAudioFeedbacks(instance),
+    ...getAudioPresetFeedbacks(instance),
+    ...getGeneralFeedbacks(instance),
+    ...getLayersFeedbacks(instance),
+    ...getListFeedbacks(instance),
+    ...getPlaybackFeedbacks(instance),
+    ...getReplayFeedbacks(instance),
+    ...getTallyFeedbacks(instance),
+    ...getTransitionFeedbacks(instance),
+    ...getUtilFeedbacks(instance),
+    ...getVideoCallFeedbacks(instance),
   }
 }

@@ -29,17 +29,32 @@ If there is more than one parameter, use "&" as a separator between them:
 ```
 
 
-# Button Shifting
-The ability to modify the action and feedback options by using the Toggle Shift action, which will split text inputs by the configured Shift Delimiter and determine which value to use based on the state of the Shift Action.
-
-For some feedback, such as Tally and Layer Routing it's possible to enable 'blinking' which causes the feedback to indicate a solid color if the current Shift layer is active, or flash that color if it's an one of the inactive Shift layers that is showing feedback. For example, if you have a feedback to show the preview with the input set to "Cam1/Cam2", when shift is not toggled it would show a solid green when "Cam1" is in preview, or flash if "cam2" is in preview, and when Shift is toggled on the reverse would happen.
-
-
 # HTTP API
 This module now supports Companions HTTP API, providing endpoints that can be used by 3rd party applications, and as a Data Source in vMix itself. Information on the API endpoints is available in [docs/http_api.md](./docs/http_api.md)
 
 
 # Recent Patches
+**v5.0.0**
+- BREAKING CHANGE: Removed the deprecated 'Button Shift' functionality, as it's now redundant with Companion v4.3 native Expression capabilities
+- Many Actions/Feedbacks have been updated to support Companions new capability of toggling an option between standard and Expression modes
+- Added documentation for a list of vMix Shortcuts and the corresponding Companion Actions, available at [https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/shortcut_list.md](https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/shortcut_list.md)
+- Added more descriptions for Actions/Feedbacks and their options
+- Actions:
+  - `Output - MultiCorder / Recording / Streaming` Action has been replaced by individual actions for MultiCorder, Recording, Streaming, External, Fullscreen, and FTB
+  - Renamed `Media` Actions to `Playback` to better explain their functionality
+  - Added `Audio Preset` actions to store the current vMix audio states (such as bus routing, volume, etc...) in Companion which when loaded will send the necessary commands to set vMix back to the selected state
+  - Added `General - vMix Connection`, `Config - Set Host`, and `Config - Set Port`, Actions to allow for easily swapping from one vMix instance to another.
+  - Added 80 new Actions, resulting in 100% coverage of vMix Shortcut Functions (full list of new actions can be found at [https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/patch_notes.md](https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/patch_notes.md))
+  - Updated `Audio - Route Bus to Master` with an option to choose between Toggle, On, or Off
+  - Updated `Title - Start / Stop / Pause Countdown` to now also include an option to Suspend a Countdown
+  - Updated `Input - Colour Correction` to include options for Auto and Resetting Colour Correction
+  - Updated `Playback - Playback Actions` to include an option to Play/Pause a Live input (such as an NDI/OMT feed)
+- Feedbacks:
+  - Renamed `Media` Feedbacks to `Playback` to better explain their functionality
+- Variables:
+  - Added `input_X_position`, `mix_X_preview_position`, and `mix_X_program_position`, variables giving the current position in ms of an input
+  - Added `dynamic_input_X_json`, `streams`, `recording`, `input_X_json`, `mix_X_preview_json`, `mix_X_program_json`, `output_X_json`, `overlay_X_json`, and `replay_json`, variables to give JSON data for use in Expressions
+
 **v4.2.0**
 - Added support for vMix 29
 - Actions:

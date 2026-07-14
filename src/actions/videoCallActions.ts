@@ -1,40 +1,69 @@
-import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import { options } from '../utils'
-import type VMixInstance from '../index'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
+import { options } from '../utils.js'
+import type VMixInstance from '../index.js'
 
-type VideoCallAudioSourceOptions = {
-  input: string
-  value: 'Master' | 'Headphones' | 'BusA' | 'BusB' | 'BusC' | 'BusD' | 'BusE' | 'BusF' | 'BusG'
+export type VideoCallActionsSchema = {
+  videoCallAudioSource: CompanionActionSchema<{
+    input: string
+    value: 'Master' | 'Headphones' | 'BusA' | 'BusB' | 'BusC' | 'BusD' | 'BusE' | 'BusF' | 'BusG'
+  }>
+  videoCallVideoSource: CompanionActionSchema<{
+    input: string
+    value: 'Output1' | 'Output2' | 'Output3' | 'Output4' | 'None'
+  }>
+  videoCallConnect: CompanionActionSchema<{
+    functionID: 'VideoCallConnect' | 'VideoCallReconnect'
+    input: string
+    name: string
+    password: string
+  }>
 }
 
-type VideoCallVideoSourceOptions = {
-  input: string
-  value: 'Output1' | 'Output2' | 'Output3' | 'Output4' | 'None'
-}
-
-type VideoCallConnectOptions = {
-  functionID: 'VideoCallConnect' | 'VideoCallReconnect'
-  input: string
-  name: string
-  password: string
-}
-
-type VideoCallAudioSourceCallback = ActionCallback<'videoCallAudioSource', VideoCallAudioSourceOptions>
-type VideoCallVideoSourceCallback = ActionCallback<'videoCallVideoSource', VideoCallVideoSourceOptions>
-type VideoCallConnectCallback = ActionCallback<'videoCallConnect', VideoCallConnectOptions>
-
-export interface VideoCallActions {
-  videoCallAudioSource: VMixAction<VideoCallAudioSourceCallback>
-  videoCallVideoSource: VMixAction<VideoCallVideoSourceCallback>
-  videoCallConnect: VMixAction<VideoCallConnectCallback>
-
-  [key: string]: VMixAction<any>
-}
-
-export type VideoCallCallbacks = VideoCallAudioSourceCallback | VideoCallVideoSourceCallback
-
-export const vMixVideoCallActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): VideoCallActions => {
+export const getVideoCallActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<VideoCallActionsSchema> => {
   return {
+    videoCallConnect: {
+      name: 'VideoCall - Connect / Reconnect',
+      description: 'Connection or reconnect to a vMix Call (Requires vMix 28+)',
+      options: [
+        {
+          type: 'dropdown',
+          label: 'Select Output',
+          id: 'functionID',
+          default: 'VideoCallConnect',
+          choices: [
+            { id: 'VideoCallConnect', label: 'Connect' },
+            { id: 'VideoCallReconnect', label: 'Reconnect' },
+          ],
+          disableAutoExpression: true,
+        },
+        options.input,
+        {
+          type: 'textinput',
+          label: 'Name',
+          id: 'name',
+          default: '',
+          useVariables: true,
+          isVisibleExpression: `$(options:functionID) === 'VideoCallConnect'`,
+        },
+        {
+          type: 'textinput',
+          label: 'Password',
+          id: 'password',
+          default: '',
+          useVariables: true,
+          isVisibleExpression: `$(options:functionID) === 'VideoCallConnect'`,
+        },
+      ],
+      callback: async (action) => {
+        if (action.options.functionID === 'VideoCallConnect') {
+          return instance.tcp.sendCommand(action.options.functionID + `Input=${action.options.input}&Value=${action.options.name},${action.options.password}`)
+        } else {
+          return instance.tcp.sendCommand(action.options.functionID + `Input=${action.options.input}`)
+        }
+      },
+    },
+
     videoCallAudioSource: {
       name: 'VideoCall - Select Audio Source',
       description: 'Routes an Audio Source to the Video Call Input',
@@ -56,6 +85,7 @@ export const vMixVideoCallActions = (instance: VMixInstance, sendBasicCommand: S
             { id: 'BusF', label: 'F' },
             { id: 'BusG', label: 'G' },
           ],
+          expressionDescription: `Valid Values: 'Master', 'Headphones', 'BusA', 'BusB', 'BusC', 'BusD', 'BusE', 'BusF', 'BusG'`,
         },
       ],
       callback: sendBasicCommand,
@@ -78,54 +108,16 @@ export const vMixVideoCallActions = (instance: VMixInstance, sendBasicCommand: S
             { id: 'Output4', label: 'Output 4' },
             { id: 'None', label: 'None' },
           ],
+          expressionDescription: `Valid Values: 'Output1', 'Output2', 'Output3', 'Output4', 'None'`,
         },
       ],
       callback: sendBasicCommand,
     },
-
-    videoCallConnect: {
-      name: 'VideoCall - Connect / Reconnect',
-      description: 'Connection or reconnect to a vMix Call (Requires vMix 28+)',
-      options: [
-        {
-          type: 'dropdown',
-          label: 'Select Output',
-          id: 'functionID',
-          default: 'VideoCallConnect',
-          choices: [
-            { id: 'VideoCallConnect', label: 'Connect' },
-            { id: 'VideoCallReconnect', label: 'Reconnect' },
-          ],
-        },
-        options.input,
-        {
-          type: 'textinput',
-          label: 'Name',
-          id: 'name',
-          default: '',
-          useVariables: { local: true },
-          isVisible: (options) => options.functionID === 'VideoCallConnect',
-        },
-        {
-          type: 'textinput',
-          label: 'Password',
-          id: 'password',
-          default: '',
-          useVariables: { local: true },
-          isVisible: (options) => options.functionID === 'VideoCallConnect',
-        },
-      ],
-      callback: async (action, context) => {
-        const selected = (await instance.parseOption(action.options.input, context))[instance.buttonShift.state]
-
-        if (action.options.functionID === 'VideoCallConnect') {
-          if (instance.tcp) return instance.tcp.sendCommand(action.options.functionID + `Input=${selected}`)
-        } else {
-          const name = (await instance.parseOption(action.options.name, context))[instance.buttonShift.state]
-          const password = (await instance.parseOption(action.options.password, context))[instance.buttonShift.state]
-          if (instance.tcp) return instance.tcp.sendCommand(action.options.functionID + `Input=${selected}&Value=${name},${password}`)
-        }
-      },
-    },
   }
+}
+
+export const vMixVideoCallFunctions: ActionFunctionsList<VideoCallActionsSchema> = {
+  videoCallConnect: ['VideoCallConnect', 'VideoCallReconnect'],
+  videoCallAudioSource: ['VideoCallAudioSource'],
+  videoCallVideoSource: ['VideoCallVideoSource'],
 }

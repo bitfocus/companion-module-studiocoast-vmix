@@ -1,17 +1,16 @@
-import { combineRgb } from '@companion-module/base'
-import type { VMixPresetArray } from './presets'
+import type { CompanionPresetDefinitions, CompanionPresetSection } from '@companion-module/base'
+import { type VMixInstanceTypes } from '../utils.js'
 
-export const getPlayListPresets = (): VMixPresetArray => {
-  const playListPresets: VMixPresetArray = [
-    {
-      category: 'PlayList',
+export const getPlayListDefinitions = (): CompanionPresetDefinitions<VMixInstanceTypes> => {
+  const playListDefinitions: CompanionPresetDefinitions<VMixInstanceTypes> = {
+    playlist_start: {
       name: 'PlayList Start',
-      type: 'button',
+      type: 'simple',
       style: {
         text: 'PlayList Start',
         size: '18',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -27,21 +26,21 @@ export const getPlayListPresets = (): VMixPresetArray => {
             value: '',
           },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0),
+            color: 0x000000,
+            bgcolor: 0xff0000,
           },
         },
       ],
     },
-    {
-      category: 'PlayList',
+
+    playlist_stop: {
       name: 'PlayList Stop',
-      type: 'button',
+      type: 'simple',
       style: {
         text: 'PlayList Stop',
         size: '18',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -57,21 +56,21 @@ export const getPlayListPresets = (): VMixPresetArray => {
             value: '',
           },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0),
+            color: 0x000000,
+            bgcolor: 0xff0000,
           },
         },
       ],
     },
-    {
-      category: 'PlayList',
+
+    playlist_next: {
       name: 'PlayList Next',
-      type: 'button',
+      type: 'simple',
       style: {
         text: 'PlayList Next',
         size: '18',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -81,11 +80,11 @@ export const getPlayListPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
-    {
-      category: 'PlayList',
+
+    playlist_prev: {
       name: 'PlayList Prev',
-      type: 'button',
-      style: { text: 'PlayList Prev', size: '18', color: combineRgb(255, 255, 255), bgcolor: combineRgb(0, 0, 0) },
+      type: 'simple',
+      style: { text: 'PlayList Prev', size: '18', color: 0xffffff, bgcolor: 0x000000 },
       steps: [
         {
           down: [{ actionId: 'playListFunctions', options: { functionID: 'PreviousPlayListEntry' } }],
@@ -94,7 +93,20 @@ export const getPlayListPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
+  }
+
+  return playListDefinitions
+}
+
+export const getPlaylistStructure = (): CompanionPresetSection<VMixInstanceTypes>[] => {
+  const structure: CompanionPresetSection<VMixInstanceTypes>[] = [
+    {
+      id: 'playlistStructure',
+      name: 'PlayList',
+      description: "Control of vMix's PlayList feature, not related to List type inputs",
+      definitions: ['playlist_start', 'playlist_stop', 'playlist_next', 'playlist_prev'],
+    },
   ]
 
-  return playListPresets
+  return structure
 }

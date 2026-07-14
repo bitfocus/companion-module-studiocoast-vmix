@@ -1,86 +1,62 @@
-import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import { type MixOptionEntry, options, TRANSITIONS } from '../utils'
-import type VMixInstance from '../index'
+import { type CompanionActionDefinitions, type CompanionActionSchema, createModuleLogger } from '@companion-module/base'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
+import { type MixOptionEntry, options, TRANSITIONS } from '../utils.js'
+import type VMixInstance from '../index.js'
 
-type ProgramCutOptions = {
-  input: string
-  mix: MixOptionEntry
-  mixVariable: string
+export type TransitionActionsSchema = {
+  programCut: CompanionActionSchema<{
+    input: string
+    mix: MixOptionEntry
+  }>
+  transitionMix: CompanionActionSchema<{
+    mix: MixOptionEntry
+    functionID: (typeof TRANSITIONS)[number]
+    duration: string
+    input?: string
+  }>
+  transition: CompanionActionSchema<{
+    functionID: `Transition${number}` | `Stinger${number}`
+    mix: MixOptionEntry
+  }>
+  setTransitionEffect: CompanionActionSchema<{
+    functionID: 'SetTransitionEffect1' | 'SetTransitionEffect2' | 'SetTransitionEffect3' | 'SetTransitionEffect4'
+    value: (typeof TRANSITIONS)[number]
+  }>
+  setTransitionDuration: CompanionActionSchema<{
+    functionID: 'SetTransitionDuration1' | 'SetTransitionDuration2' | 'SetTransitionDuration3' | 'SetTransitionDuration4'
+    value: number
+  }>
+  quickPlay: CompanionActionSchema<{
+    input: string
+  }>
+  setStingerGTInput: CompanionActionSchema<{
+    input: string
+    stinger: number
+  }>
 }
 
-type TransitionMixOptions = {
-  mix: MixOptionEntry
-  mixVariable: string
-  functionID: (typeof TRANSITIONS)[number]
-  duration: string
-  input?: string
-}
+const log = createModuleLogger('Actions - Transition')
 
-type TransitionOptions = {
-  functionID: `Transition${number}` | `Stinger${number}`
-  mix: MixOptionEntry
-  mixVariable: string
-}
-
-type SetTransitionEffectOptions = {
-  functionID: 'SetTransitionEffect1' | 'SetTransitionEffect2' | 'SetTransitionEffect3' | 'SetTransitionEffect4'
-  value: (typeof TRANSITIONS)[number]
-}
-
-type SetTransitionDurationOptions = {
-  functionID: 'SetTransitionDuration1' | 'SetTransitionDuration2' | 'SetTransitionDuration3' | 'SetTransitionDuration4'
-  value: number
-}
-
-type QuickPlayOptions = {
-  input: string
-}
-
-type ProgramCutCallback = ActionCallback<'programCut', ProgramCutOptions>
-type TransitionMixCallback = ActionCallback<'transitionMix', TransitionMixOptions>
-type TransitionCallback = ActionCallback<'transition', TransitionOptions>
-type SetTransitionEffectCallback = ActionCallback<'setTransitionEffect', SetTransitionEffectOptions>
-type SetTransitionDurationCallback = ActionCallback<'setTransitionDuration', SetTransitionDurationOptions>
-type QuickPlayCallback = ActionCallback<'quickPlay', QuickPlayOptions>
-
-export interface TransitionActions {
-  programCut: VMixAction<ProgramCutCallback>
-  transitionMix: VMixAction<TransitionMixCallback>
-  transition: VMixAction<TransitionCallback>
-  setTransitionEffect: VMixAction<SetTransitionEffectCallback>
-  setTransitionDuration: VMixAction<SetTransitionDurationCallback>
-  quickPlay: VMixAction<QuickPlayCallback>
-
-  [key: string]: VMixAction<any>
-}
-
-export type TransitionCallbacks = ProgramCutCallback | TransitionMixCallback | TransitionCallback | SetTransitionEffectCallback | SetTransitionDurationCallback | QuickPlayCallback
-
-export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): TransitionActions => {
+export const getTransitionActions = (instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<TransitionActionsSchema> => {
   return {
     programCut: {
       name: 'Transition - Send Input to Program',
       description: 'Cuts the input directly to Output without changing Preview',
-      options: [options.input, options.mixSelect, options.mixVariable],
-      callback: async (action, context) => {
-        let mixVariable: string | number = (await instance.parseOption(action.options.mixVariable, context))[instance.buttonShift.state]
-        mixVariable = parseInt(mixVariable, 10) - 1
-
-        let mix: number = action.options.mix
-        if (mix === -1) mix = instance.routingData.mix
-        if (mix === -2) mix = mixVariable
+      options: [options.input, options.mixSelect],
+      callback: async (action) => {
+        const mix = action.options.mix === 'Selected' ? instance.routingData.mix : action.options.mix
+        if (mix === null) return log.warn(`Transition - Send Input to Program - Invalid Mix option: ${action.options.mix}`)
 
         const programCut: any = {
           id: 'programCut',
           options: {
-            functionID: 'CutDirect',
+            functionID: mix !== 1 ? 'ActiveInput' : 'CutDirect',
             input: action.options.input,
-            mix,
+            mix: mix,
           },
         }
 
-        if (programCut.options.mix !== 0) programCut.options.functionID = 'ActiveInput'
-        return sendBasicCommand(programCut, context)
+        return sendBasicCommand(programCut)
       },
     },
 
@@ -89,59 +65,55 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
       description: 'Transition Preview to Program using the selected Transition',
       options: [
         options.mixSelect,
-        options.mixVariable,
         {
           type: 'dropdown',
           label: 'Select transition',
           id: 'functionID',
           default: 'Cut',
           choices: TRANSITIONS.map((transition) => ({ id: transition, label: transition })),
+          expressionDescription: `Valid Values: ${TRANSITIONS.join(', ')}`,
         },
         {
           type: 'textinput',
-          label: 'Duration',
+          label: 'Duration in ms',
+          description: '0 to 9999',
           id: 'duration',
           default: '1000',
-          useVariables: { local: true },
+          useVariables: true,
         },
         {
           type: 'textinput',
           label: 'Input - Leave blank to transition Preview',
           id: 'input',
           default: '',
-          tooltip: 'Number, Name, or GUID',
-          useVariables: { local: true },
+          description: 'Number, Name, or GUID',
+          useVariables: true,
         },
       ],
-      callback: async (action, context) => {
-        const command: any = {
-          actionId: 'transitionMix',
-          options: {
-            mix: action.options.mix,
-            mixVariable: action.options.mixVariable,
-            functionID: action.options.functionID,
-          },
-        }
-
-        let duration: string | number = (await instance.parseOption(action.options.duration, context))[instance.buttonShift.state]
-        const input = (await instance.parseOption(action.options.input || '', context))[instance.buttonShift.state]
-        duration = parseFloat(duration)
+      callback: async (action) => {
+        let duration: number = parseFloat(action.options.duration)
 
         if (isNaN(duration)) {
-          instance.log('warn', `Transition mix Duration must be a number`)
-          return
+          return log.warn(`Transition - Transition Mix - Duration must be a number`)
         }
 
         if (duration < 0) duration = 0
         if (duration > 9999) {
-          instance.log('warn', `Max transition duration limited by vMix to 9999ms`)
+          log.warn(`Transition - Transition Mix - Duration limited by vMix to 9999ms`)
           duration = 9999
         }
 
-        command.options.duration = duration
+        const command: any = {
+          actionId: 'transitionMix',
+          options: {
+            mix: action.options.mix,
+            functionID: action.options.functionID,
+            duration,
+          },
+        }
 
-        if (action.options.input !== '' && action.options.input !== undefined) command.options.input = input
-        return sendBasicCommand(command, context)
+        if (action.options.input !== '' && action.options.input !== undefined) command.options.input = action.options.input
+        return sendBasicCommand(command)
       },
     },
 
@@ -168,40 +140,22 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
             { id: 'Stinger7', label: 'Stinger 7' },
             { id: 'Stinger8', label: 'Stinger 8' },
           ],
+          expressionDescription: `Valid Values: 'Transition1', 'Transition2', 'Transition3', 'Transition4', 'Stinger1', 'Stinger2', 'Stinger3', 'Stinger4', 'Stinger5', 'Stinger6', 'Stinger7', 'Stinger8'`,
         },
         {
           type: 'dropdown',
           label: 'Mix',
           id: 'mix',
-          default: 0,
-          choices: [
-            { id: 0, label: '1' },
-            { id: 1, label: '2' },
-            { id: 2, label: '3' },
-            { id: 3, label: '4' },
-            { id: 4, label: '5' },
-            { id: 5, label: '6' },
-            { id: 6, label: '7' },
-            { id: 7, label: '8' },
-            { id: 8, label: '9' },
-            { id: 9, label: '10' },
-            { id: 10, label: '11' },
-            { id: 11, label: '12' },
-            { id: 12, label: '13' },
-            { id: 13, label: '14' },
-            { id: 14, label: '15' },
-            { id: 15, label: '16' },
-            { id: -1, label: 'Selected' },
-            { id: -2, label: 'Variable' },
-          ],
-          isVisible: (options) => {
-            const opt = options as TransitionOptions
-            return opt.functionID.startsWith('Stinger')
-          },
+          default: 1,
+          choices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map((id) => ({ id, label: `${id}` })),
+          isVisibleExpression: `includes($(options:feedbackID), 'Stinger')`,
+          expressionDescription: `Valid Values: 1 to 16`,
         },
-        options.mixVariable,
       ],
-      callback: async (action, context) => {
+      callback: async (action) => {
+        const mix = action.options.mix
+        if (mix === null) return log.warn(`Transition - Auto/Stinger Transition - Invalid Mix option: ${action.options.mix}`)
+
         const command: any = {
           actionId: 'transition',
           options: {
@@ -210,11 +164,10 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
         }
 
         if (action.options.functionID.startsWith('Stinger')) {
-          command.options.mix = action.options.mix
-          command.options.mixVariable = action.options.mixVariable
+          command.options.mix = mix
         }
 
-        return sendBasicCommand(command, context)
+        return sendBasicCommand(command)
       },
     },
 
@@ -233,6 +186,7 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
             { id: 'SetTransitionEffect3', label: 'Transition 3' },
             { id: 'SetTransitionEffect4', label: 'Transition 4' },
           ],
+          disableAutoExpression: true,
         },
         {
           type: 'dropdown',
@@ -240,6 +194,7 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
           id: 'value',
           default: 'Cut',
           choices: TRANSITIONS.map((transition) => ({ id: transition, label: transition })),
+          expressionDescription: `Valid Values: ${TRANSITIONS.join(', ')}`,
         },
       ],
       callback: sendBasicCommand,
@@ -260,10 +215,12 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
             { id: 'SetTransitionDuration3', label: 'Transition 3' },
             { id: 'SetTransitionDuration4', label: 'Transition 4' },
           ],
+          disableAutoExpression: true,
         },
         {
           type: 'number',
-          label: 'Duration',
+          label: 'Duration in ms',
+          description: '0 to 9999',
           id: 'value',
           min: 0,
           max: 9999,
@@ -279,5 +236,69 @@ export const vMixTransitionActions = (instance: VMixInstance, sendBasicCommand: 
       options: [options.input],
       callback: sendBasicCommand,
     },
+
+    setStingerGTInput: {
+      name: 'Transition - Set Stinger GT Input',
+      description: 'Assigns a GT Input to be used as a Stinger Transition',
+      options: [
+        options.input,
+        {
+          type: 'number',
+          label: 'Stinger',
+          description: 'Valid Values: 1 to 8',
+          id: 'stinger',
+          default: 1,
+          min: 1,
+          max: 8,
+          step: 1,
+        },
+      ],
+      callback: async (action) => {
+        const input = await instance.data.getInput(action.options.input)
+        if (input === null) return
+
+        return instance.tcp.sendCommand(`FUNCTION SetStingerGTInput${action.options.stinger} Input=${input.key}`)
+      },
+    },
   }
+}
+
+export const vMixTransitionFunctions: ActionFunctionsList<TransitionActionsSchema> = {
+  programCut: ['ActiveInput', 'CutDirect'],
+  transitionMix: [
+    'Cut',
+    'Fade',
+    'Zoom',
+    'Wipe',
+    'Slide',
+    'Fly',
+    'CrossZoom',
+    'FlyRotate',
+    'Cube',
+    'CubeZoom',
+    'VerticalWipe',
+    'VerticalSlide',
+    'Merge',
+    'WipeReverse',
+    'SlideReverse',
+    'VerticalWipeReverse',
+    'VerticalSlideReverse',
+    'BarnDoor',
+    'RollerDoor',
+    'AlphaFade',
+  ],
+  transition: ['Transition1', 'Transition2', 'Transition3', 'Transition4', 'Stinger1', 'Stinger2', 'Stinger3', 'Stinger4', 'Stinger5', 'Stinger6', 'Stinger7', 'Stinger8'],
+  setTransitionEffect: ['SetTransitionEffect1', 'SetTransitionEffect2', 'SetTransitionEffect3', 'SetTransitionEffect4'],
+  setTransitionDuration: ['SetTransitionDuration1', 'SetTransitionDuration2', 'SetTransitionDuration3', 'SetTransitionDuration4'],
+  quickPlay: ['QuickPlay'],
+  setStingerGTInput: [
+    'SetStingerGTInput1',
+    'SetStingerGTInput2',
+    'SetStingerGTInput3',
+    'SetStingerGTInput4',
+    'SetStingerGTInput5',
+    'SetStingerGTInput6',
+    'SetStingerGTInput7',
+    'SetStingerGTInput8',
+  ],
 }

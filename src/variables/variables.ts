@@ -1,23 +1,36 @@
-import type VMixInstance from '..'
-import type { CompanionVariableDefinition } from '@companion-module/base'
-import { audioDefinitions, audioValues } from './audioVariables'
-import { dynamicDefinitions, dynamicValues } from './dynamicVariables'
-import { generalDefinitions, generalValues } from './generalVariables'
-import { inputDefinitions, inputValues } from './inputVariables'
-import { layerDefinitions, layerValues } from './layerVariables'
-import { mixDefinitions, mixValues } from './mixVariables'
-import { outputDefinitions, outputValues } from './outputVariables'
-import { overlayDefinitions, overlayValues } from './overlayVariables'
-import { replayDefinitions, replayValues } from './replayVariables'
-import { transitionDefinitions, transitionValues } from './transitionVariables'
+import type VMixInstance from '../index.js'
+import { type CompanionVariableDefinitions, type JsonValue, createModuleLogger } from '@companion-module/base'
+import { type AudioVariablesSchema, audioDefinitions, audioValues } from './audioVariables.js'
+import { type DynamicVariablesSchema, dynamicDefinitions, dynamicValues } from './dynamicVariables.js'
+import { type GeneralVariablesSchema, generalDefinitions, generalValues } from './generalVariables.js'
+import { type InputVariablesSchema, inputDefinitions, inputValues } from './inputVariables.js'
+import { type LayerVariablesSchema, layerDefinitions, layerValues } from './layerVariables.js'
+import { type MixVariablesSchema, mixDefinitions, mixValues } from './mixVariables.js'
+import { type OutputVariablesSchema, outputDefinitions, outputValues } from './outputVariables.js'
+import { type OverlayVariablesSchema, overlayDefinitions, overlayValues } from './overlayVariables.js'
+import { type ReplayVariablesSchema, replayDefinitions, replayValues } from './replayVariables.js'
+import { type TransitionVariablesSchema, transitionDefinitions, transitionValues } from './transitionVariables.js'
 
 export interface InstanceVariableValue {
-  [key: string]: string | number | undefined
+  [key: string]: string | number | JsonValue | undefined
 }
+
+export type VariablesSchema = AudioVariablesSchema &
+  DynamicVariablesSchema &
+  GeneralVariablesSchema &
+  InputVariablesSchema &
+  LayerVariablesSchema &
+  MixVariablesSchema &
+  OutputVariablesSchema &
+  OverlayVariablesSchema &
+  ReplayVariablesSchema &
+  TransitionVariablesSchema
+
+const log = createModuleLogger('Variables')
 
 export class Variables {
   private readonly instance: VMixInstance
-  public currentDefinitions: CompanionVariableDefinition[] = []
+  public currentDefinitions: CompanionVariableDefinitions = {}
   public currentVariables: InstanceVariableValue = {}
   public definitionsUpdateDebounce: ReturnType<typeof setTimeout> | null = null
   public definitionsUpdateNeeded = false
@@ -30,11 +43,11 @@ export class Variables {
    * @param variables Object of variable names and their values
    * @description Updates or removes variable for current instance
    */
-  public readonly set = (variables: InstanceVariableValue): void => {
-    const newVariables: { [variableId: string]: string | number | undefined } = {}
-    const changes: { [variableId: string]: string | number | undefined } = {}
+  public readonly set = (variables: Partial<VariablesSchema>): void => {
+    const newVariables: Partial<VariablesSchema> = {}
+    //const changes: Partial<VariablesSchema> = {}
 
-    for (const name in variables) {
+    /*    for (const name in variables) {
       if (this.currentVariables[name] !== variables[name]) changes[name] = variables[name]
       newVariables[name] = variables[name]
     }
@@ -43,11 +56,10 @@ export class Variables {
       if (variables[name] === undefined) {
         changes[name] = undefined
       }
-    }
+    }*/
 
     this.currentVariables = newVariables
-    this.instance.setVariableValues(changes)
-    this.instance.checkFeedbacks('buttonText')
+    this.instance.setVariableValues(variables)
 
     if (this.instance.apiProcessing.hold) {
       this.instance.apiProcessing.variables = new Date().getTime()
@@ -56,9 +68,9 @@ export class Variables {
 
       if (duration > this.instance.config.apiPollInterval && !freshStart) {
         if (duration > this.instance.config.apiPollInterval * 3) {
-          this.instance.log('warn', `API Processing took ${duration}ms, but the API Polling Interval is set to ${this.instance.config.apiPollInterval}ms`)
+          log.warn(`API Processing took ${duration}ms, but the API Polling Interval is set to ${this.instance.config.apiPollInterval}ms`)
         } else {
-          this.instance.log('debug', `API Processing took ${duration}ms, but the API Polling Interval is set to ${this.instance.config.apiPollInterval}ms`)
+          log.debug(`API Processing took ${duration}ms, but the API Polling Interval is set to ${this.instance.config.apiPollInterval}ms`)
         }
       }
 
@@ -91,7 +103,7 @@ export class Variables {
       }
     }, this.instance.config.debugVariableDefinitionDelay)
 
-    const variableDefinitions: CompanionVariableDefinition[] = [
+    const variableDefinitions: CompanionVariableDefinitions<VariablesSchema> = {
       ...audioDefinitions(this.instance),
       ...(await dynamicDefinitions(this.instance)),
       ...generalDefinitions(this.instance),
@@ -102,17 +114,17 @@ export class Variables {
       ...overlayDefinitions(this.instance),
       ...replayDefinitions(this.instance),
       ...transitionDefinitions(this.instance),
-    ]
+    }
 
+    if (JSON.stringify(this.currentDefinitions) !== JSON.stringify(variableDefinitions)) this.instance.setVariableDefinitions(variableDefinitions)
     this.currentDefinitions = variableDefinitions
-    this.instance.setVariableDefinitions(variableDefinitions)
   }
 
   /**
    * @description Update variables
    */
   public readonly updateVariables = async (): Promise<void> => {
-    let newVariables: InstanceVariableValue = {}
+    let newVariables: Partial<VariablesSchema> = {}
 
     const variablesPromise = await Promise.all([
       audioValues(this.instance),
@@ -127,7 +139,7 @@ export class Variables {
       transitionValues(this.instance),
     ])
 
-    variablesPromise.forEach((variables: InstanceVariableValue) => {
+    variablesPromise.forEach((variables: Partial<VariablesSchema>) => {
       newVariables = { ...newVariables, ...variables }
     })
 

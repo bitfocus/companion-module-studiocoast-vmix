@@ -1,43 +1,34 @@
-import { combineRgb } from '@companion-module/base'
-import type { VMixPresetArray } from './presets'
+import type { CompanionPresetDefinitions, CompanionPresetSection } from '@companion-module/base'
+import { type VMixInstanceTypes } from '../utils.js'
 
-export const getAudioPresetPresets = (): VMixPresetArray => {
-  const audioPresetPresets: VMixPresetArray = [
-    {
-      category: `Audio Presets`,
-      name: 'Input Audio',
-      type: 'text',
-      text: 'Save/Load vMix Audio state',
-    },
-
-    {
-      category: 'Audio Presets',
-      name: 'Save Preset 1',
-      type: 'button',
+export const getAudioPresetDefinitions = (): CompanionPresetDefinitions<VMixInstanceTypes> => {
+  const audioPresetDefinitions: CompanionPresetDefinitions<VMixInstanceTypes> = {
+    audioPreset_save: {
+      name: 'Save Preset',
+      type: 'simple',
       style: {
-        text: 'Save Preset 1',
+        text: 'Save Preset',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
-          down: [{ actionId: 'saveAudioPreset', options: { name: 'preset 1', overwrite: true, includeBusses: true, includeInputs: true, inputReference: 'title', filter: '' } }],
+          down: [{ actionId: 'saveAudioPreset', options: { name: 'preset', overwrite: true, includeBusses: true, includeInputs: true, inputReference: 'title', filter: '' } }],
           up: [],
         },
       ],
       feedbacks: [],
     },
 
-    {
-      category: 'Audio Presets',
-      name: 'Load Preset 1',
-      type: 'button',
+    audioPreset_load: {
+      name: 'Load Preset',
+      type: 'simple',
       style: {
-        text: 'Load Preset 1',
+        text: 'Load Preset',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -70,22 +61,21 @@ export const getAudioPresetPresets = (): VMixPresetArray => {
             inputFilter: '',
           },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0),
+            color: 0x000000,
+            bgcolor: 0xff0000,
           },
         },
       ],
     },
 
-    {
-      category: 'Audio Presets',
+    audioPreset_fade: {
       name: 'Fade Preset 1',
-      type: 'button',
+      type: 'simple',
       style: {
         text: 'Fade Preset 1',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -118,22 +108,21 @@ export const getAudioPresetPresets = (): VMixPresetArray => {
             inputFilter: '',
           },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0),
+            color: 0x000000,
+            bgcolor: 0xff0000,
           },
         },
       ],
     },
 
-    {
-      category: 'Audio Presets',
-      name: 'Load Preset 1 Routing',
-      type: 'button',
+    audioPreset_routing: {
+      name: 'Load Preset Routing',
+      type: 'simple',
       style: {
-        text: 'Load Preset 1 Routing',
+        text: 'Load Preset Routing',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -141,7 +130,7 @@ export const getAudioPresetPresets = (): VMixPresetArray => {
             {
               actionId: 'loadAudioPreset',
               options: {
-                name: 'preset 1',
+                name: 'preset',
                 busses: ['busRouting'],
                 busFade: '0',
                 busFilter: '',
@@ -159,29 +148,28 @@ export const getAudioPresetPresets = (): VMixPresetArray => {
         {
           feedbackId: 'audioPresetActive',
           options: {
-            name: 'preset 1',
+            name: 'preset',
             busses: ['busRouting'],
             busFilter: '',
             inputs: ['inputRouting'],
             inputFilter: '',
           },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0),
+            color: 0x000000,
+            bgcolor: 0xff0000,
           },
         },
       ],
     },
 
-    {
-      category: 'Audio Presets',
-      name: 'Delete Preset 1',
-      type: 'button',
+    audioPreset_delete: {
+      name: 'Delete Preset',
+      type: 'simple',
       style: {
-        text: 'Delete Preset 1',
+        text: 'Delete Preset',
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -189,7 +177,7 @@ export const getAudioPresetPresets = (): VMixPresetArray => {
             {
               actionId: 'deleteAudioPreset',
               options: {
-                name: 'preset 1',
+                name: 'preset',
               },
             },
           ],
@@ -198,7 +186,28 @@ export const getAudioPresetPresets = (): VMixPresetArray => {
       ],
       feedbacks: [],
     },
+  }
+
+  return audioPresetDefinitions
+}
+
+export const getAudioPresetStructure = (): CompanionPresetSection<VMixInstanceTypes>[] => {
+  const structure: CompanionPresetSection<VMixInstanceTypes>[] = [
+    {
+      id: 'audioPresetStructure',
+      name: 'Audio Presets',
+      description: 'Save / Load current audio bus & input state',
+      definitions: [
+        {
+          id: 'audioPresets',
+          type: 'simple',
+          name: 'Audio Presets',
+          description: 'Save the current state of vMix Busses and Inputs to ',
+          presets: ['audioPreset_save', 'audioPreset_load', 'audioPreset_fade', 'audioPreset_routing', 'audioPreset_delete'],
+        },
+      ],
+    },
   ]
 
-  return audioPresetPresets
+  return structure
 }

@@ -1,27 +1,17 @@
-import type { VMixAction, ActionCallback, SendBasicCommand } from './actions'
-import type VMixInstance from '../index'
+import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
+import type VMixInstance from '../index.js'
 
-type PlayListFunctionsOptions = {
-  functionID: 'StartPlayList' | 'StopPlayList' | 'NextPlayListEntry' | 'PreviousPlayListEntry'
+export type PlayListActionsSchema = {
+  playListFunctions: CompanionActionSchema<{
+    functionID: 'StartPlayList' | 'StopPlayList' | 'NextPlayListEntry' | 'PreviousPlayListEntry'
+  }>
+  selectPlayList: CompanionActionSchema<{
+    value: string
+  }>
 }
 
-type SelectPlayListOptions = {
-  value: string
-}
-
-type PlayListFunctionsCallback = ActionCallback<'playListFunctions', PlayListFunctionsOptions>
-type SelectPlayListCallback = ActionCallback<'selectPlayList', SelectPlayListOptions>
-
-export interface PlayListActions {
-  playListFunctions: VMixAction<PlayListFunctionsCallback>
-  selectPlayList: VMixAction<SelectPlayListCallback>
-
-  [key: string]: VMixAction<any>
-}
-
-export type PlayListCallbacks = PlayListFunctionsCallback | SelectPlayListCallback
-
-export const vMixPlayListActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): PlayListActions => {
+export const getPlayListActions = (_instance: VMixInstance, sendBasicCommand: SendBasicCommand): CompanionActionDefinitions<PlayListActionsSchema> => {
   return {
     playListFunctions: {
       name: 'Playlist - Functions',
@@ -38,6 +28,7 @@ export const vMixPlayListActions = (_instance: VMixInstance, sendBasicCommand: S
             { id: 'NextPlayListEntry', label: 'Next Item in Play List' },
             { id: 'PreviousPlayListEntry', label: 'Previous Item in Play List' },
           ],
+          disableAutoExpression: true,
         },
       ],
       callback: sendBasicCommand,
@@ -52,10 +43,15 @@ export const vMixPlayListActions = (_instance: VMixInstance, sendBasicCommand: S
           label: 'Playlist name',
           id: 'value',
           default: '',
-          useVariables: { local: true },
+          useVariables: true,
         },
       ],
       callback: sendBasicCommand,
     },
   }
+}
+
+export const vMixPlaylistFunctions: ActionFunctionsList<PlayListActionsSchema> = {
+  playListFunctions: ['StartPlayList', 'StopPlayList', 'NextPlayListEntry', 'PreviousPlayListEntry'],
+  selectPlayList: ['SelectPlayList'],
 }

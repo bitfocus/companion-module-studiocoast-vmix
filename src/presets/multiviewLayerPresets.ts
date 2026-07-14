@@ -1,134 +1,16 @@
-import { combineRgb } from '@companion-module/base'
-import type { VMixPresetArray } from './presets'
+import type { CompanionPresetDefinitions, CompanionPresetGroup, CompanionPresetSection } from '@companion-module/base'
+import { type VMixInstanceTypes } from '../utils.js'
 
-export const getMultiviewLayersPresets = (): VMixPresetArray => {
-  const multiviewLayersPresets: VMixPresetArray = [
-    {
-      category: 'MultiView Layers',
-      name: 'MultiView Layer Presets',
-      type: 'text',
-      text: "Each preset will require you to enter the Input in the Action and Feedback. Some Presets such as enabling/disabling lack feedback as vMix's API lacks data on if a layer is enabled or not.",
-    },
-    {
-      category: 'MultiView Layers',
-      name: 'Toggle / Enable / Disable Layer 1 to 10 on Input',
-      type: 'text',
-      text: '',
-    },
-  ]
-
-  for (let i = 1; i < 11; i++) {
-    multiviewLayersPresets.push(
-      {
-        category: 'MultiView Layers',
-        name: `Toggle Layer ${i}`,
-        type: 'button',
-        style: {
-          text: `Toggle Layer ${i}`,
-          size: '14',
-          color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
-        },
-        steps: [
-          {
-            down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', layer: i } }],
-            up: [],
-          },
-        ],
-        feedbacks: [],
-      },
-      {
-        category: 'MultiView Layers',
-        name: `Set Layer ${i} On`,
-        type: 'button',
-        style: {
-          text: `Set Layer ${i} On`,
-          size: '14',
-          color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
-        },
-        steps: [
-          {
-            down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', layer: i } }],
-            up: [],
-          },
-        ],
-        feedbacks: [],
-      },
-      {
-        category: 'MultiView Layers',
-        name: `Set Layer ${i} Off`,
-        type: 'button',
-        style: {
-          text: `Set Layer ${i} Off`,
-          size: '14',
-          color: combineRgb(255, 255, 255),
-          bgcolor: combineRgb(0, 0, 0),
-        },
-        steps: [
-          {
-            down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', layer: i } }],
-            up: [],
-          },
-        ],
-        feedbacks: [],
-      },
-    )
-  }
-
-  multiviewLayersPresets.push({
-    category: 'MultiView Layers',
-    name: 'Set which input is assigned to layers 1 to 10 on an Input',
-    type: 'text',
-    text: '',
-  })
-
-  for (let i = 1; i < 11; i++) {
-    multiviewLayersPresets.push({
-      category: 'MultiView Layers',
-      name: `Set Layer ${i} Input`,
-      type: 'button',
-      style: {
-        text: `Set Layer ${i} Input`,
-        size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
-      },
-      steps: [
-        {
-          down: [{ actionId: 'setMultiViewOverlay', options: { input: '', layer: i, layerInput: '' } }],
-          up: [],
-        },
-      ],
-      feedbacks: [
-        {
-          feedbackId: 'inputOnMultiview',
-          options: { inputX: '', inputY: '', layer: `${i}` },
-          style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 0, 0),
-          },
-        },
-      ],
-    })
-  }
-
-  multiviewLayersPresets.push(
-    {
-      category: 'MultiView Layers',
-      name: 'Layer Routing',
-      type: 'text',
-      text: 'Set a target Input, a target Layer, and route an input to that layer',
-    },
-    {
-      category: 'MultiView Layers',
+export const getMultiviewLayersDefinitions = (): CompanionPresetDefinitions<VMixInstanceTypes> => {
+  const multiviewLayersDefinitions: CompanionPresetDefinitions<VMixInstanceTypes> = {
+    multiviewLayers_setTargetInput: {
       name: `Set Target Input`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: `Set Target Input`,
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -141,21 +23,21 @@ export const getMultiviewLayersPresets = (): VMixPresetArray => {
           feedbackId: 'selectedDestinationInput',
           options: { input: '' },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0),
+            color: 0x000000,
+            bgcolor: 0x0ffff00,
           },
         },
       ],
     },
-    {
-      category: 'MultiView Layers',
+
+    multiviewLayers_setDestinationLayer: {
       name: `Set Input on Layer`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: `Set Input on Layer`,
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -168,21 +50,21 @@ export const getMultiviewLayersPresets = (): VMixPresetArray => {
           feedbackId: 'selectedDestinationLayer',
           options: { selectedIndex: '1' },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0),
+            color: 0x000000,
+            bgcolor: 0x0ffff00,
           },
         },
       ],
     },
-    {
-      category: 'MultiView Layers',
+
+    multiviewLayers_setSourceInput: {
       name: `Set Input on Layer`,
-      type: 'button',
+      type: 'simple',
       style: {
         text: `Set Input on Layer`,
         size: '14',
-        color: combineRgb(255, 255, 255),
-        bgcolor: combineRgb(0, 0, 0),
+        color: 0xffffff,
+        bgcolor: 0x000000,
       },
       steps: [
         {
@@ -195,13 +77,161 @@ export const getMultiviewLayersPresets = (): VMixPresetArray => {
           feedbackId: 'routableMultiviewLayer',
           options: { input: '1' },
           style: {
-            color: combineRgb(0, 0, 0),
-            bgcolor: combineRgb(255, 255, 0),
+            color: 0x000000,
+            bgcolor: 0x0ffff00,
           },
         },
       ],
     },
-  )
+  }
 
-  return multiviewLayersPresets
+  for (let i = 1; i < 11; i++) {
+    multiviewLayersDefinitions[`multiviewLayers_toggleLayer${i}`] = {
+      name: `Toggle Layer ${i}`,
+      type: 'simple',
+      style: {
+        text: `Toggle Layer ${i}`,
+        size: '14',
+        color: 0xffffff,
+        bgcolor: 0x000000,
+      },
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlay', input: '', value: i.toString() } }],
+          up: [],
+        },
+      ],
+      feedbacks: [],
+    }
+
+    multiviewLayersDefinitions[`multiviewLayers_setLayer${i}On`] = {
+      name: `Set Layer ${i} On`,
+      type: 'simple',
+      style: {
+        text: `Set Layer ${i} On`,
+        size: '14',
+        color: 0xffffff,
+        bgcolor: 0x000000,
+      },
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOn', input: '', value: i.toString() } }],
+          up: [],
+        },
+      ],
+      feedbacks: [],
+    }
+
+    multiviewLayersDefinitions[`multiviewLayers_setLayer${i}Off`] = {
+      name: `Set Layer ${i} Off`,
+      type: 'simple',
+      style: {
+        text: `Set Layer ${i} Off`,
+        size: '14',
+        color: 0xffffff,
+        bgcolor: 0x000000,
+      },
+      steps: [
+        {
+          down: [{ actionId: 'multiViewOverlay', options: { functionID: 'MultiViewOverlayOff', input: '', value: i.toString() } }],
+          up: [],
+        },
+      ],
+      feedbacks: [],
+    }
+
+    multiviewLayersDefinitions[`multiviewLayers_setLayer${i}Input`] = {
+      name: `Set Layer ${i} Input`,
+      type: 'simple',
+      style: {
+        text: `Set Layer ${i} Input`,
+        size: '14',
+        color: 0xffffff,
+        bgcolor: 0x000000,
+      },
+      steps: [
+        {
+          down: [{ actionId: 'setMultiViewOverlay', options: { input: '', layer: i, layerInput: '' } }],
+          up: [],
+        },
+      ],
+      feedbacks: [
+        {
+          feedbackId: 'inputOnMultiview',
+          options: { inputX: '', inputY: '', layer: `${i}` },
+          style: {
+            color: 0x000000,
+            bgcolor: 0xff0000,
+          },
+        },
+      ],
+    }
+  }
+
+  return multiviewLayersDefinitions
+}
+
+export const getMultiviewLayerStructure = (): CompanionPresetSection<VMixInstanceTypes>[] => {
+  const layerGroups: CompanionPresetGroup<VMixInstanceTypes>[] = []
+
+  const layerToggle: CompanionPresetGroup<VMixInstanceTypes> = {
+    id: `layerToggle`,
+    type: 'simple',
+    name: `Layer Toggle`,
+    description: 'Toggle a Layer On/Off on an Input',
+    presets: [],
+  }
+
+  const layerOn: CompanionPresetGroup<VMixInstanceTypes> = {
+    id: `layerOn`,
+    type: 'simple',
+    name: `Layer On`,
+    description: 'Set a Layer On',
+    presets: [],
+  }
+
+  const layerOff: CompanionPresetGroup<VMixInstanceTypes> = {
+    id: `layerOff`,
+    type: 'simple',
+    name: `Layer Off`,
+    description: 'Set a Layer off',
+    presets: [],
+  }
+
+  const layerInput: CompanionPresetGroup<VMixInstanceTypes> = {
+    id: `layerInput`,
+    type: 'simple',
+    name: `Set Layer Input`,
+    description: 'Sets the source Input being sent to a Layer',
+    presets: [],
+  }
+
+  for (let layer = 1; layer < 11; layer++) {
+    layerToggle.presets.push(`multiviewLayers_toggleLayer${layer}`)
+    layerOn.presets.push(`multiviewLayers_setLayer${layer}On`)
+    layerOff.presets.push(`multiviewLayers_setLayer${layer}Off`)
+    layerInput.presets.push(`multiviewLayers_setLayer${layer}Input`)
+  }
+
+  layerGroups.push(layerToggle, layerOn, layerOff, layerInput)
+
+  const structure: CompanionPresetSection<VMixInstanceTypes>[] = [
+    {
+      id: 'multiviewLayerStructure',
+      name: 'Input Layer Routing',
+      description: 'Set which source Inputs are set to a Layer on an Input, and set their on/off state',
+      definitions: [
+        {
+          id: 'layerSelection',
+          type: 'simple',
+          name: 'Input, Layer, and Source input',
+          description: 'Set a target Input, target Layer, and a source to be set as that target',
+          presets: ['multiviewLayers_setTargetInput', 'multiviewLayers_setDestinationLayer', 'multiviewLayers_setSourceInput'],
+        },
+        ...layerGroups,
+      ],
+    },
+  ]
+
+  return structure
 }
