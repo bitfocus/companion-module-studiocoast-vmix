@@ -71,11 +71,15 @@ export class TCP {
    * @description Create a TCP connection to vMix and start API polling
    */
   public readonly init = (): void => {
+    this.tcpHost = this.instance.config.host
+    this.tcpPort = this.instance.config.tcpPort
+
     if (this.tcpHost === undefined || this.tcpPort === undefined) {
       return log.warn(`Unable to connect to vMix, please configure a host and port in the instance configuration`)
     }
 
     // The functions socket is primary and controls the module status and startup of activator and xml sockets
+    log.debug(`Starting connection to ${this.tcpHost}:${this.tcpPort}`)
     this.sockets.functions = new tcp(this.tcpHost, this.tcpPort)
 
     this.sockets.functions.on('status_change', (status, message) => {
@@ -90,18 +94,23 @@ export class TCP {
         this.instance.updateStatus(InstanceStatus.Connecting)
       } else if (status === 'disconnected') {
         this.instance.connected = false
-        this.instance.updateStatus(InstanceStatus.Disconnected)
+        this.instance.updateStatus(InstanceStatus.Disconnected, 'TCP Socket Disconnected')
       } else if (status === 'unknown_error') {
         this.instance.connected = false
-        this.instance.updateStatus(InstanceStatus.UnknownError)
+        this.instance.updateStatus(InstanceStatus.UnknownError, 'TCP Socket Unknown Error')
       }
 
       this.instance.variables?.updateVariables()
     })
 
-    this.sockets.functions.on('error', (err: Error) => {
-      this.instance.updateStatus(InstanceStatus.UnknownError)
-      log[this.instance.config.connectionErrorLog ? 'error' : 'debug']('Function Socket err: ' + err)
+    this.sockets.functions.on('error', (err: NodeJS.ErrnoException) => {
+      if (err.code === 'ECONNREFUSED') {
+        this.instance.updateStatus(InstanceStatus.ConnectionFailure, err.message)
+      } else {
+        this.instance.updateStatus(InstanceStatus.UnknownError, err.message)
+      }
+
+      log[this.instance.config.connectionErrorLog ? 'error' : 'debug']('Function Socket err: ' + err.message)
     })
 
     this.sockets.functions.on('connect', () => {

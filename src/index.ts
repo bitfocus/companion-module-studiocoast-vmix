@@ -75,7 +75,9 @@ export default class VMixInstance extends InstanceBase<VMixInstanceTypes> {
    */
   public async init(config: Config): Promise<void> {
     if (config.debugVersionUpdateNotifications) {
-      log.info('v5.0.0 of this mode has now been released! Patch notes can be found at https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/patch_notes.md')
+      log.info(
+        'v5.0.0 of this module has now been released! Patch notes can be found at https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/patch_notes.md',
+      )
     }
 
     this.config = config

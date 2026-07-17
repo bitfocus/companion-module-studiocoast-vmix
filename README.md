@@ -34,6 +34,10 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 
 
 # Recent Patches
+**v5.0.1**
+- Fixed a bug with connecting to remote vMix machines
+- Added more data to the TCP connection logs
+
 **v5.0.0**
 - BREAKING CHANGE: Removed the deprecated 'Button Shift' functionality, as it's now redundant with Companion v4.3 native Expression capabilities
 - Many Actions/Feedbacks have been updated to support Companions new capability of toggling an option between standard and Expression modes
