@@ -34,6 +34,10 @@ This module now supports Companions HTTP API, providing endpoints that can be us
 
 
 # Recent Patches
+**v5.0.2**
+- Fixed a bug with the `Layers - check if X input is a Layer on input Y` Feedback not correctly updating
+- Fixed a bug with the `Start / Stop / Toggle Streaming` Action where the incorrect stream values were being used
+
 **v5.0.1**
 - Fixed a bug with connecting to remote vMix machines
 - Added more data to the TCP connection logs
