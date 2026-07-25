@@ -83,7 +83,7 @@ export const getLayersFeedbacks = (instance: VMixInstance): CompanionFeedbackDef
 
     inputOnMultiview: {
       type: 'boolean',
-      name: 'Layers - check if X input is on Layer on Y input',
+      name: 'Layers - check if X input is a Layer on input Y',
       description: 'Indicates if the input is currently on a specified layer of an input',
       defaultStyle: { color: 0x000000, bgcolor: 0x0ffff00 },
       options: [

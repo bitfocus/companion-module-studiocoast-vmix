@@ -1084,6 +1084,7 @@ export class VMixData {
       changes.add('inputSelectedIndex')
       changes.add('inputSelectedIndexBoolean')
       changes.add('routableMultiviewLayer')
+      changes.add('inputOnMultiview')
       changes.add('inputVolumeMeter')
       changes.add('inputState')
       changes.add('audioPresetActive')
