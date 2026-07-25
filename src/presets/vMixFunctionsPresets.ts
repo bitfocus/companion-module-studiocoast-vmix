@@ -176,7 +176,7 @@ export const getFunctionDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       },
       steps: [
         {
-          down: [{ actionId: 'streamingFunctions', options: { functionID: 'StartStopStreaming', value: '1' } }],
+          down: [{ actionId: 'streamingFunctions', options: { functionID: 'StartStopStreaming', value: 1 } }],
           up: [],
         },
       ],
@@ -203,7 +203,7 @@ export const getFunctionDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       },
       steps: [
         {
-          down: [{ actionId: 'streamingFunctions', options: { functionID: 'StartStopStreaming', value: '2' } }],
+          down: [{ actionId: 'streamingFunctions', options: { functionID: 'StartStopStreaming', value: 2 } }],
           up: [],
         },
       ],
@@ -230,7 +230,7 @@ export const getFunctionDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       },
       steps: [
         {
-          down: [{ actionId: 'streamingFunctions', options: { functionID: 'StartStopStreaming', value: '3' } }],
+          down: [{ actionId: 'streamingFunctions', options: { functionID: 'StartStopStreaming', value: 3 } }],
           up: [],
         },
       ],
@@ -257,7 +257,7 @@ export const getFunctionDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       },
       steps: [
         {
-          down: [{ actionId: 'streamingFunctions', options: { functionID: 'StartStopStreaming', value: '4' } }],
+          down: [{ actionId: 'streamingFunctions', options: { functionID: 'StartStopStreaming', value: 4 } }],
           up: [],
         },
       ],
@@ -284,7 +284,7 @@ export const getFunctionDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       },
       steps: [
         {
-          down: [{ actionId: 'streamingFunctions', options: { functionID: 'StartStopStreaming', value: '5' } }],
+          down: [{ actionId: 'streamingFunctions', options: { functionID: 'StartStopStreaming', value: 5 } }],
           up: [],
         },
       ],

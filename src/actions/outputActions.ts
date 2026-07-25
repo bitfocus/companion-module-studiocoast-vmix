@@ -18,7 +18,7 @@ export type OutputActionsSchema = {
   }>
   streamingFunctions: CompanionActionSchema<{
     functionID: 'StartStopStreaming' | 'StartStreaming' | 'StopStreaming'
-    value: '' | '1' | '2' | '3' | '4' | '5'
+    value: '' | 1 | 2 | 3 | 4 | 5
   }>
   externalFunctions: CompanionActionSchema<{
     functionID: 'StartStopExternal' | 'StartExternal' | 'StopExternal'
@@ -185,7 +185,7 @@ export const getOutputActions = (instance: VMixInstance, sendBasicCommand: SendB
         let command = `FUNCTION ${action.options.functionID}`
 
         if (action.options.value != '') {
-          command += ` value=${action.options.value}`
+          command += ` value=${action.options.value - 1}`
         }
 
         return instance.tcp.sendCommand(command)
