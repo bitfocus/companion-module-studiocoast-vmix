@@ -996,7 +996,7 @@ export const getAudioStructure = (): CompanionPresetSection<VMixInstanceTypes>[]
     {
       id: 'audioBusStructure',
       name: 'Audio Bus',
-      description: 'Bus presets such as Mute, Solo, Routing, Volume, etc...',
+      description: 'Bus presets such as Mute, Solo, Volume, etc...',
       definitions: [
         {
           id: 'audioBusMaster',
@@ -1011,7 +1011,7 @@ export const getAudioStructure = (): CompanionPresetSection<VMixInstanceTypes>[]
     {
       id: 'audioInputStructure',
       name: 'Audio Input',
-      description: '',
+      description: 'Presets for Input Audio such as Mute, Solo, routing, Volume, etc...',
       definitions: [
         {
           id: 'audioInputStatePresets',
@@ -1049,20 +1049,6 @@ export const getAudioStructure = (): CompanionPresetSection<VMixInstanceTypes>[]
             'audio_inputSendToBusF',
             'audio_inputSendToBusG',
           ],
-        },
-      ],
-    },
-    {
-      id: 'audioPresetsStructure',
-      name: 'Audio Presets',
-      description: '',
-      definitions: [
-        {
-          id: 'audioPresets',
-          type: 'simple',
-          name: 'Audio Presets',
-          description: 'Save the current state of vMix Busses and Inputs to',
-          presets: ['audioPreset_save', 'audioPreset_load', 'audioPreset_routing', 'audioPreset_delete'],
         },
       ],
     },
