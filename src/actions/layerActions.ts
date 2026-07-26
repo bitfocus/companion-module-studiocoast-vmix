@@ -63,7 +63,7 @@ export type LayerActionsSchema = {
     input: string
     layer: number
     layerInput: string
-		duration: number
+    duration: number
   }>
 }
 
@@ -152,7 +152,7 @@ export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBa
         {
           type: 'textinput',
           label: 'Input to use on Layer',
-					description: 'Number, Name, or GUID',
+          description: 'Number, Name, or GUID',
           id: 'layerInput',
           default: '',
           useVariables: true,
