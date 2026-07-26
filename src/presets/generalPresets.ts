@@ -8,7 +8,7 @@ export const getGeneralDefinitions = (): CompanionPresetDefinitions<VMixInstance
       type: 'simple',
       style: {
         text: 'Send Key Press',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -26,7 +26,7 @@ export const getGeneralDefinitions = (): CompanionPresetDefinitions<VMixInstance
       type: 'simple',
       style: {
         text: 'Script Start',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -44,7 +44,7 @@ export const getGeneralDefinitions = (): CompanionPresetDefinitions<VMixInstance
       type: 'simple',
       style: {
         text: 'Script Stop',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -62,7 +62,7 @@ export const getGeneralDefinitions = (): CompanionPresetDefinitions<VMixInstance
       type: 'simple',
       style: {
         text: 'Script Stop All',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },

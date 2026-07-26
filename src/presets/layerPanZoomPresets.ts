@@ -86,7 +86,7 @@ export const getLayerPanZoomDefinitions = (): CompanionPresetDefinitions<VMixIns
       type: 'simple',
       style: {
         text: `Zoom +`,
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -121,7 +121,7 @@ export const getLayerPanZoomDefinitions = (): CompanionPresetDefinitions<VMixIns
       type: 'simple',
       style: {
         text: `Zoom -`,
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -1041,7 +1041,7 @@ export const getLayerPanZoomDefinitions = (): CompanionPresetDefinitions<VMixIns
       type: 'simple',
       style: {
         text: `Zoom ${zoom}%`,
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },

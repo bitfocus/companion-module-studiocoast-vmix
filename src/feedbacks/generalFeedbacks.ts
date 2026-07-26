@@ -19,7 +19,7 @@ export type GeneralFeedbacksSchema = {
   }>
   status: CompanionFeedbackSchema<{
     status: 'connection' | 'fadeToBlack' | 'recording' | 'external' | 'streaming' | 'multiCorder' | 'fullscreen' | 'playList'
-    value: '' | '0' | '1' | '2'
+    value: '' | '0' | '1' | '2' | '3' | '4'
   }>
 }
 

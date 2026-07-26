@@ -16,7 +16,7 @@ export const getTitleGraphicsDefinitions = (): CompanionPresetDefinitions<VMixIn
       type: 'simple',
       style: {
         text: 'Set Title',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -39,7 +39,7 @@ export const getTitleGraphicsDefinitions = (): CompanionPresetDefinitions<VMixIn
       type: 'simple',
       style: {
         text: 'Set Title +1',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -62,7 +62,7 @@ export const getTitleGraphicsDefinitions = (): CompanionPresetDefinitions<VMixIn
       type: 'simple',
       style: {
         text: 'Set Title -1',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -85,7 +85,7 @@ export const getTitleGraphicsDefinitions = (): CompanionPresetDefinitions<VMixIn
       type: 'simple',
       style: {
         text: 'Next Title',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -103,7 +103,7 @@ export const getTitleGraphicsDefinitions = (): CompanionPresetDefinitions<VMixIn
       type: 'simple',
       style: {
         text: 'Prev Title',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -123,7 +123,7 @@ export const getTitleGraphicsDefinitions = (): CompanionPresetDefinitions<VMixIn
       type: 'simple',
       style: {
         text: `Title Preset ${i}`,
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -142,7 +142,7 @@ export const getTitleGraphicsDefinitions = (): CompanionPresetDefinitions<VMixIn
     type: 'simple',
     style: {
       text: 'Title Transition In',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -160,7 +160,7 @@ export const getTitleGraphicsDefinitions = (): CompanionPresetDefinitions<VMixIn
     type: 'simple',
     style: {
       text: 'Title Transition Out',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -178,7 +178,7 @@ export const getTitleGraphicsDefinitions = (): CompanionPresetDefinitions<VMixIn
     type: 'simple',
     style: {
       text: 'Title Continuous',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -196,7 +196,7 @@ export const getTitleGraphicsDefinitions = (): CompanionPresetDefinitions<VMixIn
     type: 'simple',
     style: {
       text: 'Title Data Change In',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -214,7 +214,7 @@ export const getTitleGraphicsDefinitions = (): CompanionPresetDefinitions<VMixIn
     type: 'simple',
     style: {
       text: 'Title Data Change Out',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -233,7 +233,7 @@ export const getTitleGraphicsDefinitions = (): CompanionPresetDefinitions<VMixIn
       type: 'simple',
       style: {
         text: `Title Page ${i}`,
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },

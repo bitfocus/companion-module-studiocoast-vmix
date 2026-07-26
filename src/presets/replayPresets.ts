@@ -14,7 +14,7 @@ export const getReplayDefinitions = (): CompanionPresetDefinitions<VMixInstanceT
         type: 'simple',
         style: {
           text: `${channel} Cam ${i}`,
-          size: '18',
+          size: '14',
           color: 0xffffff,
           bgcolor: 0x000000,
         },
@@ -49,7 +49,7 @@ export const getReplayDefinitions = (): CompanionPresetDefinitions<VMixInstanceT
       type: 'simple',
       style: {
         text: `Channel${channel}`,
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -226,7 +226,7 @@ export const getReplayDefinitions = (): CompanionPresetDefinitions<VMixInstanceT
     type: 'simple',
     style: {
       text: 'Mark In',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -244,7 +244,7 @@ export const getReplayDefinitions = (): CompanionPresetDefinitions<VMixInstanceT
     type: 'simple',
     style: {
       text: 'Mark Out',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -262,7 +262,7 @@ export const getReplayDefinitions = (): CompanionPresetDefinitions<VMixInstanceT
     type: 'simple',
     style: {
       text: 'Mark Last 10s',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -280,7 +280,7 @@ export const getReplayDefinitions = (): CompanionPresetDefinitions<VMixInstanceT
     type: 'simple',
     style: {
       text: 'Mark Last 30s',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -298,7 +298,7 @@ export const getReplayDefinitions = (): CompanionPresetDefinitions<VMixInstanceT
     type: 'simple',
     style: {
       text: 'Update In',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -316,7 +316,7 @@ export const getReplayDefinitions = (): CompanionPresetDefinitions<VMixInstanceT
     type: 'simple',
     style: {
       text: 'Update Out',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },

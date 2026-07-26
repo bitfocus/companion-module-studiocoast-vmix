@@ -151,7 +151,7 @@ export const getOutputStructure = (): CompanionPresetSection<VMixInstanceTypes>[
     {
       id: 'outputStructure',
       name: 'Outputs 2-4 / External / Fullscreen',
-      description: 'Starting and Stopping scripts in vMix',
+      description: 'Starting and Stopping Outputs in vMix',
       definitions: [...outputGroups],
     },
   ]

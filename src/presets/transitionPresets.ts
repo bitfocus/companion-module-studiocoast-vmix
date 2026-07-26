@@ -30,7 +30,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
       type: 'simple',
       style: {
         text: `Stinger ${i}`,
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -50,7 +50,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
       type: 'simple',
       style: {
         text: `T${i} Set Cut`,
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -73,7 +73,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
       type: 'simple',
       style: {
         text: `T${i} Set Fade`,
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -96,7 +96,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
       type: 'simple',
       style: {
         text: `T${i} Set Zoom`,
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -119,7 +119,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
       type: 'simple',
       style: {
         text: `T${i} Set Merge`,
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -142,7 +142,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
       type: 'simple',
       style: {
         text: `T${i} Set 250ms`,
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -160,7 +160,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
       type: 'simple',
       style: {
         text: `T${i} Set 500ms`,
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -178,7 +178,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
       type: 'simple',
       style: {
         text: `T${i} Set 1000ms`,
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -196,7 +196,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
       type: 'simple',
       style: {
         text: `T${i} Set 2000ms`,
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -215,7 +215,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
     type: 'simple',
     style: {
       text: 'Cut',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -233,7 +233,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
     type: 'simple',
     style: {
       text: 'Fade',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -251,7 +251,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
     type: 'simple',
     style: {
       text: 'Zoom',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -269,7 +269,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
     type: 'simple',
     style: {
       text: 'Wipe',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -287,7 +287,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
     type: 'simple',
     style: {
       text: 'Slide',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -310,7 +310,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
     type: 'simple',
     style: {
       text: 'Fly',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -328,7 +328,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
     type: 'simple',
     style: {
       text: 'Cross Zoom',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -351,7 +351,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
     type: 'simple',
     style: {
       text: 'Fly Rotate',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -374,7 +374,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
     type: 'simple',
     style: {
       text: 'Cube',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -392,7 +392,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
     type: 'simple',
     style: {
       text: 'Cube Zoom',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -415,7 +415,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
     type: 'simple',
     style: {
       text: 'Vertical Wipe',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -438,7 +438,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
     type: 'simple',
     style: {
       text: 'Vertical Slide',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -461,7 +461,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
     type: 'simple',
     style: {
       text: 'Merge',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -484,7 +484,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
     type: 'simple',
     style: {
       text: 'Wipe Reverse',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -507,7 +507,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
     type: 'simple',
     style: {
       text: 'Slide Reverse',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -530,7 +530,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
     type: 'simple',
     style: {
       text: 'Vertical Wipe Reverse',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },
@@ -553,7 +553,7 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
     type: 'simple',
     style: {
       text: 'Vertical Slide Reverse',
-      size: '18',
+      size: '14',
       color: 0xffffff,
       bgcolor: 0x000000,
     },

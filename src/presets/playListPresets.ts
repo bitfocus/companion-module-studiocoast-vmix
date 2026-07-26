@@ -8,7 +8,7 @@ export const getPlayListDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       type: 'simple',
       style: {
         text: 'PlayList Start',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -38,7 +38,7 @@ export const getPlayListDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       type: 'simple',
       style: {
         text: 'PlayList Stop',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -68,7 +68,7 @@ export const getPlayListDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       type: 'simple',
       style: {
         text: 'PlayList Next',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -84,7 +84,7 @@ export const getPlayListDefinitions = (): CompanionPresetDefinitions<VMixInstanc
     playlist_prev: {
       name: 'PlayList Prev',
       type: 'simple',
-      style: { text: 'PlayList Prev', size: '18', color: 0xffffff, bgcolor: 0x000000 },
+      style: { text: 'PlayList Prev', size: '14', color: 0xffffff, bgcolor: 0x000000 },
       steps: [
         {
           down: [{ actionId: 'playListFunctions', options: { functionID: 'PreviousPlayListEntry' } }],

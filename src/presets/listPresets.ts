@@ -8,7 +8,7 @@ export const getListDefinitions = (): CompanionPresetDefinitions<VMixInstanceTyp
       type: 'simple',
       style: {
         text: 'Next Photo',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -26,7 +26,7 @@ export const getListDefinitions = (): CompanionPresetDefinitions<VMixInstanceTyp
       type: 'simple',
       style: {
         text: 'Prev Photo',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -44,7 +44,7 @@ export const getListDefinitions = (): CompanionPresetDefinitions<VMixInstanceTyp
       type: 'simple',
       style: {
         text: 'Next List Item',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -62,7 +62,7 @@ export const getListDefinitions = (): CompanionPresetDefinitions<VMixInstanceTyp
       type: 'simple',
       style: {
         text: 'Prev List Item',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -80,7 +80,7 @@ export const getListDefinitions = (): CompanionPresetDefinitions<VMixInstanceTyp
       type: 'simple',
       style: {
         text: 'Select Index',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },

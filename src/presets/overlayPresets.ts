@@ -8,7 +8,7 @@ export const getOverlayDefinitions = (): CompanionPresetDefinitions<VMixInstance
       type: 'simple',
       style: {
         text: 'OVL All Off',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },

@@ -8,7 +8,7 @@ export const getVideoPlaybackDefinitions = (): CompanionPresetDefinitions<VMixIn
       type: 'simple',
       style: {
         text: 'play',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -26,7 +26,7 @@ export const getVideoPlaybackDefinitions = (): CompanionPresetDefinitions<VMixIn
       type: 'simple',
       style: {
         text: 'Pause',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -44,7 +44,7 @@ export const getVideoPlaybackDefinitions = (): CompanionPresetDefinitions<VMixIn
       type: 'simple',
       style: {
         text: 'Play Pause',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -62,7 +62,7 @@ export const getVideoPlaybackDefinitions = (): CompanionPresetDefinitions<VMixIn
       type: 'simple',
       style: {
         text: 'Restart',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -80,7 +80,7 @@ export const getVideoPlaybackDefinitions = (): CompanionPresetDefinitions<VMixIn
       type: 'simple',
       style: {
         text: 'Loop ON',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -98,7 +98,7 @@ export const getVideoPlaybackDefinitions = (): CompanionPresetDefinitions<VMixIn
       type: 'simple',
       style: {
         text: 'Loop OFF',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },

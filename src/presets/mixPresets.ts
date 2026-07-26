@@ -11,7 +11,7 @@ export const getMixDefinitions = (): CompanionPresetDefinitions<VMixInstanceType
         type: 'simple',
         style: {
           text: `PGM ${input}`,
-          size: '18',
+          size: '14',
           color: 0xffffff,
           bgcolor: 0x000000,
         },
@@ -48,7 +48,7 @@ export const getMixDefinitions = (): CompanionPresetDefinitions<VMixInstanceType
         type: 'simple',
         style: {
           text: `PRV ${input}`,
-          size: '18',
+          size: '14',
           color: 0xffffff,
           bgcolor: 0x000000,
         },
@@ -83,7 +83,7 @@ export const getMixDefinitions = (): CompanionPresetDefinitions<VMixInstanceType
       type: 'simple',
       style: {
         text: 'Cut',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -106,7 +106,7 @@ export const getMixDefinitions = (): CompanionPresetDefinitions<VMixInstanceType
       type: 'simple',
       style: {
         text: 'Fade',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -129,7 +129,7 @@ export const getMixDefinitions = (): CompanionPresetDefinitions<VMixInstanceType
       type: 'simple',
       style: {
         text: 'Merge',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -152,7 +152,7 @@ export const getMixDefinitions = (): CompanionPresetDefinitions<VMixInstanceType
       type: 'simple',
       style: {
         text: 'Auto',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },

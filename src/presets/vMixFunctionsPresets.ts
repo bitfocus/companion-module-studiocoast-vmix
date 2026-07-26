@@ -8,7 +8,7 @@ export const getFunctionDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       type: 'simple',
       style: {
         text: 'Toggle Multicorder',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -35,7 +35,7 @@ export const getFunctionDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       type: 'simple',
       style: {
         text: 'Toggle Recording',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -62,7 +62,7 @@ export const getFunctionDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       type: 'simple',
       style: {
         text: 'Toggle External',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -89,7 +89,7 @@ export const getFunctionDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       type: 'simple',
       style: {
         text: 'Toggle Fullscreen',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -116,7 +116,7 @@ export const getFunctionDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       type: 'simple',
       style: {
         text: 'Toggle FTB',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -143,7 +143,7 @@ export const getFunctionDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       type: 'simple',
       style: {
         text: 'Toggle All Streams',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -170,7 +170,7 @@ export const getFunctionDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       type: 'simple',
       style: {
         text: 'Toggle Stream 1',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -183,7 +183,7 @@ export const getFunctionDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       feedbacks: [
         {
           feedbackId: 'status',
-          options: { status: 'streaming', value: '' },
+          options: { status: 'streaming', value: '0' },
           style: {
             color: 0x000000,
             bgcolor: 0xff0000,
@@ -197,7 +197,7 @@ export const getFunctionDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       type: 'simple',
       style: {
         text: 'Toggle Stream 2',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -210,7 +210,7 @@ export const getFunctionDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       feedbacks: [
         {
           feedbackId: 'status',
-          options: { status: 'streaming', value: '' },
+          options: { status: 'streaming', value: '1' },
           style: {
             color: 0x000000,
             bgcolor: 0xff0000,
@@ -224,7 +224,7 @@ export const getFunctionDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       type: 'simple',
       style: {
         text: 'Toggle Stream 3',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -237,7 +237,7 @@ export const getFunctionDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       feedbacks: [
         {
           feedbackId: 'status',
-          options: { status: 'streaming', value: '' },
+          options: { status: 'streaming', value: '2' },
           style: {
             color: 0x000000,
             bgcolor: 0xff0000,
@@ -251,7 +251,7 @@ export const getFunctionDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       type: 'simple',
       style: {
         text: 'Toggle Stream 4',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -264,7 +264,7 @@ export const getFunctionDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       feedbacks: [
         {
           feedbackId: 'status',
-          options: { status: 'streaming', value: '' },
+          options: { status: 'streaming', value: '3' },
           style: {
             color: 0x000000,
             bgcolor: 0xff0000,
@@ -278,7 +278,7 @@ export const getFunctionDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       type: 'simple',
       style: {
         text: 'Toggle Stream 5',
-        size: '18',
+        size: '14',
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -291,7 +291,7 @@ export const getFunctionDefinitions = (): CompanionPresetDefinitions<VMixInstanc
       feedbacks: [
         {
           feedbackId: 'status',
-          options: { status: 'streaming', value: '' },
+          options: { status: 'streaming', value: '4' },
           style: {
             color: 0x000000,
             bgcolor: 0xff0000,
