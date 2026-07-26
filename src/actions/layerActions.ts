@@ -63,6 +63,7 @@ export type LayerActionsSchema = {
     input: string
     layer: number
     layerInput: string
+		duration: number
   }>
 }
 
@@ -151,9 +152,20 @@ export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBa
         {
           type: 'textinput',
           label: 'Input to use on Layer',
+					description: 'Number, Name, or GUID',
           id: 'layerInput',
           default: '',
           useVariables: true,
+        },
+        {
+          type: 'number',
+          label: 'Duration',
+          description: `Transition duration in ms`,
+          id: 'duration',
+          default: 1000,
+          min: 1,
+          max: 10000,
+          step: 1,
         },
       ],
       callback: async (action) => {
@@ -162,7 +174,7 @@ export const getLayerActions = (instance: VMixInstance, sendBasicCommand: SendBa
 
         if (input === null || layerInput === null) return
 
-        return instance.tcp.sendCommand(`FUNCTION SetLayerAnimated Input=${input.key}&Value=${action.options.layer},${layerInput.key}`)
+        return instance.tcp.sendCommand(`FUNCTION SetLayerAnimated Input=${input.key}&Value=${action.options.layer},${layerInput.key},${action.options.duration}`)
       },
     },
 

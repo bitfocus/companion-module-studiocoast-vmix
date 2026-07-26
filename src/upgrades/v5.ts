@@ -142,4 +142,22 @@ const upgradeV5_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
   return changes
 }
 
-export default [upgradeV5_0_0]
+const upgradeV5_0_3: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config, undefined> => {
+  const changes: CompanionStaticUpgradeResult<Config, undefined> = {
+    updatedConfig: null,
+    updatedSecrets: null,
+    updatedActions: [],
+    updatedFeedbacks: [],
+  }
+
+  for (const action of props.actions) {
+    if (action.actionId === 'setLayerAnimated') {
+      action.options.duration = { isExpression: false, value: 1000 }
+      changes.updatedActions.push(action)
+    }
+  }
+
+  return changes
+}
+
+export default [upgradeV5_0_0, upgradeV5_0_3]
