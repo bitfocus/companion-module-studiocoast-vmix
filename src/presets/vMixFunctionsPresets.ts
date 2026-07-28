@@ -315,14 +315,14 @@ export const getVMixFunctionsStructure = (): CompanionPresetSection<VMixInstance
           id: 'outputFunctions',
           type: 'simple',
           name: 'Recording / External / Fullscreen / MultiCorder / FTB',
-          description: 'test',
+          description: 'vMix output functions',
           presets: ['functions_toggleRecording', 'functions_toggleExternal', 'functions_toggleFullscreen', 'functions_toggleMulticorder', 'functions_toggleFTB'],
         },
         {
           id: 'streamFunctions',
           type: 'simple',
           name: 'Streams',
-          description: '',
+          description: 'Stream toggle for both individual streams 1 to 5 and all streams',
           presets: [
             'functions_toggleStream',
             'functions_toggleStream1',
