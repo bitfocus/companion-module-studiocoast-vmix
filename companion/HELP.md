@@ -1,7 +1,15 @@
-**Sponsor**<br />
-This module, as with Companion, is free and open source, but if you'd like to support the continued development of this and my other modules (Google Sheets, Twitch, Discord, Voicemeeter, and more) tips will always be appreciated either on [Github](https://github.com/sponsors/thedist), [Ko-Fi](https://ko-fi.com/thedist), or Subscribe to me on Twitch [https://www.twitch.tv/subs/dist](https://www.twitch.tv/subs/dist).
+# Sponsors
 
-**API Polling Interval**<br />
+This module, like Companion, will always be free and open source. Sponsorship helps make continued development and maintenance possible, not just for this module, but also for projects such as vMix, Google Sheets, Twitch, Discord, and more.
+
+If you'd like to support my work, you can sponsor me on [GitHub](https://github.com/sponsors/thedist), buy me a coffee on [Ko-fi](https://ko-fi.com/thedist), or subscribe on [Twitch](https://www.twitch.tv/subs/dist).
+
+**Sponsor Showcase**<br />
+<a href="https://cloudflexbroadcast.com/" target="_blank"><img src="https://avatars.githubusercontent.com/u/198860892" width="48" alt="CLOUDflex Broadcast"></a><br>
+<a href="https://cloudflexbroadcast.com/" target="_blank">CLOUDflex Broadcast</a><br>
+
+# API Polling Interval<br />
+
 The majority of vMix data used by Companion for feedback and variables is retrieved through the vMix REST API, the frequency at which this data is polled can be changed in the instance config.
 
 All instances prior to 1.2.6 had a poll interval of 100ms, but from 1.2.6 the default has been changed to 250ms. It is recommended that users who need responsive feedbacks and had no previous issues to lower the interval in the config back to 100ms, and for users with a significantly large number of inputs or running on older hardware to either leave the interval at 250ms, or enter a slower interval should the server be insufficient for the number of inputs.
@@ -12,18 +20,19 @@ Default: 250ms <br />
 Minimum: 100ms <br />
 Set to 0 to disable API Polling.
 
+# Functions / Shortcuts<br />
 
-**Functions**<br />
-For commands not natively available in this module, you can access the full list of commands either through the vMix shortcuts screen, or at this [vMix API Util](https://util.dist.dev/vmixapi). These commands can either be sent as a HTTP GET request, or with a custom command as documented below.
-
-For additional actions please raise a feature request at [github](https://github.com/bitfocus/companion-module-studiocoast-vmix)
-
+All vMix shortcuts can be achieved through Actions (see [https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/shortcut_list.md](https://github.com/bitfocus/companion-module-studiocoast-vmix/blob/main/docs/shortcut_list.md) for the full list of which Shortcuts relate to which Actions), but should you wish you can also use these commands can either sent as a HTTP GET request, or with a Custom Command action as documented below.
 
 **Using Custom Commands/shortcuts**<br />
 When using vMix shortcuts, please follow this syntax/layout, with space before the first value:
 
-***ReplayMarkInOut Value=5000***
+**_ReplayMarkInOut Value=5000_**
 
 and if there is more than one parameter use "&" as a separator between them like this example:
 
-***SetOutput2 Value=Input&Input=3***
+**_SetOutput2 Value=Input&Input=3_**
+
+# HTTP API<br />
+
+This module supports Companions HTTP API, providing endpoints that can be used by 3rd party applications, and as a Data Source in vMix itself. Information on the API endpoints is available in [docs/http_api.md](./docs/http_api.md)
