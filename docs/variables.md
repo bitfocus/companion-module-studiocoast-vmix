@@ -90,6 +90,7 @@
 | dynamic_input\_`X`\_volume\_`AudioChannel`\_db     |
 | dynamic_input\_`X`\_volume\_`AudioChannel`\_linear |
 | dynamic_input\_`X`\_meter`AudioChannel`            |
+| dynamic_input\_`X`\_meter`AudioChannel`\_linear    |
 | dynamic_input\_`X`\_meter`AudioChannel`\_avg_1s    |
 | dynamic_input\_`X`\_meter`AudioChannel`\_avg_3s    |
 | dynamic_input\_`X`\_meter`AudioChannel`\_peak_1s   |
@@ -192,6 +193,7 @@ Note: Input Names in variable IDs support `a to z`, `0 to 9`, `-`, `_`, and `.`.
 | input\_`InputID`\_volume\_`AudioChannel`\_db     |
 | input\_`InputID`\_volume\_`AudioChannel`\_linear |
 | input\_`InputID`\_meter`AudioChannel`            |
+| input\_`InputID`\_meter`AudioChannel`\_linear    |
 | input\_`InputID`\_meter`AudioChannel`\_avg_1s    |
 | input\_`InputID`\_meter`AudioChannel`\_avg_3s    |
 | input\_`InputID`\_meter`AudioChannel`\_peak_1s   |
@@ -243,6 +245,7 @@ Note: Input Names in variable IDs support `a to z`, `0 to 9`, `-`, `_`, and `.`.
 | mix\_`X`\_`Y`\_mute                         |
 | mix\_`X`\_`Y`\_framedelay                   |
 | mix\_`X`\_`Y`\_meter`AudioChannel`          |
+| mix\_`X`\_`Y`\_meter`AudioChannel`\_linear  |
 | mix\_`X`\_`Y`\_meter`AudioChannel`\_avg_1s  |
 | mix\_`X`\_`Y`\_meter`AudioChannel`\_avg_3s  |
 | mix\_`X`\_`Y`\_meter`AudioChannel`\_peak_1s |

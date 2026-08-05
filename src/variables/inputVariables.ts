@@ -60,6 +60,7 @@ export type InputVariablesSchema = Partial<{
   [key: `input_${string}_meter${'f1' | 'f2'}_avg_3s`]: string
   [key: `input_${string}_meter${'f1' | 'f2'}_peak_1s`]: string
   [key: `input_${string}_meter${'f1' | 'f2'}_peak_3s`]: string
+  [key: `input_${string}_meter${'f1' | 'f2'}_linear`]: number | string
   [key: `input_${string}_position_panx`]: number | string
   [key: `input_${string}_position_pany`]: number | string
   [key: `input_${string}_position_zoomx`]: number | string
@@ -537,9 +538,11 @@ export const inputValues = async (instance: VMixInstance): Promise<InputVariable
 
         if (input.meterF1 !== undefined) {
           variables[`input_${type}_meterf1`] = volumeTodB(input.meterF1 * 100).toFixed(1)
+          variables[`input_${type}_meterf1_linear`] = Math.round(volumeToLinear(input.meterF1 * 100))
         }
         if (input.meterF2 !== undefined) {
           variables[`input_${type}_meterf2`] = volumeTodB(input.meterF2 * 100).toFixed(1)
+          variables[`input_${type}_meterf2_linear`] = Math.round(volumeToLinear(input.meterF2 * 100))
         }
 
         const audioLevel = instance.data.audioLevels.find((level) => level.key === input.key)

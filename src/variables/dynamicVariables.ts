@@ -68,6 +68,7 @@ export type DynamicVariablesSchema = {
   [key: `dynamic_input_${number}_volume_${'f1' | 'f2'}_db`]: string
   [key: `dynamic_input_${number}_volume_${'f1' | 'f2'}_linear`]: number | string
   [key: `dynamic_input_${number}_meter${'f1' | 'f2'}`]: string
+  [key: `dynamic_input_${number}_meter${'f1' | 'f2'}_linear`]: number | string
   [key: `dynamic_input_${number}_meter${'f1' | 'f2'}_avg_1s`]: string
   [key: `dynamic_input_${number}_meter${'f1' | 'f2'}_avg_3s`]: string
   [key: `dynamic_input_${number}_meter${'f1' | 'f2'}_peak_1s`]: string
@@ -207,10 +208,12 @@ export const dynamicDefinitions = async (instance: VMixInstance): Promise<Compan
 
         if (input.meterF1 !== undefined) {
           definitions[`dynamic_input_${dynamic + 1}_meterf1`] = { name: `Dynamic Input ${dynamic + 1} MeterF1` }
+          definitions[`dynamic_input_${dynamic + 1}_meterf1_linear`] = { name: `Dynamic Input ${dynamic + 1} MeterF1` }
         }
 
         if (input.meterF2 !== undefined) {
-          definitions[`dynamic_input_${dynamic + 1}_meterf2`] = { name: `Dynamic Input ${dynamic + 1} MeterF2` }
+          definitions[`dynamic_input_${dynamic + 1}_meterf2`] = { name: `Dynamic Input ${dynamic + 1} MeterF2 Linear` }
+          definitions[`dynamic_input_${dynamic + 1}_meterf2_linear`] = { name: `Dynamic Input ${dynamic + 1} MeterF2 Linear` }
         }
 
         const audioLevel = instance.data.audioLevels.find((level) => level.key === input.key)
@@ -457,9 +460,11 @@ export const dynamicValues = async (instance: VMixInstance): Promise<DynamicVari
 
           if (input.meterF1 !== undefined) {
             variables[`dynamic_input_${dynamic + 1}_meterf1`] = volumeTodB(input.meterF1 * 100).toFixed(1)
+            variables[`dynamic_input_${dynamic + 1}_meterf1_linear`] = Math.round(volumeToLinear(input.meterF1 * 100))
           }
           if (input.meterF2 !== undefined) {
             variables[`dynamic_input_${dynamic + 1}_meterf2`] = volumeTodB(input.meterF2 * 100).toFixed(1)
+            variables[`dynamic_input_${dynamic + 1}_meterf2_linear`] = Math.round(volumeToLinear(input.meterF2 * 100))
           }
 
           const audioLevel = instance.data.audioLevels.find((level) => level.key === input.key)

@@ -1,7 +1,7 @@
 import type { CompanionVariableDefinitions, JsonValue } from '@companion-module/base'
 import type VMixInstance from '../index.js'
 import type { Mix } from '../data.js'
-import { calcDuration, calcRemaining, volumeTodB } from '../utils.js'
+import { calcDuration, calcRemaining, volumeTodB, volumeToLinear } from '../utils.js'
 
 type MixType = 'preview' | 'program'
 
@@ -21,6 +21,7 @@ export type MixVariablesSchema = Partial<{
   [key: `mix_${string}_${MixType}_mute`]: string
   [key: `mix_${string}_${MixType}_framedelay`]: number
   [key: `mix_${string}_${MixType}_meter${MixMeterTypes}`]: string
+  [key: `mix_${string}_${MixType}_meter${MixMeterTypes}_linear`]: string | number
   [key: `mix_${string}_${MixType}_meter${MixMeterTypes}_avg_1s`]: string
   [key: `mix_${string}_${MixType}_meter${MixMeterTypes}_avg_3s`]: string
   [key: `mix_${string}_${MixType}_meter${MixMeterTypes}_peak_1s`]: string
@@ -72,7 +73,9 @@ export const mixDefinitions = async (instance: VMixInstance): Promise<CompanionV
 
       if (instance.config.variablesShowInputVolume) {
         definitions[`mix_${id.toLowerCase()}_${lowercaseType}_meterf1`] = { name: `Mix ${id} ${type} Meter F1` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_meterf1_linear`] = { name: `Mix ${id} ${type} Meter F1 Linear` }
         definitions[`mix_${id.toLowerCase()}_${lowercaseType}_meterf2`] = { name: `Mix ${id} ${type} Meter F2` }
+        definitions[`mix_${id.toLowerCase()}_${lowercaseType}_meterf2_linear`] = { name: `Mix ${id} ${type} Meter F2 Linear` }
         definitions[`mix_${id.toLowerCase()}_${lowercaseType}_meterf1_avg_1s`] = { name: `Mix ${id} ${type} Meter F1 Avg 1s` }
         definitions[`mix_${id.toLowerCase()}_${lowercaseType}_meterf2_avg_1s`] = { name: `Mix ${id} ${type} Meter F2 Avg 1s` }
         definitions[`mix_${id.toLowerCase()}_${lowercaseType}_meterf1_avg_3s`] = { name: `Mix ${id} ${type} Meter F1 Avg 3s` }
@@ -176,7 +179,9 @@ export const mixValues = async (instance: VMixInstance): Promise<MixVariablesSch
       variables[`mix_${id}_${type}_mute`] = inputAudio.toString()
       variables[`mix_${id}_${type}_audio`] = (!inputAudio).toString()
       variables[`mix_${id}_${type}_meterf1`] = volumeTodB((input.meterF1 || 0) * 100).toFixed(1)
+      variables[`mix_${id}_${type}_meterf1_linear`] = Math.round(volumeToLinear((input.meterF1 || 0) * 100))
       variables[`mix_${id}_${type}_meterf2`] = volumeTodB((input.meterF2 || 0) * 100).toFixed(1)
+      variables[`mix_${id}_${type}_meterf2_linear`] = Math.round(volumeToLinear((input.meterF2 || 0) * 100))
 
       if (instance.config.variablesShowInputVolume) {
         const audioLevel = instance.data.audioLevels.find((level) => level.key === input.key)
