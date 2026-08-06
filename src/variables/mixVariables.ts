@@ -57,7 +57,6 @@ export const mixDefinitions = async (instance: VMixInstance): Promise<CompanionV
       if (!input) continue
 
       const lowercaseType = type.toLowerCase() as MixType
-
       definitions[`mix_${id.toLowerCase()}_${lowercaseType}`] = { name: `Mix ${id} ${type}` }
       definitions[`mix_${id.toLowerCase()}_${lowercaseType}_name`] = { name: `Mix ${id} ${type} Short Title` }
       definitions[`mix_${id.toLowerCase()}_${lowercaseType}_full_title`] = { name: `Mix ${id} ${type} Full Title` }
@@ -145,7 +144,9 @@ export const mixDefinitions = async (instance: VMixInstance): Promise<CompanionV
 
   for (const mix of mixes) {
     await setDefinitions(mix)
-    if (mix.number === instance.routingData.mix + 1) await setDefinitions(mix, true)
+    if (mix.number === instance.routingData.mix) {
+      await setDefinitions(mix, true)
+    }
   }
 
   return definitions
@@ -285,7 +286,7 @@ export const mixValues = async (instance: VMixInstance): Promise<MixVariablesSch
 
   for (const mix of mixes) {
     await setVariables(mix)
-    if (mix.number === instance.routingData.mix + 1) await setVariables(mix, true)
+    if (mix.number === instance.routingData.mix) await setVariables(mix, true)
   }
 
   variables['mix_selected'] = instance.routingData.mix
