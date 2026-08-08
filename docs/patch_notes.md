@@ -1,5 +1,9 @@
 # Patch Notes
 
+**v5.0.4**
+- Fixed a bug with the `Util - Select Mix` Action and related performance issues with variable generation
+- ADded missing linear variables for input meters to allow easy use of Companion v5 gauges
+
 **v5.0.3**
 - Fixed a bug with the `Layer - Set Layer (Animated)` Action not working correctly
 - Tweaked some presets to allow for better readability of the text and more accurate Feedbacks
