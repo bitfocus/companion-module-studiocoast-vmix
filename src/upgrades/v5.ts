@@ -170,12 +170,25 @@ const upgradeV5_0_5: CompanionStaticUpgradeScript<Config> = (_context, props): C
 
   for (const action of props.actions) {
     if (action.actionId === 'overlayFunctions') {
-      const oldMix = JSON.stringify(action.options.mix)
+      let changed = false
       if (action.options.mix === undefined) action.options.mix = { isExpression: false, value: [1] }
-      let mixValue = action.options.mix.value
 
-      if (mixValue === undefined) mixValue = [1]
-      if (!Array.isArray(mixValue)) mixValue = [mixValue]
+      if (action.options.mix.value === undefined || action.options.mix.value === null) {
+        action.options.mix.value = action.options.mix.isExpression ? [1] : '[1]'
+        changed = true
+      }
+
+      let mixValue
+
+      if (action.options.mix.isExpression) {
+        mixValue = JSON.parse(action.options.mix.value) as number[]
+      } else {
+        mixValue = action.options.mix.value as number[]
+      }
+
+      if (!Array.isArray(mixValue)) {
+        mixValue = [mixValue]
+      }
 
       if (mixValue.includes(0)) {
         const newValue: JsonValue | string = mixValue.includes(1) ? mixValue.filter((mix) => mix !== 0) : mixValue.map((mix) => (mix === 0 ? 1 : mix))
@@ -185,9 +198,10 @@ const upgradeV5_0_5: CompanionStaticUpgradeScript<Config> = (_context, props): C
         } else {
           action.options.mix = { isExpression: false, value: newValue }
         }
+        changed = true
       }
 
-      if (JSON.stringify(action.options.mix) !== oldMix) changes.updatedActions.push(action)
+      if (changed) changes.updatedActions.push(action)
     }
   }
 
