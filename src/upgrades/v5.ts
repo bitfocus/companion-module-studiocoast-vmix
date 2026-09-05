@@ -1,4 +1,4 @@
-import { type CompanionStaticUpgradeScript, type CompanionStaticUpgradeResult } from '@companion-module/base'
+import type { CompanionStaticUpgradeScript, CompanionStaticUpgradeResult, JsonValue } from '@companion-module/base'
 import type { Config } from '../config.js'
 
 const upgradeV5_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config, undefined> => {
@@ -160,4 +160,38 @@ const upgradeV5_0_3: CompanionStaticUpgradeScript<Config> = (_context, props): C
   return changes
 }
 
-export default [upgradeV5_0_0, upgradeV5_0_3]
+const upgradeV5_0_5: CompanionStaticUpgradeScript<Config> = (_context, props): CompanionStaticUpgradeResult<Config, undefined> => {
+  const changes: CompanionStaticUpgradeResult<Config, undefined> = {
+    updatedConfig: null,
+    updatedSecrets: null,
+    updatedActions: [],
+    updatedFeedbacks: [],
+  }
+
+  for (const action of props.actions) {
+    if (action.actionId === 'overlayFunctions') {
+      const oldMix = JSON.stringify(action.options.mix)
+      if (action.options.mix === undefined) action.options.mix = { isExpression: false, value: [1] }
+      let mixValue = action.options.mix.value
+
+      if (mixValue === undefined) mixValue = [1]
+      if (!Array.isArray(mixValue)) mixValue = [mixValue]
+
+      if (mixValue.includes(0)) {
+        const newValue: JsonValue | string = mixValue.includes(1) ? mixValue.filter((mix) => mix !== 0) : mixValue.map((mix) => (mix === 0 ? 1 : mix))
+
+        if (action.options.mix.isExpression) {
+          action.options.mix = { isExpression: true, value: JSON.stringify(newValue) }
+        } else {
+          action.options.mix = { isExpression: false, value: newValue }
+        }
+      }
+
+      if (JSON.stringify(action.options.mix) !== oldMix) changes.updatedActions.push(action)
+    }
+  }
+
+  return changes
+}
+
+export default [upgradeV5_0_0, upgradeV5_0_3, upgradeV5_0_5]

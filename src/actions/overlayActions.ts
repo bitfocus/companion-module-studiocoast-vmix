@@ -81,25 +81,30 @@ export const getOverlayActions = (instance: VMixInstance, _sendBasicCommand: Sen
       ],
       callback: async (action) => {
         const input = action.options.input
+        const type = action.options.type
         const overlayID: string | number = action.options.overlay
 
-        const mix = action.options.mix.map((x) => {
-          if (x === 'Selected') return instance.routingData.mix
-          return (x as number) - 1
-        })
+        if (type === 'OverlayInput' || type === 'In' || type === 'Last') {
+          const mix = action.options.mix.map((x) => {
+            if (x === 'Selected') return instance.routingData.mix
+            return (x as number) - 1
+          })
 
-        if (action.options.type === 'OverlayInput') {
-          return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID} Input=${input}&Mix=${mix.join(',')}`)
-        } else if (action.options.type === 'PreviewOverlayInput') {
-          return instance.tcp.sendCommand(`FUNCTION PreviewOverlayInput${overlayID} Input=${input}`)
-        } else if (action.options.type === 'OverlayInputAllOff') {
-          return instance.tcp.sendCommand(`FUNCTION OverlayInputAllOff`)
-        } else if (action.options.type === 'In') {
-          return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type} Input=${input}&Mix=${mix.join(',')}`)
-        } else if (action.options.type === 'Last') {
-          return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type} Mix=${mix.join(',')}`)
+          if (action.options.type === 'OverlayInput') {
+            return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID} Input=${input}&Mix=${mix.join(',')}`)
+          } else if (action.options.type === 'In') {
+            return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type} Input=${input}&Mix=${mix.join(',')}`)
+          } else if (action.options.type === 'Last') {
+            return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type} Mix=${mix.join(',')}`)
+          }
         } else {
-          return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type}`)
+          if (action.options.type === 'PreviewOverlayInput') {
+            return instance.tcp.sendCommand(`FUNCTION PreviewOverlayInput${overlayID} Input=${input}`)
+          } else if (action.options.type === 'OverlayInputAllOff') {
+            return instance.tcp.sendCommand(`FUNCTION OverlayInputAllOff`)
+          } else {
+            return instance.tcp.sendCommand(`FUNCTION OverlayInput${overlayID}${action.options.type}`)
+          }
         }
       },
     },

@@ -18,9 +18,12 @@ If you'd like to support my work, you can sponsor me on [GitHub](https://github.
 
 
 # Recent Patches
+**v5.0.5**
+- Fixed an issue with an internal upgrade script not appropriately handling the upgrade of `Overlay - Functions` actions from very old configs
+
 **v5.0.4**
 - Fixed a bug with the `Util - Select Mix` Action and related performance issues with variable generation
-- ADded missing linear variables for input meters to allow easy use of Companion v5 gauges
+- Added missing linear variables for input meters to allow easy use of Companion v5 gauges
 
 **v5.0.3**
 - Fixed a bug with the `Layer - Set Layer (Animated)` Action not working correctly
