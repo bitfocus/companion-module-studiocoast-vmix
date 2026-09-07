@@ -2,6 +2,7 @@
 
 **v5.0.5**
 - Fixed an issue with an internal upgrade script not appropriately handling the upgrade of `Overlay - Functions` actions from very old configs
+- Adjusted text size on Audio Meter presets to improve legibility
 
 **v5.0.4**
 - Fixed a bug with the `Util - Select Mix` Action and related performance issues with variable generation

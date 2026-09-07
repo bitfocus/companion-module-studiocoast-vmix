@@ -722,7 +722,7 @@ export const getAudioDefinitions = (): CompanionPresetDefinitions<VMixInstanceTy
       type: 'simple',
       style: {
         text: `Master`,
-				alignment: 'left:top',
+        alignment: 'left:top',
         size: 10,
         color: 0xffffff,
         bgcolor: 0x000000,
@@ -915,7 +915,7 @@ export const getAudioDefinitions = (): CompanionPresetDefinitions<VMixInstanceTy
       type: 'simple',
       style: {
         text: `Bus ${bus}`,
-				alignment: 'left:top',
+        alignment: 'left:top',
         size: 10,
         color: 0xffffff,
         bgcolor: 0x000000,

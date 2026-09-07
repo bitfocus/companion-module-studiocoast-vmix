@@ -24,6 +24,7 @@ If you'd like to support my work, you can sponsor me on [GitHub](https://github.
 # Recent Patches
 **v5.0.5**
 - Fixed an issue with an internal upgrade script not appropriately handling the upgrade of `Overlay - Functions` actions from very old configs
+- Adjusted text size on Audio Meter presets to improve legibility
 
 **v5.0.4**
 - Fixed a bug with the `Util - Select Mix` Action and related performance issues with variable generation
