@@ -721,8 +721,9 @@ export const getAudioDefinitions = (): CompanionPresetDefinitions<VMixInstanceTy
       name: `Bus Master\nMeters`,
       type: 'simple',
       style: {
-        text: `Bus Master\nMeters`,
-        size: '14',
+        text: `Master`,
+				alignment: 'left:top',
+        size: 10,
         color: 0xffffff,
         bgcolor: 0x000000,
       },
@@ -913,8 +914,9 @@ export const getAudioDefinitions = (): CompanionPresetDefinitions<VMixInstanceTy
       name: `Bus ${bus}\nMeters`,
       type: 'simple',
       style: {
-        text: `Bus ${bus}\nMeters`,
-        size: '14',
+        text: `Bus ${bus}`,
+				alignment: 'left:top',
+        size: 10,
         color: 0xffffff,
         bgcolor: 0x000000,
       },
