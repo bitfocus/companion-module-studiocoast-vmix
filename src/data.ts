@@ -385,11 +385,6 @@ export class VMixData {
    */
   public getAudioLevelData(level: AudioLevel): AudioLevelData {
     const now = Math.floor(new Date().getTime() / 1000)
-    let s1 = 1000 / this.instance.config.apiPollInterval
-    let s3 = s1 * 3
-
-    if (s1 < 1) s1 = 1
-    if (s3 < 1) s3 = 1
 
     const s1ArrF1 = level.meterF1.filter((level) => Math.floor(level.time.getTime() / 1000) === now - 1).map((level) => level.value)
     const s1ArrF2 = level.meterF2.filter((level) => Math.floor(level.time.getTime() / 1000) === now - 1).map((level) => level.value)
@@ -478,7 +473,8 @@ export class VMixData {
             number: parseInt(input.$.number, 10),
             type: input.$.type,
             title: input.$.title + '',
-            shortTitle: input.$.shortTitle + '' || null,
+            // Fix: `+ ''` binds before `||`, so a missing attribute became the truthy string "undefined" and the null fallback never applied
+            shortTitle: input.$.shortTitle !== undefined ? input.$.shortTitle + '' : null,
             state: input.$.state,
             position: parseFloat(input.$.position),
             duration: parseFloat(input.$.duration),
@@ -738,8 +734,9 @@ export class VMixData {
             parsedData.mix.forEach((item: any) => {
               if (item.$.number == mixID) {
                 mix.active = true
-                mix.preview = item.preview[0]
-                mix.program = item.active[0]
+                // Fix: raw xml2js strings broke strict `=== input.number` tally checks for every mix except Mix 1
+                mix.preview = parseInt(item.preview[0], 10)
+                mix.program = parseInt(item.active[0], 10)
               }
             })
           }
@@ -846,7 +843,8 @@ export class VMixData {
             speed: parseFloat(replay.$.speed),
             speedA: replay.$.speedA ? parseFloat(replay.$.speedA) : 0,
             speedB: replay.$.speedB ? parseFloat(replay.$.speedB) : 0,
-            timecode: replay.timecode[0],
+            // Fix: guard like timecodeA/B, a partially loaded replay input without <timecode> threw and aborted the whole parse
+            timecode: replay.timecode ? replay.timecode[0] : '',
             timecodeA: replay.timecodeA ? replay.timecodeA[0] : '',
             timecodeB: replay.timecodeB ? replay.timecodeB[0] : '',
           }
@@ -1206,6 +1204,16 @@ export class VMixData {
       .catch((err) => {
         log.debug(JSON.stringify(err))
         this.instance.checkFeedbacks('status')
+        // Fix: a failed parse left apiProcessing.hold stuck at true, which silently stopped all further XML polling until a reconnect
+        this.instance.apiProcessing = {
+          hold: false,
+          holdCount: 0,
+          request: 0,
+          response: 0,
+          parsed: 0,
+          feedbacks: 0,
+          variables: 0,
+        }
         return
       })
   }

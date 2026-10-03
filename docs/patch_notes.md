@@ -1,5 +1,19 @@
 # Patch Notes
 
+**v5.0.6**
+- Fixed internal upgrade scripts resetting some `Layer - Set MultiView Overlay`, `Audio - Plugin`, and `Replay - Play Event` option values to defaults when upgrading from very old configs
+- Fixed keep-alive PING no longer being sent after changing the vMix host/port, and repeated API Polling Interval changes not being applied
+- Fixed inputs without a Short Title being reported as `undefined` in variables and the HTTP API
+- Fixed Mix 2-16 Preview/Program tally comparisons for variables and feedbacks
+- Fixed API polling stalling until a reconnect if a partially loaded Replay input caused a parse error
+- Fixed `Audio - Set Volume Input Bus Mixer` sending the unresolved `Selected`/`Master` bus to vMix
+- Fixed `Title - Adjust title text color` and `Title - Adjust title text visibility` not URL encoding Input names containing spaces or special characters
+- Fixed `Replay - Set Speed` producing an invalid value when Max Speed is 0, and removed a non-existent 21st Events tab from `Replay - Move event`
+- Fixed Overlay 2-8, Replay Channel B Camera, Transition 2-4 Duration, and Bus B-G Send to Master presets controlling or displaying the wrong target
+- Fixed Audio Preset input filter using the bus filter text
+- Fixed `mix_selected_*_layer_*` position variables never updating
+- Fixed a Video Call input without an audio source aborting the update of all variables
+
 **v5.0.5**
 - Fixed an issue with an internal upgrade script not appropriately handling the upgrade of `Overlay - Functions` actions from very old configs
 - Adjusted text size on Audio Meter presets to improve legibility

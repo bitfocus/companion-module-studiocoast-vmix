@@ -499,7 +499,7 @@ export const getInputActions = (instance: VMixInstance, sendBasicCommand: SendBa
       callback: async (action) => {
         const selected = action.options.input
         const input = await instance.data.getInput(selected)
-        let cmd = ''
+        let cmd: string
 
         if (!input) return
 

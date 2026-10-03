@@ -398,7 +398,7 @@ export const getAudioFeedbacks = (instance: VMixInstance): CompanionFeedbackDefi
         },
       ],
       callback: (feedback) => {
-        let volume = 0
+        let volume: number
 
         if (feedback.options.bus === 'Headphones') {
           const bus = instance.data.audio.find((output) => output.bus === 'master')

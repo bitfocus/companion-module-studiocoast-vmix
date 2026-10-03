@@ -356,11 +356,13 @@ export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBa
 
         if (action.options.adjustment === 'Increase') {
           target = volumeToLinear(input.volume) + amount
-          if (target > 100) target = 100
         } else if (action.options.adjustment === 'Decrease') {
           target = volumeToLinear(input.volume) - amount
-          if (target < 0) target = 0
         }
+
+        // Fix: clamp on the 'Set' path too, the free-text amount (e.g. a variable) could send values outside 0-100
+        if (target > 100) target = 100
+        if (target < 0) target = 0
 
         target = Math.round(target)
 
@@ -461,11 +463,13 @@ export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBa
 
         if (action.options.adjustment === 'Increase') {
           target = volumeToLinear(currentVolume) + amount
-          if (target > 100) target = 100
         } else if (action.options.adjustment === 'Decrease') {
           target = volumeToLinear(currentVolume) - amount
-          if (target < 0) target = 0
         }
+
+        // Fix: clamp on the 'Set' path too, the free-text amount (e.g. a variable) could send values outside 0-100
+        if (target > 100) target = 100
+        if (target < 0) target = 0
 
         target = Math.round(target)
 
@@ -544,7 +548,8 @@ export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBa
 
         if (input === null) return
 
-        return instance.tcp.sendCommand(`FUNCTION SetVolumeBusMixer Input=${input.key}&Value=${action.options.value},${action.options.amount}`)
+        // Fix: the resolved `bus` was computed but the raw option was sent, so 'Selected' / 'Master' reached vMix literally
+        return instance.tcp.sendCommand(`FUNCTION SetVolumeBusMixer Input=${input.key}&Value=${bus},${action.options.amount}`)
       },
     },
 

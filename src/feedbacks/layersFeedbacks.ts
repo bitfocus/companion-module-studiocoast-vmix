@@ -120,7 +120,7 @@ export const getLayersFeedbacks = (instance: VMixInstance): CompanionFeedbackDef
 
         if (!inputX || !inputY || isNaN(layer)) return false
 
-        let hit = false
+        let hit: boolean
         if (layer === 0) {
           hit = inputY.overlay?.find((overlay) => overlay.key === inputX.key) !== undefined
         } else {

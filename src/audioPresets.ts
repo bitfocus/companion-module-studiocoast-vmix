@@ -109,7 +109,8 @@ export class AudioPresets {
       const presetInputs = data.inputs.filter((presetInput) => {
         if (!settings.inputs.includes('inputFilter') || settings.inputFilter.length === 0) return true
 
-        const filter = settings.busFilter.split(',').map((filter) => filter.trim().toLowerCase())
+        // Fix: copy-paste from the bus block above, the input filter was reading the bus filter string
+        const filter = settings.inputFilter.split(',').map((filter) => filter.trim().toLowerCase())
 
         return filter.includes(presetInput.id + '')
       })

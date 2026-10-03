@@ -1,6 +1,6 @@
 {
 	"include": ["src/**/*.ts"],
-	"exclude": ["node_modules/**", "src/**/*spec.ts", "src/**/__tests__/*", "src/**/__mocks__/*"],
+	"exclude": ["node_modules/**"],
 	"compilerOptions": {
 		"rootDir": "./src",
 		"outDir": "./dist",
@@ -26,5 +26,6 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"skipLibCheck": true,
+		"isolatedModules": true
 	}
 }
