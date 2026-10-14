@@ -148,7 +148,6 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
       },
       steps: [
         {
-          // Fix: all four slots targeted SetTransitionDuration1, so "T2-T4 Set Xms" changed Transition 1
           down: [{ actionId: 'setTransitionDuration', options: { functionID: `SetTransitionDuration${i}` as 'SetTransitionDuration1', value: 250 } }],
           up: [],
         },
@@ -167,7 +166,6 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
       },
       steps: [
         {
-          // Fix: functionID hardcoded to slot 1 instead of i
           down: [{ actionId: 'setTransitionDuration', options: { functionID: `SetTransitionDuration${i}` as 'SetTransitionDuration1', value: 500 } }],
           up: [],
         },
@@ -186,7 +184,6 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
       },
       steps: [
         {
-          // Fix: functionID hardcoded to slot 1 instead of i
           down: [{ actionId: 'setTransitionDuration', options: { functionID: `SetTransitionDuration${i}` as 'SetTransitionDuration1', value: 1000 } }],
           up: [],
         },
@@ -205,7 +202,6 @@ export const getTransitionDefinitions = (): CompanionPresetDefinitions<VMixInsta
       },
       steps: [
         {
-          // Fix: functionID hardcoded to slot 1 instead of i
           down: [{ actionId: 'setTransitionDuration', options: { functionID: `SetTransitionDuration${i}` as 'SetTransitionDuration1', value: 2000 } }],
           up: [],
         },

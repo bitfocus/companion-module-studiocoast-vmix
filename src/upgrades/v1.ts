@@ -81,7 +81,6 @@ export const upgradeV1_2_0: CompanionStaticUpgradeScript<Config> = (_context, pr
       action.options.input = action.options.countdownStartInput
       delete action.options.countdownStartInput
     } else if (action.actionId === 'stopCountdown') {
-      // Fix: copy-paste error, stopCountdown was migrated to StartCountdown
       action.actionId = 'StopCountdown'
       action.options.input = action.options.countdownStopInput
       delete action.options.countdownStopInput

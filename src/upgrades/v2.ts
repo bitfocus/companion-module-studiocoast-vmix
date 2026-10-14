@@ -112,19 +112,16 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
       action.options.value = action.options.selectedIndex
       delete action.options.selectedIndex
     } else if (action.actionId === 'setMultiViewOverlay') {
-      // Fix: Companion hands options to upgrade scripts already wrapped as { isExpression, value }; without .value the wrapper object hits parseInt (NaN -> default 1)
       action.options.layer = { isExpression: false, value: stringToInt(action.options.selectedIndex?.value, 1, 0, 10) }
       action.options.layerInput = action.options.LayerInput
       delete action.options.selectedIndex
       delete action.options.LayerInput
     } else if (action.actionId === 'setMultiViewOverlayOnPreview') {
-      // Fix: read .value, otherwise parseInt runs on the wrapper object (NaN -> default 1)
       action.options.layer = { isExpression: false, value: stringToInt(action.options.selectedIndex?.value, 1, 0, 10) }
       action.options.layerInput = action.options.LayerInput
       delete action.options.selectedIndex
       delete action.options.LayerInput
     } else if (action.actionId === 'setMultiViewOverlayOnProgram') {
-      // Fix: read .value, otherwise parseInt runs on the wrapper object (NaN -> default 1)
       action.options.layer = { isExpression: false, value: stringToInt(action.options.selectedIndex?.value, 1, 0, 10) }
       action.options.layerInput = action.options.LayerInput
       delete action.options.selectedIndex
@@ -142,7 +139,6 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
     } else if (action.actionId === 'AudioOnOff') {
       action.actionId = 'audio'
     } else if (action.actionId === 'audioPlugin') {
-      // Fix: read .value, otherwise parseInt runs on the wrapper object (NaN -> default 1)
       action.options.value = { isExpression: false, value: stringToInt(action.options.value?.value, 1, 1, 1000) }
     } else if (action.actionId === 'StartCountdown') {
       action.actionId = 'controlCountdown'
@@ -182,13 +178,11 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript<Config> = (_context, props): C
       action.options.channel = { isExpression: false, value: 'Current' }
     } else if (action.actionId === 'replayPlayEvent') {
       action.options.channel = { isExpression: false, value: 'Current' }
-      // Fix: read .value, otherwise parseInt runs on the wrapper object (NaN -> default 0, event ID is lost)
       action.options.value = { isExpression: false, value: stringToInt(action.options.value?.value, 0, 0, 1000) }
     } else if (action.actionId === 'replayPlaySelectedEventToOutput') {
       action.options.channel = { isExpression: false, value: 'Current' }
     } else if (action.actionId === 'replayPlayEventsByIDToOutput') {
       action.options.channel = { isExpression: false, value: 'Current' }
-      // Fix: read .value, otherwise parseInt runs on the wrapper object (NaN -> default 0, event ID is lost)
       action.options.value = { isExpression: false, value: stringToInt(action.options.value?.value, 0, 0, 1000) }
     } else {
       actionChanged = false

@@ -416,7 +416,6 @@ export const dynamicValues = async (instance: VMixInstance): Promise<DynamicVari
         }
 
         if (input.type === 'VideoCall') {
-          // Fix: removed dead `audioSource` stripping that threw on a missing callAudioSource and aborted the whole variable update
           variables[`dynamic_input_${dynamic + 1}_call_password`] = input.callPassword || ''
           variables[`dynamic_input_${dynamic + 1}_call_connected`] = input.callConnected ? 'Connected' : 'Disconnected'
           variables[`dynamic_input_${dynamic + 1}_call_video_source`] = input.callVideoSource || ''

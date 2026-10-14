@@ -360,7 +360,6 @@ export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBa
           target = volumeToLinear(input.volume) - amount
         }
 
-        // Fix: clamp on the 'Set' path too, the free-text amount (e.g. a variable) could send values outside 0-100
         if (target > 100) target = 100
         if (target < 0) target = 0
 
@@ -467,7 +466,6 @@ export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBa
           target = volumeToLinear(currentVolume) - amount
         }
 
-        // Fix: clamp on the 'Set' path too, the free-text amount (e.g. a variable) could send values outside 0-100
         if (target > 100) target = 100
         if (target < 0) target = 0
 
@@ -548,7 +546,6 @@ export const getAudioActions = (instance: VMixInstance, sendBasicCommand: SendBa
 
         if (input === null) return
 
-        // Fix: the resolved `bus` was computed but the raw option was sent, so 'Selected' / 'Master' reached vMix literally
         return instance.tcp.sendCommand(`FUNCTION SetVolumeBusMixer Input=${input.key}&Value=${bus},${action.options.amount}`)
       },
     },

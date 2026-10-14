@@ -24,7 +24,6 @@ export const getOverlayDefinitions = (): CompanionPresetDefinitions<VMixInstance
 
   for (let i = 1; i < 9; i++) {
     overlayDefinitions[`overlay_${i}Pgm`] = {
-      // Fix: hardcoded `${1}` labelled all eight program presets "Overlay 1 Prgm"
       name: `Overlay ${i} Prgm`,
       type: 'simple',
       style: {
@@ -72,7 +71,6 @@ export const getOverlayDefinitions = (): CompanionPresetDefinitions<VMixInstance
           down: [
             {
               actionId: 'overlayFunctions',
-              // Fix: overlay was hardcoded to '1' while the feedback tracked overlay i, so Overlay 2-8 buttons controlled Overlay 1
               options: { type: 'PreviewOverlayInput', input: '', overlay: `${i}`, mix: [1] },
             },
           ],
@@ -107,7 +105,6 @@ export const getOverlayDefinitions = (): CompanionPresetDefinitions<VMixInstance
           down: [
             {
               actionId: 'overlayFunctions',
-              // Fix: overlay hardcoded to '1' instead of i
               options: { type: 'In', input: '', overlay: `${i}`, mix: [1] },
             },
           ],
@@ -142,7 +139,6 @@ export const getOverlayDefinitions = (): CompanionPresetDefinitions<VMixInstance
           down: [
             {
               actionId: 'overlayFunctions',
-              // Fix: overlay hardcoded to '1' instead of i
               options: { type: 'Last', input: '', overlay: `${i}`, mix: [1] },
             },
           ],
@@ -177,7 +173,6 @@ export const getOverlayDefinitions = (): CompanionPresetDefinitions<VMixInstance
           down: [
             {
               actionId: 'overlayFunctions',
-              // Fix: overlay hardcoded to '1' instead of i
               options: { type: 'Out', input: '', overlay: `${i}`, mix: [1] },
             },
           ],
@@ -212,7 +207,6 @@ export const getOverlayDefinitions = (): CompanionPresetDefinitions<VMixInstance
           down: [
             {
               actionId: 'overlayFunctions',
-              // Fix: overlay hardcoded to '1' instead of i
               options: { type: 'Off', input: '', overlay: `${i}`, mix: [1] },
             },
           ],
@@ -247,7 +241,6 @@ export const getOverlayDefinitions = (): CompanionPresetDefinitions<VMixInstance
           down: [
             {
               actionId: 'overlayFunctions',
-              // Fix: overlay hardcoded to '1' instead of i
               options: { type: 'Zoom', input: '', overlay: `${i}`, mix: [1] },
             },
           ],

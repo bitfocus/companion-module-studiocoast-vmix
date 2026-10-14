@@ -321,7 +321,6 @@ export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBa
         const value = action.options.value
         const indexNaNCheck = isNaN(parseInt(index, 10)) ? 'SelectedName' : 'SelectedIndex'
 
-        // Fix: input and layer were not URL-encoded like in every other title action, names with spaces or '&' corrupted the query
         return instance.tcp.sendCommand(`FUNCTION SetTextColour Input=${encodeURIComponent(action.options.input)}&Value=${value}&${indexNaNCheck}=${encodeURIComponent(index)}`)
       },
     },
@@ -360,7 +359,6 @@ export const getTitleActions = (instance: VMixInstance, sendBasicCommand: SendBa
         if (action.options.adjustment === 'On') type = 'SetTextVisibleOn'
         if (action.options.adjustment === 'Off') type = 'SetTextVisibleOff'
 
-        // Fix: input and layer were not URL-encoded like in every other title action
         return instance.tcp.sendCommand(`FUNCTION ${type} Input=${encodeURIComponent(action.options.input)}&${indexNaNCheck}=${encodeURIComponent(index)}`)
       },
     },

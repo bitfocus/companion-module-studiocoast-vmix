@@ -120,7 +120,6 @@ export const mixDefinitions = async (instance: VMixInstance): Promise<CompanionV
           definitions[`mix_${id.toLowerCase()}_${lowercaseType}_layer_${i}_key`] = { name: `Mix ${id} ${type} Layer ${i} Key` }
 
           if (instance.config.variablesShowInputLayerPosition) {
-            // Fix: raw `id` produced "mix_Selected_..." definitions while mixValues writes "mix_selected_...", leaving these variables permanently empty
             definitions[`mix_${id.toLowerCase()}_${lowercaseType}_layer_${i}_panx`] = { name: `Mix ${id} ${type} Layer ${i} Pan X` }
             definitions[`mix_${id.toLowerCase()}_${lowercaseType}_layer_${i}_pany`] = { name: `Mix ${id} ${type} Layer ${i} Pan Y` }
             definitions[`mix_${id.toLowerCase()}_${lowercaseType}_layer_${i}_x`] = { name: `Mix ${id} ${type} Layer ${i} X` }

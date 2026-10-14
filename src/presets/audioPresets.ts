@@ -262,7 +262,6 @@ export const getAudioDefinitions = (): CompanionPresetDefinitions<VMixInstanceTy
       feedbacks: [
         {
           feedbackId: 'inputBusRouting',
-          // Fix: feedback checked 'Master' while the action routes to Bus B
           options: { input: '1', value: 'B' },
           style: {
             color: 0x000000,
@@ -954,7 +953,6 @@ export const getAudioDefinitions = (): CompanionPresetDefinitions<VMixInstanceTy
       },
       steps: [
         {
-          // Fix: value hardcoded to 'A', so the Bus B-G presets all toggled Bus A while their feedback tracked the right bus
           down: [{ actionId: 'busXSendToMaster', options: { value: bus, functionID: 'BusXSendToMaster' } }],
           up: [],
         },

@@ -32,7 +32,6 @@ export const getReplayDefinitions = (): CompanionPresetDefinitions<VMixInstanceT
         feedbacks: [
           {
             feedbackId: 'replayCamera',
-            // Fix: feedback was hardcoded to channel A / camera 1 for all 16 presets, so e.g. "B Cam 5" lit up when A Cam 1 was live
             options: { channel: channel as 'A' | 'B', camera: i as 1 },
             style: {
               color: 0x000000,

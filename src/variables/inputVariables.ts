@@ -494,7 +494,6 @@ export const inputValues = async (instance: VMixInstance): Promise<InputVariable
       }
 
       if (input.type === 'VideoCall') {
-        // Fix: removed dead `audioSource` stripping that threw on a missing callAudioSource and aborted the whole variable update
         variables[`input_${type}_call_password`] = input.callPassword || ''
         variables[`input_${type}_call_connected`] = input.callConnected ? 'Connected' : 'Disconnected'
         variables[`input_${type}_call_video_source`] = input.callVideoSource || ''

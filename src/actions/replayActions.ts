@@ -587,7 +587,6 @@ export const getReplayActions = (instance: VMixInstance, sendBasicCommand: SendB
           return log.warn(`Replay - Set Speed - Invalid Speed ${action.options.value}`)
         }
 
-        // Fix: max of 0 passed validation and produced a division by zero (Infinity/NaN sent to vMix); also log the right option
         if (isNaN(maxValue) || maxValue <= 0) {
           return log.warn(`Replay - Set Speed - Invalid Max Speed ${action.options.max}`)
         }
@@ -661,7 +660,6 @@ export const getReplayActions = (instance: VMixInstance, sendBasicCommand: SendB
           label: 'Destination',
           id: 'value',
           default: 0,
-          // Fix: 21 entries produced a bogus "Events 21" choice, vMix only has 20 event lists (0-19)
           choices: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19].map((item, index) => ({
             id: item,
             label: `Events ${index + 1}`,
@@ -760,7 +758,6 @@ export const getReplayActions = (instance: VMixInstance, sendBasicCommand: SendB
       ],
       callback: async (action) => {
         const value = action.options.value - 1
-        // Fix: promise was neither returned nor awaited, a failed send became an unhandled rejection
         return instance.tcp.sendCommand(`FUNCTION ${action.options.functionID} Value=${value}`)
       },
     },

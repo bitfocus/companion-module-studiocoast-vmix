@@ -217,7 +217,6 @@ export class TCP {
       this.initXMLPolling()
     })
 
-    // Fix: listener was attached to the activator socket instead of the XML socket (XML status never logged, activator logged twice)
     this.sockets.xml?.on('status_change', (status, message) => {
       log.debug(`XML socket - Status: ${status}${message ? ' - Message: ' + message : ''}`)
     })
@@ -288,7 +287,6 @@ export class TCP {
       clearInterval(this.pollAPI)
     }
 
-    // Fix: track the active interval, otherwise update() always compares against the startup value and repeated changes are ignored
     this.pollInterval = this.instance.config.apiPollInterval
 
     const pollAPI = () => {
@@ -353,7 +351,6 @@ export class TCP {
 
       if (this.pingInterval !== null) {
         clearInterval(this.pingInterval)
-        // Fix: without resetting to null, init() skips the guard and no PING is ever sent again after a reconnect
         this.pingInterval = null
       }
 
