@@ -120,18 +120,19 @@ export const mixDefinitions = async (instance: VMixInstance): Promise<CompanionV
           definitions[`mix_${id.toLowerCase()}_${lowercaseType}_layer_${i}_key`] = { name: `Mix ${id} ${type} Layer ${i} Key` }
 
           if (instance.config.variablesShowInputLayerPosition) {
-            definitions[`mix_${id}_${lowercaseType}_layer_${i}_panx`] = { name: `Mix ${id} ${type} Layer ${i} Pan X` }
-            definitions[`mix_${id}_${lowercaseType}_layer_${i}_pany`] = { name: `Mix ${id} ${type} Layer ${i} Pan Y` }
-            definitions[`mix_${id}_${lowercaseType}_layer_${i}_x`] = { name: `Mix ${id} ${type} Layer ${i} X` }
-            definitions[`mix_${id}_${lowercaseType}_layer_${i}_y`] = { name: `Mix ${id} ${type} Layer ${i} Y` }
-            definitions[`mix_${id}_${lowercaseType}_layer_${i}_zoomx`] = { name: `Mix ${id} ${type} Layer ${i} Zoom X` }
-            definitions[`mix_${id}_${lowercaseType}_layer_${i}_zoomy`] = { name: `Mix ${id} ${type} Layer ${i} Zoom Y` }
-            definitions[`mix_${id}_${lowercaseType}_layer_${i}_width`] = { name: `Mix ${id} ${type} Layer ${i} Width` }
-            definitions[`mix_${id}_${lowercaseType}_layer_${i}_height`] = { name: `Mix ${id} ${type} Layer ${i} Height` }
-            definitions[`mix_${id}_${lowercaseType}_layer_${i}_cropx1`] = { name: `Mix ${id} ${type} Layer ${i} Crop X1` }
-            definitions[`mix_${id}_${lowercaseType}_layer_${i}_cropx2`] = { name: `Mix ${id} ${type} Layer ${i} Crop X2` }
-            definitions[`mix_${id}_${lowercaseType}_layer_${i}_cropy1`] = { name: `Mix ${id} ${type} Layer ${i} Crop Y1` }
-            definitions[`mix_${id}_${lowercaseType}_layer_${i}_cropy2`] = { name: `Mix ${id} ${type} Layer ${i} Crop Y2` }
+            // Fix: raw `id` produced "mix_Selected_..." definitions while mixValues writes "mix_selected_...", leaving these variables permanently empty
+            definitions[`mix_${id.toLowerCase()}_${lowercaseType}_layer_${i}_panx`] = { name: `Mix ${id} ${type} Layer ${i} Pan X` }
+            definitions[`mix_${id.toLowerCase()}_${lowercaseType}_layer_${i}_pany`] = { name: `Mix ${id} ${type} Layer ${i} Pan Y` }
+            definitions[`mix_${id.toLowerCase()}_${lowercaseType}_layer_${i}_x`] = { name: `Mix ${id} ${type} Layer ${i} X` }
+            definitions[`mix_${id.toLowerCase()}_${lowercaseType}_layer_${i}_y`] = { name: `Mix ${id} ${type} Layer ${i} Y` }
+            definitions[`mix_${id.toLowerCase()}_${lowercaseType}_layer_${i}_zoomx`] = { name: `Mix ${id} ${type} Layer ${i} Zoom X` }
+            definitions[`mix_${id.toLowerCase()}_${lowercaseType}_layer_${i}_zoomy`] = { name: `Mix ${id} ${type} Layer ${i} Zoom Y` }
+            definitions[`mix_${id.toLowerCase()}_${lowercaseType}_layer_${i}_width`] = { name: `Mix ${id} ${type} Layer ${i} Width` }
+            definitions[`mix_${id.toLowerCase()}_${lowercaseType}_layer_${i}_height`] = { name: `Mix ${id} ${type} Layer ${i} Height` }
+            definitions[`mix_${id.toLowerCase()}_${lowercaseType}_layer_${i}_cropx1`] = { name: `Mix ${id} ${type} Layer ${i} Crop X1` }
+            definitions[`mix_${id.toLowerCase()}_${lowercaseType}_layer_${i}_cropx2`] = { name: `Mix ${id} ${type} Layer ${i} Crop X2` }
+            definitions[`mix_${id.toLowerCase()}_${lowercaseType}_layer_${i}_cropy1`] = { name: `Mix ${id} ${type} Layer ${i} Crop Y1` }
+            definitions[`mix_${id.toLowerCase()}_${lowercaseType}_layer_${i}_cropy2`] = { name: `Mix ${id} ${type} Layer ${i} Crop Y2` }
           }
         }
       }

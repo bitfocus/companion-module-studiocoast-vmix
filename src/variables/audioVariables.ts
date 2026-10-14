@@ -72,7 +72,7 @@ export const audioValues = async (instance: VMixInstance): Promise<AudioVariable
 
   if (instance.config.variablesShowAudio) {
     busses.forEach((id) => {
-      let audioBus: AudioBus | null = null
+      let audioBus: AudioBus | null
 
       if (id === 'Selected') {
         audioBus = instance.data.getAudioBus(instance.routingData.bus)

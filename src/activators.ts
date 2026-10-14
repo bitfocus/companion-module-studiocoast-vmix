@@ -4,14 +4,7 @@ import type { CallAudioSource, CallVideoSource, Input } from './data.js'
 import type { FeedbackId } from './feedbacks/feedback.js'
 
 type ActivatorEventHandlers =
-  | 'handlerBusAudio'
-  | 'handlerInputAudio'
-  | 'handlerInputState'
-  | 'handlerPreviewProgram'
-  | 'handlerReplay'
-  | 'handlerVideoCall'
-  | 'handlerVMixState'
-  | 'handlerVolumeChannelMixer'
+  'handlerBusAudio' | 'handlerInputAudio' | 'handlerInputState' | 'handlerPreviewProgram' | 'handlerReplay' | 'handlerVideoCall' | 'handlerVMixState' | 'handlerVolumeChannelMixer'
 type AudioBusMasterID = 'M' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
 type StatusType = 'fadeToBlack' | 'recording' | 'external' | 'streaming' | 'playList' | 'multiCorder' | 'fullscreen'
 

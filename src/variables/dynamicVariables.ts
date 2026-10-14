@@ -170,8 +170,8 @@ export const dynamicDefinitions = async (instance: VMixInstance): Promise<Compan
       }
 
       if (input.type === 'VideoList' || input.type === 'VirtualSet' || input.type === 'Photos') {
-        ;(definitions[`dynamic_input_${dynamic + 1}_selected`] = { name: `Dynamic Input ${dynamic + 1} Selected Position` }),
-          (definitions[`dynamic_input_${dynamic + 1}_selectedindex`] = { name: `Dynamic Input ${dynamic + 1} Selected Index` })
+        ;((definitions[`dynamic_input_${dynamic + 1}_selected`] = { name: `Dynamic Input ${dynamic + 1} Selected Position` }),
+          (definitions[`dynamic_input_${dynamic + 1}_selectedindex`] = { name: `Dynamic Input ${dynamic + 1} Selected Index` }))
         definitions[`dynamic_input_${dynamic + 1}_selected_name`] = { name: `Dynamic Input ${dynamic + 1} Selected Name` }
       }
 
@@ -416,11 +416,7 @@ export const dynamicValues = async (instance: VMixInstance): Promise<DynamicVari
         }
 
         if (input.type === 'VideoCall') {
-          let audioSource = input.callAudioSource as string
-          if (audioSource.startsWith('Bus')) {
-            audioSource = audioSource.substr(3)
-          }
-
+          // Fix: removed dead `audioSource` stripping that threw on a missing callAudioSource and aborted the whole variable update
           variables[`dynamic_input_${dynamic + 1}_call_password`] = input.callPassword || ''
           variables[`dynamic_input_${dynamic + 1}_call_connected`] = input.callConnected ? 'Connected' : 'Disconnected'
           variables[`dynamic_input_${dynamic + 1}_call_video_source`] = input.callVideoSource || ''

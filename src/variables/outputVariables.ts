@@ -52,7 +52,7 @@ export const outputValues = async (instance: VMixInstance): Promise<OutputVariab
   }
 
   for (const output of instance.data.outputs) {
-    let source = ''
+    let source: string
 
     if (output.source === 'Input') {
       source = `Input${output.input}`
