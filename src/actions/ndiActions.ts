@@ -1,18 +1,18 @@
-import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import type { CompanionActionDefinitions } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
-import { options } from '../utils.js'
+import { type ActionSchema, options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type NDIActionsSchema = {
-  ndiCommand: CompanionActionSchema<{
+  ndiCommand: ActionSchema<{
     input: string
     value: string
   }>
-  ndiSelectSource: CompanionActionSchema<{
+  ndiSelectSource: ActionSchema<{
     input: string
     value: string
   }>
-  ndiRecording: CompanionActionSchema<{
+  ndiRecording: ActionSchema<{
     input: string
   }>
 }

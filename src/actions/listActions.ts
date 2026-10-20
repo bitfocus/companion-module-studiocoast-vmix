@@ -1,55 +1,55 @@
-import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import type { CompanionActionDefinitions } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
-import { options } from '../utils.js'
+import { type ActionSchema, options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type ListActionsSchema = {
-  nextPicture: CompanionActionSchema<{
+  nextPicture: ActionSchema<{
     input: string
   }>
-  previousPicture: CompanionActionSchema<{
+  previousPicture: ActionSchema<{
     input: string
   }>
-  nextItem: CompanionActionSchema<{
+  nextItem: ActionSchema<{
     input: string
   }>
-  previousItem: CompanionActionSchema<{
+  previousItem: ActionSchema<{
     input: string
   }>
-  selectIndex: CompanionActionSchema<{
+  selectIndex: ActionSchema<{
     input: string
     value: string
   }>
-  autoPlayFirst: CompanionActionSchema<{
+  autoPlayFirst: ActionSchema<{
     input: string
     functionID: 'AutoPlayFirst' | 'AutoPlayFirstOn' | 'AutoPlayFirstOff'
   }>
-  autoPlayNext: CompanionActionSchema<{
+  autoPlayNext: ActionSchema<{
     input: string
     functionID: 'AutoPlayNext' | 'AutoPlayNextOn' | 'AutoPlayNextOff'
   }>
-  listShuffle: CompanionActionSchema<{
+  listShuffle: ActionSchema<{
     input: string
   }>
-  listAdd: CompanionActionSchema<{
-    input: string
-    value: string
-  }>
-  listRemove: CompanionActionSchema<{
+  listAdd: ActionSchema<{
     input: string
     value: string
   }>
-  listRemoveAll: CompanionActionSchema<{
-    input: string
-  }>
-  listExport: CompanionActionSchema<{
+  listRemove: ActionSchema<{
     input: string
     value: string
   }>
-  listShowHide: CompanionActionSchema<{
+  listRemoveAll: ActionSchema<{
     input: string
   }>
-  listPlayOut: CompanionActionSchema<{
+  listExport: ActionSchema<{
+    input: string
+    value: string
+  }>
+  listShowHide: ActionSchema<{
+    input: string
+  }>
+  listPlayOut: ActionSchema<{
     input: string
   }>
 }

@@ -1,18 +1,18 @@
-import { type CompanionActionDefinitions, type CompanionActionSchema, createModuleLogger } from '@companion-module/base'
+import { type CompanionActionDefinitions, createModuleLogger } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
-import { options } from '../utils.js'
+import { type ActionSchema, options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type ZoomActionsSchema = {
-  zoomMuteSelf: CompanionActionSchema<{
+  zoomMuteSelf: ActionSchema<{
     input: string
     functionID: 'zoomMuteSelf' | 'zoomUnMuteSelf'
   }>
-  zoomSelectParticipantByName: CompanionActionSchema<{
+  zoomSelectParticipantByName: ActionSchema<{
     input: string
     value: string
   }>
-  zoomJoinMeeting: CompanionActionSchema<{
+  zoomJoinMeeting: ActionSchema<{
     input: string
     meetingID: string
     password: string

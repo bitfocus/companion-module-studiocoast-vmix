@@ -1,25 +1,25 @@
-import { type CompanionActionDefinitions, type CompanionActionSchema, createModuleLogger } from '@companion-module/base'
+import { type CompanionActionDefinitions, createModuleLogger } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
-import { type EmptyOptions, options } from '../utils.js'
+import { type ActionSchema, type EmptyOptions, options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type ReplayActionsSchema = {
-  replayACamera: CompanionActionSchema<{
+  replayACamera: ActionSchema<{
     functionID: 'ReplayACamera1' | 'ReplayACamera2' | 'ReplayACamera3' | 'ReplayACamera4' | 'ReplayACamera5' | 'ReplayACamera6' | 'ReplayACamera7' | 'ReplayACamera8'
   }>
-  replayBCamera: CompanionActionSchema<{
+  replayBCamera: ActionSchema<{
     functionID: 'ReplayBCamera1' | 'ReplayBCamera2' | 'ReplayBCamera3' | 'ReplayBCamera4' | 'ReplayBCamera5' | 'ReplayBCamera6' | 'ReplayBCamera7' | 'ReplayBCamera8'
   }>
-  replayCCamera: CompanionActionSchema<{
+  replayCCamera: ActionSchema<{
     functionID: 'ReplayCCamera1' | 'ReplayCCamera2' | 'ReplayCCamera3' | 'ReplayCCamera4' | 'ReplayCCamera5' | 'ReplayCCamera6' | 'ReplayCCamera7' | 'ReplayCCamera8'
   }>
-  replayDCamera: CompanionActionSchema<{
+  replayDCamera: ActionSchema<{
     functionID: 'ReplayDCamera1' | 'ReplayDCamera2' | 'ReplayDCamera3' | 'ReplayDCamera4' | 'ReplayDCamera5' | 'ReplayDCamera6' | 'ReplayDCamera7' | 'ReplayDCamera8'
   }>
-  replayCamera: CompanionActionSchema<{
+  replayCamera: ActionSchema<{
     functionID: 'ReplayCamera1' | 'ReplayCamera2' | 'ReplayCamera3' | 'ReplayCamera4' | 'ReplayCamera5' | 'ReplayCamera6' | 'ReplayCamera7' | 'ReplayCamera8'
   }>
-  replayEventCamera: CompanionActionSchema<{
+  replayEventCamera: ActionSchema<{
     functionID:
       | 'ReplaySelectedEventCameraOn'
       | 'ReplaySelectedEventCameraOff'
@@ -29,11 +29,11 @@ export type ReplayActionsSchema = {
       | 'ReplayLastEventSingleCameraOn'
     value: number
   }>
-  replaySelectChannel: CompanionActionSchema<{
+  replaySelectChannel: ActionSchema<{
     functionID: 'replaySelectChannelAB' | 'replaySelectChannelA' | 'replaySelectChannelB'
   }>
   replaySwapChannels: EmptyOptions
-  replayMark: CompanionActionSchema<{
+  replayMark: ActionSchema<{
     functionID:
       | 'ReplayMarkCancel'
       | 'ReplayMarkIn'
@@ -48,14 +48,14 @@ export type ReplayActionsSchema = {
     value: string
     value2: string
   }>
-  replayMoveInOut: CompanionActionSchema<{
+  replayMoveInOut: ActionSchema<{
     functionID: 'ReplayMoveSelectedInPoint' | 'ReplayMoveSelectedOutPoint'
     value: string
   }>
-  replayUpdateInOut: CompanionActionSchema<{
+  replayUpdateInOut: ActionSchema<{
     functionID: 'ReplayUpdateSelectedInPoint' | 'ReplayUpdateSelectedOutPoint'
   }>
-  replaySelectEvents: CompanionActionSchema<{
+  replaySelectEvents: ActionSchema<{
     functionID:
       | 'ReplaySelectEvents1'
       | 'ReplaySelectEvents2'
@@ -80,154 +80,154 @@ export type ReplayActionsSchema = {
 
     channel: ReplayChannel
   }>
-  replayChangeDirection: CompanionActionSchema<{
+  replayChangeDirection: ActionSchema<{
     channel: ReplayChannel
   }>
-  replayChangeSpeed: CompanionActionSchema<{
+  replayChangeSpeed: ActionSchema<{
     channel: ReplayChannel
     value: number
   }>
-  replaySetAudioSource: CompanionActionSchema<{
+  replaySetAudioSource: ActionSchema<{
     value: string
   }>
-  replaySetSpeed: CompanionActionSchema<{
+  replaySetSpeed: ActionSchema<{
     channel: ReplayChannel
     value: string
     max: string
   }>
-  replayUpdateSelectedSpeed: CompanionActionSchema<{
+  replayUpdateSelectedSpeed: ActionSchema<{
     functionID: 'ReplayUpdateSelectedSpeed' | 'ReplayUpdateSelectedSpeedDefault' | 'ReplayUpdateSelectedSpeedFromValue'
     channel: ReplayChannel
     value: number
   }>
-  replayMoveEvent: CompanionActionSchema<{
+  replayMoveEvent: ActionSchema<{
     functionID: 'ReplayMoveLastEvent' | 'ReplayMoveSelectedEvent'
     value: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19
   }>
-  replayMoveEventUpDown: CompanionActionSchema<{
+  replayMoveEventUpDown: ActionSchema<{
     functionID: 'ReplayMoveSelectedEventUp' | 'ReplayMoveSelectedEventDown'
   }>
-  replaySelectEvent: CompanionActionSchema<{
+  replaySelectEvent: ActionSchema<{
     functionID: 'ReplaySelectFirstEvent' | 'ReplaySelectLastEvent' | 'ReplaySelectNextEvent' | 'ReplaySelectPreviousEvent'
     channel: ReplayChannel
   }>
-  replayScrollSelectedEvent: CompanionActionSchema<{
+  replayScrollSelectedEvent: ActionSchema<{
     value: number
   }>
-  replayCopyEvent: CompanionActionSchema<{
+  replayCopyEvent: ActionSchema<{
     functionID: 'ReplayCopyLastEvent' | 'ReplayCopySelectedEvent'
     value: number
   }>
-  replayDeleteEvent: CompanionActionSchema<{
+  replayDeleteEvent: ActionSchema<{
     functionID: 'ReplayDeleteLastEvent' | 'ReplayDeleteSelectedEvent'
     value: number
   }>
-  replayDuplicateEvent: CompanionActionSchema<{
+  replayDuplicateEvent: ActionSchema<{
     functionID: 'ReplayDuplicateLastEvent' | 'ReplayDuplicateSelectedEvent'
     value: number
   }>
   replayExportLastEvent: EmptyOptions
-  replayFastForwardBackward: CompanionActionSchema<{
+  replayFastForwardBackward: ActionSchema<{
     functionID: 'ReplayFastForward' | 'ReplayFastBackward'
     channel: ReplayChannel
     value: number
   }>
-  replayJumpFrames: CompanionActionSchema<{
+  replayJumpFrames: ActionSchema<{
     channel: ReplayChannel
     value: string
   }>
-  replayJumpFramesFast: CompanionActionSchema<{
+  replayJumpFramesFast: ActionSchema<{
     functionID: 'ReplayJumpFramesFastOn' | 'ReplayJumpFramesFastOff'
   }>
-  replayJumpToNow: CompanionActionSchema<{
+  replayJumpToNow: ActionSchema<{
     channel: ReplayChannel
   }>
-  replayJumpToInOut: CompanionActionSchema<{
+  replayJumpToInOut: ActionSchema<{
     functionID: 'ReplayJumpToSelectedInPoint' | 'ReplayJumpToSelectedOutPoint'
   }>
-  replayRecording: CompanionActionSchema<{
+  replayRecording: ActionSchema<{
     functionID: 'ReplayStartRecording' | 'ReplayStopRecording' | 'ReplayStartStopRecording'
   }>
-  replayLive: CompanionActionSchema<{
+  replayLive: ActionSchema<{
     functionID: 'ReplayLive' | 'ReplayRecorded'
   }>
   replayLiveToggle: EmptyOptions
-  replayPlay: CompanionActionSchema<{
+  replayPlay: ActionSchema<{
     channel: ReplayChannel
   }>
-  replayPlayNextPrevious: CompanionActionSchema<{
+  replayPlayNextPrevious: ActionSchema<{
     functionID: 'ReplayPlayNext' | 'ReplayPlayPrevious'
     channel: ReplayChannel
   }>
-  replayPause: CompanionActionSchema<{
+  replayPause: ActionSchema<{
     channel: ReplayChannel
   }>
-  replayPlayPause: CompanionActionSchema<{
+  replayPlayPause: ActionSchema<{
     channel: ReplayChannel
   }>
-  replayPlayForwardBackward: CompanionActionSchema<{
+  replayPlayForwardBackward: ActionSchema<{
     functionID: 'Toggle' | 'ReplayPlayForward' | 'ReplayPlayBackward'
     channel: ReplayChannel
   }>
-  replaySetDirection: CompanionActionSchema<{
+  replaySetDirection: ActionSchema<{
     functionID: ''
     channel: ReplayChannel
   }>
-  replayPlayEvent: CompanionActionSchema<{
+  replayPlayEvent: ActionSchema<{
     channel: ReplayChannel
     value: string
   }>
-  replayPlayEventToOutput: CompanionActionSchema<{
+  replayPlayEventToOutput: ActionSchema<{
     channel: ReplayChannel
     value: string
   }>
-  replayPlaySelectedEvent: CompanionActionSchema<{
+  replayPlaySelectedEvent: ActionSchema<{
     channel: ReplayChannel
   }>
-  replayPlaySelectedEventToOutput: CompanionActionSchema<{
+  replayPlaySelectedEventToOutput: ActionSchema<{
     channel: ReplayChannel
   }>
-  replayPlayEventsByID: CompanionActionSchema<{
-    channel: ReplayChannel
-    value: string
-  }>
-  replayPlayEventsByIDToOutput: CompanionActionSchema<{
+  replayPlayEventsByID: ActionSchema<{
     channel: ReplayChannel
     value: string
   }>
-  replayPlayLastEvent: CompanionActionSchema<{
+  replayPlayEventsByIDToOutput: ActionSchema<{
+    channel: ReplayChannel
+    value: string
+  }>
+  replayPlayLastEvent: ActionSchema<{
     channel: ReplayChannel
   }>
-  replayPlayLastEventToOutput: CompanionActionSchema<{
+  replayPlayLastEventToOutput: ActionSchema<{
     channel: ReplayChannel
   }>
-  replayPlayAllEvents: CompanionActionSchema<{
+  replayPlayAllEvents: ActionSchema<{
     channel: ReplayChannel
   }>
-  replayPlayAllEventsToOutput: CompanionActionSchema<{
+  replayPlayAllEventsToOutput: ActionSchema<{
     channel: ReplayChannel
   }>
   replayStopEvents: EmptyOptions
-  replayToggleLastEventCamera: CompanionActionSchema<{
+  replayToggleLastEventCamera: ActionSchema<{
     camera: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
   }>
-  replayToggleCamera: CompanionActionSchema<{
+  replayToggleCamera: ActionSchema<{
     camera: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
   }>
   replayShowHide: EmptyOptions
-  replayQuadMode: CompanionActionSchema<{
+  replayQuadMode: ActionSchema<{
     functionID: 'ReplayToggleQuadMode' | 'ReplayQuadModeOn' | 'ReplayQuadModeOff'
   }>
-  replayEventText: CompanionActionSchema<{
+  replayEventText: ActionSchema<{
     type: 'Set' | 'Append'
     target: 'Last' | 'Selected'
     camera: string
     text: string
   }>
-  replayEventTextClear: CompanionActionSchema<{
+  replayEventTextClear: ActionSchema<{
     target: 'Last' | 'Selected'
   }>
-  replaySetTimecode: CompanionActionSchema<{
+  replaySetTimecode: ActionSchema<{
     functionID:
       'ReplaySetTimecode' | 'ReplaySetChannelAToBTimecode' | 'ReplaySetChannelAToBTimecodeAndCamera' | 'ReplaySetChannelBToATimecode' | 'ReplaySetChannelBToATimecodeAndCamera'
     channel: ReplayChannel

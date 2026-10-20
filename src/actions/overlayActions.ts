@@ -1,9 +1,10 @@
-import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { ActionSchema } from '../utils.js'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import type VMixInstance from '../index.js'
 
 export type OverlayActionsSchema = {
-  overlayFunctions: CompanionActionSchema<{
+  overlayFunctions: ActionSchema<{
     type: 'OverlayInput' | 'PreviewOverlayInput' | 'In' | 'Last' | 'Out' | 'Off' | 'Zoom' | 'OverlayInputAllOff'
     input: string
     overlay: string

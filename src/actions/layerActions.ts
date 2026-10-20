@@ -1,41 +1,41 @@
-import { type CompanionActionDefinitions, type CompanionActionSchema, createModuleLogger } from '@companion-module/base'
+import { type CompanionActionDefinitions, createModuleLogger } from '@companion-module/base'
 import type { FunctionIDs } from '@distdev/vmix-utils'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
-import { type EmptyOptions, type MixOptionEntry, options, parseMix, valueMinMax } from '../utils.js'
+import { type ActionSchema, type EmptyOptions, type MixOptionEntry, options, parseMix, valueMinMax } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type LayerActionsSchema = {
-  multiViewOverlay: CompanionActionSchema<{
+  multiViewOverlay: ActionSchema<{
     functionID: 'MultiViewOverlay' | 'MultiViewOverlayOff' | 'MultiViewOverlayOn'
     input: string
     value: string
   }>
-  setMultiViewOverlay: CompanionActionSchema<{
+  setMultiViewOverlay: ActionSchema<{
     input: string
     layer: number
     layerInput: string
   }>
-  setMultiViewOverlayOnPreview: CompanionActionSchema<{
+  setMultiViewOverlayOnPreview: ActionSchema<{
     layer: number
     layerInput: string
     mix: MixOptionEntry
   }>
-  setMultiViewOverlayOnProgram: CompanionActionSchema<{
+  setMultiViewOverlayOnProgram: ActionSchema<{
     layer: number
     layerInput: string
     mix: MixOptionEntry
   }>
-  setMultiViewOverlayDestinationInput: CompanionActionSchema<{
+  setMultiViewOverlayDestinationInput: ActionSchema<{
     destinationInput: string
   }>
-  setMultiViewOverlayDestinationLayer: CompanionActionSchema<{
+  setMultiViewOverlayDestinationLayer: ActionSchema<{
     destinationLayer: string
   }>
-  setMultiViewOverlaySourceInput: CompanionActionSchema<{
+  setMultiViewOverlaySourceInput: ActionSchema<{
     sourceIndex: string
   }>
   clearMultiViewOverlaySelection: EmptyOptions
-  setLayerPosition: CompanionActionSchema<{
+  setLayerPosition: ActionSchema<{
     input: string
     layer: string
     setting: 'Crop' | 'CropX1' | 'CropX2' | 'CropY1' | 'CropY2' | 'PanX' | 'PanY' | 'X' | 'Y' | 'Height' | 'Width' | 'Rectangle' | 'Zoom'
@@ -48,18 +48,18 @@ export type LayerActionsSchema = {
     rectangle: string
     zoom: string
   }>
-  moveLayer: CompanionActionSchema<{
+  moveLayer: ActionSchema<{
     input: string
     from: number
     to: number
   }>
-  swapLayerAnimated: CompanionActionSchema<{
+  swapLayerAnimated: ActionSchema<{
     input: string
     from: number
     to: number
     duration: number
   }>
-  setLayerAnimated: CompanionActionSchema<{
+  setLayerAnimated: ActionSchema<{
     input: string
     layer: number
     layerInput: string

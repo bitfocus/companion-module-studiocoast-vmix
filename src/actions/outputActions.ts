@@ -1,47 +1,47 @@
-import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import type { CompanionActionDefinitions } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import type VMixInstance from '../index.js'
-import { type MixOptionEntry, type EmptyOptions, options, parseMix } from '../utils.js'
+import { type ActionSchema, type MixOptionEntry, type EmptyOptions, options, parseMix } from '../utils.js'
 
 export type OutputActionsSchema = {
-  outputSet: CompanionActionSchema<{
+  outputSet: ActionSchema<{
     functionID: 'SetOutput2' | 'SetOutput3' | 'SetOutput4' | 'SetOutputExternal2' | 'SetOutputFullscreen' | 'SetOutputFullscreen2'
     value: 'Output' | 'Preview' | 'MultiView' | 'MultiView2' | 'Replay' | 'Mix' | 'Input'
     input: string
     mix: MixOptionEntry
   }>
-  multicorderFunctions: CompanionActionSchema<{
+  multicorderFunctions: ActionSchema<{
     functionID: 'StartStopMultiCorder' | 'StartMultiCorder' | 'StopMultiCorder'
   }>
-  recordingFunctions: CompanionActionSchema<{
+  recordingFunctions: ActionSchema<{
     functionID: 'StartStopRecording' | 'StartRecording' | 'StopRecording'
   }>
-  streamingFunctions: CompanionActionSchema<{
+  streamingFunctions: ActionSchema<{
     functionID: 'StartStopStreaming' | 'StartStreaming' | 'StopStreaming'
     value: '' | 1 | 2 | 3 | 4 | 5
   }>
-  externalFunctions: CompanionActionSchema<{
+  externalFunctions: ActionSchema<{
     functionID: 'StartStopExternal' | 'StartExternal' | 'StopExternal'
   }>
-  fullscreenFunctions: CompanionActionSchema<{
+  fullscreenFunctions: ActionSchema<{
     functionID: 'Fullscreen' | 'FullscreenOff' | 'FullscreenOn'
   }>
-  srtFunctions: CompanionActionSchema<{
+  srtFunctions: ActionSchema<{
     functionID: 'StartStopSRTOutput' | 'StartSRTOutput' | 'StopSRTOutput'
   }>
   fadeToBlack: EmptyOptions
-  streamingSettings: CompanionActionSchema<{
+  streamingSettings: ActionSchema<{
     functionID: 'StreamingSetKey' | 'StreamingSetPassword' | 'StreamingSetURL' | 'StreamingSetUsername'
     url: string
     key: string
     username: string
     password: string
   }>
-  snapshot: CompanionActionSchema<{
+  snapshot: ActionSchema<{
     input: string
     value: string
   }>
-  writeDurationToRecordingLog: CompanionActionSchema<{
+  writeDurationToRecordingLog: ActionSchema<{
     value: string
   }>
 }

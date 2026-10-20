@@ -1,26 +1,26 @@
-import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import type { CompanionActionDefinitions } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import type VMixInstance from '../index.js'
-import type { EmptyOptions } from 'src/utils.js'
+import type { ActionSchema, EmptyOptions } from '../utils.js'
 
 export type GeneralActionsSchema = {
-  keyPress: CompanionActionSchema<{
+  keyPress: ActionSchema<{
     value: string
   }>
-  sendKeys: CompanionActionSchema<{
+  sendKeys: ActionSchema<{
     value: string
   }>
-  tbar: CompanionActionSchema<{
+  tbar: ActionSchema<{
     value: string
   }>
-  dynamic: CompanionActionSchema<{
+  dynamic: ActionSchema<{
     type: 'Input' | 'Value'
     number: '1' | '2' | '3' | '4'
     value: string
   }>
   activatorRefresh: EmptyOptions
   callManagerShowHide: EmptyOptions
-  vMixConnection: CompanionActionSchema<{
+  vMixConnection: ActionSchema<{
     type: 'Connect' | 'Disconnect' | 'Reconnect'
   }>
 }

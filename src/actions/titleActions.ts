@@ -1,71 +1,71 @@
-import { type CompanionActionDefinitions, type CompanionActionSchema, createModuleLogger } from '@companion-module/base'
+import { type CompanionActionDefinitions, createModuleLogger } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
-import { TITLEANIMATIONPAGE, options } from '../utils.js'
+import { type ActionSchema, TITLEANIMATIONPAGE, options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type TitleActionsSchema = {
-  controlCountdown: CompanionActionSchema<{
+  controlCountdown: ActionSchema<{
     functionID: 'StartCountdown' | 'StopCountdown' | 'PauseCountdown' | 'SuspendCountdown'
     input: string
     selectedIndex: string
   }>
-  setCountdown: CompanionActionSchema<{
+  setCountdown: ActionSchema<{
     value: string
     input: string
     selectedIndex: string
   }>
-  changeCountdown: CompanionActionSchema<{
+  changeCountdown: ActionSchema<{
     value: string
     input: string
     selectedIndex: string
   }>
-  adjustCountdown: CompanionActionSchema<{
+  adjustCountdown: ActionSchema<{
     value: string
     input: string
     selectedIndex: string
   }>
-  setText: CompanionActionSchema<{
+  setText: ActionSchema<{
     input: string
     selectedIndex: string
     adjustment: 'Set' | 'Increase' | 'Decrease'
     value: string
     encode: boolean
   }>
-  setTextColor: CompanionActionSchema<{
+  setTextColor: ActionSchema<{
     input: string
     selectedIndex: string
     value: string
   }>
-  setTextVisible: CompanionActionSchema<{
+  setTextVisible: ActionSchema<{
     input: string
     selectedIndex: string
     adjustment: 'Toggle' | 'On' | 'Off'
   }>
-  setColor: CompanionActionSchema<{
+  setColor: ActionSchema<{
     input: string
     selectedIndex: string
     value: string
   }>
-  setImage: CompanionActionSchema<{
+  setImage: ActionSchema<{
     input: string
     selectedIndex: string
     value: string
     encode: boolean
   }>
-  setImageVisible: CompanionActionSchema<{
+  setImageVisible: ActionSchema<{
     input: string
     selectedIndex: string
     adjustment: 'Toggle' | 'On' | 'Off'
   }>
-  selectTitlePreset: CompanionActionSchema<{
+  selectTitlePreset: ActionSchema<{
     input: string
     value: string
   }>
-  titlePreset: CompanionActionSchema<{
+  titlePreset: ActionSchema<{
     input: string
     functionID: 'NextTitlePreset' | 'PreviousTitlePreset'
   }>
-  titleBeginAnimation: CompanionActionSchema<{
+  titleBeginAnimation: ActionSchema<{
     input: string
     value:
       | 'TransitionIn'
@@ -84,11 +84,11 @@ export type TitleActionsSchema = {
       | 'DataChangeIn'
       | 'DataChangeOut'
   }>
-  titleRender: CompanionActionSchema<{
+  titleRender: ActionSchema<{
     input: string
     functionID: 'PauseRender' | 'ResumeRender'
   }>
-  setTickerSpeed: CompanionActionSchema<{
+  setTickerSpeed: ActionSchema<{
     input: string
     selectedIndex: string
     value: number

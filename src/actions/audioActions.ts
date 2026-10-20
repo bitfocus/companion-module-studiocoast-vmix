@@ -1,101 +1,101 @@
-import { type CompanionActionDefinitions, type CompanionActionSchema, createModuleLogger } from '@companion-module/base'
+import { type CompanionActionDefinitions, createModuleLogger } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
-import { type AudioBusOption, type AudioBusMasterOption, type AudioBusMasterHeadphonesOption, type EmptyOptions, options, volumeToLinear } from '../utils.js'
+import { type ActionSchema, type AudioBusOption, type AudioBusMasterOption, type AudioBusMasterHeadphonesOption, type EmptyOptions, options, volumeToLinear } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type AudioActionsSchema = {
-  audioBus: CompanionActionSchema<{
+  audioBus: ActionSchema<{
     input: string
     value: AudioBusMasterOption
     functionID: 'AudioBus' | 'AudioBusOn' | 'AudioBusOff'
   }>
-  busXSendToMaster: CompanionActionSchema<{
+  busXSendToMaster: ActionSchema<{
     value: AudioBusOption
     functionID: 'BusXSendToMaster' | 'BusXSendToMasterOn' | 'BusXSendToMasterOff'
   }>
-  busXAudio: CompanionActionSchema<{
+  busXAudio: ActionSchema<{
     value: AudioBusMasterOption
     functionID: 'BusXAudio' | 'BusXAudioOn' | 'BusXAudioOff'
   }>
-  busXAudioPlugin: CompanionActionSchema<{
+  busXAudioPlugin: ActionSchema<{
     value: AudioBusMasterOption
     functionID: 'BusXAudioPluginOnOff' | 'BusXAudioPluginOn' | 'BusXAudioPluginOff' | 'BusXAudioPluginShow'
     plugin: number
   }>
-  audio: CompanionActionSchema<{
+  audio: ActionSchema<{
     input: string
     functionID: 'Audio' | 'AudioOn' | 'AudioOff'
   }>
-  audioAuto: CompanionActionSchema<{
+  audioAuto: ActionSchema<{
     input: string
     functionID: 'AudioAuto' | 'AudioAutoOn' | 'AudioAutoOff'
   }>
-  busXSolo: CompanionActionSchema<{
+  busXSolo: ActionSchema<{
     value: AudioBusOption
     functionID: 'BusXSolo' | 'BusXSoloOn' | 'BusXSoloOff'
   }>
-  solo: CompanionActionSchema<{
+  solo: ActionSchema<{
     input: string
     functionID: 'Solo' | 'SoloOn' | 'SoloOff'
   }>
-  setInputVolume: CompanionActionSchema<{
+  setInputVolume: ActionSchema<{
     input: string
     adjustment: 'Set' | 'Increase' | 'Decrease'
     amount: string
   }>
-  setBusVolumeFade: CompanionActionSchema<{
+  setBusVolumeFade: ActionSchema<{
     value: AudioBusMasterOption
     fadeVol: string
     fadeTime: string
   }>
-  setVolumeFade: CompanionActionSchema<{
+  setVolumeFade: ActionSchema<{
     fadeMin: string
     fadeTime: string
     input: string
   }>
-  setBusVolume: CompanionActionSchema<{
+  setBusVolume: ActionSchema<{
     value: AudioBusMasterHeadphonesOption
     adjustment: 'Set' | 'Increase' | 'Decrease'
     amount: string
   }>
-  audioPlugin: CompanionActionSchema<{
+  audioPlugin: ActionSchema<{
     input: string
     value: number
     functionID: 'AudioPluginOnOff' | 'AudioPluginOn' | 'AudioPluginOff' | 'AudioPluginShow'
   }>
-  audioChannelMatrixApplyPreset: CompanionActionSchema<{
+  audioChannelMatrixApplyPreset: ActionSchema<{
     input: string
     value: string
   }>
-  setVolumeBusMixer: CompanionActionSchema<{
+  setVolumeBusMixer: ActionSchema<{
     input: string
     value: AudioBusMasterOption
     amount: number
   }>
-  setVolumeChannel: CompanionActionSchema<{
+  setVolumeChannel: ActionSchema<{
     input: string
     channel: string
     adjustment: 'Set' | 'Increase' | 'Decrease'
     amount: string
   }>
-  setVolumeChannelMixer: CompanionActionSchema<{
+  setVolumeChannelMixer: ActionSchema<{
     input: string
     channel: string
     adjustment: 'Set' | 'Increase' | 'Decrease'
     amount: string
   }>
-  setBalance: CompanionActionSchema<{
+  setBalance: ActionSchema<{
     input: string
     adjustment: 'Set' | 'Increase' | 'Decrease'
     amount: number
   }>
-  setGain: CompanionActionSchema<{
+  setGain: ActionSchema<{
     input: string
     channel: 'Both' | '1' | '2'
     adjustment: 'Set' | 'Increase' | 'Decrease'
     amount: number
   }>
-  soloPFL: CompanionActionSchema<{
+  soloPFL: ActionSchema<{
     input: string
     functionID: 'SoloPFL' | 'SoloPFLOn' | 'SoloPFLOff'
   }>

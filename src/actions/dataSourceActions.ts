@@ -1,22 +1,23 @@
-import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { ActionSchema } from '../utils.js'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
 import type VMixInstance from '../index.js'
 
 export type DataSourceActionsSchema = {
-  dataSourceAutoNext: CompanionActionSchema<{
+  dataSourceAutoNext: ActionSchema<{
     functionID: 'DataSourceAutoNextOn' | 'DataSourceAutoNextOff' | 'DataSourceAutoNextOnOff'
     value: string
   }>
-  dataSourceNextRow: CompanionActionSchema<{
+  dataSourceNextRow: ActionSchema<{
     value: string
   }>
-  dataSourcePreviousRow: CompanionActionSchema<{
+  dataSourcePreviousRow: ActionSchema<{
     value: string
   }>
-  dataSourceSelectRow: CompanionActionSchema<{
+  dataSourceSelectRow: ActionSchema<{
     value: string
   }>
-  dataSourcePlayPause: CompanionActionSchema<{
+  dataSourcePlayPause: ActionSchema<{
     functionID: 'DataSourcePlayPause' | 'DataSourcePlay' | 'DataSourcePause'
     value: string
   }>

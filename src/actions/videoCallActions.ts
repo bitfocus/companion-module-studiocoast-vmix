@@ -1,18 +1,18 @@
-import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import type { CompanionActionDefinitions } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
-import { options } from '../utils.js'
+import { type ActionSchema, options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type VideoCallActionsSchema = {
-  videoCallAudioSource: CompanionActionSchema<{
+  videoCallAudioSource: ActionSchema<{
     input: string
     value: 'Master' | 'Headphones' | 'BusA' | 'BusB' | 'BusC' | 'BusD' | 'BusE' | 'BusF' | 'BusG'
   }>
-  videoCallVideoSource: CompanionActionSchema<{
+  videoCallVideoSource: ActionSchema<{
     input: string
     value: 'Output1' | 'Output2' | 'Output3' | 'Output4' | 'None'
   }>
-  videoCallConnect: CompanionActionSchema<{
+  videoCallConnect: ActionSchema<{
     functionID: 'VideoCallConnect' | 'VideoCallReconnect'
     input: string
     name: string

@@ -33,6 +33,7 @@ export const getTallyFeedbacks = (instance: VMixInstance): CompanionFeedbackDefi
   return {
     inputPreview: {
       type: 'advanced',
+      affectedProperties: ['color', 'bgcolor', 'imageBuffer'],
       name: 'Tally - Preview state',
       description: 'Indicates if an input is in Preview (or is a layer of an input that is if layer tally is selected)',
       options: [options.input, options.mixSelect, options.foregroundColor, options.backgroundColorPreview, options.layerTallyIndicator],
@@ -99,6 +100,7 @@ export const getTallyFeedbacks = (instance: VMixInstance): CompanionFeedbackDefi
 
     inputLive: {
       type: 'advanced',
+      affectedProperties: ['color', 'bgcolor', 'imageBuffer'],
       name: 'Tally - Program state',
       description: 'Indicates if an input is in Program (or is a layer of an input that is if layer tally is selected)',
       options: [options.input, options.mixSelect, options.foregroundColor, options.backgroundColorProgram, options.layerTallyIndicator],
@@ -165,6 +167,7 @@ export const getTallyFeedbacks = (instance: VMixInstance): CompanionFeedbackDefi
 
     overlayStatus: {
       type: 'advanced',
+      affectedProperties: ['color', 'bgcolor'],
       name: 'Tally - Overlay state',
       description: 'Indicates if an input (or any if left blank) is previewed, or live, as an overlay',
       options: [

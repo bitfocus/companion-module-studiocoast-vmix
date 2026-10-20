@@ -1,35 +1,35 @@
-import { type CompanionActionDefinitions, type CompanionActionSchema, createModuleLogger } from '@companion-module/base'
+import { type CompanionActionDefinitions, createModuleLogger } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
-import { type MixOptionEntry, options, TRANSITIONS } from '../utils.js'
+import { type ActionSchema, type MixOptionEntry, options, TRANSITIONS } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type TransitionActionsSchema = {
-  programCut: CompanionActionSchema<{
+  programCut: ActionSchema<{
     input: string
     mix: MixOptionEntry
   }>
-  transitionMix: CompanionActionSchema<{
+  transitionMix: ActionSchema<{
     mix: MixOptionEntry
     functionID: (typeof TRANSITIONS)[number]
     duration: string
     input?: string
   }>
-  transition: CompanionActionSchema<{
+  transition: ActionSchema<{
     functionID: `Transition${number}` | `Stinger${number}`
     mix: MixOptionEntry
   }>
-  setTransitionEffect: CompanionActionSchema<{
+  setTransitionEffect: ActionSchema<{
     functionID: 'SetTransitionEffect1' | 'SetTransitionEffect2' | 'SetTransitionEffect3' | 'SetTransitionEffect4'
     value: (typeof TRANSITIONS)[number]
   }>
-  setTransitionDuration: CompanionActionSchema<{
+  setTransitionDuration: ActionSchema<{
     functionID: 'SetTransitionDuration1' | 'SetTransitionDuration2' | 'SetTransitionDuration3' | 'SetTransitionDuration4'
     value: number
   }>
-  quickPlay: CompanionActionSchema<{
+  quickPlay: ActionSchema<{
     input: string
   }>
-  setStingerGTInput: CompanionActionSchema<{
+  setStingerGTInput: ActionSchema<{
     input: string
     stinger: number
   }>

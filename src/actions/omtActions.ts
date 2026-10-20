@@ -1,14 +1,14 @@
-import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import type { CompanionActionDefinitions } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
-import { options } from '../utils.js'
+import { type ActionSchema, options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type OMTActionsSchema = {
-  omtPreview: CompanionActionSchema<{
+  omtPreview: ActionSchema<{
     input: string
     functionID: 'OMTPreviewOn' | 'OMTPreviewOff'
   }>
-  omtSelectSource: CompanionActionSchema<{
+  omtSelectSource: ActionSchema<{
     input: string
     value: string
   }>

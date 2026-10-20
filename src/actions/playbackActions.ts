@@ -1,21 +1,21 @@
-import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import type { CompanionActionDefinitions } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
-import { options } from '../utils.js'
+import { type ActionSchema, options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type PlaybackActionsSchema = {
-  videoActions: CompanionActionSchema<{
+  videoActions: ActionSchema<{
     input: string
     inputType: boolean
     functionID: 'Play' | 'Pause' | 'PlayPause' | 'Restart' | 'LoopOn' | 'LoopOff' | 'Loop'
   }>
-  videoPlayhead: CompanionActionSchema<{
+  videoPlayhead: ActionSchema<{
     input: string
     inputType: boolean
     adjustment: 'Set' | 'Increase' | 'Decrease'
     value: number
   }>
-  videoMark: CompanionActionSchema<{
+  videoMark: ActionSchema<{
     input: string
     inputType: boolean
     functionID: 'MarkIn' | 'MarkOut' | 'MarkReset' | 'MarkResetIn' | 'MarkResetOut'

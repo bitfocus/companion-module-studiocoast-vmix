@@ -1,21 +1,21 @@
-import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import type { CompanionActionDefinitions } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
-import type { EmptyOptions } from '../utils.js'
+import type { ActionSchema, EmptyOptions } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type ScriptingActionsSchema = {
-  command: CompanionActionSchema<{
+  command: ActionSchema<{
     command: string
     encode: boolean
   }>
-  scriptStart: CompanionActionSchema<{
+  scriptStart: ActionSchema<{
     value: string
   }>
-  scriptStop: CompanionActionSchema<{
+  scriptStop: ActionSchema<{
     value: string
   }>
   scriptStopAll: EmptyOptions
-  scriptDynamic: CompanionActionSchema<{
+  scriptDynamic: ActionSchema<{
     functionID: 'ScriptStartDynamic' | 'ScriptStopDynamic'
     value: string
   }>

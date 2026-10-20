@@ -1,12 +1,13 @@
-import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import type { CompanionActionDefinitions } from '@companion-module/base'
+import type { ActionSchema } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type ConfigActionsSchema = {
-  configSetHost: CompanionActionSchema<{
+  configSetHost: ActionSchema<{
     value: string
     reconnect: boolean
   }>
-  configSetPort: CompanionActionSchema<{
+  configSetPort: ActionSchema<{
     value: number
     reconnect: boolean
   }>

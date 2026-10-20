@@ -34,7 +34,7 @@
 		"node": "^22.22"
 	},
 	"dependencies": {
-		"@companion-module/base": "~2.0.4",
+		"@companion-module/base": "~2.1.3",
 		"@distdev/vmix-utils": "^1.2.5",
 		"companion-module-utils": "^0.4.0",
 		"lodash": "~4.18.1",

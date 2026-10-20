@@ -1,10 +1,10 @@
-import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import type { CompanionActionDefinitions } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
-import { options } from '../utils.js'
+import { type ActionSchema, options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type PTZActionsSchema = {
-  ptzMove: CompanionActionSchema<{
+  ptzMove: ActionSchema<{
     input: string
     functionID:
       | 'PTZHome'
@@ -21,12 +21,12 @@ export type PTZActionsSchema = {
       | 'PTZMoveToVirtualInputPositionByIndex'
     value: string
   }>
-  ptzFocusZoom: CompanionActionSchema<{
+  ptzFocusZoom: ActionSchema<{
     input: string
     functionID: 'PTZFocusAuto' | 'PTZFocusFar' | 'PTZFocusManual' | 'PTZFocusNear' | 'PTZFocusStop' | 'PTZZoomIn' | 'PTZZoomOut' | 'PTZZoomStop'
     value: string
   }>
-  ptzVirtualInput: CompanionActionSchema<{
+  ptzVirtualInput: ActionSchema<{
     input: string
     functionID: 'PTZCreateVirtualInput' | 'PTZUpdateVirtualInput'
   }>

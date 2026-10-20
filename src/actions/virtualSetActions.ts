@@ -1,10 +1,10 @@
-import type { CompanionActionDefinitions, CompanionActionSchema } from '@companion-module/base'
+import type { CompanionActionDefinitions } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
-import { options } from '../utils.js'
+import { type ActionSchema, options } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type VirtualSetActionsSchema = {
-  virtualSet: CompanionActionSchema<{
+  virtualSet: ActionSchema<{
     input: string
     value: '1' | '2' | '3' | '4'
   }>

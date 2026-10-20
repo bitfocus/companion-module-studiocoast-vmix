@@ -192,6 +192,7 @@ export const getAudioFeedbacks = (instance: VMixInstance): CompanionFeedbackDefi
 
     liveBusVolume: {
       type: 'advanced',
+      affectedProperties: ['color', 'bgcolor'],
       name: 'Audio - Bus live dB value',
       description: 'Indicate what the live dB value on a bus is',
       options: [
@@ -286,6 +287,7 @@ export const getAudioFeedbacks = (instance: VMixInstance): CompanionFeedbackDefi
 
     liveInputVolume: {
       type: 'advanced',
+      affectedProperties: ['color', 'bgcolor'],
       name: 'Audio - Input live dB value',
       description: 'Indicate what the live dB value on an input is',
       options: [
@@ -461,6 +463,7 @@ export const getAudioFeedbacks = (instance: VMixInstance): CompanionFeedbackDefi
 
     busVolumeMeter: {
       type: 'advanced',
+      affectedProperties: ['imageBuffer'],
       name: 'Audio - Bus Volume Meters',
       description: 'Volume meters for a Bus',
       options: [options.audioBusMaster],
@@ -493,6 +496,7 @@ export const getAudioFeedbacks = (instance: VMixInstance): CompanionFeedbackDefi
 
     inputVolumeMeter: {
       type: 'advanced',
+      affectedProperties: ['imageBuffer'],
       name: 'Audio - Input Volume Meters',
       description: 'Volume meters for an input',
       options: [options.input],

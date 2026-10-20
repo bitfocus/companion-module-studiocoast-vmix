@@ -51,6 +51,7 @@ export const getPlaybackFeedbacks = (instance: VMixInstance): CompanionFeedbackD
 
     videoTimer: {
       type: 'advanced',
+      affectedProperties: ['color'],
       name: 'Playback - Video Timer',
       description: 'Indicate time remaining on video input',
       options: [

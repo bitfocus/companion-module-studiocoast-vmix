@@ -1,47 +1,47 @@
-import { type CompanionActionDefinitions, type CompanionActionSchema, createModuleLogger } from '@companion-module/base'
+import { type CompanionActionDefinitions, createModuleLogger } from '@companion-module/base'
 import type { ActionFunctionsList, SendBasicCommand } from './actions.js'
-import { type EmptyOptions, type MixOptionEntry, options, TRANSITIONS, valueMinMax } from '../utils.js'
+import { type ActionSchema, type EmptyOptions, type MixOptionEntry, options, TRANSITIONS, valueMinMax } from '../utils.js'
 import type VMixInstance from '../index.js'
 
 export type InputActionsSchema = {
-  addInput: CompanionActionSchema<{
+  addInput: ActionSchema<{
     value: string
   }>
-  removeInput: CompanionActionSchema<{
+  removeInput: ActionSchema<{
     input: string
   }>
-  setInputName: CompanionActionSchema<{
+  setInputName: ActionSchema<{
     input: string
     value: string
   }>
-  previewInput: CompanionActionSchema<{
+  previewInput: ActionSchema<{
     input: string
     mix: MixOptionEntry
   }>
   previewInputNext: EmptyOptions
   previewInputPrevious: EmptyOptions
-  go: CompanionActionSchema<{
+  go: ActionSchema<{
     input: string
   }>
-  resetInput: CompanionActionSchema<{
+  resetInput: ActionSchema<{
     input: string
   }>
   undo: EmptyOptions
-  inputEffect: CompanionActionSchema<{
+  inputEffect: ActionSchema<{
     input: string
     effect: '1' | '2' | '3' | '4'
     state: '' | 'On' | 'Off'
   }>
-  inputEffectStrength: CompanionActionSchema<{
+  inputEffectStrength: ActionSchema<{
     input: string
     effect: '1' | '2' | '3' | '4'
     strength: string
   }>
-  setAlpha: CompanionActionSchema<{
+  setAlpha: ActionSchema<{
     input: string
     value: number
   }>
-  setCC: CompanionActionSchema<{
+  setCC: ActionSchema<{
     input: string
     setting:
       | 'ColourCorrectionAuto'
@@ -67,7 +67,7 @@ export type InputActionsSchema = {
     gainValue: string
     otherValue: string
   }>
-  inputPosition: CompanionActionSchema<{
+  inputPosition: ActionSchema<{
     input: string
     setting: 'SetZoom' | 'SetCrop' | 'SetCropX1' | 'SetCropX2' | 'SetCropY1' | 'SetCropY2' | 'SetPanX' | 'SetPanY'
     adjustment: 'Set' | 'Increase' | 'Decrease'
@@ -76,38 +76,38 @@ export type InputActionsSchema = {
     cropValue2: string
     panValue: string
   }>
-  inputSharpen: CompanionActionSchema<{
+  inputSharpen: ActionSchema<{
     input: string
     functionID: 'SharpenOn' | 'SharpenOff'
   }>
-  inputFrameDelay: CompanionActionSchema<{
+  inputFrameDelay: ActionSchema<{
     input: string
     value: string
   }>
-  inputAuto: CompanionActionSchema<{
+  inputAuto: ActionSchema<{
     input: string
     functionID: 'AutoPlayOn' | 'AutoPlayOff' | 'AutoPauseOn' | 'AutoPauseOff' | 'AutoRestartOn' | 'AutoRestartOff'
   }>
-  createVirtualInput: CompanionActionSchema<{
+  createVirtualInput: ActionSchema<{
     input: string
   }>
-  deinterlace: CompanionActionSchema<{
+  deinterlace: ActionSchema<{
     input: string
     functionID: 'DeinterlaceOn' | 'DeinterlaceOff'
   }>
-  inputPreview: CompanionActionSchema<{
+  inputPreview: ActionSchema<{
     input: string
     functionID: 'InputPreviewShowHide' | 'InputPreviewShow' | 'InputPreviewHide'
   }>
-  mirrorInput: CompanionActionSchema<{
+  mirrorInput: ActionSchema<{
     input: string
     functionID: 'MirrorOn' | 'MirrorOff'
   }>
-  moveInput: CompanionActionSchema<{
+  moveInput: ActionSchema<{
     input: string
     value: number
   }>
-  selectCategory: CompanionActionSchema<{
+  selectCategory: ActionSchema<{
     value:
       | 'All'
       | 'Red'
@@ -134,25 +134,25 @@ export type InputActionsSchema = {
       | 'Custom16'
       | 'Search'
   }>
-  saveVideoDelay: CompanionActionSchema<{
+  saveVideoDelay: ActionSchema<{
     input: string
     duration: number
   }>
-  setPictureEffect: CompanionActionSchema<{
+  setPictureEffect: ActionSchema<{
     input: string
     type: 'Effect' | 'Duration'
     transition: (typeof TRANSITIONS)[number]
     duration: number
   }>
-  setPictureTransition: CompanionActionSchema<{
+  setPictureTransition: ActionSchema<{
     input: string
     value: number
   }>
-  setRate: CompanionActionSchema<{
+  setRate: ActionSchema<{
     input: string
     value: number
   }>
-  videoDelayRecording: CompanionActionSchema<{
+  videoDelayRecording: ActionSchema<{
     input: string
     functionID: 'VideoDelayStartStopRecording' | 'VideoDelayStartRecording' | 'VideoDelayStopRecording'
     duration: number

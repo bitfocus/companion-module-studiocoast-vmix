@@ -21,6 +21,7 @@ export const getListFeedbacks = (instance: VMixInstance): CompanionFeedbackDefin
   return {
     inputSelectedIndex: {
       type: 'advanced',
+      affectedProperties: ['color', 'bgcolor'],
       name: 'List - Selected Index (Advanced)',
       description: 'If the specified slide/index is selected, change colors of the bank',
       options: [

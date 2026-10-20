@@ -1,9 +1,10 @@
-import { type CompanionActionDefinitions, type CompanionActionSchema, createModuleLogger } from '@companion-module/base'
+import { type CompanionActionDefinitions, createModuleLogger } from '@companion-module/base'
+import type { ActionSchema } from '../utils.js'
 import type { SendBasicCommand } from './actions.js'
 import type VMixInstance from '../index.js'
 
 export type AudioPresetActionsSchema = {
-  loadAudioPreset: CompanionActionSchema<{
+  loadAudioPreset: ActionSchema<{
     name: string
     busses: ('busRouting' | 'busVolumes' | 'busMute' | 'busSolo' | 'busFilter')[]
     busFade: string
@@ -13,10 +14,10 @@ export type AudioPresetActionsSchema = {
     inputFilter: string
     commandDelay: string
   }>
-  deleteAudioPreset: CompanionActionSchema<{
+  deleteAudioPreset: ActionSchema<{
     name: string
   }>
-  saveAudioPreset: CompanionActionSchema<{
+  saveAudioPreset: ActionSchema<{
     name: string
     overwrite: boolean
     includeBusses: boolean
